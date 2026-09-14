@@ -8,6 +8,8 @@ import {
   blogTagsQueryOptions,
 } from "@/features/blog"
 import { createSeoMeta } from "@/shared/config"
+import { IS_PUBLIC_UI } from "@/shared/constants"
+import { UnderConstructionBlock } from "@/shared/ui"
 
 export const Route = createFileRoute("/_profile/blog")({
   loader: async ({ context }) => {
@@ -33,18 +35,24 @@ export const Route = createFileRoute("/_profile/blog")({
   }),
   component: BlogPage,
 })
-
 function BlogPage() {
   const loaderData = Route.useLoaderData()
 
   return (
     <div className="w-full">
-      <BlogGrid
-        initialPosts={loaderData?.posts}
-        initialCategories={loaderData?.categories}
-        initialTags={loaderData?.tags}
-        initialGroups={loaderData?.groups}
-      />
+      {IS_PUBLIC_UI ? (
+        <BlogGrid
+          initialPosts={loaderData?.posts}
+          initialCategories={loaderData?.categories}
+          initialTags={loaderData?.tags}
+          initialGroups={loaderData?.groups}
+        />
+      ) : (
+        <UnderConstructionBlock
+          moduleName="Engineering Blog"
+          moduleBadge="BLOG_202"
+        />
+      )}
     </div>
   )
 }

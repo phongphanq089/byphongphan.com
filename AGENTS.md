@@ -82,9 +82,21 @@ src/
 
 - **Strict Prohibition of `React.FC`:** NEVER use `React.FC` or `React.FunctionComponent`. Always declare components using standard named functions with explicitly typed props: `export function ComponentName({ ... }: ComponentProps)`.
 
+### Design System, Layout & Visual Consistency (MANDATORY)
+
+- **Border Radius Synchronization:** All border radii must strictly follow design tokens (`--radius`, `rounded-lg`, `rounded-md`, `rounded-xl`, `rounded-full`). Arbitrary, one-off values (e.g. `rounded-[13px]`, `rounded-[22px]`) are strictly forbidden.
+- **Button Row Height Uniformity:** All buttons situated in the same row, action bar, or button group MUST have identical heights (matching `size` props or explicit equal height classes). Staggered, uneven button heights in the same row are strictly prohibited.
+- **Equal Height for Grid Cards & Blocks:** All card blocks in a grid row must maintain uniform height (`h-full`, `flex flex-col flex-1`), regardless of content length. Prevent jagged, staggered, or uneven card heights ("thụt thò"). Use `mt-auto` for card footers/actions to keep alignments flush.
+- **Preserve Button & UI Color System:** Always use the existing design system color tokens and button variants (`default`, `secondary`, `outline`, `ghost`, `destructive`). Introducing arbitrary rogue colors (e.g. ad-hoc hex values, random Tailwind colors outside the palette) is strictly forbidden.
+- **Reference Image Policy (Layout Only, Keep Brand Colors):** When an image or screenshot is provided as a layout reference, ONLY replicate the layout structure, wireframe hierarchy, and component arrangement. NEVER borrow colors, gradients, or themes from the reference image. Always apply the project's existing theme and color tokens.
+
+### Language & Codebase Standards (MANDATORY)
+
+- **Strict English Only in Code:** NEVER write Vietnamese comments, notes, docstrings, variable names, function names, or commit messages. All code, comments, logs, and UI strings must be written strictly in English.
+
 For specific implementation requirements, refer to the modular rules in `.agents/rules/`:
 
-- [TypeScript Strict Quality](.agents/rules/typescript.md): Zero red lines, upfront typing, no `any`.
-- [UI & Responsive Rules](.agents/rules/ui-responsive.md): Mandatory core UI reuse, mobile 2-column grid exception, body scroll lock, button wrap prevention.
+- [TypeScript Strict Quality](.agents/rules/typescript.md): Zero red lines, upfront typing, no `any`, English-only code.
+- [UI & Responsive Rules](.agents/rules/ui-responsive.md): Mandatory core UI reuse, border radius sync, equal button/card heights, color fidelity, reference image rules, mobile 2-column grid.
 - [Code Performance & Data](.agents/rules/code-performance.md): Re-render audits, TanStack Query selectors, Zod validation.
 - [Frontend Design Craft](.agents/skills/frontend-design/SKILL.md): Distinctive, production-grade UI design principles avoiding generic AI UI.

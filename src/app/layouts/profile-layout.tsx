@@ -64,7 +64,7 @@ export function ProfileLayout({ children }: { children?: React.ReactNode }) {
           </div>
 
           {/* Bottom Floating Dynamic Dock & Scroll Progress */}
-          <div className="fixed bottom-6 left-1/2 z-100 -translate-x-1/2 md:right-8 md:bottom-8 md:left-auto md:translate-x-0">
+          <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 md:right-8 md:bottom-8 md:left-auto md:translate-x-0">
             <div className="flex items-center gap-2 sm:gap-3">
               <BottomMenu />
               <ProgressWhileScroll />

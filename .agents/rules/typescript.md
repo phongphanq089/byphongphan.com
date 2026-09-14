@@ -59,3 +59,9 @@ When writing, refactoring, or generating code for this project, you MUST strictl
     return <ul>{items.map(renderItem)}</ul>
   }
   ```
+
+## 6. Language & Code Comments Standard (Strict English-Only)
+
+- **Strict Prohibition of Vietnamese in Code:** NEVER use Vietnamese for code comments, inline notes, JSDoc, function or variable identifiers, Git commits, or internal debugging logs.
+- **English Everywhere in Codebase:** All code, type annotations, inline comments, docstrings, and UI default texts must be written strictly in English.
+

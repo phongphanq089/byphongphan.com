@@ -6,6 +6,8 @@ import {
   resourcesQueryOptions,
 } from "@/features/resources"
 import { createSeoMeta } from "@/shared/config"
+import { IS_PUBLIC_UI } from "@/shared/constants"
+import { UnderConstructionBlock } from "@/shared/ui"
 
 export const Route = createFileRoute("/_profile/resources")({
   loader: async ({ context }) => {
@@ -30,10 +32,17 @@ function ResourcesPage() {
 
   return (
     <div className="w-full">
-      <ResourceGrid
-        initialResources={loaderData?.resources}
-        initialCategories={loaderData?.categories}
-      />
+      {IS_PUBLIC_UI ? (
+        <ResourceGrid
+          initialResources={loaderData?.resources}
+          initialCategories={loaderData?.categories}
+        />
+      ) : (
+        <UnderConstructionBlock
+          moduleName="Developer Resources"
+          moduleBadge="RESOURCES_202"
+        />
+      )}
     </div>
   )
 }
