@@ -34,6 +34,9 @@ export type SchematicType =
   | "toast"
   | "tooltip"
   | "skeleton"
+  | "select"
+  | "card"
+  | "animated-glow-card"
 
 export interface ComponentItem {
   id: string
@@ -44,4 +47,36 @@ export interface ComponentItem {
   count?: number
   schematicType: SchematicType
   badge?: string
+}
+
+export interface PropItem {
+  name: string
+  type: string
+  default?: string
+  description: string
+  typeDetails?: string
+}
+
+export interface ComponentApiDoc {
+  componentName: string
+  description?: string
+  props: PropItem[]
+}
+
+export interface ComponentVariant {
+  id: string
+  title: string
+  description?: string
+  component: React.ComponentType
+  code: string
+  dependencies?: string[]
+}
+
+export interface ManualInstallStep {
+  step: number
+  title: string
+  type: "dependencies" | "code" | "note"
+  fileName?: string
+  code?: string
+  dependencies?: string[]
 }

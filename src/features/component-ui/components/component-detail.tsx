@@ -11,9 +11,12 @@ import {
   Sparkles,
   Terminal,
 } from "lucide-react"
+import type { MDXComponents } from "mdx/types"
 import { useMemo, useState } from "react"
 
 import { GridContainer } from "@/app/layouts"
+import { REGISTRY_DEMO_CODES, REGISTRY_DEMOS } from "@/registry/demos"
+import { siteConfig } from "@/shared/config"
 import { cn } from "@/shared/lib"
 import {
   Button,
@@ -25,7 +28,14 @@ import { TableOfContents, type TOCItem } from "@/shared/ui/system"
 
 import { COMPONENTS_DATA } from "../components-data"
 import type { ComponentItem } from "../types"
+import { mdxComponents } from "./mdx-components"
 import { RenderSchematic } from "./schematics"
+
+const mdxModules = import.meta.glob<{
+  default: React.ComponentType<{
+    components?: MDXComponents
+  }>
+}>("../../../content/components/*.mdx", { eager: true })
 
 interface ComponentDetailProps {
   component: ComponentItem
@@ -41,15 +51,26 @@ const COMPONENT_TOC_ITEMS: TOCItem[] = [
   { id: "navigation", title: "Related Components", depth: 2 },
 ]
 
-type TabMode = "preview" | "code" | "props"
+type TabMode = "doc" | "preview" | "code" | "props"
 
-export const ComponentDetail = ({ component }: ComponentDetailProps) => {
-  const [activeTab, setActiveTab] = useState<TabMode>("preview")
+export function ComponentDetail({ component }: ComponentDetailProps) {
+  const MdxComponent = useMemo(() => {
+    const matchingKey = Object.keys(mdxModules).find((filePath) =>
+      filePath.endsWith(`/${component.slug}.mdx`)
+    )
+    return matchingKey ? mdxModules[matchingKey].default : null
+  }, [component.slug])
+
+  const [activeTab, setActiveTab] = useState<TabMode>(
+    MdxComponent ? "doc" : "preview"
+  )
   const [copiedInstall, setCopiedInstall] = useState(false)
   const [copiedCode, setCopiedCode] = useState(false)
   const [packageManager, setPackageManager] = useState<"pnpm" | "npm" | "bun">(
     "pnpm"
   )
+
+  const LiveDemo = REGISTRY_DEMOS[component.slug]
 
   // Find previous and next components
   const { prevComponent, nextComponent } = useMemo(() => {
@@ -64,15 +85,20 @@ export const ComponentDetail = ({ component }: ComponentDetailProps) => {
   }, [component.id])
 
   const installCommand = useMemo(() => {
+    const isCustomRegistry = Boolean(REGISTRY_DEMOS[component.slug])
+    const source = isCustomRegistry
+      ? `${siteConfig.url}/r/${component.slug}.json`
+      : component.slug
+
     switch (packageManager) {
       case "pnpm":
-        return `pnpm dlx shadcn@latest add ${component.slug}`
+        return `pnpm dlx shadcn@latest add ${source}`
       case "npm":
-        return `npx shadcn@latest add ${component.slug}`
+        return `npx shadcn@latest add ${source}`
       case "bun":
-        return `bunx --bun shadcn@latest add ${component.slug}`
+        return `bunx --bun shadcn@latest add ${source}`
       default:
-        return `npx shadcn@latest add ${component.slug}`
+        return `npx shadcn@latest add ${source}`
     }
   }, [packageManager, component.slug])
 
@@ -85,9 +111,12 @@ export const ComponentDetail = ({ component }: ComponentDetailProps) => {
   }
 
   const sampleCode = useMemo(() => {
+    if (REGISTRY_DEMO_CODES[component.slug]) {
+      return REGISTRY_DEMO_CODES[component.slug]
+    }
     const pascalName = component.name.replace(/[^a-zA-Z0-9]/g, "")
     return `import * as React from "react"
-import { ${pascalName} } from "@/shared/ui/core/${component.slug}"
+import { ${pascalName} } from "@/components/ui/${component.slug}"
 
 export function ${pascalName}Demo() {
   return (
@@ -109,6 +138,21 @@ export function ${pascalName}Demo() {
     }
   }
 
+  const tocItems = useMemo<TOCItem[]>(() => {
+    if (MdxComponent) {
+      return [
+        { id: "overview", title: "Overview", depth: 2 },
+        { id: "variants-showcase", title: "Variants", depth: 2 },
+        { id: "installation", title: "Installation", depth: 2 },
+        { id: "usage", title: "Usage", depth: 2 },
+        { id: "anatomy", title: "Anatomy", depth: 2 },
+        { id: "api-reference", title: "API reference", depth: 2 },
+        { id: "navigation", title: "Related Components", depth: 2 },
+      ]
+    }
+    return COMPONENT_TOC_ITEMS
+  }, [MdxComponent])
+
   const handleTocItemClick = (id: string) => {
     if (id === "code-implementation") {
       setActiveTab("code")
@@ -124,7 +168,7 @@ export function ${pascalName}Demo() {
       {/* Fixed Table of Contents on Desktop Screens (outside container) */}
       <aside className="pointer-events-auto fixed top-28 right-4 z-30 hidden w-52 xl:block min-[1400px]:right-auto min-[1400px]:left-[calc(50%+33rem)] 2xl:right-12">
         <TableOfContents
-          items={COMPONENT_TOC_ITEMS}
+          items={tocItems}
           title="ON THIS PAGE"
           icon={<BookOpen className="size-3.5 opacity-80" />}
           onItemClick={handleTocItemClick}
@@ -265,6 +309,22 @@ export function ${pascalName}Demo() {
         className="px-4 py-3 sm:px-8"
       >
         <div className="flex items-center gap-1.5">
+          {MdxComponent && (
+            <button
+              type="button"
+              onClick={() => setActiveTab("doc")}
+              className={cn(
+                "flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all duration-200",
+                activeTab === "doc"
+                  ? "border-pp-primary/60 bg-pp-primary/10 text-pp-primary shadow-xs"
+                  : "border-border/60 bg-muted/30 text-muted-foreground hover:border-border hover:bg-muted/60 hover:text-foreground"
+              )}
+            >
+              <BookOpen className="size-3.5" />
+              <span>Documentation</span>
+            </button>
+          )}
+
           <button
             type="button"
             onClick={() => setActiveTab("preview")}
@@ -276,7 +336,7 @@ export function ${pascalName}Demo() {
             )}
           >
             <Eye className="size-3.5" />
-            <span>Preview</span>
+            <span>{MdxComponent ? "Sandbox" : "Preview"}</span>
           </button>
 
           <button
@@ -293,38 +353,57 @@ export function ${pascalName}Demo() {
             <span>Code</span>
           </button>
 
-          <button
-            type="button"
-            onClick={() => setActiveTab("props")}
-            className={cn(
-              "flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all duration-200",
-              activeTab === "props"
-                ? "border-pp-primary/60 bg-pp-primary/10 text-pp-primary shadow-xs"
-                : "border-border/60 bg-muted/30 text-muted-foreground hover:border-border hover:bg-muted/60 hover:text-foreground"
-            )}
-          >
-            <Layers className="size-3.5" />
-            <span>API & Props</span>
-          </button>
+          {!MdxComponent && (
+            <button
+              type="button"
+              onClick={() => setActiveTab("props")}
+              className={cn(
+                "flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-all duration-200",
+                activeTab === "props"
+                  ? "border-pp-primary/60 bg-pp-primary/10 text-pp-primary shadow-xs"
+                  : "border-border/60 bg-muted/30 text-muted-foreground hover:border-border hover:bg-muted/60 hover:text-foreground"
+              )}
+            >
+              <Layers className="size-3.5" />
+              <span>API & Props</span>
+            </button>
+          )}
         </div>
       </GridContainer>
 
       {/* 3. Tab Content Viewport */}
       <GridContainer borderBottom showCrosshairs className="p-4 sm:p-8 md:p-12">
+        {activeTab === "doc" && MdxComponent && (
+          <div className="mx-auto w-full max-w-4xl py-2">
+            <MdxComponent components={mdxComponents} />
+          </div>
+        )}
         {activeTab === "preview" && (
           <div className="relative flex min-h-[380px] w-full items-center justify-center overflow-hidden rounded-2xl border border-black/10 bg-black/60 p-8 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-[#0c0c0f]">
             {/* Ambient Radial Spotlight */}
             <div className="pointer-events-none absolute inset-0 bg-radial from-white/[0.05] to-transparent" />
 
-            {/* Schematic Render */}
-            <div className="relative z-10 flex scale-110 items-center justify-center sm:scale-125">
-              <RenderSchematic type={component.schematicType} />
+            {/* Live Interactive Demo or Schematic Fallback */}
+            <div className="relative z-10 flex items-center justify-center">
+              {LiveDemo ? (
+                <div className="flex items-center justify-center p-6">
+                  <LiveDemo />
+                </div>
+              ) : (
+                <div className="scale-110 sm:scale-125">
+                  <RenderSchematic type={component.schematicType} />
+                </div>
+              )}
             </div>
 
             {/* Stage Footer Note */}
             <div className="absolute bottom-3 left-4 flex items-center gap-2 text-[10px] text-muted-foreground/60">
               <Sparkles className="size-3 text-pp-primary" />
-              <span>Pixel-perfect dark schematic stage</span>
+              <span>
+                {LiveDemo
+                  ? "Interactive live component stage"
+                  : "Pixel-perfect dark schematic stage"}
+              </span>
             </div>
           </div>
         )}

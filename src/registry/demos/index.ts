@@ -1,0 +1,129 @@
+import type React from "react"
+
+import { AnimatedGlowCardDemo } from "./animated-glow-card-demo"
+import { BadgeDemo } from "./badge-demo"
+import { ButtonDemo } from "./button-demo"
+import { CardDemo } from "./card-demo"
+import { SelectDemo } from "./select-demo"
+
+export { AnimatedGlowCardDemo, BadgeDemo, ButtonDemo, CardDemo, SelectDemo }
+
+export const REGISTRY_DEMOS: Record<string, React.ComponentType> = {
+  select: SelectDemo,
+  button: ButtonDemo,
+  badge: BadgeDemo,
+  card: CardDemo,
+  "animated-glow-card": AnimatedGlowCardDemo,
+}
+
+export const REGISTRY_DEMO_CODES: Record<string, string> = {
+  select: `import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+export function SelectDemo() {
+  return (
+    <Select defaultValue="react">
+      <SelectTrigger className="w-[220px]">
+        <SelectValue placeholder="Select a framework" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Frameworks</SelectLabel>
+          <SelectItem value="react">React 19</SelectItem>
+          <SelectItem value="nextjs">Next.js 15</SelectItem>
+          <SelectItem value="tanstack">TanStack Start</SelectItem>
+          <SelectItem value="vue">Vue 3</SelectItem>
+          <SelectItem value="svelte">Svelte 5</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+  )
+}`,
+  button: `import { Button } from "@/components/ui/button"
+
+export function ButtonDemo() {
+  return (
+    <div className="flex flex-wrap items-center gap-3">
+      <Button variant="default">Default</Button>
+      <Button variant="secondary">Secondary</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="ghost">Ghost</Button>
+      <Button variant="destructive">Destructive</Button>
+    </div>
+  )
+}`,
+  badge: `import { Badge } from "@/components/ui/badge"
+
+export function BadgeDemo() {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-3">
+      <Badge variant="default">Default</Badge>
+      <Badge variant="secondary">Secondary</Badge>
+      <Badge variant="outline">Outline</Badge>
+      <Badge variant="destructive">Destructive</Badge>
+    </div>
+  )
+}`,
+  card: `import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
+export function CardDemo() {
+  return (
+    <Card className="w-full max-w-sm">
+      <CardHeader>
+        <CardTitle>Create project</CardTitle>
+        <CardDescription>Deploy your new project in one-click.</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-xs text-muted-foreground">
+          Your project will be deployed to your custom domain with zero configuration.
+        </p>
+      </CardContent>
+      <CardFooter className="flex justify-between">
+        <Button variant="outline" size="sm">
+          Cancel
+        </Button>
+        <Button size="sm">Deploy</Button>
+      </CardFooter>
+    </Card>
+  )
+}`,
+  "animated-glow-card": `import { Card, CardCanvas } from "@/components/animated-glow-card"
+
+export function AnimatedGlowCardDemo() {
+  return (
+    <CardCanvas className="flex w-full items-center justify-center p-4">
+      <Card className="w-full max-w-sm" showCrosshairs={true}>
+        <div className="flex flex-col gap-2 p-2">
+          <div className="flex items-center justify-between">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+              SEC-01 // RADIAL
+            </span>
+            <span className="size-2 animate-pulse rounded-full bg-emerald-500" />
+          </div>
+          <h4 className="text-base font-semibold text-foreground">
+            Specular Highlight
+          </h4>
+          <p className="text-xs leading-relaxed text-muted-foreground">
+            Dynamic cursor-following glow border utilizing mouse tracking CSS variables.
+          </p>
+        </div>
+      </Card>
+    </CardCanvas>
+  )
+}`,
+}

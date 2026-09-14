@@ -499,6 +499,46 @@ export function SkeletonSchematic() {
   )
 }
 
+// Card Schematic
+export function CardSchematic() {
+  return (
+    <div className="flex w-full max-w-[200px] flex-col gap-2 rounded-xl border border-white/15 bg-white/[0.04] p-3.5 shadow-md">
+      <div className="flex items-center gap-2">
+        <div className="size-3 rounded-full bg-white/40" />
+        <div className="h-2 w-16 rounded-full bg-white/80" />
+      </div>
+      <div className="flex flex-col gap-1.5 py-1">
+        <div className="h-1.5 w-full rounded-full bg-white/20" />
+        <div className="h-1.5 w-3/4 rounded-full bg-white/15" />
+      </div>
+      <div className="flex items-center justify-between pt-1">
+        <div className="h-1.5 w-10 rounded-full bg-white/30" />
+        <div className="h-4 w-10 rounded-md bg-white/10" />
+      </div>
+    </div>
+  )
+}
+
+// Animated Glow Card Schematic
+export function AnimatedGlowCardSchematic() {
+  return (
+    <div className="relative flex w-full max-w-[200px] flex-col gap-2 rounded-xl border border-white/30 bg-white/[0.06] p-3.5 shadow-[0_0_25px_rgba(255,255,255,0.15)]">
+      <div className="pointer-events-none absolute -inset-px rounded-xl bg-gradient-to-tr from-white/20 via-transparent to-white/10 opacity-70" />
+      <div className="flex items-center justify-between">
+        <div className="h-2 w-16 rounded-full bg-white/90" />
+        <span className="size-2 animate-pulse rounded-full bg-cyan-400" />
+      </div>
+      <div className="flex flex-col gap-1.5 py-1">
+        <div className="h-1.5 w-full rounded-full bg-white/25" />
+        <div className="h-1.5 w-2/3 rounded-full bg-white/20" />
+      </div>
+      <div className="flex items-center justify-end pt-1">
+        <div className="h-4 w-12 rounded-md bg-white/20" />
+      </div>
+    </div>
+  )
+}
+
 export function RenderSchematic({ type }: { type: SchematicType }) {
   switch (type) {
     case "accordion":
@@ -540,6 +580,7 @@ export function RenderSchematic({ type }: { type: SchematicType }) {
     case "dialog":
       return <DialogSchematic />
     case "dropdown":
+    case "select":
       return <DropdownSchematic />
     case "hover-card":
       return <HoverCardSchematic />
@@ -553,6 +594,10 @@ export function RenderSchematic({ type }: { type: SchematicType }) {
       return <TooltipSchematic />
     case "skeleton":
       return <SkeletonSchematic />
+    case "card":
+      return <CardSchematic />
+    case "animated-glow-card":
+      return <AnimatedGlowCardSchematic />
     default:
       return null
   }
