@@ -1,4 +1,4 @@
-import React from "react"
+import React, { createContext, useContext } from "react"
 
 import { cn } from "@/shared/lib/utils"
 
@@ -18,6 +18,19 @@ export const Crosshair = ({ className }: { className?: string }) => (
   </svg>
 )
 
+export type GridContainerMaxWidth =
+  "default" | "wide" | "5xl" | "6xl" | "7xl" | "full" | string
+
+export interface GridLayoutContextValue {
+  maxWidth?: GridContainerMaxWidth
+}
+
+export const GridLayoutContext = createContext<GridLayoutContextValue>({
+  maxWidth: "default",
+})
+
+export const useGridLayout = () => useContext(GridLayoutContext)
+
 export interface GridContainerProps {
   as?: React.ElementType
   children: React.ReactNode
@@ -27,6 +40,7 @@ export interface GridContainerProps {
   borderBottom?: boolean
   borderTop?: boolean
   id?: string
+  maxWidth?: GridContainerMaxWidth
 }
 
 export function GridContainer({
@@ -38,7 +52,22 @@ export function GridContainer({
   borderBottom = true,
   borderTop = false,
   id,
+  maxWidth: propMaxWidth,
 }: GridContainerProps) {
+  const context = useGridLayout()
+  const effectiveMaxWidth = propMaxWidth ?? context.maxWidth ?? "default"
+
+  const maxWidthClass =
+    effectiveMaxWidth === "wide" || effectiveMaxWidth === "7xl"
+      ? "max-w-7xl 2xl:max-w-[1400px]"
+      : effectiveMaxWidth === "6xl"
+        ? "max-w-6xl"
+        : effectiveMaxWidth === "full"
+          ? "max-w-full"
+          : effectiveMaxWidth === "default" || effectiveMaxWidth === "5xl"
+            ? "max-w-5xl"
+            : effectiveMaxWidth
+
   return (
     <Component
       id={id}
@@ -50,7 +79,8 @@ export function GridContainer({
     >
       <div
         className={cn(
-          "relative mx-auto h-full max-w-5xl border-r border-l border-border",
+          "relative mx-auto h-full border-r border-l border-border duration-300 ease-in-out",
+          maxWidthClass,
           columns === 2 && "grid grid-cols-1 md:grid-cols-2",
           columns === 3 && "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
           className

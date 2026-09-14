@@ -72,7 +72,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-separator",
     name: "Separator",
     slug: "separator",
-    category: "foundations",
+    category: "primitives",
     description:
       "Visually or semantically separates content in a page, supporting both horizontal and vertical orientations.",
     schematicType: "separator",

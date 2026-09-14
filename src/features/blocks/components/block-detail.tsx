@@ -121,7 +121,7 @@ export function ${pascalTitle}Block() {
       case "tablet":
         return "max-w-[768px]"
       default:
-        return "w-full max-w-5xl"
+        return "w-full max-w-6xl 2xl:max-w-7xl"
     }
   }, [viewport])
 
@@ -353,7 +353,7 @@ export function ${pascalTitle}Block() {
             <div className="pointer-events-none absolute inset-0 bg-radial from-white/[0.05] to-transparent" />
 
             {/* Schematic Render */}
-            <div className="relative z-10 flex h-full w-full max-w-2xl scale-110 items-center justify-center sm:scale-125">
+            <div className="relative z-10 flex h-full w-full max-w-4xl scale-110 items-center justify-center sm:scale-125">
               <RenderBlockSchematic type={block.schematicType} />
             </div>
           </div>
