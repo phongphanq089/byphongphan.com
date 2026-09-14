@@ -278,7 +278,7 @@ function AdminResourcesPage() {
             </h1>
             <Badge
               variant="outline"
-              className="rounded-md border-border/80 bg-muted/40 font-mono text-xs"
+              className="rounded-md border-border/80 bg-muted/40 text-xs"
             >
               {resources.length} Listed
             </Badge>
@@ -408,7 +408,7 @@ function AdminResourcesPage() {
                     {res.pricing === "Free" && (
                       <Badge
                         variant="outline"
-                        className="rounded-md border-emerald-500/30 bg-emerald-500/10 font-mono text-[10px] text-emerald-400"
+                        className="rounded-md border-emerald-500/30 bg-emerald-500/10 text-[10px] text-emerald-400"
                       >
                         Free
                       </Badge>
@@ -416,7 +416,7 @@ function AdminResourcesPage() {
                     {res.pricing === "MIT" && (
                       <Badge
                         variant="outline"
-                        className="rounded-md border-blue-500/30 bg-blue-500/10 font-mono text-[10px] text-blue-400"
+                        className="rounded-md border-blue-500/30 bg-blue-500/10 text-[10px] text-blue-400"
                       >
                         MIT
                       </Badge>
@@ -424,7 +424,7 @@ function AdminResourcesPage() {
                     {res.pricing === "Freemium" && (
                       <Badge
                         variant="outline"
-                        className="rounded-md border-purple-500/30 bg-purple-500/10 font-mono text-[10px] text-purple-400"
+                        className="rounded-md border-purple-500/30 bg-purple-500/10 text-[10px] text-purple-400"
                       >
                         Freemium
                       </Badge>
@@ -432,7 +432,7 @@ function AdminResourcesPage() {
                     {res.pricing === "Paid" && (
                       <Badge
                         variant="outline"
-                        className="rounded-md border-amber-500/30 bg-amber-500/10 font-mono text-[10px] text-amber-400"
+                        className="rounded-md border-amber-500/30 bg-amber-500/10 text-[10px] text-amber-400"
                       >
                         Paid
                       </Badge>
@@ -455,7 +455,7 @@ function AdminResourcesPage() {
                     </button>
                   </td>
 
-                  <td className="px-3 py-3.5 font-mono text-muted-foreground">
+                  <td className="px-3 py-3.5 text-muted-foreground">
                     {res.publishedAt}
                   </td>
 
@@ -550,7 +550,7 @@ function AdminResourcesPage() {
                       <Input
                         {...field}
                         placeholder="https://originui.com"
-                        className="h-9 rounded-lg font-mono text-xs"
+                        className="h-9 rounded-lg text-xs"
                       />
                     </FormControl>
                     <FormMessage />

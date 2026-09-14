@@ -96,14 +96,12 @@ export function BlogPostDetail({ post, allPosts = [] }: BlogPostDetailProps) {
           {post.tags && post.tags.length > 0 && (
             <div className="mt-12 border-t border-border/60 pt-6">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="font-mono text-xs text-muted-foreground">
-                  TOPICS //
-                </span>
+                <span className="text-xs text-muted-foreground">TOPICS //</span>
                 {post.tags.map((tag) => (
                   <Badge
                     key={tag._id}
                     variant="outline"
-                    className="gap-1 rounded-md border-border/60 bg-muted/40 font-mono text-xs text-muted-foreground transition-colors hover:border-pp-primary hover:text-foreground"
+                    className="gap-1 rounded-md border-border/60 bg-muted/40 text-xs text-muted-foreground transition-colors hover:border-pp-primary hover:text-foreground"
                   >
                     <span>#</span>
                     <span>{tag.title}</span>
@@ -134,7 +132,7 @@ export function BlogPostDetail({ post, allPosts = [] }: BlogPostDetailProps) {
       >
         <Link
           to="/blog"
-          className="group flex items-center gap-2 font-mono text-xs font-semibold text-muted-foreground transition-colors hover:text-pp-primary"
+          className="group flex items-center gap-2 text-xs font-semibold text-muted-foreground transition-colors hover:text-pp-primary"
         >
           <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" />
           <span>ALL WRITING & ARTICLES</span>
@@ -145,7 +143,7 @@ export function BlogPostDetail({ post, allPosts = [] }: BlogPostDetailProps) {
           variant="outline"
           size="sm"
           onClick={scrollToTop}
-          className="gap-1.5 font-mono text-xs text-muted-foreground hover:text-foreground"
+          className="gap-1.5 text-xs text-muted-foreground hover:text-foreground"
         >
           <ArrowUp className="size-3.5" />
           <span>Back to Top ↑</span>

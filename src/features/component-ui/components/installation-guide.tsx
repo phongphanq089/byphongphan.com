@@ -152,7 +152,7 @@ export function cn(...inputs: ClassValue[]) {
           </div>
 
           <div className="p-4">
-            <code className="font-mono text-xs break-all text-foreground">
+            <code className="text-xs break-all text-foreground">
               {cliCommand}
             </code>
           </div>
@@ -211,7 +211,7 @@ export function cn(...inputs: ClassValue[]) {
               </div>
 
               <div className="p-3">
-                <code className="font-mono text-xs break-all text-foreground">
+                <code className="text-xs break-all text-foreground">
                   {depCommand}
                 </code>
               </div>
@@ -231,10 +231,10 @@ export function cn(...inputs: ClassValue[]) {
             <div className="overflow-hidden rounded-xl border border-border/80 bg-card/60">
               <div className="flex items-center justify-between border-b border-border/60 bg-muted/30 px-3 py-1.5">
                 <div className="flex items-center gap-2">
-                  <span className="rounded bg-muted px-1 py-0.5 font-mono text-[10px] font-bold text-muted-foreground">
+                  <span className="rounded bg-muted px-1 py-0.5 text-[10px] font-bold text-muted-foreground">
                     TS
                   </span>
-                  <span className="font-mono text-xs text-muted-foreground">
+                  <span className="text-xs text-muted-foreground">
                     lib/utils.ts
                   </span>
                 </div>
@@ -254,7 +254,7 @@ export function cn(...inputs: ClassValue[]) {
                 </Button>
               </div>
 
-              <div className="p-3 font-mono text-xs text-foreground">
+              <div className="p-3 text-xs text-foreground">
                 <pre>
                   <code>{`export { cn } from "@/shared/lib/utils"`}</code>
                 </pre>
@@ -276,10 +276,8 @@ export function cn(...inputs: ClassValue[]) {
               <div className="overflow-hidden rounded-xl border border-border/80 bg-card/60">
                 <div className="flex items-center justify-between border-b border-border/60 bg-muted/30 px-3 py-1.5">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10px] text-muted-foreground">
-                      ⚛
-                    </span>
-                    <span className="font-mono text-xs text-muted-foreground">
+                    <span className="text-[10px] text-muted-foreground">⚛</span>
+                    <span className="text-xs text-muted-foreground">
                       {fileName}
                     </span>
                   </div>
@@ -301,7 +299,7 @@ export function cn(...inputs: ClassValue[]) {
 
                 <div
                   className={cn(
-                    "relative overflow-hidden p-4 font-mono text-xs leading-relaxed text-foreground transition-all duration-300",
+                    "relative overflow-hidden p-4 text-xs leading-relaxed text-foreground transition-all duration-300",
                     !isExpanded && "max-h-60"
                   )}
                 >

@@ -176,23 +176,19 @@ export function BlueprintSection() {
             <div className="grid grid-cols-2 gap-3 text-[11px] sm:grid-cols-4">
               <div className="rounded border border-border/50 bg-background/60 p-2 text-center">
                 <span className="text-muted-foreground">Level 0 Rail</span>
-                <p className="font-mono font-bold text-foreground">X = 14px</p>
+                <p className="font-bold text-foreground">X = 14px</p>
               </div>
               <div className="rounded border border-border/50 bg-background/60 p-2 text-center">
                 <span className="text-muted-foreground">Level 1 Rail</span>
-                <p className="font-mono font-bold text-foreground">X = 30px</p>
+                <p className="font-bold text-foreground">X = 30px</p>
               </div>
               <div className="rounded border border-border/50 bg-background/60 p-2 text-center">
                 <span className="text-muted-foreground">Chamfer Angle</span>
-                <p className="font-mono font-bold text-emerald-400">
-                  45° (dx = dy)
-                </p>
+                <p className="font-bold text-emerald-400">45° (dx = dy)</p>
               </div>
               <div className="rounded border border-border/50 bg-background/60 p-2 text-center">
                 <span className="text-muted-foreground">Motion Engine</span>
-                <p className="font-mono font-bold text-pp-primary">
-                  Framer Motion
-                </p>
+                <p className="font-bold text-pp-primary">Framer Motion</p>
               </div>
             </div>
           </div>

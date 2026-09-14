@@ -29,7 +29,7 @@ export function BlogSeriesStepper({
             <Layers className="size-4" />
           </div>
           <div>
-            <div className="flex items-center gap-2 font-mono text-[10px] text-muted-foreground uppercase">
+            <div className="flex items-center gap-2 text-[10px] text-muted-foreground uppercase">
               <span className="font-semibold text-pp-primary">
                 SERIES ROADMAP
               </span>
@@ -47,7 +47,7 @@ export function BlogSeriesStepper({
         <Badge
           variant="outline"
           className={cn(
-            "font-mono text-[10px]",
+            "text-[10px]",
             group.isCompleted
               ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"
               : "border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400"
@@ -91,7 +91,7 @@ export function BlogSeriesStepper({
               {/* Step Status Node */}
               <div
                 className={cn(
-                  "relative z-10 flex size-9 shrink-0 items-center justify-center rounded-full border font-mono text-xs font-semibold transition-all",
+                  "relative z-10 flex size-9 shrink-0 items-center justify-center rounded-full border text-xs font-semibold transition-all",
                   isCurrent
                     ? "border-pp-primary bg-pp-primary text-primary-foreground shadow-md ring-4 ring-pp-primary/20"
                     : isPast
@@ -119,13 +119,13 @@ export function BlogSeriesStepper({
               >
                 <div className="flex flex-col gap-0.5">
                   <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10px] text-muted-foreground">
+                    <span className="text-[10px] text-muted-foreground">
                       Part {sp.groupOrder ?? idx + 1}
                     </span>
                     {isCurrent && (
                       <Badge
                         variant="outline"
-                        className="border-pp-primary/40 bg-pp-primary/10 px-1 py-0 font-mono text-[9px] text-pp-primary"
+                        className="border-pp-primary/40 bg-pp-primary/10 px-1 py-0 text-[9px] text-pp-primary"
                       >
                         CURRENT
                       </Badge>
@@ -143,7 +143,7 @@ export function BlogSeriesStepper({
                   </span>
                 </div>
 
-                <div className="hidden items-center gap-3 font-mono text-xs text-muted-foreground sm:flex">
+                <div className="hidden items-center gap-3 text-xs text-muted-foreground sm:flex">
                   <span>{sp.readTime}m read</span>
                   <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" />
                 </div>

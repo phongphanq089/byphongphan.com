@@ -84,7 +84,7 @@ export function BlogPostHeader({
 
       <div className="relative z-10 flex flex-col gap-6">
         {/* Architectural Monospace Telemetry Ribbon */}
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[11px] text-muted-foreground">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] text-muted-foreground">
           <Link
             to="/"
             className="transition-colors hover:text-foreground hover:underline"
@@ -118,7 +118,7 @@ export function BlogPostHeader({
             <Badge
               key={category._id}
               variant="outline"
-              className="gap-1.5 border-pp-primary/30 bg-pp-primary/5 font-mono text-xs font-semibold text-pp-primary backdrop-blur-xs"
+              className="gap-1.5 border-pp-primary/30 bg-pp-primary/5 text-xs font-semibold text-pp-primary backdrop-blur-xs"
             >
               <Tag className="size-3" />
               <span>{category.title}</span>
@@ -128,7 +128,7 @@ export function BlogPostHeader({
           {post.group && (
             <Badge
               variant="outline"
-              className="gap-1.5 border-border/80 bg-muted/40 font-mono text-xs text-muted-foreground"
+              className="gap-1.5 border-border/80 bg-muted/40 text-xs text-muted-foreground"
             >
               <Layers className="size-3 text-pp-primary" />
               <span>Series: {post.group.title}</span>
@@ -167,11 +167,11 @@ export function BlogPostHeader({
               <div className="flex items-center gap-1.5 font-semibold text-foreground">
                 <span>{post.author.name}</span>
                 <CheckCircle2 className="size-3.5 fill-blue-500/20 text-blue-500" />
-                <span className="font-mono text-[10px] text-muted-foreground uppercase">
+                <span className="text-[10px] text-muted-foreground uppercase">
                   [UI ARCHITECT]
                 </span>
               </div>
-              <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <Clock className="size-3" />
                   <span>{post.readTime} min read</span>
@@ -193,7 +193,7 @@ export function BlogPostHeader({
               variant="outline"
               size="sm"
               onClick={onOpenTOC}
-              className="hidden items-center gap-2 border-border/60 bg-muted/30 px-2.5 font-mono text-xs text-muted-foreground hover:border-pp-primary/60 hover:text-foreground sm:flex"
+              className="hidden items-center gap-2 border-border/60 bg-muted/30 px-2.5 text-xs text-muted-foreground hover:border-pp-primary/60 hover:text-foreground sm:flex"
               aria-label="Open Table of Contents and Reading Telemetry"
             >
               <span className="size-2 animate-pulse rounded-full bg-pp-primary" />

@@ -72,7 +72,7 @@ function AdminNotFoundPage() {
             <div className="flex items-center justify-center gap-2">
               <Badge
                 variant="outline"
-                className="rounded-md border-primary/30 bg-primary/10 px-2 py-0.5 font-mono text-xs font-medium text-primary"
+                className="rounded-md border-primary/30 bg-primary/10 px-2 py-0.5 text-xs font-medium text-primary"
               >
                 ERR_ROUTE_404
               </Badge>
@@ -86,7 +86,7 @@ function AdminNotFoundPage() {
           </div>
 
           {/* Path Inspector Bar */}
-          <div className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-border/70 bg-muted/40 px-3.5 py-2 text-left font-mono text-xs">
+          <div className="mt-5 flex items-center justify-between gap-3 rounded-lg border border-border/70 bg-muted/40 px-3.5 py-2 text-left text-xs">
             <div className="flex min-w-0 items-center gap-2">
               <span className="text-[11px] tracking-wider text-muted-foreground uppercase">
                 Path
@@ -172,7 +172,7 @@ function AdminNotFoundPage() {
         {/* ─── Command Palette Hint ─── */}
         <p className="text-xs text-muted-foreground">
           Tip: Press{" "}
-          <kbd className="rounded-md border border-border/80 bg-muted/60 px-1.5 py-0.5 font-mono text-[10px] font-semibold text-foreground">
+          <kbd className="rounded-md border border-border/80 bg-muted/60 px-1.5 py-0.5 text-[10px] font-semibold text-foreground">
             Ctrl + K
           </kbd>{" "}
           anywhere to open the command palette

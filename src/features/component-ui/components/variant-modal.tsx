@@ -126,7 +126,7 @@ export function VariantModal({
 
               {/* Command Snippet */}
               <div className="p-3">
-                <code className="font-mono text-xs break-all text-white/90">
+                <code className="text-xs break-all text-white/90">
                   {installCommand}
                 </code>
               </div>
@@ -154,7 +154,7 @@ export function VariantModal({
               </Button>
             </div>
 
-            <div className="relative max-h-[380px] overflow-y-auto rounded-xl border border-white/10 bg-black/80 p-4 font-mono text-xs leading-relaxed text-white/90">
+            <div className="relative max-h-[380px] overflow-y-auto rounded-xl border border-white/10 bg-black/80 p-4 text-xs leading-relaxed text-white/90">
               <pre>
                 <code>{variant.code}</code>
               </pre>

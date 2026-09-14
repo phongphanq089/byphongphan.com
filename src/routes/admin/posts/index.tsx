@@ -153,7 +153,7 @@ function AdminPostsListPage() {
             </h1>
             <Badge
               variant="outline"
-              className="rounded-md border-border/80 bg-muted/40 font-mono text-xs"
+              className="rounded-md border-border/80 bg-muted/40 text-xs"
             >
               {posts.length} Articles
             </Badge>
@@ -280,7 +280,7 @@ function AdminPostsListPage() {
                               </Badge>
                             )}
                           </div>
-                          <p className="truncate font-mono text-[11px] text-muted-foreground">
+                          <p className="truncate text-[11px] text-muted-foreground">
                             /{post.slug}
                           </p>
                         </div>
@@ -326,7 +326,7 @@ function AdminPostsListPage() {
                       {post.publishedAt}
                     </td>
 
-                    <td className="px-3 py-3.5 font-mono text-muted-foreground">
+                    <td className="px-3 py-3.5 text-muted-foreground">
                       {post.views.toLocaleString()}
                     </td>
 

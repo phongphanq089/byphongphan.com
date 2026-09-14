@@ -35,7 +35,7 @@ export function BlogPostCover({ coverImage, title }: BlogPostCoverProps) {
         </div>
 
         {/* Technical Caption Telemetry Bar */}
-        <div className="mt-2.5 flex items-center justify-between px-1 font-mono text-[11px] text-muted-foreground/75">
+        <div className="mt-2.5 flex items-center justify-between px-1 text-[11px] text-muted-foreground/75">
           <span className="flex items-center gap-2">
             <span className="font-bold text-pp-primary">FIG 01.0</span>
             <span>//</span>

@@ -90,11 +90,9 @@ export const PortableTextCodeBlock = ({
             <div className="size-2.5 rounded-full bg-emerald-500/70" />
           </div>
           {value.filename ? (
-            <span className="ml-2 font-mono text-xs text-white/70">
-              {value.filename}
-            </span>
+            <span className="ml-2 text-xs text-white/70">{value.filename}</span>
           ) : value.language ? (
-            <span className="ml-2 font-mono text-xs text-white/40 uppercase">
+            <span className="ml-2 text-xs text-white/40 uppercase">
               {value.language}
             </span>
           ) : null}
@@ -122,7 +120,7 @@ export const PortableTextCodeBlock = ({
       </div>
 
       {/* Code viewport */}
-      <pre className="overflow-x-auto p-4 font-mono text-xs leading-relaxed text-white/90">
+      <pre className="overflow-x-auto p-4 text-xs leading-relaxed text-white/90">
         <code>{value.code}</code>
       </pre>
     </div>
@@ -346,7 +344,7 @@ export const defaultPortableTextComponents: PortableTextComponents = {
     ),
     em: ({ children }) => <em className="italic">{children}</em>,
     code: ({ children }) => (
-      <code className="rounded-md border border-border/80 bg-muted/60 px-1.5 py-0.5 font-mono text-[12px] font-medium text-foreground">
+      <code className="rounded-md border border-border/80 bg-muted/60 px-1.5 py-0.5 text-[12px] font-medium text-foreground">
         {children}
       </code>
     ),

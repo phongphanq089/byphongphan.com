@@ -91,31 +91,31 @@ function JsonNode({
 
     if (value === null) {
       valueElement = (
-        <span className="font-mono font-medium text-rose-500 dark:text-rose-400">
+        <span className="font-medium text-rose-500 dark:text-rose-400">
           null
         </span>
       )
     } else if (typeof value === "boolean") {
       valueElement = (
-        <span className="font-mono font-medium text-purple-600 dark:text-purple-400">
+        <span className="font-medium text-purple-600 dark:text-purple-400">
           {value ? "true" : "false"}
         </span>
       )
     } else if (typeof value === "number") {
       valueElement = (
-        <span className="font-mono text-amber-600 dark:text-amber-400">
+        <span className="text-amber-600 dark:text-amber-400">
           {renderHighlighted(String(value))}
         </span>
       )
     } else if (typeof value === "string") {
       valueElement = (
-        <span className="font-mono text-emerald-600 dark:text-emerald-400">
+        <span className="text-emerald-600 dark:text-emerald-400">
           &quot;{renderHighlighted(value)}&quot;
         </span>
       )
     } else {
       valueElement = (
-        <span className="font-mono text-muted-foreground">{String(value)}</span>
+        <span className="text-muted-foreground">{String(value)}</span>
       )
     }
 
@@ -123,15 +123,15 @@ function JsonNode({
       <div className="rounded-xs py-0.5 text-xs leading-5 transition-colors hover:bg-muted/40">
         <span style={{ paddingLeft: `${depth * 14}px` }} />
         {name !== undefined && (
-          <span className="font-mono font-medium text-sky-600 dark:text-sky-300">
+          <span className="font-medium text-sky-600 dark:text-sky-300">
             &quot;{renderHighlighted(name)}&quot;
           </span>
         )}
         {name !== undefined && (
-          <span className="font-mono text-muted-foreground">: </span>
+          <span className="text-muted-foreground">: </span>
         )}
         {valueElement}
-        {!isLast && <span className="font-mono text-muted-foreground">,</span>}
+        {!isLast && <span className="text-muted-foreground">,</span>}
       </div>
     )
   }
@@ -160,29 +160,25 @@ function JsonNode({
         </span>
 
         {name !== undefined && (
-          <span className="font-mono font-medium text-sky-600 dark:text-sky-300">
+          <span className="font-medium text-sky-600 dark:text-sky-300">
             &quot;{renderHighlighted(name)}&quot;
           </span>
         )}
         {name !== undefined && (
-          <span className="font-mono text-muted-foreground">: </span>
+          <span className="text-muted-foreground">: </span>
         )}
 
-        <span className="font-mono text-muted-foreground">{opening}</span>
+        <span className="text-muted-foreground">{opening}</span>
 
         {!isOpen && (
-          <span className="font-mono text-[10px] text-muted-foreground/60">
+          <span className="text-[10px] text-muted-foreground/60">
             {" "}
             ... {itemsCount} {itemsCount === 1 ? "item" : "items"}{" "}
           </span>
         )}
 
-        {!isOpen && (
-          <span className="font-mono text-muted-foreground">{closing}</span>
-        )}
-        {!isOpen && !isLast && (
-          <span className="font-mono text-muted-foreground">,</span>
-        )}
+        {!isOpen && <span className="text-muted-foreground">{closing}</span>}
+        {!isOpen && !isLast && <span className="text-muted-foreground">,</span>}
       </div>
 
       {isOpen && (
@@ -199,7 +195,7 @@ function JsonNode({
             />
           ))}
           <div
-            className="rounded-xs py-0.5 font-mono text-muted-foreground transition-colors hover:bg-muted/30"
+            className="rounded-xs py-0.5 text-muted-foreground transition-colors hover:bg-muted/30"
             style={{ paddingLeft: `${depth * 14}px` }}
           >
             <span className="inline-block w-3.5" />
@@ -353,10 +349,7 @@ export function JsonViewer({
           </div>
 
           {searchQuery && (
-            <Badge
-              variant="secondary"
-              className="h-5 px-1.5 font-mono text-[10px]"
-            >
+            <Badge variant="secondary" className="h-5 px-1.5 text-[10px]">
               {matchCount} {matchCount === 1 ? "match" : "matches"}
             </Badge>
           )}
@@ -366,7 +359,7 @@ export function JsonViewer({
         <div className="flex items-center gap-2">
           <Badge
             variant="outline"
-            className="h-6 gap-1 font-mono text-[10px] text-muted-foreground"
+            className="h-6 gap-1 text-[10px] text-muted-foreground"
           >
             <span>Size:</span>
             <strong className="text-foreground">{formatBytes(size)}</strong>
@@ -417,7 +410,7 @@ export function JsonViewer({
             />
           </div>
         ) : (
-          <pre className="font-mono text-xs leading-relaxed text-foreground select-text">
+          <pre className="text-xs leading-relaxed text-foreground select-text">
             <code>{formattedJson}</code>
           </pre>
         )}

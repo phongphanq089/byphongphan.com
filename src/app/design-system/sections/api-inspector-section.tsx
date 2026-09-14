@@ -166,11 +166,11 @@ export function ApiInspectorSection() {
             <div className="flex items-center gap-2">
               <Badge
                 variant="outline"
-                className="border-primary/40 bg-primary/10 font-mono text-[10px] font-bold text-primary uppercase"
+                className="border-primary/40 bg-primary/10 text-[10px] font-bold text-primary uppercase"
               >
                 Interactive Dev Tool HUD
               </Badge>
-              <span className="font-mono text-xs text-muted-foreground">
+              <span className="text-xs text-muted-foreground">
                 Zero-Reload &bull; Function-Based &bull; Built-in API Client
               </span>
             </div>
@@ -179,7 +179,7 @@ export function ApiInspectorSection() {
             </h3>
             <p className="max-w-3xl text-xs text-muted-foreground">
               A visual API debugging and testing HUD that completely replaces{" "}
-              <code className="rounded bg-muted px-1 py-0.5 font-mono text-foreground">
+              <code className="rounded bg-muted px-1 py-0.5 text-foreground">
                 console.log
               </code>
               . Pass any data-returning function, test custom endpoints with{" "}
@@ -258,7 +258,7 @@ export function ApiInspectorSection() {
                 <div className="flex items-center justify-between gap-1">
                   <Badge
                     variant="outline"
-                    className="border-emerald-500/30 bg-emerald-500/10 px-1 py-0 font-mono text-[9px] font-bold text-emerald-600 dark:text-emerald-400"
+                    className="border-emerald-500/30 bg-emerald-500/10 px-1 py-0 text-[9px] font-bold text-emerald-600 dark:text-emerald-400"
                   >
                     {endpoint.method}
                   </Badge>
@@ -266,7 +266,7 @@ export function ApiInspectorSection() {
                   {result && (
                     <Badge
                       variant="outline"
-                      className="font-mono text-[9px] text-muted-foreground"
+                      className="text-[9px] text-muted-foreground"
                     >
                       {result.durationMs}ms
                     </Badge>
@@ -416,7 +416,7 @@ export function ApiInspectorSection() {
           You can test APIs interactively using the Request Composer in the
           Drawer or programmatically using `sendRequest`:
         </p>
-        <pre className="mt-3 overflow-x-auto rounded-lg border border-border/70 bg-muted/40 p-3.5 font-mono text-[11px] leading-relaxed text-foreground">
+        <pre className="mt-3 overflow-x-auto rounded-lg border border-border/70 bg-muted/40 p-3.5 text-[11px] leading-relaxed text-foreground">
           <code>{`// In any React component:
 const { sendRequest } = useApiInspector();
 
@@ -438,7 +438,7 @@ await sendRequest({
           </div>
           <p className="text-xs text-muted-foreground">
             Displays a slide-over drawer from the right edge (
-            <code className="rounded bg-muted px-1 py-0.5 font-mono text-[11px] text-foreground">
+            <code className="rounded bg-muted px-1 py-0.5 text-[11px] text-foreground">
               direction=&quot;right&quot;
             </code>
             ) featuring independent, isolated scrollable content.

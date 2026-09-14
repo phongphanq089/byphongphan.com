@@ -227,14 +227,14 @@ export function RequestComposer({
         <div className="flex items-center gap-2">
           <Badge
             variant="outline"
-            className="border-primary/50 bg-primary/10 font-mono text-[9px] font-bold text-primary"
+            className="border-primary/50 bg-primary/10 text-[9px] font-bold text-primary"
           >
             API CLIENT
           </Badge>
           <span className="text-xs font-semibold text-foreground">
             Request Composer
           </span>
-          <span className="hidden font-mono text-[11px] text-muted-foreground sm:inline">
+          <span className="hidden text-[11px] text-muted-foreground sm:inline">
             (Test POST, PUT, PATCH, DELETE)
           </span>
         </div>
@@ -266,7 +266,7 @@ export function RequestComposer({
                 size="xs"
                 onClick={() => handleMethodChange(m)}
                 className={cn(
-                  "h-6.5 px-2 font-mono text-[10px] font-bold transition-all",
+                  "h-6.5 px-2 text-[10px] font-bold transition-all",
                   isSelected
                     ? getMethodColorClass(m)
                     : "text-muted-foreground hover:text-foreground"
@@ -285,7 +285,7 @@ export function RequestComposer({
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://api.example.com/v1/resource"
-            className="h-7.5 font-mono text-xs"
+            className="h-7.5 text-xs"
           />
         </div>
 
@@ -340,7 +340,7 @@ export function RequestComposer({
           >
             <Code2 className="size-3" />
             <span>Headers</span>
-            <Badge variant="outline" className="h-4 px-1 font-mono text-[9px]">
+            <Badge variant="outline" className="h-4 px-1 text-[9px]">
               {Object.keys(parsedHeaders).length}
             </Badge>
           </Button>
@@ -391,13 +391,13 @@ export function RequestComposer({
             onChange={(e) => setBodyText(e.target.value)}
             placeholder='{\n  "key": "value"\n}'
             rows={5}
-            className="font-mono text-xs leading-relaxed"
+            className="text-xs leading-relaxed"
           />
 
           {jsonError && (
             <div className="flex items-center gap-1.5 text-[11px] text-rose-500">
               <AlertCircle className="size-3.5 shrink-0" />
-              <span className="truncate font-mono">{jsonError}</span>
+              <span className="truncate">{jsonError}</span>
             </div>
           )}
         </div>
@@ -408,7 +408,7 @@ export function RequestComposer({
         <div className="space-y-2">
           <p className="text-[11px] text-muted-foreground">
             Enter request headers, one per line in{" "}
-            <code className="rounded bg-muted px-1 font-mono text-[10px] text-foreground">
+            <code className="rounded bg-muted px-1 text-[10px] text-foreground">
               Header-Name: Value
             </code>{" "}
             format:
@@ -418,7 +418,7 @@ export function RequestComposer({
             onChange={(e) => setHeadersText(e.target.value)}
             placeholder="Content-Type: application/json&#10;Authorization: Bearer my-token"
             rows={4}
-            className="font-mono text-xs leading-relaxed"
+            className="text-xs leading-relaxed"
           />
         </div>
       )}
@@ -440,7 +440,7 @@ export function RequestComposer({
                   <Badge
                     variant="outline"
                     className={cn(
-                      "font-mono text-[9px] font-bold uppercase",
+                      "text-[9px] font-bold uppercase",
                       getMethodColorClass(tpl.method)
                     )}
                   >

@@ -122,7 +122,7 @@ export function AnimatedGlowCardDemo() {
       <Card className="w-full max-w-sm" showCrosshairs={true}>
         <div className="flex flex-col gap-2 p-2">
           <div className="flex items-center justify-between">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+            <span className="text-[10px]  uppercase tracking-widest text-muted-foreground">
               SEC-01 // RADIAL
             </span>
             <span className="size-2 animate-pulse rounded-full bg-emerald-500" />

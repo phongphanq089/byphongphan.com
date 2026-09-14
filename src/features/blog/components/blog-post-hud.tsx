@@ -99,7 +99,7 @@ export function BlogPostHud({
                   <span className="size-1.5 animate-pulse rounded-full bg-pp-primary" />
                 </div>
 
-                <div className="flex items-center gap-1 font-mono text-xs font-semibold">
+                <div className="flex items-center gap-1 text-xs font-semibold">
                   <span className="text-foreground">TOC</span>
                   <span className="text-muted-foreground/40">•</span>
                   <span className="text-pp-primary">{readingProgress}%</span>
@@ -114,11 +114,11 @@ export function BlogPostHud({
                 <div className="flex flex-col text-left">
                   <div className="flex items-center gap-2">
                     <BookOpen className="size-4 text-pp-primary" />
-                    <DrawerTitle className="font-mono text-xs font-bold tracking-wider text-foreground uppercase">
+                    <DrawerTitle className="text-xs font-bold tracking-wider text-foreground uppercase">
                       READING TELEMETRY & SPEC
                     </DrawerTitle>
                   </div>
-                  <DrawerDescription className="font-mono text-[11px] text-muted-foreground">
+                  <DrawerDescription className="text-[11px] text-muted-foreground">
                     {readTime} MIN READ • {tocItems.length} SECTIONS DETECTED
                   </DrawerDescription>
                 </div>
@@ -140,7 +140,7 @@ export function BlogPostHud({
               <div className="flex flex-1 flex-col gap-3.5 overflow-y-auto px-5 py-4 pb-8">
                 {/* 1. Progress Telemetry Card */}
                 <div className="flex flex-col gap-2.5 rounded-xl border border-border/70 bg-card/60 p-3.5 shadow-xs backdrop-blur-md">
-                  <div className="flex items-center justify-between font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
+                  <div className="flex items-center justify-between text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
                     <span className="flex items-center gap-1.5 text-foreground">
                       <span className="size-1.5 animate-pulse rounded-full bg-pp-primary" />
                       <span>PROGRESS</span>
@@ -158,7 +158,7 @@ export function BlogPostHud({
                     />
                   </div>
 
-                  <div className="flex items-center justify-between font-mono text-[10px] text-muted-foreground/75">
+                  <div className="flex items-center justify-between text-[10px] text-muted-foreground/75">
                     <span>{readTime} MIN READ</span>
                     <span>{tocItems.length} SECTIONS</span>
                   </div>
@@ -184,7 +184,7 @@ export function BlogPostHud({
                     onScrollToTop()
                     onOpenChange(false)
                   }}
-                  className="w-full gap-2 border-border/70 bg-card/40 font-mono text-xs font-medium text-foreground hover:border-pp-primary hover:text-foreground"
+                  className="w-full gap-2 border-border/70 bg-card/40 text-xs font-medium text-foreground hover:border-pp-primary hover:text-foreground"
                 >
                   <ArrowUp className="size-3.5" />
                   <span>Jump to Top ↑</span>

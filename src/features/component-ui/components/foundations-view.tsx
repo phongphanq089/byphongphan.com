@@ -130,14 +130,14 @@ const TYPOGRAPHY_SCALES = [
   },
   {
     token: "Telemetry / Eyebrow",
-    classKey: "text-[11px] font-mono tracking-widest uppercase",
+    classKey: "text-[11px]  tracking-widest uppercase",
     size: "11px / 0.6875rem",
     weight: "600 SemiBold Mono",
     sample: "// 01. CORE DESIGN SPECIFICATION",
   },
   {
     token: "Micro Monospace",
-    classKey: "text-[10px] font-mono text-muted-foreground",
+    classKey: "text-[10px]  text-muted-foreground",
     size: "10px / 0.625rem",
     weight: "500 Medium Mono",
     sample: "SHA-256: 7dfa1830 · 60FPS · REACT 19",
@@ -256,7 +256,7 @@ export function FoundationsView() {
                     <h3 className="text-sm font-bold text-foreground">
                       {token.name}
                     </h3>
-                    <code className="font-mono text-xs text-pp-primary">
+                    <code className="text-xs text-pp-primary">
                       var({token.cssVar})
                     </code>
                     <p className="text-xs text-muted-foreground">
@@ -295,7 +295,7 @@ export function FoundationsView() {
                     token.borderClass
                   )}
                 >
-                  <span className="rounded bg-black/40 px-2 py-1 font-mono text-[10px] text-white/90 backdrop-blur-md">
+                  <span className="rounded bg-black/40 px-2 py-1 text-[10px] text-white/90 backdrop-blur-md">
                     {token.value}
                   </span>
                   <div className="flex items-center gap-1.5 rounded-full bg-black/30 px-2 py-0.5 text-[10px] text-white/80">
@@ -338,7 +338,7 @@ export function FoundationsView() {
                 <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
                   Interactive Specimen Playground
                 </span>
-                <span className="font-mono text-[11px] text-muted-foreground/60">
+                <span className="text-[11px] text-muted-foreground/60">
                   Live Preview • Type below to test
                 </span>
               </div>
@@ -353,7 +353,7 @@ export function FoundationsView() {
                 <p className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
                   {customSpecimenText || "Type text above to test"}
                 </p>
-                <p className="mt-2 font-mono text-xs text-muted-foreground">
+                <p className="mt-2 text-xs text-muted-foreground">
                   {customSpecimenText || "Type text above to test"}
                 </p>
               </div>
@@ -372,7 +372,7 @@ export function FoundationsView() {
                     <span className="text-xs font-bold text-foreground">
                       {scale.token}
                     </span>
-                    <div className="flex items-center gap-2 font-mono text-[11px] text-muted-foreground">
+                    <div className="flex items-center gap-2 text-[11px] text-muted-foreground">
                       <span>{scale.size}</span>
                       <span>•</span>
                       <span>{scale.weight}</span>
@@ -431,7 +431,7 @@ export function FoundationsView() {
                 <h3 className="text-sm font-bold text-foreground">
                   Default Container
                 </h3>
-                <span className="rounded bg-muted px-2 py-0.5 font-mono text-[10px] text-muted-foreground">
+                <span className="rounded bg-muted px-2 py-0.5 text-[10px] text-muted-foreground">
                   max-w-5xl (1024px)
                 </span>
               </div>
@@ -440,7 +440,7 @@ export function FoundationsView() {
                 Components, Blog, and Resources pages.
               </p>
               <div className="mt-3 rounded-lg border border-dashed border-border/80 bg-muted/20 p-4">
-                <div className="h-10 rounded-sm border border-border bg-card p-2 text-center font-mono text-xs text-foreground">
+                <div className="h-10 rounded-sm border border-border bg-card p-2 text-center text-xs text-foreground">
                   Content Width = 1024px
                 </div>
               </div>
@@ -452,7 +452,7 @@ export function FoundationsView() {
                 <h3 className="text-sm font-bold text-foreground">
                   Wide Blocks Container
                 </h3>
-                <span className="rounded bg-pp-primary/10 px-2 py-0.5 font-mono text-[10px] font-bold text-pp-primary">
+                <span className="rounded bg-pp-primary/10 px-2 py-0.5 text-[10px] font-bold text-pp-primary">
                   max-w-7xl 2xl:max-w-[1400px]
                 </span>
               </div>
@@ -461,7 +461,7 @@ export function FoundationsView() {
                 and detail pages for desktop mockups.
               </p>
               <div className="mt-3 rounded-lg border border-dashed border-pp-primary/40 bg-pp-primary/5 p-4">
-                <div className="h-10 rounded-sm border border-pp-primary/30 bg-card p-2 text-center font-mono text-xs text-pp-primary">
+                <div className="h-10 rounded-sm border border-pp-primary/30 bg-card p-2 text-center text-xs text-pp-primary">
                   Content Width = 1280px - 1400px
                 </div>
               </div>
@@ -475,7 +475,7 @@ export function FoundationsView() {
             </h3>
             <div className="space-y-4">
               {/* 1-Col */}
-              <div className="relative flex h-12 items-center justify-center rounded-lg border border-border bg-card font-mono text-xs text-muted-foreground">
+              <div className="relative flex h-12 items-center justify-center rounded-lg border border-border bg-card text-xs text-muted-foreground">
                 <Crosshair className="top-[-6px] left-[-6px]" />
                 <Crosshair className="top-[-6px] right-[-6px]" />
                 <span>columns = 1 (Full Width Blueprint)</span>
@@ -483,23 +483,23 @@ export function FoundationsView() {
 
               {/* 2-Col */}
               <div className="relative grid grid-cols-2 rounded-lg border border-border bg-card">
-                <div className="flex h-12 items-center justify-center border-r border-border font-mono text-xs text-muted-foreground">
+                <div className="flex h-12 items-center justify-center border-r border-border text-xs text-muted-foreground">
                   Col 1 (50%)
                 </div>
-                <div className="flex h-12 items-center justify-center font-mono text-xs text-muted-foreground">
+                <div className="flex h-12 items-center justify-center text-xs text-muted-foreground">
                   Col 2 (50%)
                 </div>
               </div>
 
               {/* 3-Col */}
               <div className="relative grid grid-cols-3 rounded-lg border border-border bg-card">
-                <div className="flex h-12 items-center justify-center border-r border-border font-mono text-xs text-muted-foreground">
+                <div className="flex h-12 items-center justify-center border-r border-border text-xs text-muted-foreground">
                   Col 1 (33.3%)
                 </div>
-                <div className="flex h-12 items-center justify-center border-r border-border font-mono text-xs text-muted-foreground">
+                <div className="flex h-12 items-center justify-center border-r border-border text-xs text-muted-foreground">
                   Col 2 (33.3%)
                 </div>
-                <div className="flex h-12 items-center justify-center font-mono text-xs text-muted-foreground">
+                <div className="flex h-12 items-center justify-center text-xs text-muted-foreground">
                   Col 3 (33.3%)
                 </div>
               </div>
@@ -550,12 +550,12 @@ export function FoundationsView() {
                     token.classKey
                   )}
                 >
-                  <span className="font-mono text-[10px] font-bold text-foreground">
+                  <span className="text-[10px] font-bold text-foreground">
                     {token.px}
                   </span>
                 </div>
                 <div className="space-y-0.5">
-                  <span className="font-mono text-xs font-bold text-foreground">
+                  <span className="text-xs font-bold text-foreground">
                     {token.name}
                   </span>
                   {token.isDefault && (
@@ -650,7 +650,7 @@ export function FoundationsView() {
           {/* Quick Copy Snippet */}
           <GridContainer borderBottom showCrosshairs className="p-4 sm:p-6">
             <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border bg-card p-4">
-              <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground">
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <Terminal className="size-4 text-pp-primary" />
                 <span>Import:</span>
                 <code className="rounded bg-muted px-2 py-0.5 text-foreground">

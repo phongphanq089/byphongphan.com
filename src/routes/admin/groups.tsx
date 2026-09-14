@@ -217,7 +217,7 @@ function AdminGroupsPage() {
             </h1>
             <Badge
               variant="outline"
-              className="rounded-md border-border/80 bg-muted/40 font-mono text-xs"
+              className="rounded-md border-border/80 bg-muted/40 text-xs"
             >
               {seriesList.length} Tracks
             </Badge>
@@ -286,7 +286,7 @@ function AdminGroupsPage() {
                 )}
               </div>
 
-              <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5 font-mono text-xs text-foreground">
+              <div className="absolute bottom-2.5 left-3 flex items-center gap-1.5 text-xs text-foreground">
                 <BookOpen className="size-3.5 text-primary" />
                 <span>{series.postCount} Articles</span>
               </div>
@@ -304,9 +304,7 @@ function AdminGroupsPage() {
 
             {/* Card Footer */}
             <CardFooter className="flex items-center justify-between border-t border-border/60 p-4 pt-3 text-xs text-muted-foreground">
-              <span className="font-mono text-[11px]">
-                Updated {series.updatedAt}
-              </span>
+              <span className="text-[11px]">Updated {series.updatedAt}</span>
 
               <div className="flex items-center gap-1">
                 <Button
@@ -411,7 +409,7 @@ function AdminGroupsPage() {
                       <Input
                         {...field}
                         placeholder="series-slug"
-                        className="h-9 rounded-lg font-mono text-xs"
+                        className="h-9 rounded-lg text-xs"
                       />
                     </FormControl>
                     <FormMessage />

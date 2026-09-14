@@ -38,14 +38,14 @@ export function BlogPostNavigation({
           params={{ slug: prevPost.slug.current }}
           className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-border/70 bg-card/40 p-4 transition-all duration-200 hover:border-pp-primary/60 hover:bg-card/70 hover:shadow-md"
         >
-          <div className="flex items-center gap-1.5 font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase transition-colors group-hover:text-pp-primary">
+          <div className="flex items-center gap-1.5 text-[10px] font-semibold tracking-wider text-muted-foreground uppercase transition-colors group-hover:text-pp-primary">
             <ArrowLeft className="size-3 transition-transform group-hover:-translate-x-1" />
             <span>PREVIOUS ARTICLE</span>
           </div>
           <h4 className="mt-2 line-clamp-2 text-sm leading-snug font-bold text-foreground transition-colors group-hover:text-pp-primary">
             {prevPost.title}
           </h4>
-          <div className="mt-3 flex items-center gap-3 font-mono text-[11px] text-muted-foreground">
+          <div className="mt-3 flex items-center gap-3 text-[11px] text-muted-foreground">
             <span className="flex items-center gap-1">
               <Clock className="size-3" />
               <span>{prevPost.readTime}m read</span>
@@ -67,14 +67,14 @@ export function BlogPostNavigation({
             !prevPost && "sm:col-start-2"
           )}
         >
-          <div className="flex items-center justify-start gap-1.5 font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase transition-colors group-hover:text-pp-primary sm:justify-end">
+          <div className="flex items-center justify-start gap-1.5 text-[10px] font-semibold tracking-wider text-muted-foreground uppercase transition-colors group-hover:text-pp-primary sm:justify-end">
             <span>NEXT ARTICLE</span>
             <ArrowRight className="size-3 transition-transform group-hover:translate-x-1" />
           </div>
           <h4 className="mt-2 line-clamp-2 text-sm leading-snug font-bold text-foreground transition-colors group-hover:text-pp-primary">
             {nextPost.title}
           </h4>
-          <div className="mt-3 flex items-center justify-start gap-3 font-mono text-[11px] text-muted-foreground sm:justify-end">
+          <div className="mt-3 flex items-center justify-start gap-3 text-[11px] text-muted-foreground sm:justify-end">
             <span>{formatDateShort(nextPost.publishedAt)}</span>
             <span>•</span>
             <span className="flex items-center gap-1">

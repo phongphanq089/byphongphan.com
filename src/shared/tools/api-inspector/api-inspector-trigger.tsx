@@ -57,7 +57,7 @@ export function DevApiInspectorFloatingTrigger({
           {entries.length > 0 && (
             <Badge
               variant="secondary"
-              className="h-4.5 min-w-4.5 px-1 font-mono text-[10px] font-bold"
+              className="h-4.5 min-w-4.5 px-1 text-[10px] font-bold"
             >
               {entries.length}
             </Badge>

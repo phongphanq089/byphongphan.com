@@ -71,7 +71,7 @@ const UiComponentsSection = () => {
           {row2.length === 2 && (
             <div className="hidden h-full w-full items-center justify-center p-4 sm:p-5 md:p-5 lg:flex lg:p-6">
               <div className="flex h-full w-full items-center justify-center rounded-xl border border-dashed border-border/60 bg-muted/20 p-8 text-center">
-                <span className="font-mono text-[10px] tracking-widest text-muted-foreground/40 uppercase">
+                <span className="text-[10px] tracking-widest text-muted-foreground/40 uppercase">
                   More Primitives Coming Soon
                 </span>
               </div>

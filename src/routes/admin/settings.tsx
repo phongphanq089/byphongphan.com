@@ -143,7 +143,7 @@ function AdminSettingsPage() {
               </h1>
               <Badge
                 variant="outline"
-                className="rounded-md border-border/80 bg-muted/40 font-mono text-xs"
+                className="rounded-md border-border/80 bg-muted/40 text-xs"
               >
                 Validated
               </Badge>
@@ -346,10 +346,7 @@ function AdminSettingsPage() {
                     <FormItem>
                       <FormLabel>SEO Keywords (Comma Separated)</FormLabel>
                       <FormControl>
-                        <Input
-                          {...field}
-                          className="h-9 rounded-lg font-mono text-xs"
-                        />
+                        <Input {...field} className="h-9 rounded-lg text-xs" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -393,7 +390,7 @@ function AdminSettingsPage() {
                         <FormControl>
                           <Input
                             {...field}
-                            className="h-9 rounded-lg font-mono text-xs"
+                            className="h-9 rounded-lg text-xs"
                           />
                         </FormControl>
                         <FormMessage />
@@ -479,10 +476,7 @@ function AdminSettingsPage() {
                   <FormItem>
                     <FormLabel>GitHub Profile URL</FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        className="h-9 rounded-lg font-mono text-xs"
-                      />
+                      <Input {...field} className="h-9 rounded-lg text-xs" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -496,10 +490,7 @@ function AdminSettingsPage() {
                   <FormItem>
                     <FormLabel>LinkedIn Profile URL</FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        className="h-9 rounded-lg font-mono text-xs"
-                      />
+                      <Input {...field} className="h-9 rounded-lg text-xs" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -513,10 +504,7 @@ function AdminSettingsPage() {
                   <FormItem>
                     <FormLabel>Twitter / X URL</FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        className="h-9 rounded-lg font-mono text-xs"
-                      />
+                      <Input {...field} className="h-9 rounded-lg text-xs" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -530,10 +518,7 @@ function AdminSettingsPage() {
                   <FormItem>
                     <FormLabel>Contact Email</FormLabel>
                     <FormControl>
-                      <Input
-                        {...field}
-                        className="h-9 rounded-lg font-mono text-xs"
-                      />
+                      <Input {...field} className="h-9 rounded-lg text-xs" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -564,7 +549,7 @@ function AdminSettingsPage() {
                   Connected to project pooler in AWS Singapore (ap-southeast-1)
                   using WebSocket driver.
                 </p>
-                <div className="space-y-1 border-t border-border/60 pt-2 font-mono text-[11px] text-muted-foreground">
+                <div className="space-y-1 border-t border-border/60 pt-2 text-[11px] text-muted-foreground">
                   <div className="flex justify-between">
                     <span>Branch:</span>
                     <span className="text-foreground">main</span>
@@ -595,7 +580,7 @@ function AdminSettingsPage() {
                   Direct media asset hosting, automatic WebP/AVIF
                   transformations, and edge delivery.
                 </p>
-                <div className="space-y-1 border-t border-border/60 pt-2 font-mono text-[11px] text-muted-foreground">
+                <div className="space-y-1 border-t border-border/60 pt-2 text-[11px] text-muted-foreground">
                   <div className="flex justify-between">
                     <span>Endpoint:</span>
                     <span className="text-foreground">

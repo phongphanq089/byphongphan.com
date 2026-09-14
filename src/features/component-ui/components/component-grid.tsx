@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router"
-import { ArrowRight, Layers, LayoutGrid } from "lucide-react"
+import { LayoutGrid } from "lucide-react"
 import { useMemo } from "react"
 
 import { GridContainer } from "@/app/layouts"
@@ -33,56 +33,14 @@ export function ComponentGrid({ category = "all" }: ComponentGridProps) {
 
   return (
     <div className="w-full">
-      {/* 1. Component Hero */}
       <ComponentHero
         category={category}
         totalCount={filteredComponents.length}
       />
-
-      {/* 2. Route-based Segmented Category Nav Tabs */}
       <GridContainer borderBottom showCrosshairs className="p-0">
         <ComponentFilterBar activeCategory={category} />
       </GridContainer>
 
-      {/* 3. Featured Foundations Banner on 'ALL' tab */}
-      {category === "all" && (
-        <GridContainer
-          borderBottom
-          showCrosshairs
-          className="flex flex-col items-start justify-between gap-4 p-5 sm:flex-row sm:items-center sm:px-8 sm:py-6"
-        >
-          <div className="flex items-center gap-3.5">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-pp-primary/40 bg-pp-primary/10 text-pp-primary shadow-xs">
-              <Layers className="size-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="text-sm font-bold text-foreground">
-                  Design System Foundations
-                </h3>
-                <span className="rounded bg-pp-primary/10 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-pp-primary">
-                  TOKENS & GRID
-                </span>
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Explore semantic OKLCH color palettes, Geist font hierarchy,
-                container scaling, and corner radius tokens.
-              </p>
-            </div>
-          </div>
-
-          <Link
-            to="/component-ui/$category"
-            params={{ category: "foundations" }}
-            className="flex shrink-0 items-center gap-2 rounded-lg border border-border/80 bg-background/80 px-3.5 py-2 text-xs font-semibold text-foreground transition-all hover:border-pp-primary hover:bg-pp-primary/10 hover:text-pp-primary"
-          >
-            <span>View Foundations</span>
-            <ArrowRight className="size-3.5" />
-          </Link>
-        </GridContainer>
-      )}
-
-      {/* 4. Dedicated Foundations Architectural View or Component Grid */}
       {category === "foundations" ? (
         <FoundationsView />
       ) : componentRows.length > 0 ? (
@@ -123,7 +81,6 @@ export function ComponentGrid({ category = "all" }: ComponentGridProps) {
           </GridContainer>
         ))
       ) : (
-        /* Empty state */
         <GridContainer
           borderBottom
           showCrosshairs

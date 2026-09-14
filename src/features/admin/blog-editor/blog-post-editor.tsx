@@ -237,7 +237,7 @@ export function BlogPostEditor({
 
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <span className="font-mono text-xs text-muted-foreground">
+                <span className="text-xs text-muted-foreground">
                   Blog / {isNew ? "New Post" : "Editing"}
                 </span>
                 <Badge
@@ -259,7 +259,7 @@ export function BlogPostEditor({
 
           <div className="flex items-center gap-2">
             {/* Word count & Reading time indicator */}
-            <div className="mr-2 hidden items-center gap-2 font-mono text-xs text-muted-foreground lg:flex">
+            <div className="mr-2 hidden items-center gap-2 text-xs text-muted-foreground lg:flex">
               <span>{wordCount.toLocaleString()} words</span>
               <span>&bull;</span>
               <span className="flex items-center gap-1">
@@ -333,7 +333,7 @@ export function BlogPostEditor({
               />
 
               {/* Slug & URL path inspector */}
-              <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border/70 bg-muted/30 px-3 py-1.5 font-mono text-xs text-muted-foreground">
+              <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border/70 bg-muted/30 px-3 py-1.5 text-xs text-muted-foreground">
                 <div className="flex min-w-0 flex-1 items-center gap-1.5">
                   <Globe className="size-3.5 shrink-0 text-muted-foreground/60" />
                   <span className="text-muted-foreground">
@@ -380,7 +380,7 @@ export function BlogPostEditor({
                       <FormLabel className="text-xs font-medium text-muted-foreground">
                         Excerpt (Search summary & Social preview)
                       </FormLabel>
-                      <span className="font-mono text-[10px] text-muted-foreground">
+                      <span className="text-[10px] text-muted-foreground">
                         {(field.value || "").length}/350
                       </span>
                     </div>
@@ -534,7 +534,7 @@ export function BlogPostEditor({
                             id="content-editor"
                             rows={24}
                             placeholder="# Introduction&#10;&#10;Write your in-depth technical article here using Markdown..."
-                            className="w-full resize-y bg-transparent font-mono text-xs leading-relaxed text-foreground outline-none placeholder:text-muted-foreground/30"
+                            className="w-full resize-y bg-transparent text-xs leading-relaxed text-foreground outline-none placeholder:text-muted-foreground/30"
                           />
                         </FormControl>
                         <FormMessage />
@@ -558,7 +558,7 @@ export function BlogPostEditor({
                                 id="content-editor"
                                 rows={24}
                                 placeholder="# Introduction&#10;&#10;Write markdown..."
-                                className="w-full resize-none bg-transparent font-mono text-xs leading-relaxed text-foreground outline-none placeholder:text-muted-foreground/30"
+                                className="w-full resize-none bg-transparent text-xs leading-relaxed text-foreground outline-none placeholder:text-muted-foreground/30"
                               />
                             </FormControl>
                             <FormMessage />
@@ -693,7 +693,7 @@ export function BlogPostEditor({
                         <Input
                           {...field}
                           type="date"
-                          className="h-9 rounded-lg font-mono text-xs"
+                          className="h-9 rounded-lg text-xs"
                         />
                       </FormControl>
                     </FormItem>
@@ -828,7 +828,7 @@ export function BlogPostEditor({
                         <Badge
                           key={tag}
                           variant="outline"
-                          className="gap-1 rounded-md border-primary/30 bg-primary/10 px-1.5 py-0.5 font-mono text-[11px] text-primary"
+                          className="gap-1 rounded-md border-primary/30 bg-primary/10 px-1.5 py-0.5 text-[11px] text-primary"
                         >
                           <span>#{tag}</span>
                           <button
@@ -870,7 +870,7 @@ export function BlogPostEditor({
                             key={tag}
                             type="button"
                             onClick={() => handleToggleTag(tag)}
-                            className={`rounded-md border px-1.5 py-0.5 font-mono text-[10px] transition-colors ${
+                            className={`rounded-md border px-1.5 py-0.5 text-[10px] transition-colors ${
                               isSelected
                                 ? "border-primary bg-primary font-semibold text-primary-foreground"
                                 : "border-border/70 bg-card/60 text-muted-foreground hover:border-border hover:text-foreground"
@@ -892,7 +892,7 @@ export function BlogPostEditor({
                 Google Search Snippet Preview
               </p>
               <div className="space-y-1 rounded-lg border border-border/80 bg-background/50 p-3">
-                <p className="truncate font-mono text-[11px] text-muted-foreground">
+                <p className="truncate text-[11px] text-muted-foreground">
                   phongdev.me &rsaquo; blog &rsaquo; {watchSlug || "slug"}
                 </p>
                 <p className="line-clamp-1 text-xs font-semibold text-primary">

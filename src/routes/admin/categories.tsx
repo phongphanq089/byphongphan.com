@@ -285,7 +285,7 @@ function AdminCategoriesPage() {
             </h1>
             <Badge
               variant="outline"
-              className="rounded-md border-border/80 bg-muted/40 font-mono text-xs"
+              className="rounded-md border-border/80 bg-muted/40 text-xs"
             >
               Taxonomy
             </Badge>
@@ -385,7 +385,7 @@ function AdminCategoriesPage() {
                       </div>
                     </td>
 
-                    <td className="px-3 py-3.5 font-mono text-muted-foreground">
+                    <td className="px-3 py-3.5 text-muted-foreground">
                       /{cat.slug}
                     </td>
 
@@ -396,7 +396,7 @@ function AdminCategoriesPage() {
                     <td className="px-3 py-3.5">
                       <Badge
                         variant="outline"
-                        className="rounded-md border-border/80 bg-muted/40 font-mono text-[11px]"
+                        className="rounded-md border-border/80 bg-muted/40 text-[11px]"
                       >
                         {cat.postCount}
                       </Badge>
@@ -446,7 +446,7 @@ function AdminCategoriesPage() {
                 <Badge
                   key={tag.id}
                   variant="outline"
-                  className="cursor-pointer rounded-md border-border/80 bg-muted/30 px-2.5 py-1 font-mono text-xs text-foreground transition-colors hover:border-primary/50 hover:bg-primary/10 hover:text-primary"
+                  className="cursor-pointer rounded-md border-border/80 bg-muted/30 px-2.5 py-1 text-xs text-foreground transition-colors hover:border-primary/50 hover:bg-primary/10 hover:text-primary"
                 >
                   <Hash className="mr-0.5 size-3 text-muted-foreground" />
                   <span>{tag.title}</span>
@@ -482,14 +482,14 @@ function AdminCategoriesPage() {
                       </div>
                     </td>
 
-                    <td className="px-3 py-3 font-mono text-muted-foreground">
+                    <td className="px-3 py-3 text-muted-foreground">
                       #{tag.slug}
                     </td>
 
                     <td className="px-3 py-3">
                       <Badge
                         variant="outline"
-                        className="rounded-md border-border/80 bg-muted/40 font-mono text-[11px]"
+                        className="rounded-md border-border/80 bg-muted/40 text-[11px]"
                       >
                         {tag.postCount}
                       </Badge>
@@ -572,7 +572,7 @@ function AdminCategoriesPage() {
                       <Input
                         {...field}
                         placeholder="category-slug"
-                        className="h-9 rounded-lg font-mono text-xs"
+                        className="h-9 rounded-lg text-xs"
                       />
                     </FormControl>
                     <FormMessage />
@@ -597,7 +597,7 @@ function AdminCategoriesPage() {
                         <Input
                           {...field}
                           placeholder="#dc2626"
-                          className="h-9 w-32 rounded-lg font-mono text-xs"
+                          className="h-9 w-32 rounded-lg text-xs"
                         />
                       </div>
                     </FormControl>
@@ -703,7 +703,7 @@ function AdminCategoriesPage() {
                       <Input
                         {...field}
                         placeholder="next-js-15"
-                        className="h-9 rounded-lg font-mono text-xs"
+                        className="h-9 rounded-lg text-xs"
                       />
                     </FormControl>
                     <FormMessage />

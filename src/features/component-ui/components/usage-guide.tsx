@@ -48,7 +48,7 @@ export function UsageGuide({
           )}
         </Button>
 
-        <pre className="overflow-x-auto font-mono text-xs text-foreground">
+        <pre className="overflow-x-auto text-xs text-foreground">
           <code>{importCode}</code>
         </pre>
       </div>
@@ -69,7 +69,7 @@ export function UsageGuide({
           )}
         </Button>
 
-        <pre className="overflow-x-auto font-mono text-xs text-foreground">
+        <pre className="overflow-x-auto text-xs text-foreground">
           <code>{exampleCode}</code>
         </pre>
       </div>

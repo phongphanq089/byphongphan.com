@@ -21,13 +21,11 @@ function PropRow({ prop }: { prop: PropItem }) {
         className="group flex w-full items-center justify-between px-4 py-3 text-left text-xs transition-colors hover:bg-muted/40"
       >
         <div className="flex items-center gap-2">
-          <code className="font-mono font-medium text-foreground">
-            {prop.name}
-          </code>
+          <code className="font-medium text-foreground">{prop.name}</code>
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="font-mono text-[11px] text-muted-foreground group-hover:text-foreground">
+          <span className="text-[11px] text-muted-foreground group-hover:text-foreground">
             {prop.type}
           </span>
           <ChevronDown
@@ -49,7 +47,7 @@ function PropRow({ prop }: { prop: PropItem }) {
             {prop.default && (
               <div className="flex items-center gap-1.5">
                 <span className="text-muted-foreground/70">Default:</span>
-                <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-foreground">
+                <code className="rounded bg-muted px-1.5 py-0.5 text-foreground">
                   {prop.default}
                 </code>
               </div>
@@ -57,7 +55,7 @@ function PropRow({ prop }: { prop: PropItem }) {
             {prop.typeDetails && (
               <div className="flex items-center gap-1.5">
                 <span className="text-muted-foreground/70">Signature:</span>
-                <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-pp-primary">
+                <code className="rounded bg-muted px-1.5 py-0.5 text-pp-primary">
                   {prop.typeDetails}
                 </code>
               </div>

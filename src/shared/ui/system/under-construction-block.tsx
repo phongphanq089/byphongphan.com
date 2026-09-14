@@ -88,13 +88,13 @@ export function UnderConstructionBlock({
             <div className="flex flex-wrap items-center justify-center gap-2">
               <Badge
                 variant="outline"
-                className="rounded-md border-primary/30 bg-primary/10 px-2.5 py-0.5 font-mono text-xs font-semibold text-primary"
+                className="rounded-md border-primary/30 bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary"
               >
                 {moduleBadge}
               </Badge>
               <Badge
                 variant="outline"
-                className="rounded-md border-border/80 bg-background/50 px-2 py-0.5 font-mono text-xs text-muted-foreground"
+                className="rounded-md border-border/80 bg-background/50 px-2 py-0.5 text-xs text-muted-foreground"
               >
                 COMING_SOON
               </Badge>
@@ -113,7 +113,7 @@ export function UnderConstructionBlock({
             )}
 
             {/* Inspector Telemetry Bar */}
-            <div className="mt-6 flex flex-col items-stretch justify-between gap-2.5 rounded-xl border border-border/70 bg-muted/35 px-4 py-2.5 text-left font-mono text-xs sm:flex-row sm:items-center">
+            <div className="mt-6 flex flex-col items-stretch justify-between gap-2.5 rounded-xl border border-border/70 bg-muted/35 px-4 py-2.5 text-left text-xs sm:flex-row sm:items-center">
               <div className="flex min-w-0 items-center gap-2.5">
                 <span className="text-[10px] font-bold tracking-wider text-muted-foreground uppercase">
                   {inspectInfo?.label ?? "Target Module"}

@@ -56,7 +56,7 @@ function CodeBlock({
 
       <pre
         className={cn(
-          "overflow-x-auto p-4 font-mono text-xs leading-relaxed text-foreground",
+          "overflow-x-auto p-4 text-xs leading-relaxed text-foreground",
           className
         )}
         {...props}
@@ -141,7 +141,7 @@ export const mdxComponents = {
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn(
-        "rounded bg-muted px-1.5 py-0.5 font-mono text-xs font-medium text-foreground",
+        "rounded bg-muted px-1.5 py-0.5 text-xs font-medium text-foreground",
         className
       )}
       {...props}

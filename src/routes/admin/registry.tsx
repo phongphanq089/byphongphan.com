@@ -145,7 +145,7 @@ function AdminRegistryPage() {
             </h1>
             <Badge
               variant="outline"
-              className="rounded-md border-primary/40 bg-primary/10 font-mono text-xs text-primary"
+              className="rounded-md border-primary/40 bg-primary/10 text-xs text-primary"
             >
               CLI Distribution
             </Badge>
@@ -159,7 +159,7 @@ function AdminRegistryPage() {
         <div className="flex items-center gap-2">
           <Badge
             variant="outline"
-            className="rounded-md border-border/80 bg-muted/40 px-2.5 py-1 font-mono text-xs"
+            className="rounded-md border-border/80 bg-muted/40 px-2.5 py-1 text-xs"
           >
             Origin UI & SoundCN Compatible
           </Badge>
@@ -173,7 +173,7 @@ function AdminRegistryPage() {
             <CardDescription className="text-xs">
               Core Primitives
             </CardDescription>
-            <CardTitle className="font-mono text-2xl font-bold text-foreground">
+            <CardTitle className="text-2xl font-bold text-foreground">
               21
             </CardTitle>
           </CardHeader>
@@ -183,7 +183,7 @@ function AdminRegistryPage() {
             <CardDescription className="text-xs">
               Animated Components
             </CardDescription>
-            <CardTitle className="font-mono text-2xl font-bold text-primary">
+            <CardTitle className="text-2xl font-bold text-primary">
               14
             </CardTitle>
           </CardHeader>
@@ -193,7 +193,7 @@ function AdminRegistryPage() {
             <CardDescription className="text-xs">
               Composite Blocks
             </CardDescription>
-            <CardTitle className="font-mono text-2xl font-bold text-foreground">
+            <CardTitle className="text-2xl font-bold text-foreground">
               8
             </CardTitle>
           </CardHeader>
@@ -263,7 +263,7 @@ function AdminRegistryPage() {
                     {item.status === "new" && (
                       <Badge
                         variant="outline"
-                        className="rounded-md border-primary/40 bg-primary/10 font-mono text-[10px] text-primary"
+                        className="rounded-md border-primary/40 bg-primary/10 text-[10px] text-primary"
                       >
                         NEW
                       </Badge>
@@ -271,20 +271,18 @@ function AdminRegistryPage() {
                     {item.status === "beta" && (
                       <Badge
                         variant="outline"
-                        className="rounded-md border-amber-500/40 bg-amber-500/10 font-mono text-[10px] text-amber-500"
+                        className="rounded-md border-amber-500/40 bg-amber-500/10 text-[10px] text-amber-500"
                       >
                         BETA
                       </Badge>
                     )}
                   </div>
-                  <p className="font-mono text-xs text-muted-foreground">
-                    @{item.name}
-                  </p>
+                  <p className="text-xs text-muted-foreground">@{item.name}</p>
                 </div>
 
                 <Badge
                   variant="outline"
-                  className="rounded-md border-border/80 bg-muted/40 font-mono text-[10px] text-muted-foreground capitalize"
+                  className="rounded-md border-border/80 bg-muted/40 text-[10px] text-muted-foreground capitalize"
                 >
                   {item.type}
                 </Badge>
@@ -303,7 +301,7 @@ function AdminRegistryPage() {
                   <Badge
                     key={dep}
                     variant="outline"
-                    className="rounded-md border-border/60 bg-muted/30 px-1.5 py-0 font-mono text-[10px] text-muted-foreground"
+                    className="rounded-md border-border/60 bg-muted/30 px-1.5 py-0 text-[10px] text-muted-foreground"
                   >
                     {dep}
                   </Badge>
@@ -313,7 +311,7 @@ function AdminRegistryPage() {
 
             {/* CLI Command Bar & Action */}
             <div className="mt-4 space-y-2 border-t border-border/60 pt-3">
-              <div className="flex items-center justify-between gap-2 rounded-lg border border-border/80 bg-muted/40 px-2.5 py-1.5 font-mono text-[11px] text-muted-foreground">
+              <div className="flex items-center justify-between gap-2 rounded-lg border border-border/80 bg-muted/40 px-2.5 py-1.5 text-[11px] text-muted-foreground">
                 <span className="truncate">{item.command}</span>
                 <Button
                   variant="ghost"
@@ -353,7 +351,7 @@ function AdminRegistryPage() {
               <Code2 className="size-4 text-primary" />
               <span>{previewItem?.title}</span>
             </DialogTitle>
-            <DialogDescription className="font-mono text-xs">
+            <DialogDescription className="text-xs">
               @{previewItem?.name} &bull; Type: {previewItem?.type}
             </DialogDescription>
           </DialogHeader>
@@ -363,7 +361,7 @@ function AdminRegistryPage() {
               <p className="mb-1 font-semibold text-foreground">
                 CLI Installation:
               </p>
-              <code className="block rounded-md bg-card p-2 font-mono text-xs text-foreground">
+              <code className="block rounded-md bg-card p-2 text-xs text-foreground">
                 {previewItem?.command}
               </code>
             </div>
@@ -372,7 +370,7 @@ function AdminRegistryPage() {
               <p className="mb-1 font-semibold text-foreground">
                 Project Import:
               </p>
-              <code className="block rounded-md bg-card p-2 font-mono text-xs text-primary">
+              <code className="block rounded-md bg-card p-2 text-xs text-primary">
                 {`import { ${previewItem?.title.replace(/\s+/g, "")} } from "@/shared/ui"`}
               </code>
             </div>

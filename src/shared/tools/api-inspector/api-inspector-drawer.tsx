@@ -239,7 +239,7 @@ export function ApiInspectorDrawer() {
                   </DrawerTitle>
                   <Badge
                     variant="outline"
-                    className="border-primary/40 bg-primary/10 px-1.5 py-0 font-mono text-[9px] font-semibold text-primary"
+                    className="border-primary/40 bg-primary/10 px-1.5 py-0 text-[9px] font-semibold text-primary"
                   >
                     DEV HUD v2.0
                   </Badge>
@@ -384,7 +384,7 @@ export function ApiInspectorDrawer() {
                     variant={selectedMethodFilter === m ? "default" : "outline"}
                     size="xs"
                     onClick={() => setSelectedMethodFilter(m)}
-                    className="h-5.5 px-2 font-mono text-[10px] whitespace-nowrap"
+                    className="h-5.5 px-2 text-[10px] whitespace-nowrap"
                   >
                     {m}
                   </Button>
@@ -418,7 +418,7 @@ export function ApiInspectorDrawer() {
                       <Badge
                         variant="outline"
                         className={cn(
-                          "h-4 px-1 font-mono text-[9px] font-bold tracking-wider uppercase",
+                          "h-4 px-1 text-[9px] font-bold tracking-wider uppercase",
                           getMethodBadgeClass(entry.method)
                         )}
                       >
@@ -434,7 +434,7 @@ export function ApiInspectorDrawer() {
                       <Badge
                         variant="outline"
                         className={cn(
-                          "h-4 px-1 font-mono text-[9px] font-medium",
+                          "h-4 px-1 text-[9px] font-medium",
                           getStatusBadgeClass(entry.status)
                         )}
                       >
@@ -492,14 +492,14 @@ export function ApiInspectorDrawer() {
                       <Badge
                         variant="outline"
                         className={cn(
-                          "h-5 px-1.5 font-mono text-[10px] font-bold tracking-wider uppercase",
+                          "h-5 px-1.5 text-[10px] font-bold tracking-wider uppercase",
                           getMethodBadgeClass(activeEntry.method)
                         )}
                       >
                         {activeEntry.method || "GET"}
                       </Badge>
 
-                      <code className="truncate font-mono text-xs font-medium text-foreground select-all">
+                      <code className="truncate text-xs font-medium text-foreground select-all">
                         {activeEntry.endpoint}
                       </code>
 
@@ -512,7 +512,7 @@ export function ApiInspectorDrawer() {
                         title="Copy Endpoint"
                       >
                         {copiedUrl ? (
-                          <span className="font-mono text-[10px] text-emerald-500">
+                          <span className="text-[10px] text-emerald-500">
                             OK
                           </span>
                         ) : (
@@ -572,7 +572,7 @@ export function ApiInspectorDrawer() {
                         <Badge
                           variant="outline"
                           className={cn(
-                            "h-5.5 gap-1 font-mono text-[10px] font-medium",
+                            "h-5.5 gap-1 text-[10px] font-medium",
                             getStatusBadgeClass(activeEntry.status)
                           )}
                         >
@@ -585,7 +585,7 @@ export function ApiInspectorDrawer() {
                         <Badge
                           variant="outline"
                           className={cn(
-                            "h-5.5 gap-1 font-mono text-[10px]",
+                            "h-5.5 gap-1 text-[10px]",
                             getLatencyBadgeClass(activeEntry.durationMs)
                           )}
                         >
@@ -597,7 +597,7 @@ export function ApiInspectorDrawer() {
                       {activeEntry.timestamp && (
                         <Badge
                           variant="outline"
-                          className="h-5.5 font-mono text-[10px] text-muted-foreground"
+                          className="h-5.5 text-[10px] text-muted-foreground"
                         >
                           {activeEntry.timestamp}
                         </Badge>
@@ -635,9 +635,7 @@ export function ApiInspectorDrawer() {
                   <div className="flex items-start justify-between gap-3 rounded-xl border border-rose-500/40 bg-rose-500/10 p-3 text-xs text-rose-600 dark:text-rose-400">
                     <div className="space-y-1">
                       <strong className="font-semibold">Request Failed:</strong>
-                      <p className="font-mono text-[11px]">
-                        {activeEntry.error}
-                      </p>
+                      <p className="text-[11px]">{activeEntry.error}</p>
                     </div>
                     <Button
                       type="button"
@@ -744,7 +742,7 @@ export function ApiInspectorDrawer() {
                         <span className="text-[10px] text-muted-foreground uppercase">
                           Identifier
                         </span>
-                        <p className="font-mono text-xs text-foreground">
+                        <p className="text-xs text-foreground">
                           {activeEntry.id}
                         </p>
                       </div>
@@ -752,7 +750,7 @@ export function ApiInspectorDrawer() {
                         <span className="text-[10px] text-muted-foreground uppercase">
                           Method & Status
                         </span>
-                        <p className="font-mono text-xs text-foreground">
+                        <p className="text-xs text-foreground">
                           {activeEntry.method || "GET"} &bull;{" "}
                           {activeEntry.status || 200}
                         </p>
@@ -761,7 +759,7 @@ export function ApiInspectorDrawer() {
                         <span className="text-[10px] text-muted-foreground uppercase">
                           Trigger Mode
                         </span>
-                        <p className="font-mono text-xs text-foreground">
+                        <p className="text-xs text-foreground">
                           {typeof activeEntry.fetcher === "function"
                             ? "Custom Function / Interactive Client"
                             : "Native HTTP Fetcher"}
@@ -771,7 +769,7 @@ export function ApiInspectorDrawer() {
                         <span className="text-[10px] text-muted-foreground uppercase">
                           Last Latency
                         </span>
-                        <p className="font-mono text-xs text-foreground">
+                        <p className="text-xs text-foreground">
                           {activeEntry.durationMs !== undefined
                             ? `${activeEntry.durationMs} ms`
                             : "N/A"}
@@ -785,7 +783,7 @@ export function ApiInspectorDrawer() {
                           <h5 className="font-semibold text-foreground">
                             Request Headers Sent
                           </h5>
-                          <div className="rounded-lg border border-border/60 bg-muted/20 p-3 font-mono text-[11px]">
+                          <div className="rounded-lg border border-border/60 bg-muted/20 p-3 text-[11px]">
                             {Object.entries(activeEntry.requestHeaders).map(
                               ([k, v]) => (
                                 <div
@@ -809,7 +807,7 @@ export function ApiInspectorDrawer() {
                           <h5 className="font-semibold text-foreground">
                             Response Headers Received
                           </h5>
-                          <div className="max-h-48 overflow-y-auto rounded-lg border border-border/60 bg-muted/20 p-3 font-mono text-[11px]">
+                          <div className="max-h-48 overflow-y-auto rounded-lg border border-border/60 bg-muted/20 p-3 text-[11px]">
                             {Object.entries(activeEntry.headers).map(
                               ([k, v]) => (
                                 <div
@@ -846,7 +844,7 @@ export function ApiInspectorDrawer() {
                           Copy
                         </Button>
                       </div>
-                      <pre className="overflow-x-auto rounded-lg border border-border/70 bg-muted/30 p-3 font-mono text-[11px] text-foreground">
+                      <pre className="overflow-x-auto rounded-lg border border-border/70 bg-muted/30 p-3 text-[11px] text-foreground">
                         <code>{`curl -X ${activeEntry.method || "GET"} "${activeEntry.endpoint}"`}</code>
                       </pre>
                     </div>
@@ -857,7 +855,7 @@ export function ApiInspectorDrawer() {
                       <span className="font-semibold text-foreground">
                         JavaScript Fetch Snippet
                       </span>
-                      <pre className="overflow-x-auto rounded-lg border border-border/70 bg-muted/30 p-3 font-mono text-[11px] text-foreground">
+                      <pre className="overflow-x-auto rounded-lg border border-border/70 bg-muted/30 p-3 text-[11px] text-foreground">
                         <code>{`const response = await fetch("${activeEntry.endpoint}", {\n  method: "${activeEntry.method || "GET"}",\n});\nconst data = await response.json();`}</code>
                       </pre>
                     </div>
