@@ -1,0 +1,50 @@
+﻿import { SELECT_VARIANTS } from "@/registry/variants/select-variants"
+import { SELECT_API_REFERENCE, SELECT_USAGE } from "@/features/component-ui/data/select-doc-data"
+
+Displays a list of options for the user to pick from—triggered by a button. Built on top of Radix UI primitives with full keyboard navigation and accessible WAI-ARIA attributes.
+
+## Variants Showcase
+
+Explore common interactive variants inspired by production design patterns. Click `<>` on any card to inspect and copy its exact implementation code.
+
+<VariantsGrid variants={SELECT_VARIANTS} componentSlug="select" />
+
+---
+
+<InstallationGuide
+  componentSlug="select"
+  dependencies={["radix-ui", "lucide-react", "class-variance-authority", "clsx", "tailwind-merge"]}
+  fileName="components/ui/select.tsx"
+/>
+
+---
+
+<UsageGuide
+  importCode={SELECT_USAGE.importCode}
+  exampleCode={SELECT_USAGE.exampleCode}
+/>
+
+---
+
+## Anatomy
+
+Understand the structural hierarchy of composable sub-elements:
+
+```tsx
+<Select>
+  <SelectTrigger>
+    <SelectValue />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectGroup>
+      <SelectLabel />
+      <SelectItem />
+      <SelectSeparator />
+    </SelectGroup>
+  </SelectContent>
+</Select>
+```
+
+---
+
+<ApiReference sections={SELECT_API_REFERENCE} />

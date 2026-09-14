@@ -1,15 +1,25 @@
+import path from "node:path"
+import { fileURLToPath } from "node:url"
+
+import mdx from "@mdx-js/rollup"
 import netlify from "@netlify/vite-plugin-tanstack-start"
 import tailwindcss from "@tailwindcss/vite"
 import { devtools } from "@tanstack/devtools-vite"
 import { tanstackStart } from "@tanstack/react-start/plugin/vite"
 import viteReact from "@vitejs/plugin-react"
+import remarkGfm from "remark-gfm"
 import { defineConfig } from "vite"
 import tsconfigPaths from "vite-tsconfig-paths"
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 const isDev = process.env.NODE_ENV !== "production"
 
 const config = defineConfig({
   resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
     dedupe: ["react", "react-dom", "styled-components"],
   },
   server: {
@@ -50,6 +60,9 @@ const config = defineConfig({
     }),
     netlify(),
 
+    mdx({
+      remarkPlugins: [remarkGfm],
+    }),
     tailwindcss(),
     viteReact(),
     isDev && devtools(),
