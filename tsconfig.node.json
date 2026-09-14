@@ -1,14 +1,15 @@
+// (Tooling / Node Scope): Controls build configuration and tooling scripts (vite.config.ts, eslint.config.js). It strips out DOM libraries and strictly provides Node.js runtime typings (types: ["node"]).
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "incremental": true,
-    "composite": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "target": "es2022",
-    "lib": ["es2022"], // Node không cần DOM
+    "incremental": true, // Enables incremental builds. TypeScript records state metadata from the previous run to re-check only changed files on subsequent builds.
+    "composite": true, // Required when using Project References. Instructs TypeScript to treat the sub-project as an independent, referencable compilation unit with enforced boundaries.
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo", // Defines the cache file location for incremental compilation metadata. Storing it in ./node_modules/.tmp/ keeps your workspace clean without committing cache files to version control.
+    "target": "es2022", // Specifies the output ECMAScript version. It assumes the runtime supports modern features like Top-Level await, Class Fields, and methods like
+    "lib": ["es2022"],
     "module": "esnext",
     "types": ["node"],
-    "skipLibCheck": true,
+    "skipLibCheck": true, // Skips full type checking of declaration files (.d.ts) inside node_modules, significantly accelerating build and type-checking performance.
 
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -16,7 +17,7 @@
     "moduleDetection": "force",
     "noEmit": true,
 
-    "strict": true
+    "strict": true // Enables all strict type-checking flags (strictNullChecks, noImplicitAny, etc.).
   },
-  "include": ["vite.config.ts", "eslint.config.js"] // Gom cả file eslint vào đây để TS check
+  "include": ["vite.config.ts", "eslint.config.js"]
 }
