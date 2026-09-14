@@ -99,7 +99,7 @@ export function SidebarAdmin() {
     <Sidebar
       variant="sidebar"
       collapsible="icon"
-      className="top-14! h-[calc(100svh-3.5rem)]! border-r border-border/80 bg-sidebar"
+      className="top-14! h-[calc(100svh-3.5rem)]! border-r border-border/80"
     >
       <SidebarContent className="px-2.5 py-3">
         {/* Main Dashboard */}

@@ -30,6 +30,10 @@ const config = defineConfig({
       prerender: {
         enabled: true,
         crawlLinks: false,
+        autoStaticPathsDiscovery: false,
+        concurrency: 2,
+        filter: ({ path }) =>
+          !path.startsWith("/admin") && !path.startsWith("/studio"),
       },
       pages: [
         { path: "/" },

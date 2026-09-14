@@ -215,8 +215,8 @@ function AdminDashboardPage() {
       {/* ─── Main Grid: Management Shortcuts & Infrastructure Overview ─── */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
         {/* Left Column: Content Modules (2 cols, standardized rounded-xl) */}
-        <div className="space-y-6 lg:col-span-2">
-          <Card className="rounded-xl border-border/70 bg-card/60 shadow-none">
+        <div className="h-full space-y-6 lg:col-span-2">
+          <Card className="h-full rounded-xl border-border/70 bg-card/60 shadow-none">
             <CardHeader className="border-b border-border/40 pb-4">
               <CardTitle className="text-base font-bold text-foreground">
                 Content Modules & Shortcuts

@@ -8,7 +8,6 @@ import {
 } from "lucide-react"
 
 import {
-  Badge,
   Button,
   DropdownMenu,
   DropdownMenuContent,
@@ -26,7 +25,7 @@ import {
 
 export function AdminHeader() {
   return (
-    <header className="sticky top-0 z-50 flex h-14 w-full shrink-0 items-center justify-between border-b border-border/70 bg-background/95 px-4 backdrop-blur-md transition-all">
+    <header className="sticky top-0 z-50 flex h-14 w-full shrink-0 items-center justify-between border-b border-border/70 bg-accent/95 px-4 backdrop-blur-md transition-all">
       {/* ─── LEFT: Logo & Breadcrumbs / Project Selector ─── */}
       <div className="flex items-center gap-3">
         <SidebarTrigger className="-ml-1 size-8 rounded-lg hover:bg-muted" />
@@ -42,14 +41,6 @@ export function AdminHeader() {
         {/* Workspace info */}
         <div className="flex items-center gap-2 text-xs">
           <span className="font-semibold text-foreground">phong phan</span>
-          <span className="text-muted-foreground/40">/</span>
-          <span className="font-medium text-foreground">byphongphan.com</span>
-          <Badge
-            variant="outline"
-            className="border-primary/30 bg-primary/10 px-1.5 py-0 text-[10px] font-semibold text-primary"
-          >
-            Admin
-          </Badge>
         </div>
       </div>
 

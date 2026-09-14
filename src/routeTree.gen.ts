@@ -17,12 +17,20 @@ import { Route as ProfileRouteImport } from "./routes/_profile"
 import { Route as AdminIndexRouteImport } from "./routes/admin/index"
 import { Route as ProfileIndexRouteImport } from "./routes/_profile.index"
 import { Route as StudioSplatRouteImport } from "./routes/studio.$"
+import { Route as AdminSettingsRouteImport } from "./routes/admin/settings"
+import { Route as AdminResourcesRouteImport } from "./routes/admin/resources"
+import { Route as AdminRegistryRouteImport } from "./routes/admin/registry"
+import { Route as AdminGroupsRouteImport } from "./routes/admin/groups"
+import { Route as AdminCategoriesRouteImport } from "./routes/admin/categories"
 import { Route as AdminSplatRouteImport } from "./routes/admin/$"
 import { Route as ProfileResourcesRouteImport } from "./routes/_profile.resources"
 import { Route as ProfileComponentUiRouteImport } from "./routes/_profile.component-ui"
 import { Route as ProfileBlogRouteImport } from "./routes/_profile.blog"
 import { Route as ProfileBlockRouteImport } from "./routes/_profile.block"
+import { Route as AdminPostsIndexRouteImport } from "./routes/admin/posts/index"
 import { Route as ProfileBlocksIndexRouteImport } from "./routes/_profile.blocks.index"
+import { Route as AdminPostsNewRouteImport } from "./routes/admin/posts/new"
+import { Route as AdminPostsIdRouteImport } from "./routes/admin/posts/$id"
 import { Route as ProfileComponentUiSlugRouteImport } from "./routes/_profile.component-ui_.$slug"
 import { Route as ProfileBlogSlugRouteImport } from "./routes/_profile.blog_.$slug"
 import { Route as ProfileBlockSlugRouteImport } from "./routes/_profile.block_.$slug"
@@ -68,6 +76,31 @@ const StudioSplatRoute = StudioSplatRouteImport.update({
   path: "/studio/$",
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: "/settings",
+  path: "/settings",
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminResourcesRoute = AdminResourcesRouteImport.update({
+  id: "/resources",
+  path: "/resources",
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminRegistryRoute = AdminRegistryRouteImport.update({
+  id: "/registry",
+  path: "/registry",
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminGroupsRoute = AdminGroupsRouteImport.update({
+  id: "/groups",
+  path: "/groups",
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
+  id: "/categories",
+  path: "/categories",
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminSplatRoute = AdminSplatRouteImport.update({
   id: "/$",
   path: "/$",
@@ -93,10 +126,25 @@ const ProfileBlockRoute = ProfileBlockRouteImport.update({
   path: "/block",
   getParentRoute: () => ProfileRoute,
 } as any)
+const AdminPostsIndexRoute = AdminPostsIndexRouteImport.update({
+  id: "/posts/",
+  path: "/posts/",
+  getParentRoute: () => AdminRoute,
+} as any)
 const ProfileBlocksIndexRoute = ProfileBlocksIndexRouteImport.update({
   id: "/blocks/",
   path: "/blocks/",
   getParentRoute: () => ProfileRoute,
+} as any)
+const AdminPostsNewRoute = AdminPostsNewRouteImport.update({
+  id: "/posts/new",
+  path: "/posts/new",
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPostsIdRoute = AdminPostsIdRouteImport.update({
+  id: "/posts/$id",
+  path: "/posts/$id",
+  getParentRoute: () => AdminRoute,
 } as any)
 const ProfileComponentUiSlugRoute = ProfileComponentUiSlugRouteImport.update({
   id: "/component-ui_/$slug",
@@ -137,12 +185,20 @@ export interface FileRoutesByFullPath {
   "/component-ui": typeof ProfileComponentUiRoute
   "/resources": typeof ProfileResourcesRoute
   "/admin/$": typeof AdminSplatRoute
+  "/admin/categories": typeof AdminCategoriesRoute
+  "/admin/groups": typeof AdminGroupsRoute
+  "/admin/registry": typeof AdminRegistryRoute
+  "/admin/resources": typeof AdminResourcesRoute
+  "/admin/settings": typeof AdminSettingsRoute
   "/studio/$": typeof StudioSplatRoute
   "/admin/": typeof AdminIndexRoute
   "/block/$slug": typeof ProfileBlockSlugRoute
   "/blog/$slug": typeof ProfileBlogSlugRoute
   "/component-ui/$slug": typeof ProfileComponentUiSlugRoute
+  "/admin/posts/$id": typeof AdminPostsIdRoute
+  "/admin/posts/new": typeof AdminPostsNewRoute
   "/blocks/": typeof ProfileBlocksIndexRoute
+  "/admin/posts/": typeof AdminPostsIndexRoute
   "/blocks/$category/$slug": typeof ProfileBlocksCategorySlugRoute
   "/blocks/$category/": typeof ProfileBlocksCategoryIndexRoute
 }
@@ -155,13 +211,21 @@ export interface FileRoutesByTo {
   "/component-ui": typeof ProfileComponentUiRoute
   "/resources": typeof ProfileResourcesRoute
   "/admin/$": typeof AdminSplatRoute
+  "/admin/categories": typeof AdminCategoriesRoute
+  "/admin/groups": typeof AdminGroupsRoute
+  "/admin/registry": typeof AdminRegistryRoute
+  "/admin/resources": typeof AdminResourcesRoute
+  "/admin/settings": typeof AdminSettingsRoute
   "/studio/$": typeof StudioSplatRoute
   "/": typeof ProfileIndexRoute
   "/admin": typeof AdminIndexRoute
   "/block/$slug": typeof ProfileBlockSlugRoute
   "/blog/$slug": typeof ProfileBlogSlugRoute
   "/component-ui/$slug": typeof ProfileComponentUiSlugRoute
+  "/admin/posts/$id": typeof AdminPostsIdRoute
+  "/admin/posts/new": typeof AdminPostsNewRoute
   "/blocks": typeof ProfileBlocksIndexRoute
+  "/admin/posts": typeof AdminPostsIndexRoute
   "/blocks/$category/$slug": typeof ProfileBlocksCategorySlugRoute
   "/blocks/$category": typeof ProfileBlocksCategoryIndexRoute
 }
@@ -177,13 +241,21 @@ export interface FileRoutesById {
   "/_profile/component-ui": typeof ProfileComponentUiRoute
   "/_profile/resources": typeof ProfileResourcesRoute
   "/admin/$": typeof AdminSplatRoute
+  "/admin/categories": typeof AdminCategoriesRoute
+  "/admin/groups": typeof AdminGroupsRoute
+  "/admin/registry": typeof AdminRegistryRoute
+  "/admin/resources": typeof AdminResourcesRoute
+  "/admin/settings": typeof AdminSettingsRoute
   "/studio/$": typeof StudioSplatRoute
   "/_profile/": typeof ProfileIndexRoute
   "/admin/": typeof AdminIndexRoute
   "/_profile/block_/$slug": typeof ProfileBlockSlugRoute
   "/_profile/blog_/$slug": typeof ProfileBlogSlugRoute
   "/_profile/component-ui_/$slug": typeof ProfileComponentUiSlugRoute
+  "/admin/posts/$id": typeof AdminPostsIdRoute
+  "/admin/posts/new": typeof AdminPostsNewRoute
   "/_profile/blocks/": typeof ProfileBlocksIndexRoute
+  "/admin/posts/": typeof AdminPostsIndexRoute
   "/_profile/blocks/$category/$slug": typeof ProfileBlocksCategorySlugRoute
   "/_profile/blocks/$category/": typeof ProfileBlocksCategoryIndexRoute
 }
@@ -200,12 +272,20 @@ export interface FileRouteTypes {
     | "/component-ui"
     | "/resources"
     | "/admin/$"
+    | "/admin/categories"
+    | "/admin/groups"
+    | "/admin/registry"
+    | "/admin/resources"
+    | "/admin/settings"
     | "/studio/$"
     | "/admin/"
     | "/block/$slug"
     | "/blog/$slug"
     | "/component-ui/$slug"
+    | "/admin/posts/$id"
+    | "/admin/posts/new"
     | "/blocks/"
+    | "/admin/posts/"
     | "/blocks/$category/$slug"
     | "/blocks/$category/"
   fileRoutesByTo: FileRoutesByTo
@@ -218,13 +298,21 @@ export interface FileRouteTypes {
     | "/component-ui"
     | "/resources"
     | "/admin/$"
+    | "/admin/categories"
+    | "/admin/groups"
+    | "/admin/registry"
+    | "/admin/resources"
+    | "/admin/settings"
     | "/studio/$"
     | "/"
     | "/admin"
     | "/block/$slug"
     | "/blog/$slug"
     | "/component-ui/$slug"
+    | "/admin/posts/$id"
+    | "/admin/posts/new"
     | "/blocks"
+    | "/admin/posts"
     | "/blocks/$category/$slug"
     | "/blocks/$category"
   id:
@@ -239,13 +327,21 @@ export interface FileRouteTypes {
     | "/_profile/component-ui"
     | "/_profile/resources"
     | "/admin/$"
+    | "/admin/categories"
+    | "/admin/groups"
+    | "/admin/registry"
+    | "/admin/resources"
+    | "/admin/settings"
     | "/studio/$"
     | "/_profile/"
     | "/admin/"
     | "/_profile/block_/$slug"
     | "/_profile/blog_/$slug"
     | "/_profile/component-ui_/$slug"
+    | "/admin/posts/$id"
+    | "/admin/posts/new"
     | "/_profile/blocks/"
+    | "/admin/posts/"
     | "/_profile/blocks/$category/$slug"
     | "/_profile/blocks/$category/"
   fileRoutesById: FileRoutesById
@@ -317,6 +413,41 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof StudioSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    "/admin/settings": {
+      id: "/admin/settings"
+      path: "/settings"
+      fullPath: "/admin/settings"
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    "/admin/resources": {
+      id: "/admin/resources"
+      path: "/resources"
+      fullPath: "/admin/resources"
+      preLoaderRoute: typeof AdminResourcesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    "/admin/registry": {
+      id: "/admin/registry"
+      path: "/registry"
+      fullPath: "/admin/registry"
+      preLoaderRoute: typeof AdminRegistryRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    "/admin/groups": {
+      id: "/admin/groups"
+      path: "/groups"
+      fullPath: "/admin/groups"
+      preLoaderRoute: typeof AdminGroupsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    "/admin/categories": {
+      id: "/admin/categories"
+      path: "/categories"
+      fullPath: "/admin/categories"
+      preLoaderRoute: typeof AdminCategoriesRouteImport
+      parentRoute: typeof AdminRoute
+    }
     "/admin/$": {
       id: "/admin/$"
       path: "/$"
@@ -352,12 +483,33 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof ProfileBlockRouteImport
       parentRoute: typeof ProfileRoute
     }
+    "/admin/posts/": {
+      id: "/admin/posts/"
+      path: "/posts"
+      fullPath: "/admin/posts/"
+      preLoaderRoute: typeof AdminPostsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     "/_profile/blocks/": {
       id: "/_profile/blocks/"
       path: "/blocks"
       fullPath: "/blocks/"
       preLoaderRoute: typeof ProfileBlocksIndexRouteImport
       parentRoute: typeof ProfileRoute
+    }
+    "/admin/posts/new": {
+      id: "/admin/posts/new"
+      path: "/posts/new"
+      fullPath: "/admin/posts/new"
+      preLoaderRoute: typeof AdminPostsNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    "/admin/posts/$id": {
+      id: "/admin/posts/$id"
+      path: "/posts/$id"
+      fullPath: "/admin/posts/$id"
+      preLoaderRoute: typeof AdminPostsIdRouteImport
+      parentRoute: typeof AdminRoute
     }
     "/_profile/component-ui_/$slug": {
       id: "/_profile/component-ui_/$slug"
@@ -430,12 +582,28 @@ const ProfileRouteWithChildren =
 
 interface AdminRouteChildren {
   AdminSplatRoute: typeof AdminSplatRoute
+  AdminCategoriesRoute: typeof AdminCategoriesRoute
+  AdminGroupsRoute: typeof AdminGroupsRoute
+  AdminRegistryRoute: typeof AdminRegistryRoute
+  AdminResourcesRoute: typeof AdminResourcesRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminPostsIdRoute: typeof AdminPostsIdRoute
+  AdminPostsNewRoute: typeof AdminPostsNewRoute
+  AdminPostsIndexRoute: typeof AdminPostsIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
   AdminSplatRoute: AdminSplatRoute,
+  AdminCategoriesRoute: AdminCategoriesRoute,
+  AdminGroupsRoute: AdminGroupsRoute,
+  AdminRegistryRoute: AdminRegistryRoute,
+  AdminResourcesRoute: AdminResourcesRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminPostsIdRoute: AdminPostsIdRoute,
+  AdminPostsNewRoute: AdminPostsNewRoute,
+  AdminPostsIndexRoute: AdminPostsIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
