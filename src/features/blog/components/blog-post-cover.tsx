@@ -1,5 +1,3 @@
-import React from "react"
-
 import { GridContainer } from "@/app/layouts"
 
 import type { BlogPost } from "../types"

@@ -1,3 +1,8 @@
+import type {
+  ActualFileObject,
+  FilePondFile,
+  FilePondInitialFile,
+} from "filepond"
 import { registerPlugin } from "filepond"
 import FilePondPluginFileValidateSize from "filepond-plugin-file-validate-size"
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type"
@@ -12,6 +17,9 @@ registerPlugin(
   FilePondPluginFileValidateSize,
   FilePondPluginFileValidateType
 )
+
+export type FileUploadItem =
+  string | FilePondInitialFile | Blob | ActualFileObject | unknown
 
 export interface FileUploadProps {
   files?: unknown[]
@@ -86,8 +94,14 @@ export function FileUpload({
       )}
     >
       <FilePond
-        files={files}
-        onupdatefiles={onupdatefiles}
+        files={
+          files as
+            | (string | FilePondInitialFile | Blob | ActualFileObject)[]
+            | undefined
+        }
+        onupdatefiles={
+          onupdatefiles as ((fileItems: FilePondFile[]) => void) | undefined
+        }
         allowMultiple={allowMultiple}
         maxFiles={maxFiles}
         maxFileSize={maxFileSize}

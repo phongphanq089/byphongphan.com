@@ -71,7 +71,7 @@ function CommandInput({
   return (
     <div
       data-slot="command-input-wrapper"
-      className="flex h-12 items-center gap-2.5 border-b border-border/60 px-4"
+      className="flex h-12 items-center gap-2.5 px-4"
     >
       <SearchIcon className="size-4 shrink-0 text-muted-foreground" />
       <CommandPrimitive.Input
@@ -94,7 +94,7 @@ function CommandList({
     <CommandPrimitive.List
       data-slot="command-list"
       className={cn(
-        "custom-scrollbar max-h-[360px] scroll-py-1 overflow-x-hidden overflow-y-auto p-2 outline-none sm:max-h-[420px]",
+        "custom-scrollbar no-scrollbar max-h-[360px] scroll-py-1 overflow-x-hidden overflow-y-auto p-2 outline-none sm:max-h-[420px]",
         className
       )}
       {...props}

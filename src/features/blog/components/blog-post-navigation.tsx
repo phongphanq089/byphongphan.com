@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowLeft, ArrowRight, Clock } from "lucide-react"
-import React from "react"
 
 import { cn } from "@/shared/lib"
 

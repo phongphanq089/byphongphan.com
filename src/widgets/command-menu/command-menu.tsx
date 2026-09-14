@@ -81,9 +81,10 @@ export function CommandMenu() {
       onOpenChange={setOpen}
       title="Command Palette"
       description="Quick search and commands navigation"
+      className="bg-accent px-2"
     >
       <CommandInput placeholder="Type a command or search..." />
-      <CommandList>
+      <CommandList className="rounded-xl bg-background">
         <CommandEmpty>No results found.</CommandEmpty>
 
         {COMMAND_GROUPS.map((group, groupIdx) => {
@@ -147,13 +148,9 @@ export function CommandMenu() {
         })}
       </CommandList>
 
-      {/* Footer bar matching image 1 */}
-      <div className="flex items-center justify-between border-t border-border/60 bg-muted/30 px-3.5 py-2.5 text-xs text-muted-foreground">
+      <div className="flex items-center justify-between px-3.5 py-2.5 text-xs text-muted-foreground">
         <div className="flex items-center gap-2">
-          <PPPixelMark size={20} className="text-pp-primary" />
-          <span className="text-[11px] font-medium tracking-wide text-muted-foreground">
-            PHONG PHAN
-          </span>
+          <PPPixelMark size={22} className="text-pp-primary" />
         </div>
         <div className="flex items-center gap-1.5 text-[11px]">
           <span>Go to page</span>

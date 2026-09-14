@@ -67,7 +67,7 @@ const resourceFormSchema = z.object({
     .string()
     .min(10, "Description must be at least 10 characters")
     .max(300, "Description cannot exceed 300 characters"),
-  isFeatured: z.boolean().default(false),
+  isFeatured: z.boolean(),
 })
 
 type ResourceFormValues = z.infer<typeof resourceFormSchema>

@@ -1,5 +1,4 @@
 import { ArrowUpRight, Check, Star } from "lucide-react"
-import React from "react"
 
 import type { BlockSchematicType } from "../../types"
 
@@ -104,7 +103,7 @@ export function SocialLinksGridSchematic() {
           { label: "YouTube" },
           { label: "LinkedIn" },
           { label: "Telegram" },
-        ].map((item, idx) => (
+        ].map((_, idx) => (
           <div
             key={idx}
             className="flex items-center justify-between p-2.5 transition-colors hover:bg-white/[0.04]"

@@ -41,7 +41,7 @@ export function TOCMinimap({ items, className }: TOCMinimapProps) {
     if (nextOpen) play()
   }
 
-  const handleTriggerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleTriggerClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
     e.stopPropagation()
     setOpen((prev) => {

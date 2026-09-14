@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowRight, Check, CheckCircle2, Clock, Layers } from "lucide-react"
-import React from "react"
 
 import { cn } from "@/shared/lib"
 import { Badge } from "@/shared/ui/core"

@@ -25,7 +25,7 @@ export const postFormSchema = z.object({
   groupOrder: z.number().optional(),
   readTime: z.number().min(1).max(120),
   status: z.enum(["draft", "published", "archived"]),
-  isFeatured: z.boolean().default(false),
+  isFeatured: z.boolean(),
   publishedAt: z.string().optional(),
 })
 

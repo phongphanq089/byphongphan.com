@@ -8,8 +8,20 @@ import tseslint from "typescript-eslint"
 
 export default tseslint.config(
   {
-    // Các thư mục cần bỏ qua
-    ignores: ["dist", ".vinxi", ".output", ".agents", ".agent"],
+    // Các thư mục và file sinh tự động cần bỏ qua
+    ignores: [
+      "dist",
+      ".vinxi",
+      ".output",
+      ".netlify",
+      "node_modules",
+      "public",
+      "src/routeTree.gen.ts",
+      "**/*.gen.ts",
+      "src/__registry__",
+      ".agents",
+      ".agent",
+    ],
   },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
@@ -30,6 +42,7 @@ export default tseslint.config(
       ...reactHooks.configs.recommended.rules,
 
       "react-refresh/only-export-components": "off",
+      "react-hooks/incompatible-library": "off",
       "@typescript-eslint/consistent-type-imports": "error",
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",

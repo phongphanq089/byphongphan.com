@@ -97,6 +97,8 @@ export interface RegisterApiOptions {
   autoExecute?: boolean
   /** Initial fallback data to display before execution */
   initialData?: unknown
+  /** Payload / initial data (alias for initialData) */
+  data?: unknown
 }
 
 export interface SendRequestOptions {

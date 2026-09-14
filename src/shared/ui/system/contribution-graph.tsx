@@ -445,7 +445,7 @@ export type ContributionGraphTotalCountProps = Omit<
   HTMLAttributes<HTMLDivElement>,
   "children"
 > & {
-  children?: (props: { totalCount: number; year: number }) => ReactNode
+  children?: (props: { totalCount: number; year: number | string }) => ReactNode
 }
 
 export const ContributionGraphTotalCount = ({

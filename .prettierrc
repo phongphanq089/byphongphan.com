@@ -5,6 +5,7 @@
   "singleQuote": false,
   "trailingComma": "es5",
   "bracketSpacing": true,
+  "endOfLine": "auto",
   "plugins": ["prettier-plugin-tailwindcss"],
   "tailwindFunctions": ["clsx", "cn", "cva"],
   "tailwindStylesheet": "./src/styles/app.css"

@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/incompatible-library */
 import { zodResolver } from "@hookform/resolvers/zod"
 import { createFileRoute } from "@tanstack/react-router"
 import { Check, Database, HardDrive, Save } from "lucide-react"

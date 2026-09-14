@@ -284,7 +284,7 @@ export function ApiInspectorProvider({
         method: options.method || "GET",
         status: autoExecute ? "loading" : 200,
         timestamp: new Date().toLocaleTimeString(),
-        data: options.initialData ?? null,
+        data: options.data ?? options.initialData ?? null,
         headers: options.headers,
         requestBody: options.requestBody,
         description: options.description,

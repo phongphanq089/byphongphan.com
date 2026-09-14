@@ -16,6 +16,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  PPPixelMark,
   SidebarTrigger,
   Tooltip,
   TooltipContent,
@@ -26,22 +27,15 @@ import {
 export function AdminHeader() {
   return (
     <header className="sticky top-0 z-50 flex h-14 w-full shrink-0 items-center justify-between border-b border-border/70 bg-accent/95 px-4 backdrop-blur-md transition-all">
-      {/* ─── LEFT: Logo & Breadcrumbs / Project Selector ─── */}
       <div className="flex items-center gap-3">
         <SidebarTrigger className="-ml-1 size-8 rounded-lg hover:bg-muted" />
 
-        {/* Brand Icon */}
         <Link
           to="/admin"
-          className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary font-black text-primary-foreground shadow-md shadow-primary/25"
+          className="translate-y-0.2 flex items-center justify-center"
         >
-          <span className="text-xs tracking-tighter">PP</span>
+          <PPPixelMark size={30} className="text-pp-primary" />
         </Link>
-
-        {/* Workspace info */}
-        <div className="flex items-center gap-2 text-xs">
-          <span className="font-semibold text-foreground">phong phan</span>
-        </div>
       </div>
 
       {/* ─── CENTER: Quick Search Command Bar ─── */}

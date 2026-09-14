@@ -355,7 +355,11 @@ function AdminPostsListPage() {
                             </Link>
                           </DropdownMenuItem>
                           <DropdownMenuItem asChild className="gap-2 text-xs">
-                            <Link to={`/blog/${post.slug}`} target="_blank">
+                            <Link
+                              to="/blog/$slug"
+                              params={{ slug: post.slug }}
+                              target="_blank"
+                            >
                               <ExternalLink className="size-3.5" />
                               <span>Live Preview</span>
                             </Link>

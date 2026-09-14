@@ -64,7 +64,7 @@ const seriesFormSchema = z.object({
     .string()
     .min(10, "Description must be at least 10 characters")
     .max(300, "Description cannot exceed 300 characters"),
-  isCompleted: z.boolean().default(false),
+  isCompleted: z.boolean(),
 })
 
 type SeriesFormValues = z.infer<typeof seriesFormSchema>
