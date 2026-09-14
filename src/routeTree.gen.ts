@@ -24,17 +24,18 @@ import { Route as AdminGroupsRouteImport } from './routes/admin/groups'
 import { Route as AdminCategoriesRouteImport } from './routes/admin/categories'
 import { Route as AdminSplatRouteImport } from './routes/admin/$'
 import { Route as ProfileResourcesRouteImport } from './routes/_profile.resources'
-import { Route as ProfileComponentUiRouteImport } from './routes/_profile.component-ui'
 import { Route as ProfileBlogRouteImport } from './routes/_profile.blog'
 import { Route as ProfileBlockRouteImport } from './routes/_profile.block'
 import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
+import { Route as ProfileComponentUiIndexRouteImport } from './routes/_profile.component-ui.index'
 import { Route as ProfileBlocksIndexRouteImport } from './routes/_profile.blocks.index'
 import { Route as AdminPostsNewRouteImport } from './routes/admin/posts/new'
 import { Route as AdminPostsIdRouteImport } from './routes/admin/posts/$id'
-import { Route as ProfileComponentUiSlugRouteImport } from './routes/_profile.component-ui_.$slug'
 import { Route as ProfileBlogSlugRouteImport } from './routes/_profile.blog_.$slug'
 import { Route as ProfileBlockSlugRouteImport } from './routes/_profile.block_.$slug'
+import { Route as ProfileComponentUiCategoryIndexRouteImport } from './routes/_profile.component-ui.$category.index'
 import { Route as ProfileBlocksCategoryIndexRouteImport } from './routes/_profile.blocks.$category.index'
+import { Route as ProfileComponentUiCategorySlugRouteImport } from './routes/_profile.component-ui.$category.$slug'
 import { Route as ProfileBlocksCategorySlugRouteImport } from './routes/_profile.blocks.$category.$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -111,11 +112,6 @@ const ProfileResourcesRoute = ProfileResourcesRouteImport.update({
   path: '/resources',
   getParentRoute: () => ProfileRoute,
 } as any)
-const ProfileComponentUiRoute = ProfileComponentUiRouteImport.update({
-  id: '/component-ui',
-  path: '/component-ui',
-  getParentRoute: () => ProfileRoute,
-} as any)
 const ProfileBlogRoute = ProfileBlogRouteImport.update({
   id: '/blog',
   path: '/blog',
@@ -130,6 +126,11 @@ const AdminPostsIndexRoute = AdminPostsIndexRouteImport.update({
   id: '/posts/',
   path: '/posts/',
   getParentRoute: () => AdminRoute,
+} as any)
+const ProfileComponentUiIndexRoute = ProfileComponentUiIndexRouteImport.update({
+  id: '/component-ui/',
+  path: '/component-ui/',
+  getParentRoute: () => ProfileRoute,
 } as any)
 const ProfileBlocksIndexRoute = ProfileBlocksIndexRouteImport.update({
   id: '/blocks/',
@@ -146,11 +147,6 @@ const AdminPostsIdRoute = AdminPostsIdRouteImport.update({
   path: '/posts/$id',
   getParentRoute: () => AdminRoute,
 } as any)
-const ProfileComponentUiSlugRoute = ProfileComponentUiSlugRouteImport.update({
-  id: '/component-ui_/$slug',
-  path: '/component-ui/$slug',
-  getParentRoute: () => ProfileRoute,
-} as any)
 const ProfileBlogSlugRoute = ProfileBlogSlugRouteImport.update({
   id: '/blog_/$slug',
   path: '/blog/$slug',
@@ -161,10 +157,22 @@ const ProfileBlockSlugRoute = ProfileBlockSlugRouteImport.update({
   path: '/block/$slug',
   getParentRoute: () => ProfileRoute,
 } as any)
+const ProfileComponentUiCategoryIndexRoute =
+  ProfileComponentUiCategoryIndexRouteImport.update({
+    id: '/component-ui/$category/',
+    path: '/component-ui/$category/',
+    getParentRoute: () => ProfileRoute,
+  } as any)
 const ProfileBlocksCategoryIndexRoute =
   ProfileBlocksCategoryIndexRouteImport.update({
     id: '/blocks/$category/',
     path: '/blocks/$category/',
+    getParentRoute: () => ProfileRoute,
+  } as any)
+const ProfileComponentUiCategorySlugRoute =
+  ProfileComponentUiCategorySlugRouteImport.update({
+    id: '/component-ui/$category/$slug',
+    path: '/component-ui/$category/$slug',
     getParentRoute: () => ProfileRoute,
   } as any)
 const ProfileBlocksCategorySlugRoute =
@@ -182,7 +190,6 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/block': typeof ProfileBlockRoute
   '/blog': typeof ProfileBlogRoute
-  '/component-ui': typeof ProfileComponentUiRoute
   '/resources': typeof ProfileResourcesRoute
   '/admin/$': typeof AdminSplatRoute
   '/admin/categories': typeof AdminCategoriesRoute
@@ -194,13 +201,15 @@ export interface FileRoutesByFullPath {
   '/admin/': typeof AdminIndexRoute
   '/block/$slug': typeof ProfileBlockSlugRoute
   '/blog/$slug': typeof ProfileBlogSlugRoute
-  '/component-ui/$slug': typeof ProfileComponentUiSlugRoute
   '/admin/posts/$id': typeof AdminPostsIdRoute
   '/admin/posts/new': typeof AdminPostsNewRoute
   '/blocks/': typeof ProfileBlocksIndexRoute
+  '/component-ui/': typeof ProfileComponentUiIndexRoute
   '/admin/posts/': typeof AdminPostsIndexRoute
   '/blocks/$category/$slug': typeof ProfileBlocksCategorySlugRoute
+  '/component-ui/$category/$slug': typeof ProfileComponentUiCategorySlugRoute
   '/blocks/$category/': typeof ProfileBlocksCategoryIndexRoute
+  '/component-ui/$category/': typeof ProfileComponentUiCategoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/design-system': typeof DesignSystemRoute
@@ -208,7 +217,6 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/block': typeof ProfileBlockRoute
   '/blog': typeof ProfileBlogRoute
-  '/component-ui': typeof ProfileComponentUiRoute
   '/resources': typeof ProfileResourcesRoute
   '/admin/$': typeof AdminSplatRoute
   '/admin/categories': typeof AdminCategoriesRoute
@@ -221,13 +229,15 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminIndexRoute
   '/block/$slug': typeof ProfileBlockSlugRoute
   '/blog/$slug': typeof ProfileBlogSlugRoute
-  '/component-ui/$slug': typeof ProfileComponentUiSlugRoute
   '/admin/posts/$id': typeof AdminPostsIdRoute
   '/admin/posts/new': typeof AdminPostsNewRoute
   '/blocks': typeof ProfileBlocksIndexRoute
+  '/component-ui': typeof ProfileComponentUiIndexRoute
   '/admin/posts': typeof AdminPostsIndexRoute
   '/blocks/$category/$slug': typeof ProfileBlocksCategorySlugRoute
+  '/component-ui/$category/$slug': typeof ProfileComponentUiCategorySlugRoute
   '/blocks/$category': typeof ProfileBlocksCategoryIndexRoute
+  '/component-ui/$category': typeof ProfileComponentUiCategoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -238,7 +248,6 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_profile/block': typeof ProfileBlockRoute
   '/_profile/blog': typeof ProfileBlogRoute
-  '/_profile/component-ui': typeof ProfileComponentUiRoute
   '/_profile/resources': typeof ProfileResourcesRoute
   '/admin/$': typeof AdminSplatRoute
   '/admin/categories': typeof AdminCategoriesRoute
@@ -251,13 +260,15 @@ export interface FileRoutesById {
   '/admin/': typeof AdminIndexRoute
   '/_profile/block_/$slug': typeof ProfileBlockSlugRoute
   '/_profile/blog_/$slug': typeof ProfileBlogSlugRoute
-  '/_profile/component-ui_/$slug': typeof ProfileComponentUiSlugRoute
   '/admin/posts/$id': typeof AdminPostsIdRoute
   '/admin/posts/new': typeof AdminPostsNewRoute
   '/_profile/blocks/': typeof ProfileBlocksIndexRoute
+  '/_profile/component-ui/': typeof ProfileComponentUiIndexRoute
   '/admin/posts/': typeof AdminPostsIndexRoute
   '/_profile/blocks/$category/$slug': typeof ProfileBlocksCategorySlugRoute
+  '/_profile/component-ui/$category/$slug': typeof ProfileComponentUiCategorySlugRoute
   '/_profile/blocks/$category/': typeof ProfileBlocksCategoryIndexRoute
+  '/_profile/component-ui/$category/': typeof ProfileComponentUiCategoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -269,7 +280,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/block'
     | '/blog'
-    | '/component-ui'
     | '/resources'
     | '/admin/$'
     | '/admin/categories'
@@ -281,13 +291,15 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/block/$slug'
     | '/blog/$slug'
-    | '/component-ui/$slug'
     | '/admin/posts/$id'
     | '/admin/posts/new'
     | '/blocks/'
+    | '/component-ui/'
     | '/admin/posts/'
     | '/blocks/$category/$slug'
+    | '/component-ui/$category/$slug'
     | '/blocks/$category/'
+    | '/component-ui/$category/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/design-system'
@@ -295,7 +307,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/block'
     | '/blog'
-    | '/component-ui'
     | '/resources'
     | '/admin/$'
     | '/admin/categories'
@@ -308,13 +319,15 @@ export interface FileRouteTypes {
     | '/admin'
     | '/block/$slug'
     | '/blog/$slug'
-    | '/component-ui/$slug'
     | '/admin/posts/$id'
     | '/admin/posts/new'
     | '/blocks'
+    | '/component-ui'
     | '/admin/posts'
     | '/blocks/$category/$slug'
+    | '/component-ui/$category/$slug'
     | '/blocks/$category'
+    | '/component-ui/$category'
   id:
     | '__root__'
     | '/_profile'
@@ -324,7 +337,6 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/_profile/block'
     | '/_profile/blog'
-    | '/_profile/component-ui'
     | '/_profile/resources'
     | '/admin/$'
     | '/admin/categories'
@@ -337,13 +349,15 @@ export interface FileRouteTypes {
     | '/admin/'
     | '/_profile/block_/$slug'
     | '/_profile/blog_/$slug'
-    | '/_profile/component-ui_/$slug'
     | '/admin/posts/$id'
     | '/admin/posts/new'
     | '/_profile/blocks/'
+    | '/_profile/component-ui/'
     | '/admin/posts/'
     | '/_profile/blocks/$category/$slug'
+    | '/_profile/component-ui/$category/$slug'
     | '/_profile/blocks/$category/'
+    | '/_profile/component-ui/$category/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -462,13 +476,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileResourcesRouteImport
       parentRoute: typeof ProfileRoute
     }
-    '/_profile/component-ui': {
-      id: '/_profile/component-ui'
-      path: '/component-ui'
-      fullPath: '/component-ui'
-      preLoaderRoute: typeof ProfileComponentUiRouteImport
-      parentRoute: typeof ProfileRoute
-    }
     '/_profile/blog': {
       id: '/_profile/blog'
       path: '/blog'
@@ -489,6 +496,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/admin/posts/'
       preLoaderRoute: typeof AdminPostsIndexRouteImport
       parentRoute: typeof AdminRoute
+    }
+    '/_profile/component-ui/': {
+      id: '/_profile/component-ui/'
+      path: '/component-ui'
+      fullPath: '/component-ui/'
+      preLoaderRoute: typeof ProfileComponentUiIndexRouteImport
+      parentRoute: typeof ProfileRoute
     }
     '/_profile/blocks/': {
       id: '/_profile/blocks/'
@@ -511,13 +525,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPostsIdRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/_profile/component-ui_/$slug': {
-      id: '/_profile/component-ui_/$slug'
-      path: '/component-ui/$slug'
-      fullPath: '/component-ui/$slug'
-      preLoaderRoute: typeof ProfileComponentUiSlugRouteImport
-      parentRoute: typeof ProfileRoute
-    }
     '/_profile/blog_/$slug': {
       id: '/_profile/blog_/$slug'
       path: '/blog/$slug'
@@ -532,11 +539,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileBlockSlugRouteImport
       parentRoute: typeof ProfileRoute
     }
+    '/_profile/component-ui/$category/': {
+      id: '/_profile/component-ui/$category/'
+      path: '/component-ui/$category'
+      fullPath: '/component-ui/$category/'
+      preLoaderRoute: typeof ProfileComponentUiCategoryIndexRouteImport
+      parentRoute: typeof ProfileRoute
+    }
     '/_profile/blocks/$category/': {
       id: '/_profile/blocks/$category/'
       path: '/blocks/$category'
       fullPath: '/blocks/$category/'
       preLoaderRoute: typeof ProfileBlocksCategoryIndexRouteImport
+      parentRoute: typeof ProfileRoute
+    }
+    '/_profile/component-ui/$category/$slug': {
+      id: '/_profile/component-ui/$category/$slug'
+      path: '/component-ui/$category/$slug'
+      fullPath: '/component-ui/$category/$slug'
+      preLoaderRoute: typeof ProfileComponentUiCategorySlugRouteImport
       parentRoute: typeof ProfileRoute
     }
     '/_profile/blocks/$category/$slug': {
@@ -552,29 +573,31 @@ declare module '@tanstack/react-router' {
 interface ProfileRouteChildren {
   ProfileBlockRoute: typeof ProfileBlockRoute
   ProfileBlogRoute: typeof ProfileBlogRoute
-  ProfileComponentUiRoute: typeof ProfileComponentUiRoute
   ProfileResourcesRoute: typeof ProfileResourcesRoute
   ProfileIndexRoute: typeof ProfileIndexRoute
   ProfileBlockSlugRoute: typeof ProfileBlockSlugRoute
   ProfileBlogSlugRoute: typeof ProfileBlogSlugRoute
-  ProfileComponentUiSlugRoute: typeof ProfileComponentUiSlugRoute
   ProfileBlocksIndexRoute: typeof ProfileBlocksIndexRoute
+  ProfileComponentUiIndexRoute: typeof ProfileComponentUiIndexRoute
   ProfileBlocksCategorySlugRoute: typeof ProfileBlocksCategorySlugRoute
+  ProfileComponentUiCategorySlugRoute: typeof ProfileComponentUiCategorySlugRoute
   ProfileBlocksCategoryIndexRoute: typeof ProfileBlocksCategoryIndexRoute
+  ProfileComponentUiCategoryIndexRoute: typeof ProfileComponentUiCategoryIndexRoute
 }
 
 const ProfileRouteChildren: ProfileRouteChildren = {
   ProfileBlockRoute: ProfileBlockRoute,
   ProfileBlogRoute: ProfileBlogRoute,
-  ProfileComponentUiRoute: ProfileComponentUiRoute,
   ProfileResourcesRoute: ProfileResourcesRoute,
   ProfileIndexRoute: ProfileIndexRoute,
   ProfileBlockSlugRoute: ProfileBlockSlugRoute,
   ProfileBlogSlugRoute: ProfileBlogSlugRoute,
-  ProfileComponentUiSlugRoute: ProfileComponentUiSlugRoute,
   ProfileBlocksIndexRoute: ProfileBlocksIndexRoute,
+  ProfileComponentUiIndexRoute: ProfileComponentUiIndexRoute,
   ProfileBlocksCategorySlugRoute: ProfileBlocksCategorySlugRoute,
+  ProfileComponentUiCategorySlugRoute: ProfileComponentUiCategorySlugRoute,
   ProfileBlocksCategoryIndexRoute: ProfileBlocksCategoryIndexRoute,
+  ProfileComponentUiCategoryIndexRoute: ProfileComponentUiCategoryIndexRoute,
 }
 
 const ProfileRouteWithChildren =

@@ -1,11 +1,13 @@
-import { createFileRoute, notFound } from "@tanstack/react-router"
+﻿import { createFileRoute, notFound } from "@tanstack/react-router"
 
 import { ComponentDetail, COMPONENTS_DATA } from "@/features/component-ui"
 import { createSeoMeta, siteConfig } from "@/shared/config"
 
-export const Route = createFileRoute("/_profile/component-ui_/$slug")({
+export const Route = createFileRoute("/_profile/component-ui/$category/$slug")({
   loader: ({ params }) => {
-    const component = COMPONENTS_DATA.find((c) => c.slug === params.slug)
+    const component = COMPONENTS_DATA.find(
+      (c) => c.category === params.category && c.slug === params.slug
+    )
     if (!component) {
       throw notFound()
     }
@@ -18,7 +20,7 @@ export const Route = createFileRoute("/_profile/component-ui_/$slug")({
     const description =
       loaderData?.component?.description ??
       "Pixel-perfect UI component documentation and preview."
-    const pageUrl = `${siteConfig.url}/component-ui/${params.slug}`
+    const pageUrl = `${siteConfig.url}/component-ui/${params.category}/${params.slug}`
 
     return {
       meta: createSeoMeta({

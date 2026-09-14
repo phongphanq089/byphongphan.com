@@ -1,0 +1,41 @@
+﻿import { UnboxingBucketDemo } from "@/registry/demos"
+import { UNBOXING_BUCKET_API_REFERENCE, UNBOXING_BUCKET_USAGE } from "@/features/component-ui/data/unboxing-bucket-doc-data"
+
+Interactive 3D unboxing container animation with emerging spring-physics feature chips powered by Motion (framer-motion).
+
+## Live Interactive Stage
+
+Watch the sequence of feature chips float up from the package cavity, hover in 3D perspective, and dissolve upward.
+
+<div className="my-6 flex items-center justify-center rounded-2xl border border-border/80 bg-black/60 p-6 backdrop-blur-md">
+  <UnboxingBucketDemo />
+</div>
+
+---
+
+<InstallationGuide
+  componentSlug="unboxing-bucket"
+  dependencies={["motion", "lucide-react", "clsx", "tailwind-merge"]}
+  fileName="components/unboxing-bucket.tsx"
+/>
+
+---
+
+<UsageGuide
+  importCode={UNBOXING_BUCKET_USAGE.importCode}
+  exampleCode={UNBOXING_BUCKET_USAGE.exampleCode}
+/>
+
+---
+
+## Technical Insights & Architecture
+
+This component is constructed using a 3-layer sandwich visual architecture:
+
+1. **Layer 1 (Background SVGs)**: The open lid flaps, inside back wall, and interior shadow folds of the carton box.
+2. **Layer 2 (Middle Motion Stage)**: The animated floating chip managed by `AnimatePresence mode="popLayout"`, starting tucked inside the box cavity, springing upward, and floating away.
+3. **Layer 3 (Foreground SVGs)**: The front carton body and dropped lip flap with `pointer-events-none`, naturally occluding the lower part of the chip as it emerges from inside the package.
+
+---
+
+<ApiReference sections={UNBOXING_BUCKET_API_REFERENCE} />

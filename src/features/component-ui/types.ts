@@ -1,5 +1,5 @@
 export type ComponentCategoryId =
-  "all" | "primitives" | "navigation" | "overlays" | "blocks"
+  "all" | "primitives" | "animations" | "foundations"
 
 export interface ComponentCategory {
   id: ComponentCategoryId
@@ -37,6 +37,8 @@ export type SchematicType =
   | "select"
   | "card"
   | "animated-glow-card"
+  | "unboxing-bucket"
+  | "separator"
 
 export interface ComponentItem {
   id: string

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "@tanstack/react-router"
 import {
   ArrowLeft,
@@ -200,6 +201,13 @@ export function ${pascalName}Demo() {
               Components
             </Link>
             <span>/</span>
+            <Link
+              to={`/component-ui/${component.category}` as any}
+              className="capitalize transition-colors hover:text-foreground"
+            >
+              {component.category}
+            </Link>
+            <span>/</span>
             <span className="font-semibold text-pp-primary">
               {component.name}
             </span>
@@ -231,11 +239,11 @@ export function ${pascalName}Demo() {
 
             {/* Back Button */}
             <Link
-              to="/component-ui"
+              to={`/component-ui/${component.category}` as any}
               className="flex items-center gap-2 rounded-lg border border-border/80 bg-background/80 px-3.5 py-2 text-xs font-medium text-foreground transition-all hover:border-pp-primary/60 hover:bg-pp-primary/10 hover:text-pp-primary active:scale-98"
             >
               <ArrowLeft className="size-3.5" />
-              <span>All Components</span>
+              <span className="capitalize">{component.category}</span>
             </Link>
           </div>
 
@@ -517,8 +525,11 @@ export function ${pascalName}Demo() {
       >
         {prevComponent ? (
           <Link
-            to="/component-ui/$slug"
-            params={{ slug: prevComponent.slug }}
+            to="/component-ui/$category/$slug"
+            params={{
+              category: prevComponent.category,
+              slug: prevComponent.slug,
+            }}
             className="group flex items-center gap-3 rounded-xl border border-border/80 bg-background/60 p-4 transition-all hover:border-pp-primary/60 hover:bg-pp-primary/10"
           >
             <div className="flex size-8 items-center justify-center rounded-lg border border-border bg-muted/60 text-muted-foreground transition-transform group-hover:-translate-x-0.5 group-hover:text-foreground">
@@ -539,8 +550,11 @@ export function ${pascalName}Demo() {
 
         {nextComponent ? (
           <Link
-            to="/component-ui/$slug"
-            params={{ slug: nextComponent.slug }}
+            to="/component-ui/$category/$slug"
+            params={{
+              category: nextComponent.category,
+              slug: nextComponent.slug,
+            }}
             className="group flex items-center justify-end gap-3 rounded-xl border border-border/80 bg-background/60 p-4 text-right transition-all hover:border-pp-primary/60 hover:bg-pp-primary/10"
           >
             <div className="flex flex-col text-right">

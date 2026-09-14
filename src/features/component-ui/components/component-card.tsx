@@ -27,8 +27,8 @@ export const ComponentCard = ({ component }: ComponentCardProps) => {
 
   return (
     <Link
-      to="/component-ui/$slug"
-      params={{ slug: component.slug }}
+      to="/component-ui/$category/$slug"
+      params={{ category: component.category, slug: component.slug }}
       className={cn(
         "group relative flex h-full w-full flex-col justify-between overflow-hidden rounded-lg p-4 transition-all duration-300 sm:p-5",
         "border border-black/10 bg-muted dark:border-white/10",

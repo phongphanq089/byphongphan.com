@@ -539,6 +539,50 @@ export function AnimatedGlowCardSchematic() {
   )
 }
 
+// Unboxing Bucket Schematic
+export function UnboxingBucketSchematic() {
+  return (
+    <div className="relative flex w-full max-w-[190px] flex-col items-center justify-center">
+      {/* Floating chip above box */}
+      <div className="z-10 flex items-center gap-1.5 rounded-full border border-pp-primary/60 bg-white/10 px-2.5 py-1 shadow-lg backdrop-blur-md">
+        <span className="size-2 animate-pulse rounded-full bg-pp-primary" />
+        <div className="h-1.5 w-12 rounded-full bg-white/90" />
+      </div>
+
+      {/* Isometric box wireframe shape */}
+      <div className="relative -mt-1 h-14 w-28 rounded-lg border border-white/25 bg-white/[0.04] shadow-md">
+        <div className="absolute -top-1.5 left-2 h-2 w-10 -rotate-12 rounded-sm border-t border-l border-white/30" />
+        <div className="absolute -top-1.5 right-2 h-2 w-10 rotate-12 rounded-sm border-t border-r border-white/30" />
+        <div className="flex h-full items-center justify-center">
+          <div className="h-1 w-16 rounded-full bg-white/15" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Separator Schematic
+export function SeparatorSchematic() {
+  return (
+    <div className="flex w-full max-w-[190px] flex-col gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-3 shadow-xs">
+      <div className="flex flex-col gap-1">
+        <div className="h-1.5 w-16 rounded-full bg-white/60" />
+        <div className="h-1 w-24 rounded-full bg-white/25" />
+      </div>
+      {/* Horizontal Separator */}
+      <div className="h-px w-full bg-white/20" />
+      {/* Horizontal items divided by vertical separators */}
+      <div className="flex h-4 items-center justify-center gap-2.5">
+        <div className="h-1.5 w-8 rounded-full bg-white/40" />
+        <div className="h-full w-px bg-white/20" />
+        <div className="h-1.5 w-8 rounded-full bg-white/40" />
+        <div className="h-full w-px bg-white/20" />
+        <div className="h-1.5 w-8 rounded-full bg-white/40" />
+      </div>
+    </div>
+  )
+}
+
 export function RenderSchematic({ type }: { type: SchematicType }) {
   switch (type) {
     case "accordion":
@@ -598,6 +642,10 @@ export function RenderSchematic({ type }: { type: SchematicType }) {
       return <CardSchematic />
     case "animated-glow-card":
       return <AnimatedGlowCardSchematic />
+    case "unboxing-bucket":
+      return <UnboxingBucketSchematic />
+    case "separator":
+      return <SeparatorSchematic />
     default:
       return null
   }

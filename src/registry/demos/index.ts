@@ -5,8 +5,18 @@ import { BadgeDemo } from "./badge-demo"
 import { ButtonDemo } from "./button-demo"
 import { CardDemo } from "./card-demo"
 import { SelectDemo } from "./select-demo"
+import { SeparatorDemo } from "./separator-demo"
+import { UnboxingBucketDemo } from "./unboxing-bucket-demo"
 
-export { AnimatedGlowCardDemo, BadgeDemo, ButtonDemo, CardDemo, SelectDemo }
+export {
+  AnimatedGlowCardDemo,
+  BadgeDemo,
+  ButtonDemo,
+  CardDemo,
+  SelectDemo,
+  SeparatorDemo,
+  UnboxingBucketDemo,
+}
 
 export const REGISTRY_DEMOS: Record<string, React.ComponentType> = {
   select: SelectDemo,
@@ -14,6 +24,8 @@ export const REGISTRY_DEMOS: Record<string, React.ComponentType> = {
   badge: BadgeDemo,
   card: CardDemo,
   "animated-glow-card": AnimatedGlowCardDemo,
+  "unboxing-bucket": UnboxingBucketDemo,
+  separator: SeparatorDemo,
 }
 
 export const REGISTRY_DEMO_CODES: Record<string, string> = {
@@ -124,6 +136,39 @@ export function AnimatedGlowCardDemo() {
         </div>
       </Card>
     </CardCanvas>
+  )
+}`,
+  "unboxing-bucket": `import { UnboxingBucket } from "@/components/unboxing-bucket"
+
+export function UnboxingBucketDemo() {
+  return (
+    <div className="flex w-full items-center justify-center p-4">
+      <UnboxingBucket />
+    </div>
+  )
+}`,
+  separator: `import { Separator } from "@/components/ui/separator"
+
+export function SeparatorDemo() {
+  return (
+    <div className="flex w-full max-w-sm flex-col gap-4 rounded-xl border border-border/80 bg-background/60 p-5 shadow-xs">
+      <div className="space-y-1">
+        <h4 className="text-sm font-semibold leading-none text-foreground">
+          Radix UI Primitives
+        </h4>
+        <p className="text-xs text-muted-foreground">
+          An open-source UI component library.
+        </p>
+      </div>
+      <Separator className="my-1" />
+      <div className="flex h-5 items-center space-x-4 text-xs">
+        <div className="font-medium text-foreground">Blog</div>
+        <Separator orientation="vertical" />
+        <div className="font-medium text-foreground">Docs</div>
+        <Separator orientation="vertical" />
+        <div className="font-medium text-foreground">Source</div>
+      </div>
+    </div>
   )
 }`,
 }

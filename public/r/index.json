@@ -49,5 +49,26 @@
       "framer-motion"
     ],
     "registryDependencies": []
+  },
+  {
+    "name": "unboxing-bucket",
+    "type": "registry:component",
+    "title": "Unboxing Bucket",
+    "description": "Interactive 3D unboxing container animation with emerging spring-physics feature chips.",
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": []
+  },
+  {
+    "name": "separator",
+    "type": "registry:ui",
+    "title": "Separator",
+    "description": "Visually or semantically separates content in a page, supporting both horizontal and vertical orientations.",
+    "dependencies": [
+      "@radix-ui/react-separator"
+    ],
+    "registryDependencies": []
   }
 ]

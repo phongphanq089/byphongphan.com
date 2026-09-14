@@ -83,4 +83,38 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
       },
     ],
   },
+  // 6. Unboxing Bucket
+  {
+    name: "unboxing-bucket",
+    title: "Unboxing Bucket",
+    description:
+      "Interactive 3D unboxing container animation with emerging spring-physics feature chips.",
+    type: "registry:component",
+    dependencies: ["motion", "lucide-react"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/unboxing-bucket.tsx",
+        type: "registry:component",
+        target: "components/unboxing-bucket.tsx",
+      },
+    ],
+  },
+  // 7. Separator
+  {
+    name: "separator",
+    title: "Separator",
+    description:
+      "Visually or semantically separates content in a page, supporting both horizontal and vertical orientations.",
+    type: "registry:ui",
+    dependencies: ["@radix-ui/react-separator"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "ui/separator.tsx",
+        type: "registry:ui",
+        target: "components/ui/separator.tsx",
+      },
+    ],
+  },
 ]

@@ -55,6 +55,24 @@ export const Route = createFileRoute("/sitemap.xml")({
             priority: "0.8",
           },
           {
+            path: "/component-ui/primitives",
+            lastmod: now,
+            changefreq: "weekly",
+            priority: "0.8",
+          },
+          {
+            path: "/component-ui/animations",
+            lastmod: now,
+            changefreq: "weekly",
+            priority: "0.8",
+          },
+          {
+            path: "/component-ui/foundations",
+            lastmod: now,
+            changefreq: "weekly",
+            priority: "0.8",
+          },
+          {
             path: "/design-system",
             lastmod: now,
             changefreq: "monthly",
@@ -95,7 +113,7 @@ export const Route = createFileRoute("/sitemap.xml")({
         // 2. Dynamic Component UI Pages
         COMPONENTS_DATA.forEach((component) => {
           dynamicRoutes.push({
-            path: `/component-ui/${component.slug}`,
+            path: `/component-ui/${component.category}/${component.slug}`,
             lastmod: now,
             changefreq: "weekly",
             priority: "0.8",

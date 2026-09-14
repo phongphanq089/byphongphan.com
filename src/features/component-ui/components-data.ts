@@ -1,9 +1,10 @@
 import type { ComponentCategory, ComponentItem } from "./types"
 
 export const COMPONENT_CATEGORIES: ComponentCategory[] = [
-  { id: "all", label: "All" },
-  { id: "primitives", label: "Core Primitives" },
-  { id: "blocks", label: "Composed Blocks" },
+  { id: "all", label: "ALL" },
+  { id: "primitives", label: "PRIMITIVES" },
+  { id: "animations", label: "ANIMATIONS" },
+  { id: "foundations", label: "FOUNDATIONS" },
 ]
 
 export const COMPONENTS_DATA: ComponentItem[] = [
@@ -49,10 +50,31 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-animated-glow-card",
     name: "Animated Glow Card",
     slug: "animated-glow-card",
-    category: "blocks",
+    category: "animations",
     description:
       "Cursor-following radial specular highlight border card powered by CSS variables.",
     schematicType: "animated-glow-card",
     badge: "Motion",
+  },
+  // 6. Unboxing Bucket
+  {
+    id: "comp-unboxing-bucket",
+    name: "Unboxing Bucket",
+    slug: "unboxing-bucket",
+    category: "animations",
+    description:
+      "Interactive 3D unboxing container animation with emerging spring-physics feature chips.",
+    schematicType: "unboxing-bucket",
+    badge: "Motion",
+  },
+  // 7. Separator
+  {
+    id: "comp-separator",
+    name: "Separator",
+    slug: "separator",
+    category: "foundations",
+    description:
+      "Visually or semantically separates content in a page, supporting both horizontal and vertical orientations.",
+    schematicType: "separator",
   },
 ]

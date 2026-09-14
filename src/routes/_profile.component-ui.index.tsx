@@ -1,19 +1,19 @@
-import { createFileRoute } from "@tanstack/react-router"
+﻿import { createFileRoute } from "@tanstack/react-router"
 
 import { ComponentGrid } from "@/features/component-ui"
 import { createSeoMeta } from "@/shared/config"
 
-export const Route = createFileRoute("/_profile/component-ui")({
+export const Route = createFileRoute("/_profile/component-ui/")({
   head: () => ({
     meta: createSeoMeta("componentUi"),
   }),
-  component: ComponentUiPage,
+  component: ComponentUiAllPage,
 })
 
-function ComponentUiPage() {
+function ComponentUiAllPage() {
   return (
     <div className="w-full">
-      <ComponentGrid />
+      <ComponentGrid category="all" />
     </div>
   )
 }
