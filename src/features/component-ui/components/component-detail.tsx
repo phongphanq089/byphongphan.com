@@ -16,11 +16,8 @@ import { REGISTRY_DEMO_CODES, REGISTRY_DEMOS } from "@/registry/demos"
 import { siteConfig } from "@/shared/config"
 import { extractTocFromMarkdown } from "@/shared/lib"
 import { Button } from "@/shared/ui/core"
+import { CodeBlockCommand, convertNpmCommand } from "@/shared/ui/core"
 import { TOCMinimap } from "@/shared/ui/system/toc-minimap"
-import {
-  CodeBlockCommand,
-  convertNpmCommand,
-} from "@/shared/ui/tool/code-block-command"
 
 import { COMPONENTS_DATA } from "../components-data"
 import type { ComponentItem } from "../types"
@@ -175,7 +172,7 @@ export function ${pascalName}Demo() {
         borderBottom
         className="relative flex flex-col justify-between gap-6"
       >
-        <div className="relative z-10 flex flex-col gap-4 px-4 py-3 md:px-4">
+        <div className="relative z-10 flex flex-col gap-4 px-4 py-3 md:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3">
@@ -298,9 +295,9 @@ export function ${pascalName}Demo() {
           id="mdx-content"
           borderBottom
           showCrosshairs
-          className="p-4 sm:p-8 md:p-12"
+          className="p-4 lg:p-8"
         >
-          <div className="mx-auto w-full max-w-4xl py-2">
+          <div className="mx-auto w-full">
             <mdxData.Component components={mdxComponents} />
           </div>
         </GridContainer>
@@ -309,7 +306,7 @@ export function ${pascalName}Demo() {
           id="interactive-demo"
           borderBottom
           showCrosshairs
-          className="p-4 sm:p-8 md:p-12"
+          className="p-4 lg:p-8"
         >
           <ComponentStagePreview
             slug={component.slug}

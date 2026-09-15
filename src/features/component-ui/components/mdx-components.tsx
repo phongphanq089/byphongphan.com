@@ -5,7 +5,9 @@ import {
   CodeBlockCopyButton,
   markdownCodeProps,
 } from "@/registry/ui/code-block"
+import { siteConfig } from "@/shared/config"
 import { cn, extractTextFromNode, slugify } from "@/shared/lib"
+import { CodeBlockCommand } from "@/shared/ui/core"
 
 import { ApiReference } from "./api-reference"
 import { InstallationGuide } from "./installation-guide"
@@ -22,13 +24,29 @@ import {
 import { UsageGuide } from "./usage-guide"
 import { VariantsGrid } from "./variants-grid"
 
+export function SiteUrl({
+  path = "",
+  className,
+}: {
+  path?: string
+  className?: string
+}) {
+  const cleanPath = path ? (path.startsWith("/") ? path : `/${path}`) : ""
+  const fullUrl = `${siteConfig.url}${cleanPath}`
+  return (
+    <span className={cn("font-mono text-xs text-primary", className)}>
+      {fullUrl}
+    </span>
+  )
+}
+
 function MdxCodeBlock(
   props: React.HTMLAttributes<HTMLPreElement> & { "data-code"?: string }
 ) {
   const { code, language } = markdownCodeProps(props)
-  const finalCode = code || props["data-code"] || ""
+  const rawCode = (code || props["data-code"] || "").trim()
 
-  if (!finalCode) {
+  if (!rawCode) {
     return (
       <pre
         className={cn(
@@ -38,6 +56,24 @@ function MdxCodeBlock(
         {...props}
       />
     )
+  }
+
+  // Normalize site url placeholders like @site or {siteUrl}
+  const finalCode = rawCode
+    .replaceAll("@site", siteConfig.url)
+    .replaceAll("{{siteUrl}}", siteConfig.url)
+    .replaceAll("{siteUrl}", siteConfig.url)
+
+  // Automatically render single-line package/CLI commands with CodeBlockCommand
+  const isCliCommand =
+    (language === "bash" || language === "sh" || language === "shell") &&
+    !finalCode.includes("\n") &&
+    /^(npx|npm\s+(install|i|create|run)|pnpm\s+(add|dlx|create)|yarn\s+(add|dlx|create)|bun\s+(add|x))\b/.test(
+      finalCode
+    )
+
+  if (isCliCommand) {
+    return <CodeBlockCommand command={finalCode} className="my-4" />
   }
 
   return (
@@ -176,4 +212,6 @@ export const mdxComponents = {
   Steps,
   Step,
   ComponentSource,
+  CodeBlockCommand,
+  SiteUrl,
 }

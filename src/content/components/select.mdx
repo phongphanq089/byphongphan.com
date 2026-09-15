@@ -12,40 +12,25 @@ links:
 
 ## Installation
 
-<CodeTabs>
+<CodeTabs defaultValue="manual">
+    <TabsList>
+      <TabsTrigger value="cli">Command</TabsTrigger>
+      <TabsTrigger value="manual">Manual</TabsTrigger>
+    </TabsList>
 
-<TabsList>
-  <TabsTrigger value="cli">Command</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
-</TabsList>
-<TabsContent value="cli">
+    <TabsContent value="cli">
+      <CodeBlockCommand name="select" />
+    </TabsContent>
 
-```bash
-npx shadcn@latest add select
-```
-
-</TabsContent>
-
-<TabsContent value="manual">
-
-<Steps className="mb-0 pt-2">
-
-<Step>Install the following dependencies:</Step>
-
-```bash
-npm install radix-ui lucide-react class-variance-authority clsx tailwind-merge
-```
-
-<Step>Copy and paste the following code into your project.</Step>
-
-<ComponentSource name="select" title="components/ui/select.tsx" />
-
-<Step>Update the import paths to match your project setup.</Step>
-
-</Steps>
-
-</TabsContent>
-
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the following dependencies:</Step>
+      <CodeBlockCommand command="npm install radix-ui lucide-react class-variance-authority clsx tailwind-merge" />
+      <Step>Copy and paste the following code into your project.</Step>
+      <ComponentSource name="select" title="components/ui/select.tsx" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
 </CodeTabs>
 
 ## Usage
@@ -60,9 +45,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-```
 
-```tsx
 <Select defaultValue="apple">
   <SelectTrigger className="w-[180px]">
     <SelectValue placeholder="Select a fruit" />
@@ -82,10 +65,15 @@ Select
 ├── SelectTrigger
 │   └── SelectValue
 └── SelectContent
+    ├── SelectGroup
+    │   ├── SelectLabel
+    │   ├── SelectItem
+    │   └── SelectItem
+    ├── SelectSeparator
     └── SelectGroup
         ├── SelectLabel
         ├── SelectItem
-        └── SelectSeparator
+        └── SelectItem
 ```
 
 ## Simple Select

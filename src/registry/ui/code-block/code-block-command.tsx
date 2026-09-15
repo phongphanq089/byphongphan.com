@@ -1,6 +1,7 @@
 import { TerminalIcon, TextAlignStartIcon } from "lucide-react"
 import { useMemo, useState } from "react"
 
+import { siteConfig } from "@/shared/config"
 import { cn } from "@/shared/lib"
 import {
   CopyButton,
@@ -43,6 +44,23 @@ export function usePackageManager() {
  * Props for the CodeBlockCommand component.
  */
 export type CodeBlockCommandProps = {
+  /**
+   * Component or block name (e.g. "select").
+   * Automatically formats command as `npx shadcn@latest add ${siteConfig.url}/r/${name}.json`.
+   */
+  name?: string
+
+  /**
+   * Shorthand command string (e.g. "npx shadcn@latest add select" or "npx shadcn@latest add @site/r/select.json").
+   * Placeholders like `@site`, `{siteUrl}`, and `{{siteUrl}}` are dynamically replaced with `siteConfig.url`.
+   */
+  command?: string
+
+  /**
+   * Additional className applied to the root container.
+   */
+  className?: string
+
   /**
    * Natural language instruction for AI agents to install a package or component.
    */
@@ -109,25 +127,52 @@ export type CodeBlockCommandProps = {
 }
 
 export function CodeBlockCommand({
+  name,
+  command,
   prompt,
   pnpm,
   yarn,
   npm,
   bun,
+  className,
   onCopySuccess,
   onCopyError,
 }: CodeBlockCommandProps) {
   const [packageManager, setPackageManager] = usePackageManager()
 
+  const normalizedCommand = useMemo(() => {
+    if (name) {
+      return `npx shadcn@latest add ${siteConfig.url}/r/${name}.json`
+    }
+    if (command) {
+      return command
+        .replaceAll("@site", siteConfig.url)
+        .replaceAll("{{siteUrl}}", siteConfig.url)
+        .replaceAll("{siteUrl}", siteConfig.url)
+    }
+    return undefined
+  }, [name, command])
+
+  const converted = useMemo(
+    () =>
+      normalizedCommand ? convertNpmCommand(normalizedCommand) : undefined,
+    [normalizedCommand]
+  )
+
+  const resolvedPnpm = pnpm ?? converted?.pnpm
+  const resolvedYarn = yarn ?? converted?.yarn
+  const resolvedNpm = npm ?? converted?.npm
+  const resolvedBun = bun ?? converted?.bun
+
   const tabs = useMemo(() => {
     return {
       prompt,
-      pnpm,
-      yarn,
-      npm,
-      bun,
+      pnpm: resolvedPnpm,
+      yarn: resolvedYarn,
+      npm: resolvedNpm,
+      bun: resolvedBun,
     }
-  }, [prompt, pnpm, yarn, npm, bun])
+  }, [prompt, resolvedPnpm, resolvedYarn, resolvedNpm, resolvedBun])
 
   const tabsFiltered = useMemo(
     () => Object.entries(tabs).filter(([, value]) => !!value),
@@ -135,7 +180,12 @@ export function CodeBlockCommand({
   )
 
   return (
-    <div className="relative overflow-hidden rounded-xl bg-accent p-3">
+    <div
+      className={cn(
+        "relative overflow-hidden rounded-xl bg-accent p-3",
+        className
+      )}
+    >
       <Tabs
         className="gap-0"
         value={packageManager}

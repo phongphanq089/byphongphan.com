@@ -24,3 +24,5 @@ export * from "./switch"
 export * from "./tabs"
 export * from "./textarea"
 export * from "./tooltip"
+// ====== code block ui ============= //
+export * from "@/registry/ui/code-block"

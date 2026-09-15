@@ -99,7 +99,7 @@ export function TabsList({
   return (
     <TabsListPrimitive
       className={cn(
-        "h-9 items-center justify-start rounded-lg border border-border/60 bg-muted/40 p-1 text-muted-foreground",
+        "min-h-10 items-center justify-start rounded-lg border border-border/60 bg-muted px-1 py-3 text-muted-foreground",
         className
       )}
       {...props}
@@ -114,7 +114,7 @@ export function TabsTrigger({
   return (
     <TabsTriggerPrimitive
       className={cn(
-        "h-7 rounded-md px-3 text-xs font-medium transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs",
+        "h-7 rounded-sm px-3 text-xs font-medium transition-all data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-xs",
         className
       )}
       {...props}
@@ -144,7 +144,7 @@ export function Steps({
   return (
     <div
       className={cn(
-        "steps my-4 mb-8 ml-4 space-y-4 border-l border-border/80 pl-6 [counter-reset:step]",
+        "steps mb-8 ml-4 space-y-4 border-l border-border/80 pl-6 [counter-reset:step]",
         className
       )}
       {...props}
@@ -160,7 +160,7 @@ export function Step({
   return (
     <p
       className={cn(
-        "relative text-sm font-medium text-foreground [counter-increment:step] before:absolute before:top-0 before:-left-[33px] before:flex before:size-6 before:items-center before:justify-center before:rounded-full before:border before:border-border before:bg-card before:text-xs before:font-bold before:text-muted-foreground before:content-[counter(step)]",
+        "relative text-sm font-medium text-foreground [counter-increment:step] before:absolute before:top-0 before:-left-[36px] before:flex before:size-6 before:items-center before:justify-center before:rounded-full before:border before:border-border before:bg-accent before:text-xs before:font-bold before:text-muted-foreground before:content-[counter(step)]",
         className
       )}
       {...props}
