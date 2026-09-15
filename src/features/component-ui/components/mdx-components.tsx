@@ -5,7 +5,7 @@ import {
   CodeBlockCopyButton,
   markdownCodeProps,
 } from "@/registry/ui/code-block"
-import { cn } from "@/shared/lib"
+import { cn, extractTextFromNode, slugify } from "@/shared/lib"
 
 import { ApiReference } from "./api-reference"
 import { InstallationGuide } from "./installation-guide"
@@ -52,33 +52,66 @@ function MdxCodeBlock(
 }
 
 export const mdxComponents = {
-  h1: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h1
-      className={cn(
-        "mt-2 mb-4 scroll-m-20 text-3xl font-bold tracking-tight text-foreground",
-        className
-      )}
-      {...props}
-    />
-  ),
-  h2: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2
-      className={cn(
-        "mt-8 mb-3 scroll-m-20 text-xl font-semibold tracking-tight text-foreground",
-        className
-      )}
-      {...props}
-    />
-  ),
-  h3: ({ className, ...props }: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3
-      className={cn(
-        "mt-6 mb-2 scroll-m-20 text-base font-semibold tracking-tight text-foreground",
-        className
-      )}
-      {...props}
-    />
-  ),
+  h1: ({
+    className,
+    children,
+    id,
+    ...props
+  }: React.HTMLAttributes<HTMLHeadingElement>) => {
+    const headingId = id || slugify(extractTextFromNode(children))
+    return (
+      <h1
+        id={headingId}
+        className={cn(
+          "mt-2 mb-4 scroll-m-20 text-3xl font-bold tracking-tight text-foreground",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </h1>
+    )
+  },
+  h2: ({
+    className,
+    children,
+    id,
+    ...props
+  }: React.HTMLAttributes<HTMLHeadingElement>) => {
+    const headingId = id || slugify(extractTextFromNode(children))
+    return (
+      <h2
+        id={headingId}
+        className={cn(
+          "mt-8 mb-3 scroll-m-20 text-xl font-semibold tracking-tight text-foreground",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </h2>
+    )
+  },
+  h3: ({
+    className,
+    children,
+    id,
+    ...props
+  }: React.HTMLAttributes<HTMLHeadingElement>) => {
+    const headingId = id || slugify(extractTextFromNode(children))
+    return (
+      <h3
+        id={headingId}
+        className={cn(
+          "mt-6 mb-2 scroll-m-20 text-base font-semibold tracking-tight text-foreground",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </h3>
+    )
+  },
   p: ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p
       className={cn(

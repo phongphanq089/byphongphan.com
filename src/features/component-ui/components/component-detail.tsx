@@ -14,7 +14,9 @@ import { GridContainer } from "@/app/layouts"
 import { CopyButton } from "@/registry/animated/buttton/copy-button"
 import { REGISTRY_DEMO_CODES, REGISTRY_DEMOS } from "@/registry/demos"
 import { siteConfig } from "@/shared/config"
+import { extractTocFromMarkdown } from "@/shared/lib"
 import { Button } from "@/shared/ui/core"
+import { TOCMinimap } from "@/shared/ui/system/toc-minimap"
 import {
   CodeBlockCommand,
   convertNpmCommand,
@@ -151,13 +153,25 @@ export function ${pascalName}Demo() {
     sampleCode,
   ])
 
+  const tocItems = useMemo(
+    () => extractTocFromMarkdown(rawMdxContent, { includeOverview: true }),
+    [rawMdxContent]
+  )
+
   const title = mdxData?.frontmatter?.title ?? component.name
   const description = mdxData?.frontmatter?.description ?? component.description
   const links = mdxData?.frontmatter?.links
 
   return (
     <div className="relative w-full">
+      {tocItems.length > 0 && (
+        <div className="fixed top-1/2 right-0 z-40 hidden -translate-y-1/2 lg:block">
+          <TOCMinimap items={tocItems} />
+        </div>
+      )}
+
       <GridContainer
+        id="overview"
         borderBottom
         className="relative flex flex-col justify-between gap-6"
       >
