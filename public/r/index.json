@@ -70,5 +70,18 @@
       "@radix-ui/react-separator"
     ],
     "registryDependencies": []
+  },
+  {
+    "name": "code-block",
+    "type": "registry:ui",
+    "title": "Code Block",
+    "description": "Syntax-highlighted code surface powered by Shiki with line numbers, line highlighting, collapsible blocks, diff mode, and copy actions.",
+    "dependencies": [
+      "shiki",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "button"
+    ]
   }
 ]

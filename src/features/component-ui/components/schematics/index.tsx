@@ -583,6 +583,36 @@ export function SeparatorSchematic() {
   )
 }
 
+export function CodeBlockSchematic() {
+  return (
+    <div className="flex w-full max-w-[210px] flex-col rounded-lg border border-white/15 bg-black/60 p-2.5 shadow-md">
+      <div className="mb-2 flex items-center justify-between border-b border-white/10 pb-1.5">
+        <div className="flex items-center gap-1.5">
+          <span className="size-1.5 rounded-full bg-red-500/80" />
+          <span className="size-1.5 rounded-full bg-yellow-500/80" />
+          <span className="size-1.5 rounded-full bg-emerald-500/80" />
+          <div className="ml-1 h-1.5 w-12 rounded-full bg-white/20" />
+        </div>
+        <div className="h-1.5 w-6 rounded-full bg-white/10" />
+      </div>
+      <div className="flex flex-col gap-1.5 font-mono">
+        <div className="flex items-center gap-2">
+          <span className="text-[9px] text-white/30">1</span>
+          <div className="h-1.5 w-24 rounded-full bg-purple-400/70" />
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-[9px] text-white/30">2</span>
+          <div className="h-1.5 w-32 rounded-full bg-blue-400/60" />
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-[9px] text-white/30">3</span>
+          <div className="h-1.5 w-16 rounded-full bg-emerald-400/60" />
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function RenderSchematic({ type }: { type: SchematicType }) {
   switch (type) {
     case "accordion":
@@ -646,6 +676,8 @@ export function RenderSchematic({ type }: { type: SchematicType }) {
       return <UnboxingBucketSchematic />
     case "separator":
       return <SeparatorSchematic />
+    case "code-block":
+      return <CodeBlockSchematic />
     default:
       return null
   }

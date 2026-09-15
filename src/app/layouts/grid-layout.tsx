@@ -31,16 +31,18 @@ export const GridLayoutContext = createContext<GridLayoutContextValue>({
 
 export const useGridLayout = () => useContext(GridLayoutContext)
 
-export interface GridContainerProps {
+export type GridContainerProps = {
   as?: React.ElementType
-  children: React.ReactNode
+  children?: React.ReactNode
   className?: string
   showCrosshairs?: boolean
   columns?: 1 | 2 | 3
   borderBottom?: boolean
   borderTop?: boolean
+  borderLeft?: boolean
+  borderRight?: boolean
   id?: string
-  maxWidth?: GridContainerMaxWidth
+  maxWidth?: string
 }
 
 export function GridContainer({
@@ -51,6 +53,8 @@ export function GridContainer({
   columns = 1,
   borderBottom = true,
   borderTop = false,
+  borderLeft = true,
+  borderRight = true,
   id,
   maxWidth: propMaxWidth,
 }: GridContainerProps) {
@@ -79,7 +83,9 @@ export function GridContainer({
     >
       <div
         className={cn(
-          "relative mx-auto h-full border-r border-l border-border duration-300 ease-in-out",
+          "relative mx-auto h-full duration-300 ease-in-out",
+          borderLeft && "border-l border-border",
+          borderRight && "border-r border-border",
           maxWidthClass,
           columns === 2 && "grid grid-cols-1 md:grid-cols-2",
           columns === 3 && "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
@@ -97,12 +103,15 @@ export function GridContainer({
           </>
         )}
 
+        {/* Bottom Crosshairs */}
         {showCrosshairs && borderBottom && (
           <>
-            <Crosshair className="bottom-[-6px] left-[-6px]" />
-            <Crosshair className="right-[-6px] bottom-[-6px]" />
+            {borderLeft && <Crosshair className="bottom-[-6px] left-[-6px]" />}
+            {borderRight && (
+              <Crosshair className="right-[-6px] bottom-[-6px]" />
+            )}
             {columns === 2 && (
-              <Crosshair className="bottom-[-6px] left-1/2 -translate-x-1/2" />
+              <Crosshair className="bottom-[-6px] left-1/2 hidden -translate-x-1/2 md:block" />
             )}
             {columns === 3 && (
               <>
@@ -113,12 +122,13 @@ export function GridContainer({
           </>
         )}
 
+        {/* Top Crosshairs */}
         {showCrosshairs && borderTop && (
           <>
-            <Crosshair className="top-[-6px] left-[-6px]" />
-            <Crosshair className="top-[-6px] right-[-6px]" />
+            {borderLeft && <Crosshair className="top-[-6px] left-[-6px]" />}
+            {borderRight && <Crosshair className="top-[-6px] right-[-6px]" />}
             {columns === 2 && (
-              <Crosshair className="top-[-6px] left-1/2 -translate-x-1/2" />
+              <Crosshair className="top-[-6px] left-1/2 hidden -translate-x-1/2 md:block" />
             )}
             {columns === 3 && (
               <>

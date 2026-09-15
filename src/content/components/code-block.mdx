@@ -1,0 +1,89 @@
+---
+title: Code Block
+description: A syntax-highlighted code display surface powered by Shiki with dual themes, line numbers, line highlighting, collapsible blocks, and copy affordances.
+base: shiki
+component: true
+links:
+  doc: https://shiki.style/
+  api: https://shiki.style/guide/dual-themes
+---
+
+<ComponentPreview name="code-block-demo" />
+
+## Installation
+
+<CodeTabs>
+
+<TabsList>
+  <TabsTrigger value="cli">Command</TabsTrigger>
+  <TabsTrigger value="manual">Manual</TabsTrigger>
+</TabsList>
+<TabsContent value="cli">
+
+```bash
+npx shadcn@latest add code-block
+```
+
+</TabsContent>
+
+<TabsContent value="manual">
+
+<Steps className="mb-0 pt-2">
+
+<Step>Install the following dependencies:</Step>
+
+```bash
+npm install shiki lucide-react class-variance-authority clsx tailwind-merge
+```
+
+<Step>Copy and paste the code-block files into your project.</Step>
+
+<ComponentSource name="code-block" title="components/ui/code-block/code-block.tsx" />
+
+<Step>Update the import paths to match your project setup.</Step>
+
+</Steps>
+
+</TabsContent>
+
+</CodeTabs>
+
+## Usage
+
+```tsx
+import {
+  CodeBlock,
+  CodeBlockCopyButton,
+  CodeBlockHeader,
+  CodeBlockLanguage,
+  CodeBlockTitle,
+} from "@/components/ui/code-block"
+```
+
+```tsx
+<CodeBlock code={code} language="typescript" showLineNumbers>
+  <CodeBlockHeader>
+    <CodeBlockTitle>example.ts</CodeBlockTitle>
+    <CodeBlockLanguage />
+    <CodeBlockCopyButton className="ml-auto" />
+  </CodeBlockHeader>
+</CodeBlock>
+```
+
+## Features
+
+### Line Numbers
+
+Enable numeric gutter indicators using the `showLineNumbers` prop. Numbers are rendered with pseudo-elements to avoid interfering with copy operations.
+
+### Highlighted Lines
+
+Emphasize specific lines with the `highlightedLines` prop using comma-separated ranges or line numbers (e.g. `highlightedLines="2,4-6"`).
+
+### Collapsible Blocks
+
+Constrain height on lengthy source code snippets using `maxLines={18}` coupled with `<CodeBlockExpandButton />` for one-click unfolding.
+
+### Diff & Patch Mode
+
+Highlight additions and removals natively via `diff={{ added: "2-4", removed: "6" }}` or by parsing unified git patches.

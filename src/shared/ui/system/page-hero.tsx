@@ -33,10 +33,6 @@ export interface PageHeroProps {
   className?: string
 }
 
-/**
- * Standardised Blueprint Hero banner used across subpages (Blocks, Components, Blog, Resources).
- * Synchronizes background blueprint stripes, radial glow, responsive typography, and optional stats bar.
- */
 export function PageHero({
   badge,
   count,
@@ -58,9 +54,6 @@ export function PageHero({
           className
         )}
       >
-        {/* Subtle Ambient Radial Glow */}
-        <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-pp-primary/10 blur-3xl dark:bg-pp-primary/15" />
-
         <div className="relative z-10 flex flex-col gap-2.5">
           {(badge || count !== undefined) && (
             <div className="flex flex-wrap items-center gap-2">

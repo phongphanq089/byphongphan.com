@@ -1,69 +1,53 @@
-import { Check, Copy } from "lucide-react"
-import React, { useState } from "react"
+import React from "react"
 
+import {
+  CodeBlock as CoreCodeBlock,
+  CodeBlockCopyButton,
+  markdownCodeProps,
+} from "@/registry/ui/code-block"
 import { cn } from "@/shared/lib"
-import { Button } from "@/shared/ui/core"
 
 import { ApiReference } from "./api-reference"
 import { InstallationGuide } from "./installation-guide"
+import {
+  CodeTabs,
+  ComponentPreview,
+  ComponentSource,
+  Step,
+  Steps,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "./mdx-custom-components"
 import { UsageGuide } from "./usage-guide"
 import { VariantsGrid } from "./variants-grid"
 
-function CodeBlock({
-  children,
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLPreElement> & { "data-code"?: string }) {
-  const [copied, setCopied] = useState(false)
+function MdxCodeBlock(
+  props: React.HTMLAttributes<HTMLPreElement> & { "data-code"?: string }
+) {
+  const { code, language } = markdownCodeProps(props)
+  const finalCode = code || props["data-code"] || ""
 
-  const handleCopy = () => {
-    let text = ""
-    if (typeof children === "string") {
-      text = children
-    } else if (props["data-code"]) {
-      text = props["data-code"]
-    } else if (
-      React.isValidElement(children) &&
-      typeof children.props === "object" &&
-      children.props !== null &&
-      "children" in children.props
-    ) {
-      text = String((children.props as { children?: unknown }).children ?? "")
-    }
-
-    if (text && navigator.clipboard) {
-      navigator.clipboard.writeText(text)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    }
-  }
-
-  return (
-    <div className="group relative my-4 overflow-hidden rounded-xl border border-border/80 bg-card/60">
-      <Button
-        type="button"
-        variant="ghost"
-        size="icon-xs"
-        onClick={handleCopy}
-        className="absolute top-2.5 right-2.5 size-6 text-muted-foreground opacity-0 transition-opacity group-hover:opacity-100 hover:text-foreground"
-      >
-        {copied ? (
-          <Check className="size-3.5 text-emerald-400" />
-        ) : (
-          <Copy className="size-3.5" />
-        )}
-      </Button>
-
+  if (!finalCode) {
+    return (
       <pre
         className={cn(
           "overflow-x-auto p-4 text-xs leading-relaxed text-foreground",
-          className
+          props.className
         )}
         {...props}
-      >
-        {children}
-      </pre>
-    </div>
+      />
+    )
+  }
+
+  return (
+    <CoreCodeBlock
+      code={finalCode}
+      language={language}
+      className={cn("my-4", props.className)}
+    >
+      <CodeBlockCopyButton position="pinned" />
+    </CoreCodeBlock>
   )
 }
 
@@ -137,7 +121,7 @@ export const mdxComponents = {
   hr: ({ ...props }: React.HTMLAttributes<HTMLHRElement>) => (
     <hr className="my-8 border-border/60" {...props} />
   ),
-  pre: CodeBlock,
+  pre: MdxCodeBlock,
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <code
       className={cn(
@@ -151,4 +135,12 @@ export const mdxComponents = {
   InstallationGuide,
   UsageGuide,
   VariantsGrid,
+  ComponentPreview,
+  CodeTabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
+  Steps,
+  Step,
+  ComponentSource,
 }

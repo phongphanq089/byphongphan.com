@@ -117,4 +117,31 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
       },
     ],
   },
+  // 8. Code Block
+  {
+    name: "code-block",
+    title: "Code Block",
+    description:
+      "Syntax-highlighted code surface powered by Shiki with line numbers, line highlighting, collapsible blocks, diff mode, and copy actions.",
+    type: "registry:ui",
+    dependencies: ["shiki", "lucide-react"],
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "ui/code-block/code-block.tsx",
+        type: "registry:ui",
+        target: "components/ui/code-block/code-block.tsx",
+      },
+      {
+        path: "ui/code-block/code-block-highlight.tsx",
+        type: "registry:ui",
+        target: "components/ui/code-block/code-block-highlight.tsx",
+      },
+      {
+        path: "ui/code-block/index.ts",
+        type: "registry:ui",
+        target: "components/ui/code-block/index.ts",
+      },
+    ],
+  },
 ]

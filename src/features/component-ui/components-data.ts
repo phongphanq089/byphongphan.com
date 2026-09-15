@@ -77,4 +77,15 @@ export const COMPONENTS_DATA: ComponentItem[] = [
       "Visually or semantically separates content in a page, supporting both horizontal and vertical orientations.",
     schematicType: "separator",
   },
+  // 8. Code Block
+  {
+    id: "comp-code-block",
+    name: "Code Block",
+    slug: "code-block",
+    category: "primitives",
+    description:
+      "Syntax-highlighted code display with Shiki, line numbers, line highlighting, collapsible blocks, diff mode, and copy actions.",
+    schematicType: "code-block",
+    badge: "Shiki",
+  },
 ]

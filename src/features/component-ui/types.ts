@@ -39,6 +39,7 @@ export type SchematicType =
   | "animated-glow-card"
   | "unboxing-bucket"
   | "separator"
+  | "code-block"
 
 export interface ComponentItem {
   id: string
