@@ -111,3 +111,48 @@ Brand accent stroke highlight for prominent input stages.
 Red invalid status outline paired with form validation message.
 
 <ComponentPreview name="error-select" />
+
+---
+
+## API Reference
+
+### Select
+
+The root context component managing open state, value selection, and keyboard navigation.
+
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `defaultValue?` | `string` | - |
+| `value?` | `string` | - |
+| `onValueChange?` | `(value: string) => void` | - |
+| `disabled?` | `boolean` | `false` |
+| `dir?` | `"ltr" \| "rtl"` | `"ltr"` |
+
+### SelectTrigger
+
+The button element that toggles the select dropdown list.
+
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `className?` | `string` | - |
+| `asChild?` | `boolean` | `false` |
+
+### SelectContent
+
+The floating card element containing grouped or individual select items.
+
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `position?` | `"item-aligned" \| "popper"` | `"popper"` |
+| `sideOffset?` | `number` | `4` |
+| `className?` | `string` | - |
+
+### SelectItem
+
+An individual selectable option item inside the menu.
+
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `value` | `string` | - |
+| `disabled?` | `boolean` | `false` |
+| `className?` | `string` | - |

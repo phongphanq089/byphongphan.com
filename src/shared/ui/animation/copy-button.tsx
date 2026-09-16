@@ -1,1 +1,1 @@
-export * from "@/registry/animated/buttton/copy-button"
+export * from "@/registry/animated/button/copy-button"

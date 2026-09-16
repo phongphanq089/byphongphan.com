@@ -1,5 +1,13 @@
-import { AnimatedGlowCardDemo } from "@/registry/demos"
-import { GLOW_CARD_API_REFERENCE, GLOW_CARD_USAGE } from "@/features/component-ui/data/glow-card-doc-data"
+---
+title: Animated Glow Card
+description: Cursor-following radial specular highlight border card powered by dynamic CSS variables and architectural corner reticle crosshairs.
+component: true
+badge: Motion
+links:
+  doc: https://motion.dev/docs/react-animation
+---
+
+<ComponentPreview name="animated-glow-card-demo" />
 
 Cursor-following radial specular highlight border card powered by dynamic CSS variables and architectural corner reticle crosshairs.
 
@@ -7,24 +15,24 @@ Cursor-following radial specular highlight border card powered by dynamic CSS va
 
 Hover over and move your cursor across the card area to witness the localized specular highlight gradient following your pointer in real-time.
 
-<div className="my-6 flex items-center justify-center rounded-2xl border border-border/80 bg-black/60 p-6 backdrop-blur-md">
-  <AnimatedGlowCardDemo />
-</div>
+---
+
+<InstallationGuide componentSlug="animated-glow-card" />
 
 ---
 
-<InstallationGuide
-  componentSlug="animated-glow-card"
-  dependencies={["framer-motion", "clsx", "tailwind-merge"]}
-  fileName="components/animated-glow-card.tsx"
-/>
+## Usage
 
----
+```tsx
+import { CardCanvas, GlowCard } from "@/components/animated-glow-card"
 
-<UsageGuide
-  importCode={GLOW_CARD_USAGE.importCode}
-  exampleCode={GLOW_CARD_USAGE.exampleCode}
-/>
+<CardCanvas className="p-4">
+  <GlowCard className="w-full max-w-sm" showCrosshairs={true}>
+    <h3 className="font-semibold">Interactive Card</h3>
+    <p className="text-xs text-muted-foreground">Specular highlight card</p>
+  </GlowCard>
+</CardCanvas>
+```
 
 ---
 
@@ -38,4 +46,24 @@ This component uses zero-dependency CSS custom properties to ensure 60fps hardwa
 
 ---
 
-<ApiReference sections={GLOW_CARD_API_REFERENCE} />
+## API Reference
+
+### CardCanvas
+
+Interactive mouse-tracking wrapper establishing bounding dimensions and local CSS variables (`--mouse-x`, `--mouse-y`).
+
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `children` | `React.ReactNode` | - |
+| `className?` | `string` | - |
+
+### GlowCard
+
+Specular gradient border card with dynamic hover glow and architectural reticle crosshairs.
+
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `showCrosshairs?` | `boolean` | `true` |
+| `className?` | `string` | - |
+| `contentClassName?` | `string` | - |
+

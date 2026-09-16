@@ -1,12 +1,17 @@
-export type ComponentCategoryId =
-  "all" | "primitives" | "animations" | "foundations"
+import type { ComponentCategoryId } from "@/registry/schema"
+
+export type { ComponentCategoryId } from "@/registry/schema"
+
+/** Extends ComponentCategoryId with the "all" sentinel used by filter/grid UI */
+export type ComponentCategoryIdWithAll = "all" | ComponentCategoryId
 
 export interface ComponentCategory {
-  id: ComponentCategoryId
+  id: ComponentCategoryIdWithAll
   label: string
   count?: number
 }
 
+/** Schematic types that are currently implemented in schematics/index.tsx */
 export type SchematicType =
   | "accordion"
   | "alert"

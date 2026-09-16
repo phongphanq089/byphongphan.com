@@ -5,6 +5,8 @@ export type RegistryType =
   | "registry:block"
   | "registry:lib"
 
+export type ComponentCategoryId = "primitives" | "animations" | "foundations"
+
 export interface RegistryFile {
   path: string
   content?: string
@@ -17,6 +19,12 @@ export interface RegistryItem {
   title: string
   description: string
   type: RegistryType
+  /** UI category for the component grid */
+  category: ComponentCategoryId
+  /** Schematic thumbnail type used on component cards */
+  schematicType: string
+  /** Optional pill badge label shown on card/detail */
+  badge?: string
   author?: string
   dependencies?: string[]
   devDependencies?: string[]

@@ -87,3 +87,39 @@ Constrain height on lengthy source code snippets using `maxLines={18}` coupled w
 ### Diff & Patch Mode
 
 Highlight additions and removals natively via `diff={{ added: "2-4", removed: "6" }}` or by parsing unified git patches.
+
+---
+
+## API Reference
+
+### CodeBlock
+
+Syntax-highlighted code surface powered by Shiki with line numbers, diff mode, and collapsible support.
+
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `code` | `string` | - |
+| `language?` | `string` | `"typescript"` |
+| `showLineNumbers?` | `boolean` | `false` |
+| `highlightedLines?` | `string` | - |
+| `maxLines?` | `number` | - |
+| `diff?` | `{ added?: string; removed?: string }` | - |
+| `className?` | `string` | - |
+
+### CodeBlockHeader
+
+Top control bar housing filename title, language tag, and copy affordance.
+
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `className?` | `string` | - |
+| `children` | `React.ReactNode` | - |
+
+### CodeBlockCopyButton
+
+Animated one-click clipboard copy button with check feedback icon.
+
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `className?` | `string` | - |
+| `position?` | `"default" \| "pinned"` | `"default"` |

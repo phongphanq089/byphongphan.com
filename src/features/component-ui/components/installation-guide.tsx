@@ -1,13 +1,16 @@
-﻿import { Check, Copy } from "lucide-react"
+﻿import { Check, ChevronDown, ChevronUp, Copy } from "lucide-react"
 import { useMemo, useState } from "react"
 
+import { REGISTRY_ITEMS } from "@/registry"
 import { siteConfig } from "@/shared/config"
 import { cn } from "@/shared/lib"
 import { Button } from "@/shared/ui/core"
 
 interface InstallationGuideProps {
   componentSlug: string
+  /** @deprecated Auto-derived from registry. Kept for MDX backward compat but ignored. */
   dependencies?: string[]
+  /** @deprecated Auto-derived from registry. Kept for MDX backward compat but ignored. */
   fileName?: string
   code?: string
   className?: string
@@ -15,8 +18,6 @@ interface InstallationGuideProps {
 
 export function InstallationGuide({
   componentSlug,
-  dependencies = ["radix-ui", "lucide-react", "class-variance-authority"],
-  fileName = `components/ui/${componentSlug}.tsx`,
   code,
   className,
 }: InstallationGuideProps) {
@@ -29,6 +30,11 @@ export function InstallationGuide({
   const [copiedCode, setCopiedCode] = useState(false)
   const [copiedCli, setCopiedCli] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
+
+  const registryItem = REGISTRY_ITEMS.find((r) => r.name === componentSlug)
+  const dependencies = registryItem?.dependencies ?? []
+  const fileName =
+    registryItem?.files[0]?.target ?? `components/ui/${componentSlug}.tsx`
 
   const registryUrl = `${siteConfig.url}/r/${componentSlug}.json`
 
@@ -78,6 +84,8 @@ export function cn(...inputs: ClassValue[]) {
     }
   }
 
+  const PM_OPTIONS = ["pnpm", "npm", "yarn", "bun"] as const
+
   return (
     <div className={cn("my-6 flex w-full flex-col gap-5", className)}>
       <div className="flex items-center justify-between">
@@ -87,30 +95,34 @@ export function cn(...inputs: ClassValue[]) {
 
         {/* Tab Switcher: Command vs Manual */}
         <div className="flex items-center rounded-lg border border-border/80 bg-muted/40 p-0.5">
-          <button
+          <Button
             type="button"
+            variant="ghost"
+            size="sm"
             onClick={() => setTab("command")}
             className={cn(
-              "rounded-md px-3 py-1 text-xs font-medium transition-colors",
+              "h-7 rounded-md px-3 text-xs font-medium",
               tab === "command"
                 ? "bg-background text-foreground shadow-xs"
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
             Command
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
+            variant="ghost"
+            size="sm"
             onClick={() => setTab("manual")}
             className={cn(
-              "rounded-md px-3 py-1 text-xs font-medium transition-colors",
+              "h-7 rounded-md px-3 text-xs font-medium",
               tab === "manual"
                 ? "bg-background text-foreground shadow-xs"
                 : "text-muted-foreground hover:text-foreground"
             )}
           >
             Manual
-          </button>
+          </Button>
         </div>
       </div>
 
@@ -119,20 +131,22 @@ export function cn(...inputs: ClassValue[]) {
         <div className="overflow-hidden rounded-xl border border-border/80 bg-card/60 shadow-xs">
           <div className="flex items-center justify-between border-b border-border/60 bg-muted/30 px-3 py-2">
             <div className="flex items-center gap-1">
-              {(["pnpm", "npm", "yarn", "bun"] as const).map((pm) => (
-                <button
+              {PM_OPTIONS.map((pm) => (
+                <Button
                   key={pm}
                   type="button"
+                  variant="ghost"
+                  size="sm"
                   onClick={() => setPackageManager(pm)}
                   className={cn(
-                    "rounded px-2 py-0.5 text-xs transition-colors",
+                    "h-6 rounded px-2 text-xs",
                     packageManager === pm
                       ? "bg-accent font-bold text-foreground"
                       : "text-muted-foreground hover:text-foreground"
                   )}
                 >
                   {pm}
-                </button>
+                </Button>
               ))}
             </div>
 
@@ -178,20 +192,22 @@ export function cn(...inputs: ClassValue[]) {
             <div className="overflow-hidden rounded-xl border border-border/80 bg-card/60">
               <div className="flex items-center justify-between border-b border-border/60 bg-muted/30 px-3 py-1.5">
                 <div className="flex items-center gap-1">
-                  {(["pnpm", "yarn", "npm", "bun"] as const).map((pm) => (
-                    <button
+                  {PM_OPTIONS.map((pm) => (
+                    <Button
                       key={pm}
                       type="button"
+                      variant="ghost"
+                      size="sm"
                       onClick={() => setPackageManager(pm)}
                       className={cn(
-                        "rounded px-2 py-0.5 text-xs transition-colors",
+                        "h-6 rounded px-2 text-xs",
                         packageManager === pm
                           ? "bg-accent font-bold text-foreground"
                           : "text-muted-foreground hover:text-foreground"
                       )}
                     >
                       {pm}
-                    </button>
+                    </Button>
                   ))}
                 </div>
 
@@ -309,33 +325,39 @@ export function cn(...inputs: ClassValue[]) {
 
                   {!isExpanded && (
                     <div className="absolute inset-x-0 bottom-0 flex h-24 items-end justify-center bg-gradient-to-t from-card to-transparent p-3">
-                      <button
+                      <Button
                         type="button"
+                        variant="outline"
+                        size="sm"
                         onClick={() => setIsExpanded(true)}
-                        className="rounded-md border border-border bg-background px-3 py-1 text-xs font-medium text-foreground shadow-xs transition-colors hover:bg-accent"
+                        className="h-7 px-3 text-xs"
                       >
+                        <ChevronDown className="size-3" />
                         Expand
-                      </button>
+                      </Button>
                     </div>
                   )}
                 </div>
 
                 {isExpanded && (
                   <div className="flex justify-center border-t border-border/40 p-2">
-                    <button
+                    <Button
                       type="button"
+                      variant="ghost"
+                      size="sm"
                       onClick={() => setIsExpanded(false)}
-                      className="text-xs text-muted-foreground hover:text-foreground"
+                      className="h-7 text-xs text-muted-foreground hover:text-foreground"
                     >
+                      <ChevronUp className="size-3" />
                       Collapse
-                    </button>
+                    </Button>
                   </div>
                 )}
               </div>
             </div>
           )}
 
-          {/* Step 4: Notice */}
+          {/* Final Step: Notice */}
           <div className="relative flex flex-col gap-1">
             <div className="absolute -left-8 flex size-6 items-center justify-center rounded-full border border-border bg-background text-[11px] font-bold text-muted-foreground">
               {code ? 4 : 3}

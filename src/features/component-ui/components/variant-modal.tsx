@@ -1,4 +1,4 @@
-﻿import { Check, Copy } from "lucide-react"
+import { Check, Copy } from "lucide-react"
 import { useMemo, useState } from "react"
 
 import { siteConfig } from "@/shared/config"
@@ -93,19 +93,21 @@ export function VariantModal({
               <div className="flex items-center justify-between border-b border-white/10 bg-white/[0.03] px-3 py-2">
                 <div className="flex items-center gap-1">
                   {(["pnpm", "npm", "yarn", "bun"] as const).map((pm) => (
-                    <button
+                    <Button
                       key={pm}
                       type="button"
+                      variant="ghost"
+                      size="sm"
                       onClick={() => setPackageManager(pm)}
                       className={cn(
-                        "rounded px-2 py-0.5 text-xs transition-colors",
+                        "h-6 rounded px-2 text-xs",
                         packageManager === pm
                           ? "bg-white/20 font-bold text-white shadow-xs"
                           : "text-white/50 hover:text-white"
                       )}
                     >
                       {pm}
-                    </button>
+                    </Button>
                   ))}
                 </div>
 

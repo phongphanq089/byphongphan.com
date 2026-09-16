@@ -5,14 +5,14 @@ import { useMemo } from "react"
 import { GridContainer } from "@/app/layouts"
 
 import { COMPONENTS_DATA } from "../components-data"
-import type { ComponentCategoryId, ComponentItem } from "../types"
+import type { ComponentCategoryIdWithAll, ComponentItem } from "../types"
 import { ComponentCard } from "./component-card"
 import { ComponentFilterBar } from "./component-filter-bar"
 import { ComponentHero } from "./component-hero"
 import { FoundationsView } from "./foundations-view"
 
 interface ComponentGridProps {
-  category?: ComponentCategoryId
+  category?: ComponentCategoryIdWithAll
 }
 
 export function ComponentGrid({ category = "all" }: ComponentGridProps) {

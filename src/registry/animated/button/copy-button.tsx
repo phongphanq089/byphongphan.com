@@ -3,9 +3,9 @@ import type { AnimatePresenceProps, HTMLMotionProps } from "motion/react"
 import { AnimatePresence, motion } from "motion/react"
 import type { ComponentProps } from "react"
 
+import { Button } from "@/registry/ui/button"
 import { type CopyState, useCopyToClipboard } from "@/shared/hooks"
 import { cn } from "@/shared/lib"
-import { Button } from "@/shared/ui"
 
 export type CopyStateIconProps = {
   state: CopyState

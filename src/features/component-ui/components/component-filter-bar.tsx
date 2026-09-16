@@ -4,15 +4,15 @@ import { cn } from "@/shared/lib"
 import { StripedPattern } from "@/shared/ui/system"
 
 import { COMPONENT_CATEGORIES } from "../components-data"
-import type { ComponentCategoryId } from "../types"
+import type { ComponentCategoryIdWithAll } from "../types"
 
 interface ComponentFilterBarProps {
-  activeCategory?: ComponentCategoryId
+  activeCategory?: ComponentCategoryIdWithAll
 }
 
-export const ComponentFilterBar = ({
+export function ComponentFilterBar({
   activeCategory = "all",
-}: ComponentFilterBarProps) => {
+}: ComponentFilterBarProps) {
   return (
     <div className="no-scrollbar flex w-full items-stretch overflow-x-auto">
       {COMPONENT_CATEGORIES.map((cat) => {

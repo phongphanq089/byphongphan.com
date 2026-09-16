@@ -1,7 +1,8 @@
-﻿import { ChevronDown } from "lucide-react"
+import { ChevronDown } from "lucide-react"
 import { useState } from "react"
 
 import { cn } from "@/shared/lib"
+import { Button } from "@/shared/ui/core"
 
 import type { ComponentApiDoc, PropItem } from "../types"
 
@@ -15,10 +16,11 @@ function PropRow({ prop }: { prop: PropItem }) {
 
   return (
     <div className="border-b border-border/40 last:border-b-0">
-      <button
+      <Button
         type="button"
+        variant="ghost"
         onClick={() => setIsOpen(!isOpen)}
-        className="group flex w-full items-center justify-between px-4 py-3 text-left text-xs transition-colors hover:bg-muted/40"
+        className="group flex h-auto w-full items-center justify-between px-4 py-3 text-left text-xs"
       >
         <div className="flex items-center gap-2">
           <code className="font-medium text-foreground">{prop.name}</code>
@@ -35,7 +37,7 @@ function PropRow({ prop }: { prop: PropItem }) {
             )}
           />
         </div>
-      </button>
+      </Button>
 
       {isOpen && (
         <div className="flex flex-col gap-2 bg-muted/20 px-4 py-3 text-xs">

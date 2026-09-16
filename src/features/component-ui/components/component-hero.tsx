@@ -1,9 +1,9 @@
 import { PageHero } from "@/shared/ui/system"
 
-import type { ComponentCategoryId } from "../types"
+import type { ComponentCategoryIdWithAll } from "../types"
 
 interface ComponentHeroProps {
-  category?: ComponentCategoryId
+  category?: ComponentCategoryIdWithAll
   totalCount?: number
 }
 

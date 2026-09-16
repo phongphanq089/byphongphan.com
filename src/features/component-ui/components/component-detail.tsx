@@ -1,5 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { Link } from "@tanstack/react-router"
+﻿import { Link } from "@tanstack/react-router"
 import {
   ArrowLeft,
   ArrowRight,
@@ -11,8 +10,9 @@ import type { MDXComponents } from "mdx/types"
 import { useMemo } from "react"
 
 import { GridContainer } from "@/app/layouts"
-import { CopyButton } from "@/registry/animated/buttton/copy-button"
-import { REGISTRY_DEMO_CODES, REGISTRY_DEMOS } from "@/registry/demos"
+import { REGISTRY_ITEMS } from "@/registry"
+import { CopyButton } from "@/registry/animated/button/copy-button"
+import { REGISTRY_DEMOS } from "@/registry/demos"
 import { siteConfig } from "@/shared/config"
 import { extractTocFromMarkdown } from "@/shared/lib"
 import { Button } from "@/shared/ui/core"
@@ -88,32 +88,13 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
     return { prevComponent: prev, nextComponent: next }
   }, [component.id])
 
-  const isCustomRegistry = Boolean(REGISTRY_DEMOS[component.slug])
-  const source = isCustomRegistry
+  // A component is in the custom registry when it has a corresponding registry entry
+  const registryItem = REGISTRY_ITEMS.find((r) => r.name === component.slug)
+  const source = registryItem
     ? `${siteConfig.url}/r/${component.slug}.json`
     : component.slug
 
   const baseCommand = `npx shadcn@latest add ${source}`
-
-  const sampleCode = useMemo(() => {
-    if (REGISTRY_DEMO_CODES[component.slug]) {
-      return REGISTRY_DEMO_CODES[component.slug]
-    }
-    const pascalName = component.name.replace(/[^a-zA-Z0-9]/g, "")
-    return `import * as React from "react"
-import { ${pascalName} } from "@/components/ui/${component.slug}"
-
-export function ${pascalName}Demo() {
-  return (
-    <div className="flex items-center justify-center p-8">
-      <${pascalName}>
-        {/* Component content */}
-      </${pascalName}>
-    </div>
-  )
-}
-`
-  }, [component.name, component.slug])
 
   const rawMdxContent = useMemo(() => {
     const matchingKey = Object.keys(rawMdxModules).find((filePath) => {
@@ -122,36 +103,16 @@ export function ${pascalName}Demo() {
     })
     if (matchingKey) {
       const moduleValue = rawMdxModules[matchingKey]
-      if (typeof moduleValue === "string") {
-        return moduleValue
-      }
-      if (moduleValue && typeof (moduleValue as any).default === "string") {
-        return (moduleValue as any).default
-      }
+      if (typeof moduleValue === "string") return moduleValue
     }
-    // Fallback markdown only if this component does not have a dedicated .mdx file
-    return `# ${component.name}
-
-    ${component.description}
-      ## Installation
-      \`\`\`bash
-      ${baseCommand}
-      \`\`\`
-      ## Usage
-      \`\`\`tsx
-      ${sampleCode}
-      \`\`\`
-      `
-  }, [
-    component.name,
-    component.description,
-    component.slug,
-    baseCommand,
-    sampleCode,
-  ])
+    return null
+  }, [component.slug])
 
   const tocItems = useMemo(
-    () => extractTocFromMarkdown(rawMdxContent, { includeOverview: true }),
+    () =>
+      rawMdxContent
+        ? extractTocFromMarkdown(rawMdxContent, { includeOverview: true })
+        : [],
     [rawMdxContent]
   )
 
@@ -236,21 +197,23 @@ export function ${pascalName}Demo() {
         >
           <div className="flex items-center justify-between">
             <Button variant={"ghost"} asChild>
-              <Link to={`/component-ui/${component.category}` as any}>
+              <Link to={`/component-ui/${component.category}` as never}>
                 <ArrowLeft className="size-3.5" />
                 <span className="capitalize">{component.category}</span>
               </Link>
             </Button>
 
             <div className="flex items-center gap-2">
-              <CopyButton
-                className="relative gap-1.5 bg-accent pr-2.5 pl-2"
-                variant="secondary"
-                size="lg"
-                text={rawMdxContent}
-              >
-                Copy Page
-              </CopyButton>
+              {rawMdxContent && (
+                <CopyButton
+                  className="relative gap-1.5 bg-accent pr-2.5 pl-2"
+                  variant="secondary"
+                  size="lg"
+                  text={rawMdxContent}
+                >
+                  Copy Page
+                </CopyButton>
+              )}
 
               <div className="flex items-center gap-2">
                 {prevComponent ? (
@@ -265,9 +228,7 @@ export function ${pascalName}Demo() {
                       <ArrowLeft className="size-4" />
                     </Link>
                   </Button>
-                ) : (
-                  ""
-                )}
+                ) : null}
 
                 {nextComponent ? (
                   <Button variant="secondary" size="icon" asChild>
@@ -281,9 +242,7 @@ export function ${pascalName}Demo() {
                       <ArrowRight className="size-4" />
                     </Link>
                   </Button>
-                ) : (
-                  ""
-                )}
+                ) : null}
               </div>
             </div>
           </div>
@@ -301,7 +260,7 @@ export function ${pascalName}Demo() {
             <mdxData.Component components={mdxComponents} />
           </div>
         </GridContainer>
-      ) : (
+      ) : LiveDemo ? (
         <GridContainer
           id="interactive-demo"
           borderBottom
@@ -312,8 +271,22 @@ export function ${pascalName}Demo() {
             slug={component.slug}
             schematicType={component.schematicType}
             liveDemo={LiveDemo}
-            code={sampleCode}
+            code={`// ${component.name} — documentation coming soon.\n// Install via:\n// ${baseCommand}`}
           />
+        </GridContainer>
+      ) : (
+        <GridContainer
+          id="coming-soon"
+          borderBottom
+          showCrosshairs
+          className="flex flex-col items-center justify-center gap-4 py-20 text-center"
+        >
+          <p className="text-sm font-medium text-muted-foreground">
+            Documentation coming soon.
+          </p>
+          <p className="text-xs text-muted-foreground/60">
+            Install the component via the command above to get started.
+          </p>
         </GridContainer>
       )}
     </div>

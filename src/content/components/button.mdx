@@ -1,0 +1,59 @@
+---
+title: Button
+description: Displays a button or a component that looks like a button with multiple visual variants and sizes.
+base: radix
+component: true
+links:
+  doc: https://www.radix-ui.com/primitives/docs/components/slot
+---
+
+<ComponentPreview name="button-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="manual">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="cli">
+    <CodeBlockCommand name="button" />
+  </TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the following dependencies:</Step>
+      <CodeBlockCommand command="npm install radix-ui class-variance-authority clsx tailwind-merge" />
+      <Step>Copy and paste the button component into your project.</Step>
+      <ComponentSource name="button" title="components/ui/button.tsx" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { Button } from "@/components/ui/button"
+
+<Button variant="default" size="default">
+  Click me
+</Button>
+```
+
+---
+
+## API Reference
+
+### Button
+
+Core interactive button trigger supporting standard HTML button attributes and Radix Slot polymorphism.
+
+| Prop | Type | Default |
+| :--- | :--- | :--- |
+| `variant?` | `"default" \| "outline" \| "secondary" \| "ghost" \| "destructive" \| "link"` | `"default"` |
+| `size?` | `"default" \| "xs" \| "sm" \| "lg" \| "icon" \| "icon-xs" \| "icon-sm" \| "icon-lg"` | `"default"` |
+| `asChild?` | `boolean` | `false` |
+| `disabled?` | `boolean` | `false` |
+| `className?` | `string` | - |

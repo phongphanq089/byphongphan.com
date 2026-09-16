@@ -1,9 +1,14 @@
-import { Link } from "@tanstack/react-router"
+﻿import { Link } from "@tanstack/react-router"
 import { ArrowUpRight, Check, Copy } from "lucide-react"
-import React, { useState } from "react"
+import { useState } from "react"
 
 import { cn } from "@/shared/lib"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/core"
+import {
+  Button,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/shared/ui/core"
 
 import type { ComponentItem } from "../types"
 import { RenderSchematic } from "./schematics"
@@ -12,7 +17,7 @@ interface ComponentCardProps {
   component: ComponentItem
 }
 
-export const ComponentCard = ({ component }: ComponentCardProps) => {
+export function ComponentCard({ component }: ComponentCardProps) {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = (e: React.MouseEvent) => {
@@ -55,10 +60,12 @@ export const ComponentCard = ({ component }: ComponentCardProps) => {
         <div className="flex items-center gap-1.5">
           <Tooltip>
             <TooltipTrigger asChild>
-              <button
+              <Button
                 type="button"
+                variant="ghost"
+                size="icon-xs"
                 onClick={handleCopy}
-                className="flex size-6 items-center justify-center rounded-md border border-border/60 bg-muted/40 text-muted-foreground opacity-0 transition-all group-hover:opacity-100 hover:border-pp-primary/50 hover:bg-pp-primary/10 hover:text-pp-primary active:scale-95"
+                className="size-6 border border-border/60 bg-muted/40 text-muted-foreground opacity-0 transition-all group-hover:opacity-100 hover:border-pp-primary/50 hover:bg-pp-primary/10 hover:text-pp-primary active:scale-95"
                 aria-label="Copy component name"
               >
                 {copied ? (
@@ -66,7 +73,7 @@ export const ComponentCard = ({ component }: ComponentCardProps) => {
                 ) : (
                   <Copy className="size-3" />
                 )}
-              </button>
+              </Button>
             </TooltipTrigger>
             <TooltipContent side="top" sideOffset={4} className="text-[10px]">
               {copied ? "Copied name!" : "Copy name"}

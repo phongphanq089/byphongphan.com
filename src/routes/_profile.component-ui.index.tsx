@@ -1,4 +1,4 @@
-﻿import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute } from "@tanstack/react-router"
 
 import { ComponentGrid } from "@/features/component-ui"
 import { createSeoMeta } from "@/shared/config"
