@@ -55,6 +55,7 @@ export interface ComponentItem {
   count?: number
   schematicType: SchematicType
   badge?: string
+  isNew?: boolean
 }
 
 export interface PropItem {

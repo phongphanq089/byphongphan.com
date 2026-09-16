@@ -1,9 +1,10 @@
-﻿import { Link } from "@tanstack/react-router"
+import { Link } from "@tanstack/react-router"
 import { ArrowUpRight, Check, Copy } from "lucide-react"
 import { useState } from "react"
 
 import { cn } from "@/shared/lib"
 import {
+  Badge,
   Button,
   Tooltip,
   TooltipContent,
@@ -52,8 +53,13 @@ export function ComponentCard({ component }: ComponentCardProps) {
           <h3 className="text-sm font-semibold tracking-tight text-foreground transition-colors group-hover:text-pp-primary sm:text-base">
             {component.name}
           </h3>
-          {component.badge && (
-            <span className="size-2 rounded-full bg-blue-500 shadow-[0_0_8px_#3b82f6]" />
+          {component.isNew && (
+            <Badge
+              variant="outline"
+              className="h-4.5 gap-1 rounded border-primary bg-primary px-1.5 text-[9px] font-semibold tracking-wider text-white uppercase shadow-[0_0_8px_var(--pp-primary-glow)]"
+            >
+              New
+            </Badge>
           )}
         </div>
 

@@ -629,8 +629,6 @@ export function RenderSchematic({ type }: { type: SchematicType }) {
       return <BadgeSchematic />
     case "breadcrumb":
       return <BreadcrumbSchematic />
-    case "button":
-      return <ButtonSchematic />
     case "calendar":
       return <CalendarSchematic />
     case "not-found":

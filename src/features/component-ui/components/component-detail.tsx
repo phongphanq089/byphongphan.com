@@ -1,4 +1,4 @@
-﻿import { Link } from "@tanstack/react-router"
+import { Link } from "@tanstack/react-router"
 import {
   ArrowLeft,
   ArrowRight,
@@ -15,8 +15,12 @@ import { CopyButton } from "@/registry/animated/button/copy-button"
 import { REGISTRY_DEMOS } from "@/registry/demos"
 import { siteConfig } from "@/shared/config"
 import { extractTocFromMarkdown } from "@/shared/lib"
-import { Button } from "@/shared/ui/core"
-import { CodeBlockCommand, convertNpmCommand } from "@/shared/ui/core"
+import {
+  Badge,
+  Button,
+  CodeBlockCommand,
+  convertNpmCommand,
+} from "@/shared/ui/core"
 import { TOCMinimap } from "@/shared/ui/system/toc-minimap"
 
 import { COMPONENTS_DATA } from "../components-data"
@@ -141,9 +145,19 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
                   {title}
                 </h1>
 
-                {(mdxData?.frontmatter?.badge ?? component.badge) && (
+                {component.isNew && (
+                  <Badge
+                    variant="outline"
+                    className="h-5 gap-1.5 rounded-full border-primary/30 bg-primary/10 px-2 text-[10px] font-semibold tracking-wider text-primary uppercase shadow-[0_0_10px_var(--pp-primary-glow)]"
+                  >
+                    <span className="size-1.5 animate-pulse rounded-full bg-primary" />
+                    New
+                  </Badge>
+                )}
+
+                {mdxData?.frontmatter?.badge && (
                   <span className="rounded-full border border-blue-500/40 bg-blue-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-blue-400">
-                    {mdxData?.frontmatter?.badge ?? component.badge}
+                    {mdxData.frontmatter.badge}
                   </span>
                 )}
               </div>

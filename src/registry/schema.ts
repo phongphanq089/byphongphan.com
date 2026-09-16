@@ -23,8 +23,8 @@ export interface RegistryItem {
   category: ComponentCategoryId
   /** Schematic thumbnail type used on component cards */
   schematicType: string
-  /** Optional pill badge label shown on card/detail */
-  badge?: string
+  /** Whether the component is newly added (renders "New" badge on card) */
+  isNew?: boolean
   author?: string
   dependencies?: string[]
   devDependencies?: string[]

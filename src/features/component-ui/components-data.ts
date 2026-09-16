@@ -24,6 +24,6 @@ export const COMPONENTS_DATA: ComponentItem[] = REGISTRY_ITEMS.map(
     category: item.category,
     description: item.description,
     schematicType: item.schematicType as ComponentItem["schematicType"],
-    badge: item.badge,
+    isNew: item.isNew,
   })
 )
