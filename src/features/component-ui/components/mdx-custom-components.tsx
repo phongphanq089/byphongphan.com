@@ -1,5 +1,6 @@
 import React, { useMemo } from "react"
 
+import { REGISTRY_ITEMS } from "@/registry"
 import { REGISTRY_DEMOS } from "@/registry/demos"
 import {
   CodeBlock,
@@ -30,31 +31,85 @@ const REGISTRY_SOURCES = import.meta.glob<string>(
 )
 
 /**
- * Resolves raw source code directly from files in /src/registry.
- * Prioritizes live demo files (e.g. select-demo.tsx) so demos are 100% single-source-of-truth.
+ * Resolves demo/example source code for ComponentPreview and VariantModal.
+ * Checks demos first, then variants.
  */
-function resolveRegistrySource(
+export function resolveDemoSource(name?: string): string | undefined {
+  if (!name) return undefined
+  const cleanName = name.replace(/-demo$/, "")
+
+  const candidates = [
+    `/demos/${name}.tsx`,
+    `/demos/${cleanName}-demo.tsx`,
+    `/demos/${cleanName}.tsx`,
+    `/variants/select/${name}.tsx`,
+    `/variants/${cleanName}/${name}.tsx`,
+    `/${name}.tsx`,
+  ]
+
+  for (const suffix of candidates) {
+    const matchedKey = Object.keys(REGISTRY_SOURCES).find((key) =>
+      key.endsWith(suffix)
+    )
+    if (matchedKey && REGISTRY_SOURCES[matchedKey]) {
+      return REGISTRY_SOURCES[matchedKey]
+    }
+  }
+
+  // Check VARIANTS_MAP
+  return VARIANTS_MAP.get(name)?.code ?? VARIANTS_MAP.get(cleanName)?.code
+}
+
+/** Backward compatibility alias */
+export const resolveRegistrySource = resolveDemoSource
+
+/**
+ * Resolves actual UI component source code for ComponentSource ("Copy and paste into your project").
+ * Always targets the real component in /src/registry/ui/ or /src/registry/animated/, NEVER the demo file.
+ */
+export function resolveComponentSource(
   name?: string,
   title?: string
 ): string | undefined {
   if (!name && !title) return undefined
 
+  // 1. If name matches a registry item, look up its target file path directly
   if (name) {
-    const cleanName = name.replace(/-demo$/, "")
+    const registryItem = REGISTRY_ITEMS.find((item) => item.name === name)
+    if (registryItem && registryItem.files.length > 0) {
+      const primaryPath = registryItem.files[0].path
+      const foundKey = Object.keys(REGISTRY_SOURCES).find((k) =>
+        k.endsWith(primaryPath.replace(/^src\//, ""))
+      )
+      if (foundKey && REGISTRY_SOURCES[foundKey]) {
+        return REGISTRY_SOURCES[foundKey]
+      }
+    }
+  }
+
+  // 2. If title is given (e.g. "components/ui/select.tsx"), match by filename
+  if (title) {
+    const normalizedTitle = title
+      .replace(/^components\//, "")
+      .replace(/^\/?/, "/")
+    const matchedKey = Object.keys(REGISTRY_SOURCES).find(
+      (key) => !key.includes("/demos/") && key.endsWith(normalizedTitle)
+    )
+    if (matchedKey && REGISTRY_SOURCES[matchedKey]) {
+      return REGISTRY_SOURCES[matchedKey]
+    }
+  }
+
+  // 3. Fallback candidates strictly within /ui/ or /animated/
+  if (name) {
     const candidates = [
-      `/demos/${name}.tsx`,
-      `/demos/${cleanName}-demo.tsx`,
-      `/demos/${cleanName}.tsx`,
       `/ui/${name}.tsx`,
-      `/ui/${cleanName}.tsx`,
       `/ui/${name}/index.ts`,
       `/ui/${name}/${name}.tsx`,
-      `/ui/${cleanName}/index.ts`,
-      `/ui/${cleanName}/${cleanName}.tsx`,
       `/animated/${name}.tsx`,
-      `/animated/${cleanName}.tsx`,
-      `/${name}.tsx`,
-      `/${cleanName}.tsx`,
+      `/animated/${name}/index.ts`,
+      `/animated/${name}/${name}.tsx`,
+      `/ui/${name.replace(/-demo$/, "")}.tsx`,
     ]
 
     for (const suffix of candidates) {
@@ -64,16 +119,6 @@ function resolveRegistrySource(
       if (matchedKey && REGISTRY_SOURCES[matchedKey]) {
         return REGISTRY_SOURCES[matchedKey]
       }
-    }
-  }
-
-  if (title) {
-    const normalizedTitle = title.replace(/^components\//, "")
-    const matchedTitleKey = Object.keys(REGISTRY_SOURCES).find((key) =>
-      key.endsWith(normalizedTitle)
-    )
-    if (matchedTitleKey && REGISTRY_SOURCES[matchedTitleKey]) {
-      return REGISTRY_SOURCES[matchedTitleKey]
     }
   }
 
@@ -105,12 +150,10 @@ export function ComponentPreview({
     VARIANTS_MAP.get(name)?.component ??
     VARIANTS_MAP.get(cleanName)?.component
 
-  // 2. Resolve code: First directly from the actual source file in REGISTRY_SOURCES, then VARIANTS_MAP
+  // 2. Resolve demo code: First from live demo/variant files, then VARIANTS_MAP
   const sampleCode =
-    resolveRegistrySource(name) ??
-    resolveRegistrySource(cleanName) ??
-    VARIANTS_MAP.get(name)?.code ??
-    VARIANTS_MAP.get(cleanName)?.code ??
+    resolveDemoSource(name) ??
+    resolveDemoSource(cleanName) ??
     `// Code preview for ${name}`
 
   return (
@@ -239,7 +282,7 @@ export function ComponentSource({
   const resolvedCode = useMemo(() => {
     if (explicitCode) return explicitCode
     return (
-      resolveRegistrySource(name, title) ??
+      resolveComponentSource(name, title) ??
       `// Source implementation for ${title ?? name ?? "component"}`
     )
   }, [explicitCode, name, title])

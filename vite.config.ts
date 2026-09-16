@@ -36,8 +36,29 @@ function rawMdxPlugin(): Plugin {
     load(id) {
       if (id.startsWith("\0raw-mdx:")) {
         const realPath = id.slice("\0raw-mdx:".length)
+        this.addWatchFile(realPath)
         const content = fs.readFileSync(realPath, "utf-8")
         return `export default ${JSON.stringify(content)};`
+      }
+    },
+    handleHotUpdate({ file, server, modules }) {
+      if (file.endsWith(".mdx")) {
+        const normalizedFile = file.replace(/\\/g, "/").toLowerCase()
+        const affectedModules = [...modules]
+
+        for (const [modId, mod] of server.moduleGraph.idToModuleMap.entries()) {
+          if (
+            modId.startsWith("\0raw-mdx:") &&
+            modId
+              .slice("\0raw-mdx:".length)
+              .replace(/\\/g, "/")
+              .toLowerCase() === normalizedFile
+          ) {
+            server.moduleGraph.invalidateModule(mod)
+            affectedModules.push(mod)
+          }
+        }
+        return affectedModules
       }
     },
   }

@@ -55,7 +55,7 @@ export function extractTocFromMarkdown(
     }
     if (inCodeBlock) continue
 
-    const match = line.match(/^(#{2,3})\s+(.+)$/)
+    const match = line.match(/^(#{1,3})\s+(.+)$/)
     if (match) {
       const depth = match[1].length
       let rawTitle = match[2].trim()

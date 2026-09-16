@@ -12,6 +12,7 @@ import {
 } from "@/shared/ui/core"
 
 import type { ComponentVariant } from "../types"
+import { resolveRegistrySource } from "./mdx-custom-components"
 
 interface VariantModalProps {
   variant: ComponentVariant | null
@@ -57,9 +58,14 @@ export function VariantModal({
     }
   }
 
+  const variantCode = useMemo(() => {
+    if (!variant) return ""
+    return variant.code || resolveRegistrySource(variant.id) || ""
+  }, [variant])
+
   const handleCopyCode = () => {
-    if (variant && navigator.clipboard) {
-      navigator.clipboard.writeText(variant.code)
+    if (variantCode && navigator.clipboard) {
+      navigator.clipboard.writeText(variantCode)
       setCopiedCode(true)
       setTimeout(() => setCopiedCode(false), 2000)
     }
@@ -158,7 +164,7 @@ export function VariantModal({
 
             <div className="relative max-h-[380px] overflow-y-auto rounded-xl border border-white/10 bg-black/80 p-4 text-xs leading-relaxed text-white/90">
               <pre>
-                <code>{variant.code}</code>
+                <code>{variantCode}</code>
               </pre>
             </div>
           </div>

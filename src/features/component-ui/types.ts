@@ -76,7 +76,7 @@ export interface ComponentVariant {
   title: string
   description?: string
   component: React.ComponentType
-  code: string
+  code?: string
   dependencies?: string[]
 }
 
