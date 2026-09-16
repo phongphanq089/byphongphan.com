@@ -63,12 +63,12 @@ export function ComponentStagePreview({
 
         <TabsContent
           value="preview"
-          className="m-0 flex-1 rounded-lg bg-background outline-none"
+          className="m-0 w-full flex-1 rounded-lg bg-background outline-none"
         >
           <div className="relative flex min-h-[380px] w-full items-center justify-center p-8 sm:p-12">
             <div className="relative z-10 flex w-full items-center justify-center">
               {LiveDemo ? (
-                <div className="flex items-center justify-center p-4">
+                <div className="flex w-full items-center justify-center p-4">
                   <LiveDemo />
                 </div>
               ) : (

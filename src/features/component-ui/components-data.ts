@@ -23,7 +23,6 @@ export const COMPONENTS_DATA: ComponentItem[] = REGISTRY_ITEMS.map(
     slug: item.name,
     category: item.category,
     description: item.description,
-    schematic: item.schematic,
     schematicType: item.schematicType as ComponentItem["schematicType"],
     isNew: item.isNew,
   })

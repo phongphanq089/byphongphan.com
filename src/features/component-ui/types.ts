@@ -22,7 +22,6 @@ export interface ComponentItem {
   category: ComponentCategoryId
   description: string
   count?: number
-  schematic?: React.ComponentType
   schematicType: SchematicType
   badge?: string
   isNew?: boolean

@@ -10,7 +10,7 @@ import {
   CodeBlockLanguage,
   CodeBlockTitle,
 } from "@/registry/ui/code-block"
-import { SELECT_VARIANTS } from "@/registry/variants/select-variants"
+import { VARIANTS_MAP } from "@/registry/variants"
 import { cn } from "@/shared/lib"
 import {
   Tabs,
@@ -30,20 +30,24 @@ const REGISTRY_SOURCES = import.meta.glob<string>(
   }
 )
 
+const DYNAMIC_VARIANT_MODULES = import.meta.glob<{
+  default?: React.ComponentType
+  [key: string]: unknown
+}>("/src/registry/variants/**/*.{tsx,ts}", { eager: true })
+
 /**
  * Resolves demo/example source code for ComponentPreview and VariantModal.
- * Checks demos first, then variants.
+ * Checks demos first, then any variant subfolder dynamically.
  */
 export function resolveDemoSource(name?: string): string | undefined {
   if (!name) return undefined
   const cleanName = name.replace(/-demo$/, "")
 
+  // 1. Check direct demo candidates
   const candidates = [
     `/demos/${name}.tsx`,
     `/demos/${cleanName}-demo.tsx`,
     `/demos/${cleanName}.tsx`,
-    `/variants/select/${name}.tsx`,
-    `/variants/${cleanName}/${name}.tsx`,
     `/${name}.tsx`,
   ]
 
@@ -56,7 +60,17 @@ export function resolveDemoSource(name?: string): string | undefined {
     }
   }
 
-  // Check VARIANTS_MAP
+  // 2. Dynamic lookup in /variants/ across any component subfolder (e.g. /variants/card/card-with-image.tsx, /variants/select/icon-select.tsx)
+  const matchedVariantKey = Object.keys(REGISTRY_SOURCES).find(
+    (key) =>
+      key.includes("/variants/") &&
+      (key.endsWith(`/${name}.tsx`) || key.endsWith(`/${cleanName}.tsx`))
+  )
+  if (matchedVariantKey && REGISTRY_SOURCES[matchedVariantKey]) {
+    return REGISTRY_SOURCES[matchedVariantKey]
+  }
+
+  // 3. Check VARIANTS_MAP code property
   return VARIANTS_MAP.get(name)?.code ?? VARIANTS_MAP.get(cleanName)?.code
 }
 
@@ -125,9 +139,6 @@ export function resolveComponentSource(
   return undefined
 }
 
-// Map of all variants for ComponentPreview lookup
-const VARIANTS_MAP = new Map(SELECT_VARIANTS.map((v) => [v.id, v]))
-
 export interface ComponentPreviewProps {
   name: string
   styleName?: string
@@ -142,13 +153,29 @@ export function ComponentPreview({
   direction,
   className,
 }: ComponentPreviewProps) {
-  // 1. Check direct REGISTRY_DEMOS
+  // 1. Check direct REGISTRY_DEMOS, then registered VARIANTS_MAP, then dynamic VARIANT_MODULES
   const cleanName = name.replace(/-demo$/, "")
-  const LiveDemo =
+
+  let LiveDemo: React.ComponentType | undefined =
     REGISTRY_DEMOS[name] ??
     REGISTRY_DEMOS[cleanName] ??
     VARIANTS_MAP.get(name)?.component ??
     VARIANTS_MAP.get(cleanName)?.component
+
+  if (!LiveDemo) {
+    const matchedModuleKey = Object.keys(DYNAMIC_VARIANT_MODULES).find(
+      (key) =>
+        !key.endsWith("-variants.tsx") &&
+        !key.endsWith("/index.ts") &&
+        (key.endsWith(`/${name}.tsx`) || key.endsWith(`/${cleanName}.tsx`))
+    )
+    if (matchedModuleKey) {
+      const mod = DYNAMIC_VARIANT_MODULES[matchedModuleKey]
+      LiveDemo = (mod.default ??
+        Object.values(mod).find((val) => typeof val === "function")) as
+        React.ComponentType | undefined
+    }
+  }
 
   // 2. Resolve demo code: First from live demo/variant files, then VARIANTS_MAP
   const sampleCode =

@@ -1,31 +1,32 @@
-﻿import { Button } from "@/registry/ui/button"
-import {
+﻿import {
+  Button,
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/registry/ui/card"
+} from "@/shared/ui"
 
 export function CardDemo() {
   return (
-    <Card className="w-full max-w-sm">
+    <Card className="w-full max-w-xs">
       <CardHeader>
-        <CardTitle>Create project</CardTitle>
-        <CardDescription>Deploy your new project in one-click.</CardDescription>
+        <CardTitle>Default Card</CardTitle>
+        <CardDescription>
+          This card uses the default size variant.
+        </CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="text-xs text-muted-foreground">
-          Your project will be deployed to your custom domain with zero
-          configuration.
+        <p>
+          The card component supports a size prop that defaults to
+          &quot;default&quot; for standard spacing and sizing.
         </p>
       </CardContent>
-      <CardFooter className="flex justify-between">
-        <Button variant="outline" size="sm">
-          Cancel
+      <CardFooter>
+        <Button variant="outline" className="w-full">
+          Action
         </Button>
-        <Button size="sm">Deploy</Button>
       </CardFooter>
     </Card>
   )
