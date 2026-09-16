@@ -1,6 +1,10 @@
+import type React from "react"
+
 import type { ComponentCategoryId } from "@/registry/schema"
+import type { SchematicType } from "@/registry/schematics"
 
 export type { ComponentCategoryId } from "@/registry/schema"
+export type { SchematicType } from "@/registry/schematics"
 
 /** Extends ComponentCategoryId with the "all" sentinel used by filter/grid UI */
 export type ComponentCategoryIdWithAll = "all" | ComponentCategoryId
@@ -11,41 +15,6 @@ export interface ComponentCategory {
   count?: number
 }
 
-/** Schematic types that are currently implemented in schematics/index.tsx */
-export type SchematicType =
-  | "accordion"
-  | "alert"
-  | "alert-dialog"
-  | "autocomplete"
-  | "avatar"
-  | "badge"
-  | "breadcrumb"
-  | "button"
-  | "calendar"
-  | "not-found"
-  | "activity-feed"
-  | "banner"
-  | "benefits"
-  | "blog-listings"
-  | "careers"
-  | "chat"
-  | "command"
-  | "checkbox"
-  | "dialog"
-  | "dropdown"
-  | "hover-card"
-  | "input"
-  | "tabs"
-  | "toast"
-  | "tooltip"
-  | "skeleton"
-  | "select"
-  | "card"
-  | "animated-glow-card"
-  | "unboxing-bucket"
-  | "separator"
-  | "code-block"
-
 export interface ComponentItem {
   id: string
   name: string
@@ -53,6 +22,7 @@ export interface ComponentItem {
   category: ComponentCategoryId
   description: string
   count?: number
+  schematic?: React.ComponentType
   schematicType: SchematicType
   badge?: string
   isNew?: boolean

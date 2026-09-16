@@ -11,43 +11,11 @@
     "registryDependencies": []
   },
   {
-    "name": "button",
-    "type": "registry:ui",
-    "title": "Button",
-    "description": "Displays a button or a component that looks like a button.",
-    "dependencies": [
-      "radix-ui",
-      "class-variance-authority"
-    ],
-    "registryDependencies": []
-  },
-  {
-    "name": "badge",
-    "type": "registry:ui",
-    "title": "Badge",
-    "description": "Displays a badge or a component that looks like a badge.",
-    "dependencies": [
-      "@radix-ui/react-slot",
-      "class-variance-authority"
-    ],
-    "registryDependencies": []
-  },
-  {
     "name": "card",
     "type": "registry:ui",
     "title": "Card",
     "description": "Displays a card with header, content, and footer.",
     "dependencies": [],
-    "registryDependencies": []
-  },
-  {
-    "name": "animated-glow-card",
-    "type": "registry:component",
-    "title": "Animated Glow Card",
-    "description": "Cursor-following radial specular highlight border card powered by CSS variables.",
-    "dependencies": [
-      "framer-motion"
-    ],
     "registryDependencies": []
   },
   {
@@ -58,16 +26,6 @@
     "dependencies": [
       "motion",
       "lucide-react"
-    ],
-    "registryDependencies": []
-  },
-  {
-    "name": "separator",
-    "type": "registry:ui",
-    "title": "Separator",
-    "description": "Visually or semantically separates content in a page, supporting both horizontal and vertical orientations.",
-    "dependencies": [
-      "@radix-ui/react-separator"
     ],
     "registryDependencies": []
   },

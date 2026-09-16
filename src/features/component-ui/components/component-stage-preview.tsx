@@ -73,7 +73,7 @@ export function ComponentStagePreview({
                 </div>
               ) : (
                 <div className="scale-110 sm:scale-125">
-                  <RenderSchematic type={schematicType ?? "not-found"} />
+                  <RenderSchematic type={schematicType} />
                 </div>
               )}
             </div>

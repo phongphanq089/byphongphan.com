@@ -1,3 +1,9 @@
+import type React from "react"
+
+import type { SchematicType } from "./schematics"
+
+export type { SchematicType } from "./schematics"
+
 export type RegistryType =
   | "registry:ui"
   | "registry:component"
@@ -21,8 +27,10 @@ export interface RegistryItem {
   type: RegistryType
   /** UI category for the component grid */
   category: ComponentCategoryId
+  /** Schematic component representing the wireframe thumbnail for this item */
+  schematic?: React.ComponentType
   /** Schematic thumbnail type used on component cards */
-  schematicType: string
+  schematicType?: SchematicType | string
   /** Whether the component is newly added (renders "New" badge on card) */
   isNew?: boolean
   author?: string

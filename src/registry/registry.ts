@@ -1,4 +1,10 @@
 import type { RegistryItem } from "./schema"
+import {
+  CardSchematic,
+  CodeBlockSchematic,
+  SelectSchematic,
+  UnboxingBucketSchematic,
+} from "./schematics"
 
 export const REGISTRY_ITEMS: RegistryItem[] = [
   {
@@ -8,6 +14,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
       "Displays a list of options for the user to pick from—triggered by a button.",
     type: "registry:ui",
     category: "primitives",
+    schematic: SelectSchematic,
     schematicType: "select",
     isNew: true,
     dependencies: ["radix-ui", "lucide-react"],
@@ -26,6 +33,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description: "Displays a card with header, content, and footer.",
     type: "registry:ui",
     category: "primitives",
+    schematic: CardSchematic,
     schematicType: "card",
     dependencies: [],
     registryDependencies: [],
@@ -44,6 +52,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
       "Interactive 3D unboxing container animation with emerging spring-physics feature chips.",
     type: "registry:component",
     category: "animations",
+    schematic: UnboxingBucketSchematic,
     schematicType: "unboxing-bucket",
     dependencies: ["motion", "lucide-react"],
     registryDependencies: [],
@@ -62,6 +71,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
       "Syntax-highlighted code surface powered by Shiki with line numbers, line highlighting, collapsible blocks, diff mode, and copy actions.",
     type: "registry:ui",
     category: "primitives",
+    schematic: CodeBlockSchematic,
     schematicType: "code-block",
     dependencies: ["shiki", "lucide-react"],
     registryDependencies: ["button"],
