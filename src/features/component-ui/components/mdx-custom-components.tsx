@@ -1,6 +1,6 @@
 import React, { useMemo } from "react"
 
-import { REGISTRY_DEMO_CODES, REGISTRY_DEMOS } from "@/registry/demos"
+import { REGISTRY_DEMOS } from "@/registry/demos"
 import {
   CodeBlock,
   CodeBlockCopyButton,
@@ -29,6 +29,57 @@ const REGISTRY_SOURCES = import.meta.glob<string>(
   }
 )
 
+/**
+ * Resolves raw source code directly from files in /src/registry.
+ * Prioritizes live demo files (e.g. select-demo.tsx) so demos are 100% single-source-of-truth.
+ */
+function resolveRegistrySource(
+  name?: string,
+  title?: string
+): string | undefined {
+  if (!name && !title) return undefined
+
+  if (name) {
+    const cleanName = name.replace(/-demo$/, "")
+    const candidates = [
+      `/demos/${name}.tsx`,
+      `/demos/${cleanName}-demo.tsx`,
+      `/demos/${cleanName}.tsx`,
+      `/ui/${name}.tsx`,
+      `/ui/${cleanName}.tsx`,
+      `/ui/${name}/index.ts`,
+      `/ui/${name}/${name}.tsx`,
+      `/ui/${cleanName}/index.ts`,
+      `/ui/${cleanName}/${cleanName}.tsx`,
+      `/animated/${name}.tsx`,
+      `/animated/${cleanName}.tsx`,
+      `/${name}.tsx`,
+      `/${cleanName}.tsx`,
+    ]
+
+    for (const suffix of candidates) {
+      const matchedKey = Object.keys(REGISTRY_SOURCES).find((key) =>
+        key.endsWith(suffix)
+      )
+      if (matchedKey && REGISTRY_SOURCES[matchedKey]) {
+        return REGISTRY_SOURCES[matchedKey]
+      }
+    }
+  }
+
+  if (title) {
+    const normalizedTitle = title.replace(/^components\//, "")
+    const matchedTitleKey = Object.keys(REGISTRY_SOURCES).find((key) =>
+      key.endsWith(normalizedTitle)
+    )
+    if (matchedTitleKey && REGISTRY_SOURCES[matchedTitleKey]) {
+      return REGISTRY_SOURCES[matchedTitleKey]
+    }
+  }
+
+  return undefined
+}
+
 // Map of all variants for ComponentPreview lookup
 const VARIANTS_MAP = new Map(SELECT_VARIANTS.map((v) => [v.id, v]))
 
@@ -54,9 +105,10 @@ export function ComponentPreview({
     VARIANTS_MAP.get(name)?.component ??
     VARIANTS_MAP.get(cleanName)?.component
 
+  // 2. Resolve code: First directly from the actual source file in REGISTRY_SOURCES, then VARIANTS_MAP
   const sampleCode =
-    REGISTRY_DEMO_CODES[name] ??
-    REGISTRY_DEMO_CODES[cleanName] ??
+    resolveRegistrySource(name) ??
+    resolveRegistrySource(cleanName) ??
     VARIANTS_MAP.get(name)?.code ??
     VARIANTS_MAP.get(cleanName)?.code ??
     `// Code preview for ${name}`
@@ -186,40 +238,10 @@ export function ComponentSource({
 }: ComponentSourceProps) {
   const resolvedCode = useMemo(() => {
     if (explicitCode) return explicitCode
-    if (name) {
-      // 1. Check direct file in /src/registry/ui/${name}.tsx
-      const uiKey = `/src/registry/ui/${name}.tsx`
-      if (REGISTRY_SOURCES[uiKey]) return REGISTRY_SOURCES[uiKey]
-
-      // 2. Check subdirectory index in /src/registry/ui/${name}/index.ts
-      const dirIndexKey = `/src/registry/ui/${name}/index.ts`
-      if (REGISTRY_SOURCES[dirIndexKey]) return REGISTRY_SOURCES[dirIndexKey]
-
-      // 3. Check subdirectory component in /src/registry/ui/${name}/${name}.tsx
-      const dirComponentKey = `/src/registry/ui/${name}/${name}.tsx`
-      if (REGISTRY_SOURCES[dirComponentKey])
-        return REGISTRY_SOURCES[dirComponentKey]
-
-      // 4. Check any registry file matching /${name}.tsx
-      const matchedKey = Object.keys(REGISTRY_SOURCES).find(
-        (key) =>
-          key.endsWith(`/${name}.tsx`) || key.endsWith(`/${name}/index.ts`)
-      )
-      if (matchedKey && REGISTRY_SOURCES[matchedKey]) {
-        return REGISTRY_SOURCES[matchedKey]
-      }
-    }
-    if (title) {
-      const normalizedTitle = title.replace(/^components\//, "")
-      const matchedTitleKey = Object.keys(REGISTRY_SOURCES).find((key) =>
-        key.endsWith(normalizedTitle)
-      )
-      if (matchedTitleKey && REGISTRY_SOURCES[matchedTitleKey]) {
-        return REGISTRY_SOURCES[matchedTitleKey]
-      }
-    }
-    if (name && REGISTRY_DEMO_CODES[name]) return REGISTRY_DEMO_CODES[name]
-    return `// Source implementation for ${title ?? name ?? "component"}`
+    return (
+      resolveRegistrySource(name, title) ??
+      `// Source implementation for ${title ?? name ?? "component"}`
+    )
   }, [explicitCode, name, title])
 
   const displayTitle = title ?? (name ? `${name}.tsx` : "component.tsx")
@@ -235,15 +257,18 @@ export function ComponentSource({
       <CodeBlock
         code={resolvedCode}
         language={language}
+        maxLines={18}
         showLineNumbers
-        maxLines={24}
+        className="rounded-lg"
       >
         <CodeBlockHeader>
           <CodeBlockTitle>{displayTitle}</CodeBlockTitle>
           <CodeBlockLanguage />
-          <CodeBlockCopyButton className="ml-auto" />
+          <div className="ml-auto flex items-center gap-1">
+            <CodeBlockCopyButton />
+            <CodeBlockExpandButton />
+          </div>
         </CodeBlockHeader>
-        <CodeBlockExpandButton />
       </CodeBlock>
     </div>
   )
