@@ -3,8 +3,7 @@
 import { CheckIcon, ChevronDownIcon, PlusIcon } from "lucide-react"
 import { useId, useState } from "react"
 
-import { cn } from "@/shared/lib"
-import { Field, Popover, PopoverContent, PopoverTrigger } from "@/shared/ui"
+import { Button } from "@/registry/ui/button"
 import {
   Command,
   CommandEmpty,
@@ -13,8 +12,10 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/shared/ui"
-import { Button } from "@/shared/ui"
+} from "@/registry/ui/command"
+import { Field } from "@/registry/ui/field"
+import { Popover, PopoverContent, PopoverTrigger } from "@/registry/ui/popover"
+import { cn } from "@/shared/lib"
 
 const organizations = [
   {

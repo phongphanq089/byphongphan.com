@@ -1,6 +1,8 @@
 import { ArrowRightIcon, BellIcon, TreePalmIcon } from "lucide-react"
 
-import { Badge, Button, Card, CardContent } from "@/shared/ui"
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
+import { Card, CardContent } from "@/registry/ui/card"
 
 export function CardWithImage() {
   return (

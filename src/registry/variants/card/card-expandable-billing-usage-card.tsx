@@ -1,16 +1,16 @@
 import { ChevronDownIcon } from "lucide-react"
 import { useState } from "react"
 
-import { cn } from "@/shared/lib"
+import { Button } from "@/registry/ui/button"
 import {
-  Button,
   Card,
   CardAction,
   CardContent,
   CardHeader,
   CardTitle,
-  Progress,
-} from "@/shared/ui"
+} from "@/registry/ui/card"
+import { Progress } from "@/registry/ui/progress"
+import { cn } from "@/shared/lib"
 
 const CardExpandableBillingUsageCard = () => {
   const [isOpen, setIsOpen] = useState(false)

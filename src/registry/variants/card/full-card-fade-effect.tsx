@@ -1,11 +1,6 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Badge,
-  Card,
-  CardContent,
-} from "@/shared/ui"
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
+import { Badge } from "@/registry/ui/badge"
+import { Card, CardContent } from "@/registry/ui/card"
 
 //Full card with image and shadow fade effect
 const FullCardFadeEffect = () => {

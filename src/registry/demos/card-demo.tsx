@@ -1,12 +1,12 @@
-﻿import {
-  Button,
+﻿import { Button } from "@/registry/ui/button"
+import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/shared/ui"
+} from "@/registry/ui/card"
 
 export function CardDemo() {
   return (

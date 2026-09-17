@@ -1,3 +1,4 @@
+import { Field } from "@/registry/ui/field"
 import {
   Select,
   SelectContent,
@@ -5,7 +6,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/registry/ui/select"
-import { Field } from "@/shared/ui"
 
 export function ColoredBorderSelect() {
   return (

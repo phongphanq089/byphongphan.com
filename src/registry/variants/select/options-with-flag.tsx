@@ -1,7 +1,7 @@
 import { useId } from "react"
 
+import { Field } from "@/registry/ui/field"
 import {
-  Field,
   Select,
   SelectContent,
   SelectGroup,
@@ -9,7 +9,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/shared/ui"
+} from "@/registry/ui/select"
 
 const countries = [
   {

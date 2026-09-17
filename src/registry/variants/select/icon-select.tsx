@@ -7,14 +7,14 @@ import {
 } from "lucide-react"
 import type { ReactElement } from "react"
 
-import { Field } from "@/shared/ui"
+import { Field } from "@/registry/ui/field"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/shared/ui"
+} from "@/registry/ui/select"
 
 interface IconPlaceholderProps {
   lucide: string

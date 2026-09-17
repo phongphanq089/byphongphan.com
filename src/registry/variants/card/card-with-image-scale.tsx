@@ -1,4 +1,4 @@
-import { Card } from "@/shared/ui"
+import { Card } from "@/registry/ui/card"
 
 export function CardWithImageScale() {
   return (
