@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo, useRef, useState } from "react"
 
 import { REGISTRY_ITEMS } from "@/registry"
 import { REGISTRY_DEMOS } from "@/registry/demos"
@@ -308,13 +308,41 @@ export function ComponentSource({
   code: explicitCode,
   className,
 }: ComponentSourceProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [isInView, setIsInView] = useState(false)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    if (typeof IntersectionObserver === "undefined") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setIsInView(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: "250px" }
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
   const resolvedCode = useMemo(() => {
+    if (!isInView) return ""
     if (explicitCode) return explicitCode
     return (
       resolveComponentSource(name, title) ??
       `// Source implementation for ${title ?? name ?? "component"}`
     )
-  }, [explicitCode, name, title])
+  }, [explicitCode, isInView, name, title])
 
   const displayTitle = title ?? (name ? `${name}.tsx` : "component.tsx")
   const language =
@@ -325,23 +353,29 @@ export function ComponentSource({
         : "bash"
 
   return (
-    <div className={cn("my-4 w-full", className)}>
-      <CodeBlock
-        code={resolvedCode}
-        language={language}
-        maxLines={18}
-        showLineNumbers
-        className="rounded-lg"
-      >
-        <CodeBlockHeader>
-          <CodeBlockTitle>{displayTitle}</CodeBlockTitle>
-          <CodeBlockLanguage />
-          <div className="ml-auto flex items-center gap-1">
-            <CodeBlockCopyButton />
-            <CodeBlockExpandButton />
-          </div>
-        </CodeBlockHeader>
-      </CodeBlock>
+    <div ref={containerRef} className={cn("my-4 w-full", className)}>
+      {isInView ? (
+        <CodeBlock
+          code={resolvedCode}
+          language={language}
+          maxLines={18}
+          showLineNumbers
+          className="rounded-lg"
+        >
+          <CodeBlockHeader>
+            <CodeBlockTitle>{displayTitle}</CodeBlockTitle>
+            <CodeBlockLanguage />
+            <div className="ml-auto flex items-center gap-1">
+              <CodeBlockCopyButton />
+              <CodeBlockExpandButton />
+            </div>
+          </CodeBlockHeader>
+        </CodeBlock>
+      ) : (
+        <div className="flex min-h-[140px] w-full items-center justify-center rounded-lg border border-border/60 bg-muted/20 font-mono text-xs text-muted-foreground/50">
+          Loading {displayTitle}...
+        </div>
+      )}
     </div>
   )
 }
