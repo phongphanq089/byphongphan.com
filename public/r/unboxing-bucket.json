@@ -13,7 +13,7 @@
     "lucide-react"
   ],
   "registryDependencies": [
-    "use-media-query"
+    "https://byphongphan.com/r/use-media-query.json"
   ],
   "files": [
     {

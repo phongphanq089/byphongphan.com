@@ -2,6 +2,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 import { REGISTRY_ITEMS } from "../src/registry/registry"
+import { siteConfig } from "../src/shared/config/site.config"
 
 const REGISTRY_DIR = path.join(process.cwd(), "src", "registry")
 const OUTPUT_DIR = path.join(process.cwd(), "public", "r")
@@ -38,6 +39,28 @@ async function buildRegistry() {
       }
     })
 
+    const resolvedRegistryDependencies = (item.registryDependencies ?? []).map(
+      (dep) => {
+        // If already an absolute URL or namespaced (@scope/name), keep as-is
+        if (
+          dep.startsWith("http://") ||
+          dep.startsWith("https://") ||
+          dep.startsWith("@")
+        ) {
+          return dep
+        }
+
+        // If it matches a local registry item (custom item on our site), qualify with full URL
+        const isInternalItem = REGISTRY_ITEMS.some((reg) => reg.name === dep)
+        if (isInternalItem) {
+          return `${siteConfig.url}/r/${dep}.json`
+        }
+
+        // Otherwise it's an official shadcn component (e.g. "button"), keep bare name
+        return dep
+      }
+    )
+
     const registryItemPayload = {
       $schema: "https://ui.shadcn.com/schema/registry-item.json",
       name: item.name,
@@ -46,7 +69,7 @@ async function buildRegistry() {
       description: item.description,
       dependencies: item.dependencies ?? [],
       devDependencies: item.dependencies ?? [],
-      registryDependencies: item.registryDependencies ?? [],
+      registryDependencies: resolvedRegistryDependencies,
       files: filesWithContent,
       ...(item.tailwind ? { tailwind: item.tailwind } : {}),
       ...(item.cssVars ? { cssVars: item.cssVars } : {}),
@@ -66,7 +89,7 @@ async function buildRegistry() {
       title: item.title,
       description: item.description,
       dependencies: item.dependencies ?? [],
-      registryDependencies: item.registryDependencies ?? [],
+      registryDependencies: resolvedRegistryDependencies,
     })
   }
 
