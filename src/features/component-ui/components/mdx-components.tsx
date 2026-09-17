@@ -88,7 +88,67 @@ function MdxCodeBlock(
   )
 }
 
+/**
+ * Automatically appends ?utm_source=<hostname> to external URLs
+ * so external project owners and authors recognize referrals from byphongphan.com.
+ */
+export function withUtmSource(url?: string): string | undefined {
+  if (!url) return url
+  if (!url.startsWith("http://") && !url.startsWith("https://")) return url
+
+  try {
+    const parsed = new URL(url)
+    const currentHost = new URL(siteConfig.url).hostname
+
+    // Skip internal site domains, subdomains, and local dev
+    if (
+      parsed.hostname === currentHost ||
+      parsed.hostname.endsWith(`.${currentHost}`) ||
+      parsed.hostname === "localhost"
+    ) {
+      return url
+    }
+
+    // Append utm_source if not already present
+    if (!parsed.searchParams.has("utm_source")) {
+      parsed.searchParams.set("utm_source", currentHost)
+    }
+
+    return parsed.toString()
+  } catch {
+    return url
+  }
+}
+
 export const mdxComponents = {
+  a: ({
+    href,
+    className,
+    children,
+    target,
+    rel,
+    ...props
+  }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+    const finalHref = withUtmSource(href)
+    const isExternal =
+      typeof href === "string" &&
+      (href.startsWith("http://") || href.startsWith("https://"))
+
+    return (
+      <a
+        href={finalHref}
+        target={target ?? (isExternal ? "_blank" : undefined)}
+        rel={rel ?? (isExternal ? "noreferrer noopener" : undefined)}
+        className={cn(
+          "font-medium text-foreground underline decoration-border/60 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </a>
+    )
+  },
   h1: ({
     className,
     children,
