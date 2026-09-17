@@ -43,6 +43,8 @@
 
 :root,
 .dark {
+  color-scheme: dark;
+
   /* ─── Brand Base Tokens (PP Identity) ─── */
   --pp-primary: oklch(0.985 0 0); /* Red-600 */
   --pp-primary-foreground: oklch(0.985 0 0);
@@ -96,9 +98,16 @@
   --code-token-parameter: var(--color-amber-600);
   --code-token-comment: var(--color-muted-foreground);
   --code-token-punctuation: var(--color-foreground);
+
+  /* Scrollbar Theme Tokens */
+  --scrollbar-thumb: oklch(1 0 0 / 18%);
+  --scrollbar-thumb-hover: oklch(1 0 0 / 35%);
+  --scrollbar-track: transparent;
 }
 
 .light {
+  color-scheme: light;
+
   /* ─── Brand Base Tokens (PP Identity) ─── */
   --pp-primary: oklch(
     0.141 0.005 285.823
@@ -141,6 +150,11 @@
   --border-glow: rgba(0, 0, 0, 0.22);
   --grid-dots: rgba(0, 0, 0, 0.04);
   --grid-dots-hover: rgba(0, 0, 0, 0.08);
+
+  /* Scrollbar Theme Tokens (visible subtle dark gray thumb in light theme) */
+  --scrollbar-thumb: oklch(0 0 0 / 28%);
+  --scrollbar-thumb-hover: oklch(0 0 0 / 48%);
+  --scrollbar-track: transparent;
 }
 
 @theme inline {
@@ -165,6 +179,9 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-scrollbar-thumb: var(--scrollbar-thumb);
+  --color-scrollbar-thumb-hover: var(--scrollbar-thumb-hover);
+  --color-scrollbar-track: var(--scrollbar-track);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -297,71 +314,40 @@
   }
 }
 
-/* Custom scrollbar styling. Thanks @shadcn-ui */
+*::-webkit-scrollbar-button,
+::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
 ::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: var(--scrollbar-thumb);
   border-radius: 5px;
 }
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+/* Fallback for standard browsers like Firefox that do not support ::-webkit-scrollbar */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  }
 }
 
 button {
   @apply cursor-pointer;
 }
 
-.custom-scrollbar::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  transition: all 0.3s ease;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--primary); /* Use theme primary color on hover */
-}
-
 @utility link-underline {
   @apply underline decoration-current/30 decoration-1 underline-offset-3 transition-colors hover:decoration-current;
-}
-
-@layer base {
-  @keyframes show-top-mask {
-    to {
-      --top-mask-height: var(--mask-height);
-    }
-  }
-
-  @keyframes hide-bottom-mask {
-    to {
-      --bottom-mask-height: 0px;
-    }
-  }
-
-  @keyframes show-left-mask {
-    to {
-      --left-mask-width: var(--mask-width);
-    }
-  }
-
-  @keyframes hide-right-mask {
-    to {
-      --right-mask-width: 0px;
-    }
-  }
 }

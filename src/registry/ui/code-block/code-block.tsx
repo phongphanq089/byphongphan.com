@@ -1600,7 +1600,7 @@ function CodeBlockSurface({
              the pre's overflowing width, and the sticky number cell anchors
              to that viewport instead. Mixed ownership shipped once and read
              as two scrollbar styles on one block. */
-          scroll && "[scrollbar-width:thin] overflow-auto",
+          scroll && "custom-scrollbar overflow-auto",
           scroll && visibleLines && "max-h-(--cb-max-height)",
           className
         )}
