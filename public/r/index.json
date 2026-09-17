@@ -27,6 +27,16 @@
       "motion",
       "lucide-react"
     ],
+    "registryDependencies": [
+      "use-media-query"
+    ]
+  },
+  {
+    "name": "use-media-query",
+    "type": "registry:hook",
+    "title": "useMediaQuery",
+    "description": "React hook for responsive design and media query listening with SSR support.",
+    "dependencies": [],
     "registryDependencies": []
   },
   {

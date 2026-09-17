@@ -55,12 +55,29 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     schematic: UnboxingBucketSchematic,
     schematicType: "unboxing-bucket",
     dependencies: ["motion", "lucide-react"],
-    registryDependencies: [],
+    registryDependencies: ["use-media-query"],
     files: [
       {
         path: "animated/unboxing-bucket.tsx",
         type: "registry:component",
         target: "components/unboxing-bucket.tsx",
+      },
+    ],
+  },
+  {
+    name: "use-media-query",
+    title: "useMediaQuery",
+    description:
+      "React hook for responsive design and media query listening with SSR support.",
+    type: "registry:hook",
+    category: "foundations",
+    dependencies: [],
+    registryDependencies: [],
+    files: [
+      {
+        path: "hooks/use-media-query.ts",
+        type: "registry:hook",
+        target: "hooks/use-media-query.ts",
       },
     ],
   },

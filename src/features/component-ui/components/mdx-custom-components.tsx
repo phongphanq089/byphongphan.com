@@ -123,6 +123,8 @@ export function resolveComponentSource(
       `/animated/${name}.tsx`,
       `/animated/${name}/index.ts`,
       `/animated/${name}/${name}.tsx`,
+      `/hooks/${name}.ts`,
+      `/hooks/${name}.tsx`,
       `/ui/${name.replace(/-demo$/, "")}.tsx`,
     ]
 

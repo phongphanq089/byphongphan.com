@@ -1,9 +1,9 @@
-﻿/* eslint-disable react-hooks/set-state-in-effect */
+/* eslint-disable react-hooks/set-state-in-effect */
 import { ShieldCheck, Sparkles, Users, Zap } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import React, { useEffect, useState } from "react"
 
-import { useIsMobile } from "@/shared/hooks/use-mobile"
+import { useIsMobile } from "@/registry/hooks/use-media-query"
 import { cn } from "@/shared/lib/utils"
 
 export interface UnboxingChipItem {

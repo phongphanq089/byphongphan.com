@@ -7,15 +7,36 @@ badge: Motion
 
 <ComponentPreview name="unboxing-bucket-demo" />
 
-Interactive 3D unboxing container animation with emerging spring-physics feature chips powered by Motion (framer-motion).
-
 ## Live Interactive Stage
 
-Watch the sequence of feature chips float up from the package cavity, hover in 3D perspective, and dissolve upward.
+Interactive 3D unboxing container animation with emerging spring-physics feature chips powered by Motion (framer-motion). Watch the sequence of feature chips float up from the package cavity, hover in 3D perspective, and dissolve upward.
 
 ---
 
-<InstallationGuide componentSlug="unboxing-bucket" />
+## Installation
+
+<CodeTabs defaultValue="manual">
+    <TabsList>
+      <TabsTrigger value="cli">Command</TabsTrigger>
+      <TabsTrigger value="manual">Manual</TabsTrigger>
+    </TabsList>
+
+    <TabsContent value="cli">
+      <CodeBlockCommand name="unboxing-bucket" />
+    </TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the following dependencies:</Step>
+      <CodeBlockCommand command="npm install lucide-react motion" />
+      <Step>Copy and paste the following code into your project.</Step>
+      <ComponentSource name="unboxing-bucket" title="components/unboxing-bucket.tsx" />
+      <ComponentSource name="use-media-query" title="hooks/use-media-query.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
 
 ---
 
@@ -48,20 +69,19 @@ This component is constructed using a 3-layer sandwich visual architecture:
 
 Interactive 3D unboxing container animation with emerging spring-physics feature chips.
 
-| Prop | Type | Default |
-| :--- | :--- | :--- |
-| `chips?` | `UnboxingChipItem[]` | `DEFAULT_CHIPS` |
-| `intervalMs?` | `number` | `2600` |
-| `className?` | `string` | - |
+| Prop          | Type                 | Default         |
+| :------------ | :------------------- | :-------------- |
+| `chips?`      | `UnboxingChipItem[]` | `DEFAULT_CHIPS` |
+| `intervalMs?` | `number`             | `2600`          |
+| `className?`  | `string`             | -               |
 
 ### UnboxingChipItem
 
 Data structure for an individual emerging chip item.
 
-| Prop | Type | Default |
-| :--- | :--- | :--- |
-| `id` | `number \| string` | - |
-| `title` | `string` | - |
-| `description` | `string` | - |
-| `icon` | `React.ComponentType<{ className?: string }>` | - |
-
+| Prop          | Type                                          | Default |
+| :------------ | :-------------------------------------------- | :------ |
+| `id`          | `number \| string`                            | -       |
+| `title`       | `string`                                      | -       |
+| `description` | `string`                                      | -       |
+| `icon`        | `React.ComponentType<{ className?: string }>` | -       |

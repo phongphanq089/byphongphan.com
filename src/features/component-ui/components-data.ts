@@ -16,14 +16,14 @@ export const COMPONENT_CATEGORIES: {
  * Derived from REGISTRY_ITEMS — single source of truth.
  * Do not add component display metadata here; update registry.ts instead.
  */
-export const COMPONENTS_DATA: ComponentItem[] = REGISTRY_ITEMS.map(
-  (item): ComponentItem => ({
-    id: `comp-${item.name}`,
-    name: item.title,
-    slug: item.name,
-    category: item.category,
-    description: item.description,
-    schematicType: item.schematicType as ComponentItem["schematicType"],
-    isNew: item.isNew,
-  })
-)
+export const COMPONENTS_DATA: ComponentItem[] = REGISTRY_ITEMS.filter(
+  (item) => item.type !== "registry:hook" && item.type !== "registry:lib"
+).map((item): ComponentItem => ({
+  id: `comp-${item.name}`,
+  name: item.title,
+  slug: item.name,
+  category: item.category,
+  description: item.description,
+  schematicType: item.schematicType as ComponentItem["schematicType"],
+  isNew: item.isNew,
+}))

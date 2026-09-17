@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router"
+import { useRouter } from "@tanstack/react-router"
 import { Dices, Lightbulb, RotateCcw } from "lucide-react"
 import { useEffect, useRef } from "react"
 
@@ -7,6 +7,7 @@ import { Button } from "@/shared/ui/core/button"
 
 export function NotFound({ children }: { children?: React.ReactNode }) {
   const gravityRef = useRef<GravityRef | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
     const originalBodyOverflow = document.body.style.overflow
@@ -313,9 +314,9 @@ export function NotFound({ children }: { children?: React.ReactNode }) {
         </h1>
         <p className="text-md pointer-events-auto mb-4">
           We couldn't find the page you were looking for.{" "}
-          <Link to="/" className="underline underline-offset-2">
-            Take Me Home
-          </Link>
+          <Button variant={"ghost"} onClick={() => router.history.back()}>
+            Go back
+          </Button>
         </p>
 
         {children && (
