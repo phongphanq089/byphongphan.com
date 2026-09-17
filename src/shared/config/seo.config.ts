@@ -95,6 +95,11 @@ export const pagesSeoConfig: Record<string, SeoConfig> = {
     description: "Headless CMS workspace powered by Sanity.io.",
     noIndex: true,
   },
+  colophon: {
+    title: "Colophon • Phong Phan",
+    description:
+      "System specifications, typography, modern tech stack, and design inspirations behind this developer portfolio.",
+  },
 }
 
 /**

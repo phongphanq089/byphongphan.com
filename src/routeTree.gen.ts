@@ -24,6 +24,7 @@ import { Route as AdminGroupsRouteImport } from './routes/admin/groups'
 import { Route as AdminCategoriesRouteImport } from './routes/admin/categories'
 import { Route as AdminSplatRouteImport } from './routes/admin/$'
 import { Route as ProfileResourcesRouteImport } from './routes/_profile.resources'
+import { Route as ProfileColophonRouteImport } from './routes/_profile.colophon'
 import { Route as ProfileBlogRouteImport } from './routes/_profile.blog'
 import { Route as ProfileBlockRouteImport } from './routes/_profile.block'
 import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
@@ -112,6 +113,11 @@ const ProfileResourcesRoute = ProfileResourcesRouteImport.update({
   path: '/resources',
   getParentRoute: () => ProfileRoute,
 } as any)
+const ProfileColophonRoute = ProfileColophonRouteImport.update({
+  id: '/colophon',
+  path: '/colophon',
+  getParentRoute: () => ProfileRoute,
+} as any)
 const ProfileBlogRoute = ProfileBlogRouteImport.update({
   id: '/blog',
   path: '/blog',
@@ -190,6 +196,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/block': typeof ProfileBlockRoute
   '/blog': typeof ProfileBlogRoute
+  '/colophon': typeof ProfileColophonRoute
   '/resources': typeof ProfileResourcesRoute
   '/admin/$': typeof AdminSplatRoute
   '/admin/categories': typeof AdminCategoriesRoute
@@ -217,6 +224,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/block': typeof ProfileBlockRoute
   '/blog': typeof ProfileBlogRoute
+  '/colophon': typeof ProfileColophonRoute
   '/resources': typeof ProfileResourcesRoute
   '/admin/$': typeof AdminSplatRoute
   '/admin/categories': typeof AdminCategoriesRoute
@@ -248,6 +256,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_profile/block': typeof ProfileBlockRoute
   '/_profile/blog': typeof ProfileBlogRoute
+  '/_profile/colophon': typeof ProfileColophonRoute
   '/_profile/resources': typeof ProfileResourcesRoute
   '/admin/$': typeof AdminSplatRoute
   '/admin/categories': typeof AdminCategoriesRoute
@@ -280,6 +289,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/block'
     | '/blog'
+    | '/colophon'
     | '/resources'
     | '/admin/$'
     | '/admin/categories'
@@ -307,6 +317,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/block'
     | '/blog'
+    | '/colophon'
     | '/resources'
     | '/admin/$'
     | '/admin/categories'
@@ -337,6 +348,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/_profile/block'
     | '/_profile/blog'
+    | '/_profile/colophon'
     | '/_profile/resources'
     | '/admin/$'
     | '/admin/categories'
@@ -476,6 +488,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileResourcesRouteImport
       parentRoute: typeof ProfileRoute
     }
+    '/_profile/colophon': {
+      id: '/_profile/colophon'
+      path: '/colophon'
+      fullPath: '/colophon'
+      preLoaderRoute: typeof ProfileColophonRouteImport
+      parentRoute: typeof ProfileRoute
+    }
     '/_profile/blog': {
       id: '/_profile/blog'
       path: '/blog'
@@ -573,6 +592,7 @@ declare module '@tanstack/react-router' {
 interface ProfileRouteChildren {
   ProfileBlockRoute: typeof ProfileBlockRoute
   ProfileBlogRoute: typeof ProfileBlogRoute
+  ProfileColophonRoute: typeof ProfileColophonRoute
   ProfileResourcesRoute: typeof ProfileResourcesRoute
   ProfileIndexRoute: typeof ProfileIndexRoute
   ProfileBlockSlugRoute: typeof ProfileBlockSlugRoute
@@ -588,6 +608,7 @@ interface ProfileRouteChildren {
 const ProfileRouteChildren: ProfileRouteChildren = {
   ProfileBlockRoute: ProfileBlockRoute,
   ProfileBlogRoute: ProfileBlogRoute,
+  ProfileColophonRoute: ProfileColophonRoute,
   ProfileResourcesRoute: ProfileResourcesRoute,
   ProfileIndexRoute: ProfileIndexRoute,
   ProfileBlockSlugRoute: ProfileBlockSlugRoute,

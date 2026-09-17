@@ -101,6 +101,7 @@ const config = defineConfig({
         { path: "/resources" },
         { path: "/component-ui" },
         { path: "/design-system" },
+        { path: "/colophon" },
       ],
       sitemap: {
         enabled: true,

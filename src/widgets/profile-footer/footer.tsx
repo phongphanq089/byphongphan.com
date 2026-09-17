@@ -276,6 +276,13 @@ export default function Footer() {
           <span>Crafted with craft & precision</span>
           <span className="text-muted-foreground/30">•</span>
           <span className="text-muted-foreground/60">Netlify Edge</span>
+          <span className="text-muted-foreground/30">•</span>
+          <Link
+            to="/colophon"
+            className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-pp-primary hover:decoration-pp-primary"
+          >
+            Colophon
+          </Link>
         </div>
 
         <div className="flex flex-wrap items-center justify-between gap-4 sm:justify-end sm:gap-6">
