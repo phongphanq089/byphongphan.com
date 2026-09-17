@@ -1,7 +1,7 @@
 import { ArrowUpRight } from "lucide-react"
 
 import { siteConfig } from "@/shared/config"
-import { Badge } from "@/shared/ui/core"
+import { Badge, ExternalLink } from "@/shared/ui/core"
 
 export function ColophonHero() {
   return (
@@ -72,15 +72,18 @@ export function ColophonHero() {
           Sanity Studio v5
         </span>
 
-        <a
+        <ExternalLink
           href={siteConfig.repoUrl}
-          target="_blank"
-          rel="noopener noreferrer"
+          utm={{
+            source: "byphongphan.com",
+            medium: "colophon",
+            campaign: "hero",
+          }}
           className="ml-auto inline-flex items-center gap-1 font-mono text-[11px] text-pp-primary hover:underline"
         >
           <span>View Source</span>
           <ArrowUpRight className="size-3" />
-        </a>
+        </ExternalLink>
       </div>
     </div>
   )

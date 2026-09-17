@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react"
 
 import { siteConfig } from "@/shared/config"
+import { ExternalLink } from "@/shared/ui/core"
 
 export function ColophonInspirations() {
   return (
@@ -26,14 +27,17 @@ export function ColophonInspirations() {
         </p>
       </div>
 
-      {/* 2-Column Grid (Direct Reference Image 2 Wireframe Hierarchy) */}
+      {/* 2-Column Grid (Direct Reference Image 2 Wireframe Hierarchy & siteConfig.inspirations) */}
       <div className="grid grid-cols-1 gap-x-12 gap-y-3 sm:grid-cols-2">
         {siteConfig.inspirations.map((item) => (
-          <a
+          <ExternalLink
             key={item.name}
             href={item.href}
-            target="_blank"
-            rel="noopener noreferrer"
+            utm={{
+              source: "byphongphan.com",
+              medium: "colophon",
+              campaign: "inspirations",
+            }}
             className="group flex items-center justify-between rounded-md border border-transparent px-3 py-2.5 transition-all duration-150 hover:border-border/60 hover:bg-card/60"
           >
             <div className="flex items-baseline gap-2.5">
@@ -45,7 +49,7 @@ export function ColophonInspirations() {
             <div className="flex items-center gap-1.5 text-muted-foreground transition-all duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-pp-primary">
               <ArrowUpRight className="size-4" />
             </div>
-          </a>
+          </ExternalLink>
         ))}
       </div>
     </div>

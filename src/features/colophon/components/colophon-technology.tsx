@@ -1,5 +1,6 @@
 import { ArrowUpRight, Cpu } from "lucide-react"
 
+import { ExternalLink } from "@/shared/ui/core"
 import { iconComponents } from "@/shared/ui/icons"
 
 import { COLOPHON_TECH_CATEGORIES } from "../colophon-data"
@@ -23,67 +24,85 @@ export function ColophonTechnology() {
       <div className="max-w-3xl space-y-4 text-base leading-relaxed text-muted-foreground sm:text-[17px]">
         <p>
           This website is crafted using{" "}
-          <a
+          <ExternalLink
             href="https://react.dev/"
-            target="_blank"
-            rel="noopener noreferrer"
+            utm={{
+              source: "byphongphan.com",
+              medium: "colophon",
+              campaign: "editorial",
+            }}
             className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-pp-primary hover:decoration-pp-primary"
           >
             React 19
-          </a>{" "}
+          </ExternalLink>{" "}
           and{" "}
-          <a
+          <ExternalLink
             href="https://www.typescriptlang.org/"
-            target="_blank"
-            rel="noopener noreferrer"
+            utm={{
+              source: "byphongphan.com",
+              medium: "colophon",
+              campaign: "editorial",
+            }}
             className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-pp-primary hover:decoration-pp-primary"
           >
             TypeScript
-          </a>
+          </ExternalLink>
           , bundled and served via{" "}
-          <a
+          <ExternalLink
             href="https://vite.dev/"
-            target="_blank"
-            rel="noopener noreferrer"
+            utm={{
+              source: "byphongphan.com",
+              medium: "colophon",
+              campaign: "editorial",
+            }}
             className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-pp-primary hover:decoration-pp-primary"
           >
             Vite 8
-          </a>
+          </ExternalLink>
           . For type-safe routing, pre-rendering, and SSR capabilities, it
           relies on{" "}
-          <a
+          <ExternalLink
             href="https://tanstack.com/router"
-            target="_blank"
-            rel="noopener noreferrer"
+            utm={{
+              source: "byphongphan.com",
+              medium: "colophon",
+              campaign: "editorial",
+            }}
             className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-pp-primary hover:decoration-pp-primary"
           >
             TanStack Router
-          </a>{" "}
+          </ExternalLink>{" "}
           and{" "}
           <span className="font-medium text-foreground">TanStack Start</span>.
           Production deployments are continuously delivered to{" "}
-          <a
+          <ExternalLink
             href="https://www.netlify.com/"
-            target="_blank"
-            rel="noopener noreferrer"
+            utm={{
+              source: "byphongphan.com",
+              medium: "colophon",
+              campaign: "editorial",
+            }}
             className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-pp-primary hover:decoration-pp-primary"
           >
             Netlify Edge
-          </a>
+          </ExternalLink>
           , an edge runtime optimized for instant response times and global CDN
           caching.
         </p>
 
         <p>
           For styling, I opted for{" "}
-          <a
+          <ExternalLink
             href="https://tailwindcss.com/"
-            target="_blank"
-            rel="noopener noreferrer"
+            utm={{
+              source: "byphongphan.com",
+              medium: "colophon",
+              campaign: "editorial",
+            }}
             className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-pp-primary hover:decoration-pp-primary"
           >
             Tailwind CSS v4
-          </a>
+          </ExternalLink>
           , a utility-first styling engine utilizing modern{" "}
           <span className="font-mono text-xs text-foreground">@theme</span>{" "}
           directives and native CSS variables. Colors are defined within the{" "}
@@ -95,42 +114,54 @@ export function ColophonTechnology() {
         <p>
           Application state follows a modular duality: client global state is
           kept lightweight with{" "}
-          <a
+          <ExternalLink
             href="https://zustand-demo.pmnd.rs/"
-            target="_blank"
-            rel="noopener noreferrer"
+            utm={{
+              source: "byphongphan.com",
+              medium: "colophon",
+              campaign: "editorial",
+            }}
             className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-pp-primary hover:decoration-pp-primary"
           >
             Zustand
-          </a>
+          </ExternalLink>
           , while asynchronous query invalidation and server caching are handled
           by{" "}
-          <a
+          <ExternalLink
             href="https://tanstack.com/query"
-            target="_blank"
-            rel="noopener noreferrer"
+            utm={{
+              source: "byphongphan.com",
+              medium: "colophon",
+              campaign: "editorial",
+            }}
             className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-pp-primary hover:decoration-pp-primary"
           >
             TanStack Query v5
-          </a>
+          </ExternalLink>
           . Headless content is authored in an embedded{" "}
-          <a
+          <ExternalLink
             href="https://www.sanity.io/"
-            target="_blank"
-            rel="noopener noreferrer"
+            utm={{
+              source: "byphongphan.com",
+              medium: "colophon",
+              campaign: "editorial",
+            }}
             className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-pp-primary hover:decoration-pp-primary"
           >
             Sanity Studio v5
-          </a>{" "}
+          </ExternalLink>{" "}
           backed by a serverless{" "}
-          <a
+          <ExternalLink
             href="https://neon.tech/"
-            target="_blank"
-            rel="noopener noreferrer"
+            utm={{
+              source: "byphongphan.com",
+              medium: "colophon",
+              campaign: "editorial",
+            }}
             className="font-medium text-foreground underline decoration-border underline-offset-4 transition-colors hover:text-pp-primary hover:decoration-pp-primary"
           >
             Neon PostgreSQL
-          </a>{" "}
+          </ExternalLink>{" "}
           database and{" "}
           <span className="font-medium text-foreground">Drizzle ORM</span>.
         </p>
@@ -156,11 +187,14 @@ export function ColophonTechnology() {
                   : null
 
                 return (
-                  <a
+                  <ExternalLink
                     key={item.name}
                     href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    utm={{
+                      source: "byphongphan.com",
+                      medium: "colophon",
+                      campaign: "tech_stack",
+                    }}
                     className="group relative flex h-full flex-col justify-between rounded-lg border border-border/60 bg-card/50 p-4 transition-all duration-200 hover:-translate-y-0.5 hover:border-pp-primary/60 hover:bg-accent hover:shadow-[0_4px_16px_rgba(220,38,38,0.1)]"
                   >
                     <div className="flex items-start justify-between gap-2">
@@ -188,7 +222,7 @@ export function ColophonTechnology() {
                         {item.role}
                       </p>
                     </div>
-                  </a>
+                  </ExternalLink>
                 )
               })}
             </div>

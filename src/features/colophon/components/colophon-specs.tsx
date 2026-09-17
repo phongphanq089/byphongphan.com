@@ -1,5 +1,7 @@
 import { ArrowUpRight, Terminal } from "lucide-react"
 
+import { ExternalLink } from "@/shared/ui/core"
+
 import { COLOPHON_SYSTEM_SPECS } from "../colophon-data"
 
 export function ColophonSpecs() {
@@ -45,15 +47,18 @@ export function ColophonSpecs() {
                     </dt>
                     <dd className="flex items-center justify-between text-xs font-medium text-foreground">
                       {spec.link ? (
-                        <a
+                        <ExternalLink
                           href={spec.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
+                          utm={{
+                            source: "byphongphan.com",
+                            medium: "colophon",
+                            campaign: "specs",
+                          }}
                           className="inline-flex items-center gap-1 text-pp-primary hover:underline"
                         >
                           <span className="truncate">{spec.value}</span>
                           <ArrowUpRight className="size-3 shrink-0" />
-                        </a>
+                        </ExternalLink>
                       ) : (
                         <span>{spec.value}</span>
                       )}
