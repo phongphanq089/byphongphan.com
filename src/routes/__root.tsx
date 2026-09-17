@@ -42,8 +42,8 @@ import {
   DevApiInspectorFloatingTrigger,
 } from "@/shared/tools/api-inspector"
 import { TooltipProvider } from "@/shared/ui"
+import { NotFound } from "@/shared/ui/block/not-found"
 import { DefaultCatchBoundary } from "@/shared/ui/system/default-catch-boundary"
-import { NotFound } from "@/shared/ui/system/not-found"
 import { CommandMenu } from "@/widgets/command-menu"
 
 import appCss from "../styles/app.css?url"
