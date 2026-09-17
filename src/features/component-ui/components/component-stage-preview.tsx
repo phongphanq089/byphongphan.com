@@ -1,4 +1,6 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { FileCode2 } from "lucide-react"
+import { useEffect, useRef, useState } from "react"
 
 import { CodeBlock, CodeBlockCopyButton } from "@/registry/ui/code-block"
 import { cn } from "@/shared/lib"
@@ -23,14 +25,54 @@ export function ComponentStagePreview({
   code,
   className,
 }: ComponentStagePreviewProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [isInView, setIsInView] = useState(false)
+  const [currentTab, setCurrentTab] = useState("preview")
+  const [hasViewedCode, setHasViewedCode] = useState(false)
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+
+    if (typeof IntersectionObserver === "undefined") {
+      setIsInView(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: "300px" }
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  const handleTabChange = (val: string) => {
+    setCurrentTab(val)
+    if (val === "code") {
+      setHasViewedCode(true)
+    }
+  }
+
   return (
     <div
+      ref={containerRef}
       className={cn(
         "relative flex w-full flex-col overflow-hidden rounded-2xl border border-black/10 bg-accent px-2 pb-2 shadow transition-all duration-300 dark:border-white/10",
         className
       )}
     >
-      <Tabs defaultValue="preview" className="flex w-full flex-col gap-0">
+      <Tabs
+        value={currentTab}
+        onValueChange={handleTabChange}
+        className="flex w-full flex-col gap-0"
+      >
         <div className="flex h-11 items-center justify-between px-4">
           <TabsList variant="line" className="h-full gap-4 bg-transparent p-0">
             <TabsTrigger
@@ -67,13 +109,20 @@ export function ComponentStagePreview({
         >
           <div className="relative flex min-h-[380px] w-full items-center justify-center p-8 sm:p-12">
             <div className="relative z-10 flex w-full items-center justify-center">
-              {LiveDemo ? (
-                <div className="flex w-full items-center justify-center p-4">
-                  <LiveDemo />
-                </div>
+              {isInView ? (
+                LiveDemo ? (
+                  <div className="flex w-full items-center justify-center p-4">
+                    <LiveDemo />
+                  </div>
+                ) : (
+                  <div className="scale-110 sm:scale-125">
+                    <RenderSchematic type={schematicType} />
+                  </div>
+                )
               ) : (
-                <div className="scale-110 sm:scale-125">
-                  <RenderSchematic type={schematicType} />
+                <div className="flex flex-col items-center justify-center gap-3 text-muted-foreground/50">
+                  <div className="size-6 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
+                  <span className="font-mono text-xs">Loading preview...</span>
                 </div>
               )}
             </div>
@@ -83,14 +132,20 @@ export function ComponentStagePreview({
           value="code"
           className="m-0 flex-1 rounded-lg bg-background outline-none"
         >
-          <ScrollFadeEffect className="max-h-[520px] w-full">
-            <CodeBlock
-              code={code}
-              language="tsx"
-              showLineNumbers
-              className="rounded-none border-0 bg-transparent"
-            />
-          </ScrollFadeEffect>
+          {hasViewedCode ? (
+            <ScrollFadeEffect className="max-h-[520px] w-full">
+              <CodeBlock
+                code={code}
+                language="tsx"
+                showLineNumbers
+                className="rounded-none border-0 bg-transparent"
+              />
+            </ScrollFadeEffect>
+          ) : (
+            <div className="flex min-h-[240px] items-center justify-center text-muted-foreground/50">
+              <div className="size-5 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
+            </div>
+          )}
         </TabsContent>
       </Tabs>
     </div>

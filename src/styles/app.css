@@ -44,7 +44,7 @@
 :root,
 .dark {
   /* ─── Brand Base Tokens (PP Identity) ─── */
-  --pp-primary: #dc2626; /* Red-600 */
+  --pp-primary: oklch(0.985 0 0); /* Red-600 */
   --pp-primary-foreground: oklch(0.985 0 0);
   --pp-primary-glow: rgba(220, 38, 38, 0.25);
 
@@ -100,7 +100,9 @@
 
 .light {
   /* ─── Brand Base Tokens (PP Identity) ─── */
-  --pp-primary: #dc2626;
+  --pp-primary: oklch(
+    0.141 0.005 285.823
+  ); /*oklch(0.141 0.005 285.823)     === oklch(0.985 0 0) === #dc2626*/
   --pp-primary-foreground: oklch(0.985 0 0);
   --pp-primary-glow: rgba(220, 38, 38, 0.15);
 

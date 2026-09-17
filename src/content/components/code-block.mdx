@@ -1,10 +1,10 @@
 ---
 title: Code Block
-description: A syntax-highlighted code display surface powered by Shiki with dual themes, line numbers, line highlighting, collapsible blocks, and copy affordances.
+description: A high-performance syntax-highlighted code surface powered by Shiki with zero-DOM CSS line numbers, dual themes, line highlighting, collapsible blocks, diff mode, code folding, diagnostic levels, and copy actions.
 base: shiki
 component: true
 links:
-  doc: https://shiki.style/
+  doc: https://reui.io/docs/components/base/code-block
   api: https://shiki.style/guide/dual-themes
 ---
 
@@ -12,41 +12,60 @@ links:
 
 ## Installation
 
-<CodeTabs>
+<CodeTabs defaultValue="manual">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
 
-<TabsList>
-  <TabsTrigger value="cli">Command</TabsTrigger>
-  <TabsTrigger value="manual">Manual</TabsTrigger>
-</TabsList>
 <TabsContent value="cli">
-
-```bash
-npx shadcn@latest add code-block
-```
-
+  <CodeBlockCommand name="code-block" />
 </TabsContent>
 
-<TabsContent value="manual">
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the required dependencies:</Step>
+      <CodeBlockCommand command="npm install shiki lucide-react class-variance-authority clsx tailwind-merge" />
 
-<Steps className="mb-0 pt-2">
+      <Step>Copy and paste the code-block files into your project:</Step>
+      <ComponentSource
+        name="code-block"
+        title="components/ui/code-block/code-block.tsx"
+      />
+      <ComponentSource
+        title="components/ui/code-block/code-block-highlight.tsx"
+      />
+      <ComponentSource
+        title="components/ui/code-block/index.ts"
+      />
 
-<Step>Install the following dependencies:</Step>
+      <Step>Update your import paths to match your project directory alias.</Step>
+    </Steps>
 
-```bash
-npm install shiki lucide-react class-variance-authority clsx tailwind-merge
-```
-
-<Step>Copy and paste the code-block files into your project.</Step>
-
-<ComponentSource name="code-block" title="components/ui/code-block/code-block.tsx" />
-
-<Step>Update the import paths to match your project setup.</Step>
-
-</Steps>
-
-</TabsContent>
-
+  </TabsContent>
 </CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+CodeBlock
+├── CodeBlockHeader
+│   ├── CodeBlockTitle
+│   ├── CodeBlockLanguage
+│   ├── CodeBlockWrapToggle
+│   ├── CodeBlockDownloadButton
+│   └── CodeBlockCopyButton
+├── CodeBlockSurface (Built-in or via CodeBlockContent)
+│   ├── Line Numbers (CSS counter, zero-DOM)
+│   ├── Fold Toggles & Diff Indicators (+ / -)
+│   ├── Code Tokens & Words
+│   └── CodeBlockLineActions (Hover action bar)
+└── CodeBlockExpandButton
+```
+
+---
 
 ## Usage
 
@@ -70,23 +89,33 @@ import {
 </CodeBlock>
 ```
 
-## Features
+---
 
-### Line Numbers
+## Examples
 
-Enable numeric gutter indicators using the `showLineNumbers` prop. Numbers are rendered with pseudo-elements to avoid interfering with copy operations.
+### Git Diff & Patch Review
 
-### Highlighted Lines
+Display additions and removals with dedicated line gutters and background tints for reviewing pull requests and patch differences.
 
-Emphasize specific lines with the `highlightedLines` prop using comma-separated ranges or line numbers (e.g. `highlightedLines="2,4-6"`).
+<ComponentPreview name="diff-code-block" />
 
-### Collapsible Blocks
+### Diagnostic Severity Levels
 
-Constrain height on lengthy source code snippets using `maxLines={18}` coupled with `<CodeBlockExpandButton />` for one-click unfolding.
+Surface inline compiler and linter diagnostics with error, warning, and info visual indicators.
 
-### Diff & Patch Mode
+<ComponentPreview name="diagnostics-code-block" />
 
-Highlight additions and removals natively via `diff={{ added: "2-4", removed: "6" }}` or by parsing unified git patches.
+### Collapsible with Max Lines
+
+Clamp lengthy code snippets to a clean maximum height with a smooth bottom gradient fade and floating expand button.
+
+<ComponentPreview name="collapsible-code-block" />
+
+### Action Toolbar with Wrap & Download
+
+A complete header bar equipped with soft line-wrapping toggles, one-click file download, and clipboard copy affordances.
+
+<ComponentPreview name="toolbar-code-block" />
 
 ---
 
@@ -94,32 +123,129 @@ Highlight additions and removals natively via `diff={{ added: "2-4", removed: "6
 
 ### CodeBlock
 
-Syntax-highlighted code surface powered by Shiki with line numbers, diff mode, and collapsible support.
+The root container managing syntax highlighting, Shiki streaming, CSS counter state, and context providers.
 
-| Prop | Type | Default |
-| :--- | :--- | :--- |
-| `code` | `string` | - |
-| `language?` | `string` | `"typescript"` |
-| `showLineNumbers?` | `boolean` | `false` |
-| `highlightedLines?` | `string` | - |
-| `maxLines?` | `number` | - |
-| `diff?` | `{ added?: string; removed?: string }` | - |
-| `className?` | `string` | - |
+| Prop                     | Type                          | Default     | Description                                                                |
+| :----------------------- | :---------------------------- | :---------- | :------------------------------------------------------------------------- |
+| `code`                   | `string`                      | `""`        | Raw source code string to highlight.                                       |
+| `language?`              | `string`                      | `undefined` | Programming language identifier (e.g. `"typescript"`, `"json"`, `"bash"`). |
+| `lines?`                 | `CodeBlockLine[]`             | `undefined` | Pre-tokenized server-side lines to skip client-side Shiki highlighter.     |
+| `showLineNumbers?`       | `boolean`                     | `false`     | Whether to display numeric gutter indicators.                              |
+| `startLine?`             | `number`                      | `1`         | 1-based initial counter seed for line numbering.                           |
+| `highlightedLines?`      | `CodeBlockLineSpec`           | `undefined` | Comma-separated lines or inclusive ranges to highlight (e.g. `"2,4-6"`).   |
+| `highlightedWords?`      | `CodeBlockWordSpec[]`         | `undefined` | Exact token substrings to highlight with visual pills.                     |
+| `focusedLines?`          | `CodeBlockLineSpec`           | `undefined` | Lines to keep focused while dimming other lines.                           |
+| `diff?`                  | `CodeBlockDiffSpec`           | `undefined` | Addition and removal line specs (e.g. `{ added: "2-4", removed: "6" }`).   |
+| `lineLevels?`            | `CodeBlockLevelSpec`          | `undefined` | Diagnostic levels per line (e.g. `{ error: "3", warning: "7" }`).          |
+| `maxLines?`              | `number`                      | `undefined` | Maximum visible lines before clamping with a collapsible fade.             |
+| `expanded?`              | `boolean`                     | `undefined` | Controlled collapsed/expanded state when `maxLines` is set.                |
+| `defaultExpanded?`       | `boolean`                     | `false`     | Initial uncontrolled expanded state.                                       |
+| `onExpandedChange?`      | `(expanded: boolean) => void` | `undefined` | Callback fired when the expanded state changes.                            |
+| `foldable?`              | `boolean`                     | `false`     | Enables indentation-based code folding with chevron toggles.               |
+| `folded?`                | `number[]`                    | `undefined` | Controlled array of folded region start lines.                             |
+| `defaultFolded?`         | `number[]`                    | `undefined` | Initial uncontrolled folded region start lines.                            |
+| `onFoldedChange?`        | `(folded: number[]) => void`  | `undefined` | Callback fired when folded regions change.                                 |
+| `wrap?`                  | `boolean`                     | `undefined` | Controlled soft text wrapping toggle.                                      |
+| `defaultWrap?`           | `boolean`                     | `false`     | Initial soft text wrapping state.                                          |
+| `onWrapChange?`          | `(wrap: boolean) => void`     | `undefined` | Callback fired when wrap state changes.                                    |
+| `selectable?`            | `boolean`                     | `false`     | Allows clicking and Shift-clicking lines for selection.                    |
+| `selectedLines?`         | `number[]`                    | `undefined` | Controlled array of selected line numbers.                                 |
+| `defaultSelectedLines?`  | `number[]`                    | `[]`        | Initial uncontrolled selected line numbers.                                |
+| `onSelectedLinesChange?` | `(lines: number[]) => void`   | `undefined` | Callback fired when line selections change.                                |
+| `streaming?`             | `boolean`                     | `false`     | Enables AI token streaming optimizations with animated caret.              |
+| `variant?`               | `"default" \| "ghost"`        | `"default"` | Visual surface variant. `"ghost"` renders a transparent backdrop.          |
+| `className?`             | `string`                      | `undefined` | Additional classes merged onto the root element.                           |
+
+### CodeBlockContent
+
+Composable surface that renders the code block inside an external scroll wrapper (e.g. `ScrollArea`).
+
+| Prop         | Type     | Default     | Description                                 |
+| :----------- | :------- | :---------- | :------------------------------------------ |
+| `className?` | `string` | `undefined` | Additional classes for the surface element. |
 
 ### CodeBlockHeader
 
-Top control bar housing filename title, language tag, and copy affordance.
+Top toolbar header housing filename title, language tag, and action buttons.
 
-| Prop | Type | Default |
-| :--- | :--- | :--- |
-| `className?` | `string` | - |
-| `children` | `React.ReactNode` | - |
+| Prop         | Type              | Default     | Description                                  |
+| :----------- | :---------------- | :---------- | :------------------------------------------- |
+| `className?` | `string`          | `undefined` | Additional classes for the header container. |
+| `children`   | `React.ReactNode` | `undefined` | Header content elements.                     |
+
+### CodeBlockTitle
+
+Displays the file name or snippet label with standard typography.
+
+| Prop         | Type              | Default     | Description                                     |
+| :----------- | :---------------- | :---------- | :---------------------------------------------- |
+| `children?`  | `React.ReactNode` | `undefined` | Title label text. Defaults to active file name. |
+| `className?` | `string`          | `undefined` | Additional classes for the title element.       |
+
+### CodeBlockLanguage
+
+Displays the detected or specified syntax language badge.
+
+| Prop         | Type     | Default     | Description                                |
+| :----------- | :------- | :---------- | :----------------------------------------- |
+| `className?` | `string` | `undefined` | Additional classes for the language label. |
 
 ### CodeBlockCopyButton
 
-Animated one-click clipboard copy button with check feedback icon.
+Interactive clipboard button with animated copied state feedback.
 
-| Prop | Type | Default |
-| :--- | :--- | :--- |
-| `className?` | `string` | - |
-| `position?` | `"default" \| "pinned"` | `"default"` |
+| Prop             | Type                    | Default     | Description                                                               |
+| :--------------- | :---------------------- | :---------- | :------------------------------------------------------------------------ |
+| `value?`         | `string`                | `undefined` | Explicit text to copy. Defaults to the current code snippet.              |
+| `position?`      | `"default" \| "pinned"` | `"default"` | Placement strategy. `"pinned"` places the button in the top-right corner. |
+| `alwaysVisible?` | `boolean`               | `false`     | When pinned, keeps the button visible instead of fading in on hover.      |
+| `className?`     | `string`                | `undefined` | Additional classes for the copy button.                                   |
+
+### CodeBlockDownloadButton
+
+Downloads the current code block content as a local file.
+
+| Prop         | Type     | Default           | Description                                      |
+| :----------- | :------- | :---------------- | :----------------------------------------------- |
+| `filename?`  | `string` | `undefined`       | Target download filename (e.g. `"snippet.tsx"`). |
+| `label?`     | `string` | `"Download code"` | Accessible ARIA label.                           |
+| `className?` | `string` | `undefined`       | Additional classes for the download button.      |
+
+### CodeBlockWrapToggle
+
+Toggles soft line-wrapping on and off.
+
+| Prop         | Type     | Default     | Description                               |
+| :----------- | :------- | :---------- | :---------------------------------------- |
+| `className?` | `string` | `undefined` | Additional classes for the toggle button. |
+
+### CodeBlockExpandButton
+
+Floating expand/collapse control rendered when `maxLines` clamps code block height.
+
+| Prop            | Type     | Default      | Description                        |
+| :-------------- | :------- | :----------- | :--------------------------------- |
+| `expandText?`   | `string` | `"Expand"`   | Label displayed when collapsed.    |
+| `collapseText?` | `string` | `"Collapse"` | Label displayed when expanded.     |
+| `className?`    | `string` | `undefined`  | Additional classes for the button. |
+
+### CodeBlockLineActions
+
+Render prop registering custom action controls on hovered/active code lines.
+
+| Prop       | Type                                                  | Default | Description                                      |
+| :--------- | :---------------------------------------------------- | :------ | :----------------------------------------------- |
+| `side?`    | `"end" \| "gutter"`                                   | `"end"` | Placement of the action control on the line row. |
+| `children` | `(data: { line: number, text: string }) => ReactNode` | -       | Render prop receiving active line metadata.      |
+
+---
+
+## References
+
+- [ReUI Code Block Component](https://reui.io/docs/components/base/code-block)
+- [ReUI Code Block Showcase & Variants](https://reui.io/components/code-block)
+- [Shiki Dual Themes & Syntax Highlighting](https://shiki.style/guide/dual-themes)
+- [CSS Counters (Zero-DOM Line Numbers)](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_counter_styles/Using_CSS_counters)
+- [W3C WCAG 2.4.7 Focus Visible](https://www.w3.org/WAI/WCAG21/Understanding/focus-visible.html)
+- [CSS content-visibility](https://developer.mozilla.org/en-US/docs/Web/CSS/content-visibility)
+- [Unified Diff Format](https://www.gnu.org/software/diffutils/manual/html_node/Unified-Format.html)
