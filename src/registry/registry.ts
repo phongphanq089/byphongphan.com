@@ -2,6 +2,7 @@ import type { RegistryItem } from "./schema"
 import {
   CardSchematic,
   CodeBlockSchematic,
+  FlipClockSchematic,
   SelectSchematic,
   UnboxingBucketSchematic,
 } from "./schematics"
@@ -61,6 +62,26 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
         path: "animated/unboxing-bucket.tsx",
         type: "registry:component",
         target: "components/unboxing-bucket.tsx",
+      },
+    ],
+  },
+  {
+    name: "flip-clock",
+    title: "Flip Clock",
+    description:
+      "Mechanical 2D split-flap counter and clock with real-time, timer, stopwatch, and date-time display modes.",
+    type: "registry:component",
+    category: "animations",
+    schematic: FlipClockSchematic,
+    schematicType: "flip-clock",
+    isNew: true,
+    dependencies: ["motion", "@rexa-developer/tiks"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/flip-clock.tsx",
+        type: "registry:component",
+        target: "components/flip-clock.tsx",
       },
     ],
   },

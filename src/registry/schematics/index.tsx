@@ -2,15 +2,18 @@ import type React from "react"
 
 import { CardSchematic } from "./card-schematic"
 import { CodeBlockSchematic } from "./code-block-schematic"
+import { FlipClockSchematic } from "./flip-clock-schematic"
 import { SelectSchematic } from "./select-schematic"
 import { UnboxingBucketSchematic } from "./unboxing-bucket-schematic"
 
 export * from "./card-schematic"
 export * from "./code-block-schematic"
+export * from "./flip-clock-schematic"
 export * from "./select-schematic"
 export * from "./unboxing-bucket-schematic"
 
-export type SchematicType = "select" | "card" | "unboxing-bucket" | "code-block"
+export type SchematicType =
+  "select" | "card" | "unboxing-bucket" | "code-block" | "flip-clock"
 
 export function DefaultSchematic() {
   return (
@@ -26,6 +29,7 @@ export const SCHEMATICS_MAP: Record<SchematicType, React.ComponentType> = {
   card: CardSchematic,
   "unboxing-bucket": UnboxingBucketSchematic,
   "code-block": CodeBlockSchematic,
+  "flip-clock": FlipClockSchematic,
 }
 
 export function RenderSchematic({ type }: { type?: string }) {

@@ -105,13 +105,13 @@ export function ComponentStagePreview({
 
         <TabsContent
           value="preview"
-          className="m-0 w-full flex-1 rounded-lg bg-background outline-none"
+          className="m-0 w-full flex-1 overflow-hidden rounded-lg bg-background outline-none"
         >
-          <div className="relative flex min-h-[380px] w-full items-center justify-center p-8 sm:p-12">
+          <div className="relative flex min-h-[380px] w-full items-center justify-center p-4 md:p-8">
             <div className="relative z-10 flex w-full items-center justify-center">
               {isInView ? (
                 LiveDemo ? (
-                  <div className="flex w-full items-center justify-center p-4">
+                  <div className="flex w-full items-center justify-center">
                     <LiveDemo />
                   </div>
                 ) : (
@@ -122,7 +122,7 @@ export function ComponentStagePreview({
               ) : (
                 <div className="flex flex-col items-center justify-center gap-3 text-muted-foreground/50">
                   <div className="size-6 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
-                  <span className="font-mono text-xs">Loading preview...</span>
+                  <span className="text-xs">Loading preview...</span>
                 </div>
               )}
             </div>

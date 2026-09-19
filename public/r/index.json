@@ -32,6 +32,17 @@
     ]
   },
   {
+    "name": "flip-clock",
+    "type": "registry:component",
+    "title": "Flip Clock",
+    "description": "Mechanical 2D split-flap counter and clock with real-time, timer, stopwatch, and date-time display modes.",
+    "dependencies": [
+      "@pqina/flip",
+      "@rexa-developer/tiks"
+    ],
+    "registryDependencies": []
+  },
+  {
     "name": "use-media-query",
     "type": "registry:hook",
     "title": "useMediaQuery",

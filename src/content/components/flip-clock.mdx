@@ -1,0 +1,166 @@
+---
+title: Flip Clock
+description: Mechanical 3D split-flap clock and dynamic counter built with Framer Motion — real-time clock, countdown, stopwatch, date-time, and counter modes with zero external animation dependencies.
+component: true
+badge: "motion"
+---
+
+<ComponentPreview name="flip-clock-demo" />
+
+## Live Interactive Stage
+
+The **Flip Clock** is an authentic mechanical split-flap display built natively with **Framer Motion** (`motion`), React 19, and CSS 3D perspective transforms. It replicates physical airport departure boards, retro Solari di Udine clocks, and vintage train timetable displays with realistic flap-fold dynamics, internal lighting gradients, and zero third-party canvas engines.
+
+---
+
+## Installation
+
+<CodeTabs defaultValue="manual">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="cli">
+    <CodeBlockCommand name="flip-clock" />
+  </TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the required dependencies:</Step>
+      <CodeBlockCommand command="npm install framer-motion lucide-react" />
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="flip-clock" title="components/flip-clock.tsx" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Usage
+
+### 1. Real-time Local Clock
+
+Displays hours, minutes, and seconds synchronized with local system time.
+
+```tsx
+import { FlipClock } from "@/components/flip-clock"
+
+export function ClockExample() {
+  return (
+    <FlipClock
+      mode="clock"
+      size="md"
+      variant="default"
+      showSeconds={true}
+      showLabels={true}
+      sound={true}
+    />
+  )
+}
+```
+
+### 2. Date & Time with Weekday & Month
+
+Shows Day of week (`WED`), Day of Month (`17`), Month (`09`), Year (`2026`), alongside hours, minutes, and seconds.
+
+```tsx
+<FlipClock
+  mode="date-time"
+  size="md"
+  variant="default"
+  showDayOfWeek={true}
+  showDate={true}
+  showMonth={true}
+  showYear={true}
+  showHours={true}
+  showMinutes={true}
+  showSeconds={true}
+/>
+```
+
+### 3. Countdown Timer
+
+Counts down towards a specific target timestamp or duration with zero-time callback.
+
+```tsx
+<FlipClock
+  mode="countdown"
+  targetDate={new Date("2027-01-01T00:00:00")}
+  showDays={true}
+  showHours={true}
+  showMinutes={true}
+  showSeconds={true}
+  onComplete={() => alert("Countdown reached zero!")}
+/>
+```
+
+### 4. Stopwatch / Elapsed Time
+
+Counts up with pause, resume, and reset capabilities.
+
+```tsx
+<FlipClock
+  mode="stopwatch"
+  isPaused={false}
+  size="lg"
+  variant="amber"
+/>
+```
+
+### 5. Dynamic Counter
+
+Flips arbitrary numeric or string values (e.g. live visitor counts, fundraising totals).
+
+```tsx
+<FlipClock
+  mode="counter"
+  value={1348}
+  label="VISITORS"
+  size="xl"
+  variant="blueprint"
+/>
+```
+
+---
+
+## Engineering & Architecture
+
+- **Custom 3D Motion Physics**: Powered natively by Framer Motion (`motion`) and CSS 3D perspective transforms (`rotateX`, `preserve-3d`, backface culling) with realistic flap-folding dynamics, subpixel border alignment, and internal gradient shading without heavy third-party canvas engines.
+- **SSR & Hydration Resilient**: Microtask-deferred initial state calculation and declarative template reconciliation prevent hydration mismatches across static site generation (SSG) in Vite and TanStack Start.
+- **Synthesized Web Audio Clicks**: Generates procedural mechanical split-flap click sounds via the browser's native Web Audio API oscillator synthesis — requiring zero external audio assets or third-party sound libraries.
+- **Container Query Scaling**: Supports standard fixed scales (`sm`, `md`, `lg`, `xl`) and a fluid `size="full"` mode powered by CSS Container Queries (`[container-type:inline-size]` and `cqw`), adapting seamlessly to fill 100% of any parent container.
+
+---
+
+## API Reference
+
+### FlipClock
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `mode?` | `"clock" \| "date-time" \| "countdown" \| "stopwatch" \| "counter"` | `"clock"` | Active operating mode |
+| `size?` | `"sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"` | Dimension scale of cards ("full" fluidly fills parent container) |
+| `variant?` | `"default" \| "blueprint" \| "amber" \| "outline"` | `"default"` | Color and texture theme |
+| `value?` | `string \| number` | - | Numerical or string value for `"counter"` mode |
+| `label?` | `string` | - | Text label for `"counter"` mode |
+| `targetDate?` | `Date \| string \| number` | - | Target deadline for `"countdown"` mode |
+| `durationSeconds?` | `number` | - | Duration in seconds for countdown timer |
+| `isPaused?` | `boolean` | `false` | Pauses clock, countdown, or stopwatch ticking |
+| `format12h?` | `boolean` | `false` | 12-hour display format |
+| `showAmPm?` | `boolean` | `true` | Renders AM/PM indicator in 12h clock mode |
+| `showDays?` | `boolean` | `true` | Renders Days group (countdown mode) |
+| `showDayOfWeek?` | `boolean` | `true` | Renders weekday (e.g. MON, TUE) in date-time mode |
+| `showDate?` | `boolean` | `true` | Renders day of month in date-time mode |
+| `showMonth?` | `boolean` | `true` | Renders month in date-time mode |
+| `showYear?` | `boolean` | `true` | Renders year in date-time mode |
+| `showHours?` | `boolean` | `true` | Renders hours unit |
+| `showMinutes?` | `boolean` | `true` | Renders minutes unit |
+| `showSeconds?` | `boolean` | `true` | Renders seconds unit |
+| `showLabels?` | `boolean` | `true` | Renders unit labels beneath cards |
+| `showSeparators?` | `boolean` | `true` | Renders separators (`:`, `/`, etc.) |
+| `separator?` | `string` | `":"` | Custom separator character |
+| `sound?` | `boolean` | `false` | Plays procedural mechanical split-flap click sound on update |
+| `onComplete?` | `() => void` | - | Callback fired when countdown timer reaches zero |
+| `className?` | `string` | - | Additional Tailwind CSS classes |
