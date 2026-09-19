@@ -51,21 +51,26 @@ export interface FooterNavItem {
 }
 
 export const footerNavigation: FooterNavItem[] = [
-  { name: "Overview", href: "/", shortcut: "G H" },
-  { name: "Writing", href: "/blog", badge: "Live", shortcut: "G L" },
+  { name: "Home", href: "/", badge: "LIVE", shortcut: "H P" },
+  { name: "Blog", href: "/blog", badge: "COMING_SOON", shortcut: "B L" },
   {
     name: "Component UI",
     href: "/component-ui",
-    badge: "Craft",
-    shortcut: "G C",
+    badge: "LIVE",
+    shortcut: "C U",
   },
-  { name: "Blocks", href: "/blocks", shortcut: "G B" },
-  { name: "Resources", href: "/resources", shortcut: "G R" },
+  { name: "Blocks", href: "/blocks", badge: "COMING_SOON", shortcut: "B L" },
   {
-    name: "Design System",
-    href: "/design-system",
-    badge: "Lab",
-    shortcut: "G D",
+    name: "Resources",
+    href: "/resources",
+    badge: "COMING_SOON",
+    shortcut: "B L",
+  },
+  {
+    name: "colophon",
+    href: "/colophon",
+    badge: "LIVE",
+    shortcut: "C P",
   },
 ]
 
