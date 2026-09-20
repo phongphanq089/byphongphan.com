@@ -37,7 +37,7 @@
     "title": "Flip Clock",
     "description": "Mechanical 2D split-flap counter and clock with real-time, timer, stopwatch, and date-time display modes.",
     "dependencies": [
-      "@pqina/flip",
+      "motion",
       "@rexa-developer/tiks"
     ],
     "registryDependencies": []
@@ -62,5 +62,16 @@
     "registryDependencies": [
       "button"
     ]
+  },
+  {
+    "name": "map",
+    "type": "registry:ui",
+    "title": "Map",
+    "description": "High-performance interactive vector map powered by MapLibre GL with dark/light themes, custom markers, popups, controls, routes, arcs, GeoJSON, and clustering.",
+    "dependencies": [
+      "maplibre-gl",
+      "lucide-react"
+    ],
+    "registryDependencies": []
   }
 ]

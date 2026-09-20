@@ -3,6 +3,7 @@ import {
   CardSchematic,
   CodeBlockSchematic,
   FlipClockSchematic,
+  MapSchematic,
   SelectSchematic,
   UnboxingBucketSchematic,
 } from "./schematics"
@@ -128,6 +129,26 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
         path: "ui/code-block/index.ts",
         type: "registry:ui",
         target: "components/ui/code-block/index.ts",
+      },
+    ],
+  },
+  {
+    name: "map",
+    title: "Map",
+    description:
+      "High-performance interactive vector map powered by MapLibre GL with dark/light themes, custom markers, popups, controls, routes, arcs, GeoJSON, and clustering.",
+    type: "registry:ui",
+    category: "primitives",
+    schematic: MapSchematic,
+    schematicType: "map",
+    isNew: true,
+    dependencies: ["maplibre-gl", "lucide-react"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "ui/map.tsx",
+        type: "registry:ui",
+        target: "components/ui/map.tsx",
       },
     ],
   },

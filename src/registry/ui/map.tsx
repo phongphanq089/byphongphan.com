@@ -21,7 +21,7 @@ import {
 import { createPortal } from "react-dom"
 import { X, Minus, Plus, Locate, Maximize, Loader2 } from "lucide-react"
 
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 
 if (typeof window !== "undefined" && !MapLibreGL.getWorkerUrl()) {
   MapLibreGL.setWorkerUrl(
@@ -55,7 +55,7 @@ const blankMapStyle: MapLibreGL.StyleSpecification = {
 // Prevent equivalent inline style objects from triggering a full map style reload.
 function useStableValue<T>(value: T): T {
   const key = useMemo(() => JSON.stringify(value) ?? "", [value])
-   
+
   return useMemo(() => value, [key])
 }
 
@@ -331,7 +331,6 @@ const Map = forwardRef<MapRef, MapProps>(function Map(
       setIsStyleLoaded(false)
       setMapInstance(null)
     }
-     
   }, [])
 
   // Sync controlled viewport to map
@@ -523,8 +522,6 @@ function MapMarker({
     markerInstance.on("dragend", handleDragEnd)
 
     return markerInstance
-
-     
   }, [])
 
   useEffect(() => {
@@ -535,8 +532,6 @@ function MapMarker({
     return () => {
       marker.remove()
     }
-
-     
   }, [map])
 
   const { offset, rotation, rotationAlignment, pitchAlignment } = markerOptions
@@ -653,7 +648,6 @@ function MarkerPopup({
       .setDOMContent(container)
 
     return popupInstance
-     
   }, [])
 
   useEffect(() => {
@@ -665,7 +659,6 @@ function MarkerPopup({
     return () => {
       marker.setPopup(null)
     }
-     
   }, [map])
 
   // Sync popup options when they change.
@@ -718,7 +711,6 @@ function MarkerTooltip({
     }).setMaxWidth("none")
 
     return tooltipInstance
-     
   }, [])
 
   useEffect(() => {
@@ -739,7 +731,6 @@ function MarkerTooltip({
       marker.getElement()?.removeEventListener("mouseleave", handleMouseLeave)
       tooltip.remove()
     }
-     
   }, [map])
 
   // Sync tooltip options when they change.
@@ -1051,7 +1042,6 @@ function MapPopup({
       .setLngLat([longitude, latitude])
 
     return popupInstance
-     
   }, [])
 
   useEffect(() => {
@@ -1070,7 +1060,6 @@ function MapPopup({
         popup.remove()
       }
     }
-     
   }, [map])
 
   // Sync popup position and options when they change.
@@ -1410,7 +1399,6 @@ function MapRoute({
         // ignore
       }
     }
-     
   }, [isLoaded, map])
 
   // When coordinates change, update the source data
@@ -1628,7 +1616,6 @@ function RouteProgress({
         // ignore
       }
     }
-     
   }, [ready, map])
 
   useEffect(() => {
@@ -1843,7 +1830,6 @@ function MapGeoJSON<
         // style may be mid-reload
       }
     }
-     
   }, [isLoaded, map])
 
   // Sync data when it changes.
@@ -2217,7 +2203,6 @@ function MapArc<T extends MapArcDatum = MapArcDatum>({
         // ignore
       }
     }
-     
   }, [isLoaded, map])
 
   // Sync features when data / curvature / samples change.
@@ -2475,7 +2460,6 @@ function MapClusterLayer<
         // ignore
       }
     }
-     
   }, [isLoaded, map, sourceId])
 
   // Update source data when data prop changes (only for non-URL data)
