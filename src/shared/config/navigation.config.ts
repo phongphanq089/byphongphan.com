@@ -8,6 +8,13 @@ export interface NavItemConfig {
 
 export const MAIN_NAV_ITEMS: NavItemConfig[] = [
   {
+    id: "home",
+    label: "HOME",
+    title: "Home",
+    link: "/",
+    shortcut: ["H", "P"],
+  },
+  {
     id: "block",
     label: "BLOCKS",
     title: "Blocks",

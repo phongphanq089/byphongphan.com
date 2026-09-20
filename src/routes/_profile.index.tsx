@@ -20,14 +20,10 @@ export const Route = createFileRoute("/_profile/")({
 function HomePage() {
   return (
     <div className="w-full">
-      {/* 1. Banner Hero */}
-      <GridContainer
-        className="relative flex flex-col overflow-hidden px-4 pt-8 pb-12 sm:px-8"
-        showCrosshairs={true}
-        borderBottom={false}
-      >
+      {/* 1. Banner Hero (manages its own GridContainers) */}
+      <div className="relative overflow-hidden">
         <BannerHero />
-      </GridContainer>
+      </div>
 
       {/* 2. About Me */}
       <SectionAbout />
