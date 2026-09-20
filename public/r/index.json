@@ -73,5 +73,15 @@
       "lucide-react"
     ],
     "registryDependencies": []
+  },
+  {
+    "name": "text-hover-effect",
+    "type": "registry:component",
+    "title": "Text Hover Effect",
+    "description": "Interactive typographic SVG reveal effect that traces strokes on mount and reveals a vibrant radial gradient mask following cursor movement.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
   }
 ]

@@ -5,6 +5,7 @@ import {
   FlipClockSchematic,
   MapSchematic,
   SelectSchematic,
+  TextHoverEffectSchematic,
   UnboxingBucketSchematic,
 } from "./schematics"
 
@@ -149,6 +150,26 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
         path: "ui/map.tsx",
         type: "registry:ui",
         target: "components/ui/map.tsx",
+      },
+    ],
+  },
+  {
+    name: "text-hover-effect",
+    title: "Text Hover Effect",
+    description:
+      "Interactive typographic SVG reveal effect that traces strokes on mount and reveals a vibrant radial gradient mask following cursor movement.",
+    type: "registry:component",
+    category: "animations",
+    schematic: TextHoverEffectSchematic,
+    schematicType: "text-hover-effect",
+    isNew: true,
+    dependencies: ["motion"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/text-hover-effect.tsx",
+        type: "registry:component",
+        target: "components/text-hover-effect.tsx",
       },
     ],
   },

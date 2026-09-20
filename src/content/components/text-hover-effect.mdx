@@ -1,0 +1,116 @@
+---
+title: Text Hover Effect
+description: Interactive typographic SVG reveal effect that traces letter strokes on mount and reveals a vibrant radial gradient mask following cursor movement.
+component: true
+badge: Motion
+---
+
+<ComponentPreview name="text-hover-effect-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="text-hover-effect" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the required motion dependency:</Step>
+      <CodeBlockCommand command="npm install motion" />
+
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="text-hover-effect" title="components/text-hover-effect.tsx" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+TextHoverEffect (SVG container with pure math SSR viewBox)
+├── <defs>
+│   ├── <linearGradient> (Multi-stop gradient for letter fill)
+│   ├── <motion.radialGradient> (Spotlight circle tracking cursor coords)
+│   └── <mask> (Applies radial spotlight as a stencil over text)
+├── <text (hidden)> (Invisible DOM element for sub-pixel bbox measuring)
+├── <text (outline)> (Faint stroke that fades in on hover)
+├── <motion.text (stroke)> (Entrance animation drawing character contours)
+└── <text (revealed)> (Gradient-colored fill clipped by radial mask)
+```
+
+---
+
+## Usage
+
+```tsx
+import { TextHoverEffect } from "@/components/text-hover-effect"
+```
+
+```tsx
+export function HeroSection() {
+  return (
+    <div className="h-40 w-full max-w-2xl mx-auto">
+      <TextHoverEffect text="PORTFOLIO" />
+    </div>
+  )
+}
+```
+
+---
+
+## Features
+
+- **SSR-Safe Pure-Math ViewBox**: Calculates an accurate initial SVG bounding box mathematically without requiring client DOM access, preventing layout shift and hydration mismatches.
+- **Isolated Multi-Instance IDs**: Automatically scopes SVG gradient, filter, and mask IDs with `useId()`, allowing multiple independent instances on the same page without cursor conflict.
+- **Dynamic Gradient Palettes**: Pass custom hex color arrays to match brand guidelines, dark cyberpunk themes, or warm sunset palettes.
+- **Automatic Ambient Sweep**: Activate `automatic={true}` to continuously sweep the radial spotlight back and forth across the text during idle periods.
+- **Responsive Vector Geometry**: Built entirely with scalable vector graphics that seamlessly fit any container width while preserving sharp typographic contours.
+
+---
+
+## Examples
+
+### Automatic Ambient Sweep
+
+Autonomously moves the radial gradient mask across the text back and forth when idle, without requiring cursor interactions.
+
+<ComponentPreview name="text-hover-effect-automatic" />
+
+### Cyberpunk Neon Palette
+
+Customize the gradient stops with electric cyan, blue, violet, and hot magenta tones.
+
+<ComponentPreview name="text-hover-effect-neon" />
+
+### Sunset Palette
+
+Warm, energetic color transitions using gold, orange, and purple hues.
+
+<ComponentPreview name="text-hover-effect-sunset" />
+
+---
+
+## API Reference
+
+### TextHoverEffect
+
+Interactive typographic SVG reveal component.
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `text` | `string` | - | The text string to render and animate (required). |
+| `duration` | `number` | `0` | Cursor follow interpolation duration in seconds. Set higher for smoother lag effect. |
+| `automatic` | `boolean` | `false` | When enabled, continuously sweeps the radial gradient across the text when idle. |
+| `strokeDuration` | `number` | `4` | Duration in seconds of the initial outline drawing animation on mount. |
+| `colors` | `string[]` | `["#eab308", "#ef4444", "#3b82f6", "#06b6d4", "#8b5cf6"]` | Custom hex or CSS color stops for the hover reveal gradient. |
+| `className` | `string` | `undefined` | Additional CSS classes for the SVG container. |

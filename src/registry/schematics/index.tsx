@@ -5,6 +5,7 @@ import { CodeBlockSchematic } from "./code-block-schematic"
 import { FlipClockSchematic } from "./flip-clock-schematic"
 import { MapSchematic } from "./map-schematic"
 import { SelectSchematic } from "./select-schematic"
+import { TextHoverEffectSchematic } from "./text-hover-effect-schematic"
 import { UnboxingBucketSchematic } from "./unboxing-bucket-schematic"
 
 export * from "./card-schematic"
@@ -12,10 +13,17 @@ export * from "./code-block-schematic"
 export * from "./flip-clock-schematic"
 export * from "./map-schematic"
 export * from "./select-schematic"
+export * from "./text-hover-effect-schematic"
 export * from "./unboxing-bucket-schematic"
 
 export type SchematicType =
-  "select" | "card" | "unboxing-bucket" | "code-block" | "flip-clock" | "map"
+  | "select"
+  | "card"
+  | "unboxing-bucket"
+  | "code-block"
+  | "flip-clock"
+  | "map"
+  | "text-hover-effect"
 
 export function DefaultSchematic() {
   return (
@@ -33,6 +41,7 @@ export const SCHEMATICS_MAP: Record<SchematicType, React.ComponentType> = {
   "code-block": CodeBlockSchematic,
   "flip-clock": FlipClockSchematic,
   map: MapSchematic,
+  "text-hover-effect": TextHoverEffectSchematic,
 }
 
 export function RenderSchematic({ type }: { type?: string }) {
