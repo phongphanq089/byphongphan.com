@@ -1,11 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-import { GridContainer } from "@/app/layouts"
 import {
-  ColophonDesign,
+  ColophonDesignSystem,
   ColophonHero,
   ColophonInspirations,
-  ColophonSpecs,
   ColophonTechnology,
 } from "@/features/colophon"
 import { createSeoMeta } from "@/shared/config"
@@ -20,50 +18,13 @@ export const Route = createFileRoute("/_profile/colophon")({
 function ColophonPage() {
   return (
     <div className="w-full">
-      {/* 01. Hero & Philosophy */}
-      <GridContainer
-        borderBottom={true}
-        showCrosshairs={true}
-        className="px-6 sm:px-10"
-      >
-        <ColophonHero />
-      </GridContainer>
+      <ColophonHero />
 
-      {/* 02. Architecture & Technology */}
-      <GridContainer
-        borderBottom={true}
-        showCrosshairs={true}
-        className="px-6 sm:px-10"
-      >
-        <ColophonTechnology />
-      </GridContainer>
+      <ColophonTechnology />
 
-      {/* 03. Design & Typography */}
-      <GridContainer
-        borderBottom={true}
-        showCrosshairs={true}
-        className="px-6 sm:px-10"
-      >
-        <ColophonDesign />
-      </GridContainer>
+      <ColophonDesignSystem />
 
-      {/* 04. Inspirations */}
-      <GridContainer
-        borderBottom={true}
-        showCrosshairs={true}
-        className="px-6 sm:px-10"
-      >
-        <ColophonInspirations />
-      </GridContainer>
-
-      {/* 05. Technical Manifest & Specs */}
-      <GridContainer
-        borderBottom={true}
-        showCrosshairs={true}
-        className="px-6 sm:px-10"
-      >
-        <ColophonSpecs />
-      </GridContainer>
+      <ColophonInspirations />
     </div>
   )
 }

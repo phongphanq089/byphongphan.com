@@ -41,8 +41,84 @@ export type GridContainerProps = {
   borderTop?: boolean
   borderLeft?: boolean
   borderRight?: boolean
+  itemBorders?: boolean
   id?: string
   maxWidth?: string
+}
+
+function flattenChildren(children: React.ReactNode): React.ReactNode[] {
+  const result: React.ReactNode[] = []
+  React.Children.forEach(children, (child) => {
+    if (React.isValidElement(child) && child.type === React.Fragment) {
+      result.push(
+        ...flattenChildren(
+          (child.props as { children?: React.ReactNode }).children
+        )
+      )
+    } else if (child !== null && child !== undefined && child !== false) {
+      result.push(child)
+    }
+  })
+  return result
+}
+
+function getChildBorderClasses(
+  index: number,
+  total: number,
+  columns: 1 | 2 | 3
+): string {
+  if (columns <= 1 || total <= 1) return ""
+
+  const hasRowBelowMobile = index < total - 1
+
+  if (columns === 2) {
+    const totalRowsDesktop = Math.ceil(total / 2)
+    const currentRowDesktop = Math.floor(index / 2)
+    const hasRowBelowDesktop = currentRowDesktop < totalRowsDesktop - 1
+
+    if (hasRowBelowMobile && hasRowBelowDesktop) {
+      return "border-b border-border"
+    }
+    if (hasRowBelowMobile && !hasRowBelowDesktop) {
+      return "border-b border-border md:border-b-0"
+    }
+    if (!hasRowBelowMobile && hasRowBelowDesktop) {
+      return "md:border-b md:border-border"
+    }
+    return ""
+  }
+
+  if (columns === 3) {
+    const totalRowsTablet = Math.ceil(total / 2)
+    const currentRowTablet = Math.floor(index / 2)
+    const hasRowBelowTablet = currentRowTablet < totalRowsTablet - 1
+
+    const totalRowsDesktop = Math.ceil(total / 3)
+    const currentRowDesktop = Math.floor(index / 3)
+    const hasRowBelowDesktop = currentRowDesktop < totalRowsDesktop - 1
+
+    if (hasRowBelowMobile && hasRowBelowTablet && hasRowBelowDesktop) {
+      return "border-b border-border"
+    }
+    if (hasRowBelowMobile && hasRowBelowTablet && !hasRowBelowDesktop) {
+      return "border-b border-border lg:border-b-0"
+    }
+    if (hasRowBelowMobile && !hasRowBelowTablet && !hasRowBelowDesktop) {
+      return "border-b border-border md:border-b-0"
+    }
+    if (!hasRowBelowMobile && hasRowBelowTablet && hasRowBelowDesktop) {
+      return "md:border-b md:border-border"
+    }
+    if (!hasRowBelowMobile && hasRowBelowTablet && !hasRowBelowDesktop) {
+      return "md:border-b md:border-border lg:border-b-0"
+    }
+    if (!hasRowBelowMobile && !hasRowBelowTablet && hasRowBelowDesktop) {
+      return "lg:border-b lg:border-border"
+    }
+    return ""
+  }
+
+  return ""
 }
 
 export function GridContainer({
@@ -55,6 +131,7 @@ export function GridContainer({
   borderTop = false,
   borderLeft = true,
   borderRight = true,
+  itemBorders = true,
   id,
   maxWidth: propMaxWidth,
 }: GridContainerProps) {
@@ -71,6 +148,37 @@ export function GridContainer({
           : effectiveMaxWidth === "default" || effectiveMaxWidth === "5xl"
             ? "max-w-5xl"
             : effectiveMaxWidth
+
+  const processedChildren = React.useMemo(() => {
+    if (!itemBorders || !columns || columns <= 1) {
+      return children
+    }
+
+    const flatChildren = flattenChildren(children)
+    const total = flatChildren.length
+
+    if (total <= 1) {
+      return children
+    }
+
+    return flatChildren.map((child, index) => {
+      if (!React.isValidElement(child)) {
+        return child
+      }
+
+      const borderClass = getChildBorderClasses(index, total, columns)
+      if (!borderClass) {
+        return child
+      }
+
+      const existingClassName = (child.props as { className?: string })
+        .className
+
+      return React.cloneElement(child, {
+        className: cn(existingClassName, borderClass),
+      } as React.HTMLAttributes<HTMLElement>)
+    })
+  }, [children, columns, itemBorders])
 
   return (
     <Component
@@ -98,6 +206,7 @@ export function GridContainer({
 
         {columns === 3 && (
           <>
+            <div className="pointer-events-none absolute top-0 bottom-0 left-1/2 hidden w-px -translate-x-1/2 bg-border md:block lg:hidden" />
             <div className="pointer-events-none absolute top-0 bottom-0 left-1/3 hidden w-px -translate-x-1/2 bg-border lg:block" />
             <div className="pointer-events-none absolute top-0 bottom-0 left-2/3 hidden w-px -translate-x-1/2 bg-border lg:block" />
           </>
@@ -115,6 +224,7 @@ export function GridContainer({
             )}
             {columns === 3 && (
               <>
+                <Crosshair className="bottom-[-6px] left-1/2 hidden -translate-x-1/2 md:block lg:hidden" />
                 <Crosshair className="bottom-[-6px] left-1/3 hidden -translate-x-1/2 lg:block" />
                 <Crosshair className="bottom-[-6px] left-2/3 hidden -translate-x-1/2 lg:block" />
               </>
@@ -132,6 +242,7 @@ export function GridContainer({
             )}
             {columns === 3 && (
               <>
+                <Crosshair className="top-[-6px] left-1/2 hidden -translate-x-1/2 md:block lg:hidden" />
                 <Crosshair className="top-[-6px] left-1/3 hidden -translate-x-1/2 lg:block" />
                 <Crosshair className="top-[-6px] left-2/3 hidden -translate-x-1/2 lg:block" />
               </>
@@ -139,7 +250,7 @@ export function GridContainer({
           </>
         )}
 
-        {children}
+        {processedChildren}
       </div>
     </Component>
   )

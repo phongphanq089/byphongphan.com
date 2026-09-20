@@ -4,7 +4,7 @@ import type {
   ColophonColorToken,
   ColophonFontSpecimen,
   ColophonInspirationItem,
-  ColophonSystemSpec,
+  ColophonSpacingToken,
   ColophonTechCategory,
 } from "./types"
 
@@ -126,158 +126,114 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
 export const COLOPHON_FONT_SPECIMENS: ColophonFontSpecimen[] = [
   {
     name: "Geist Mono",
-    role: "Technical Coordinates, Code & Metadata",
-    foundry: "Vercel / Guillermo Rauch",
-    format: "Variable Font (WOFF2)",
-    weights: ["Regular (400)", "Medium (500)", "SemiBold (600)", "Bold (700)"],
-    previewText:
-      "const engineer = { craft: true, precision: 1.0, oklch: true };",
-    sampleGlyphs: "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789 {}[]()=>#%&*",
+    role: "Code, metadata & technical labels",
+    foundry: "Vercel",
+    format: "Variable WOFF2",
+    weights: ["400", "500", "600", "700"],
+    previewText: "const craft = { precision: 1.0 };",
+    sampleGlyphs: "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789",
     cssFamily: "var(--font-mono)",
     cssClass: "font-mono",
     badge: "MONOSPACE",
   },
   {
     name: "Inter / System Sans",
-    role: "Editorial Headings, Navigation & Body Copy",
-    foundry: "Rasmus Andersson / System UI",
-    format: "Modern OpenType / Native System",
-    weights: ["Light (300)", "Regular (400)", "Medium (500)", "Bold (700)"],
-    previewText:
-      "Design is not just what it looks like and feels like. Design is how it works.",
-    sampleGlyphs:
-      "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz",
+    role: "Headings, navigation & body copy",
+    foundry: "Rasmus Andersson",
+    format: "System UI",
+    weights: ["300", "400", "500", "700"],
+    previewText: "Design is how it works.",
+    sampleGlyphs: "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm",
     cssFamily: "var(--font-sans)",
     cssClass: "font-sans",
     badge: "SANS-SERIF",
   },
   {
     name: "Playfair Display",
-    role: "Selective Editorial Accents & Quotations",
+    role: "Editorial accents & quotations",
     foundry: "Claus Eggers Sørensen",
     format: "Google Fonts Variable",
-    weights: ["Regular (400)", "Italic (400i)", "Bold (700)"],
-    previewText:
-      "Crafting interfaces that bridge technology and human curiosity.",
-    sampleGlyphs: "“High Craft Digital Portfolio & Engineering Playground”",
+    weights: ["400", "400i", "700"],
+    previewText: "Bridging technology and curiosity.",
+    sampleGlyphs: '"High Craft Portfolio & Playground"',
     cssFamily: "var(--font-serif)",
     cssClass: "font-serif",
-    badge: "SERIF ACCENT",
+    badge: "SERIF",
   },
 ]
 
 export const COLOPHON_COLOR_TOKENS: ColophonColorToken[] = [
   {
-    name: "Primary Signal Red",
+    name: "PP Primary",
     variable: "--pp-primary",
+    swatchColor: "oklch(0.985 0 0)",
     oklchDark: "oklch(0.985 0 0)",
     oklchLight: "oklch(0.141 0.005 285.8)",
-    description:
-      "Signature accent color used for focal highlights, active tabs, and coordinates.",
+    description: "Main brand signature accent",
     category: "brand",
   },
   {
-    name: "Obsidian Canvas",
+    name: "Background",
     variable: "--background",
+    swatchColor: "oklch(0.12 0 0)",
     oklchDark: "oklch(0.12 0 0)",
     oklchLight: "oklch(1 0 0)",
-    description:
-      "Deep carbon backdrop engineered for minimal eye fatigue and high border contrast.",
+    description: "App backdrop",
     category: "surface",
   },
   {
-    name: "Elevated Surface",
-    variable: "--card / --secondary",
-    oklchDark: "oklch(0.20 0 0)",
+    name: "Accent",
+    variable: "--accent",
+    swatchColor: "oklch(0.25 0 0)",
+    oklchDark: "oklch(0.25 0 0)",
     oklchLight: "oklch(0.97 0 0)",
-    description:
-      "Subtle luminous cards maintaining 1:1 elevation against the backdrop.",
+    description: "Interactive hover",
     category: "surface",
   },
   {
-    name: "Technical Blueprint Border",
+    name: "Border",
     variable: "--border",
+    swatchColor: "oklch(1 0 0 / 12%)",
     oklchDark: "oklch(1 0 0 / 12%)",
-    oklchLight: "oklch(0.90 0 0)",
-    description:
-      "Precision 1px structural dividing lines accompanied by crosshairs.",
+    oklchLight: "oklch(0.9 0 0)",
+    description: "Separators & borders",
     category: "blueprint",
+  },
+]
+
+export const COLOPHON_SPACING_TOKENS: ColophonSpacingToken[] = [
+  {
+    name: "Base Radius",
+    variable: "--radius",
+    value: "0.75rem",
+    description: "Default border radius",
+  },
+  {
+    name: "Radius SM",
+    variable: "--radius-sm",
+    value: "calc(var(--radius) - 4px)",
+    description: "Small elements",
+  },
+  {
+    name: "Radius MD",
+    variable: "--radius-md",
+    value: "calc(var(--radius) - 2px)",
+    description: "Medium elements",
+  },
+  {
+    name: "Radius LG",
+    variable: "--radius-lg",
+    value: "var(--radius)",
+    description: "Cards & containers",
+  },
+  {
+    name: "Radius XL",
+    variable: "--radius-xl",
+    value: "calc(var(--radius) + 4px)",
+    description: "Large containers",
   },
 ]
 
 export const COLOPHON_INSPIRATIONS: ColophonInspirationItem[] = [
   ...siteConfig.inspirations,
-]
-
-export const COLOPHON_SYSTEM_SPECS: ColophonSystemSpec[] = [
-  {
-    category: "Environment & Hosting",
-    specs: [
-      {
-        property: "Platform",
-        value: "Netlify Edge CDN",
-        note: "Global distributed edge network",
-      },
-      {
-        property: "SSR / Prerendering",
-        value: "TanStack Start Static Export",
-        note: "Lightning fast TTFB",
-      },
-      {
-        property: "Package Manager",
-        value: "pnpm 11.17",
-        note: "Fast, disk space efficient",
-      },
-      {
-        property: "Node Runtime",
-        value: "Node.js 22 LTS",
-        note: "Modern ECMAScript modules",
-      },
-    ],
-  },
-  {
-    category: "Engineering Quality",
-    specs: [
-      {
-        property: "Type Checking",
-        value: "TypeScript Strict (Zero `any`)",
-        note: "tsc -b --noEmit",
-      },
-      {
-        property: "Linting & Formatting",
-        value: "ESLint 9 + Prettier",
-        note: "Automated Git hooks via Husky",
-      },
-      {
-        property: "Component Typing",
-        value: "Pure Named Functions",
-        note: "Zero React.FC anti-pattern",
-      },
-      {
-        property: "Theme Switching",
-        value: "Instant LocalStorage + Zero FOUC",
-        note: "Inline hydration script",
-      },
-    ],
-  },
-  {
-    category: "Repository & License",
-    specs: [
-      {
-        property: "Source Code",
-        value: "phongphanq089/phong-dev-portfiolio",
-        link: "https://github.com/phongphanq089/phong-dev-portfiolio",
-      },
-      {
-        property: "Copyright",
-        value: `© ${new Date().getFullYear()} Phong Phan`,
-        note: "All rights reserved",
-      },
-      {
-        property: "Location",
-        value: "Viet Nam (GMT+7)",
-        note: "Crafted with passion & precision",
-      },
-    ],
-  },
 ]
