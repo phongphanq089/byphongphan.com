@@ -11,15 +11,39 @@ import { useEffect } from "react"
 import type { JSX } from "react/jsx-runtime"
 
 import {
+  BLOG_CATEGORIES_QUERY,
+  BLOG_GROUPS_QUERY,
+  BLOG_POSTS_QUERY,
+  blogCategoriesQueryOptions,
+  blogGroupsQueryOptions,
+  blogPostsQueryOptions,
+  getBlogCategories,
+  getBlogGroups,
+  getBlogPosts,
+} from "@/features/blog"
+import {
+  getResourceCategories,
+  getResources,
+  RESOURCE_CATEGORIES_QUERY,
+  resourceCategoriesQueryOptions,
+  RESOURCES_QUERY,
+  resourcesQueryOptions,
+} from "@/features/resources"
+import {
   createPersonJsonLd,
   createSeoMeta,
   createSiteLinks,
 } from "@/shared/config"
-import { siteSettingsQueryOptions } from "@/shared/lib/sanity"
+import { getSiteSettings, siteSettingsQueryOptions } from "@/shared/lib/sanity"
 import { ThemeProvider } from "@/shared/providers/theme-provider"
+import {
+  ApiInspectorDrawer,
+  ApiInspectorProvider,
+  DevApiInspectorFloatingTrigger,
+} from "@/shared/tools/api-inspector"
 import { TooltipProvider } from "@/shared/ui"
+import { NotFound } from "@/shared/ui/block/not-found"
 import { DefaultCatchBoundary } from "@/shared/ui/system/default-catch-boundary"
-import { NotFound } from "@/shared/ui/system/not-found"
 import { CommandMenu } from "@/widgets/command-menu"
 
 import appCss from "../styles/app.css?url"
@@ -29,13 +53,39 @@ export const Route = createRootRouteWithContext<{
 }>()({
   loader: async ({ context }) => {
     try {
-      const siteSettings = await context.queryClient.ensureQueryData(
-        siteSettingsQueryOptions()
-      )
+      const [
+        siteSettings,
+        resources,
+        categories,
+        blogPosts,
+        blogCategories,
+        blogGroups,
+      ] = await Promise.all([
+        context.queryClient.ensureQueryData(siteSettingsQueryOptions()),
+        context.queryClient.ensureQueryData(resourcesQueryOptions()),
+        context.queryClient.ensureQueryData(resourceCategoriesQueryOptions()),
+        context.queryClient.ensureQueryData(blogPostsQueryOptions()),
+        context.queryClient.ensureQueryData(blogCategoriesQueryOptions()),
+        context.queryClient.ensureQueryData(blogGroupsQueryOptions()),
+      ])
 
-      return { siteSettings }
+      return {
+        siteSettings,
+        resources,
+        categories,
+        blogPosts,
+        blogCategories,
+        blogGroups,
+      }
     } catch {
-      return { siteSettings: null }
+      return {
+        siteSettings: null,
+        resources: [],
+        categories: [],
+        blogPosts: [],
+        blogCategories: [],
+        blogGroups: [],
+      }
     }
   },
   head: ({ loaderData }) => {
@@ -79,8 +129,16 @@ export const Route = createRootRouteWithContext<{
 })
 
 function RootComponent() {
+  const loaderData = Route.useLoaderData()
   return (
-    <RootDocument>
+    <RootDocument
+      siteSettings={loaderData?.siteSettings}
+      resources={loaderData?.resources}
+      categories={loaderData?.categories}
+      blogPosts={loaderData?.blogPosts}
+      blogCategories={loaderData?.blogCategories}
+      blogGroups={loaderData?.blogGroups}
+    >
       <Outlet />
     </RootDocument>
   )
@@ -88,7 +146,23 @@ function RootComponent() {
 
 const themeScript = `(function(){try{var t=localStorage.getItem('vite-ui-theme')||'dark',r=document.documentElement,s=t==='system'?(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):t;r.classList.remove('light','dark');r.classList.add(s);}catch(e){}})()`
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootDocument({
+  children,
+  siteSettings,
+  resources,
+  categories,
+  blogPosts,
+  blogCategories,
+  blogGroups,
+}: {
+  children: React.ReactNode
+  siteSettings?: unknown
+  resources?: unknown
+  categories?: unknown
+  blogPosts?: unknown
+  blogCategories?: unknown
+  blogGroups?: unknown
+}) {
   useEffect(() => {
     if (typeof window !== "undefined" && "serviceWorker" in navigator) {
       window.addEventListener("load", () => {
@@ -110,7 +184,16 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         suppressHydrationWarning
       >
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <RootLayoutBody>{children}</RootLayoutBody>
+          <RootLayoutBody
+            siteSettings={siteSettings}
+            resources={resources}
+            categories={categories}
+            blogPosts={blogPosts}
+            blogCategories={blogCategories}
+            blogGroups={blogGroups}
+          >
+            {children}
+          </RootLayoutBody>
         </ThemeProvider>
         <Scripts />
       </body>
@@ -118,7 +201,23 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   )
 }
 
-function RootLayoutBody({ children }: { children: React.ReactNode }) {
+function RootLayoutBody({
+  children,
+  siteSettings,
+  resources,
+  categories,
+  blogPosts,
+  blogCategories,
+  blogGroups,
+}: {
+  children: React.ReactNode
+  siteSettings?: unknown
+  resources?: unknown
+  categories?: unknown
+  blogPosts?: unknown
+  blogCategories?: unknown
+  blogGroups?: unknown
+}) {
   const location = useLocation()
   const isStudio = location.pathname.startsWith("/studio")
 
@@ -126,10 +225,86 @@ function RootLayoutBody({ children }: { children: React.ReactNode }) {
     return <>{children}</>
   }
 
+  const initialEntries = [
+    ...(siteSettings
+      ? [
+          {
+            id: "sanity-site-settings",
+            title: "Sanity Site Settings",
+            endpoint: "*[_type == 'setting'][0]",
+            method: "GROQ" as const,
+            status: 200,
+            data: siteSettings,
+            fetcher: () => getSiteSettings(),
+            description:
+              "Global site metadata, theme, and SEO settings fetched from Sanity CMS",
+          },
+        ]
+      : []),
+    {
+      id: "sanity-resources",
+      title: "Sanity Resources",
+      endpoint: RESOURCES_QUERY,
+      method: "GROQ" as const,
+      status: 200,
+      data: resources,
+      fetcher: () => getResources(),
+      description:
+        "Curated developer tools, UI libraries, and design resources fetched via GROQ",
+    },
+    {
+      id: "sanity-resource-categories",
+      title: "Sanity Resource Categories",
+      endpoint: RESOURCE_CATEGORIES_QUERY,
+      method: "GROQ" as const,
+      status: 200,
+      data: categories,
+      fetcher: () => getResourceCategories(),
+      description:
+        "Developer resource categories and navigation filters fetched via GROQ",
+    },
+    {
+      id: "sanity-blog-posts",
+      title: "Sanity Blog Posts",
+      endpoint: BLOG_POSTS_QUERY,
+      method: "GROQ" as const,
+      status: 200,
+      data: blogPosts,
+      fetcher: () => getBlogPosts(),
+      description:
+        "Full list of articles and engineering writeups fetched from Sanity CMS",
+    },
+    {
+      id: "sanity-blog-categories",
+      title: "Sanity Blog Categories",
+      endpoint: BLOG_CATEGORIES_QUERY,
+      method: "GROQ" as const,
+      status: 200,
+      data: blogCategories,
+      fetcher: () => getBlogCategories(),
+      description: "Blog categories for filtering posts fetched via GROQ",
+    },
+    {
+      id: "sanity-blog-groups",
+      title: "Sanity Blog Series",
+      endpoint: BLOG_GROUPS_QUERY,
+      method: "GROQ" as const,
+      status: 200,
+      data: blogGroups,
+      fetcher: () => getBlogGroups(),
+      description:
+        "Curated multi-part engineering series and learning collections fetched via GROQ",
+    },
+  ]
+
   return (
-    <TooltipProvider>
-      {children}
-      <CommandMenu />
-    </TooltipProvider>
+    <ApiInspectorProvider initialEntries={initialEntries}>
+      <TooltipProvider>
+        {children}
+        <CommandMenu />
+        <DevApiInspectorFloatingTrigger />
+        <ApiInspectorDrawer />
+      </TooltipProvider>
+    </ApiInspectorProvider>
   )
 }

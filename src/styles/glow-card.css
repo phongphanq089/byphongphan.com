@@ -1,0 +1,191 @@
+/* ─── Technical Blueprint Glow Card & Canvas Styles ─── */
+.card-canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  overflow: visible; /* Allows corner crosshair lines to extend outside card bounds */
+  padding: 1px;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.card-backdrop {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    280px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+    var(--pp-primary-glow, rgba(220, 38, 38, 0.12)),
+    transparent 65%
+  );
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.card-canvas:hover .card-backdrop {
+  opacity: 1;
+}
+
+.glow-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background: var(--card);
+  overflow: visible; /* Let crosshairs extend outside card boundaries */
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  transition:
+    border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 2;
+}
+
+.glow-card:hover {
+  border-color: var(--border-glow);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+}
+
+.card-content {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  flex: 1;
+  background: var(--card);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-image: radial-gradient(var(--grid-dots) 1.2px, transparent 1.2px);
+  background-size: 8px 8px;
+  transition: background-image 0.3s ease;
+}
+
+.glow-card:hover .card-content {
+  background-image: radial-gradient(
+    var(--grid-dots-hover) 1.2px,
+    transparent 1.2px
+  );
+}
+
+/* ─── Blueprint Corner Reticles/Crosshairs ─── */
+.corner-crosshair {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.35;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glow-card:hover .corner-crosshair {
+  opacity: 1;
+}
+
+.corner-crosshair .line-h {
+  transition:
+    width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.3s ease;
+  width: 14px;
+}
+
+.corner-crosshair .line-v {
+  transition:
+    height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.3s ease;
+  height: 14px;
+}
+
+.glow-card:hover .corner-crosshair .line-h {
+  width: 26px;
+}
+
+.glow-card:hover .corner-crosshair .line-v {
+  height: 26px;
+}
+
+/* Top Left Corner Reticle */
+.corner-crosshair.tl {
+  top: -1px;
+  left: -1px;
+}
+.corner-crosshair.tl .line-h {
+  position: absolute;
+  right: 100%;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-glow));
+}
+.corner-crosshair.tl .line-v {
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--border-glow));
+}
+
+/* Top Right Corner Reticle */
+.corner-crosshair.tr {
+  top: -1px;
+  right: -1px;
+}
+.corner-crosshair.tr .line-h {
+  position: absolute;
+  left: 100%;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(to left, transparent, var(--border-glow));
+}
+.corner-crosshair.tr .line-v {
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, var(--border-glow));
+}
+
+/* Bottom Left Corner Reticle */
+.corner-crosshair.bl {
+  bottom: -1px;
+  left: -1px;
+}
+.corner-crosshair.bl .line-h {
+  position: absolute;
+  right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--border-glow));
+}
+.corner-crosshair.bl .line-v {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 1px;
+  background: linear-gradient(to top, transparent, var(--border-glow));
+}
+.corner-crosshair.br {
+  bottom: -1px;
+  right: -1px;
+}
+.corner-crosshair.br .line-h {
+  position: absolute;
+  left: 100%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(to left, transparent, var(--border-glow));
+}
+.corner-crosshair.br .line-v {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 1px;
+  background: linear-gradient(to top, transparent, var(--border-glow));
+}

@@ -8,314 +8,581 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root"
-import { Route as SitemapDotxmlRouteImport } from "./routes/sitemap[.]xml"
-import { Route as RobotsDottxtRouteImport } from "./routes/robots[.]txt"
-import { Route as DesignSystemRouteImport } from "./routes/design-system"
-import { Route as ProfileRouteImport } from "./routes/_profile"
-import { Route as ProfileIndexRouteImport } from "./routes/_profile.index"
-import { Route as StudioSplatRouteImport } from "./routes/studio.$"
-import { Route as ProfileResourcesRouteImport } from "./routes/_profile.resources"
-import { Route as ProfileComponentUiRouteImport } from "./routes/_profile.component-ui"
-import { Route as ProfileBlogRouteImport } from "./routes/_profile.blog"
-import { Route as ProfileBlockRouteImport } from "./routes/_profile.block"
-import { Route as ProfileBlocksIndexRouteImport } from "./routes/_profile.blocks.index"
-import { Route as ProfileComponentUiSlugRouteImport } from "./routes/_profile.component-ui_.$slug"
-import { Route as ProfileBlockSlugRouteImport } from "./routes/_profile.block_.$slug"
-import { Route as ProfileBlocksCategoryIndexRouteImport } from "./routes/_profile.blocks.$category.index"
-import { Route as ProfileBlocksCategorySlugRouteImport } from "./routes/_profile.blocks.$category.$slug"
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as DesignSystemRouteImport } from './routes/design-system'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as ProfileRouteImport } from './routes/_profile'
+import { Route as AdminIndexRouteImport } from './routes/admin/index'
+import { Route as ProfileIndexRouteImport } from './routes/_profile.index'
+import { Route as StudioSplatRouteImport } from './routes/studio.$'
+import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
+import { Route as AdminResourcesRouteImport } from './routes/admin/resources'
+import { Route as AdminRegistryRouteImport } from './routes/admin/registry'
+import { Route as AdminGroupsRouteImport } from './routes/admin/groups'
+import { Route as AdminCategoriesRouteImport } from './routes/admin/categories'
+import { Route as AdminSplatRouteImport } from './routes/admin/$'
+import { Route as ProfileResourcesRouteImport } from './routes/_profile.resources'
+import { Route as ProfileColophonRouteImport } from './routes/_profile.colophon'
+import { Route as ProfileBlogRouteImport } from './routes/_profile.blog'
+import { Route as ProfileBlockRouteImport } from './routes/_profile.block'
+import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
+import { Route as ProfileComponentUiIndexRouteImport } from './routes/_profile.component-ui.index'
+import { Route as ProfileBlocksIndexRouteImport } from './routes/_profile.blocks.index'
+import { Route as AdminPostsNewRouteImport } from './routes/admin/posts/new'
+import { Route as AdminPostsIdRouteImport } from './routes/admin/posts/$id'
+import { Route as ProfileBlogSlugRouteImport } from './routes/_profile.blog_.$slug'
+import { Route as ProfileBlockSlugRouteImport } from './routes/_profile.block_.$slug'
+import { Route as ProfileComponentUiCategoryIndexRouteImport } from './routes/_profile.component-ui.$category.index'
+import { Route as ProfileBlocksCategoryIndexRouteImport } from './routes/_profile.blocks.$category.index'
+import { Route as ProfileComponentUiCategorySlugRouteImport } from './routes/_profile.component-ui.$category.$slug'
+import { Route as ProfileBlocksCategorySlugRouteImport } from './routes/_profile.blocks.$category.$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: "/sitemap.xml",
-  path: "/sitemap.xml",
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
-  id: "/robots.txt",
-  path: "/robots.txt",
+  id: '/robots.txt',
+  path: '/robots.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DesignSystemRoute = DesignSystemRouteImport.update({
-  id: "/design-system",
-  path: "/design-system",
+  id: '/design-system',
+  path: '/design-system',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
-  id: "/_profile",
+  id: '/_profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminIndexRoute = AdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ProfileIndexRoute = ProfileIndexRouteImport.update({
-  id: "/",
-  path: "/",
+  id: '/',
+  path: '/',
   getParentRoute: () => ProfileRoute,
 } as any)
 const StudioSplatRoute = StudioSplatRouteImport.update({
-  id: "/studio/$",
-  path: "/studio/$",
+  id: '/studio/$',
+  path: '/studio/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSettingsRoute = AdminSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminResourcesRoute = AdminResourcesRouteImport.update({
+  id: '/resources',
+  path: '/resources',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminRegistryRoute = AdminRegistryRouteImport.update({
+  id: '/registry',
+  path: '/registry',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminGroupsRoute = AdminGroupsRouteImport.update({
+  id: '/groups',
+  path: '/groups',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSplatRoute = AdminSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => AdminRoute,
+} as any)
 const ProfileResourcesRoute = ProfileResourcesRouteImport.update({
-  id: "/resources",
-  path: "/resources",
+  id: '/resources',
+  path: '/resources',
   getParentRoute: () => ProfileRoute,
 } as any)
-const ProfileComponentUiRoute = ProfileComponentUiRouteImport.update({
-  id: "/component-ui",
-  path: "/component-ui",
+const ProfileColophonRoute = ProfileColophonRouteImport.update({
+  id: '/colophon',
+  path: '/colophon',
   getParentRoute: () => ProfileRoute,
 } as any)
 const ProfileBlogRoute = ProfileBlogRouteImport.update({
-  id: "/blog",
-  path: "/blog",
+  id: '/blog',
+  path: '/blog',
   getParentRoute: () => ProfileRoute,
 } as any)
 const ProfileBlockRoute = ProfileBlockRouteImport.update({
-  id: "/block",
-  path: "/block",
+  id: '/block',
+  path: '/block',
+  getParentRoute: () => ProfileRoute,
+} as any)
+const AdminPostsIndexRoute = AdminPostsIndexRouteImport.update({
+  id: '/posts/',
+  path: '/posts/',
+  getParentRoute: () => AdminRoute,
+} as any)
+const ProfileComponentUiIndexRoute = ProfileComponentUiIndexRouteImport.update({
+  id: '/component-ui/',
+  path: '/component-ui/',
   getParentRoute: () => ProfileRoute,
 } as any)
 const ProfileBlocksIndexRoute = ProfileBlocksIndexRouteImport.update({
-  id: "/blocks/",
-  path: "/blocks/",
+  id: '/blocks/',
+  path: '/blocks/',
   getParentRoute: () => ProfileRoute,
 } as any)
-const ProfileComponentUiSlugRoute = ProfileComponentUiSlugRouteImport.update({
-  id: "/component-ui_/$slug",
-  path: "/component-ui/$slug",
+const AdminPostsNewRoute = AdminPostsNewRouteImport.update({
+  id: '/posts/new',
+  path: '/posts/new',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminPostsIdRoute = AdminPostsIdRouteImport.update({
+  id: '/posts/$id',
+  path: '/posts/$id',
+  getParentRoute: () => AdminRoute,
+} as any)
+const ProfileBlogSlugRoute = ProfileBlogSlugRouteImport.update({
+  id: '/blog_/$slug',
+  path: '/blog/$slug',
   getParentRoute: () => ProfileRoute,
 } as any)
 const ProfileBlockSlugRoute = ProfileBlockSlugRouteImport.update({
-  id: "/block_/$slug",
-  path: "/block/$slug",
+  id: '/block_/$slug',
+  path: '/block/$slug',
   getParentRoute: () => ProfileRoute,
 } as any)
+const ProfileComponentUiCategoryIndexRoute =
+  ProfileComponentUiCategoryIndexRouteImport.update({
+    id: '/component-ui/$category/',
+    path: '/component-ui/$category/',
+    getParentRoute: () => ProfileRoute,
+  } as any)
 const ProfileBlocksCategoryIndexRoute =
   ProfileBlocksCategoryIndexRouteImport.update({
-    id: "/blocks/$category/",
-    path: "/blocks/$category/",
+    id: '/blocks/$category/',
+    path: '/blocks/$category/',
+    getParentRoute: () => ProfileRoute,
+  } as any)
+const ProfileComponentUiCategorySlugRoute =
+  ProfileComponentUiCategorySlugRouteImport.update({
+    id: '/component-ui/$category/$slug',
+    path: '/component-ui/$category/$slug',
     getParentRoute: () => ProfileRoute,
   } as any)
 const ProfileBlocksCategorySlugRoute =
   ProfileBlocksCategorySlugRouteImport.update({
-    id: "/blocks/$category/$slug",
-    path: "/blocks/$category/$slug",
+    id: '/blocks/$category/$slug',
+    path: '/blocks/$category/$slug',
     getParentRoute: () => ProfileRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
-  "/": typeof ProfileIndexRoute
-  "/design-system": typeof DesignSystemRoute
-  "/robots.txt": typeof RobotsDottxtRoute
-  "/sitemap.xml": typeof SitemapDotxmlRoute
-  "/block": typeof ProfileBlockRoute
-  "/blog": typeof ProfileBlogRoute
-  "/component-ui": typeof ProfileComponentUiRoute
-  "/resources": typeof ProfileResourcesRoute
-  "/studio/$": typeof StudioSplatRoute
-  "/block/$slug": typeof ProfileBlockSlugRoute
-  "/component-ui/$slug": typeof ProfileComponentUiSlugRoute
-  "/blocks/": typeof ProfileBlocksIndexRoute
-  "/blocks/$category/$slug": typeof ProfileBlocksCategorySlugRoute
-  "/blocks/$category/": typeof ProfileBlocksCategoryIndexRoute
+  '/': typeof ProfileIndexRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/design-system': typeof DesignSystemRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/block': typeof ProfileBlockRoute
+  '/blog': typeof ProfileBlogRoute
+  '/colophon': typeof ProfileColophonRoute
+  '/resources': typeof ProfileResourcesRoute
+  '/admin/$': typeof AdminSplatRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/groups': typeof AdminGroupsRoute
+  '/admin/registry': typeof AdminRegistryRoute
+  '/admin/resources': typeof AdminResourcesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/studio/$': typeof StudioSplatRoute
+  '/admin/': typeof AdminIndexRoute
+  '/block/$slug': typeof ProfileBlockSlugRoute
+  '/blog/$slug': typeof ProfileBlogSlugRoute
+  '/admin/posts/$id': typeof AdminPostsIdRoute
+  '/admin/posts/new': typeof AdminPostsNewRoute
+  '/blocks/': typeof ProfileBlocksIndexRoute
+  '/component-ui/': typeof ProfileComponentUiIndexRoute
+  '/admin/posts/': typeof AdminPostsIndexRoute
+  '/blocks/$category/$slug': typeof ProfileBlocksCategorySlugRoute
+  '/component-ui/$category/$slug': typeof ProfileComponentUiCategorySlugRoute
+  '/blocks/$category/': typeof ProfileBlocksCategoryIndexRoute
+  '/component-ui/$category/': typeof ProfileComponentUiCategoryIndexRoute
 }
 export interface FileRoutesByTo {
-  "/design-system": typeof DesignSystemRoute
-  "/robots.txt": typeof RobotsDottxtRoute
-  "/sitemap.xml": typeof SitemapDotxmlRoute
-  "/block": typeof ProfileBlockRoute
-  "/blog": typeof ProfileBlogRoute
-  "/component-ui": typeof ProfileComponentUiRoute
-  "/resources": typeof ProfileResourcesRoute
-  "/studio/$": typeof StudioSplatRoute
-  "/": typeof ProfileIndexRoute
-  "/block/$slug": typeof ProfileBlockSlugRoute
-  "/component-ui/$slug": typeof ProfileComponentUiSlugRoute
-  "/blocks": typeof ProfileBlocksIndexRoute
-  "/blocks/$category/$slug": typeof ProfileBlocksCategorySlugRoute
-  "/blocks/$category": typeof ProfileBlocksCategoryIndexRoute
+  '/design-system': typeof DesignSystemRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/block': typeof ProfileBlockRoute
+  '/blog': typeof ProfileBlogRoute
+  '/colophon': typeof ProfileColophonRoute
+  '/resources': typeof ProfileResourcesRoute
+  '/admin/$': typeof AdminSplatRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/groups': typeof AdminGroupsRoute
+  '/admin/registry': typeof AdminRegistryRoute
+  '/admin/resources': typeof AdminResourcesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/studio/$': typeof StudioSplatRoute
+  '/': typeof ProfileIndexRoute
+  '/admin': typeof AdminIndexRoute
+  '/block/$slug': typeof ProfileBlockSlugRoute
+  '/blog/$slug': typeof ProfileBlogSlugRoute
+  '/admin/posts/$id': typeof AdminPostsIdRoute
+  '/admin/posts/new': typeof AdminPostsNewRoute
+  '/blocks': typeof ProfileBlocksIndexRoute
+  '/component-ui': typeof ProfileComponentUiIndexRoute
+  '/admin/posts': typeof AdminPostsIndexRoute
+  '/blocks/$category/$slug': typeof ProfileBlocksCategorySlugRoute
+  '/component-ui/$category/$slug': typeof ProfileComponentUiCategorySlugRoute
+  '/blocks/$category': typeof ProfileBlocksCategoryIndexRoute
+  '/component-ui/$category': typeof ProfileComponentUiCategoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  "/_profile": typeof ProfileRouteWithChildren
-  "/design-system": typeof DesignSystemRoute
-  "/robots.txt": typeof RobotsDottxtRoute
-  "/sitemap.xml": typeof SitemapDotxmlRoute
-  "/_profile/block": typeof ProfileBlockRoute
-  "/_profile/blog": typeof ProfileBlogRoute
-  "/_profile/component-ui": typeof ProfileComponentUiRoute
-  "/_profile/resources": typeof ProfileResourcesRoute
-  "/studio/$": typeof StudioSplatRoute
-  "/_profile/": typeof ProfileIndexRoute
-  "/_profile/block_/$slug": typeof ProfileBlockSlugRoute
-  "/_profile/component-ui_/$slug": typeof ProfileComponentUiSlugRoute
-  "/_profile/blocks/": typeof ProfileBlocksIndexRoute
-  "/_profile/blocks/$category/$slug": typeof ProfileBlocksCategorySlugRoute
-  "/_profile/blocks/$category/": typeof ProfileBlocksCategoryIndexRoute
+  '/_profile': typeof ProfileRouteWithChildren
+  '/admin': typeof AdminRouteWithChildren
+  '/design-system': typeof DesignSystemRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_profile/block': typeof ProfileBlockRoute
+  '/_profile/blog': typeof ProfileBlogRoute
+  '/_profile/colophon': typeof ProfileColophonRoute
+  '/_profile/resources': typeof ProfileResourcesRoute
+  '/admin/$': typeof AdminSplatRoute
+  '/admin/categories': typeof AdminCategoriesRoute
+  '/admin/groups': typeof AdminGroupsRoute
+  '/admin/registry': typeof AdminRegistryRoute
+  '/admin/resources': typeof AdminResourcesRoute
+  '/admin/settings': typeof AdminSettingsRoute
+  '/studio/$': typeof StudioSplatRoute
+  '/_profile/': typeof ProfileIndexRoute
+  '/admin/': typeof AdminIndexRoute
+  '/_profile/block_/$slug': typeof ProfileBlockSlugRoute
+  '/_profile/blog_/$slug': typeof ProfileBlogSlugRoute
+  '/admin/posts/$id': typeof AdminPostsIdRoute
+  '/admin/posts/new': typeof AdminPostsNewRoute
+  '/_profile/blocks/': typeof ProfileBlocksIndexRoute
+  '/_profile/component-ui/': typeof ProfileComponentUiIndexRoute
+  '/admin/posts/': typeof AdminPostsIndexRoute
+  '/_profile/blocks/$category/$slug': typeof ProfileBlocksCategorySlugRoute
+  '/_profile/component-ui/$category/$slug': typeof ProfileComponentUiCategorySlugRoute
+  '/_profile/blocks/$category/': typeof ProfileBlocksCategoryIndexRoute
+  '/_profile/component-ui/$category/': typeof ProfileComponentUiCategoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | "/"
-    | "/design-system"
-    | "/robots.txt"
-    | "/sitemap.xml"
-    | "/block"
-    | "/blog"
-    | "/component-ui"
-    | "/resources"
-    | "/studio/$"
-    | "/block/$slug"
-    | "/component-ui/$slug"
-    | "/blocks/"
-    | "/blocks/$category/$slug"
-    | "/blocks/$category/"
+    | '/'
+    | '/admin'
+    | '/design-system'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/block'
+    | '/blog'
+    | '/colophon'
+    | '/resources'
+    | '/admin/$'
+    | '/admin/categories'
+    | '/admin/groups'
+    | '/admin/registry'
+    | '/admin/resources'
+    | '/admin/settings'
+    | '/studio/$'
+    | '/admin/'
+    | '/block/$slug'
+    | '/blog/$slug'
+    | '/admin/posts/$id'
+    | '/admin/posts/new'
+    | '/blocks/'
+    | '/component-ui/'
+    | '/admin/posts/'
+    | '/blocks/$category/$slug'
+    | '/component-ui/$category/$slug'
+    | '/blocks/$category/'
+    | '/component-ui/$category/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | "/design-system"
-    | "/robots.txt"
-    | "/sitemap.xml"
-    | "/block"
-    | "/blog"
-    | "/component-ui"
-    | "/resources"
-    | "/studio/$"
-    | "/"
-    | "/block/$slug"
-    | "/component-ui/$slug"
-    | "/blocks"
-    | "/blocks/$category/$slug"
-    | "/blocks/$category"
+    | '/design-system'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/block'
+    | '/blog'
+    | '/colophon'
+    | '/resources'
+    | '/admin/$'
+    | '/admin/categories'
+    | '/admin/groups'
+    | '/admin/registry'
+    | '/admin/resources'
+    | '/admin/settings'
+    | '/studio/$'
+    | '/'
+    | '/admin'
+    | '/block/$slug'
+    | '/blog/$slug'
+    | '/admin/posts/$id'
+    | '/admin/posts/new'
+    | '/blocks'
+    | '/component-ui'
+    | '/admin/posts'
+    | '/blocks/$category/$slug'
+    | '/component-ui/$category/$slug'
+    | '/blocks/$category'
+    | '/component-ui/$category'
   id:
-    | "__root__"
-    | "/_profile"
-    | "/design-system"
-    | "/robots.txt"
-    | "/sitemap.xml"
-    | "/_profile/block"
-    | "/_profile/blog"
-    | "/_profile/component-ui"
-    | "/_profile/resources"
-    | "/studio/$"
-    | "/_profile/"
-    | "/_profile/block_/$slug"
-    | "/_profile/component-ui_/$slug"
-    | "/_profile/blocks/"
-    | "/_profile/blocks/$category/$slug"
-    | "/_profile/blocks/$category/"
+    | '__root__'
+    | '/_profile'
+    | '/admin'
+    | '/design-system'
+    | '/robots.txt'
+    | '/sitemap.xml'
+    | '/_profile/block'
+    | '/_profile/blog'
+    | '/_profile/colophon'
+    | '/_profile/resources'
+    | '/admin/$'
+    | '/admin/categories'
+    | '/admin/groups'
+    | '/admin/registry'
+    | '/admin/resources'
+    | '/admin/settings'
+    | '/studio/$'
+    | '/_profile/'
+    | '/admin/'
+    | '/_profile/block_/$slug'
+    | '/_profile/blog_/$slug'
+    | '/admin/posts/$id'
+    | '/admin/posts/new'
+    | '/_profile/blocks/'
+    | '/_profile/component-ui/'
+    | '/admin/posts/'
+    | '/_profile/blocks/$category/$slug'
+    | '/_profile/component-ui/$category/$slug'
+    | '/_profile/blocks/$category/'
+    | '/_profile/component-ui/$category/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRouteWithChildren
+  AdminRoute: typeof AdminRouteWithChildren
   DesignSystemRoute: typeof DesignSystemRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   StudioSplatRoute: typeof StudioSplatRoute
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/sitemap.xml": {
-      id: "/sitemap.xml"
-      path: "/sitemap.xml"
-      fullPath: "/sitemap.xml"
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/robots.txt": {
-      id: "/robots.txt"
-      path: "/robots.txt"
-      fullPath: "/robots.txt"
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
       preLoaderRoute: typeof RobotsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/design-system": {
-      id: "/design-system"
-      path: "/design-system"
-      fullPath: "/design-system"
+    '/design-system': {
+      id: '/design-system'
+      path: '/design-system'
+      fullPath: '/design-system'
       preLoaderRoute: typeof DesignSystemRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/_profile": {
-      id: "/_profile"
-      path: ""
-      fullPath: "/"
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_profile': {
+      id: '/_profile'
+      path: ''
+      fullPath: '/'
       preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/_profile/": {
-      id: "/_profile/"
-      path: "/"
-      fullPath: "/"
+    '/admin/': {
+      id: '/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_profile/': {
+      id: '/_profile/'
+      path: '/'
+      fullPath: '/'
       preLoaderRoute: typeof ProfileIndexRouteImport
       parentRoute: typeof ProfileRoute
     }
-    "/studio/$": {
-      id: "/studio/$"
-      path: "/studio/$"
-      fullPath: "/studio/$"
+    '/studio/$': {
+      id: '/studio/$'
+      path: '/studio/$'
+      fullPath: '/studio/$'
       preLoaderRoute: typeof StudioSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    "/_profile/resources": {
-      id: "/_profile/resources"
-      path: "/resources"
-      fullPath: "/resources"
+    '/admin/settings': {
+      id: '/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/resources': {
+      id: '/admin/resources'
+      path: '/resources'
+      fullPath: '/admin/resources'
+      preLoaderRoute: typeof AdminResourcesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/registry': {
+      id: '/admin/registry'
+      path: '/registry'
+      fullPath: '/admin/registry'
+      preLoaderRoute: typeof AdminRegistryRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/groups': {
+      id: '/admin/groups'
+      path: '/groups'
+      fullPath: '/admin/groups'
+      preLoaderRoute: typeof AdminGroupsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/categories': {
+      id: '/admin/categories'
+      path: '/categories'
+      fullPath: '/admin/categories'
+      preLoaderRoute: typeof AdminCategoriesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/$': {
+      id: '/admin/$'
+      path: '/$'
+      fullPath: '/admin/$'
+      preLoaderRoute: typeof AdminSplatRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_profile/resources': {
+      id: '/_profile/resources'
+      path: '/resources'
+      fullPath: '/resources'
       preLoaderRoute: typeof ProfileResourcesRouteImport
       parentRoute: typeof ProfileRoute
     }
-    "/_profile/component-ui": {
-      id: "/_profile/component-ui"
-      path: "/component-ui"
-      fullPath: "/component-ui"
-      preLoaderRoute: typeof ProfileComponentUiRouteImport
+    '/_profile/colophon': {
+      id: '/_profile/colophon'
+      path: '/colophon'
+      fullPath: '/colophon'
+      preLoaderRoute: typeof ProfileColophonRouteImport
       parentRoute: typeof ProfileRoute
     }
-    "/_profile/blog": {
-      id: "/_profile/blog"
-      path: "/blog"
-      fullPath: "/blog"
+    '/_profile/blog': {
+      id: '/_profile/blog'
+      path: '/blog'
+      fullPath: '/blog'
       preLoaderRoute: typeof ProfileBlogRouteImport
       parentRoute: typeof ProfileRoute
     }
-    "/_profile/block": {
-      id: "/_profile/block"
-      path: "/block"
-      fullPath: "/block"
+    '/_profile/block': {
+      id: '/_profile/block'
+      path: '/block'
+      fullPath: '/block'
       preLoaderRoute: typeof ProfileBlockRouteImport
       parentRoute: typeof ProfileRoute
     }
-    "/_profile/blocks/": {
-      id: "/_profile/blocks/"
-      path: "/blocks"
-      fullPath: "/blocks/"
+    '/admin/posts/': {
+      id: '/admin/posts/'
+      path: '/posts'
+      fullPath: '/admin/posts/'
+      preLoaderRoute: typeof AdminPostsIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_profile/component-ui/': {
+      id: '/_profile/component-ui/'
+      path: '/component-ui'
+      fullPath: '/component-ui/'
+      preLoaderRoute: typeof ProfileComponentUiIndexRouteImport
+      parentRoute: typeof ProfileRoute
+    }
+    '/_profile/blocks/': {
+      id: '/_profile/blocks/'
+      path: '/blocks'
+      fullPath: '/blocks/'
       preLoaderRoute: typeof ProfileBlocksIndexRouteImport
       parentRoute: typeof ProfileRoute
     }
-    "/_profile/component-ui_/$slug": {
-      id: "/_profile/component-ui_/$slug"
-      path: "/component-ui/$slug"
-      fullPath: "/component-ui/$slug"
-      preLoaderRoute: typeof ProfileComponentUiSlugRouteImport
+    '/admin/posts/new': {
+      id: '/admin/posts/new'
+      path: '/posts/new'
+      fullPath: '/admin/posts/new'
+      preLoaderRoute: typeof AdminPostsNewRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/posts/$id': {
+      id: '/admin/posts/$id'
+      path: '/posts/$id'
+      fullPath: '/admin/posts/$id'
+      preLoaderRoute: typeof AdminPostsIdRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/_profile/blog_/$slug': {
+      id: '/_profile/blog_/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof ProfileBlogSlugRouteImport
       parentRoute: typeof ProfileRoute
     }
-    "/_profile/block_/$slug": {
-      id: "/_profile/block_/$slug"
-      path: "/block/$slug"
-      fullPath: "/block/$slug"
+    '/_profile/block_/$slug': {
+      id: '/_profile/block_/$slug'
+      path: '/block/$slug'
+      fullPath: '/block/$slug'
       preLoaderRoute: typeof ProfileBlockSlugRouteImport
       parentRoute: typeof ProfileRoute
     }
-    "/_profile/blocks/$category/": {
-      id: "/_profile/blocks/$category/"
-      path: "/blocks/$category"
-      fullPath: "/blocks/$category/"
+    '/_profile/component-ui/$category/': {
+      id: '/_profile/component-ui/$category/'
+      path: '/component-ui/$category'
+      fullPath: '/component-ui/$category/'
+      preLoaderRoute: typeof ProfileComponentUiCategoryIndexRouteImport
+      parentRoute: typeof ProfileRoute
+    }
+    '/_profile/blocks/$category/': {
+      id: '/_profile/blocks/$category/'
+      path: '/blocks/$category'
+      fullPath: '/blocks/$category/'
       preLoaderRoute: typeof ProfileBlocksCategoryIndexRouteImport
       parentRoute: typeof ProfileRoute
     }
-    "/_profile/blocks/$category/$slug": {
-      id: "/_profile/blocks/$category/$slug"
-      path: "/blocks/$category/$slug"
-      fullPath: "/blocks/$category/$slug"
+    '/_profile/component-ui/$category/$slug': {
+      id: '/_profile/component-ui/$category/$slug'
+      path: '/component-ui/$category/$slug'
+      fullPath: '/component-ui/$category/$slug'
+      preLoaderRoute: typeof ProfileComponentUiCategorySlugRouteImport
+      parentRoute: typeof ProfileRoute
+    }
+    '/_profile/blocks/$category/$slug': {
+      id: '/_profile/blocks/$category/$slug'
+      path: '/blocks/$category/$slug'
+      fullPath: '/blocks/$category/$slug'
       preLoaderRoute: typeof ProfileBlocksCategorySlugRouteImport
       parentRoute: typeof ProfileRoute
     }
@@ -325,34 +592,69 @@ declare module "@tanstack/react-router" {
 interface ProfileRouteChildren {
   ProfileBlockRoute: typeof ProfileBlockRoute
   ProfileBlogRoute: typeof ProfileBlogRoute
-  ProfileComponentUiRoute: typeof ProfileComponentUiRoute
+  ProfileColophonRoute: typeof ProfileColophonRoute
   ProfileResourcesRoute: typeof ProfileResourcesRoute
   ProfileIndexRoute: typeof ProfileIndexRoute
   ProfileBlockSlugRoute: typeof ProfileBlockSlugRoute
-  ProfileComponentUiSlugRoute: typeof ProfileComponentUiSlugRoute
+  ProfileBlogSlugRoute: typeof ProfileBlogSlugRoute
   ProfileBlocksIndexRoute: typeof ProfileBlocksIndexRoute
+  ProfileComponentUiIndexRoute: typeof ProfileComponentUiIndexRoute
   ProfileBlocksCategorySlugRoute: typeof ProfileBlocksCategorySlugRoute
+  ProfileComponentUiCategorySlugRoute: typeof ProfileComponentUiCategorySlugRoute
   ProfileBlocksCategoryIndexRoute: typeof ProfileBlocksCategoryIndexRoute
+  ProfileComponentUiCategoryIndexRoute: typeof ProfileComponentUiCategoryIndexRoute
 }
 
 const ProfileRouteChildren: ProfileRouteChildren = {
   ProfileBlockRoute: ProfileBlockRoute,
   ProfileBlogRoute: ProfileBlogRoute,
-  ProfileComponentUiRoute: ProfileComponentUiRoute,
+  ProfileColophonRoute: ProfileColophonRoute,
   ProfileResourcesRoute: ProfileResourcesRoute,
   ProfileIndexRoute: ProfileIndexRoute,
   ProfileBlockSlugRoute: ProfileBlockSlugRoute,
-  ProfileComponentUiSlugRoute: ProfileComponentUiSlugRoute,
+  ProfileBlogSlugRoute: ProfileBlogSlugRoute,
   ProfileBlocksIndexRoute: ProfileBlocksIndexRoute,
+  ProfileComponentUiIndexRoute: ProfileComponentUiIndexRoute,
   ProfileBlocksCategorySlugRoute: ProfileBlocksCategorySlugRoute,
+  ProfileComponentUiCategorySlugRoute: ProfileComponentUiCategorySlugRoute,
   ProfileBlocksCategoryIndexRoute: ProfileBlocksCategoryIndexRoute,
+  ProfileComponentUiCategoryIndexRoute: ProfileComponentUiCategoryIndexRoute,
 }
 
 const ProfileRouteWithChildren =
   ProfileRoute._addFileChildren(ProfileRouteChildren)
 
+interface AdminRouteChildren {
+  AdminSplatRoute: typeof AdminSplatRoute
+  AdminCategoriesRoute: typeof AdminCategoriesRoute
+  AdminGroupsRoute: typeof AdminGroupsRoute
+  AdminRegistryRoute: typeof AdminRegistryRoute
+  AdminResourcesRoute: typeof AdminResourcesRoute
+  AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminIndexRoute: typeof AdminIndexRoute
+  AdminPostsIdRoute: typeof AdminPostsIdRoute
+  AdminPostsNewRoute: typeof AdminPostsNewRoute
+  AdminPostsIndexRoute: typeof AdminPostsIndexRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminSplatRoute: AdminSplatRoute,
+  AdminCategoriesRoute: AdminCategoriesRoute,
+  AdminGroupsRoute: AdminGroupsRoute,
+  AdminRegistryRoute: AdminRegistryRoute,
+  AdminResourcesRoute: AdminResourcesRoute,
+  AdminSettingsRoute: AdminSettingsRoute,
+  AdminIndexRoute: AdminIndexRoute,
+  AdminPostsIdRoute: AdminPostsIdRoute,
+  AdminPostsNewRoute: AdminPostsNewRoute,
+  AdminPostsIndexRoute: AdminPostsIndexRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRouteWithChildren,
+  AdminRoute: AdminRouteWithChildren,
   DesignSystemRoute: DesignSystemRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
@@ -362,9 +664,9 @@ export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 
-import type { getRouter } from "./router.tsx"
-import type { createStart } from "@tanstack/react-start"
-declare module "@tanstack/react-start" {
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
   interface Register {
     ssr: true
     router: Awaited<ReturnType<typeof getRouter>>

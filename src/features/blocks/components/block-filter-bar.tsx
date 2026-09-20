@@ -1,5 +1,4 @@
 import { Link } from "@tanstack/react-router"
-import React from "react"
 
 import { cn } from "@/shared/lib"
 import { StripedPattern } from "@/shared/ui/system"
@@ -11,9 +10,9 @@ interface BlockFilterBarProps {
   activeCategory?: BlockCategoryId
 }
 
-export const BlockFilterBar: React.FC<BlockFilterBarProps> = ({
+export const BlockFilterBar = ({
   activeCategory = "all",
-}) => {
+}: BlockFilterBarProps) => {
   return (
     <div className="no-scrollbar flex w-full items-stretch overflow-x-auto">
       {BLOCK_CATEGORIES.map((cat) => {

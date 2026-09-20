@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowUpRight } from "lucide-react"
-import React from "react"
 
 import { cn } from "@/shared/lib"
 
@@ -11,7 +10,7 @@ interface BlockCardProps {
   block: BlockItem
 }
 
-export const BlockCard: React.FC<BlockCardProps> = ({ block }) => {
+export const BlockCard = ({ block }: BlockCardProps) => {
   return (
     <Link
       to="/blocks/$category/$slug"

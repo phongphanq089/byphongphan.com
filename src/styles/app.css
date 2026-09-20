@@ -3,8 +3,12 @@
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist-mono";
 @plugin "tailwindcss-animate";
+@import "./nav-bar.css";
+@import "./glow-card.css";
+@import "./filepond.css";
+@import "./scroll-fade-effect.css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
   --breakpoint-xs: 400px;
@@ -39,15 +43,17 @@
 
 :root,
 .dark {
+  color-scheme: dark;
+
   /* ─── Brand Base Tokens (PP Identity) ─── */
-  --pp-primary: #dc2626; /* Red-600 */
-  --pp-primary-foreground: oklch(0.985 0 0);
+  --pp-primary: oklch(0.985 0 0); /* Red-600 */
+  --pp-primary-foreground: oklch(0.15 0 0);
   --pp-primary-glow: rgba(220, 38, 38, 0.25);
 
   /* ─── Semantic Surface & Content Tokens ─── */
   --background: oklch(0.12 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.15 0 0);
+  --card: var(--color-muted);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.15 0 0);
   --popover-foreground: oklch(0.985 0 0);
@@ -59,8 +65,11 @@
   --muted-foreground: oklch(0.7 0 0);
   --accent: oklch(0.25 0 0);
   --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.6 0.2 25);
+  --destructive: oklch(52.641% 0.20823 28.037);
   --destructive-foreground: oklch(0.985 0 0);
+  --success: oklch(0.65 0.2 142);
+  --warning: oklch(0.75 0.15 75);
+  --info: oklch(0.6 0.18 245);
   --border: oklch(1 0 0 / 12%);
   --input: oklch(1 0 0 / 15%);
   --ring: var(--pp-primary);
@@ -82,15 +91,27 @@
   --border-glow: rgba(255, 255, 255, 0.22);
   --grid-dots: rgba(255, 255, 255, 0.06);
   --grid-dots-hover: rgba(255, 255, 255, 0.12);
+  --code-token-keyword: var(--color-rose-600);
+  --code-token-function: var(--color-violet-600);
+  --code-token-string: var(--color-emerald-600);
+  --code-token-constant: var(--color-sky-600);
+  --code-token-parameter: var(--color-amber-600);
+  --code-token-comment: var(--color-muted-foreground);
+  --code-token-punctuation: var(--color-foreground);
+
+  /* Scrollbar Theme Tokens */
+  --scrollbar-thumb: oklch(1 0 0 / 18%);
+  --scrollbar-thumb-hover: oklch(1 0 0 / 35%);
+  --scrollbar-track: transparent;
 }
 
-/* .dark {
-
-} */
-
 .light {
+  color-scheme: light;
+
   /* ─── Brand Base Tokens (PP Identity) ─── */
-  --pp-primary: #dc2626;
+  --pp-primary: oklch(
+    0.141 0.005 285.823
+  ); /*oklch(0.141 0.005 285.823)     === oklch(0.985 0 0) === #dc2626*/
   --pp-primary-foreground: oklch(0.985 0 0);
   --pp-primary-glow: rgba(220, 38, 38, 0.15);
 
@@ -111,6 +132,9 @@
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
+  --success: oklch(0.6 0.18 142);
+  --warning: oklch(0.7 0.16 75);
+  --info: oklch(0.55 0.18 245);
   --border: oklch(0.9 0 0);
   --input: oklch(0.9 0 0);
   --ring: var(--pp-primary);
@@ -126,6 +150,11 @@
   --border-glow: rgba(0, 0, 0, 0.22);
   --grid-dots: rgba(0, 0, 0, 0.04);
   --grid-dots-hover: rgba(0, 0, 0, 0.08);
+
+  /* Scrollbar Theme Tokens (visible subtle dark gray thumb in light theme) */
+  --scrollbar-thumb: oklch(0 0 0 / 28%);
+  --scrollbar-thumb-hover: oklch(0 0 0 / 48%);
+  --scrollbar-track: transparent;
 }
 
 @theme inline {
@@ -150,6 +179,9 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-scrollbar-thumb: var(--scrollbar-thumb);
+  --color-scrollbar-thumb-hover: var(--scrollbar-thumb-hover);
+  --color-scrollbar-track: var(--scrollbar-track);
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
   --color-chart-3: var(--chart-3);
@@ -282,362 +314,88 @@
   }
 }
 
-html::-webkit-scrollbar-track {
-  background-color: transparent;
+*::-webkit-scrollbar-button,
+::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
-html::-webkit-scrollbar {
-  width: 6px;
-  background-color: transparent;
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
 }
 
-html::-webkit-scrollbar-thumb {
-  background-color: var(--color-dark-scroll);
+/* Fallback for standard browsers like Firefox that do not support ::-webkit-scrollbar */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+  }
 }
 
 button {
   @apply cursor-pointer;
 }
 
-.custom-scrollbar::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  transition: all 0.3s ease;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: var(--primary); /* Use theme primary color on hover */
-}
-
-/* ================= CUSTOM NAVBAR ================= */
-
-nav {
-  --spotlight-color: rgba(0, 0, 0, 0.08);
-  --ambience-color: rgba(0, 0, 0, 0.8);
-}
-
-.dark nav {
-  --spotlight-color: rgba(255, 255, 255, 0.15);
-  --ambience-color: rgba(255, 255, 255, 1);
-}
-
-/* Glass Component Borders */
-.glass-border {
-  border: 1px solid rgba(0, 0, 0, 0.15);
-}
-
-.dark .glass-border {
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.spotlight-nav-bg {
-  background-color: rgb(250, 250, 250);
-}
-
-.dark .spotlight-nav-bg {
-  background-color: rgb(10, 10, 10);
-}
-
-.spotlight-nav-shadow {
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.15),
-    0 4px 6px -4px rgba(0, 0, 0, 0.1);
-}
-
-.dark .spotlight-nav-shadow {
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.5),
-    0 4px 6px -4px rgba(0, 0, 0, 0.5);
-}
-
-/* effect for vengeanceUI-text melting */
-@keyframes melt {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-
-  50% {
-    transform: translateY(10px);
-  }
-}
-
-@keyframes drip {
-  0%,
-  100% {
-    transform: scaleY(1);
-  }
-
-  50% {
-    transform: scaleY(1.15);
-    opacity: 0.3;
-  }
-}
-
-/* ================= 404 PAGE STYLES ================= */
-
-.toio-404-container {
-  @apply flex min-h-screen flex-col items-center justify-center bg-background p-4 text-center transition-colors duration-500;
-}
-
-.toio-404-display {
-  @apply relative flex items-center justify-center font-serif font-black;
-  font-size: clamp(8rem, 45vw, 40rem);
-  line-height: 0.8;
-  color: var(--foreground);
-}
-
-.toio-404-number {
-  @apply relative z-0 tracking-tighter;
-  opacity: 0.9;
-}
-
-.toio-404-zero-wrapper {
-  @apply relative mx-[-0.02em] flex items-center justify-center;
-}
-
-.toio-404-content {
-  @apply inset-0 z-10 flex flex-col items-center justify-center max-md:hidden md:absolute;
-  @apply pointer-events-none;
-  @apply text-background; /* Use background color for contrast inside the dark digit */
-  direction: ltr;
-}
-
-.toio-404-content > * {
-  @apply pointer-events-auto;
-}
-
-.toio-404-title {
-  @apply mb-1 font-serif text-base opacity-100 md:text-xl;
-}
-
-.toio-404-sub {
-  @apply mb-4 max-w-[120px] text-[13px] leading-tight md:max-w-[200px] md:text-xs;
-}
-
-.toio-404-btn {
-  @apply rounded-full border border-background/30 px-4 py-1.5 font-serif text-[10px] transition-all duration-300 md:px-6 md:py-2 md:text-xs;
-  @apply hover:bg-background hover:text-foreground;
-}
-
-.bg-border-line {
-  aspect-ratio: 1;
-  background: linear-gradient(225deg, black 49%, var(--foreground) 50%);
-  height: 48px;
-  will-change: transform;
-  z-index: 1;
-  border-bottom-left-radius: 6px;
-  flex: none;
-  width: 48px;
-  position: absolute;
-  top: 0;
-  right: 0;
-  overflow: hidden;
-}
-
-/* ─── Technical Blueprint Glow Card & Canvas Styles ─── */
-.card-canvas {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  overflow: visible; /* Allows corner crosshair lines to extend outside card bounds */
-  padding: 1px;
-  background: transparent;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s ease;
-}
-
-.card-backdrop {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: radial-gradient(
-    280px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
-    var(--pp-primary-glow, rgba(220, 38, 38, 0.12)),
-    transparent 65%
-  );
-  z-index: 1;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.card-canvas:hover .card-backdrop {
-  opacity: 1;
-}
-
-.glow-card {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  background: var(--card);
-  overflow: visible; /* Let crosshairs extend outside card boundaries */
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--border);
-  transition:
-    border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  z-index: 2;
-}
-
-.glow-card:hover {
-  border-color: var(--border-glow);
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
-}
-
-.card-content {
-  position: relative;
-  z-index: 5;
-  width: 100%;
-  height: 100%;
-  flex: 1;
-  background: var(--card);
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  background-image: radial-gradient(var(--grid-dots) 1.2px, transparent 1.2px);
-  background-size: 8px 8px;
-  transition: background-image 0.3s ease;
-}
-
-.glow-card:hover .card-content {
-  background-image: radial-gradient(
-    var(--grid-dots-hover) 1.2px,
-    transparent 1.2px
-  );
-}
-
-/* ─── Blueprint Corner Reticles/Crosshairs ─── */
-.corner-crosshair {
-  position: absolute;
-  pointer-events: none;
-  z-index: 10;
-  opacity: 0.35;
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glow-card:hover .corner-crosshair {
-  opacity: 1;
-}
-
-.corner-crosshair .line-h {
-  transition:
-    width 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    background 0.3s ease;
-  width: 14px;
-}
-
-.corner-crosshair .line-v {
-  transition:
-    height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-    background 0.3s ease;
-  height: 14px;
-}
-
-.glow-card:hover .corner-crosshair .line-h {
-  width: 26px;
-}
-
-.glow-card:hover .corner-crosshair .line-v {
-  height: 26px;
-}
-
-/* Top Left Corner Reticle */
-.corner-crosshair.tl {
-  top: -1px;
-  left: -1px;
-}
-.corner-crosshair.tl .line-h {
-  position: absolute;
-  right: 100%;
-  top: 0;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--border-glow));
-}
-.corner-crosshair.tl .line-v {
-  position: absolute;
-  left: 0;
-  bottom: 100%;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent, var(--border-glow));
-}
-
-/* Top Right Corner Reticle */
-.corner-crosshair.tr {
-  top: -1px;
-  right: -1px;
-}
-.corner-crosshair.tr .line-h {
-  position: absolute;
-  left: 100%;
-  top: 0;
-  height: 1px;
-  background: linear-gradient(to left, transparent, var(--border-glow));
-}
-.corner-crosshair.tr .line-v {
-  position: absolute;
-  right: 0;
-  bottom: 100%;
-  width: 1px;
-  background: linear-gradient(to bottom, transparent, var(--border-glow));
-}
-
-/* Bottom Left Corner Reticle */
-.corner-crosshair.bl {
-  bottom: -1px;
-  left: -1px;
-}
-.corner-crosshair.bl .line-h {
-  position: absolute;
-  right: 100%;
-  bottom: 0;
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--border-glow));
-}
-.corner-crosshair.bl .line-v {
-  position: absolute;
-  left: 0;
-  top: 100%;
-  width: 1px;
-  background: linear-gradient(to top, transparent, var(--border-glow));
-}
-
-/* Bottom Right Corner Reticle */
-.corner-crosshair.br {
-  bottom: -1px;
-  right: -1px;
-}
-.corner-crosshair.br .line-h {
-  position: absolute;
-  left: 100%;
-  bottom: 0;
-  height: 1px;
-  background: linear-gradient(to left, transparent, var(--border-glow));
-}
-.corner-crosshair.br .line-v {
-  position: absolute;
-  right: 0;
-  top: 100%;
-  width: 1px;
-  background: linear-gradient(to top, transparent, var(--border-glow));
-}
-
 @utility link-underline {
   @apply underline decoration-current/30 decoration-1 underline-offset-3 transition-colors hover:decoration-current;
+}
+
+/* ─── MapLibre GL & MapCN Styles ─── */
+.maplibregl-popup-content {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+.maplibregl-popup-tip {
+  display: none !important;
+}
+
+.maplibregl-ctrl-attrib {
+  background-color: var(--background) !important;
+  color: var(--muted-foreground) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.maplibregl-ctrl-attrib a {
+  color: var(--muted-foreground) !important;
+}
+
+.maplibregl-ctrl-attrib a:hover {
+  color: var(--foreground) !important;
+}
+
+.maplibregl-ctrl-attrib-button {
+  background: transparent !important;
+}
+
+.dark .maplibregl-ctrl-attrib-button {
+  filter: invert(1);
+}
+
+.maplibregl-cooperative-gesture-screen {
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(6px) !important;
+  font-family: inherit !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: var(--foreground, #fff) !important;
+  letter-spacing: -0.01em !important;
+  border-radius: var(--radius-xl, 0.75rem) !important;
+  text-align: center !important;
 }

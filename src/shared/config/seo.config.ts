@@ -95,6 +95,11 @@ export const pagesSeoConfig: Record<string, SeoConfig> = {
     description: "Headless CMS workspace powered by Sanity.io.",
     noIndex: true,
   },
+  colophon: {
+    title: "Colophon • Phong Phan",
+    description:
+      "System specifications, typography, modern tech stack, and design inspirations behind this developer portfolio.",
+  },
 }
 
 /**
@@ -104,11 +109,21 @@ export const pagesSeoConfig: Record<string, SeoConfig> = {
  * 3. Default predefined ogImage
  */
 export function getOgImageUrl(
-  customImage?: string,
+  customImage?: string | { url?: string } | unknown,
   sanityOgImage?: SanityImage
 ): string {
-  if (customImage && customImage.trim() !== "") {
-    return customImage
+  const resolvedCustomUrl =
+    typeof customImage === "string"
+      ? customImage
+      : typeof customImage === "object" &&
+          customImage !== null &&
+          "url" in customImage &&
+          typeof (customImage as { url: unknown }).url === "string"
+        ? (customImage as { url: string }).url
+        : undefined
+
+  if (resolvedCustomUrl && resolvedCustomUrl.trim() !== "") {
+    return resolvedCustomUrl.trim()
   }
 
   return (
@@ -138,9 +153,17 @@ export function createSeoMeta(
   }
 
   const isRoot = !config || config === undefined
-  const hasCustomImage = Boolean(
-    resolved.ogImage && resolved.ogImage.trim() !== ""
-  )
+  const customOgUrl =
+    typeof resolved.ogImage === "string"
+      ? resolved.ogImage
+      : typeof resolved.ogImage === "object" &&
+          resolved.ogImage !== null &&
+          "url" in resolved.ogImage &&
+          typeof (resolved.ogImage as { url: unknown }).url === "string"
+        ? (resolved.ogImage as { url: string }).url
+        : undefined
+
+  const hasCustomImage = Boolean(customOgUrl && customOgUrl.trim() !== "")
   const hasSanityImage = Boolean(siteSettings?.ogImage?.asset)
 
   // Priority: Route Config > Sanity Schema Settings > Default Static Config
@@ -195,7 +218,7 @@ export function createSeoMeta(
 
   // Image handling: Only output og:image if root OR custom image OR sanity image exists
   if (isRoot || hasCustomImage || hasSanityImage) {
-    const image = getOgImageUrl(resolved.ogImage, siteSettings?.ogImage)
+    const image = getOgImageUrl(customOgUrl, siteSettings?.ogImage)
     metaList.push(
       { property: "og:image", content: image },
       { name: "twitter:image", content: image }
@@ -340,5 +363,47 @@ export function createPersonJsonLd(siteSettings?: SanitySiteSettings | null) {
     sameAs,
     description:
       siteSettings?.siteDescription?.trim() || siteConfig.description,
+  }
+}
+
+/**
+ * Creates BlogPosting structured data JSON-LD for individual article detail pages.
+ */
+export function createBlogArticleJsonLd({
+  title,
+  description,
+  url,
+  image,
+  datePublished,
+  authorName,
+}: {
+  title: string
+  description?: string
+  url: string
+  image?: string
+  datePublished?: string
+  authorName?: string
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    description: description || title,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": url,
+    },
+    ...(image ? { image: [image] } : {}),
+    ...(datePublished ? { datePublished } : {}),
+    author: {
+      "@type": "Person",
+      name: authorName || siteConfig.author.name,
+      url: siteConfig.url,
+    },
+    publisher: {
+      "@type": "Person",
+      name: siteConfig.author.name,
+      url: siteConfig.url,
+    },
   }
 }

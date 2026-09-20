@@ -37,10 +37,10 @@ const PRICING_STYLES: Record<
   },
 }
 
-export const ResourceCard: React.FC<ResourceCardProps> = ({
+export const ResourceCard = ({
   resource,
   onSelectCategory,
-}) => {
+}: ResourceCardProps) => {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = (e: React.MouseEvent) => {
@@ -107,7 +107,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                   e.stopPropagation()
                   onSelectCategory?.(resource.category.slug.current)
                 }}
-                className="flex items-center gap-1.5 rounded-md border border-white/20 bg-black/75 px-2 py-0.5 font-mono text-[10px] font-semibold text-white shadow-xs backdrop-blur-md transition-colors hover:border-white/40 hover:bg-black/90"
+                className="flex items-center gap-1.5 rounded-md border border-white/20 bg-black/75 px-2 py-0.5 text-[10px] font-semibold text-white shadow-xs backdrop-blur-md transition-colors hover:border-white/40 hover:bg-black/90"
               >
                 <span
                   className="size-1.5 rounded-full"
@@ -121,7 +121,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
             <div className="absolute top-2.5 right-2.5 z-10 flex items-center gap-1.5">
               <span
                 className={cn(
-                  "rounded-md border px-2 py-0.5 font-mono text-[10px] font-semibold backdrop-blur-md",
+                  "rounded-md border px-2 py-0.5 text-[10px] font-semibold backdrop-blur-md",
                   pricingStyle.bg,
                   pricingStyle.text,
                   pricingStyle.border
@@ -166,7 +166,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                 <TooltipContent
                   side="top"
                   sideOffset={4}
-                  className="font-mono text-[10px]"
+                  className="text-[10px]"
                 >
                   {copied ? "Copied to clipboard!" : "Copy Link"}
                 </TooltipContent>
@@ -196,7 +196,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
                   style={{ backgroundColor: categoryColor }}
                 />
               )}
-              <span className="max-w-[150px] truncate font-mono text-[11px] text-muted-foreground/70 sm:max-w-[200px]">
+              <span className="max-w-[150px] truncate text-[11px] text-muted-foreground/70 sm:max-w-[200px]">
                 {resource.url.replace(/^https?:\/\/(www\.)?/, "")}
               </span>
             </div>
@@ -205,7 +205,7 @@ export const ResourceCard: React.FC<ResourceCardProps> = ({
               href={resource.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-1.5 rounded-lg border border-black/10 bg-black/5 px-2.5 py-1 font-mono text-xs font-medium text-foreground transition-colors hover:border-pp-primary/60 hover:bg-pp-primary/10 hover:text-pp-primary focus:outline-none active:scale-98 dark:border-white/10 dark:bg-white/5"
+              className="flex items-center gap-1.5 rounded-lg border border-black/10 bg-black/5 px-2.5 py-1 text-xs font-medium text-foreground transition-colors hover:border-pp-primary/60 hover:bg-pp-primary/10 hover:text-pp-primary focus:outline-none active:scale-98 dark:border-white/10 dark:bg-white/5"
             >
               <span>Visit</span>
               <ExternalLink className="size-3" />

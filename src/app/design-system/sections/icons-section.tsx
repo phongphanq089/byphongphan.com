@@ -33,7 +33,7 @@ export function IconsSection() {
               <div className="flex h-8 w-8 items-center justify-center text-foreground transition-colors group-hover:text-primary">
                 <IconComp className="h-6 w-6" />
               </div>
-              <span className="mt-2 w-full truncate text-center font-mono text-[10px] text-muted-foreground group-hover:text-foreground">
+              <span className="mt-2 w-full truncate text-center text-[10px] text-muted-foreground group-hover:text-foreground">
                 {isCopied ? "Copied!" : name}
               </span>
             </button>

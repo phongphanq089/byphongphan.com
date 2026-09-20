@@ -1,9 +1,15 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowUpRight, Check, Copy } from "lucide-react"
-import React, { useState } from "react"
+import { useState } from "react"
 
 import { cn } from "@/shared/lib"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/core"
+import {
+  Badge,
+  Button,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/shared/ui/core"
 
 import type { ComponentItem } from "../types"
 import { RenderSchematic } from "./schematics"
@@ -12,7 +18,7 @@ interface ComponentCardProps {
   component: ComponentItem
 }
 
-export const ComponentCard: React.FC<ComponentCardProps> = ({ component }) => {
+export function ComponentCard({ component }: ComponentCardProps) {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = (e: React.MouseEvent) => {
@@ -27,8 +33,8 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({ component }) => {
 
   return (
     <Link
-      to="/component-ui/$slug"
-      params={{ slug: component.slug }}
+      to="/component-ui/$category/$slug"
+      params={{ category: component.category, slug: component.slug }}
       className={cn(
         "group relative flex h-full w-full flex-col justify-between overflow-hidden rounded-lg p-4 transition-all duration-300 sm:p-5",
         "border border-black/10 bg-muted dark:border-white/10",
@@ -47,18 +53,25 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({ component }) => {
           <h3 className="text-sm font-semibold tracking-tight text-foreground transition-colors group-hover:text-pp-primary sm:text-base">
             {component.name}
           </h3>
-          {component.badge && (
-            <span className="size-2 rounded-full bg-blue-500 shadow-[0_0_8px_#3b82f6]" />
+          {component.isNew && (
+            <Badge
+              variant="outline"
+              className="h-4.5 gap-1 rounded border-primary bg-primary px-1.5 text-[9px] font-semibold tracking-wider text-white uppercase shadow-[0_0_8px_var(--pp-primary-glow)]"
+            >
+              New
+            </Badge>
           )}
         </div>
 
         <div className="flex items-center gap-1.5">
           <Tooltip>
             <TooltipTrigger asChild>
-              <button
+              <Button
                 type="button"
+                variant="ghost"
+                size="icon-xs"
                 onClick={handleCopy}
-                className="flex size-6 items-center justify-center rounded-md border border-border/60 bg-muted/40 text-muted-foreground opacity-0 transition-all group-hover:opacity-100 hover:border-pp-primary/50 hover:bg-pp-primary/10 hover:text-pp-primary active:scale-95"
+                className="size-6 border border-border/60 bg-muted/40 text-muted-foreground opacity-0 transition-all group-hover:opacity-100 hover:border-pp-primary/50 hover:bg-pp-primary/10 hover:text-pp-primary active:scale-95"
                 aria-label="Copy component name"
               >
                 {copied ? (
@@ -66,7 +79,7 @@ export const ComponentCard: React.FC<ComponentCardProps> = ({ component }) => {
                 ) : (
                   <Copy className="size-3" />
                 )}
-              </button>
+              </Button>
             </TooltipTrigger>
             <TooltipContent side="top" sideOffset={4} className="text-[10px]">
               {copied ? "Copied name!" : "Copy name"}

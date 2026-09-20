@@ -135,7 +135,7 @@ export const MusicToggleButton = ({
             {/* LO-FI Label */}
             <span
               className={cn(
-                "font-mono text-[10px] font-bold tracking-wider whitespace-nowrap uppercase transition-colors",
+                "text-[10px] font-bold tracking-wider whitespace-nowrap uppercase transition-colors",
                 isPlaying
                   ? "text-pp-primary"
                   : "text-muted-foreground group-hover:text-foreground"
@@ -167,7 +167,7 @@ export const MusicToggleButton = ({
           </button>
         </TooltipTrigger>
         <TooltipContent side="top" sideOffset={8}>
-          <div className="flex items-center gap-1.5 font-mono text-xs">
+          <div className="flex items-center gap-1.5 text-xs">
             <span>
               {isPlaying ? "⏸ Pause Lo-Fi Chill" : "▶ Play Lo-Fi Chill Beats"}
             </span>

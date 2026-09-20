@@ -1,0 +1,66 @@
+[
+  {
+    "name": "select",
+    "type": "registry:ui",
+    "title": "Select",
+    "description": "Displays a list of options for the user to pick from—triggered by a button.",
+    "dependencies": [
+      "radix-ui",
+      "lucide-react"
+    ],
+    "registryDependencies": []
+  },
+  {
+    "name": "card",
+    "type": "registry:ui",
+    "title": "Card",
+    "description": "Displays a card with header, content, and footer.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "unboxing-bucket",
+    "type": "registry:component",
+    "title": "Unboxing Bucket",
+    "description": "Interactive 3D unboxing container animation with emerging spring-physics feature chips.",
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "https://byphongphan.com/r/use-media-query.json"
+    ]
+  },
+  {
+    "name": "flip-clock",
+    "type": "registry:component",
+    "title": "Flip Clock",
+    "description": "Mechanical 2D split-flap counter and clock with real-time, timer, stopwatch, and date-time display modes.",
+    "dependencies": [
+      "@pqina/flip",
+      "@rexa-developer/tiks"
+    ],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-media-query",
+    "type": "registry:hook",
+    "title": "useMediaQuery",
+    "description": "React hook for responsive design and media query listening with SSR support.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "code-block",
+    "type": "registry:ui",
+    "title": "Code Block",
+    "description": "Syntax-highlighted code surface powered by Shiki with line numbers, line highlighting, collapsible blocks, diff mode, and copy actions.",
+    "dependencies": [
+      "shiki",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "button"
+    ]
+  }
+]

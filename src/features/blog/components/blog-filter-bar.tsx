@@ -1,4 +1,5 @@
 import {
+  Bookmark,
   Check,
   ChevronDown,
   Hash,
@@ -7,7 +8,7 @@ import {
   Search,
   X,
 } from "lucide-react"
-import React, { useMemo } from "react"
+import { useMemo } from "react"
 
 import { cn } from "@/shared/lib"
 import {
@@ -20,7 +21,7 @@ import {
   Input,
 } from "@/shared/ui/core"
 
-import type { BlogCategory, BlogPost, BlogTag } from "../types"
+import type { BlogCategory, BlogGroup, BlogPost, BlogTag } from "../types"
 
 interface BlogFilterBarProps {
   categories: BlogCategory[]
@@ -32,11 +33,14 @@ interface BlogFilterBarProps {
   selectedTag?: string | null
   onSelectTag?: (tagSlug: string | null) => void
   availableTags?: BlogTag[]
+  groups?: BlogGroup[]
+  selectedGroup?: string | null
+  onSelectGroup?: (groupSlug: string | null) => void
   filteredCount: number
   totalCount: number
 }
 
-export const BlogFilterBar: React.FC<BlogFilterBarProps> = ({
+export const BlogFilterBar = ({
   categories,
   posts,
   selectedCategory,
@@ -46,7 +50,10 @@ export const BlogFilterBar: React.FC<BlogFilterBarProps> = ({
   selectedTag,
   onSelectTag,
   availableTags = [],
-}) => {
+  groups = [],
+  selectedGroup = null,
+  onSelectGroup,
+}: BlogFilterBarProps) => {
   // Compute counts for categories
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = {}
@@ -66,13 +73,31 @@ export const BlogFilterBar: React.FC<BlogFilterBarProps> = ({
     [categories, selectedCategory]
   )
 
+  const selectedGroupObj = useMemo(
+    () => groups.find((g) => g.slug.current === selectedGroup),
+    [groups, selectedGroup]
+  )
+
+  const groupCounts = useMemo(() => {
+    const counts: Record<string, number> = {}
+    for (const grp of groups) {
+      counts[grp.slug.current] = posts.filter(
+        (p) => p.group?.slug.current === grp.slug.current
+      ).length
+    }
+    return counts
+  }, [groups, posts])
+
   const selectedTagObj = useMemo(
     () => availableTags.find((t) => t.slug.current === selectedTag),
     [availableTags, selectedTag]
   )
 
   const hasActiveFilters = Boolean(
-    selectedCategory !== null || selectedTag || searchQuery.trim() !== ""
+    selectedCategory !== null ||
+    (selectedTag !== null && selectedTag !== undefined) ||
+    selectedGroup !== null ||
+    searchQuery.trim() !== ""
   )
 
   return (
@@ -140,7 +165,7 @@ export const BlogFilterBar: React.FC<BlogFilterBarProps> = ({
                       All Categories
                     </span>
                   </div>
-                  <span className="font-mono text-[10px] text-muted-foreground">
+                  <span className="text-[10px] text-muted-foreground">
                     ({categoryCounts.all || 0})
                   </span>
                 </DropdownMenuItem>
@@ -176,7 +201,7 @@ export const BlogFilterBar: React.FC<BlogFilterBarProps> = ({
                           {cat.title}
                         </span>
                       </div>
-                      <span className="font-mono text-[10px] text-muted-foreground">
+                      <span className="text-[10px] text-muted-foreground">
                         ({count})
                       </span>
                     </DropdownMenuItem>
@@ -185,7 +210,86 @@ export const BlogFilterBar: React.FC<BlogFilterBarProps> = ({
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* 3. Tag Select Dropdown */}
+            {/* 3. Series Select Dropdown */}
+            {groups.length > 0 && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    type="button"
+                    className={cn(
+                      "flex h-8.5 items-center gap-1.5 rounded-sm border px-2.5 text-xs font-medium transition-colors hover:bg-accent focus:outline-none",
+                      selectedGroup
+                        ? "border-pp-primary/60 bg-pp-primary/10 text-pp-primary"
+                        : "border-border/80 bg-background/60 text-muted-foreground hover:text-foreground"
+                    )}
+                  >
+                    <Bookmark className="size-3.5 shrink-0" />
+                    <span className="max-w-[130px] truncate">
+                      {selectedGroupObj
+                        ? `Series: ${selectedGroupObj.title}`
+                        : "Series: All"}
+                    </span>
+                    <ChevronDown className="size-3 shrink-0 opacity-60" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-56 p-1">
+                  <DropdownMenuItem
+                    onClick={() => onSelectGroup?.(null)}
+                    className="flex items-center justify-between py-1.5 text-xs"
+                  >
+                    <div className="flex items-center gap-2">
+                      {selectedGroup === null && (
+                        <Check className="size-3.5 text-pp-primary" />
+                      )}
+                      <span
+                        className={cn(
+                          selectedGroup === null &&
+                            "pl-0 font-semibold text-pp-primary",
+                          selectedGroup !== null && "pl-5.5"
+                        )}
+                      >
+                        All Series
+                      </span>
+                    </div>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuSeparator />
+
+                  {groups.map((grp) => {
+                    const count = groupCounts[grp.slug.current] || 0
+                    const isSelected = selectedGroup === grp.slug.current
+
+                    return (
+                      <DropdownMenuItem
+                        key={grp._id}
+                        onClick={() => onSelectGroup?.(grp.slug.current)}
+                        className="flex items-center justify-between py-1.5 text-xs"
+                      >
+                        <div className="flex items-center gap-2">
+                          {isSelected ? (
+                            <Check className="size-3.5 text-pp-primary" />
+                          ) : (
+                            <span className="pl-5.5" />
+                          )}
+                          <span
+                            className={cn(
+                              isSelected && "font-semibold text-pp-primary"
+                            )}
+                          >
+                            {grp.title}
+                          </span>
+                        </div>
+                        <span className="text-[10px] text-muted-foreground">
+                          ({count})
+                        </span>
+                      </DropdownMenuItem>
+                    )
+                  })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
+
+            {/* 4. Tag Select Dropdown */}
             {availableTags.length > 0 && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -257,12 +361,13 @@ export const BlogFilterBar: React.FC<BlogFilterBarProps> = ({
               </DropdownMenu>
             )}
 
-            {/* 4. Reset Filters Button */}
+            {/* 5. Reset Filters Button */}
             {hasActiveFilters && (
               <Button
                 type="button"
                 onClick={() => {
                   onSelectCategory(null)
+                  onSelectGroup?.(null)
                   onSelectTag?.(null)
                   onSearchChange("")
                 }}

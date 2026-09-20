@@ -1,15 +1,24 @@
+import { useQuery } from "@tanstack/react-query"
 import { Link } from "@tanstack/react-router"
 import { ArrowRight } from "lucide-react"
 
 import { GridContainer } from "@/app/layouts"
-import { ResourceCard } from "@/features/resources/components/resource-card"
-import { MOCK_RESOURCES } from "@/features/resources/mock-data"
+import { ResourceCard, resourcesQueryOptions } from "@/features/resources"
 import { SectionHeading } from "@/shared/ui/system/section-heading"
 
 export const SectionResources = () => {
-  // Select 4 top featured resources
-  const row1 = MOCK_RESOURCES.slice(0, 2)
-  const row2 = MOCK_RESOURCES.slice(2, 4)
+  const { data: resources = [] } = useQuery(resourcesQueryOptions())
+
+  // Select top featured resources or first 4
+  const featured = resources.filter((r) => r.isFeatured)
+  const displayList = featured.length > 0 ? featured : resources
+
+  if (displayList.length === 0) {
+    return null
+  }
+
+  const row1 = displayList.slice(0, 2)
+  const row2 = displayList.slice(2, 4)
 
   return (
     <>
@@ -41,7 +50,7 @@ export const SectionResources = () => {
           <div
             key={resource._id}
             className={`flex h-full w-full p-4 sm:p-5 md:p-6 ${
-              idx === 0
+              idx === 0 && row1.length > 1
                 ? "border-b border-border md:border-r md:border-b-0"
                 : ""
             }`}
@@ -51,27 +60,29 @@ export const SectionResources = () => {
         ))}
       </GridContainer>
 
-      {/* Row 2: 2-Column Grid of Resources */}
-      <GridContainer
-        columns={2}
-        borderTop={false}
-        borderBottom={true}
-        showCrosshairs={true}
-        className="w-full"
-      >
-        {row2.map((resource, idx) => (
-          <div
-            key={resource._id}
-            className={`flex h-full w-full p-4 sm:p-5 md:p-6 ${
-              idx === 0
-                ? "border-b border-border md:border-r md:border-b-0"
-                : ""
-            }`}
-          >
-            <ResourceCard resource={resource} />
-          </div>
-        ))}
-      </GridContainer>
+      {/* Row 2: 2-Column Grid of Resources (only if 3+ items exist) */}
+      {row2.length > 0 && (
+        <GridContainer
+          columns={2}
+          borderTop={false}
+          borderBottom={true}
+          showCrosshairs={true}
+          className="w-full"
+        >
+          {row2.map((resource, idx) => (
+            <div
+              key={resource._id}
+              className={`flex h-full w-full p-4 sm:p-5 md:p-6 ${
+                idx === 0
+                  ? "border-b border-border md:border-r md:border-b-0"
+                  : ""
+              }`}
+            >
+              <ResourceCard resource={resource} />
+            </div>
+          ))}
+        </GridContainer>
+      )}
     </>
   )
 }

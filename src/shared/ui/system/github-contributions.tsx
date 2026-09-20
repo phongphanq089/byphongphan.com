@@ -55,7 +55,7 @@ export function GitHubContributions({
                 />
               </g>
             </TooltipTrigger>
-            <TooltipContent className="font-sans">
+            <TooltipContent className="">
               <p>
                 {activity.count} contribution{activity.count > 1 ? "s" : null}{" "}
                 on {format(new Date(activity.date), "dd.MM.yyyy")}

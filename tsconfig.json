@@ -1,10 +1,22 @@
+// Solution Root
 {
   "files": [],
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
+    "skipLibCheck": true, // Skips full type checking of declaration files (.d.ts) inside node_modules, significantly accelerating build and type-checking performance.
     "moduleResolution": "bundler",
-    "jsx": "react-jsx",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "moduleDetection": "force", // Forces TypeScript to treat every file as a discrete ES module, even if it lacks explicit import or export statements, preventing accidental leaks into the global namespace.
+    "noEmit": true,
+    "jsx": "react-jsx", // Forces TypeScript to treat every file as a discrete ES module, even if it lacks explicit import or export statements, preventing accidental leaks into the global namespace.
+    "strict": true, // Enables all strict type-checking flags (strictNullChecks, noImplicitAny, etc.).
+    "noFallthroughCasesInSwitch": true, // Reports errors for switch statements where a case clause falls through to the next without a break or return.
+    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }

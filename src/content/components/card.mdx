@@ -1,0 +1,94 @@
+---
+title: Card
+description: Displays a card with header, content, and footer sections for grouped information architecture.
+component: true
+---
+
+<ComponentPreview name="card-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="manual">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="card" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the following dependencies:</Step>
+      <CodeBlockCommand command="npm install clsx tailwind-merge" />
+      <Step>Copy and paste the card component into your project.</Step>
+      <ComponentSource name="card" title="components/ui/card.tsx" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { Button } from "@/registry/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/registry/ui/card"
+
+export function CardDemo() {
+  return (
+    <Card className="w-full max-w-xs">
+      <CardHeader>
+        <CardTitle>Default Card</CardTitle>
+        <CardDescription>
+          This card uses the default size variant.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>
+          The card component supports a size prop that defaults to
+          &quot;default&quot; for standard spacing and sizing.
+        </p>
+      </CardContent>
+      <CardFooter>
+        <Button variant="outline" className="w-full">
+          Action
+        </Button>
+      </CardFooter>
+    </Card>
+  )
+}
+```
+
+## Examples
+
+### Card with image
+
+<ComponentPreview name="card-with-image" />
+
+### Card with image scale hover effect
+
+<ComponentPreview name="card-with-image-scale" />
+
+### Card with full image
+
+<ComponentPreview name="card-with-full-image" />
+
+### Full card with image and shadow fade effect
+
+<ComponentPreview name="full-card-fade-effect" />
+
+### Card with stacked depth effect
+
+<ComponentPreview name="card-stacked-depth-effect" />
+
+### Expandable billing usage card
+
+<ComponentPreview name="card-expandable-billing-usage-card" />

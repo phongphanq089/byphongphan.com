@@ -4,10 +4,8 @@ import { GridContainer } from "@/app/layouts"
 import BannerHero from "@/features/home/banner-hero"
 import SectionAbout from "@/features/home/section-about"
 import { SectionBlocks } from "@/features/home/section-blocks"
-import { SectionBlog } from "@/features/home/section-blog"
 import { SectionBookmarks } from "@/features/home/section-bookmarks"
 import SectionMapVietnamese from "@/features/home/section-map-vietnammese"
-import { SectionResources } from "@/features/home/section-resources"
 import SectionTechStack from "@/features/home/section-tech-stack"
 import UiComponentsSection from "@/features/home/section-ui-components"
 import { createSeoMeta } from "@/shared/config"
@@ -44,17 +42,17 @@ function HomePage() {
       <UiComponentsSection />
 
       {/* 6. Blog & Writing Section */}
-      <SectionBlog />
+      {/* <SectionBlog /> */}
 
       {/* 7. Curated Resources Section */}
-      <SectionResources />
+      {/* <SectionResources /> */}
 
       {/* 8. Bookmarks Section */}
       <SectionBookmarks />
 
       {/* 9. Location & Vietnam Map Section */}
       <section id="vietnam-map">
-        <GridContainer showCrosshairs={true} as={"div"}>
+        <GridContainer showCrosshairs={true} borderTop={false} as={"div"}>
           <SectionMapVietnamese />
         </GridContainer>
       </section>

@@ -3,7 +3,7 @@ export const siteConfig = {
   title: "Phong Phan • Frontend Engineer",
   description:
     "Portfolio of Phong Phan. Frontend Engineer with a solid fullstack foundation, specializing in React, TypeScript, TanStack, fluid interactions, and UI craftsmanship.",
-  url: "https://phongphan.dev",
+  url: "https://byphongphan.com",
   ogImage: "/og-image.jpg",
   repoUrl: "https://github.com/phongphanq089/phong-dev-portfiolio",
 

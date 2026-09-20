@@ -90,12 +90,12 @@ export interface RenderIconProps extends React.SVGProps<SVGSVGElement> {
   size?: number | string
 }
 
-export const RenderIcon: React.FC<RenderIconProps> = ({
+export const RenderIcon = ({
   name,
   size = 24,
   className,
   ...props
-}) => {
+}: RenderIconProps) => {
   const IconComponent = iconComponents[name]
   if (!IconComponent) return null
 

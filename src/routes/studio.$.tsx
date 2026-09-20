@@ -26,7 +26,7 @@ function StudioPage() {
     <div className="fixed inset-0 z-[9999] h-[100dvh] w-full overflow-hidden bg-black">
       <Suspense
         fallback={
-          <div className="flex h-full w-full items-center justify-center font-mono text-sm text-neutral-400">
+          <div className="flex h-full w-full items-center justify-center text-sm text-neutral-400">
             Loading Sanity Studio...
           </div>
         }

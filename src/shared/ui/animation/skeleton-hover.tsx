@@ -52,18 +52,18 @@ export const SkeletonHover = ({
     >
       <motion.div
         variants={variants}
-        className="grid grid-cols-12 items-start gap-2 space-x-2 rounded-2xl border border-neutral-100 bg-accent-foreground p-2 dark:border-white/20 dark:bg-black"
+        className="grid grid-cols-12 items-start gap-2 space-x-2 rounded-2xl border border-neutral-500 bg-accent p-2 dark:border-white/20 dark:bg-black"
       >
         <div className="col-span-2">
           <Avatar />
         </div>
-        <p className="col-span-10 pl-3 text-xs text-white">{text1}</p>
+        <p className="col-span-10 pl-3 text-xs dark:text-white">{text1}</p>
       </motion.div>
       <motion.div
         variants={variantsSecond}
-        className="ml-auto flex w-3/4 flex-row items-center justify-end space-x-2 rounded-full border border-neutral-100 bg-accent-foreground p-2 dark:border-white/20 dark:bg-black"
+        className="ml-auto flex w-3/4 flex-row items-center justify-end space-x-2 rounded-full border border-neutral-500 bg-accent p-2 dark:border-white/20 dark:bg-black"
       >
-        <p className="px-2 text-xs text-white uppercase"> {text2}</p>
+        <p className="px-2 text-xs uppercase dark:text-white"> {text2}</p>
         <div className="h-6 w-6 shrink-0 rounded-full bg-linear-to-r from-pink-500 to-violet-500" />
       </motion.div>
     </motion.div>

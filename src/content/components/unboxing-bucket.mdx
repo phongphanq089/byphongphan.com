@@ -1,0 +1,87 @@
+---
+title: Unboxing Bucket
+description: Interactive 3D unboxing container animation with emerging spring-physics feature chips powered by Motion (framer-motion).
+component: true
+badge: Motion
+---
+
+<ComponentPreview name="unboxing-bucket-demo" />
+
+## Live Interactive Stage
+
+Interactive 3D unboxing container animation with emerging spring-physics feature chips powered by Motion (framer-motion). Watch the sequence of feature chips float up from the package cavity, hover in 3D perspective, and dissolve upward.
+
+---
+
+## Installation
+
+<CodeTabs defaultValue="manual">
+    <TabsList>
+      <TabsTrigger value="cli">Command</TabsTrigger>
+      <TabsTrigger value="manual">Manual</TabsTrigger>
+    </TabsList>
+
+    <TabsContent value="cli">
+      <CodeBlockCommand name="unboxing-bucket" />
+    </TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the following dependencies:</Step>
+      <CodeBlockCommand command="npm install lucide-react motion" />
+      <Step>Copy and paste the following code into your project.</Step>
+      <ComponentSource name="unboxing-bucket" title="components/unboxing-bucket.tsx" />
+      <ComponentSource name="use-media-query" title="hooks/use-media-query.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Usage
+
+```tsx
+import { UnboxingBucket } from "@/components/unboxing-bucket"
+
+<UnboxingBucket
+  intervalMs={2600}
+  className="py-12"
+/>
+```
+
+---
+
+## Technical Insights & Architecture
+
+This component is constructed using a 3-layer sandwich visual architecture:
+
+1. **Layer 1 (Background SVGs)**: The open lid flaps, inside back wall, and interior shadow folds of the carton box.
+2. **Layer 2 (Middle Motion Stage)**: The animated floating chip managed by `AnimatePresence mode="popLayout"`, starting tucked inside the box cavity, springing upward, and floating away.
+3. **Layer 3 (Foreground SVGs)**: The front carton body and dropped lip flap with `pointer-events-none`, naturally occluding the lower part of the chip as it emerges from inside the package.
+
+---
+
+## API Reference
+
+### UnboxingBucket
+
+Interactive 3D unboxing container animation with emerging spring-physics feature chips.
+
+| Prop          | Type                 | Default         |
+| :------------ | :------------------- | :-------------- |
+| `chips?`      | `UnboxingChipItem[]` | `DEFAULT_CHIPS` |
+| `intervalMs?` | `number`             | `2600`          |
+| `className?`  | `string`             | -               |
+
+### UnboxingChipItem
+
+Data structure for an individual emerging chip item.
+
+| Prop          | Type                                          | Default |
+| :------------ | :-------------------------------------------- | :------ |
+| `id`          | `number \| string`                            | -       |
+| `title`       | `string`                                      | -       |
+| `description` | `string`                                      | -       |
+| `icon`        | `React.ComponentType<{ className?: string }>` | -       |

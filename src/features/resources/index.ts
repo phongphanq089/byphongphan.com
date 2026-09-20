@@ -1,3 +1,4 @@
+export * from "./api/resource"
 export * from "./components/resource-card"
 export * from "./components/resource-filter-bar"
 export * from "./components/resource-grid"

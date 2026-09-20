@@ -1,154 +1,171 @@
-import { ArrowUpRight } from "lucide-react"
+import { Link } from "@tanstack/react-router"
+import { ArrowUp, ArrowUpRight } from "lucide-react"
 import React from "react"
 
 import { GridContainer } from "@/app/layouts"
 import { siteConfig } from "@/shared/config"
 import { PhongPhanIsometric } from "@/shared/ui/animation"
+import { Button } from "@/shared/ui/core"
+import { FlipClock } from "@/shared/ui/core/flip-clock"
 
-import { coreTechnologies, inspriedBy, scocialLinks } from "./setting-footer"
-
-const SocialItem = ({
-  icon,
-  label,
-  href,
-}: {
-  icon: React.ReactNode
-  label: string
-  href: string
-}) => (
-  <a
-    href={href}
-    target="_blank"
-    rel="noreferrer"
-    className="flex h-16 items-center justify-center gap-3 transition-colors hover:bg-accent/50 hover:text-pp-primary"
-  >
-    {icon}
-    <span className="font-mono text-[10px] tracking-widest uppercase opacity-70">
-      {label}
-    </span>
-  </a>
-)
+import { footerNavigation, footerSocials } from "./setting-footer"
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear()
+
   return (
-    <footer className="w-full">
-      <GridContainer borderTop className="px-4 py-6 md:px-8">
-        <div className="flex flex-col gap-1.5">
-          <h3 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
-            Core Technologies & Frameworks
-          </h3>
-          <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground sm:text-sm">
-            Deep gratitude to the remarkable open-source tools, design systems,
-            and platforms that power this web engineering portfolio.
-          </p>
-        </div>
+    <footer className="w-full bg-background text-foreground select-none">
+      <GridContainer
+        showCrosshairs={false}
+        className="flex items-center justify-center px-4 py-8 sm:py-12 md:px-8"
+      >
+        <FlipClock
+          mode="clock"
+          variant="default"
+          size="full"
+          timeZone="Asia/Ho_Chi_Minh"
+          showLabels={true}
+          format12h={true}
+          showSeconds={true}
+        />
       </GridContainer>
 
       <GridContainer
-        borderTop
         showCrosshairs={false}
-        className="grid grid-cols-1 divide-y divide-border sm:grid-cols-2 sm:divide-x sm:divide-y-0 lg:grid-cols-4"
+        className="grid grid-cols-1 divide-y divide-border md:grid-cols-2 md:divide-x md:divide-y-0"
       >
-        {coreTechnologies.map((tech) => {
-          const IconComp = tech.icon
-          return (
-            <a
-              key={tech.name}
-              href={tech.href}
-              target="_blank"
-              rel="noreferrer"
-              className="group flex flex-col justify-between p-5 transition-colors duration-200 hover:bg-muted/40 sm:p-6 dark:hover:bg-white/[0.02]"
-            >
-              <div className="flex flex-col gap-3.5">
-                <div className="flex items-center justify-between">
-                  <div className="flex size-10 items-center justify-center rounded-lg border border-border/60 bg-card p-2 text-foreground shadow-2xs transition-all duration-200 group-hover:scale-105 group-hover:border-pp-primary/50 group-hover:text-pp-primary">
-                    <IconComp className="size-5" />
-                  </div>
-                  <span className="rounded border border-border/60 bg-muted/40 px-1.5 py-0.5 font-mono text-[9px] font-semibold text-muted-foreground uppercase">
-                    {tech.badge}
+        {/* Column 1: Sitemap */}
+        <div className="flex flex-col gap-3.5">
+          <GridContainer
+            showCrosshairs={false}
+            borderLeft={false}
+            borderRight={false}
+            borderBottom
+            className="flex items-center justify-between px-4 py-4 sm:px-6"
+          >
+            <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
+              01 SITEMAP
+            </span>
+            <span className="font-mono text-[10px] text-muted-foreground">
+              06 ROUTES
+            </span>
+          </GridContainer>
+
+          <ul className="flex flex-col gap-2.5 px-4 pb-6 text-sm sm:px-6">
+            {footerNavigation.map((item) => (
+              <li key={item.name}>
+                <Link
+                  to={item.href}
+                  className="group flex items-center justify-between text-muted-foreground transition-all hover:translate-x-1 hover:text-foreground"
+                >
+                  <span className="font-medium transition-colors group-hover:text-foreground">
+                    {item.name}
                   </span>
-                </div>
-
-                <div>
-                  <div className="flex items-center gap-1 text-sm font-bold text-foreground transition-colors group-hover:text-pp-primary">
-                    <span>{tech.title}</span>
-                    <ArrowUpRight className="size-3.5 opacity-0 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:opacity-100" />
+                  <div className="flex items-center gap-2">
+                    {item.badge && (
+                      <span className="rounded bg-pp-primary/10 px-1.5 py-0.5 text-[9px] font-semibold text-pp-primary">
+                        {item.badge}
+                      </span>
+                    )}
+                    {item.shortcut && (
+                      <span className="hidden text-[10px] text-muted-foreground sm:inline">
+                        {item.shortcut}
+                      </span>
+                    )}
+                    <ArrowUpRight className="size-3 opacity-60 transition-opacity group-hover:text-pp-primary group-hover:opacity-100" />
                   </div>
-                  <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
-                    {tech.description}
-                  </p>
-                </div>
-              </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
 
-              <div className="mt-5 flex items-center justify-between border-t border-border/40 pt-3">
-                <span className="font-mono text-[10px] text-muted-foreground/60 transition-colors group-hover:text-pp-primary">
-                  {tech.href.replace(/^https?:\/\//, "")}
-                </span>
-                <span className="font-mono text-[9px] font-semibold text-muted-foreground/40 transition-colors group-hover:text-pp-primary">
-                  VISIT →
-                </span>
-              </div>
-            </a>
-          )
-        })}
-      </GridContainer>
+        {/* Column 2: Social Links */}
+        <div className="flex flex-col gap-3.5">
+          <GridContainer
+            showCrosshairs={false}
+            borderLeft={false}
+            borderRight={false}
+            borderBottom
+            className="flex items-center justify-between px-4 py-4 sm:px-6"
+          >
+            <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
+              02 SOCIAL
+            </span>
+            <span className="font-mono text-[10px] text-muted-foreground">
+              CONNECT
+            </span>
+          </GridContainer>
 
-      <GridContainer borderTop className="px-4 py-10 md:px-8">
-        <div className="flex flex-col gap-3">
-          <p className="text-sm leading-relaxed text-muted-foreground">
-            Inspired by{" "}
-            {inspriedBy.map((item, index) => (
-              <React.Fragment key={`${item.name}-${index}`}>
+          <ul className="flex flex-col gap-2.5 px-4 pb-6 text-sm sm:px-6">
+            {footerSocials.map((social) => (
+              <li key={social.name}>
                 <a
-                  href={item.href}
+                  href={social.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="font-mono text-foreground transition-colors hover:text-pp-primary"
+                  className="group flex items-center justify-between py-0.5 text-muted-foreground transition-all hover:translate-x-1 hover:text-foreground"
                 >
-                  {item.name}
+                  <span className="font-medium text-foreground transition-colors group-hover:text-pp-primary">
+                    {social.name}
+                  </span>
+                  <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground/70">
+                    <span className="max-w-[140px] truncate">
+                      {social.handle}
+                    </span>
+                    <ArrowUpRight className="size-3 text-muted-foreground/40 transition-colors group-hover:text-pp-primary" />
+                  </div>
                 </a>
-                {index < inspriedBy.length - 1 && " / "}
-              </React.Fragment>
+              </li>
             ))}
-          </p>
-          <p className="text-sm text-muted-foreground">
-            Built with care by{" "}
-            <span className="font-semibold text-foreground">
-              {siteConfig.url.replace("https://", "")}
-            </span>
-            . The source code is available on{" "}
-            <a
-              href={siteConfig.repoUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="underline underline-offset-4 transition-colors hover:text-pp-primary"
-            >
-              GitHub
-            </a>
-            .
-          </p>
+
+            {/* Open Source Repo Link */}
+            <li className="mt-0.5 border-t border-border/40 pt-2">
+              <a
+                href={siteConfig.repoUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="group flex items-center justify-between text-xs text-pp-primary/90 transition-all hover:translate-x-1 hover:text-pp-primary"
+              >
+                <span className="font-semibold">Source Code</span>
+                <div className="flex items-center gap-1 text-[10px]">
+                  <span>byphongphan.com</span>
+                  <ArrowUpRight className="size-3" />
+                </div>
+              </a>
+            </li>
+          </ul>
         </div>
       </GridContainer>
 
-      <GridContainer
-        className="grid grid-cols-2 divide-x divide-border md:grid-cols-4"
-        borderTop={true}
-        showCrosshairs={false}
-      >
-        {scocialLinks.map((item, index) => (
-          <SocialItem
-            key={`${item.name}-${index}`}
-            icon={item.icon}
-            label={item.name}
-            href={item.href}
-          />
-        ))}
-      </GridContainer>
-
-      {/* 5. 3D Isometric Art Banner */}
+      {/* ─── 2. Signature 3D Isometric Art Canvas ────────────────────────── */}
       <div className="relative w-full overflow-hidden py-6 sm:py-10">
         <PhongPhanIsometric padding />
       </div>
+
+      {/* ─── 3. Minimal Copyright Bar ────────────────────────────────────── */}
+      <GridContainer
+        borderTop
+        showCrosshairs
+        className="flex flex-col items-center justify-between gap-3.5 px-6 py-4 text-xs text-muted-foreground sm:flex-row sm:px-8"
+      >
+        <div className="flex items-center gap-2 text-[11px]">
+          <span className="font-medium text-foreground/90">
+            © {currentYear} Phong Phan. All rights reserved.
+          </span>
+        </div>
+
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="rounded"
+        >
+          <span>Top</span>
+          <ArrowUp className="size-3" />
+        </Button>
+      </GridContainer>
     </footer>
   )
 }

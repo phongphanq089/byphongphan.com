@@ -9,7 +9,7 @@
   "orientation": "portrait-primary",
   "background_color": "#121212",
   "theme_color": "#dc2626",
-  "categories": ["portfolio", "developer", "engineering"],
+  "categories": ["portfolio", "developer", "engineer"],
   "icons": [
     {
       "src": "/favicon-16x16.png",

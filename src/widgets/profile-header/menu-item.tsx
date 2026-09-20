@@ -58,7 +58,7 @@ export const MenuItem = ({ item }: MenuItemProps) => {
       {/* Text */}
       <span
         className={cn(
-          "font-mono text-xs font-medium tracking-wider whitespace-nowrap transition-colors duration-150",
+          "text-xs font-medium tracking-wider whitespace-nowrap transition-colors duration-150",
           isActive
             ? "font-semibold text-pp-primary"
             : "text-muted-foreground group-hover:text-foreground"

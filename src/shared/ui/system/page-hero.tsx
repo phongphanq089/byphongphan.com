@@ -2,9 +2,6 @@ import React from "react"
 
 import { GridContainer } from "@/app/layouts"
 import { cn } from "@/shared/lib/utils"
-
-import { StripedPattern } from "./striped-pattern"
-
 export interface PageHeroBadge {
   label: string
   icon?: React.ReactNode
@@ -36,17 +33,12 @@ export interface PageHeroProps {
   className?: string
 }
 
-/**
- * Standardised Blueprint Hero banner used across subpages (Blocks, Components, Blog, Resources).
- * Synchronizes background blueprint stripes, radial glow, responsive typography, and optional stats bar.
- */
 export function PageHero({
   badge,
   count,
   countIcon,
   title,
   description,
-  stats,
   children,
   className,
 }: PageHeroProps) {
@@ -62,17 +54,7 @@ export function PageHero({
           className
         )}
       >
-        {/* Blueprint Striped Background Pattern */}
-        <StripedPattern
-          variant="absolute"
-          className="opacity-70 dark:opacity-40"
-        />
-
-        {/* Subtle Ambient Radial Glow */}
-        <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-pp-primary/10 blur-3xl dark:bg-pp-primary/15" />
-
         <div className="relative z-10 flex flex-col gap-2.5">
-          {/* Eyebrow / Badge Row */}
           {(badge || count !== undefined) && (
             <div className="flex flex-wrap items-center gap-2">
               {badge && (
@@ -119,29 +101,6 @@ export function PageHero({
           {children}
         </div>
       </GridContainer>
-
-      {/* 2. Optional Blueprint Stats / Metadata Sub-Bar */}
-      {stats && stats.length > 0 && (
-        <GridContainer borderBottom showCrosshairs className="p-0">
-          <div className="no-scrollbar flex w-full items-stretch overflow-x-auto">
-            {stats.map((stat, idx) => (
-              <div
-                key={`stat-${idx}`}
-                className={cn(
-                  "flex shrink-0 items-center justify-center border-r border-border px-5 py-3 text-xs tracking-wider uppercase sm:px-6",
-                  stat.highlight
-                    ? "bg-muted font-bold dark:bg-white/10 dark:text-white"
-                    : "bg-muted/60 text-muted-foreground dark:bg-white/5 dark:text-muted-foreground",
-                  stat.hideOnMobile && "hidden sm:flex"
-                )}
-              >
-                <span>{stat.label}</span>
-              </div>
-            ))}
-            <StripedPattern />
-          </div>
-        </GridContainer>
-      )}
     </>
   )
 }

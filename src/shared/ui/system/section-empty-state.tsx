@@ -71,7 +71,7 @@ export function SectionEmptyState({
             <div className="flex size-9 items-center justify-center rounded-lg border border-border/60 bg-muted/40 text-muted-foreground/60 shadow-xs">
               {icon || <Inbox className="size-4" />}
             </div>
-            <span className="font-mono text-[11px] font-medium tracking-wider text-muted-foreground/70 uppercase">
+            <span className="text-[11px] font-medium tracking-wider text-muted-foreground/70 uppercase">
               {title}
             </span>
             {descText && (
@@ -109,7 +109,7 @@ export function SectionEmptyState({
 
           {/* Optional Monospace Badge */}
           {badge && (
-            <span className="mb-2 font-mono text-[10px] font-semibold tracking-widest text-pp-primary/80 uppercase">
+            <span className="mb-2 text-[10px] font-semibold tracking-widest text-pp-primary/80 uppercase">
               {badge}
             </span>
           )}

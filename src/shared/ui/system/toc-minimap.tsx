@@ -41,7 +41,7 @@ export function TOCMinimap({ items, className }: TOCMinimapProps) {
     if (nextOpen) play()
   }
 
-  const handleTriggerClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleTriggerClick = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault()
     e.stopPropagation()
     setOpen((prev) => {
@@ -77,12 +77,14 @@ export function TOCMinimap({ items, className }: TOCMinimapProps) {
               <div
                 key={item.url}
                 data-depth={item.depth}
-                data-active={item.url === `#${activeHeading}`}
+                data-active={
+                  item.url === `#${activeHeading}` ? "true" : undefined
+                }
                 className={cn(
-                  "h-0.5 w-6 shrink-0 rounded-xs bg-primary transition-[background-color] duration-200",
+                  "h-0.5 w-6 shrink-0 rounded-xs bg-muted-foreground/30 transition-all duration-200",
                   "data-[depth=3]:w-4",
                   "data-[depth=4]:w-2",
-                  "data-active:bg-foreground"
+                  "data-active:w-8 data-active:bg-primary"
                 )}
               />
             ))}
@@ -105,10 +107,12 @@ export function TOCMinimap({ items, className }: TOCMinimapProps) {
                   <a
                     href={item.url}
                     data-depth={item.depth}
-                    data-active={item.url === `#${activeHeading}`}
+                    data-active={
+                      item.url === `#${activeHeading}` ? "true" : undefined
+                    }
                     className={cn(
                       "line-clamp-2 w-full cursor-pointer transition-[color] duration-200",
-                      "text-muted-foreground hover:text-foreground data-active:text-foreground",
+                      "text-muted-foreground hover:text-foreground data-active:font-medium data-active:text-primary",
                       "data-[depth=3]:pl-4 data-[depth=4]:pl-8"
                     )}
                     onClick={handleItemClick}
@@ -126,34 +130,58 @@ export function TOCMinimap({ items, className }: TOCMinimapProps) {
 }
 
 export function useActiveHeading(itemIds: string[]) {
-  const [activeId, setActiveId] = useState<string | null>(null)
+  const [activeId, setActiveId] = useState<string | null>(itemIds[0] ?? null)
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id)
-          }
-        }
-      },
-      { rootMargin: "0% 0% -80% 0%", threshold: 0.98 }
-    )
+    if (!itemIds || itemIds.length === 0) return
 
-    for (const id of itemIds ?? []) {
-      const element = document.getElementById(id)
-      if (element) {
-        observer.observe(element)
+    const findActive = () => {
+      // If user is at or near the very top of the page
+      if (window.scrollY < 80) {
+        if (itemIds[0]) setActiveId(itemIds[0])
+        return
+      }
+
+      // If user is at the bottom of the page
+      if (
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 60
+      ) {
+        if (itemIds.length > 0) {
+          setActiveId(itemIds[itemIds.length - 1])
+        }
+        return
+      }
+
+      // Find the heading that is closest to or currently within the top viewing area
+      let currentActive = itemIds[0] ?? null
+      const thresholdY = window.innerHeight * 0.3
+
+      for (const id of itemIds) {
+        const el = document.getElementById(id)
+        if (!el) continue
+        const rect = el.getBoundingClientRect()
+        if (rect.top <= thresholdY) {
+          currentActive = id
+        } else {
+          break
+        }
+      }
+
+      if (currentActive) {
+        setActiveId(currentActive)
       }
     }
 
+    findActive()
+    const rafId = requestAnimationFrame(findActive)
+    window.addEventListener("scroll", findActive, { passive: true })
+    window.addEventListener("resize", findActive, { passive: true })
+
     return () => {
-      for (const id of itemIds ?? []) {
-        const element = document.getElementById(id)
-        if (element) {
-          observer.unobserve(element)
-        }
-      }
+      cancelAnimationFrame(rafId)
+      window.removeEventListener("scroll", findActive)
+      window.removeEventListener("resize", findActive)
     }
   }, [itemIds])
 

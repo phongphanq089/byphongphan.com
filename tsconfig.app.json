@@ -1,27 +1,33 @@
+// Client & Application Context
+// Controls all browser-facing application code (src, sanity, sanity.config.ts). It injects DOM APIs, activates the React JSX runtime, and loads client typings (vite/client, vitest).
 {
-  "extends": "./tsconfig.json", // Kế thừa paths từ file gốc
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "incremental": true,
-    "composite": true,
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
-    "target": "ES2022",
-    "useDefineForClassFields": true,
+    "incremental": true, // Enables incremental builds. TypeScript records state metadata from the previous run to re-check only changed files on subsequent builds.
+    "composite": true, // Required when using Project References. Instructs TypeScript to treat the sub-project as an independent, referencable compilation unit with enforced boundaries.
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo", // Defines the cache file location for incremental compilation metadata. Storing it in ./node_modules/.tmp/ keeps your workspace clean without committing cache files to version control.
+    "target": "ES2022", // Specifies the output ECMAScript version. It assumes the runtime supports modern features like Top-Level await, Class Fields, and methods like
+    "useDefineForClassFields": true, // Enforces standard ECMAScript class field initialization semantics (using [[Define]] rather than [[Set]]).
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "types": ["vite/client", "vitest"], // Nếu dùng TanStack Start, hãy thêm "vinxi/types" vào đây
-    "skipLibCheck": true,
+    "types": ["vite/client", "vitest"], // Controls which @types packages are exposed globally: vite/client provides Vite-specific types for module imports, environment variables, and HMR APIs. vitest provides Vitest-specific types for test functions, matchers, and hooks.
+    "skipLibCheck": true, // Skips full type checking of declaration files (.d.ts) inside node_modules, significantly accelerating build and type-checking performance.
 
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": true, // Requires explicit demarcation between values and types. Imports used strictly as types must use import type. This prevents bundlers from retaining dead imports or breaking during tree-shaking.
     "moduleDetection": "force",
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "react-jsx", // Forces TypeScript to treat every file as a discrete ES module, even if it lacks explicit import or export statements, preventing accidental leaks into the global namespace.
 
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "strict": true, // Enables all strict type-checking flags (strictNullChecks, noImplicitAny, etc.).
+    "noUnusedLocals": false, // alse & noUnusedParameters: false: Prevents the TypeScript compiler from failing builds due to unused variables or parameters (allowing ESLint to manage dead-code rules with more granular warnings).
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true, // Reports errors for switch statements where a case clause falls through to the next without a break or return.
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src", "sanity", "sanity.config.ts"]
 }

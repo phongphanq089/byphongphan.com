@@ -1,5 +1,4 @@
 import { ArrowUpRight, Check, Star } from "lucide-react"
-import React from "react"
 
 import type { BlockSchematicType } from "../../types"
 
@@ -8,7 +7,7 @@ export function NotFoundBrickSchematic() {
   return (
     <div className="flex h-full w-full flex-col items-center justify-between p-2">
       {/* Top Header Indicators */}
-      <div className="flex w-full items-center justify-between px-2 font-mono text-[8px] text-white/40">
+      <div className="flex w-full items-center justify-between px-2 text-[8px] text-white/40">
         <span>SCORE: 0404</span>
         <div className="flex gap-1">
           <span className="size-1.5 rounded-full bg-white/60" />
@@ -104,7 +103,7 @@ export function SocialLinksGridSchematic() {
           { label: "YouTube" },
           { label: "LinkedIn" },
           { label: "Telegram" },
-        ].map((item, idx) => (
+        ].map((_, idx) => (
           <div
             key={idx}
             className="flex items-center justify-between p-2.5 transition-colors hover:bg-white/[0.04]"
@@ -156,15 +155,11 @@ export function BenefitsAlternatingSchematic() {
         <div className="grid grid-cols-2 gap-1.5 pt-0.5">
           <div className="rounded-md border border-white/10 bg-white/[0.04] p-1.5">
             <span className="text-[7px] text-white/40">Checking</span>
-            <div className="font-mono text-[9px] font-bold text-white">
-              $25,895
-            </div>
+            <div className="text-[9px] font-bold text-white">$25,895</div>
           </div>
           <div className="rounded-md border border-white/10 bg-white/[0.04] p-1.5">
             <span className="text-[7px] text-white/40">Revenue</span>
-            <div className="font-mono text-[9px] font-bold text-blue-400">
-              $8,325
-            </div>
+            <div className="text-[9px] font-bold text-blue-400">$8,325</div>
           </div>
         </div>
 
@@ -224,7 +219,7 @@ export function PricingMatrixSchematic() {
       {/* Tier 1 */}
       <div className="flex flex-1 flex-col gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] p-2">
         <div className="h-1.5 w-8 rounded-full bg-white/60" />
-        <div className="font-mono text-[9px] font-bold text-white">$0</div>
+        <div className="text-[9px] font-bold text-white">$0</div>
         <div className="h-1 w-full rounded-full bg-white/20" />
         <div className="h-1 w-4/5 rounded-full bg-white/20" />
       </div>
@@ -232,7 +227,7 @@ export function PricingMatrixSchematic() {
       {/* Tier 2 (Highlighted) */}
       <div className="flex flex-1 flex-col gap-1.5 rounded-xl border border-pp-primary/50 bg-black/90 p-2.5 shadow-lg ring-1 ring-pp-primary/30">
         <div className="h-1.5 w-10 rounded-full bg-pp-primary" />
-        <div className="font-mono text-[10px] font-bold text-white">$29</div>
+        <div className="text-[10px] font-bold text-white">$29</div>
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-1">
             <Check className="size-2 text-emerald-400" />
@@ -251,7 +246,7 @@ export function PricingMatrixSchematic() {
       {/* Tier 3 */}
       <div className="flex flex-1 flex-col gap-1.5 rounded-lg border border-white/10 bg-white/[0.03] p-2">
         <div className="h-1.5 w-10 rounded-full bg-white/60" />
-        <div className="font-mono text-[9px] font-bold text-white">$99</div>
+        <div className="text-[9px] font-bold text-white">$99</div>
         <div className="h-1 w-full rounded-full bg-white/20" />
         <div className="h-1 w-4/5 rounded-full bg-white/20" />
       </div>
@@ -284,15 +279,11 @@ export function DashboardOverviewSchematic() {
         <div className="grid grid-cols-2 gap-1.5">
           <div className="rounded-md border border-white/10 bg-white/[0.04] p-1.5">
             <span className="text-[6px] text-white/40">Users</span>
-            <div className="font-mono text-[8px] font-bold text-white">
-              48.2k
-            </div>
+            <div className="text-[8px] font-bold text-white">48.2k</div>
           </div>
           <div className="rounded-md border border-white/10 bg-white/[0.04] p-1.5">
             <span className="text-[6px] text-white/40">MRR</span>
-            <div className="font-mono text-[8px] font-bold text-emerald-400">
-              +$14.2k
-            </div>
+            <div className="text-[8px] font-bold text-emerald-400">+$14.2k</div>
           </div>
         </div>
 
@@ -388,9 +379,7 @@ export function ProductGridSchematic() {
           <div className="flex flex-col gap-1 pt-1.5">
             <div className="h-1.5 w-10 rounded-full bg-white/70" />
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[8px] font-bold text-white">
-                $120
-              </span>
+              <span className="text-[8px] font-bold text-white">$120</span>
               <div className="size-3 rounded-xs bg-white" />
             </div>
           </div>
@@ -445,9 +434,7 @@ export function StatsMetricsSchematic() {
           key={idx}
           className="flex flex-col justify-center rounded-xl border border-white/15 bg-white/[0.03] p-2.5"
         >
-          <span className="font-mono text-sm font-black text-white">
-            {stat.val}
-          </span>
+          <span className="text-sm font-black text-white">{stat.val}</span>
           <span className="text-[8px] text-white/50">{stat.label}</span>
         </div>
       ))}

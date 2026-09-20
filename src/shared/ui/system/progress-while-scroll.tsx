@@ -86,7 +86,7 @@ const ProgressWhileScroll = () => {
             <div className="relative z-10 flex items-center justify-center select-none">
               <NumberFlow
                 value={progressPercent}
-                className="font-mono text-[10px] font-bold tracking-tight text-foreground tabular-nums"
+                className="text-[10px] font-bold tracking-tight text-foreground tabular-nums"
                 suffix="%"
               />
             </div>

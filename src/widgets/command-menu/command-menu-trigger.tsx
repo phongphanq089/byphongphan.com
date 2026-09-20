@@ -38,16 +38,16 @@ export function CommandMenuTrigger({
       <SearchIcon className="size-3.5 shrink-0 text-muted-foreground/80 transition-colors group-hover:text-foreground" />
 
       {!compact && (
-        <span className="hidden font-sans text-xs text-muted-foreground/80 group-hover:text-foreground xl:inline">
+        <span className="hidden text-xs text-muted-foreground/80 group-hover:text-foreground xl:inline">
           Search commands...
         </span>
       )}
 
       <div className="flex items-center gap-1">
-        <Kbd className="h-4.5 min-w-4.5 px-1 font-mono text-[10px] font-medium text-muted-foreground/80 shadow-2xs group-hover:text-foreground">
+        <Kbd className="h-4.5 min-w-4.5 px-1 text-[10px] font-medium text-muted-foreground/80 shadow-2xs group-hover:text-foreground">
           {isMac ? "⌘" : "Ctrl"}
         </Kbd>
-        <Kbd className="h-4.5 min-w-4.5 px-1 font-mono text-[10px] font-medium text-muted-foreground/80 shadow-2xs group-hover:text-foreground">
+        <Kbd className="h-4.5 min-w-4.5 px-1 text-[10px] font-medium text-muted-foreground/80 shadow-2xs group-hover:text-foreground">
           K
         </Kbd>
       </div>

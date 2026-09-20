@@ -1,16 +1,76 @@
+import { useQuery } from "@tanstack/react-query"
 import { BookmarkX } from "lucide-react"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 import { GridContainer } from "@/app/layouts"
+import { useApiInspector } from "@/shared/tools/api-inspector"
+import { Button } from "@/shared/ui/core"
 import { SectionEmptyState } from "@/shared/ui/system"
 
-import { MOCK_RESOURCE_CATEGORIES, MOCK_RESOURCES } from "../mock-data"
-import type { PricingBadge, Resource, ResourceSortOption } from "../types"
+import {
+  getResourceCategories,
+  getResources,
+  RESOURCE_CATEGORIES_QUERY,
+  resourceCategoriesQueryOptions,
+  RESOURCES_QUERY,
+  resourcesQueryOptions,
+} from "../api/resource"
+import type {
+  PricingBadge,
+  Resource,
+  ResourceCategory,
+  ResourceSortOption,
+} from "../types"
 import { ResourceCard } from "./resource-card"
 import { ResourceFilterBar } from "./resource-filter-bar"
 import { ResourceHero } from "./resource-hero"
 
-export function ResourceGrid() {
+interface ResourceGridProps {
+  initialResources?: Resource[]
+  initialCategories?: ResourceCategory[]
+}
+
+export function ResourceGrid({
+  initialResources,
+  initialCategories,
+}: ResourceGridProps = {}) {
+  const { data: resources = initialResources ?? [] } = useQuery({
+    ...resourcesQueryOptions(),
+    initialData: initialResources,
+  })
+
+  const { data: categories = initialCategories ?? [] } = useQuery({
+    ...resourceCategoriesQueryOptions(),
+    initialData: initialCategories,
+  })
+
+  // Register with API Inspector so developers can inspect and live-refetch
+  const { register } = useApiInspector()
+  useEffect(() => {
+    register({
+      id: "sanity-resources",
+      title: "Sanity Resources",
+      endpoint: RESOURCES_QUERY,
+      method: "GROQ",
+      data: resources,
+      fetcher: () => getResources(),
+      description:
+        "Curated developer tools, UI libraries, and design resources fetched via GROQ",
+      autoExecute: false,
+    })
+
+    register({
+      id: "sanity-resource-categories",
+      title: "Sanity Resource Categories",
+      endpoint: RESOURCE_CATEGORIES_QUERY,
+      method: "GROQ",
+      data: categories,
+      fetcher: () => getResourceCategories(),
+      description:
+        "Developer resource categories and navigation filters fetched via GROQ",
+      autoExecute: false,
+    })
+  }, [register, resources, categories])
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [selectedPricing, setSelectedPricing] = useState<PricingBadge | "ALL">(
     "ALL"
@@ -20,7 +80,7 @@ export function ResourceGrid() {
 
   // Filter resources based on category, pricing, and search query
   const filteredResources = useMemo(() => {
-    const list = MOCK_RESOURCES.filter((resource) => {
+    const list = resources.filter((resource) => {
       // Category filter
       if (
         selectedCategory &&
@@ -71,7 +131,7 @@ export function ResourceGrid() {
       }
       return 0
     })
-  }, [selectedCategory, selectedPricing, searchQuery, sortOption])
+  }, [resources, selectedCategory, selectedPricing, searchQuery, sortOption])
 
   // Group filtered resources in pairs of 2 for 2-column GridContainer rows
   const resourcePairs = useMemo(() => {
@@ -85,13 +145,13 @@ export function ResourceGrid() {
   return (
     <div className="w-full">
       {/* 1. Resources Hero Section */}
-      <ResourceHero totalCount={MOCK_RESOURCES.length} />
+      <ResourceHero totalCount={resources.length} />
 
       {/* 2. Interactive Filter Bar */}
       <GridContainer borderBottom showCrosshairs className="px-4 py-2 sm:px-8">
         <ResourceFilterBar
-          categories={MOCK_RESOURCE_CATEGORIES}
-          resources={MOCK_RESOURCES}
+          categories={categories}
+          resources={resources}
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
           searchQuery={searchQuery}
@@ -101,7 +161,7 @@ export function ResourceGrid() {
           sortOption={sortOption}
           onSortChange={setSortOption}
           filteredCount={filteredResources.length}
-          totalCount={MOCK_RESOURCES.length}
+          totalCount={resources.length}
         />
       </GridContainer>
 
@@ -156,18 +216,19 @@ export function ResourceGrid() {
             title="No resources found"
             description="We couldn't find any resources matching your search query or filters. Try resetting your criteria."
             action={
-              <button
-                type="button"
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={() => {
                   setSelectedCategory(null)
                   setSelectedPricing("ALL")
                   setSortOption("featured")
                   setSearchQuery("")
                 }}
-                className="rounded-lg border border-pp-primary/40 bg-pp-primary/10 px-4 py-2 font-mono text-xs font-semibold text-pp-primary transition-all duration-200 hover:bg-pp-primary hover:text-white active:scale-98"
+                className="border-pp-primary/40 bg-pp-primary/10 text-pp-primary hover:bg-pp-primary hover:text-white"
               >
                 Clear all filters
-              </button>
+              </Button>
             }
           />
         </GridContainer>

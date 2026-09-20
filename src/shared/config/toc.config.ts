@@ -22,6 +22,7 @@ export const DESIGN_SYSTEM_TOC_ITEMS: TOCItemType[] = [
   { title: "Blueprint & Layout", url: "#blueprint", depth: 1 },
   { title: "States & Feedback", url: "#feedback", depth: 1 },
   { title: "Tech Icons", url: "#icons", depth: 1 },
+  { title: "API Inspector", url: "#api-inspector", depth: 1 },
 ]
 
 // Legacy export alias

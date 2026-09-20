@@ -19,10 +19,18 @@ export interface BlogTag {
 
 export interface BlogGroup {
   _id: string
+  _type?: "group"
   title: string
   slug: {
     current: string
   }
+  description?: string
+  coverImage?: {
+    url: string
+    alt?: string
+  }
+  isCompleted?: boolean
+  postCount?: number
 }
 
 export interface BlogAuthor {
@@ -51,4 +59,6 @@ export interface BlogPost {
   readTime: number
   isFeatured?: boolean
   author: BlogAuthor
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  body?: any[]
 }

@@ -75,7 +75,7 @@ export function TokensSection() {
     <div className="space-y-10">
       {/* Color Palette */}
       <div>
-        <h3 className="mb-4 font-mono text-sm font-semibold tracking-wider text-muted-foreground uppercase">
+        <h3 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground uppercase">
           01. Color Tokens & Theme Palettes
         </h3>
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
@@ -88,12 +88,10 @@ export function TokensSection() {
                 className={`h-16 w-full rounded-md shadow-inner ${c.class}`}
               />
               <div>
-                <div className="font-mono text-sm font-semibold text-foreground">
+                <div className="text-sm font-semibold text-foreground">
                   {c.name}
                 </div>
-                <div className="font-mono text-xs text-muted-foreground">
-                  {c.text}
-                </div>
+                <div className="text-xs text-muted-foreground">{c.text}</div>
                 <div className="mt-1 text-[11px] text-muted-foreground/80">
                   {c.desc}
                 </div>
@@ -105,19 +103,19 @@ export function TokensSection() {
 
       {/* Typography Scale */}
       <div>
-        <h3 className="mb-4 font-mono text-sm font-semibold tracking-wider text-muted-foreground uppercase">
+        <h3 className="mb-4 text-sm font-semibold tracking-wider text-muted-foreground uppercase">
           02. Typography Hierarchy & Tokens
         </h3>
         <div className="divide-y divide-border rounded-lg border border-border bg-card">
           {typoScales.map((t) => (
             <div key={t.token} className="space-y-2 p-4 sm:p-6">
-              <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-muted-foreground">
+              <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
                 <span className="font-semibold text-primary">{t.token}</span>
                 <span>
                   {t.size} • {t.usage}
                 </span>
               </div>
-              <div className="font-mono text-foreground">{t.sample}</div>
+              <div className="text-foreground">{t.sample}</div>
             </div>
           ))}
         </div>

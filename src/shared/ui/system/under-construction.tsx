@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowDownRight, Terminal } from "lucide-react"
-import React, { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 import { PPMarkIsometric } from "@/shared/ui"
 import TextBurnNeon from "@/shared/ui/animation/text-burn-neon"
@@ -14,10 +14,10 @@ export interface UnderConstructionProps {
   className?: string
 }
 
-export const UnderConstruction: React.FC<UnderConstructionProps> = ({
+export const UnderConstruction = ({
   pageName,
   className = "",
-}) => {
+}: UnderConstructionProps) => {
   const [progress, setProgress] = useState(78)
 
   const [activeLogIndex, setActiveLogIndex] = useState(0)
@@ -57,7 +57,7 @@ export const UnderConstruction: React.FC<UnderConstructionProps> = ({
             </div>
 
             <div className="mt-3 flex flex-col gap-1.5 rounded-lg border border-border/40 bg-background/60 p-2.5 backdrop-blur-md">
-              <div className="flex items-center justify-between font-mono text-[10px]">
+              <div className="flex items-center justify-between text-[10px]">
                 <span className="flex items-center gap-1.5 text-muted-foreground">
                   <Terminal className="h-3 w-3 text-primary" />
                   PIPELINE TELEMETRY
@@ -75,7 +75,7 @@ export const UnderConstruction: React.FC<UnderConstructionProps> = ({
                 />
               </div>
 
-              <span className="truncate font-mono text-[9px] text-muted-foreground/70">
+              <span className="truncate text-[9px] text-muted-foreground/70">
                 {logs[activeLogIndex]}
               </span>
             </div>

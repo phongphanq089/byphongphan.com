@@ -1,14 +1,22 @@
+import { Link } from "@tanstack/react-router"
 import { CheckCircle2 } from "lucide-react"
 import React from "react"
+
+import { cn } from "@/shared/lib"
 
 import type { BlogPost } from "../types"
 
 interface BlogCardProps {
   post: BlogPost
   onSelectTag?: (tagSlug: string) => void
+  onSelectGroup?: (groupSlug: string) => void
 }
 
-export const BlogCard: React.FC<BlogCardProps> = ({ post, onSelectTag }) => {
+export const BlogCard = ({
+  post,
+  onSelectTag,
+  onSelectGroup,
+}: BlogCardProps) => {
   const primaryCategory = post.categories[0]?.title || "Article"
 
   const formattedDate = React.useMemo(() => {
@@ -29,30 +37,47 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post, onSelectTag }) => {
       {/* Top Half: Cover Image */}
       <div className="flex flex-col gap-4">
         <div className="relative aspect-[16/9] w-full overflow-hidden rounded-lg border border-border/60 bg-muted/40">
-          <img
-            src={post.coverImage.url}
-            alt={post.coverImage.alt || post.title}
-            className="h-full w-full object-cover transition-transform duration-500 will-change-transform group-hover:scale-105"
-            loading="lazy"
-          />
-
-          {/* Subtle Cyber Vignette & Gradient Overlay */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 opacity-60 transition-opacity group-hover:opacity-40" />
+          <Link
+            to="/blog/$slug"
+            params={{ slug: post.slug.current }}
+            className="block h-full w-full"
+          >
+            <img
+              src={post.coverImage.url}
+              alt={post.coverImage.alt || post.title}
+              className="h-full w-full object-cover transition-transform duration-500 will-change-transform group-hover:scale-105"
+              loading="lazy"
+            />
+            {/* Subtle Cyber Vignette & Gradient Overlay */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10 opacity-60 transition-opacity group-hover:opacity-40" />
+          </Link>
 
           {/* Group / Series Badge if present */}
           {post.group && (
             <div className="absolute top-2.5 left-2.5 z-10">
-              <span className="rounded-md border border-white/20 bg-black/70 px-2 py-0.5 font-mono text-[9px] font-semibold text-white shadow-xs backdrop-blur-md">
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onSelectGroup?.(post.group!.slug.current)
+                }}
+                className={cn(
+                  "rounded-md border border-white/20 bg-black/70 px-2 py-0.5 text-[9px] font-semibold text-white shadow-xs backdrop-blur-md transition-all",
+                  onSelectGroup &&
+                    "cursor-pointer hover:border-pp-primary hover:bg-pp-primary/90"
+                )}
+                title={`Filter series: ${post.group.title}`}
+              >
                 {post.group.title}{" "}
                 {post.groupOrder ? `• #${post.groupOrder}` : ""}
-              </span>
+              </button>
             </div>
           )}
 
           {/* Featured Ribbon */}
           {post.isFeatured && (
             <div className="absolute top-2.5 right-2.5 z-10">
-              <span className="rounded-md border border-pp-primary/40 bg-pp-primary/90 px-2 py-0.5 font-mono text-[9px] font-bold text-white shadow-xs backdrop-blur-md">
+              <span className="rounded-md border border-pp-primary/40 bg-pp-primary/90 px-2 py-0.5 text-[9px] font-bold text-white shadow-xs backdrop-blur-md">
                 FEATURED
               </span>
             </div>
@@ -64,15 +89,17 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post, onSelectTag }) => {
           <span className="font-semibold tracking-wide text-foreground">
             {primaryCategory}
           </span>
-          <span className="font-mono text-xs text-muted-foreground/80">
+          <span className="text-xs text-muted-foreground/80">
             {post.readTime} min read
           </span>
         </div>
 
         {/* Title (Matching Image 1) */}
-        <h3 className="line-clamp-2 text-lg font-bold tracking-tight text-foreground transition-colors duration-200 group-hover:text-pp-primary sm:text-xl">
-          {post.title}
-        </h3>
+        <Link to="/blog/$slug" params={{ slug: post.slug.current }}>
+          <h3 className="line-clamp-2 text-lg font-bold tracking-tight text-foreground transition-colors duration-200 group-hover:text-pp-primary hover:text-pp-primary sm:text-xl">
+            {post.title}
+          </h3>
+        </Link>
 
         {/* Excerpt / Summary (Matching Image 1) */}
         <p className="line-clamp-2 text-xs leading-relaxed text-muted-foreground sm:line-clamp-3 sm:text-sm">
@@ -93,7 +120,7 @@ export const BlogCard: React.FC<BlogCardProps> = ({ post, onSelectTag }) => {
                   e.stopPropagation()
                   onSelectTag?.(tag.slug.current)
                 }}
-                className="rounded border border-border/50 bg-muted/40 px-1.5 py-0.5 font-mono text-[9px] text-muted-foreground/80 transition-colors hover:border-pp-primary/50 hover:text-foreground"
+                className="rounded border border-border/50 bg-muted/40 px-1.5 py-0.5 text-[9px] text-muted-foreground/80 transition-colors hover:border-pp-primary/50 hover:text-foreground"
               >
                 #{tag.title}
               </button>

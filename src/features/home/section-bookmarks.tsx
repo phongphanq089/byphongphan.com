@@ -30,7 +30,7 @@ function renderBookmarkIcon(type: BookmarkItem["iconType"]) {
   switch (type) {
     case "copper":
       return (
-        <span className="font-mono text-xs font-bold tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
+        <span className="text-xs font-bold tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
           C_
         </span>
       )
@@ -110,7 +110,7 @@ export const SectionBookmarks = () => {
                 type="button"
                 onClick={() => setActiveCategory(tab.value)}
                 className={cn(
-                  "inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-1 font-mono text-xs transition-all duration-200",
+                  "inline-flex cursor-pointer items-center gap-1.5 rounded-full px-3 py-1 text-xs transition-all duration-200",
                   isActive
                     ? "bg-foreground font-semibold text-background shadow-xs"
                     : "border border-border/80 bg-background/60 text-muted-foreground hover:border-border hover:bg-accent/60 hover:text-foreground"
@@ -134,7 +134,7 @@ export const SectionBookmarks = () => {
       {/* 2-Column Responsive Blueprint Grid */}
       <GridContainer
         borderTop={false}
-        borderBottom={true}
+        borderBottom={false}
         showCrosshairs={true}
         className="p-0"
       >
@@ -169,11 +169,11 @@ export const SectionBookmarks = () => {
                         <h3 className="truncate text-sm font-semibold tracking-tight text-foreground transition-colors group-hover:text-foreground sm:text-base">
                           {item.title}
                         </h3>
-                        <span className="inline-flex items-center rounded-xs border border-border/70 bg-muted/40 px-1.5 py-0.5 font-mono text-[10px] font-medium tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
+                        <span className="inline-flex items-center rounded-xs border border-border/70 bg-muted/40 px-1.5 py-0.5 text-[10px] font-medium tracking-tight text-muted-foreground transition-colors group-hover:text-foreground">
                           {item.type}
                         </span>
                       </div>
-                      <span className="mt-0.5 truncate font-mono text-[11px] text-muted-foreground/70 transition-colors group-hover:text-muted-foreground">
+                      <span className="mt-0.5 truncate text-[11px] text-muted-foreground/70 transition-colors group-hover:text-muted-foreground">
                         {domain}
                       </span>
                     </div>
@@ -186,7 +186,7 @@ export const SectionBookmarks = () => {
                 </div>
 
                 {/* Bottom Row: Author & Date Meta */}
-                <div className="flex items-center justify-between gap-2 border-t border-border/40 pt-2.5 font-mono text-[11px] text-muted-foreground/80">
+                <div className="flex items-center justify-between gap-2 border-t border-border/40 pt-2.5 text-[11px] text-muted-foreground/80">
                   <div className="flex items-center gap-1.5 truncate">
                     <span className="size-1.5 shrink-0 rounded-full bg-muted-foreground/40 transition-colors group-hover:bg-muted-foreground/70" />
                     <span className="truncate">by {item.author}</span>
@@ -206,10 +206,10 @@ export const SectionBookmarks = () => {
                 size={12}
                 className="pointer-events-none opacity-35 dark:opacity-15"
               />
-              <div className="relative z-10 flex items-center gap-2 font-mono text-[11px] tracking-wider text-muted-foreground/60 uppercase">
+              <div className="relative z-10 flex items-center gap-2 text-[11px] tracking-wider text-muted-foreground/60 uppercase">
                 <span>More Bookmarks Coming Soon</span>
               </div>
-              <p className="relative z-10 font-mono text-[10px] text-muted-foreground/40">
+              <p className="relative z-10 text-[10px] text-muted-foreground/40">
                 Curating additional design & engineering references
               </p>
             </div>

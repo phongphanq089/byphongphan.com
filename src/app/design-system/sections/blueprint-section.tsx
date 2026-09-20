@@ -5,6 +5,7 @@ import {
   SectionDivider,
   SectionHeading,
   StripedPattern,
+  TableOfContents,
 } from "@/shared/ui/system"
 
 import { ShowcaseCard } from "../components/showcase-card"
@@ -123,6 +124,74 @@ export function BlueprintSection() {
               { label: "TAILWIND CSS V4", hideOnMobile: true },
             ]}
           />
+        </div>
+      </ShowcaseCard>
+
+      {/* 4. TableOfContents (Stepped Chamfer Rail) */}
+      <ShowcaseCard
+        title="TableOfContents (Stepped Chamfer Rail)"
+        description="Fumadocs-inspired 45-degree chamfered tree rail with continuous Framer Motion path animation"
+        tag="Navigation"
+        className="md:col-span-2"
+      >
+        <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+          <div className="w-full max-w-sm rounded-xl border border-border/80 bg-background/90 p-5 shadow-lg dark:bg-black/60">
+            <TableOfContents
+              items={[
+                { id: "demo-prerequisites", title: "Prerequisites", depth: 2 },
+                { id: "demo-installation", title: "Installation", depth: 2 },
+                { id: "demo-env", title: "Environment Variables", depth: 2 },
+                { id: "demo-server", title: "Server Setup", depth: 2 },
+                {
+                  id: "demo-basic-cfg",
+                  title: "Basic Configuration",
+                  depth: 3,
+                },
+                { id: "demo-client", title: "Client Setup", depth: 2 },
+                {
+                  id: "demo-basic-client",
+                  title: "Basic Client Configuration",
+                  depth: 3,
+                },
+                { id: "demo-expo", title: "Expo and React Native", depth: 3 },
+                { id: "demo-plugin", title: "Plugin Overview", depth: 3 },
+                { id: "demo-next", title: "Next Steps", depth: 2 },
+              ]}
+              scrollOffset={100}
+            />
+          </div>
+
+          <div className="flex flex-1 flex-col gap-3 rounded-xl border border-border/60 bg-muted/20 p-5">
+            <div className="flex items-center gap-2">
+              <span className="size-2 rounded-full bg-emerald-400" />
+              <span className="text-xs font-bold text-foreground">
+                High-Craft Stepped Rail Mathematics
+              </span>
+            </div>
+            <p className="text-xs leading-relaxed text-muted-foreground">
+              Calculates dynamic SVG coordinate paths based on heading depth:
+              level 0 sits at base coordinate X, while level 1 and beyond step
+              inwards with clean 45-degree diagonal chamfers (dx = dy).
+            </p>
+            <div className="grid grid-cols-2 gap-3 text-[11px] sm:grid-cols-4">
+              <div className="rounded border border-border/50 bg-background/60 p-2 text-center">
+                <span className="text-muted-foreground">Level 0 Rail</span>
+                <p className="font-bold text-foreground">X = 14px</p>
+              </div>
+              <div className="rounded border border-border/50 bg-background/60 p-2 text-center">
+                <span className="text-muted-foreground">Level 1 Rail</span>
+                <p className="font-bold text-foreground">X = 30px</p>
+              </div>
+              <div className="rounded border border-border/50 bg-background/60 p-2 text-center">
+                <span className="text-muted-foreground">Chamfer Angle</span>
+                <p className="font-bold text-emerald-400">45° (dx = dy)</p>
+              </div>
+              <div className="rounded border border-border/50 bg-background/60 p-2 text-center">
+                <span className="text-muted-foreground">Motion Engine</span>
+                <p className="font-bold text-pp-primary">Framer Motion</p>
+              </div>
+            </div>
+          </div>
         </div>
       </ShowcaseCard>
     </div>

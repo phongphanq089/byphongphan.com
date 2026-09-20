@@ -3,6 +3,111 @@ import type React from "react"
 import { siteConfig } from "@/shared/config"
 import { Sanity, ShadcnUI, Tailwind, Tanstack } from "@/shared/ui/icons"
 
+export interface ArchitectureSpec {
+  role: string
+  tech: string
+  detail: string
+  href: string
+}
+
+export const architectureSpecs: ArchitectureSpec[] = [
+  {
+    role: "ENGINE",
+    tech: "TanStack Start + React 19",
+    detail: "SSR, typed routes & server functions",
+    href: "https://tanstack.com/start",
+  },
+  {
+    role: "STYLING",
+    tech: "Tailwind CSS v4",
+    detail: "OKLCH color engine & design tokens",
+    href: "https://tailwindcss.com",
+  },
+  {
+    role: "CONTENT",
+    tech: "Sanity Studio v5",
+    detail: "Headless CMS & real-time GROQ lake",
+    href: "https://www.sanity.io",
+  },
+  {
+    role: "PRIMITIVES",
+    tech: "Radix UI + shadcn/ui",
+    detail: "Accessible WAI-ARIA composable blocks",
+    href: "https://ui.shadcn.com",
+  },
+  {
+    role: "HOSTING",
+    tech: "Netlify Edge",
+    detail: "Global CDN & serverless edge runtime",
+    href: "https://www.netlify.com",
+  },
+]
+
+export interface FooterNavItem {
+  name: string
+  href: string
+  shortcut?: string
+  badge?: string
+}
+
+export const footerNavigation: FooterNavItem[] = [
+  { name: "Home", href: "/", badge: "LIVE", shortcut: "H P" },
+  { name: "Blog", href: "/blog", badge: "COMING_SOON", shortcut: "B L" },
+  {
+    name: "Component UI",
+    href: "/component-ui",
+    badge: "LIVE",
+    shortcut: "C U",
+  },
+  { name: "Blocks", href: "/blocks", badge: "COMING_SOON", shortcut: "B L" },
+  {
+    name: "Resources",
+    href: "/resources",
+    badge: "COMING_SOON",
+    shortcut: "B L",
+  },
+  {
+    name: "colophon",
+    href: "/colophon",
+    badge: "LIVE",
+    shortcut: "C P",
+  },
+]
+
+export interface FooterSocial {
+  name: string
+  handle: string
+  href: string
+  iconName: "github" | "linkedin" | "twitter" | "email"
+}
+
+export const footerSocials: FooterSocial[] = [
+  {
+    name: "GitHub",
+    handle: `@${siteConfig.author.githubUsername}`,
+    href: siteConfig.social.github.href,
+    iconName: "github",
+  },
+  {
+    name: "LinkedIn",
+    handle: "in/phong-phan",
+    href: `https://${siteConfig.social.linkedin.href.replace(/^https?:\/\//, "")}`,
+    iconName: "linkedin",
+  },
+  {
+    name: "X (Twitter)",
+    handle: "@PhongPhanq089",
+    href: siteConfig.social.twitter.href,
+    iconName: "twitter",
+  },
+  {
+    name: "Email",
+    handle: siteConfig.author.email,
+    href: siteConfig.social.email.href,
+    iconName: "email",
+  },
+]
+
 export const inspriedBy = siteConfig.inspirations
 
 export interface TechCredit {
