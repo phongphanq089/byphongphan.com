@@ -47,7 +47,7 @@
 
   /* ─── Brand Base Tokens (PP Identity) ─── */
   --pp-primary: oklch(0.985 0 0); /* Red-600 */
-  --pp-primary-foreground: oklch(0.985 0 0);
+  --pp-primary-foreground: oklch(0.15 0 0);
   --pp-primary-glow: rgba(220, 38, 38, 0.25);
 
   /* ─── Semantic Surface & Content Tokens ─── */
@@ -350,4 +350,52 @@ button {
 
 @utility link-underline {
   @apply underline decoration-current/30 decoration-1 underline-offset-3 transition-colors hover:decoration-current;
+}
+
+/* ─── MapLibre GL & MapCN Styles ─── */
+.maplibregl-popup-content {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+.maplibregl-popup-tip {
+  display: none !important;
+}
+
+.maplibregl-ctrl-attrib {
+  background-color: var(--background) !important;
+  color: var(--muted-foreground) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 6px !important;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.maplibregl-ctrl-attrib a {
+  color: var(--muted-foreground) !important;
+}
+
+.maplibregl-ctrl-attrib a:hover {
+  color: var(--foreground) !important;
+}
+
+.maplibregl-ctrl-attrib-button {
+  background: transparent !important;
+}
+
+.dark .maplibregl-ctrl-attrib-button {
+  filter: invert(1);
+}
+
+.maplibregl-cooperative-gesture-screen {
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(6px) !important;
+  font-family: inherit !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: var(--foreground, #fff) !important;
+  letter-spacing: -0.01em !important;
+  border-radius: var(--radius-xl, 0.75rem) !important;
+  text-align: center !important;
 }

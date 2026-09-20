@@ -52,7 +52,7 @@ function HomePage() {
 
       {/* 9. Location & Vietnam Map Section */}
       <section id="vietnam-map">
-        <GridContainer showCrosshairs={true} as={"div"}>
+        <GridContainer showCrosshairs={true} borderTop={false} as={"div"}>
           <SectionMapVietnamese />
         </GridContainer>
       </section>

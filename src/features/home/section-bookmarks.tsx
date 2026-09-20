@@ -134,7 +134,7 @@ export const SectionBookmarks = () => {
       {/* 2-Column Responsive Blueprint Grid */}
       <GridContainer
         borderTop={false}
-        borderBottom={true}
+        borderBottom={false}
         showCrosshairs={true}
         className="p-0"
       >

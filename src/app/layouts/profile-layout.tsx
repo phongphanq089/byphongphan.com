@@ -89,7 +89,7 @@ export function ProfileLayout({ children }: { children?: React.ReactNode }) {
             <Footer />
           </div>
         </div>
-        <EdgeBlur position="bottom" height={isDownMd ? 30 : 100} />
+        <EdgeBlur position="bottom" height={isDownMd ? 30 : 70} />
       </GridLayoutContext.Provider>
     </ThemeProvider>
   )
