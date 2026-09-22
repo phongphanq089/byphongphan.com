@@ -29,5 +29,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src", "sanity", "sanity.config.ts"]
+  "include": ["src"]
 }

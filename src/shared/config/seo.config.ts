@@ -1,10 +1,27 @@
-import {
-  getSanityImageUrl,
-  type SanityImage,
-  type SanitySiteSettings,
-} from "@/shared/lib/sanity"
-
 import { siteConfig } from "./site.config"
+
+export interface DynamicSiteSettings {
+  siteName?: string
+  siteTitle?: string
+  siteDescription?: string
+  siteUrl?: string
+  author?: string
+  ogImage?: string
+  keywords?: string[]
+  twitterHandle?: string
+  twitterCard?: "summary" | "summary_large_image"
+  themeColor?: string
+  // Favicons & Icons (URL direct to CDN or relative path)
+  favicon?: string
+  favicon16?: string
+  favicon32?: string
+  appleTouchIcon?: string
+  safariMaskIcon?: string
+  // Social links  Structured Data (JSON-LD)
+  githubUrl?: string
+  linkedinUrl?: string
+  twitterUrl?: string
+}
 
 export interface SeoConfig {
   title: string
@@ -85,16 +102,6 @@ export const pagesSeoConfig: Record<string, SeoConfig> = {
     description:
       "Engineering design tokens, UI primitives, and interactive shader components created for the portfolio.",
   },
-  library: {
-    title: "UI Library • Phong Phan",
-    description:
-      "Reusable React components, custom hooks, and interaction patterns for modern web apps.",
-  },
-  studio: {
-    title: "Sanity Studio • Content Management",
-    description: "Headless CMS workspace powered by Sanity.io.",
-    noIndex: true,
-  },
   colophon: {
     title: "Colophon • Phong Phan",
     description:
@@ -108,32 +115,25 @@ export const pagesSeoConfig: Record<string, SeoConfig> = {
  * 2. Sanity Site Settings ogImage asset (optimized via urlFor)
  * 3. Default predefined ogImage
  */
-export function getOgImageUrl(
-  customImage?: string | { url?: string } | unknown,
-  sanityOgImage?: SanityImage
+export function resolveImageUrl(
+  customImage?: string | { url?: string } | null,
+  fallbackImage?: string
 ): string {
-  const resolvedCustomUrl =
-    typeof customImage === "string"
-      ? customImage
-      : typeof customImage === "object" &&
-          customImage !== null &&
-          "url" in customImage &&
-          typeof (customImage as { url: unknown }).url === "string"
-        ? (customImage as { url: string }).url
-        : undefined
-
-  if (resolvedCustomUrl && resolvedCustomUrl.trim() !== "") {
-    return resolvedCustomUrl.trim()
+  if (typeof customImage === "string" && customImage.trim() !== "") {
+    return customImage.trim()
   }
 
-  return (
-    getSanityImageUrl(sanityOgImage, {
-      width: 1200,
-      height: 630,
-      fit: "crop",
-      fallback: defaultSeoConfig.ogImage,
-    }) || defaultSeoConfig.ogImage
-  )
+  if (
+    typeof customImage === "object" &&
+    customImage !== null &&
+    "url" in customImage &&
+    typeof customImage.url === "string" &&
+    customImage.url.trim() !== ""
+  ) {
+    return customImage.url.trim()
+  }
+
+  return fallbackImage?.trim() || defaultSeoConfig.ogImage
 }
 
 /**
@@ -142,7 +142,7 @@ export function getOgImageUrl(
  */
 export function createSeoMeta(
   config?: Partial<SeoConfig> | keyof typeof pagesSeoConfig,
-  siteSettings?: SanitySiteSettings | null
+  siteSettings?: DynamicSiteSettings | null
 ) {
   let resolved: Partial<SeoConfig> = {}
 
@@ -152,21 +152,9 @@ export function createSeoMeta(
     resolved = config
   }
 
-  const isRoot = !config || config === undefined
-  const customOgUrl =
-    typeof resolved.ogImage === "string"
-      ? resolved.ogImage
-      : typeof resolved.ogImage === "object" &&
-          resolved.ogImage !== null &&
-          "url" in resolved.ogImage &&
-          typeof (resolved.ogImage as { url: unknown }).url === "string"
-        ? (resolved.ogImage as { url: string }).url
-        : undefined
+  const isRoot = !config
 
-  const hasCustomImage = Boolean(customOgUrl && customOgUrl.trim() !== "")
-  const hasSanityImage = Boolean(siteSettings?.ogImage?.asset)
-
-  // Priority: Route Config > Sanity Schema Settings > Default Static Config
+  // Tiêu chí fallback phân tầng (Cascade Fallback)
   const title =
     resolved.title?.trim() ||
     siteSettings?.siteTitle?.trim() ||
@@ -178,9 +166,7 @@ export function createSeoMeta(
     defaultSeoConfig.description
 
   const siteName = siteSettings?.siteName?.trim() || defaultSeoConfig.siteName
-
   const author = siteSettings?.author?.trim() || defaultSeoConfig.author
-
   const url =
     resolved.url?.trim() ||
     siteSettings?.siteUrl?.trim() ||
@@ -205,10 +191,7 @@ export function createSeoMeta(
     content: string
     title?: string
   }> = [
-    {
-      title,
-      content: "",
-    },
+    { title, content: "" },
     { name: "description", content: description },
     { property: "og:title", content: title },
     { property: "og:description", content: description },
@@ -216,20 +199,20 @@ export function createSeoMeta(
     { name: "twitter:description", content: description },
   ]
 
-  // Image handling: Only output og:image if root OR custom image OR sanity image exists
-  if (isRoot || hasCustomImage || hasSanityImage) {
-    const image = getOgImageUrl(customOgUrl, siteSettings?.ogImage)
+  // Image handling: root page hoặc bất kỳ page nào có ảnh riêng/ảnh dynamic từ BE
+  const image = resolveImageUrl(resolved.ogImage, siteSettings?.ogImage)
+  if (isRoot || resolved.ogImage || siteSettings?.ogImage) {
     metaList.push(
       { property: "og:image", content: image },
       { name: "twitter:image", content: image }
     )
   }
 
-  // Base root meta (only need to output at root or if siteSettings is provided)
+  // Root Meta tags
   if (isRoot || siteSettings) {
     const twitterCard = siteSettings?.twitterCard || "summary_large_image"
     const twitterHandle = siteSettings?.twitterHandle?.trim()
-    const themeColor = siteSettings?.themeColor?.hex
+    const themeColor = siteSettings?.themeColor || "#dc2626"
 
     metaList.push(
       { name: "keywords", content: keywords },
@@ -253,7 +236,7 @@ export function createSeoMeta(
     }
 
     metaList.push(
-      { name: "theme-color", content: themeColor || "#dc2626" },
+      { name: "theme-color", content: themeColor },
       { name: "application-name", content: siteName },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
@@ -264,13 +247,11 @@ export function createSeoMeta(
       { name: "apple-mobile-web-app-title", content: siteName }
     )
   } else {
-    // For child routes with specific overrides
-    if (resolved.url) {
+    // Override cho route con
+    if (resolved.url)
       metaList.push({ property: "og:url", content: resolved.url })
-    }
-    if (resolved.keywords) {
+    if (resolved.keywords)
       metaList.push({ name: "keywords", content: keywords })
-    }
     if (resolved.noIndex !== undefined) {
       metaList.push({
         name: "robots",
@@ -283,33 +264,15 @@ export function createSeoMeta(
 }
 
 /**
- * Creates dynamic header link tags (Favicons, Apple Touch, Manifest, Canonical URL)
- * Checks Sanity schema image assets first, falling back to local files.
+ * Dynamic Links: Favicons, Webmanifest, Canonical
  */
-export function createSiteLinks(siteSettings?: SanitySiteSettings | null) {
+
+export function createSiteLinks(siteSettings?: DynamicSiteSettings | null) {
   const canonicalUrl = siteSettings?.siteUrl?.trim() || siteConfig.url
-
-  const favicon = getSanityImageUrl(siteSettings?.favicon, {
-    fallback: "/favicon.ico",
-  })
-
-  const favicon16 = getSanityImageUrl(siteSettings?.favicon16, {
-    width: 16,
-    height: 16,
-    fallback: "/favicon-16x16.png",
-  })
-
-  const favicon32 = getSanityImageUrl(siteSettings?.favicon32, {
-    width: 32,
-    height: 32,
-    fallback: "/favicon-32x32.png",
-  })
-
-  const appleTouchIcon = getSanityImageUrl(siteSettings?.appleTouchIcon, {
-    width: 180,
-    height: 180,
-    fallback: "/apple-touch-icon.png",
-  })
+  const favicon = siteSettings?.favicon || "/favicon.ico"
+  const favicon16 = siteSettings?.favicon16 || "/favicon-16x16.png"
+  const favicon32 = siteSettings?.favicon32 || "/favicon-32x32.png"
+  const appleTouchIcon = siteSettings?.appleTouchIcon || "/apple-touch-icon.png"
 
   const links: Array<{
     rel: string
@@ -325,17 +288,16 @@ export function createSiteLinks(siteSettings?: SanitySiteSettings | null) {
     {
       rel: "manifest",
       href: "/site.webmanifest",
-      color: siteSettings?.themeColor?.hex || "#ffffff",
+      color: siteSettings?.themeColor || "#ffffff",
     },
     { rel: "icon", href: favicon },
   ]
 
-  const safariMask = getSanityImageUrl(siteSettings?.safariMaskIcon)
-  if (safariMask) {
+  if (siteSettings?.safariMaskIcon) {
     links.push({
       rel: "mask-icon",
-      href: safariMask,
-      color: siteSettings?.themeColor?.hex || "#000000",
+      href: siteSettings.safariMaskIcon,
+      color: siteSettings.themeColor || "#000000",
     })
   }
 
@@ -343,9 +305,9 @@ export function createSiteLinks(siteSettings?: SanitySiteSettings | null) {
 }
 
 /**
- * Creates Person structured data JSON-LD with Sanity settings fallback to static config.
+ * Person JSON-LD Schema
  */
-export function createPersonJsonLd(siteSettings?: SanitySiteSettings | null) {
+export function createPersonJsonLd(siteSettings?: DynamicSiteSettings | null) {
   const canonicalUrl = siteSettings?.siteUrl?.trim() || siteConfig.url
 
   const sameAs = [
@@ -367,7 +329,7 @@ export function createPersonJsonLd(siteSettings?: SanitySiteSettings | null) {
 }
 
 /**
- * Creates BlogPosting structured data JSON-LD for individual article detail pages.
+ * BlogPosting JSON-LD Schema
  */
 export function createBlogArticleJsonLd({
   title,

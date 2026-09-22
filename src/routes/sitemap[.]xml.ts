@@ -3,7 +3,6 @@ import { createFileRoute } from "@tanstack/react-router"
 import { BLOCKS_DATA } from "@/features/blocks"
 import { COMPONENTS_DATA } from "@/features/component-ui"
 import { siteConfig } from "@/shared/config"
-import { client } from "@/shared/lib/sanity"
 
 interface SitemapRoute {
   path: string
@@ -81,34 +80,6 @@ export const Route = createFileRoute("/sitemap.xml")({
         ]
 
         const dynamicRoutes: SitemapRoute[] = []
-
-        try {
-          // 1. Dynamic Sanity Blog Posts
-          const sanityPosts = await client.fetch<
-            Array<{
-              slug: string
-              _updatedAt?: string
-              publishedAt?: string
-            }>
-          >(
-            `*[_type == "post" && defined(slug.current)]{ "slug": slug.current, _updatedAt, publishedAt }`
-          )
-
-          if (Array.isArray(sanityPosts)) {
-            sanityPosts.forEach((post) => {
-              if (post.slug) {
-                dynamicRoutes.push({
-                  path: `/blog/${post.slug}`,
-                  lastmod: post._updatedAt || post.publishedAt || now,
-                  changefreq: "weekly",
-                  priority: "0.8",
-                })
-              }
-            })
-          }
-        } catch (error) {
-          console.error("Error fetching dynamic blog posts for sitemap:", error)
-        }
 
         // 2. Dynamic Component UI Pages
         COMPONENTS_DATA.forEach((component) => {

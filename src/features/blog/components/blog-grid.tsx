@@ -1,23 +1,16 @@
 import { useQuery } from "@tanstack/react-query"
 import { FileSearch } from "lucide-react"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 
 import { GridContainer } from "@/app/layouts"
-import { useApiInspector } from "@/shared/tools/api-inspector"
 import { Button } from "@/shared/ui/core"
 import { SectionEmptyState } from "@/shared/ui/system"
 
 import {
-  BLOG_CATEGORIES_QUERY,
-  BLOG_GROUPS_QUERY,
-  BLOG_POSTS_QUERY,
   blogCategoriesQueryOptions,
   blogGroupsQueryOptions,
   blogPostsQueryOptions,
   blogTagsQueryOptions,
-  getBlogCategories,
-  getBlogGroups,
-  getBlogPosts,
 } from "../api/blog"
 import type { BlogCategory, BlogGroup, BlogPost, BlogTag } from "../types"
 import { BlogCard } from "./blog-card"
@@ -58,45 +51,6 @@ export function BlogGrid({
     ...blogGroupsQueryOptions(),
     initialData: initialGroups,
   })
-
-  // Register with API Inspector for live monitoring and refetching
-  const { register } = useApiInspector()
-  useEffect(() => {
-    register({
-      id: "sanity-blog-posts",
-      title: "Sanity Blog Posts",
-      endpoint: BLOG_POSTS_QUERY,
-      method: "GROQ",
-      data: posts,
-      fetcher: () => getBlogPosts(),
-      description:
-        "Full list of articles and engineering writeups fetched from Sanity CMS",
-      autoExecute: false,
-    })
-
-    register({
-      id: "sanity-blog-categories",
-      title: "Sanity Blog Categories",
-      endpoint: BLOG_CATEGORIES_QUERY,
-      method: "GROQ",
-      data: categories,
-      fetcher: () => getBlogCategories(),
-      description: "Blog categories for filtering posts fetched via GROQ",
-      autoExecute: false,
-    })
-
-    register({
-      id: "sanity-blog-groups",
-      title: "Sanity Blog Series",
-      endpoint: BLOG_GROUPS_QUERY,
-      method: "GROQ",
-      data: groups,
-      fetcher: () => getBlogGroups(),
-      description:
-        "Curated multi-part engineering series and learning collections fetched via GROQ",
-      autoExecute: false,
-    })
-  }, [register, posts, categories, groups])
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [selectedGroup, setSelectedGroup] = useState<string | null>(null)

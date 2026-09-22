@@ -1,18 +1,13 @@
 import { useQuery } from "@tanstack/react-query"
 import { BookmarkX } from "lucide-react"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 
 import { GridContainer } from "@/app/layouts"
-import { useApiInspector } from "@/shared/tools/api-inspector"
 import { Button } from "@/shared/ui/core"
 import { SectionEmptyState } from "@/shared/ui/system"
 
 import {
-  getResourceCategories,
-  getResources,
-  RESOURCE_CATEGORIES_QUERY,
   resourceCategoriesQueryOptions,
-  RESOURCES_QUERY,
   resourcesQueryOptions,
 } from "../api/resource"
 import type {
@@ -44,33 +39,6 @@ export function ResourceGrid({
     initialData: initialCategories,
   })
 
-  // Register with API Inspector so developers can inspect and live-refetch
-  const { register } = useApiInspector()
-  useEffect(() => {
-    register({
-      id: "sanity-resources",
-      title: "Sanity Resources",
-      endpoint: RESOURCES_QUERY,
-      method: "GROQ",
-      data: resources,
-      fetcher: () => getResources(),
-      description:
-        "Curated developer tools, UI libraries, and design resources fetched via GROQ",
-      autoExecute: false,
-    })
-
-    register({
-      id: "sanity-resource-categories",
-      title: "Sanity Resource Categories",
-      endpoint: RESOURCE_CATEGORIES_QUERY,
-      method: "GROQ",
-      data: categories,
-      fetcher: () => getResourceCategories(),
-      description:
-        "Developer resource categories and navigation filters fetched via GROQ",
-      autoExecute: false,
-    })
-  }, [register, resources, categories])
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [selectedPricing, setSelectedPricing] = useState<PricingBadge | "ALL">(
     "ALL"

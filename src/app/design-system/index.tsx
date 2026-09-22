@@ -8,7 +8,6 @@ import { ModeToggle } from "@/shared/ui/system/mode-toggle"
 import { TOCMinimap } from "@/shared/ui/system/toc-minimap"
 
 import { AnimationsSection } from "./sections/animations-section"
-import { ApiInspectorSection } from "./sections/api-inspector-section"
 import { BlueprintSection } from "./sections/blueprint-section"
 import { BrandSection } from "./sections/brand-section"
 import { ButtonsSection } from "./sections/buttons-section"
@@ -198,22 +197,6 @@ export function DesignSystemShowcase() {
               </h2>
             </div>
             <IconsSection />
-          </section>
-
-          {/* 09. API Inspector Dev Tool */}
-          <section className="space-y-6">
-            <div
-              id="api-inspector"
-              className="scroll-mt-24 space-y-1 border-b border-border/60 pb-3"
-            >
-              <span className="text-xs font-semibold text-primary">
-                09 / DEV TOOLS
-              </span>
-              <h2 className="text-xl font-bold tracking-tight text-foreground">
-                API Inspector & JSON Viewer Tool
-              </h2>
-            </div>
-            <ApiInspectorSection />
           </section>
         </main>
 

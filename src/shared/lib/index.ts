@@ -1,5 +1,5 @@
 export * from "./get-cached-contributions"
-export * from "./sanity"
+export * from "./site-settings"
 export * from "./sound-engine"
 export * from "./sound-types"
 export * from "./toc"

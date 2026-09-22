@@ -7,7 +7,6 @@ import useMeasure from "react-use-measure"
 import { MAIN_NAV_ITEMS } from "@/shared/config"
 import { cn } from "@/shared/lib"
 import { useTheme } from "@/shared/providers/theme-provider"
-import { DevApiInspectorFloatingTrigger } from "@/shared/tools/api-inspector"
 import { Kbd, Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/core"
 import { MusicToggleButton } from "@/shared/ui/system/music-toggle-button"
 import { openCommandMenu } from "@/widgets/command-menu"
@@ -327,8 +326,6 @@ const BottomMenu = () => {
         <div className="flex items-center">
           <MusicToggleButton autoPlay={false} />
         </div>
-
-        <DevApiInspectorFloatingTrigger />
       </div>
     </div>
   )
