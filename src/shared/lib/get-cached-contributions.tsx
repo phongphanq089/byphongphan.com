@@ -7,7 +7,7 @@ type GitHubContributionsResponse = {
 }
 
 const DEFAULT_API_URL = "https://github-contributions-api.jogruber.de/v4"
-const CACHE_TTL_MS = 24 * 60 * 60 * 1000
+const CACHE_TTL_MS = 15 * 60 * 1000 // 15 minutes TTL to reflect today's commits promptly
 
 type CacheEntry = {
   promise: Promise<Activity[]>

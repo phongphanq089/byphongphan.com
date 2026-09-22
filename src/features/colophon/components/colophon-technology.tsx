@@ -104,10 +104,10 @@ export function ColophonTechnology() {
                         )}
                       </div>
 
-                      <div className="mt-4 space-y-1">
+                      <div className="mt-4 items-center justify-center space-y-1 text-center">
                         <div className="flex items-center gap-1 text-sm font-semibold text-foreground group-hover:text-pp-primary">
                           <span>{item.name}</span>
-                          <ArrowUpRight className="size-3.5 opacity-0 transition-opacity group-hover:opacity-100" />
+                          <ArrowUpRight className="size-3.5 opacity-40 transition-opacity group-hover:opacity-100" />
                         </div>
                         <p className="text-xs leading-snug text-muted-foreground">
                           {item.role}
