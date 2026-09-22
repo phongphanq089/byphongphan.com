@@ -1,9 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { queryOptions } from "@tanstack/react-query"
+import { createServerFn } from "@tanstack/react-start"
+
 import { siteConfig } from "@/shared/config/site.config"
-import {
-  client,
-  getSanityImageUrl,
-  type SanityImage,
-} from "@/shared/lib/sanity"
 
 import type {
   BlogAuthor,
@@ -13,149 +12,33 @@ import type {
   BlogTag,
 } from "../types"
 
-export const BLOG_POSTS_QUERY = `*[_type == "post"] | order(publishedAt desc) {
-  _id,
-  _type,
-  title,
-  slug,
-  excerpt,
-  coverImage,
-  categories[]->{
-    _id,
-    _type,
-    title,
-    slug,
-    description,
-    color
-  },
-  tags[]->{
-    _id,
-    _type,
-    title,
-    slug,
-    description
-  },
-  group->{
-    _id,
-    _type,
-    title,
-    slug
-  },
-  groupOrder,
-  publishedAt,
-  readTime,
-  isFeatured
-}`
+// ============================================================================
+// 2. HELPERS & FORMATTERS
+// ============================================================================
 
-export const BLOG_POST_BY_SLUG_QUERY = `*[_type == "post" && slug.current == $slug][0] {
-  _id,
-  _type,
-  title,
-  slug,
-  excerpt,
-  coverImage,
-  categories[]->{
-    _id,
-    _type,
-    title,
-    slug,
-    description,
-    color
-  },
-  tags[]->{
-    _id,
-    _type,
-    title,
-    slug,
-    description
-  },
-  group->{
-    _id,
-    _type,
-    title,
-    slug,
-    description,
-    coverImage,
-    isCompleted
-  },
-  groupOrder,
-  publishedAt,
-  readTime,
-  isFeatured,
-  body
-}`
-
-export const BLOG_CATEGORIES_QUERY = `*[_type == "category"] | order(title asc) {
-  _id,
-  _type,
-  title,
-  slug,
-  description,
-  color
-}`
-
-export const BLOG_TAGS_QUERY = `*[_type == "tag"] | order(title asc) {
-  _id,
-  _type,
-  title,
-  slug,
-  description
-}`
-
-export const BLOG_GROUPS_QUERY = `*[_type == "group"] | order(title asc) {
-  _id,
-  _type,
-  title,
-  slug,
-  description,
-  coverImage,
-  isCompleted
-}`
-
-interface RawSanityGroup {
-  _id: string
-  _type?: string
-  title?: string
-  slug?: { current: string }
-  description?: string
-  coverImage?: SanityImage | { url?: string; alt?: string }
-  isCompleted?: boolean
+function resolveSlug(
+  slug: string | { current: string } | undefined,
+  fallback: string
+): { current: string } {
+  if (typeof slug === "string") return { current: slug }
+  if (slug && typeof slug.current === "string") return slug
+  return { current: fallback }
 }
 
-interface RawSanityCategory {
-  _id: string
-  _type?: string
-  title?: string
-  slug?: { current: string }
-  description?: string
-  color?: { hex?: string } | string
-}
-
-interface RawSanityTag {
-  _id: string
-  _type?: string
-  title?: string
-  slug?: { current: string }
-  description?: string
-}
-
-interface RawSanityPost {
-  _id: string
-  _type?: string
-  title?: string
-  slug?: { current: string }
-  excerpt?: string
-  coverImage?: SanityImage | { url?: string; alt?: string }
-  categories?: RawSanityCategory[]
-  tags?: RawSanityTag[]
-  group?: BlogGroup
-  groupOrder?: number
-  publishedAt?: string
-  readTime?: number
-  isFeatured?: boolean
-  author?: BlogAuthor
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  body?: any[]
+function resolveImageUrl(
+  image: unknown,
+  fallback = "/images/placeholder.webp"
+): string {
+  if (typeof image === "string" && image.trim() !== "") return image.trim()
+  if (
+    typeof image === "object" &&
+    image !== null &&
+    "url" in image &&
+    typeof (image as { url: unknown }).url === "string"
+  ) {
+    return (image as { url: string }).url.trim()
+  }
+  return fallback
 }
 
 function extractHexColor(color: unknown): string | undefined {
@@ -178,60 +61,62 @@ const DEFAULT_BLOG_AUTHOR: BlogAuthor = {
   verified: true,
 }
 
-function formatRawPost(item: RawSanityPost): BlogPost {
-  const coverImageUrl =
-    getSanityImageUrl(item.coverImage as SanityImage, {
-      width: 1200,
-      quality: 85,
-      fit: "crop",
-    }) ||
-    (typeof item.coverImage === "object" &&
-    item.coverImage &&
-    "url" in item.coverImage
-      ? (item.coverImage as { url: string }).url
-      : "") ||
-    "/images/placeholder.webp"
+export function formatRawPost(item: any): BlogPost {
+  const fallbackSlug = item.title?.toLowerCase().replace(/\s+/g, "-") || "post"
+  const coverImageUrl = resolveImageUrl(item.coverImage)
 
   const categories: BlogCategory[] = Array.isArray(item.categories)
-    ? item.categories.map((c, idx) => ({
-        _id: c._id || `cat-${idx}`,
+    ? item.categories.map((c: any, idx: number) => ({
+        _id: c.id || `cat-${idx}`,
         title: c.title || "Uncategorized",
-        slug: c.slug || {
-          current: c.title?.toLowerCase().replace(/\s+/g, "-") || `cat-${idx}`,
-        },
+        slug: resolveSlug(c.slug, `cat-${idx}`),
         description: c.description,
         color: extractHexColor(c.color),
       }))
     : []
 
   const tags: BlogTag[] = Array.isArray(item.tags)
-    ? item.tags.map((t, idx) => ({
-        _id: t._id || `tag-${idx}`,
-        title: t.title || "tag",
-        slug: t.slug || {
-          current: t.title?.toLowerCase().replace(/\s+/g, "-") || `tag-${idx}`,
-        },
+    ? item.tags.map((t: any, idx: number) => ({
+        _id: t.id || `tag-${idx}`,
+        title: t.title || "Tag",
+        slug: resolveSlug(t.slug, `tag-${idx}`),
         description: t.description,
       }))
     : []
 
+  let group: BlogGroup | undefined = undefined
+  if (item.group) {
+    group = {
+      _id: item.group.id || "group",
+      _type: "group",
+      title: item.group.title || "Series",
+      slug: resolveSlug(item.group.slug, "series"),
+      description: item.group.description || "",
+      coverImage: {
+        url: resolveImageUrl(item.group.coverImage),
+        alt: item.group.title || "Series cover",
+      },
+      isCompleted: Boolean(item.group.isCompleted),
+    }
+  }
+
   return {
-    _id: item._id,
+    _id: item.id || fallbackSlug,
     title: item.title || "Untitled Post",
-    slug: item.slug || {
-      current: item.title?.toLowerCase().replace(/\s+/g, "-") || "post",
-    },
+    slug: resolveSlug(item.slug, fallbackSlug),
     excerpt: item.excerpt || "",
     coverImage: {
       url: coverImageUrl,
       alt:
-        (item.coverImage as { alt?: string })?.alt ||
-        item.title ||
-        "Blog post cover",
+        typeof item.coverImage === "object" &&
+        item.coverImage &&
+        "alt" in item.coverImage
+          ? item.coverImage.alt || item.title
+          : item.title || "Blog post cover",
     },
     categories,
     tags,
-    group: item.group,
+    group,
     groupOrder: item.groupOrder,
     publishedAt: item.publishedAt || new Date().toISOString(),
     readTime: item.readTime ?? 5,
@@ -241,145 +126,125 @@ function formatRawPost(item: RawSanityPost): BlogPost {
   }
 }
 
+// ============================================================================
+// 3. SERVER FUNCTIONS
+// ============================================================================
+
 /**
- * Fetch all blog posts from Sanity CMS (zero mock data fallback)
+ * Server Function
  */
-export async function getBlogPosts(): Promise<BlogPost[]> {
-  try {
-    const rawItems = await client.fetch<RawSanityPost[]>(BLOG_POSTS_QUERY)
-    if (Array.isArray(rawItems)) {
+export const getBlogPostsServerFn = createServerFn({ method: "GET" }).handler(
+  async (): Promise<BlogPost[]> => {
+    try {
+      const rawItems: any[] = []
       return rawItems.map(formatRawPost)
+    } catch (error) {
+      console.error("[ServerFn] Failed to fetch blog posts:", error)
+      return []
     }
-  } catch (error) {
-    console.error("Sanity fetch for blog posts failed:", error)
   }
-
-  return []
-}
+)
 
 /**
- * Fetch a single blog post by its slug from Sanity CMS
+ * Server Function: Lấy bài viết chi tiết theo slug
  */
-export async function getBlogPostBySlug(
-  slug: string
-): Promise<BlogPost | null> {
-  try {
-    const rawItem = await client.fetch<RawSanityPost | null>(
-      BLOG_POST_BY_SLUG_QUERY,
-      { slug }
-    )
-    if (rawItem) {
-      return formatRawPost(rawItem)
-    }
-  } catch (error) {
-    console.error(`Sanity fetch for blog post slug "${slug}" failed:`, error)
-  }
+export const getBlogPostBySlugServerFn = createServerFn({
+  method: "GET",
+})
+  .inputValidator((slug: string) => slug)
+  .handler(async ({ data: slug }): Promise<BlogPost | null> => {
+    if (!slug) return null
 
-  return null
-}
+    try {
+      // TODO: Query trực tiếp bài viết theo slug từ DB
+      const post: any = null
+      if (!post) return null
+      return formatRawPost(post)
+    } catch (error) {
+      console.error(`[ServerFn] Failed to fetch blog post (${slug}):`, error)
+      return null
+    }
+  })
+/**
+ * Server Function: Lấy danh mục bài viết
+ */
+export const getBlogCategoriesServerFn = createServerFn({
+  method: "GET",
+}).handler(async (): Promise<BlogCategory[]> => {
+  try {
+    // TODO: Query categories từ DB
+    const rawCategories: any[] = []
+    return rawCategories.map((cat: any, idx: number) => ({
+      _id: cat.id || `cat-${idx}`,
+      title: cat.title || "Category",
+      slug: resolveSlug(cat.slug, `cat-${idx}`),
+      description: cat.description,
+      color: extractHexColor(cat.color),
+    }))
+  } catch (error) {
+    console.error("[ServerFn] Failed to fetch blog categories:", error)
+    return []
+  }
+})
 
 /**
- * Fetch all blog categories from Sanity CMS (zero mock data fallback)
+ * Server Function
  */
-export async function getBlogCategories(): Promise<BlogCategory[]> {
-  try {
-    const rawCategories = await client.fetch<RawSanityCategory[]>(
-      BLOG_CATEGORIES_QUERY
-    )
-    if (Array.isArray(rawCategories)) {
-      return rawCategories.map((cat, idx) => ({
-        _id: cat._id || `cat-${idx}`,
-        title: cat.title || "Category",
-        slug: cat.slug || {
-          current:
-            cat.title?.toLowerCase().replace(/\s+/g, "-") || `category-${idx}`,
-        },
-        description: cat.description,
-        color: extractHexColor(cat.color),
-      }))
-    }
-  } catch (error) {
-    console.error("Sanity fetch for blog categories failed:", error)
-  }
-
-  return []
-}
-
-/**
- * Fetch all blog tags from Sanity CMS (zero mock data fallback)
- */
-export async function getBlogTags(): Promise<BlogTag[]> {
-  try {
-    const rawTags = await client.fetch<RawSanityTag[]>(BLOG_TAGS_QUERY)
-    if (Array.isArray(rawTags)) {
-      return rawTags.map((tag, idx) => ({
-        _id: tag._id || `tag-${idx}`,
+export const getBlogTagsServerFn = createServerFn({ method: "GET" }).handler(
+  async (): Promise<BlogTag[]> => {
+    try {
+      const rawTags: any[] = []
+      return rawTags.map((tag: any, idx: number) => ({
+        _id: tag.id || `tag-${idx}`,
         title: tag.title || "Tag",
-        slug: tag.slug || {
-          current:
-            tag.title?.toLowerCase().replace(/\s+/g, "-") || `tag-${idx}`,
-        },
+        slug: resolveSlug(tag.slug, `tag-${idx}`),
         description: tag.description,
       }))
+    } catch (error) {
+      console.error("[ServerFn] Failed to fetch blog tags:", error)
+      return []
     }
-  } catch (error) {
-    console.error("Sanity fetch for blog tags failed:", error)
   }
-
-  return []
-}
+)
 
 /**
- * Fetch all blog groups / series from Sanity CMS (zero mock data fallback)
+ * Server Function: Lấy danh sách Series/Groups
  */
-export async function getBlogGroups(): Promise<BlogGroup[]> {
-  try {
-    const rawGroups = await client.fetch<RawSanityGroup[]>(BLOG_GROUPS_QUERY)
-    if (Array.isArray(rawGroups)) {
-      return rawGroups.map((g, idx) => {
-        const coverImageUrl =
-          getSanityImageUrl(g.coverImage as SanityImage, {
-            width: 800,
-            quality: 85,
-            fit: "crop",
-          }) ||
-          (typeof g.coverImage === "object" &&
-          g.coverImage &&
-          "url" in g.coverImage
-            ? (g.coverImage as { url: string }).url
-            : "") ||
-          "/images/placeholder.webp"
-
-        return {
-          _id: g._id || `group-${idx}`,
-          _type: "group" as const,
-          title: g.title || "Untitled Series",
-          slug: g.slug || {
-            current:
-              g.title?.toLowerCase().replace(/\s+/g, "-") || `group-${idx}`,
-          },
-          description: g.description || "",
-          coverImage: {
-            url: coverImageUrl,
-            alt:
-              (g.coverImage as { alt?: string })?.alt ||
-              g.title ||
-              "Series preview",
-          },
-          isCompleted: Boolean(g.isCompleted),
-        }
-      })
+export const getBlogGroupsServerFn = createServerFn({ method: "GET" }).handler(
+  async (): Promise<BlogGroup[]> => {
+    try {
+      // TODO: Query groups từ DB
+      const rawGroups: any[] = []
+      return rawGroups.map((g: any, idx: number) => ({
+        _id: g.id || `group-${idx}`,
+        _type: "group" as const,
+        title: g.title || "Untitled Series",
+        slug: resolveSlug(g.slug, `group-${idx}`),
+        description: g.description || "",
+        coverImage: {
+          url: resolveImageUrl(g.coverImage),
+          alt: g.title || "Series preview",
+        },
+        isCompleted: Boolean(g.isCompleted),
+      }))
+    } catch (error) {
+      console.error("[ServerFn] Failed to fetch blog groups:", error)
+      return []
     }
-  } catch (error) {
-    console.error("Sanity fetch for blog groups/series failed:", error)
   }
+)
 
-  return []
-}
+// ============================================================================
+// 4. CLIENT CALLERS
+// ============================================================================
 
-/**
- * Convenience helper to fetch posts, categories, tags, and groups in parallel
- */
+export const getBlogPosts = () => getBlogPostsServerFn()
+export const getBlogPostBySlug = (slug: string) =>
+  getBlogPostBySlugServerFn({ data: slug })
+export const getBlogCategories = () => getBlogCategoriesServerFn()
+export const getBlogTags = () => getBlogTagsServerFn()
+export const getBlogGroups = () => getBlogGroupsServerFn()
+
 export async function getAllBlogData(): Promise<{
   posts: BlogPost[]
   categories: BlogCategory[]
@@ -395,47 +260,41 @@ export async function getAllBlogData(): Promise<{
   return { posts, categories, tags, groups }
 }
 
-/**
- * TanStack Query options for blog posts
- */
-export const blogPostsQueryOptions = () => ({
-  queryKey: ["sanity-blog-posts"] as const,
-  queryFn: () => getBlogPosts(),
-  staleTime: 1000 * 60 * 5, // 5 minutes
-})
+// ============================================================================
+// 5. TANSTACK QUERY OPTIONS
+// ============================================================================
 
-/**
- * TanStack Query options for blog categories
- */
-export const blogCategoriesQueryOptions = () => ({
-  queryKey: ["sanity-blog-categories"] as const,
-  queryFn: () => getBlogCategories(),
-  staleTime: 1000 * 60 * 10, // 10 minutes
-})
+export const blogPostsQueryOptions = () =>
+  queryOptions({
+    queryKey: ["blog-posts"] as const,
+    queryFn: () => getBlogPostsServerFn(),
+    staleTime: 1000 * 60 * 5,
+  })
 
-/**
- * TanStack Query options for blog tags
- */
-export const blogTagsQueryOptions = () => ({
-  queryKey: ["sanity-blog-tags"] as const,
-  queryFn: () => getBlogTags(),
-  staleTime: 1000 * 60 * 10, // 10 minutes
-})
+export const blogCategoriesQueryOptions = () =>
+  queryOptions({
+    queryKey: ["blog-categories"] as const,
+    queryFn: () => getBlogCategoriesServerFn(),
+    staleTime: 1000 * 60 * 10,
+  })
 
-/**
- * TanStack Query options for blog groups / series
- */
-export const blogGroupsQueryOptions = () => ({
-  queryKey: ["sanity-blog-groups"] as const,
-  queryFn: () => getBlogGroups(),
-  staleTime: 1000 * 60 * 10, // 10 minutes
-})
+export const blogTagsQueryOptions = () =>
+  queryOptions({
+    queryKey: ["blog-tags"] as const,
+    queryFn: () => getBlogTagsServerFn(),
+    staleTime: 1000 * 60 * 10,
+  })
 
-/**
- * TanStack Query options for a single blog post by slug
- */
-export const blogPostBySlugQueryOptions = (slug: string) => ({
-  queryKey: ["sanity-blog-post", slug] as const,
-  queryFn: () => getBlogPostBySlug(slug),
-  staleTime: 1000 * 60 * 5, // 5 minutes
-})
+export const blogGroupsQueryOptions = () =>
+  queryOptions({
+    queryKey: ["blog-groups"] as const,
+    queryFn: () => getBlogGroupsServerFn(),
+    staleTime: 1000 * 60 * 10,
+  })
+
+export const blogPostBySlugQueryOptions = (slug: string) =>
+  queryOptions({
+    queryKey: ["blog-post", slug] as const,
+    queryFn: () => getBlogPostBySlugServerFn({ data: slug }),
+    staleTime: 1000 * 60 * 5,
+  })

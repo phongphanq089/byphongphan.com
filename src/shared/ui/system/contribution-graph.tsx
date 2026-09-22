@@ -93,6 +93,7 @@ type ContributionGraphContextType = {
   year: number | string
   width: number
   height: number
+  fullWidth?: boolean
 }
 
 const ContributionGraphContext =
@@ -239,6 +240,7 @@ export type ContributionGraphProps = HTMLAttributes<HTMLDivElement> & {
   totalCount?: number
   weekStart?: WeekDay
   year?: number | string
+  fullWidth?: boolean
   children: ReactNode
   className?: string
 }
@@ -255,6 +257,7 @@ export const ContributionGraph = ({
   totalCount: totalCountProp = undefined,
   weekStart = 0,
   year: yearProp = undefined,
+  fullWidth = true,
   className,
   ...props
 }: ContributionGraphProps) => {
@@ -299,10 +302,15 @@ export const ContributionGraph = ({
         year,
         width,
         height,
+        fullWidth,
       }}
     >
       <div
-        className={cn("flex w-max max-w-full flex-col gap-2", className)}
+        className={cn(
+          "flex max-w-full flex-col gap-2",
+          fullWidth ? "w-full" : "w-max",
+          className
+        )}
         style={{ fontSize, ...style }}
         {...props}
       />
@@ -355,6 +363,8 @@ export type ContributionGraphCalendarProps = Omit<
 > & {
   hideMonthLabels?: boolean
   className?: string
+  svgClassName?: string
+  fullWidth?: boolean
   children: (props: {
     activity: Activity
     dayIndex: number
@@ -366,11 +376,22 @@ export const ContributionGraphCalendar = ({
   title = "Contribution Graph",
   hideMonthLabels = false,
   className,
+  svgClassName,
+  fullWidth: fullWidthProp,
   children,
   ...props
 }: ContributionGraphCalendarProps) => {
-  const { weeks, width, height, blockSize, blockMargin, labels } =
-    useContributionGraph()
+  const {
+    weeks,
+    width,
+    height,
+    blockSize,
+    blockMargin,
+    labels,
+    fullWidth: contextFullWidth,
+  } = useContributionGraph()
+
+  const fullWidth = fullWidthProp ?? contextFullWidth ?? true
 
   const monthLabels = useMemo(
     () => getMonthLabels(weeks, labels.months),
@@ -380,13 +401,19 @@ export const ContributionGraphCalendar = ({
   return (
     <div
       className={cn(
-        "no-scrollbar max-w-full scroll-fade-x overflow-x-auto overflow-y-hidden",
+        "no-scrollbar max-w-full overflow-x-auto overflow-y-hidden scroll-fade-effect-x",
+        fullWidth && "w-full",
         className
       )}
       {...props}
     >
       <svg
-        className="block overflow-visible"
+        className={cn(
+          "block overflow-visible",
+          fullWidth && "h-auto w-full",
+          svgClassName
+        )}
+        style={fullWidth ? { minWidth: `${width}px` } : undefined}
         height={height}
         viewBox={`0 0 ${width} ${height}`}
         width={width}
@@ -434,7 +461,7 @@ export const ContributionGraphFooter = ({
 }: ContributionGraphFooterProps) => (
   <div
     className={cn(
-      "flex flex-col items-center justify-center gap-1 whitespace-nowrap sm:gap-x-4 md:flex-row",
+      "flex flex-col items-center justify-between gap-2 whitespace-nowrap sm:flex-row",
       className
     )}
     {...props}

@@ -4,9 +4,9 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
   size?: number | string
 }
 
-// Import individual icon components
 import { ElevenTy } from "./11ty"
 import { Code } from "./code"
+import { DrizzleORM } from "./dizzle"
 import { External } from "./external"
 import { Fastify } from "./fastify"
 import { GitHub } from "./github"
@@ -32,6 +32,7 @@ import { Zustand } from "./zustand"
 
 export {
   Code,
+  DrizzleORM,
   ElevenTy,
   External,
   Fastify,
@@ -81,6 +82,7 @@ export const iconComponents = {
   refine: Refine,
   sanity: Sanity,
   vite: Vite,
+  drizzle: DrizzleORM,
 } as const
 
 export type IconName = keyof typeof iconComponents

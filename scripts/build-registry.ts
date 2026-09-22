@@ -27,6 +27,7 @@ async function buildRegistry() {
 
       // Normalize import paths for external consumers using shadcn standard aliases
       content = content.replace(/@\/shared\/lib\/utils/g, "@/lib/utils")
+      content = content.replace(/@\/shared\/lib\b/g, "@/lib/utils")
       content = content.replace(/@\/registry\/ui/g, "@/components/ui")
       content = content.replace(/@\/registry\/hooks/g, "@/hooks")
       content = content.replace(/@\/shared\/hooks/g, "@/hooks")

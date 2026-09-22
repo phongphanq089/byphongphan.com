@@ -32,23 +32,21 @@ export interface ColophonFontSpecimen {
 export interface ColophonColorToken {
   name: string
   variable: string
+  swatchColor: string
   oklchDark: string
   oklchLight: string
   description: string
   category: "brand" | "surface" | "blueprint"
 }
 
+export interface ColophonSpacingToken {
+  name: string
+  variable: string
+  value: string
+  description: string
+}
+
 export interface ColophonInspirationItem {
   name: string
   href: string
-}
-
-export interface ColophonSystemSpec {
-  category: string
-  specs: {
-    property: string
-    value: string
-    note?: string
-    link?: string
-  }[]
 }

@@ -5,28 +5,17 @@ import {
   HeadContent,
   Outlet,
   Scripts,
-  useLocation,
 } from "@tanstack/react-router"
 import { useEffect } from "react"
 import type { JSX } from "react/jsx-runtime"
 
 import {
-  BLOG_CATEGORIES_QUERY,
-  BLOG_GROUPS_QUERY,
-  BLOG_POSTS_QUERY,
   blogCategoriesQueryOptions,
   blogGroupsQueryOptions,
   blogPostsQueryOptions,
-  getBlogCategories,
-  getBlogGroups,
-  getBlogPosts,
 } from "@/features/blog"
 import {
-  getResourceCategories,
-  getResources,
-  RESOURCE_CATEGORIES_QUERY,
   resourceCategoriesQueryOptions,
-  RESOURCES_QUERY,
   resourcesQueryOptions,
 } from "@/features/resources"
 import {
@@ -34,13 +23,8 @@ import {
   createSeoMeta,
   createSiteLinks,
 } from "@/shared/config"
-import { getSiteSettings, siteSettingsQueryOptions } from "@/shared/lib/sanity"
+import { siteSettingsQueryOptions } from "@/shared/lib"
 import { ThemeProvider } from "@/shared/providers/theme-provider"
-import {
-  ApiInspectorDrawer,
-  ApiInspectorProvider,
-  DevApiInspectorFloatingTrigger,
-} from "@/shared/tools/api-inspector"
 import { TooltipProvider } from "@/shared/ui"
 import { NotFound } from "@/shared/ui/block/not-found"
 import { DefaultCatchBoundary } from "@/shared/ui/system/default-catch-boundary"
@@ -203,12 +187,6 @@ function RootDocument({
 
 function RootLayoutBody({
   children,
-  siteSettings,
-  resources,
-  categories,
-  blogPosts,
-  blogCategories,
-  blogGroups,
 }: {
   children: React.ReactNode
   siteSettings?: unknown
@@ -218,93 +196,10 @@ function RootLayoutBody({
   blogCategories?: unknown
   blogGroups?: unknown
 }) {
-  const location = useLocation()
-  const isStudio = location.pathname.startsWith("/studio")
-
-  if (isStudio) {
-    return <>{children}</>
-  }
-
-  const initialEntries = [
-    ...(siteSettings
-      ? [
-          {
-            id: "sanity-site-settings",
-            title: "Sanity Site Settings",
-            endpoint: "*[_type == 'setting'][0]",
-            method: "GROQ" as const,
-            status: 200,
-            data: siteSettings,
-            fetcher: () => getSiteSettings(),
-            description:
-              "Global site metadata, theme, and SEO settings fetched from Sanity CMS",
-          },
-        ]
-      : []),
-    {
-      id: "sanity-resources",
-      title: "Sanity Resources",
-      endpoint: RESOURCES_QUERY,
-      method: "GROQ" as const,
-      status: 200,
-      data: resources,
-      fetcher: () => getResources(),
-      description:
-        "Curated developer tools, UI libraries, and design resources fetched via GROQ",
-    },
-    {
-      id: "sanity-resource-categories",
-      title: "Sanity Resource Categories",
-      endpoint: RESOURCE_CATEGORIES_QUERY,
-      method: "GROQ" as const,
-      status: 200,
-      data: categories,
-      fetcher: () => getResourceCategories(),
-      description:
-        "Developer resource categories and navigation filters fetched via GROQ",
-    },
-    {
-      id: "sanity-blog-posts",
-      title: "Sanity Blog Posts",
-      endpoint: BLOG_POSTS_QUERY,
-      method: "GROQ" as const,
-      status: 200,
-      data: blogPosts,
-      fetcher: () => getBlogPosts(),
-      description:
-        "Full list of articles and engineering writeups fetched from Sanity CMS",
-    },
-    {
-      id: "sanity-blog-categories",
-      title: "Sanity Blog Categories",
-      endpoint: BLOG_CATEGORIES_QUERY,
-      method: "GROQ" as const,
-      status: 200,
-      data: blogCategories,
-      fetcher: () => getBlogCategories(),
-      description: "Blog categories for filtering posts fetched via GROQ",
-    },
-    {
-      id: "sanity-blog-groups",
-      title: "Sanity Blog Series",
-      endpoint: BLOG_GROUPS_QUERY,
-      method: "GROQ" as const,
-      status: 200,
-      data: blogGroups,
-      fetcher: () => getBlogGroups(),
-      description:
-        "Curated multi-part engineering series and learning collections fetched via GROQ",
-    },
-  ]
-
   return (
-    <ApiInspectorProvider initialEntries={initialEntries}>
-      <TooltipProvider>
-        {children}
-        <CommandMenu />
-        <DevApiInspectorFloatingTrigger />
-        <ApiInspectorDrawer />
-      </TooltipProvider>
-    </ApiInspectorProvider>
+    <TooltipProvider>
+      {children}
+      <CommandMenu />
+    </TooltipProvider>
   )
 }

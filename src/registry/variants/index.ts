@@ -2,16 +2,22 @@ import type { ComponentVariant } from "@/features/component-ui/types"
 
 import { CARD_VARIANTS } from "./card-variants"
 import { CODE_BLOCK_VARIANTS } from "./code-block-variants"
+import { MAP_VARIANTS } from "./map-variants"
 import { SELECT_VARIANTS } from "./select-variants"
+import { TEXT_HOVER_EFFECT_VARIANTS } from "./text-hover-effect-variants"
 
 export * from "./card-variants"
 export * from "./code-block-variants"
+export * from "./map-variants"
 export * from "./select-variants"
+export * from "./text-hover-effect-variants"
 
 export const ALL_VARIANTS: ComponentVariant[] = [
   ...SELECT_VARIANTS,
   ...CARD_VARIANTS,
   ...CODE_BLOCK_VARIANTS,
+  ...MAP_VARIANTS,
+  ...TEXT_HOVER_EFFECT_VARIANTS,
 ]
 
 export const VARIANTS_MAP = new Map<string, ComponentVariant>(
@@ -19,10 +25,12 @@ export const VARIANTS_MAP = new Map<string, ComponentVariant>(
 )
 
 /**
- * Grouped variants by component name (e.g. "select", "card", "code-block")
+ * Grouped variants by component name (e.g. "select", "card", "code-block", "map", "text-hover-effect")
  */
 export const COMPONENT_VARIANTS: Record<string, ComponentVariant[]> = {
   select: SELECT_VARIANTS,
   card: CARD_VARIANTS,
   "code-block": CODE_BLOCK_VARIANTS,
+  map: MAP_VARIANTS,
+  "text-hover-effect": TEXT_HOVER_EFFECT_VARIANTS,
 }

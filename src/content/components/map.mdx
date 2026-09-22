@@ -1,0 +1,209 @@
+---
+title: Map
+description: High-performance interactive vector map and geospatial visualization component powered by MapLibre GL with dark/light themes, custom HTML markers, popups, controls, routes, arcs, GeoJSON layers, and clustering.
+base: maplibre-gl
+component: true
+links:
+  doc: https://maplibre.org/maplibre-gl-js/docs/
+  api: https://maplibre.org/maplibre-gl-js/docs/API/
+---
+
+<ComponentPreview name="map-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="map" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the required dependencies:</Step>
+      <CodeBlockCommand command="npm install maplibre-gl lucide-react clsx tailwind-merge" />
+
+      <Step>Copy and paste the map component into your project:</Step>
+      <ComponentSource name="map" title="components/ui/map.tsx" />
+
+      <Step>Ensure Tailwind CSS and utility helpers are configured, and update import paths to match your project.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+Map
+├── MapControls (Zoom, Compass, Locate, Fullscreen)
+├── MapMarker
+│   ├── MarkerContent (Custom HTML pin / beacon icon)
+│   ├── MarkerLabel (Anchored text label)
+│   ├── MarkerTooltip (Hover tooltip)
+│   └── MarkerPopup (Rich interactive popup card)
+├── MapPopup (Standalone coordinates-based popup)
+├── MapRoute
+│   ├── RouteProgress (Animated polyline progress)
+│   └── RouteMarker (Start / End / Progress anchored markers)
+├── MapArc (Great-circle curved arcs between coordinates)
+├── MapGeoJSON (Vector polygon, line, point layers)
+└── MapClusterLayer (Supercluster point clustering)
+```
+
+---
+
+## Usage
+
+```tsx
+import {
+  Map,
+  MapControls,
+  MapMarker,
+  MarkerContent,
+  MarkerPopup,
+  MarkerTooltip,
+} from "@/components/ui/map"
+```
+
+```tsx
+export function MyMap() {
+  return (
+    <div className="h-[400px] w-full overflow-hidden rounded-xl">
+      <Map center={[-122.4194, 37.7749]} zoom={12}>
+        <MapControls position="top-right" showZoom showCompass />
+        <MapMarker longitude={-122.4194} latitude={37.7749}>
+          <MarkerContent>
+            <div className="size-4 rounded-full bg-primary border-2 border-white shadow-md" />
+          </MarkerContent>
+          <MarkerTooltip>San Francisco HQ</MarkerTooltip>
+          <MarkerPopup closeButton>
+            <div className="p-2">
+              <h4 className="font-semibold text-xs">San Francisco</h4>
+              <p className="text-[11px] text-muted-foreground">Market Street Office</p>
+            </div>
+          </MarkerPopup>
+        </MapMarker>
+      </Map>
+    </div>
+  )
+}
+```
+
+---
+
+## Features
+
+- **Theme Synchronization**: Seamlessly listens to system color schemes and `next-themes` document class or `data-theme` changes, automatically hot-swapping between Carto dark and light matter vector tiles.
+- **Blank Canvas Mode**: Use `blank={true}` for tile-less data visualization (arcs, flight routes, choropleths) without rendering street basemaps.
+- **Declarative HTML Markers**: Render rich React elements directly on the map using React portals with tooltips, labels, and popups.
+- **Built-in Navigation Controls**: Single-component `MapControls` handling zoom, compass bearing reset, device geolocation, and full-screen toggling.
+- **Geodesic Flight Arcs**: Render smooth quadratic Bézier great-circle curved arcs (`MapArc`) between coordinate pairs with interactive hover highlighting.
+- **Polylines & Routes**: Draw paths (`MapRoute`) with customizable colors, line widths, dash arrays, and anchored markers (`RouteMarker`).
+- **GeoJSON & Clustering**: Native GeoJSON layer rendering and supercluster point clustering with custom cluster colors and zoom steps.
+
+---
+
+## Examples
+
+### Map with Custom Markers & Popups
+
+Render custom HTML markers with hover tooltips and interactive popup cards.
+
+<ComponentPreview name="map-with-marker" />
+
+### Navigation Controls
+
+Configure zoom buttons, compass rotation indicator, geolocation locator, and fullscreen mode.
+
+<ComponentPreview name="map-with-controls" />
+
+### Vector Route
+
+Visualize routing pathways, delivery trails, or journeys between endpoints with custom line styles and anchor pins.
+
+<ComponentPreview name="map-with-route" />
+
+### Curved Great-Circle Arcs
+
+Display curved connection lines between global cities for flight tracking, global data transfer, or networking visualization.
+
+<ComponentPreview name="map-flight-arc" />
+
+---
+
+## API Reference
+
+### Map
+
+The root map container that initializes MapLibre GL and provides the map context.
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `center` | `[number, number]` | `undefined` | Initial center coordinates `[longitude, latitude]`. |
+| `zoom` | `number` | `undefined` | Initial zoom level. |
+| `theme` | `"light" \| "dark"` | System/Doc | Explicit theme override. If omitted, automatically detects document class or system preference. |
+| `styles` | `{ light?: string; dark?: string }` | Carto Positron / Dark Matter | Custom style URLs or StyleSpecification objects. |
+| `blank` | `boolean` | `false` | Renders a transparent, tile-less basemap for clean data visualizations. |
+| `projection` | `ProjectionSpecification` | `undefined` | Map projection. Set `{ type: "globe" }` for 3D globe mode. |
+| `viewport` | `Partial<MapViewport>` | `undefined` | Controlled viewport object `{ center, zoom, bearing, pitch }`. |
+| `onViewportChange` | `(viewport: MapViewport) => void` | `undefined` | Callback fired continuously as viewport pans, zooms, or rotates. |
+| `loading` | `boolean` | `false` | Displays a pulsing loader overlay while loading. |
+
+### MapMarker
+
+Declarative HTML marker pinned to geographic coordinates.
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `longitude` | `number` | - | Target longitude coordinate. |
+| `latitude` | `number` | - | Target latitude coordinate. |
+| `draggable` | `boolean` | `false` | Whether the marker can be dragged across the map. |
+| `onClick` | `(e: MouseEvent) => void` | `undefined` | Click event handler. |
+| `onDragEnd` | `(lngLat: { lng: number; lat: number }) => void` | `undefined` | Callback fired when drag operation ends. |
+
+### MapControls
+
+Floating navigation and utility control group.
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `position` | `"top-left" \| "top-right" \| "bottom-left" \| "bottom-right"` | `"bottom-right"` | Corner alignment on map. |
+| `showZoom` | `boolean` | `true` | Show zoom-in and zoom-out buttons. |
+| `showCompass` | `boolean` | `false` | Show 3D compass needle to reset bearing to north. |
+| `showLocate` | `boolean` | `false` | Show geolocation locator button. |
+| `showFullscreen` | `boolean` | `false` | Show fullscreen toggle button. |
+| `onLocate` | `(coords: { longitude: number; latitude: number }) => void` | `undefined` | Callback with coordinates when user is located. |
+
+### MapRoute
+
+Polyline vector route layer rendered from coordinate arrays.
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `coordinates` | `[number, number][]` | - | Array of `[longitude, latitude]` pairs defining the route path. |
+| `color` | `string` | `"#4285F4"` | Line color CSS value. |
+| `width` | `number` | `3` | Line width in pixels. |
+| `opacity` | `number` | `0.8` | Line opacity from 0 to 1. |
+| `dashArray` | `[number, number]` | `undefined` | Stroke dash pattern `[dash, gap]`. |
+| `progress` | `number` | `undefined` | Fraction of route completed (0 to 1). |
+| `active` | `boolean` | `false` | Moves route to top of z-index and applies active styles. |
+
+### MapArc
+
+Quadratic Bézier great-circle curved arcs between coordinates.
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `data` | `MapArcDatum[]` | - | Array of arcs `{ id, from: [lng, lat], to: [lng, lat] }`. |
+| `curvature` | `number` | `0.2` | Curvature factor bowing away from straight line. |
+| `samples` | `number` | `64` | Interpolation resolution along the curve. |
+| `paint` | `LinePaint` | - | MapLibre paint properties for line layer. |
+| `hoverPaint` | `LinePaint` | - | Paint properties applied to hovered arc. |
+| `onClick` | `(e: MapArcEvent) => void` | `undefined` | Arc click callback. |
+| `onHover` | `(e: MapArcEvent \| null) => void` | `undefined` | Arc hover enter/leave callback. |

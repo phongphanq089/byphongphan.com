@@ -9,8 +9,7 @@ export const Route = createFileRoute("/robots.txt")({
         const host = import.meta.env.VITE_SITE_URL || siteConfig.url
         const robots = `User-agent: *
 					Allow: /
-					Disallow: /studio
-					Disallow: /dashboard
+					Disallow: /admin
 					Sitemap: ${host.replace(/\/$/, "")}/sitemap.xml`
         return new Response(robots, {
           headers: {

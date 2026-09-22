@@ -16,7 +16,6 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ProfileRouteImport } from './routes/_profile'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as ProfileIndexRouteImport } from './routes/_profile.index'
-import { Route as StudioSplatRouteImport } from './routes/studio.$'
 import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
 import { Route as AdminResourcesRouteImport } from './routes/admin/resources'
 import { Route as AdminRegistryRouteImport } from './routes/admin/registry'
@@ -72,11 +71,6 @@ const ProfileIndexRoute = ProfileIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ProfileRoute,
-} as any)
-const StudioSplatRoute = StudioSplatRouteImport.update({
-  id: '/studio/$',
-  path: '/studio/$',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminSettingsRoute = AdminSettingsRouteImport.update({
   id: '/settings',
@@ -204,7 +198,6 @@ export interface FileRoutesByFullPath {
   '/admin/registry': typeof AdminRegistryRoute
   '/admin/resources': typeof AdminResourcesRoute
   '/admin/settings': typeof AdminSettingsRoute
-  '/studio/$': typeof StudioSplatRoute
   '/admin/': typeof AdminIndexRoute
   '/block/$slug': typeof ProfileBlockSlugRoute
   '/blog/$slug': typeof ProfileBlogSlugRoute
@@ -232,7 +225,6 @@ export interface FileRoutesByTo {
   '/admin/registry': typeof AdminRegistryRoute
   '/admin/resources': typeof AdminResourcesRoute
   '/admin/settings': typeof AdminSettingsRoute
-  '/studio/$': typeof StudioSplatRoute
   '/': typeof ProfileIndexRoute
   '/admin': typeof AdminIndexRoute
   '/block/$slug': typeof ProfileBlockSlugRoute
@@ -264,7 +256,6 @@ export interface FileRoutesById {
   '/admin/registry': typeof AdminRegistryRoute
   '/admin/resources': typeof AdminResourcesRoute
   '/admin/settings': typeof AdminSettingsRoute
-  '/studio/$': typeof StudioSplatRoute
   '/_profile/': typeof ProfileIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/_profile/block_/$slug': typeof ProfileBlockSlugRoute
@@ -297,7 +288,6 @@ export interface FileRouteTypes {
     | '/admin/registry'
     | '/admin/resources'
     | '/admin/settings'
-    | '/studio/$'
     | '/admin/'
     | '/block/$slug'
     | '/blog/$slug'
@@ -325,7 +315,6 @@ export interface FileRouteTypes {
     | '/admin/registry'
     | '/admin/resources'
     | '/admin/settings'
-    | '/studio/$'
     | '/'
     | '/admin'
     | '/block/$slug'
@@ -356,7 +345,6 @@ export interface FileRouteTypes {
     | '/admin/registry'
     | '/admin/resources'
     | '/admin/settings'
-    | '/studio/$'
     | '/_profile/'
     | '/admin/'
     | '/_profile/block_/$slug'
@@ -378,7 +366,6 @@ export interface RootRouteChildren {
   DesignSystemRoute: typeof DesignSystemRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
-  StudioSplatRoute: typeof StudioSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -431,13 +418,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof ProfileIndexRouteImport
       parentRoute: typeof ProfileRoute
-    }
-    '/studio/$': {
-      id: '/studio/$'
-      path: '/studio/$'
-      fullPath: '/studio/$'
-      preLoaderRoute: typeof StudioSplatRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/admin/settings': {
       id: '/admin/settings'
@@ -658,7 +638,6 @@ const rootRouteChildren: RootRouteChildren = {
   DesignSystemRoute: DesignSystemRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
-  StudioSplatRoute: StudioSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

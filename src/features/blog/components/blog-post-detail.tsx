@@ -3,11 +3,12 @@ import { ArrowLeft, ArrowUp } from "lucide-react"
 import { useMemo, useRef, useState } from "react"
 
 import { GridContainer } from "@/app/layouts"
+import { useDomToc } from "@/shared/hooks"
 import { Badge, Button } from "@/shared/ui/core"
-import { extractTOCFromBlocks, PortableTextRenderer } from "@/shared/ui/system"
 
 import { useReadingProgress } from "../hooks/use-reading-progress"
 import type { BlogPost } from "../types"
+import { BlogContentRenderer } from "./blog-content-renderer"
 import { BlogPostCover } from "./blog-post-cover"
 import { BlogPostHeader } from "./blog-post-header"
 import { BlogPostHud } from "./blog-post-hud"
@@ -23,13 +24,10 @@ export function BlogPostDetail({ post, allPosts = [] }: BlogPostDetailProps) {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const articleRef = useRef<HTMLElement | null>(null)
 
-  // 1. Throttled Reading Progress via Custom Hook
+  // 1. Throttled Reading Progress
   const readingProgress = useReadingProgress(articleRef)
 
-  // 2. Extract TOC headings from Portable Text body blocks
-  const tocItems = useMemo(() => {
-    return extractTOCFromBlocks(post.body || [])
-  }, [post.body])
+  const tocItems = useDomToc(articleRef, post.body)
 
   // 3. Find other posts in the same series
   const seriesPosts = useMemo(() => {
@@ -39,7 +37,7 @@ export function BlogPostDetail({ post, allPosts = [] }: BlogPostDetailProps) {
       .sort((a, b) => (a.groupOrder ?? 0) - (b.groupOrder ?? 0))
   }, [allPosts, post.group])
 
-  // 4. Find Previous and Next posts for split card navigation
+  // 4. Find Previous and Next posts
   const { prevPost, nextPost } = useMemo(() => {
     if (!allPosts || allPosts.length === 0) {
       return { prevPost: null, nextPost: null }
@@ -49,17 +47,11 @@ export function BlogPostDetail({ post, allPosts = [] }: BlogPostDetailProps) {
     )
     if (currentIndex === -1) return { prevPost: null, nextPost: null }
 
-    // allPosts is sorted DESC (newest first)
-    // currentIndex - 1 is newer (Next in sequence)
-    // currentIndex + 1 is older (Previous in sequence)
     const newer = currentIndex > 0 ? allPosts[currentIndex - 1] : null
     const older =
       currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null
 
-    return {
-      prevPost: older,
-      nextPost: newer,
-    }
+    return { prevPost: older, nextPost: newer }
   }, [allPosts, post._id, post.slug])
 
   const scrollToTop = () => {
@@ -89,7 +81,7 @@ export function BlogPostDetail({ post, allPosts = [] }: BlogPostDetailProps) {
         <article ref={articleRef} className="mx-auto max-w-3xl">
           {/* Main Article Prose Content */}
           <div className="prose prose-neutral dark:prose-invert max-w-none">
-            <PortableTextRenderer value={post.body || []} />
+            <BlogContentRenderer content={post.body} />
           </div>
 
           {/* Article Tags & Metadata Footer */}
@@ -150,9 +142,9 @@ export function BlogPostDetail({ post, allPosts = [] }: BlogPostDetailProps) {
         </Button>
       </GridContainer>
 
-      {/* ── 5. Fixed Right Action Console & Slide-Over Drawer (Universal, All Screens) ── */}
+      {/* ── 5. Fixed Right Action Console & Slide-Over Drawer ── */}
       <BlogPostHud
-        tocItems={tocItems}
+        tocItems={tocItems || []}
         readingProgress={readingProgress}
         readTime={post.readTime}
         isOpen={drawerOpen}

@@ -1,5 +1,6 @@
 import { ArrowUp, BookOpen, ChevronUp, X } from "lucide-react"
 
+import type { TocItem } from "@/shared/hooks"
 import {
   Button,
   Drawer,
@@ -10,10 +11,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/shared/ui/core"
-import { TableOfContents, type TOCItem } from "@/shared/ui/system"
 
 interface BlogPostHudProps {
-  tocItems: TOCItem[]
+  tocItems: TocItem[]
   readingProgress: number
   readTime: number
   isOpen: boolean
@@ -165,15 +165,6 @@ export function BlogPostHud({
                 </div>
 
                 {/* 2. Table of Contents Card */}
-                <div className="rounded-xl border border-border/70 bg-card/60 p-3.5 shadow-xs backdrop-blur-md">
-                  <TableOfContents
-                    items={tocItems}
-                    scrollOffset={88}
-                    title="ON THIS PAGE"
-                    icon={<BookOpen className="size-3.5 opacity-80" />}
-                    onItemClick={() => onOpenChange(false)}
-                  />
-                </div>
 
                 {/* 3. Jump to Top Action Button */}
                 <Button

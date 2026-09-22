@@ -76,9 +76,6 @@ const config = defineConfig({
       overlay: false,
     },
   },
-  optimizeDeps: {
-    include: ["sanity", "sanity/structure"],
-  },
   ssr: {
     noExternal: ["gsap", "@gsap/react", "use-sound"],
   },
@@ -91,8 +88,7 @@ const config = defineConfig({
         crawlLinks: false,
         autoStaticPathsDiscovery: false,
         concurrency: 2,
-        filter: ({ path }) =>
-          !path.startsWith("/admin") && !path.startsWith("/studio"),
+        filter: ({ path }) => !path.startsWith("/admin"),
       },
       pages: [
         { path: "/" },
