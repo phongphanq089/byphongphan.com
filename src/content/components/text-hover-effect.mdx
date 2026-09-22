@@ -29,6 +29,7 @@ badge: Motion
 
       <Step>Update the import paths to match your project directory structure.</Step>
     </Steps>
+
   </TabsContent>
 </CodeTabs>
 
@@ -59,7 +60,7 @@ import { TextHoverEffect } from "@/components/text-hover-effect"
 ```tsx
 export function HeroSection() {
   return (
-    <div className="h-40 w-full max-w-2xl mx-auto">
+    <div className="mx-auto h-40 w-full max-w-2xl">
       <TextHoverEffect text="PORTFOLIO" />
     </div>
   )
@@ -106,11 +107,11 @@ Warm, energetic color transitions using gold, orange, and purple hues.
 
 Interactive typographic SVG reveal component.
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `text` | `string` | - | The text string to render and animate (required). |
-| `duration` | `number` | `0` | Cursor follow interpolation duration in seconds. Set higher for smoother lag effect. |
-| `automatic` | `boolean` | `false` | When enabled, continuously sweeps the radial gradient across the text when idle. |
-| `strokeDuration` | `number` | `4` | Duration in seconds of the initial outline drawing animation on mount. |
-| `colors` | `string[]` | `["#eab308", "#ef4444", "#3b82f6", "#06b6d4", "#8b5cf6"]` | Custom hex or CSS color stops for the hover reveal gradient. |
-| `className` | `string` | `undefined` | Additional CSS classes for the SVG container. |
+| Prop             | Type       | Default                                                   | Description                                                                          |
+| :--------------- | :--------- | :-------------------------------------------------------- | :----------------------------------------------------------------------------------- |
+| `text`           | `string`   | -                                                         | The text string to render and animate (required).                                    |
+| `duration`       | `number`   | `0`                                                       | Cursor follow interpolation duration in seconds. Set higher for smoother lag effect. |
+| `automatic`      | `boolean`  | `false`                                                   | When enabled, continuously sweeps the radial gradient across the text when idle.     |
+| `strokeDuration` | `number`   | `4`                                                       | Duration in seconds of the initial outline drawing animation on mount.               |
+| `colors`         | `string[]` | `["#eab308", "#ef4444", "#3b82f6", "#06b6d4", "#8b5cf6"]` | Custom hex or CSS color stops for the hover reveal gradient.                         |
+| `className`      | `string`   | `undefined`                                               | Additional CSS classes for the SVG container.                                        |

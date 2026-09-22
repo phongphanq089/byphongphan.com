@@ -1,4 +1,4 @@
-import { MapPin,Minus, Navigation, Plus } from "lucide-react"
+import { MapPin, Minus, Navigation, Plus } from "lucide-react"
 
 export function MapSchematic() {
   return (

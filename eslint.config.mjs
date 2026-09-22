@@ -19,6 +19,7 @@ export default tseslint.config(
       "src/routeTree.gen.ts",
       "**/*.gen.ts",
       "src/__registry__",
+      "src/registry/**",
       ".agents",
       ".agent",
     ],

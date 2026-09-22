@@ -18,6 +18,7 @@
     "noFallthroughCasesInSwitch": true, // Reports errors for switch statements where a case clause falls through to the next without a break or return.
     "baseUrl": ".",
     "paths": {
+      "@/editor/*": ["./src/registry/block/editor/*"],
       "@/*": ["./src/*"]
     }
   },

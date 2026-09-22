@@ -21,9 +21,9 @@ The **Flip Clock** is an authentic mechanical split-flap display built natively 
     <TabsTrigger value="manual">Manual</TabsTrigger>
   </TabsList>
 
-  <TabsContent value="cli">
-    <CodeBlockCommand name="flip-clock" />
-  </TabsContent>
+<TabsContent value="cli">
+  <CodeBlockCommand name="flip-clock" />
+</TabsContent>
 
   <TabsContent value="manual">
     <Steps className="mb-0 pt-2">
@@ -101,12 +101,7 @@ Counts down towards a specific target timestamp or duration with zero-time callb
 Counts up with pause, resume, and reset capabilities.
 
 ```tsx
-<FlipClock
-  mode="stopwatch"
-  isPaused={false}
-  size="lg"
-  variant="amber"
-/>
+<FlipClock mode="stopwatch" isPaused={false} size="lg" variant="amber" />
 ```
 
 ### 5. Dynamic Counter
@@ -138,29 +133,29 @@ Flips arbitrary numeric or string values (e.g. live visitor counts, fundraising 
 
 ### FlipClock
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `mode?` | `"clock" \| "date-time" \| "countdown" \| "stopwatch" \| "counter"` | `"clock"` | Active operating mode |
-| `size?` | `"sm" \| "md" \| "lg" \| "xl" \| "full"` | `"md"` | Dimension scale of cards ("full" fluidly fills parent container) |
-| `variant?` | `"default" \| "blueprint" \| "amber" \| "outline"` | `"default"` | Color and texture theme |
-| `value?` | `string \| number` | - | Numerical or string value for `"counter"` mode |
-| `label?` | `string` | - | Text label for `"counter"` mode |
-| `targetDate?` | `Date \| string \| number` | - | Target deadline for `"countdown"` mode |
-| `durationSeconds?` | `number` | - | Duration in seconds for countdown timer |
-| `isPaused?` | `boolean` | `false` | Pauses clock, countdown, or stopwatch ticking |
-| `format12h?` | `boolean` | `false` | 12-hour display format |
-| `showAmPm?` | `boolean` | `true` | Renders AM/PM indicator in 12h clock mode |
-| `showDays?` | `boolean` | `true` | Renders Days group (countdown mode) |
-| `showDayOfWeek?` | `boolean` | `true` | Renders weekday (e.g. MON, TUE) in date-time mode |
-| `showDate?` | `boolean` | `true` | Renders day of month in date-time mode |
-| `showMonth?` | `boolean` | `true` | Renders month in date-time mode |
-| `showYear?` | `boolean` | `true` | Renders year in date-time mode |
-| `showHours?` | `boolean` | `true` | Renders hours unit |
-| `showMinutes?` | `boolean` | `true` | Renders minutes unit |
-| `showSeconds?` | `boolean` | `true` | Renders seconds unit |
-| `showLabels?` | `boolean` | `true` | Renders unit labels beneath cards |
-| `showSeparators?` | `boolean` | `true` | Renders separators (`:`, `/`, etc.) |
-| `separator?` | `string` | `":"` | Custom separator character |
-| `sound?` | `boolean` | `false` | Plays procedural mechanical split-flap click sound on update |
-| `onComplete?` | `() => void` | - | Callback fired when countdown timer reaches zero |
-| `className?` | `string` | - | Additional Tailwind CSS classes |
+| Prop               | Type                                                                | Default     | Description                                                      |
+| :----------------- | :------------------------------------------------------------------ | :---------- | :--------------------------------------------------------------- |
+| `mode?`            | `"clock" \| "date-time" \| "countdown" \| "stopwatch" \| "counter"` | `"clock"`   | Active operating mode                                            |
+| `size?`            | `"sm" \| "md" \| "lg" \| "xl" \| "full"`                            | `"md"`      | Dimension scale of cards ("full" fluidly fills parent container) |
+| `variant?`         | `"default" \| "blueprint" \| "amber" \| "outline"`                  | `"default"` | Color and texture theme                                          |
+| `value?`           | `string \| number`                                                  | -           | Numerical or string value for `"counter"` mode                   |
+| `label?`           | `string`                                                            | -           | Text label for `"counter"` mode                                  |
+| `targetDate?`      | `Date \| string \| number`                                          | -           | Target deadline for `"countdown"` mode                           |
+| `durationSeconds?` | `number`                                                            | -           | Duration in seconds for countdown timer                          |
+| `isPaused?`        | `boolean`                                                           | `false`     | Pauses clock, countdown, or stopwatch ticking                    |
+| `format12h?`       | `boolean`                                                           | `false`     | 12-hour display format                                           |
+| `showAmPm?`        | `boolean`                                                           | `true`      | Renders AM/PM indicator in 12h clock mode                        |
+| `showDays?`        | `boolean`                                                           | `true`      | Renders Days group (countdown mode)                              |
+| `showDayOfWeek?`   | `boolean`                                                           | `true`      | Renders weekday (e.g. MON, TUE) in date-time mode                |
+| `showDate?`        | `boolean`                                                           | `true`      | Renders day of month in date-time mode                           |
+| `showMonth?`       | `boolean`                                                           | `true`      | Renders month in date-time mode                                  |
+| `showYear?`        | `boolean`                                                           | `true`      | Renders year in date-time mode                                   |
+| `showHours?`       | `boolean`                                                           | `true`      | Renders hours unit                                               |
+| `showMinutes?`     | `boolean`                                                           | `true`      | Renders minutes unit                                             |
+| `showSeconds?`     | `boolean`                                                           | `true`      | Renders seconds unit                                             |
+| `showLabels?`      | `boolean`                                                           | `true`      | Renders unit labels beneath cards                                |
+| `showSeparators?`  | `boolean`                                                           | `true`      | Renders separators (`:`, `/`, etc.)                              |
+| `separator?`       | `string`                                                            | `":"`       | Custom separator character                                       |
+| `sound?`           | `boolean`                                                           | `false`     | Plays procedural mechanical split-flap click sound on update     |
+| `onComplete?`      | `() => void`                                                        | -           | Callback fired when countdown timer reaches zero                 |
+| `className?`       | `string`                                                            | -           | Additional Tailwind CSS classes                                  |

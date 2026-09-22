@@ -36,4 +36,4 @@ export const MAP_VARIANTS: ComponentVariant[] = [
   },
 ]
 
-export { MapFlightArc,MapWithControls, MapWithMarker, MapWithRoute }
+export { MapFlightArc, MapWithControls, MapWithMarker, MapWithRoute }
