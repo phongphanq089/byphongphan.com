@@ -83,5 +83,13 @@
       "motion"
     ],
     "registryDependencies": []
+  },
+  {
+    "name": "background-gradient-cursor",
+    "type": "registry:component",
+    "title": "Background Gradient Cursor",
+    "description": "Interactive ambient canvas surface featuring cursor-tracking radial mask, procedural dots, dynamic grid lines, and directional linear gradients.",
+    "dependencies": [],
+    "registryDependencies": []
   }
 ]

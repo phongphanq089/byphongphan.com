@@ -1,5 +1,6 @@
 import type React from "react"
 
+import { BackgroundGradientCursorSchematic } from "./background-gradient-cursor-schematic"
 import { CardSchematic } from "./card-schematic"
 import { CodeBlockSchematic } from "./code-block-schematic"
 import { FlipClockSchematic } from "./flip-clock-schematic"
@@ -8,6 +9,7 @@ import { SelectSchematic } from "./select-schematic"
 import { TextHoverEffectSchematic } from "./text-hover-effect-schematic"
 import { UnboxingBucketSchematic } from "./unboxing-bucket-schematic"
 
+export * from "./background-gradient-cursor-schematic"
 export * from "./card-schematic"
 export * from "./code-block-schematic"
 export * from "./flip-clock-schematic"
@@ -24,6 +26,7 @@ export type SchematicType =
   | "flip-clock"
   | "map"
   | "text-hover-effect"
+  | "background-gradient-cursor"
 
 export function DefaultSchematic() {
   return (
@@ -42,6 +45,7 @@ export const SCHEMATICS_MAP: Record<SchematicType, React.ComponentType> = {
   "flip-clock": FlipClockSchematic,
   map: MapSchematic,
   "text-hover-effect": TextHoverEffectSchematic,
+  "background-gradient-cursor": BackgroundGradientCursorSchematic,
 }
 
 export function RenderSchematic({ type }: { type?: string }) {

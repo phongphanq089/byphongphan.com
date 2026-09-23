@@ -1,5 +1,6 @@
 import type { RegistryItem } from "./schema"
 import {
+  BackgroundGradientCursorSchematic,
   CardSchematic,
   CodeBlockSchematic,
   FlipClockSchematic,
@@ -170,6 +171,26 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
         path: "animated/text-hover-effect.tsx",
         type: "registry:component",
         target: "components/text-hover-effect.tsx",
+      },
+    ],
+  },
+  {
+    name: "background-gradient-cursor",
+    title: "Background Gradient Cursor",
+    description:
+      "Interactive ambient canvas surface featuring cursor-tracking radial mask, procedural dots, dynamic grid lines, and directional linear gradients.",
+    type: "registry:component",
+    category: "animations",
+    schematic: BackgroundGradientCursorSchematic,
+    schematicType: "background-gradient-cursor",
+    isNew: true,
+    dependencies: [],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/background-gradient-cursor.tsx",
+        type: "registry:component",
+        target: "components/background-gradient-cursor.tsx",
       },
     ],
   },

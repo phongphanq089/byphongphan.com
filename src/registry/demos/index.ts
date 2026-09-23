@@ -1,5 +1,6 @@
 import type React from "react"
 
+import { BackgroundGradientCursorDemo } from "./background-gradient-cursor-demo"
 import { CardDemo } from "./card-demo"
 import { CodeBlockDemo } from "./code-block-demo"
 import { FlipClockDemo } from "./flip-clock-demo"
@@ -9,6 +10,7 @@ import { TextHoverEffectDemo } from "./text-hover-effect-demo"
 import { UnboxingBucketDemo } from "./unboxing-bucket-demo"
 
 export {
+  BackgroundGradientCursorDemo,
   CardDemo,
   CodeBlockDemo,
   FlipClockDemo,
@@ -26,4 +28,5 @@ export const REGISTRY_DEMOS: Record<string, React.ComponentType> = {
   "flip-clock": FlipClockDemo,
   map: MapDemo,
   "text-hover-effect": TextHoverEffectDemo,
+  "background-gradient-cursor": BackgroundGradientCursorDemo,
 }
