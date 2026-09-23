@@ -2,6 +2,7 @@ import { ArrowDownRight } from "lucide-react"
 
 import { GridContainer } from "@/app/layouts"
 import { PPMarkIsometric } from "@/shared/ui"
+import { SquigglyText } from "@/shared/ui/animation/squiggly-text"
 import TextBurnNeon from "@/shared/ui/animation/text-burn-neon"
 import { StripedPattern } from "@/shared/ui/system"
 
@@ -75,10 +76,12 @@ export default function BannerHero() {
         showCrosshairs={false}
         className="relative z-10"
       >
-        <div className="mx-auto max-w-xl px-4 py-4 text-center sm:px-8">
-          <p className="text-xs leading-relaxed tracking-wide text-muted-foreground sm:text-sm">
-            CRAFTING HIGH-PERFORMANCE INTERFACES, DELIGHTFUL MICRO-INTERACTIONS
-            &amp; THOUGHTFULLY ENGINEERED WEB EXPERIENCES.
+        <div className="mx-auto max-w-2xl px-4 py-4 text-center sm:px-8">
+          <p className="text-xs leading-relaxed font-semibold tracking-wide text-muted-foreground sm:text-lg">
+            <SquigglyText scale={2}>
+              One day you'll leave this world behind so live a life you will
+              remember
+            </SquigglyText>
           </p>
         </div>
       </GridContainer>

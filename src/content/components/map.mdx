@@ -32,6 +32,7 @@ links:
 
       <Step>Ensure Tailwind CSS and utility helpers are configured, and update import paths to match your project.</Step>
     </Steps>
+
   </TabsContent>
 </CodeTabs>
 
@@ -79,13 +80,15 @@ export function MyMap() {
         <MapControls position="top-right" showZoom showCompass />
         <MapMarker longitude={-122.4194} latitude={37.7749}>
           <MarkerContent>
-            <div className="size-4 rounded-full bg-primary border-2 border-white shadow-md" />
+            <div className="size-4 rounded-full border-2 border-white bg-primary shadow-md" />
           </MarkerContent>
           <MarkerTooltip>San Francisco HQ</MarkerTooltip>
           <MarkerPopup closeButton>
             <div className="p-2">
-              <h4 className="font-semibold text-xs">San Francisco</h4>
-              <p className="text-[11px] text-muted-foreground">Market Street Office</p>
+              <h4 className="text-xs font-semibold">San Francisco</h4>
+              <p className="text-[11px] text-muted-foreground">
+                Market Street Office
+              </p>
             </div>
           </MarkerPopup>
         </MapMarker>
@@ -143,67 +146,67 @@ Display curved connection lines between global cities for flight tracking, globa
 
 The root map container that initializes MapLibre GL and provides the map context.
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `center` | `[number, number]` | `undefined` | Initial center coordinates `[longitude, latitude]`. |
-| `zoom` | `number` | `undefined` | Initial zoom level. |
-| `theme` | `"light" \| "dark"` | System/Doc | Explicit theme override. If omitted, automatically detects document class or system preference. |
-| `styles` | `{ light?: string; dark?: string }` | Carto Positron / Dark Matter | Custom style URLs or StyleSpecification objects. |
-| `blank` | `boolean` | `false` | Renders a transparent, tile-less basemap for clean data visualizations. |
-| `projection` | `ProjectionSpecification` | `undefined` | Map projection. Set `{ type: "globe" }` for 3D globe mode. |
-| `viewport` | `Partial<MapViewport>` | `undefined` | Controlled viewport object `{ center, zoom, bearing, pitch }`. |
-| `onViewportChange` | `(viewport: MapViewport) => void` | `undefined` | Callback fired continuously as viewport pans, zooms, or rotates. |
-| `loading` | `boolean` | `false` | Displays a pulsing loader overlay while loading. |
+| Prop               | Type                                | Default                      | Description                                                                                     |
+| :----------------- | :---------------------------------- | :--------------------------- | :---------------------------------------------------------------------------------------------- |
+| `center`           | `[number, number]`                  | `undefined`                  | Initial center coordinates `[longitude, latitude]`.                                             |
+| `zoom`             | `number`                            | `undefined`                  | Initial zoom level.                                                                             |
+| `theme`            | `"light" \| "dark"`                 | System/Doc                   | Explicit theme override. If omitted, automatically detects document class or system preference. |
+| `styles`           | `{ light?: string; dark?: string }` | Carto Positron / Dark Matter | Custom style URLs or StyleSpecification objects.                                                |
+| `blank`            | `boolean`                           | `false`                      | Renders a transparent, tile-less basemap for clean data visualizations.                         |
+| `projection`       | `ProjectionSpecification`           | `undefined`                  | Map projection. Set `{ type: "globe" }` for 3D globe mode.                                      |
+| `viewport`         | `Partial<MapViewport>`              | `undefined`                  | Controlled viewport object `{ center, zoom, bearing, pitch }`.                                  |
+| `onViewportChange` | `(viewport: MapViewport) => void`   | `undefined`                  | Callback fired continuously as viewport pans, zooms, or rotates.                                |
+| `loading`          | `boolean`                           | `false`                      | Displays a pulsing loader overlay while loading.                                                |
 
 ### MapMarker
 
 Declarative HTML marker pinned to geographic coordinates.
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `longitude` | `number` | - | Target longitude coordinate. |
-| `latitude` | `number` | - | Target latitude coordinate. |
-| `draggable` | `boolean` | `false` | Whether the marker can be dragged across the map. |
-| `onClick` | `(e: MouseEvent) => void` | `undefined` | Click event handler. |
-| `onDragEnd` | `(lngLat: { lng: number; lat: number }) => void` | `undefined` | Callback fired when drag operation ends. |
+| Prop        | Type                                             | Default     | Description                                       |
+| :---------- | :----------------------------------------------- | :---------- | :------------------------------------------------ |
+| `longitude` | `number`                                         | -           | Target longitude coordinate.                      |
+| `latitude`  | `number`                                         | -           | Target latitude coordinate.                       |
+| `draggable` | `boolean`                                        | `false`     | Whether the marker can be dragged across the map. |
+| `onClick`   | `(e: MouseEvent) => void`                        | `undefined` | Click event handler.                              |
+| `onDragEnd` | `(lngLat: { lng: number; lat: number }) => void` | `undefined` | Callback fired when drag operation ends.          |
 
 ### MapControls
 
 Floating navigation and utility control group.
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `position` | `"top-left" \| "top-right" \| "bottom-left" \| "bottom-right"` | `"bottom-right"` | Corner alignment on map. |
-| `showZoom` | `boolean` | `true` | Show zoom-in and zoom-out buttons. |
-| `showCompass` | `boolean` | `false` | Show 3D compass needle to reset bearing to north. |
-| `showLocate` | `boolean` | `false` | Show geolocation locator button. |
-| `showFullscreen` | `boolean` | `false` | Show fullscreen toggle button. |
-| `onLocate` | `(coords: { longitude: number; latitude: number }) => void` | `undefined` | Callback with coordinates when user is located. |
+| Prop             | Type                                                           | Default          | Description                                       |
+| :--------------- | :------------------------------------------------------------- | :--------------- | :------------------------------------------------ |
+| `position`       | `"top-left" \| "top-right" \| "bottom-left" \| "bottom-right"` | `"bottom-right"` | Corner alignment on map.                          |
+| `showZoom`       | `boolean`                                                      | `true`           | Show zoom-in and zoom-out buttons.                |
+| `showCompass`    | `boolean`                                                      | `false`          | Show 3D compass needle to reset bearing to north. |
+| `showLocate`     | `boolean`                                                      | `false`          | Show geolocation locator button.                  |
+| `showFullscreen` | `boolean`                                                      | `false`          | Show fullscreen toggle button.                    |
+| `onLocate`       | `(coords: { longitude: number; latitude: number }) => void`    | `undefined`      | Callback with coordinates when user is located.   |
 
 ### MapRoute
 
 Polyline vector route layer rendered from coordinate arrays.
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `coordinates` | `[number, number][]` | - | Array of `[longitude, latitude]` pairs defining the route path. |
-| `color` | `string` | `"#4285F4"` | Line color CSS value. |
-| `width` | `number` | `3` | Line width in pixels. |
-| `opacity` | `number` | `0.8` | Line opacity from 0 to 1. |
-| `dashArray` | `[number, number]` | `undefined` | Stroke dash pattern `[dash, gap]`. |
-| `progress` | `number` | `undefined` | Fraction of route completed (0 to 1). |
-| `active` | `boolean` | `false` | Moves route to top of z-index and applies active styles. |
+| Prop          | Type                 | Default     | Description                                                     |
+| :------------ | :------------------- | :---------- | :-------------------------------------------------------------- |
+| `coordinates` | `[number, number][]` | -           | Array of `[longitude, latitude]` pairs defining the route path. |
+| `color`       | `string`             | `"#4285F4"` | Line color CSS value.                                           |
+| `width`       | `number`             | `3`         | Line width in pixels.                                           |
+| `opacity`     | `number`             | `0.8`       | Line opacity from 0 to 1.                                       |
+| `dashArray`   | `[number, number]`   | `undefined` | Stroke dash pattern `[dash, gap]`.                              |
+| `progress`    | `number`             | `undefined` | Fraction of route completed (0 to 1).                           |
+| `active`      | `boolean`            | `false`     | Moves route to top of z-index and applies active styles.        |
 
 ### MapArc
 
 Quadratic Bézier great-circle curved arcs between coordinates.
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `data` | `MapArcDatum[]` | - | Array of arcs `{ id, from: [lng, lat], to: [lng, lat] }`. |
-| `curvature` | `number` | `0.2` | Curvature factor bowing away from straight line. |
-| `samples` | `number` | `64` | Interpolation resolution along the curve. |
-| `paint` | `LinePaint` | - | MapLibre paint properties for line layer. |
-| `hoverPaint` | `LinePaint` | - | Paint properties applied to hovered arc. |
-| `onClick` | `(e: MapArcEvent) => void` | `undefined` | Arc click callback. |
-| `onHover` | `(e: MapArcEvent \| null) => void` | `undefined` | Arc hover enter/leave callback. |
+| Prop         | Type                               | Default     | Description                                               |
+| :----------- | :--------------------------------- | :---------- | :-------------------------------------------------------- |
+| `data`       | `MapArcDatum[]`                    | -           | Array of arcs `{ id, from: [lng, lat], to: [lng, lat] }`. |
+| `curvature`  | `number`                           | `0.2`       | Curvature factor bowing away from straight line.          |
+| `samples`    | `number`                           | `64`        | Interpolation resolution along the curve.                 |
+| `paint`      | `LinePaint`                        | -           | MapLibre paint properties for line layer.                 |
+| `hoverPaint` | `LinePaint`                        | -           | Paint properties applied to hovered arc.                  |
+| `onClick`    | `(e: MapArcEvent) => void`         | `undefined` | Arc click callback.                                       |
+| `onHover`    | `(e: MapArcEvent \| null) => void` | `undefined` | Arc hover enter/leave callback.                           |

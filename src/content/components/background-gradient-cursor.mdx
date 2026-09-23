@@ -1,0 +1,192 @@
+---
+title: Background Gradient Cursor
+description: Interactive ambient canvas surface featuring cursor-tracking radial mask, procedural dots, dynamic grid lines, and directional linear gradients.
+component: true
+badge: Motion
+---
+
+<ComponentPreview name="background-gradient-cursor-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="background-gradient-cursor" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="background-gradient-cursor" title="components/background-gradient-cursor.tsx" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+BackgroundGradientCursor (Relative/Absolute/Fixed canvas wrapper)
+├── <div (gradient)> (Directional linear background gradient with tilt)
+├── <div (lines)> (Repeating 45° angled architectural hatching lines)
+├── <div (grid)> (Procedural coordinate grid layout with customizable size)
+├── <div (dots)> (Radial dot matrix pattern with variable opacity)
+├── <div (mask)> (High-performance cursor-following radial spotlight mask)
+└── {children} (Optional overlaying content, badges, or interactive cards)
+```
+
+---
+
+## Usage
+
+```tsx
+import { BackgroundGradientCursor } from "@/components/background-gradient-cursor"
+```
+
+```tsx
+export function HeroBackground() {
+  return (
+    <div className="relative min-h-[400px] w-full overflow-hidden rounded-xl border border-border bg-neutral-950 p-6">
+      <BackgroundGradientCursor
+        position="absolute"
+        gradient={{
+          display: true,
+          tilt: 135,
+          colorStart: "emerald-500",
+          colorEnd: "transparent",
+          opacity: 25,
+        }}
+        grid={{
+          display: true,
+          width: "32px",
+          height: "32px",
+          color: "white/10",
+        }}
+        dots={{
+          display: true,
+          size: 1.5,
+          color: "white",
+        }}
+        mask={{
+          cursor: true,
+          radius: 160,
+          color: "rgba(16, 185, 129, 0.4)",
+        }}
+      />
+      <div className="relative z-10">
+        <h3>Interactive Canvas Content</h3>
+      </div>
+    </div>
+  )
+}
+```
+
+---
+
+## Features
+
+- **Hardware-Accelerated Cursor Tracking**: Leverages `requestAnimationFrame` with exponential smoothing (`easingFactor: 0.1`) to ensure buttery smooth, lag-free cursor tracking without layout thrashing.
+- **Layered Visual Stacking**: Five independent, composable layers—linear gradient, diagonal lines, coordinate grid, dot matrix, and radial mask—can be toggled and configured individually.
+- **Universal Color Token Support**: Accepts standard CSS variable names (e.g. `primary`, `emerald-500`), direct variables (`var(--...)`), hex codes (`#10b981`), and modern color formats (`oklch(...)`).
+- **Zero Heavy Runtime Dependencies**: Pure React 19 implementation using native CSS gradients and transforms, requiring no external 3D or animation libraries.
+- **Viewport & Element Boundary Awareness**: Automatically switches between fixed full-page tracking and scoped container boundary tracking, cleanly hiding the spotlight when the cursor exits the element.
+
+---
+
+## Examples
+
+### Cyberpunk Neon Grid
+
+High-frequency cyan grid lines paired with a dual-tone cyan and fuchsia radial gradient mask.
+
+<ComponentPreview name="background-gradient-cursor-cyberpunk" />
+
+### Technical Blueprint Matrix
+
+Precision engineering aesthetic with 24px azure coordinate grid lines and high-contrast dot intersections.
+
+<ComponentPreview name="background-gradient-cursor-blueprint" />
+
+### Warm Amber Spotlight
+
+Soft golden radial spotlight with fine amber dot accents tailored for dark card surfaces.
+
+<ComponentPreview name="background-gradient-cursor-card-spotlight" />
+
+---
+
+## API Reference
+
+### BackgroundGradientCursor
+
+The primary background container and compositor component.
+
+| Prop        | Type                                 | Default        | Description                                                                     |
+| :---------- | :----------------------------------- | :------------- | :------------------------------------------------------------------------------ |
+| `position`  | `CSSProperties["position"]`          | `"absolute"`   | CSS positioning mode (`"absolute"`, `"fixed"`, or `"relative"`).                |
+| `gradient`  | `GradientProps`                      | `{}`           | Configuration for the underlying linear gradient wash.                          |
+| `dots`      | `DotsProps`                          | `{}`           | Configuration for the procedural dot matrix pattern.                            |
+| `grid`      | `GridProps`                          | `{}`           | Configuration for the perpendicular grid lines.                                 |
+| `lines`     | `LinesProps`                         | `{}`           | Configuration for the 45-degree repeating diagonal hatching lines.              |
+| `mask`      | `MaskProps`                          | `{}`           | Configuration for the radial spotlight mask that follows cursor or fixed coords.|
+| `className` | `string`                             | `undefined`    | Additional CSS classes for the container element.                               |
+| `style`     | `CSSProperties`                      | `undefined`    | Inline style overrides.                                                         |
+| `children`  | `ReactNode`                          | `undefined`    | Child elements rendered above background layers (ensure `z-index` if needed).   |
+
+### MaskProps
+
+| Property   | Type               | Default            | Description                                                                     |
+| :--------- | :----------------- | :----------------- | :------------------------------------------------------------------------------ |
+| `cursor`   | `boolean`          | `false`            | Enables cursor tracking with smooth frame interpolation.                        |
+| `x`        | `number`           | `undefined`        | Static X position percentage (used when `cursor` is `false`).                   |
+| `y`        | `number`           | `undefined`        | Static Y position percentage (used when `cursor` is `false`).                   |
+| `radius`   | `number \| string` | `150px` / `50vh`   | Radial radius of the spotlight (pixel value or CSS length unit).                |
+| `color`    | `string`           | `undefined`        | Center color of the radial glow (e.g. `primary`, `#38bdf8`, `rgba(...)`).      |
+| `gradient` | `string`           | `undefined`        | Custom CSS `radial-gradient(...)` string to completely override mask styling.   |
+
+### GradientProps
+
+| Property     | Type      | Default       | Description                                                                     |
+| :----------- | :-------- | :------------ | :------------------------------------------------------------------------------ |
+| `display`    | `boolean` | `false`       | Whether to render the linear gradient layer.                                    |
+| `opacity`    | `number`  | `50`          | Opacity percentage from `0` to `100`.                                           |
+| `tilt`       | `number`  | `0`           | Angle in degrees for the linear gradient direction.                             |
+| `colorStart` | `string`  | `transparent` | Color token, hex code, or CSS variable for the gradient start.                  |
+| `colorEnd`   | `string`  | `transparent` | Color token, hex code, or CSS variable for the gradient end.                    |
+
+### GridProps
+
+| Property  | Type      | Default        | Description                                                                     |
+| :-------- | :-------- | :------------- | :------------------------------------------------------------------------------ |
+| `display` | `boolean` | `false`        | Whether to render the perpendicular grid lines.                                 |
+| `opacity` | `number`  | `100`          | Opacity percentage from `0` to `100`.                                           |
+| `color`   | `string`  | `"border"`     | Color token, hex code, or CSS variable for the grid lines.                      |
+| `width`   | `string`  | `"32px"`       | Horizontal cell width of the grid pattern.                                      |
+| `height`  | `string`  | `"32px"`       | Vertical cell height of the grid pattern.                                       |
+
+### DotsProps
+
+| Property  | Type      | Default         | Description                                                                     |
+| :-------- | :-------- | :-------------- | :------------------------------------------------------------------------------ |
+| `display` | `boolean` | `false`         | Whether to render the dot matrix pattern.                                       |
+| `opacity` | `number`  | `30`            | Opacity percentage from `0` to `100`.                                           |
+| `color`   | `string`  | `"foreground"`  | Color token, hex code, or CSS variable for the dots.                            |
+| `size`    | `number`  | `1`             | Radius in pixels of each rendered dot.                                          |
+
+### LinesProps
+
+| Property  | Type      | Default       | Description                                                                     |
+| :-------- | :-------- | :------------ | :------------------------------------------------------------------------------ |
+| `display` | `boolean` | `false`       | Whether to render the 45-degree diagonal lines.                                 |
+| `opacity` | `number`  | `100`         | Opacity percentage from `0` to `100`.                                           |
+| `size`    | `number`  | `16`          | Spacing interval in pixels between repeating lines.                             |
+| `color`   | `string`  | `"border"`    | Color token, hex code, or CSS variable for the hatching lines.                  |

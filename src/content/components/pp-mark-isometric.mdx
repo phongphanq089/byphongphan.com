@@ -1,0 +1,136 @@
+---
+title: Isometric Monogram Mark
+description: Interactive 3D voxel isometric monogram mark featuring procedural diagonal hatching, wireframe edges, cursor-tracking radial flashlight, and spring press physics with audio feedback.
+component: true
+badge: Motion
+---
+
+<ComponentPreview name="pp-mark-isometric-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="pp-mark-isometric" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the required motion dependencies:</Step>
+      <CodeBlockCommand command="npm install framer-motion" />
+
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="pp-mark-isometric" title="components/pp-mark-isometric.tsx" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+PPMarkIsometric (Responsive SVG container with user-space coords)
+├── <defs>
+│   ├── <pattern id="facePattern"> (45° diagonal micro-hatching strokes)
+│   ├── <motion.g id="faceFill"> (Top facet polygons with 16px spring press displacement)
+│   ├── <motion.path id="stroke"> (Wireframe contour edges with normal/pressed variants)
+│   └── <motion.radialGradient id="radialGradient"> (Spring-interpolated cursor flashlight)
+├── <g (blueprint grid)> (30° / 150° isometric dashed construction track guides)
+├── <g (3D side walls)> (Solid background fill occluding rear gridlines for volumetric depth)
+├── <use href="#faceFill"> (Base surface fill + hatched pattern overlay)
+└── <use href="#stroke"> (Subtle hairline contour + active cursor spotlight stroke)
+```
+
+---
+
+## Usage
+
+```tsx
+import { PPMarkIsometric } from "@/components/pp-mark-isometric"
+```
+
+```tsx
+export function HeroMonogram() {
+  return (
+    <div className="flex w-full max-w-md items-center justify-center p-6">
+      <PPMarkIsometric className="drop-shadow-2xl" enableSound={true} />
+    </div>
+  )
+}
+```
+
+---
+
+## Features
+
+- **True 30° Isometric Projection**: Crafted along architectural 30° / 150° isometric axes, yielding an interlocking voxel monogram with balanced hexagonal silhouettes.
+- **Dynamic Cursor Flashlight**: Spring-interpolated radial gradient tracks cursor coordinates in real time (`cx`, `cy`), casting an ambient spotlight across wireframe bevels.
+- **Micro-Hatching Facet Shading**: Top faces utilize procedural SVG pattern tiles with 45-degree hairline hatching lines (`var(--pattern)`).
+- **Tactile Haptic Audio Feedback**: Integrated Web Audio sound engine triggers crisp mechanical click feedback upon user tap/click.
+- **Interactive Spring Compression**: Clicking or tapping the mark physically compresses the top voxel faces downward by 16px with spring-mass physics.
+
+---
+
+## AI Prompt Guide: Generate Your Own Custom Monogram
+
+You can generate custom isometric vector paths for **your own initials or brand mark** using LLMs (e.g. Claude 3.7 Sonnet, GPT-4o, or Cursor). Use the prompt below:
+
+### Copy-Paste AI Generation Prompt
+
+```text
+You are an expert computational SVG mathematician and vector artist. Create the precise SVG path data for an isometric 3D voxel monogram logo mark for the initials "[YOUR_INITIALS]" (e.g. "AB", "PP", "JD", "MK").
+
+Design Constraints & Mathematical Rules:
+1. True Isometric Angles: Use strict 30° and 150° isometric axes (dx = 0.866 * unit, dy = 0.5 * unit, dz = vertical).
+2. Silhouette: Interlock both letters into a cohesive geometric hexagonal or cubic voxel footprint.
+3. Layer Separation (Strictly Grouped):
+   - Group 1 (Top Faces): A list of closed polygon paths (`M...Z`) representing the horizontal upward-facing planes.
+   - Group 2 (Solid 3D Walls): Closed polygon paths for front-left and front-right vertical facets to occlude background guidelines and give solid 3D mass.
+   - Group 3 (Wireframe Edge Strokes): Line segments (`M x1 y1 L x2 y2...`) representing every visible 3D bevel edge and contour.
+   - Group 4 (Pressed Displacement Variant): The exact same top faces and stroke paths shifted downward along the Y-axis by 16px (dy = +16) to enable click-press animation.
+4. Dimensions: Standardized within viewBox="0 0 818 585".
+5. Output format: Return only the SVG <path> coordinate strings clearly labeled for `faceFill`, `stroke.normal`, `stroke.pressed`, and `sideWalls`.
+```
+
+### Integration Steps
+
+1. Run the prompt above with your initials.
+2. In your copy of `pp-mark-isometric.tsx`, replace the `<path d="..." />` inside `ids.faceFill` with your generated **Top Faces**.
+3. Replace the `normal` and `pressed` path string arrays inside `ids.stroke` with your generated **Wireframe Edge Strokes**.
+4. Replace the `<motion.path d="..." />` inside the solid side faces group with your generated **3D Side Walls**.
+
+---
+
+## Examples
+
+### Minimalist Wireframe
+
+Deep obsidian canvas highlighting the crisp isometric construction lines and haptic click sound.
+
+<ComponentPreview name="pp-mark-isometric-wireframe" />
+
+### Cyan Engineering Blueprint
+
+Technical architectural blueprint aesthetics with 20px vector grid underlay and azure wireframe strokes.
+
+<ComponentPreview name="pp-mark-isometric-blueprint" />
+
+---
+
+## API Reference
+
+### PPMarkIsometric
+
+| Prop          | Type      | Default | Description                                                                      |
+| :------------ | :-------- | :------ | :------------------------------------------------------------------------------- |
+| `className`   | `string`  | `""`    | Additional CSS classes applied to the root `<motion.svg>` element.                |
+| `enableSound` | `boolean` | `true`  | Enables or disables the mechanical click audio feedback upon tapping/clicking.  |

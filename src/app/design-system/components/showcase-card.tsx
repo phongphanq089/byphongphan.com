@@ -1,14 +1,14 @@
-﻿import React from "react"
+import type { ReactNode } from "react"
 
-import { cn } from "@/shared/lib/utils"
+import { cn } from "@/shared/lib"
 import { Badge } from "@/shared/ui/core/badge"
 
-interface ShowcaseCardProps {
+export interface ShowcaseCardProps {
   title: string
   description?: string
   tag?: string
   className?: string
-  children: React.ReactNode
+  children: ReactNode
   codeSnippet?: string
 }
 
@@ -52,3 +52,5 @@ export function ShowcaseCard({
     </div>
   )
 }
+
+export default ShowcaseCard

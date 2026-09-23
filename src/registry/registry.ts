@@ -1,9 +1,12 @@
 import type { RegistryItem } from "./schema"
 import {
+  BackgroundGradientCursorSchematic,
   CardSchematic,
   CodeBlockSchematic,
   FlipClockSchematic,
   MapSchematic,
+  PhongPhanIsometricSchematic,
+  PPMarkIsometricSchematic,
   SelectSchematic,
   TextHoverEffectSchematic,
   UnboxingBucketSchematic,
@@ -170,6 +173,66 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
         path: "animated/text-hover-effect.tsx",
         type: "registry:component",
         target: "components/text-hover-effect.tsx",
+      },
+    ],
+  },
+  {
+    name: "background-gradient-cursor",
+    title: "Background Gradient Cursor",
+    description:
+      "Interactive ambient canvas surface featuring cursor-tracking radial mask, procedural dots, dynamic grid lines, and directional linear gradients.",
+    type: "registry:component",
+    category: "animations",
+    schematic: BackgroundGradientCursorSchematic,
+    schematicType: "background-gradient-cursor",
+    isNew: true,
+    dependencies: [],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/background-gradient-cursor.tsx",
+        type: "registry:component",
+        target: "components/background-gradient-cursor.tsx",
+      },
+    ],
+  },
+  {
+    name: "pp-mark-isometric",
+    title: "Isometric Monogram Mark",
+    description:
+      "Interactive 3D voxel isometric monogram mark featuring procedural diagonal hatching, wireframe edges, cursor-tracking radial flashlight, and spring press physics with audio feedback.",
+    type: "registry:component",
+    category: "animations",
+    schematic: PPMarkIsometricSchematic,
+    schematicType: "pp-mark-isometric",
+    isNew: true,
+    dependencies: ["framer-motion"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/pp-mark-isometric.tsx",
+        type: "registry:component",
+        target: "components/pp-mark-isometric.tsx",
+      },
+    ],
+  },
+  {
+    name: "phong-phan-isometric",
+    title: "Isometric Block Typography",
+    description:
+      "Horizontal 3D block typography extruded along an isometric blueprint grid, equipped with interactive dynamic lighting, sound feedback, and edge-to-edge/padded layout variants.",
+    type: "registry:component",
+    category: "animations",
+    schematic: PhongPhanIsometricSchematic,
+    schematicType: "phong-phan-isometric",
+    isNew: true,
+    dependencies: ["framer-motion"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/phong-phan-isometric.tsx",
+        type: "registry:component",
+        target: "components/phong-phan-isometric.tsx",
       },
     ],
   },

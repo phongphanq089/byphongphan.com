@@ -1,0 +1,322 @@
+/**
+ * Universal Lexical Editor � Editorial Precision Design System
+ * Scoped CSS for features that cannot be expressed purely with Tailwind utilities
+ */
+
+/* --- Content Editable Root ------------------------------------------------ */
+.universal-editor-input {
+  min-height: 200px;
+  position: relative;
+  outline: none;
+  tab-size: 2;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* --- Placeholder ---------------------------------------------------------- */
+.universal-editor-placeholder {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  display: inline-block;
+  color: var(--muted-foreground, #71717a);
+  opacity: 0.45;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* --- Scrollbar ------------------------------------------------------------ */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(160, 160, 160, 0.2) transparent;
+}
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(160, 160, 160, 0.2);
+  border-radius: 9999px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(160, 160, 160, 0.4);
+}
+
+/* --- Checklist Items ------------------------------------------------------ */
+.editor-checklist-item {
+  position: relative;
+  list-style-type: none;
+  outline: none;
+  min-height: 1.5em;
+  padding-left: 1.75rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.editor-checklist-item::before {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  border-radius: 5px;
+  border: 1.5px solid
+    color-mix(in srgb, var(--muted-foreground, #a1a1aa) 60%, transparent);
+  background-color: transparent;
+  transition:
+    border-color 0.12s ease,
+    background-color 0.12s ease;
+  cursor: pointer;
+}
+
+.editor-checklist-item:hover::before {
+  border-color: var(--primary, #0ea5e9);
+  background-color: color-mix(in srgb, var(--primary, #0ea5e9) 8%, transparent);
+}
+
+.editor-checklist-item-checked {
+  position: relative;
+  list-style-type: none;
+  outline: none;
+  min-height: 1.5em;
+  padding-left: 1.75rem;
+  text-decoration: line-through;
+  color: color-mix(in srgb, var(--muted-foreground, #71717a) 70%, transparent);
+  cursor: pointer;
+  user-select: none;
+}
+
+.editor-checklist-item-checked::before {
+  content: "";
+  position: absolute;
+  left: 0.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1rem;
+  height: 1rem;
+  border-radius: 5px;
+  border: 1.5px solid var(--primary, #0ea5e9);
+  background-color: var(--primary, #0ea5e9);
+  cursor: pointer;
+}
+
+.editor-checklist-item-checked::after {
+  content: "";
+  position: absolute;
+  left: 0.55rem;
+  top: calc(50% - 1px);
+  width: 0.3rem;
+  height: 0.55rem;
+  border: solid white;
+  border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-50%) rotate(45deg);
+  cursor: pointer;
+}
+
+/* --- Code Block ----------------------------------------------------------- */
+.editor-code-block {
+  position: relative;
+  border-left: 2px solid
+    color-mix(in srgb, var(--primary, #0ea5e9) 45%, transparent) !important;
+  border-radius: 0 8px 8px 0 !important;
+}
+
+.editor-code-block[data-gutter]::before {
+  content: attr(data-gutter);
+  position: sticky;
+  left: 0;
+  float: left;
+  top: 0;
+  z-index: 2;
+  min-height: 100%;
+  padding: 0 0.875rem 0 0.5rem;
+  margin-right: 0.875rem;
+  border-right: 1px solid
+    color-mix(in srgb, var(--border, #e4e4e7) 50%, transparent);
+  color: color-mix(in srgb, var(--muted-foreground, #71717a) 45%, transparent);
+  white-space: pre-wrap;
+  text-align: right;
+  user-select: none;
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+}
+
+/* --- Table Resizer -------------------------------------------------------- */
+.editor-table-resizer {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: transparent;
+  cursor: col-resize;
+  z-index: 10;
+  transition: background-color 0.12s ease;
+}
+
+.editor-table-resizer:hover,
+.editor-table-resizer:active {
+  background-color: var(--primary, #0ea5e9);
+}
+
+/* --- Block Cursor --------------------------------------------------------- */
+.editor-block-cursor {
+  display: block;
+  pointer-events: none;
+  position: absolute;
+}
+
+.editor-block-cursor::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: -2px;
+  width: 20px;
+  border-top: 2px solid currentColor;
+  animation: EditorCursorBlink 1.1s steps(2, start) infinite;
+}
+
+@keyframes EditorCursorBlink {
+  to {
+    visibility: hidden;
+  }
+}
+
+/* --- Floating Glass Panels ------------------------------------------------ */
+.editor-float-panel {
+  background: color-mix(in srgb, var(--popover) 94%, transparent);
+  border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
+  border-radius: 10px;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow:
+    0 8px 32px -8px rgba(0, 0, 0, 0.2),
+    0 2px 8px -2px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+}
+
+/* --- Editor Image --------------------------------------------------------- */
+.editor-image {
+  display: block;
+  position: relative;
+  transition:
+    box-shadow 0.15s ease,
+    outline 0.15s ease;
+  border-radius: 8px;
+}
+
+.editor-image:focus,
+.editor-image:hover {
+  outline: 2px solid color-mix(in srgb, var(--primary) 50%, transparent);
+  outline-offset: 2px;
+}
+
+/* --- Mentions ------------------------------------------------------------- */
+.editor-mention {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  background-color: color-mix(
+    in srgb,
+    var(--primary, #3b82f6) 12%,
+    transparent
+  );
+  color: var(--primary, #3b82f6);
+  border: 1px solid color-mix(in srgb, var(--primary, #3b82f6) 25%, transparent);
+  border-radius: 6px;
+  padding: 0.05rem 0.35rem;
+  font-size: 0.9em;
+  font-weight: 500;
+  line-height: 1.4;
+  user-select: all;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.editor-mention:hover {
+  background-color: color-mix(
+    in srgb,
+    var(--primary, #3b82f6) 20%,
+    transparent
+  );
+  border-color: color-mix(in srgb, var(--primary, #3b82f6) 45%, transparent);
+}
+
+/* --- Multi-Column Layouts ------------------------------------------------ */
+.layout-container {
+  display: grid;
+  width: 100%;
+  position: relative;
+  transition: all 0.2s ease-in-out;
+}
+
+.layout-item {
+  min-width: 0;
+  height: 100%;
+  position: relative;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.layout-item:hover {
+  border-color: color-mix(in srgb, var(--primary) 25%, transparent);
+}
+
+.layout-item:focus-within {
+  border-color: color-mix(in srgb, var(--primary) 55%, transparent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+@media (max-width: 640px) {
+  .layout-container {
+    grid-template-columns: 1fr !important;
+    gap: 0.75rem !important;
+  }
+}
+
+/* --- Draggable Block Styles ---------------------------------------------- */
+.draggable-block-menu {
+  border-radius: 6px;
+  cursor: grab;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  will-change: transform, opacity;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  transition:
+    transform 120ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 140ms ease-in-out;
+  z-index: 30;
+  user-select: none;
+}
+
+.draggable-block-menu:hover,
+.draggable-block-menu[data-menu-open="true"] {
+  opacity: 1 !important;
+}
+
+.draggable-block-target-line {
+  pointer-events: none;
+  background: var(--primary, #0ea5e9);
+  height: 3px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  will-change: transform, opacity;
+  border-radius: 2px;
+  z-index: 25;
+  box-shadow: 0 0 8px
+    color-mix(in srgb, var(--primary, #0ea5e9) 60%, transparent);
+}

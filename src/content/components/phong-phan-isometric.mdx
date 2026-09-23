@@ -1,0 +1,149 @@
+---
+title: Isometric Block Typography
+description: Horizontal 3D block typography extruded along an isometric blueprint grid, equipped with interactive dynamic lighting, sound feedback, and edge-to-edge/padded layout variants.
+component: true
+badge: Motion
+---
+
+<ComponentPreview name="phong-phan-isometric-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="phong-phan-isometric" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the required motion dependencies:</Step>
+      <CodeBlockCommand command="npm install framer-motion" />
+
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="phong-phan-isometric" title="components/phong-phan-isometric.tsx" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+PhongPhanIsometric (Horizontal SVG surface with viewBox="0 0 1054 198")
+├── <defs>
+│   ├── <pattern id="facePattern"> (45° diagonal hairline micro-hatching)
+│   ├── <motion.g id="frontFill"> (Compound front-facing letter polygons with press translation)
+│   ├── <motion.path id="stroke"> (Wireframe bevel contours and extrusion edges)
+│   └── <motion.radialGradient id="radialGradient"> (Dynamic mouse-following flashlight)
+├── <g (blueprint grid)> (Optional horizontal, vertical, and 45° technical construction lines)
+├── <g (3D side & top walls)> (Solid background fill providing volumetric occlusion)
+├── <use href="#frontFill"> (Front typography surface + hatched pattern texture)
+└── <use href="#stroke"> (Subtle ambient stroke + cursor-driven flashlight highlight)
+```
+
+---
+
+## Usage
+
+```tsx
+import { PhongPhanIsometric } from "@/components/phong-phan-isometric"
+```
+
+```tsx
+export function HeroBanner() {
+  return (
+    <div className="w-full max-w-5xl py-8">
+      <PhongPhanIsometric
+        variant="full"
+        showGrid={true}
+        enableSound={true}
+      />
+    </div>
+  )
+}
+```
+
+---
+
+## Features
+
+- **Extruded 3D Horizontal Block Typography**: Clean typographic block volume projected with 45° isometric bevel depth, delivering a modern architectural aesthetic.
+- **Dynamic Cursor Lighting**: Smooth spring-mass radial gradient illuminates letter facets in real time, casting focused highlights across wireframe edges.
+- **Multiple Layout Modes**: Toggle between `"full"` (edge-to-edge flush boundary) and `"padded"` (framed with bilateral breathing room and extended grid guidelines).
+- **Procedural Front Hatching**: Front faces are rendered with repeating 45-degree micro-hatching strokes for sophisticated architectural texture.
+- **Spring-Physics Press Dynamics**: Clicking compresses the 3D block forms backward (`dx: 6px, dy: -6px`) with realistic spring physics and auditory tactile feedback.
+
+---
+
+## AI Prompt Guide: Generate Your Own Custom 3D Name Typography
+
+You can prompt LLMs (Claude 3.7 Sonnet, GPT-4o, or Cursor) to generate the complete SVG paths for **your own name, handle, or brand wordmark** in this exact 3D extruded block style.
+
+### Copy-Paste AI Generation Prompt
+
+```text
+You are an expert computational SVG typography designer and vector engineer. Generate the precise mathematical SVG path data for a 3D horizontal extruded block typography for the text: "[YOUR_NAME_OR_WORDMARK]" (e.g. "ALEX SMITH", "SARAH CONNOR", "DEV STUDIO").
+
+Design Specifications & Geometry Rules:
+1. Font Geometry: Heavy, industrial geometric sans-serif block letters.
+   - Letter height: 136px (Y: 42 to Y: 178).
+   - Baseline stroke width: 26px uniformly.
+   - Consistent kerning and spacing (8-16px between letters, 24px between words).
+2. Isometric 3D Extrusion:
+   - Extrude every letter backwards and upwards at a 45° angle with an offset of dx = +22px, dy = -22px.
+   - For letters with cutouts (A, B, D, O, P, R), use compound paths with `fillRule="evenodd"`.
+3. Required SVG Layer Groups:
+   - Group 1 (`frontFill`): Closed polygon paths representing the front faces of each letter.
+   - Group 2 (`sideWalls`): Closed polygon paths representing the solid top and right extrusion walls connecting front edges to back bevels.
+   - Group 3 (`stroke.normal`): Line segments (`M x1 y1 L x2 y2...`) tracing every visible wireframe edge.
+   - Group 4 (`stroke.pressed`): The same stroke lines shifted by dx = +8px, dy = -8px for the click-down state.
+4. ViewBox: Set height to 198px and calculate width based on total character span (e.g. `viewBox="0 0 [TOTAL_WIDTH] 198"`).
+5. Output Format: Return only the clean, raw SVG <path d="..." /> strings clearly labeled for `frontFill`, `sideWalls`, and `stroke`.
+```
+
+### Integration Steps
+
+1. Run the prompt above with your custom name or wordmark.
+2. In your copy of `phong-phan-isometric.tsx`, replace the `<path d="..." />` elements in `ids.frontFill` with your generated **Front Faces**.
+3. Replace the `d` attributes in `ids.stroke` (`normal` and `pressed`) with your generated **Wireframe Strokes**.
+4. Replace the `<motion.path d="..." />` in the solid side walls group with your generated **3D Side & Top Walls**.
+5. Adjust the `viewBox` width in `phong-phan-isometric.tsx` to match your text's computed width.
+
+---
+
+## Examples
+
+### Edge-to-Edge Typography
+
+Full bleed horizontal presentation where characters span from edge to edge with 0px margin.
+
+<ComponentPreview name="phong-phan-isometric-full" />
+
+### Padded Blueprint Layout
+
+Framed presentation with lateral padding and extended construction grid tracks.
+
+<ComponentPreview name="phong-phan-isometric-padded" />
+
+---
+
+## API Reference
+
+### PhongPhanIsometric
+
+| Prop          | Type                 | Default    | Description                                                                     |
+| :------------ | :------------------- | :--------- | :------------------------------------------------------------------------------ |
+| `variant`     | `"full" \| "padded"` | `"full"`   | Switches between full bleed (`"full"`) and padded framed layout (`"padded"`).    |
+| `padding`     | `boolean`            | `false`    | Boolean shortcut: `true` sets padded layout, `false` sets edge-to-edge layout.  |
+| `showGrid`    | `boolean`            | `true`     | Toggles the extended technical blueprint construction gridlines.               |
+| `enableSound` | `boolean`            | `true`     | Enables tactile mechanical sound feedback when the user clicks or taps.        |
+| `className`   | `string`             | `""`       | Additional CSS classes applied to the root SVG element.                         |
