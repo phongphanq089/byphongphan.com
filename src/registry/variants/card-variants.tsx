@@ -1,6 +1,8 @@
 import type { ComponentVariant } from "@/features/component-ui/types"
 
 import CardExpandableBillingUsageCard from "./card/card-expandable-billing-usage-card"
+import CardGradientGlassFeature from "./card/card-gradient-glass-feature"
+import CardGradientGlassPost from "./card/card-gradient-glass-post"
 import { CardStackedDeptEffect } from "./card/card-stacked-depth-effect"
 import { CardWithFullImage } from "./card/card-with-full-image"
 import CardWithImage from "./card/card-with-image"
@@ -8,6 +10,20 @@ import { CardWithImageScale } from "./card/card-with-image-scale"
 import FullCardFadeEffect from "./card/full-card-fade-effect"
 
 export const CARD_VARIANTS: ComponentVariant[] = [
+  {
+    id: "card-gradient-glass-post",
+    title: "Gradient Glass Social Post Card",
+    description:
+      "Double-shell frosted glassmorphism card with ambient hover sheen, avatar, and nested reply thread.",
+    component: CardGradientGlassPost,
+  },
+  {
+    id: "card-gradient-glass-feature",
+    title: "Gradient Glass Feature Metric Card",
+    description:
+      "Frosted glass feature container with glowing indicator, prominent metric, and call-to-action.",
+    component: CardGradientGlassFeature,
+  },
   {
     id: "card-with-image",
     title: "Card with Image",
@@ -40,4 +56,13 @@ export const CARD_VARIANTS: ComponentVariant[] = [
   },
 ]
 
-export { CardWithImage }
+export {
+  CardExpandableBillingUsageCard,
+  CardGradientGlassFeature,
+  CardGradientGlassPost,
+  CardStackedDeptEffect,
+  CardWithFullImage,
+  CardWithImage,
+  CardWithImageScale,
+  FullCardFadeEffect,
+}
