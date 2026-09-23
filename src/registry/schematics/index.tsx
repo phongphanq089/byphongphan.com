@@ -5,6 +5,8 @@ import { CardSchematic } from "./card-schematic"
 import { CodeBlockSchematic } from "./code-block-schematic"
 import { FlipClockSchematic } from "./flip-clock-schematic"
 import { MapSchematic } from "./map-schematic"
+import { PhongPhanIsometricSchematic } from "./phong-phan-isometric-schematic"
+import { PPMarkIsometricSchematic } from "./pp-mark-isometric-schematic"
 import { SelectSchematic } from "./select-schematic"
 import { TextHoverEffectSchematic } from "./text-hover-effect-schematic"
 import { UnboxingBucketSchematic } from "./unboxing-bucket-schematic"
@@ -14,6 +16,8 @@ export * from "./card-schematic"
 export * from "./code-block-schematic"
 export * from "./flip-clock-schematic"
 export * from "./map-schematic"
+export * from "./phong-phan-isometric-schematic"
+export * from "./pp-mark-isometric-schematic"
 export * from "./select-schematic"
 export * from "./text-hover-effect-schematic"
 export * from "./unboxing-bucket-schematic"
@@ -27,6 +31,8 @@ export type SchematicType =
   | "map"
   | "text-hover-effect"
   | "background-gradient-cursor"
+  | "pp-mark-isometric"
+  | "phong-phan-isometric"
 
 export function DefaultSchematic() {
   return (
@@ -46,6 +52,8 @@ export const SCHEMATICS_MAP: Record<SchematicType, React.ComponentType> = {
   map: MapSchematic,
   "text-hover-effect": TextHoverEffectSchematic,
   "background-gradient-cursor": BackgroundGradientCursorSchematic,
+  "pp-mark-isometric": PPMarkIsometricSchematic,
+  "phong-phan-isometric": PhongPhanIsometricSchematic,
 }
 
 export function RenderSchematic({ type }: { type?: string }) {
