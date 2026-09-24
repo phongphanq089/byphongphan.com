@@ -5,7 +5,7 @@ import { Badge } from "@/shared/ui/core/badge"
 
 export function PhongPhanIsometricDemo() {
   return (
-    <div className="relative flex min-h-[380px] w-full flex-col items-center justify-center overflow-hidden rounded-xl border border-border/80 bg-neutral-950 p-6 shadow-xs select-none">
+    <div className="relative flex min-h-[380px] w-full flex-col items-center justify-center overflow-hidden rounded-xl border border-border/80 bg-accent p-6 shadow-xs select-none">
       {/* Top instruction badges */}
       <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
         <Badge

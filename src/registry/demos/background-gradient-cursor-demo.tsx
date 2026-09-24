@@ -5,7 +5,7 @@ import { Badge } from "@/shared/ui/core/badge"
 
 export function BackgroundGradientCursorDemo() {
   return (
-    <div className="relative flex min-h-[360px] w-full items-center justify-center overflow-hidden rounded-xl border border-border/80 bg-neutral-950 p-6 shadow-xs select-none">
+    <div className="relative flex min-h-[360px] w-full items-center justify-center overflow-hidden rounded-xl border border-border/80 bg-accent p-6 shadow-xs select-none">
       <BackgroundGradientCursor
         position="absolute"
         gradient={{

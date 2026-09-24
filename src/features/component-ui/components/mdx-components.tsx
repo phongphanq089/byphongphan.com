@@ -5,6 +5,14 @@ import {
   CodeBlockCopyButton,
   markdownCodeProps,
 } from "@/registry/ui/code-block"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/registry/ui/table"
 import { siteConfig } from "@/shared/config"
 import { cn, extractTextFromNode, slugify } from "@/shared/lib"
 import { CodeBlockCommand } from "@/shared/ui/core"
@@ -262,57 +270,30 @@ export const mdxComponents = {
     />
   ),
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="my-6 w-full overflow-hidden overflow-x-auto rounded-xl border border-border/80 bg-card/40 shadow-xs backdrop-blur-xs dark:border-white/10 dark:bg-[#0c0c0e]">
-      <table
-        className={cn("w-full border-collapse text-left text-xs", className)}
-        {...props}
-      />
+    <div className="">
+      <Table className={cn("w-full", className)} {...props} />
     </div>
   ),
   thead: ({
     className,
     ...props
   }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-    <thead
-      className={cn(
-        "border-b border-border/80 bg-muted/20 dark:border-white/10 dark:bg-white/[0.02]",
-        className
-      )}
-      {...props}
-    />
+    <TableHeader className={cn("", className)} {...props} />
   ),
   tbody: ({
     className,
     ...props
   }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-    <tbody
-      className={cn(
-        "divide-y divide-border/40 dark:divide-white/10",
-        className
-      )}
-      {...props}
-    />
+    <TableBody className={cn("", className)} {...props} />
   ),
   tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
-    <tr
-      className={cn(
-        "transition-colors hover:bg-muted/15 dark:hover:bg-white/[0.015]",
-        className
-      )}
-      {...props}
-    />
+    <TableRow className={cn("", className)} {...props} />
   ),
   th: ({
     className,
     ...props
   }: React.ThHTMLAttributes<HTMLTableCellElement>) => (
-    <th
-      className={cn(
-        "border-r border-border/60 px-4 py-3 text-xs font-semibold tracking-tight text-foreground last:border-r-0 dark:border-white/10",
-        className
-      )}
-      {...props}
-    />
+    <TableHead className={cn("", className)} {...props} />
   ),
   td: ({
     className,
@@ -324,20 +305,13 @@ export const mdxComponents = {
       (children.trim() === "-" || children.trim() === "—")
 
     return (
-      <td
-        className={cn(
-          "border-r border-border/40 px-4 py-3 align-middle text-xs text-foreground/90 last:border-r-0 dark:border-white/10",
-          "[&_code]:inline-block [&_code]:max-w-full [&_code]:rounded-md [&_code]:border [&_code]:border-border/80 [&_code]:bg-muted/40 [&_code]:px-2.5 [&_code]:py-1 [&_code]:font-mono [&_code]:text-xs [&_code]:leading-relaxed [&_code]:break-all [&_code]:text-foreground/90 dark:[&_code]:border-white/15 dark:[&_code]:bg-white/[0.04]",
-          className
-        )}
-        {...props}
-      >
+      <TableCell className={cn("", className)} {...props}>
         {isDash ? (
           <span className="font-mono text-xs text-muted-foreground/60">-</span>
         ) : (
           children
         )}
-      </td>
+      </TableCell>
     )
   },
   PropsTable,

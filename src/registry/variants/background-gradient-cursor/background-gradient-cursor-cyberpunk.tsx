@@ -5,7 +5,7 @@ import { Badge } from "@/registry/ui/badge"
 
 export function BackgroundGradientCursorCyberpunk() {
   return (
-    <div className="relative flex min-h-[300px] w-full items-center justify-center overflow-hidden rounded-xl border border-cyan-500/20 bg-neutral-950 p-6 shadow-xs select-none">
+    <div className="relative flex min-h-[300px] w-full items-center justify-center overflow-hidden rounded-xl border border-cyan-500/20 bg-accent p-6 shadow-xs select-none">
       <BackgroundGradientCursor
         position="absolute"
         gradient={{
