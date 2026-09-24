@@ -148,17 +148,19 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
                 {component.isNew && (
                   <Badge
                     variant="outline"
-                    className="h-5 gap-1.5 rounded-full border-primary/30 bg-primary/10 px-2 text-[10px] font-semibold tracking-wider text-primary uppercase shadow-[0_0_10px_var(--pp-primary-glow)]"
+                    className="h-5 gap-1.5 rounded border-primary/30 bg-primary/10 px-2 text-[8px] font-semibold tracking-wider text-primary uppercase shadow-[0_0_10px_var(--pp-primary-glow)]"
                   >
-                    <span className="size-1.5 animate-pulse rounded-full bg-primary" />
                     New
                   </Badge>
                 )}
 
                 {mdxData?.frontmatter?.badge && (
-                  <span className="rounded-full border border-blue-500/40 bg-blue-500/10 px-2.5 py-0.5 text-[10px] font-semibold text-blue-400">
+                  <Badge
+                    variant="outline"
+                    className="h-5 gap-1.5 rounded border-primary/30 bg-primary px-2 text-[8px] font-semibold tracking-wider text-white uppercase shadow-[0_0_10px_var(--pp-primary-glow)] dark:text-background"
+                  >
                     {mdxData.frontmatter.badge}
-                  </span>
+                  </Badge>
                 )}
               </div>
 

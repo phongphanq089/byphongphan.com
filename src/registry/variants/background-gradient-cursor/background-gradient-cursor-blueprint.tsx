@@ -1,11 +1,11 @@
 import { Ruler } from "lucide-react"
 
 import { BackgroundGradientCursor } from "@/registry/animated/background-gradient-cursor"
-import { Badge } from "@/shared/ui/core/badge"
+import { Badge } from "@/registry/ui/badge"
 
 export function BackgroundGradientCursorBlueprint() {
   return (
-    <div className="relative flex min-h-[300px] w-full items-center justify-center overflow-hidden rounded-xl border border-sky-500/20 bg-[#081325] p-6 shadow-xs select-none">
+    <div className="relative flex min-h-[300px] w-full items-center justify-center overflow-hidden rounded-xl border border-sky-500/20 bg-accent p-6 shadow-xs select-none">
       <BackgroundGradientCursor
         position="absolute"
         grid={{

@@ -1,10 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
-import { FileSearch } from "lucide-react"
 import { useMemo, useState } from "react"
 
 import { GridContainer } from "@/app/layouts"
-import { Button } from "@/shared/ui/core"
-import { SectionEmptyState } from "@/shared/ui/system"
 
 import {
   blogCategoriesQueryOptions,
@@ -219,11 +216,7 @@ export function BlogGrid({
               ) : (
                 /* Empty placeholder cell for odd number of articles */
                 <div className="hidden h-full w-full md:flex">
-                  <SectionEmptyState
-                    variant="cell"
-                    title="More Articles Coming Soon"
-                    description="New engineering notes in draft."
-                  />
+                  More Articles Coming Soon
                 </div>
               )}
             </div>
@@ -236,27 +229,8 @@ export function BlogGrid({
           showCrosshairs
           className="p-6 sm:p-10 md:p-12"
         >
-          <SectionEmptyState
-            icon={<FileSearch className="size-6" />}
-            badge="WRITING & INSIGHTS"
-            title="No articles found"
-            description="We couldn't find any articles matching your search query or filters. Try resetting your criteria."
-            action={
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  setSelectedCategory(null)
-                  setSelectedGroup(null)
-                  setSelectedTag(null)
-                  setSearchQuery("")
-                }}
-                className="border-pp-primary/40 bg-pp-primary/10 text-pp-primary hover:bg-pp-primary hover:text-white"
-              >
-                Clear all filters
-              </Button>
-            }
-          />
+          We couldn't find any articles matching your search query or filters.
+          Try resetting your criteria.
         </GridContainer>
       )}
     </div>

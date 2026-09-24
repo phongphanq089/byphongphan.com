@@ -77,13 +77,13 @@ export function ComponentStagePreview({
           <TabsList variant="line" className="h-full gap-4 bg-transparent p-0">
             <TabsTrigger
               value="preview"
-              className="relative -mb-px h-full cursor-pointer rounded-none border-b-2 border-transparent px-1 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground data-active:border-foreground data-active:text-foreground data-active:shadow-none"
+              className="relative -mb-px h-full cursor-pointer rounded-none border-b-2 border-transparent px-1 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground data-active:shadow-none"
             >
               Preview
             </TabsTrigger>
             <TabsTrigger
               value="code"
-              className="relative -mb-px h-full cursor-pointer rounded-none border-b-2 border-transparent px-1 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground data-active:border-foreground data-active:text-foreground data-active:shadow-none"
+              className="relative -mb-px h-full cursor-pointer rounded-none border-b-2 border-transparent px-1 text-xs font-semibold text-muted-foreground transition-colors hover:text-foreground data-active:text-foreground data-active:shadow-none"
             >
               Code
             </TabsTrigger>

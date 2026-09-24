@@ -9,7 +9,7 @@ import { createSeoMeta } from "@/shared/config"
 import { IS_PUBLIC_UI } from "@/shared/constants"
 import { UnderConstructionBlock } from "@/shared/ui"
 
-export const Route = createFileRoute("/_profile/resources")({
+export const Route = createFileRoute("/_site/resources/")({
   loader: async ({ context }) => {
     try {
       const [resources, categories] = await Promise.all([

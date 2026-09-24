@@ -8,7 +8,7 @@ import {
 } from "@/features/colophon"
 import { createSeoMeta } from "@/shared/config"
 
-export const Route = createFileRoute("/_profile/colophon")({
+export const Route = createFileRoute("/_site/colophon/")({
   head: () => ({
     meta: createSeoMeta("colophon"),
   }),

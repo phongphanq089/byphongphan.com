@@ -1,11 +1,10 @@
 import { Layers } from "lucide-react"
 
 import { BackgroundGradientCursor } from "@/registry/animated/background-gradient-cursor"
-import { Badge } from "@/shared/ui/core/badge"
-
+import { Badge } from "@/registry/ui/badge"
 export function BackgroundGradientCursorCardSpotlight() {
   return (
-    <div className="relative flex min-h-[300px] w-full items-center justify-center overflow-hidden rounded-xl border border-border/80 bg-neutral-950 p-6 shadow-xs select-none">
+    <div className="relative flex min-h-[300px] w-full items-center justify-center overflow-hidden rounded-xl border border-border/80 bg-accent p-6 shadow-xs select-none">
       <BackgroundGradientCursor
         position="absolute"
         gradient={{

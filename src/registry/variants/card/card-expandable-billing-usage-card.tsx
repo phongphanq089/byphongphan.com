@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/registry/ui/card"
 import { Progress } from "@/registry/ui/progress"
-import { cn } from "@/shared/lib"
+import { cn } from "cn"
 
 const CardExpandableBillingUsageCard = () => {
   const [isOpen, setIsOpen] = useState(false)

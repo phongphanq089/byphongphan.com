@@ -11,7 +11,7 @@ import {
   siteConfig,
 } from "@/shared/config"
 
-export const Route = createFileRoute("/_profile/blog_/$slug")({
+export const Route = createFileRoute("/_site/blog/$slug")({
   loader: async ({ context, params }) => {
     try {
       const [post, allPosts] = await Promise.all([

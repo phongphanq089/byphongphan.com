@@ -11,7 +11,7 @@ import { createSeoMeta } from "@/shared/config"
 import { IS_PUBLIC_UI } from "@/shared/constants"
 import { UnderConstructionBlock } from "@/shared/ui"
 
-export const Route = createFileRoute("/_profile/blog")({
+export const Route = createFileRoute("/_site/blog/")({
   loader: async ({ context }) => {
     try {
       const [posts, categories, tags, groups] = await Promise.all([

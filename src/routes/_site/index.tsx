@@ -10,7 +10,7 @@ import SectionTechStack from "@/features/home/section-tech-stack"
 import UiComponentsSection from "@/features/home/section-ui-components"
 import { createSeoMeta } from "@/shared/config"
 
-export const Route = createFileRoute("/_profile/")({
+export const Route = createFileRoute("/_site/")({
   head: () => ({
     meta: createSeoMeta("home"),
   }),

@@ -1,10 +1,10 @@
 import { Check, Code2, Copy } from "lucide-react"
 import { useState } from "react"
 
-import { cn } from "@/shared/lib"
-import { Badge } from "@/shared/ui/core/badge"
-import { Button } from "@/shared/ui/core/button"
-import { Checkbox } from "@/shared/ui/core/checkbox"
+import { cn } from "cn"
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
+import { Checkbox } from "@/registry/ui/checkbox"
 
 export interface CardShowcaseCodeProps {
   title?: string
