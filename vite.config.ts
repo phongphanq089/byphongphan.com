@@ -96,7 +96,6 @@ const config = defineConfig({
         { path: "/blog" },
         { path: "/resources" },
         { path: "/component-ui" },
-        { path: "/design-system" },
         { path: "/colophon" },
       ],
       sitemap: {

@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
-import { Route as DesignSystemRouteImport } from './routes/design-system'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ProfileRouteImport } from './routes/_profile'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
@@ -46,11 +45,6 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   id: '/robots.txt',
   path: '/robots.txt',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DesignSystemRoute = DesignSystemRouteImport.update({
-  id: '/design-system',
-  path: '/design-system',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -185,7 +179,6 @@ const ProfileBlocksCategorySlugRoute =
 export interface FileRoutesByFullPath {
   '/': typeof ProfileIndexRoute
   '/admin': typeof AdminRouteWithChildren
-  '/design-system': typeof DesignSystemRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/block': typeof ProfileBlockRoute
@@ -212,7 +205,6 @@ export interface FileRoutesByFullPath {
   '/component-ui/$category/': typeof ProfileComponentUiCategoryIndexRoute
 }
 export interface FileRoutesByTo {
-  '/design-system': typeof DesignSystemRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/block': typeof ProfileBlockRoute
@@ -243,7 +235,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_profile': typeof ProfileRouteWithChildren
   '/admin': typeof AdminRouteWithChildren
-  '/design-system': typeof DesignSystemRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_profile/block': typeof ProfileBlockRoute
@@ -275,7 +266,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
-    | '/design-system'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/block'
@@ -302,7 +292,6 @@ export interface FileRouteTypes {
     | '/component-ui/$category/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/design-system'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/block'
@@ -332,7 +321,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_profile'
     | '/admin'
-    | '/design-system'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/_profile/block'
@@ -363,7 +351,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRouteWithChildren
   AdminRoute: typeof AdminRouteWithChildren
-  DesignSystemRoute: typeof DesignSystemRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
@@ -382,13 +369,6 @@ declare module '@tanstack/react-router' {
       path: '/robots.txt'
       fullPath: '/robots.txt'
       preLoaderRoute: typeof RobotsDottxtRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/design-system': {
-      id: '/design-system'
-      path: '/design-system'
-      fullPath: '/design-system'
-      preLoaderRoute: typeof DesignSystemRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -635,7 +615,6 @@ const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRouteWithChildren,
   AdminRoute: AdminRouteWithChildren,
-  DesignSystemRoute: DesignSystemRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
