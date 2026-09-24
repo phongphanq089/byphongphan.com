@@ -263,17 +263,6 @@
   color: var(--muted-foreground);
 }
 
-/* ── Shared keyframe: terminal cursor blink (SectionEmptyState) ── */
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
-}
-
 .container-wrapper {
   @apply mx-auto w-full md:px-2 3xl:max-w-[calc(var(--breakpoint-2xl)+2rem)];
 }

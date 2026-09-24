@@ -10,7 +10,7 @@ const VALID_CATEGORIES: BlockCategoryId[] = [
   "ecommerce",
 ]
 
-export const Route = createFileRoute("/_profile/blocks/$category/")({
+export const Route = createFileRoute("/_site/blocks/$category/")({
   loader: ({ params }) => {
     const cat = params.category as BlockCategoryId
     if (!VALID_CATEGORIES.includes(cat)) {

@@ -1,4 +1,4 @@
-﻿import { createFileRoute, notFound, redirect } from "@tanstack/react-router"
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router"
 
 import { ComponentGrid, COMPONENTS_DATA } from "@/features/component-ui"
 import type { ComponentCategoryId } from "@/features/component-ui/types"
@@ -10,7 +10,7 @@ const VALID_CATEGORIES: ComponentCategoryId[] = [
   "foundations",
 ]
 
-export const Route = createFileRoute("/_profile/component-ui/$category/")({
+export const Route = createFileRoute("/_site/component-ui/$category/")({
   loader: ({ params }) => {
     const cat = params.category as ComponentCategoryId
     if (VALID_CATEGORIES.includes(cat)) {

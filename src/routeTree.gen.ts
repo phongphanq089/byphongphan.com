@@ -12,30 +12,28 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as AdminRouteImport } from './routes/admin'
-import { Route as ProfileRouteImport } from './routes/_profile'
+import { Route as SiteRouteRouteImport } from './routes/_site/route'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
-import { Route as ProfileIndexRouteImport } from './routes/_profile.index'
+import { Route as SiteIndexRouteImport } from './routes/_site/index'
 import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
 import { Route as AdminResourcesRouteImport } from './routes/admin/resources'
 import { Route as AdminRegistryRouteImport } from './routes/admin/registry'
 import { Route as AdminGroupsRouteImport } from './routes/admin/groups'
 import { Route as AdminCategoriesRouteImport } from './routes/admin/categories'
 import { Route as AdminSplatRouteImport } from './routes/admin/$'
-import { Route as ProfileResourcesRouteImport } from './routes/_profile.resources'
-import { Route as ProfileColophonRouteImport } from './routes/_profile.colophon'
-import { Route as ProfileBlogRouteImport } from './routes/_profile.blog'
-import { Route as ProfileBlockRouteImport } from './routes/_profile.block'
 import { Route as AdminPostsIndexRouteImport } from './routes/admin/posts/index'
-import { Route as ProfileComponentUiIndexRouteImport } from './routes/_profile.component-ui.index'
-import { Route as ProfileBlocksIndexRouteImport } from './routes/_profile.blocks.index'
+import { Route as SiteResourcesIndexRouteImport } from './routes/_site/resources/index'
+import { Route as SiteComponentUiIndexRouteImport } from './routes/_site/component-ui/index'
+import { Route as SiteColophonIndexRouteImport } from './routes/_site/colophon/index'
+import { Route as SiteBlogIndexRouteImport } from './routes/_site/blog/index'
+import { Route as SiteBlocksIndexRouteImport } from './routes/_site/blocks/index'
 import { Route as AdminPostsNewRouteImport } from './routes/admin/posts/new'
 import { Route as AdminPostsIdRouteImport } from './routes/admin/posts/$id'
-import { Route as ProfileBlogSlugRouteImport } from './routes/_profile.blog_.$slug'
-import { Route as ProfileBlockSlugRouteImport } from './routes/_profile.block_.$slug'
-import { Route as ProfileComponentUiCategoryIndexRouteImport } from './routes/_profile.component-ui.$category.index'
-import { Route as ProfileBlocksCategoryIndexRouteImport } from './routes/_profile.blocks.$category.index'
-import { Route as ProfileComponentUiCategorySlugRouteImport } from './routes/_profile.component-ui.$category.$slug'
-import { Route as ProfileBlocksCategorySlugRouteImport } from './routes/_profile.blocks.$category.$slug'
+import { Route as SiteBlogSlugRouteImport } from './routes/_site/blog/$slug'
+import { Route as SiteComponentUiCategoryIndexRouteImport } from './routes/_site/component-ui/$category/index'
+import { Route as SiteBlocksCategoryIndexRouteImport } from './routes/_site/blocks/$category/index'
+import { Route as SiteComponentUiCategorySlugRouteImport } from './routes/_site/component-ui/$category/$slug'
+import { Route as SiteBlocksCategorySlugRouteImport } from './routes/_site/blocks/$category/$slug'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -52,8 +50,8 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProfileRoute = ProfileRouteImport.update({
-  id: '/_profile',
+const SiteRouteRoute = SiteRouteRouteImport.update({
+  id: '/_site',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -61,10 +59,10 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
-const ProfileIndexRoute = ProfileIndexRouteImport.update({
+const SiteIndexRoute = SiteIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => ProfileRoute,
+  getParentRoute: () => SiteRouteRoute,
 } as any)
 const AdminSettingsRoute = AdminSettingsRouteImport.update({
   id: '/settings',
@@ -96,40 +94,35 @@ const AdminSplatRoute = AdminSplatRouteImport.update({
   path: '/$',
   getParentRoute: () => AdminRoute,
 } as any)
-const ProfileResourcesRoute = ProfileResourcesRouteImport.update({
-  id: '/resources',
-  path: '/resources',
-  getParentRoute: () => ProfileRoute,
-} as any)
-const ProfileColophonRoute = ProfileColophonRouteImport.update({
-  id: '/colophon',
-  path: '/colophon',
-  getParentRoute: () => ProfileRoute,
-} as any)
-const ProfileBlogRoute = ProfileBlogRouteImport.update({
-  id: '/blog',
-  path: '/blog',
-  getParentRoute: () => ProfileRoute,
-} as any)
-const ProfileBlockRoute = ProfileBlockRouteImport.update({
-  id: '/block',
-  path: '/block',
-  getParentRoute: () => ProfileRoute,
-} as any)
 const AdminPostsIndexRoute = AdminPostsIndexRouteImport.update({
   id: '/posts/',
   path: '/posts/',
   getParentRoute: () => AdminRoute,
 } as any)
-const ProfileComponentUiIndexRoute = ProfileComponentUiIndexRouteImport.update({
+const SiteResourcesIndexRoute = SiteResourcesIndexRouteImport.update({
+  id: '/resources/',
+  path: '/resources/',
+  getParentRoute: () => SiteRouteRoute,
+} as any)
+const SiteComponentUiIndexRoute = SiteComponentUiIndexRouteImport.update({
   id: '/component-ui/',
   path: '/component-ui/',
-  getParentRoute: () => ProfileRoute,
+  getParentRoute: () => SiteRouteRoute,
 } as any)
-const ProfileBlocksIndexRoute = ProfileBlocksIndexRouteImport.update({
+const SiteColophonIndexRoute = SiteColophonIndexRouteImport.update({
+  id: '/colophon/',
+  path: '/colophon/',
+  getParentRoute: () => SiteRouteRoute,
+} as any)
+const SiteBlogIndexRoute = SiteBlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => SiteRouteRoute,
+} as any)
+const SiteBlocksIndexRoute = SiteBlocksIndexRouteImport.update({
   id: '/blocks/',
   path: '/blocks/',
-  getParentRoute: () => ProfileRoute,
+  getParentRoute: () => SiteRouteRoute,
 } as any)
 const AdminPostsNewRoute = AdminPostsNewRouteImport.update({
   id: '/posts/new',
@@ -141,50 +134,39 @@ const AdminPostsIdRoute = AdminPostsIdRouteImport.update({
   path: '/posts/$id',
   getParentRoute: () => AdminRoute,
 } as any)
-const ProfileBlogSlugRoute = ProfileBlogSlugRouteImport.update({
-  id: '/blog_/$slug',
+const SiteBlogSlugRoute = SiteBlogSlugRouteImport.update({
+  id: '/blog/$slug',
   path: '/blog/$slug',
-  getParentRoute: () => ProfileRoute,
+  getParentRoute: () => SiteRouteRoute,
 } as any)
-const ProfileBlockSlugRoute = ProfileBlockSlugRouteImport.update({
-  id: '/block_/$slug',
-  path: '/block/$slug',
-  getParentRoute: () => ProfileRoute,
-} as any)
-const ProfileComponentUiCategoryIndexRoute =
-  ProfileComponentUiCategoryIndexRouteImport.update({
+const SiteComponentUiCategoryIndexRoute =
+  SiteComponentUiCategoryIndexRouteImport.update({
     id: '/component-ui/$category/',
     path: '/component-ui/$category/',
-    getParentRoute: () => ProfileRoute,
+    getParentRoute: () => SiteRouteRoute,
   } as any)
-const ProfileBlocksCategoryIndexRoute =
-  ProfileBlocksCategoryIndexRouteImport.update({
-    id: '/blocks/$category/',
-    path: '/blocks/$category/',
-    getParentRoute: () => ProfileRoute,
-  } as any)
-const ProfileComponentUiCategorySlugRoute =
-  ProfileComponentUiCategorySlugRouteImport.update({
+const SiteBlocksCategoryIndexRoute = SiteBlocksCategoryIndexRouteImport.update({
+  id: '/blocks/$category/',
+  path: '/blocks/$category/',
+  getParentRoute: () => SiteRouteRoute,
+} as any)
+const SiteComponentUiCategorySlugRoute =
+  SiteComponentUiCategorySlugRouteImport.update({
     id: '/component-ui/$category/$slug',
     path: '/component-ui/$category/$slug',
-    getParentRoute: () => ProfileRoute,
+    getParentRoute: () => SiteRouteRoute,
   } as any)
-const ProfileBlocksCategorySlugRoute =
-  ProfileBlocksCategorySlugRouteImport.update({
-    id: '/blocks/$category/$slug',
-    path: '/blocks/$category/$slug',
-    getParentRoute: () => ProfileRoute,
-  } as any)
+const SiteBlocksCategorySlugRoute = SiteBlocksCategorySlugRouteImport.update({
+  id: '/blocks/$category/$slug',
+  path: '/blocks/$category/$slug',
+  getParentRoute: () => SiteRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof ProfileIndexRoute
+  '/': typeof SiteIndexRoute
   '/admin': typeof AdminRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/block': typeof ProfileBlockRoute
-  '/blog': typeof ProfileBlogRoute
-  '/colophon': typeof ProfileColophonRoute
-  '/resources': typeof ProfileResourcesRoute
   '/admin/$': typeof AdminSplatRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/groups': typeof AdminGroupsRoute
@@ -192,74 +174,72 @@ export interface FileRoutesByFullPath {
   '/admin/resources': typeof AdminResourcesRoute
   '/admin/settings': typeof AdminSettingsRoute
   '/admin/': typeof AdminIndexRoute
-  '/block/$slug': typeof ProfileBlockSlugRoute
-  '/blog/$slug': typeof ProfileBlogSlugRoute
+  '/blog/$slug': typeof SiteBlogSlugRoute
   '/admin/posts/$id': typeof AdminPostsIdRoute
   '/admin/posts/new': typeof AdminPostsNewRoute
-  '/blocks/': typeof ProfileBlocksIndexRoute
-  '/component-ui/': typeof ProfileComponentUiIndexRoute
+  '/blocks/': typeof SiteBlocksIndexRoute
+  '/blog/': typeof SiteBlogIndexRoute
+  '/colophon/': typeof SiteColophonIndexRoute
+  '/component-ui/': typeof SiteComponentUiIndexRoute
+  '/resources/': typeof SiteResourcesIndexRoute
   '/admin/posts/': typeof AdminPostsIndexRoute
-  '/blocks/$category/$slug': typeof ProfileBlocksCategorySlugRoute
-  '/component-ui/$category/$slug': typeof ProfileComponentUiCategorySlugRoute
-  '/blocks/$category/': typeof ProfileBlocksCategoryIndexRoute
-  '/component-ui/$category/': typeof ProfileComponentUiCategoryIndexRoute
+  '/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
+  '/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
+  '/blocks/$category/': typeof SiteBlocksCategoryIndexRoute
+  '/component-ui/$category/': typeof SiteComponentUiCategoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/block': typeof ProfileBlockRoute
-  '/blog': typeof ProfileBlogRoute
-  '/colophon': typeof ProfileColophonRoute
-  '/resources': typeof ProfileResourcesRoute
   '/admin/$': typeof AdminSplatRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/groups': typeof AdminGroupsRoute
   '/admin/registry': typeof AdminRegistryRoute
   '/admin/resources': typeof AdminResourcesRoute
   '/admin/settings': typeof AdminSettingsRoute
-  '/': typeof ProfileIndexRoute
+  '/': typeof SiteIndexRoute
   '/admin': typeof AdminIndexRoute
-  '/block/$slug': typeof ProfileBlockSlugRoute
-  '/blog/$slug': typeof ProfileBlogSlugRoute
+  '/blog/$slug': typeof SiteBlogSlugRoute
   '/admin/posts/$id': typeof AdminPostsIdRoute
   '/admin/posts/new': typeof AdminPostsNewRoute
-  '/blocks': typeof ProfileBlocksIndexRoute
-  '/component-ui': typeof ProfileComponentUiIndexRoute
+  '/blocks': typeof SiteBlocksIndexRoute
+  '/blog': typeof SiteBlogIndexRoute
+  '/colophon': typeof SiteColophonIndexRoute
+  '/component-ui': typeof SiteComponentUiIndexRoute
+  '/resources': typeof SiteResourcesIndexRoute
   '/admin/posts': typeof AdminPostsIndexRoute
-  '/blocks/$category/$slug': typeof ProfileBlocksCategorySlugRoute
-  '/component-ui/$category/$slug': typeof ProfileComponentUiCategorySlugRoute
-  '/blocks/$category': typeof ProfileBlocksCategoryIndexRoute
-  '/component-ui/$category': typeof ProfileComponentUiCategoryIndexRoute
+  '/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
+  '/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
+  '/blocks/$category': typeof SiteBlocksCategoryIndexRoute
+  '/component-ui/$category': typeof SiteComponentUiCategoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_profile': typeof ProfileRouteWithChildren
+  '/_site': typeof SiteRouteRouteWithChildren
   '/admin': typeof AdminRouteWithChildren
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
-  '/_profile/block': typeof ProfileBlockRoute
-  '/_profile/blog': typeof ProfileBlogRoute
-  '/_profile/colophon': typeof ProfileColophonRoute
-  '/_profile/resources': typeof ProfileResourcesRoute
   '/admin/$': typeof AdminSplatRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/groups': typeof AdminGroupsRoute
   '/admin/registry': typeof AdminRegistryRoute
   '/admin/resources': typeof AdminResourcesRoute
   '/admin/settings': typeof AdminSettingsRoute
-  '/_profile/': typeof ProfileIndexRoute
+  '/_site/': typeof SiteIndexRoute
   '/admin/': typeof AdminIndexRoute
-  '/_profile/block_/$slug': typeof ProfileBlockSlugRoute
-  '/_profile/blog_/$slug': typeof ProfileBlogSlugRoute
+  '/_site/blog/$slug': typeof SiteBlogSlugRoute
   '/admin/posts/$id': typeof AdminPostsIdRoute
   '/admin/posts/new': typeof AdminPostsNewRoute
-  '/_profile/blocks/': typeof ProfileBlocksIndexRoute
-  '/_profile/component-ui/': typeof ProfileComponentUiIndexRoute
+  '/_site/blocks/': typeof SiteBlocksIndexRoute
+  '/_site/blog/': typeof SiteBlogIndexRoute
+  '/_site/colophon/': typeof SiteColophonIndexRoute
+  '/_site/component-ui/': typeof SiteComponentUiIndexRoute
+  '/_site/resources/': typeof SiteResourcesIndexRoute
   '/admin/posts/': typeof AdminPostsIndexRoute
-  '/_profile/blocks/$category/$slug': typeof ProfileBlocksCategorySlugRoute
-  '/_profile/component-ui/$category/$slug': typeof ProfileComponentUiCategorySlugRoute
-  '/_profile/blocks/$category/': typeof ProfileBlocksCategoryIndexRoute
-  '/_profile/component-ui/$category/': typeof ProfileComponentUiCategoryIndexRoute
+  '/_site/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
+  '/_site/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
+  '/_site/blocks/$category/': typeof SiteBlocksCategoryIndexRoute
+  '/_site/component-ui/$category/': typeof SiteComponentUiCategoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -268,10 +248,6 @@ export interface FileRouteTypes {
     | '/admin'
     | '/robots.txt'
     | '/sitemap.xml'
-    | '/block'
-    | '/blog'
-    | '/colophon'
-    | '/resources'
     | '/admin/$'
     | '/admin/categories'
     | '/admin/groups'
@@ -279,12 +255,14 @@ export interface FileRouteTypes {
     | '/admin/resources'
     | '/admin/settings'
     | '/admin/'
-    | '/block/$slug'
     | '/blog/$slug'
     | '/admin/posts/$id'
     | '/admin/posts/new'
     | '/blocks/'
+    | '/blog/'
+    | '/colophon/'
     | '/component-ui/'
+    | '/resources/'
     | '/admin/posts/'
     | '/blocks/$category/$slug'
     | '/component-ui/$category/$slug'
@@ -294,10 +272,6 @@ export interface FileRouteTypes {
   to:
     | '/robots.txt'
     | '/sitemap.xml'
-    | '/block'
-    | '/blog'
-    | '/colophon'
-    | '/resources'
     | '/admin/$'
     | '/admin/categories'
     | '/admin/groups'
@@ -306,12 +280,14 @@ export interface FileRouteTypes {
     | '/admin/settings'
     | '/'
     | '/admin'
-    | '/block/$slug'
     | '/blog/$slug'
     | '/admin/posts/$id'
     | '/admin/posts/new'
     | '/blocks'
+    | '/blog'
+    | '/colophon'
     | '/component-ui'
+    | '/resources'
     | '/admin/posts'
     | '/blocks/$category/$slug'
     | '/component-ui/$category/$slug'
@@ -319,37 +295,35 @@ export interface FileRouteTypes {
     | '/component-ui/$category'
   id:
     | '__root__'
-    | '/_profile'
+    | '/_site'
     | '/admin'
     | '/robots.txt'
     | '/sitemap.xml'
-    | '/_profile/block'
-    | '/_profile/blog'
-    | '/_profile/colophon'
-    | '/_profile/resources'
     | '/admin/$'
     | '/admin/categories'
     | '/admin/groups'
     | '/admin/registry'
     | '/admin/resources'
     | '/admin/settings'
-    | '/_profile/'
+    | '/_site/'
     | '/admin/'
-    | '/_profile/block_/$slug'
-    | '/_profile/blog_/$slug'
+    | '/_site/blog/$slug'
     | '/admin/posts/$id'
     | '/admin/posts/new'
-    | '/_profile/blocks/'
-    | '/_profile/component-ui/'
+    | '/_site/blocks/'
+    | '/_site/blog/'
+    | '/_site/colophon/'
+    | '/_site/component-ui/'
+    | '/_site/resources/'
     | '/admin/posts/'
-    | '/_profile/blocks/$category/$slug'
-    | '/_profile/component-ui/$category/$slug'
-    | '/_profile/blocks/$category/'
-    | '/_profile/component-ui/$category/'
+    | '/_site/blocks/$category/$slug'
+    | '/_site/component-ui/$category/$slug'
+    | '/_site/blocks/$category/'
+    | '/_site/component-ui/$category/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  ProfileRoute: typeof ProfileRouteWithChildren
+  SiteRouteRoute: typeof SiteRouteRouteWithChildren
   AdminRoute: typeof AdminRouteWithChildren
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -378,11 +352,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_profile': {
-      id: '/_profile'
+    '/_site': {
+      id: '/_site'
       path: ''
       fullPath: '/'
-      preLoaderRoute: typeof ProfileRouteImport
+      preLoaderRoute: typeof SiteRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -392,12 +366,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/_profile/': {
-      id: '/_profile/'
+    '/_site/': {
+      id: '/_site/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof ProfileIndexRouteImport
-      parentRoute: typeof ProfileRoute
+      preLoaderRoute: typeof SiteIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
     '/admin/settings': {
       id: '/admin/settings'
@@ -441,34 +415,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminSplatRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/_profile/resources': {
-      id: '/_profile/resources'
-      path: '/resources'
-      fullPath: '/resources'
-      preLoaderRoute: typeof ProfileResourcesRouteImport
-      parentRoute: typeof ProfileRoute
-    }
-    '/_profile/colophon': {
-      id: '/_profile/colophon'
-      path: '/colophon'
-      fullPath: '/colophon'
-      preLoaderRoute: typeof ProfileColophonRouteImport
-      parentRoute: typeof ProfileRoute
-    }
-    '/_profile/blog': {
-      id: '/_profile/blog'
-      path: '/blog'
-      fullPath: '/blog'
-      preLoaderRoute: typeof ProfileBlogRouteImport
-      parentRoute: typeof ProfileRoute
-    }
-    '/_profile/block': {
-      id: '/_profile/block'
-      path: '/block'
-      fullPath: '/block'
-      preLoaderRoute: typeof ProfileBlockRouteImport
-      parentRoute: typeof ProfileRoute
-    }
     '/admin/posts/': {
       id: '/admin/posts/'
       path: '/posts'
@@ -476,19 +422,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPostsIndexRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/_profile/component-ui/': {
-      id: '/_profile/component-ui/'
+    '/_site/resources/': {
+      id: '/_site/resources/'
+      path: '/resources'
+      fullPath: '/resources/'
+      preLoaderRoute: typeof SiteResourcesIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
+    }
+    '/_site/component-ui/': {
+      id: '/_site/component-ui/'
       path: '/component-ui'
       fullPath: '/component-ui/'
-      preLoaderRoute: typeof ProfileComponentUiIndexRouteImport
-      parentRoute: typeof ProfileRoute
+      preLoaderRoute: typeof SiteComponentUiIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
-    '/_profile/blocks/': {
-      id: '/_profile/blocks/'
+    '/_site/colophon/': {
+      id: '/_site/colophon/'
+      path: '/colophon'
+      fullPath: '/colophon/'
+      preLoaderRoute: typeof SiteColophonIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
+    }
+    '/_site/blog/': {
+      id: '/_site/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof SiteBlogIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
+    }
+    '/_site/blocks/': {
+      id: '/_site/blocks/'
       path: '/blocks'
       fullPath: '/blocks/'
-      preLoaderRoute: typeof ProfileBlocksIndexRouteImport
-      parentRoute: typeof ProfileRoute
+      preLoaderRoute: typeof SiteBlocksIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
     '/admin/posts/new': {
       id: '/admin/posts/new'
@@ -504,85 +471,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPostsIdRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/_profile/blog_/$slug': {
-      id: '/_profile/blog_/$slug'
+    '/_site/blog/$slug': {
+      id: '/_site/blog/$slug'
       path: '/blog/$slug'
       fullPath: '/blog/$slug'
-      preLoaderRoute: typeof ProfileBlogSlugRouteImport
-      parentRoute: typeof ProfileRoute
+      preLoaderRoute: typeof SiteBlogSlugRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
-    '/_profile/block_/$slug': {
-      id: '/_profile/block_/$slug'
-      path: '/block/$slug'
-      fullPath: '/block/$slug'
-      preLoaderRoute: typeof ProfileBlockSlugRouteImport
-      parentRoute: typeof ProfileRoute
-    }
-    '/_profile/component-ui/$category/': {
-      id: '/_profile/component-ui/$category/'
+    '/_site/component-ui/$category/': {
+      id: '/_site/component-ui/$category/'
       path: '/component-ui/$category'
       fullPath: '/component-ui/$category/'
-      preLoaderRoute: typeof ProfileComponentUiCategoryIndexRouteImport
-      parentRoute: typeof ProfileRoute
+      preLoaderRoute: typeof SiteComponentUiCategoryIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
-    '/_profile/blocks/$category/': {
-      id: '/_profile/blocks/$category/'
+    '/_site/blocks/$category/': {
+      id: '/_site/blocks/$category/'
       path: '/blocks/$category'
       fullPath: '/blocks/$category/'
-      preLoaderRoute: typeof ProfileBlocksCategoryIndexRouteImport
-      parentRoute: typeof ProfileRoute
+      preLoaderRoute: typeof SiteBlocksCategoryIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
-    '/_profile/component-ui/$category/$slug': {
-      id: '/_profile/component-ui/$category/$slug'
+    '/_site/component-ui/$category/$slug': {
+      id: '/_site/component-ui/$category/$slug'
       path: '/component-ui/$category/$slug'
       fullPath: '/component-ui/$category/$slug'
-      preLoaderRoute: typeof ProfileComponentUiCategorySlugRouteImport
-      parentRoute: typeof ProfileRoute
+      preLoaderRoute: typeof SiteComponentUiCategorySlugRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
-    '/_profile/blocks/$category/$slug': {
-      id: '/_profile/blocks/$category/$slug'
+    '/_site/blocks/$category/$slug': {
+      id: '/_site/blocks/$category/$slug'
       path: '/blocks/$category/$slug'
       fullPath: '/blocks/$category/$slug'
-      preLoaderRoute: typeof ProfileBlocksCategorySlugRouteImport
-      parentRoute: typeof ProfileRoute
+      preLoaderRoute: typeof SiteBlocksCategorySlugRouteImport
+      parentRoute: typeof SiteRouteRoute
     }
   }
 }
 
-interface ProfileRouteChildren {
-  ProfileBlockRoute: typeof ProfileBlockRoute
-  ProfileBlogRoute: typeof ProfileBlogRoute
-  ProfileColophonRoute: typeof ProfileColophonRoute
-  ProfileResourcesRoute: typeof ProfileResourcesRoute
-  ProfileIndexRoute: typeof ProfileIndexRoute
-  ProfileBlockSlugRoute: typeof ProfileBlockSlugRoute
-  ProfileBlogSlugRoute: typeof ProfileBlogSlugRoute
-  ProfileBlocksIndexRoute: typeof ProfileBlocksIndexRoute
-  ProfileComponentUiIndexRoute: typeof ProfileComponentUiIndexRoute
-  ProfileBlocksCategorySlugRoute: typeof ProfileBlocksCategorySlugRoute
-  ProfileComponentUiCategorySlugRoute: typeof ProfileComponentUiCategorySlugRoute
-  ProfileBlocksCategoryIndexRoute: typeof ProfileBlocksCategoryIndexRoute
-  ProfileComponentUiCategoryIndexRoute: typeof ProfileComponentUiCategoryIndexRoute
+interface SiteRouteRouteChildren {
+  SiteIndexRoute: typeof SiteIndexRoute
+  SiteBlogSlugRoute: typeof SiteBlogSlugRoute
+  SiteBlocksIndexRoute: typeof SiteBlocksIndexRoute
+  SiteBlogIndexRoute: typeof SiteBlogIndexRoute
+  SiteColophonIndexRoute: typeof SiteColophonIndexRoute
+  SiteComponentUiIndexRoute: typeof SiteComponentUiIndexRoute
+  SiteResourcesIndexRoute: typeof SiteResourcesIndexRoute
+  SiteBlocksCategorySlugRoute: typeof SiteBlocksCategorySlugRoute
+  SiteComponentUiCategorySlugRoute: typeof SiteComponentUiCategorySlugRoute
+  SiteBlocksCategoryIndexRoute: typeof SiteBlocksCategoryIndexRoute
+  SiteComponentUiCategoryIndexRoute: typeof SiteComponentUiCategoryIndexRoute
 }
 
-const ProfileRouteChildren: ProfileRouteChildren = {
-  ProfileBlockRoute: ProfileBlockRoute,
-  ProfileBlogRoute: ProfileBlogRoute,
-  ProfileColophonRoute: ProfileColophonRoute,
-  ProfileResourcesRoute: ProfileResourcesRoute,
-  ProfileIndexRoute: ProfileIndexRoute,
-  ProfileBlockSlugRoute: ProfileBlockSlugRoute,
-  ProfileBlogSlugRoute: ProfileBlogSlugRoute,
-  ProfileBlocksIndexRoute: ProfileBlocksIndexRoute,
-  ProfileComponentUiIndexRoute: ProfileComponentUiIndexRoute,
-  ProfileBlocksCategorySlugRoute: ProfileBlocksCategorySlugRoute,
-  ProfileComponentUiCategorySlugRoute: ProfileComponentUiCategorySlugRoute,
-  ProfileBlocksCategoryIndexRoute: ProfileBlocksCategoryIndexRoute,
-  ProfileComponentUiCategoryIndexRoute: ProfileComponentUiCategoryIndexRoute,
+const SiteRouteRouteChildren: SiteRouteRouteChildren = {
+  SiteIndexRoute: SiteIndexRoute,
+  SiteBlogSlugRoute: SiteBlogSlugRoute,
+  SiteBlocksIndexRoute: SiteBlocksIndexRoute,
+  SiteBlogIndexRoute: SiteBlogIndexRoute,
+  SiteColophonIndexRoute: SiteColophonIndexRoute,
+  SiteComponentUiIndexRoute: SiteComponentUiIndexRoute,
+  SiteResourcesIndexRoute: SiteResourcesIndexRoute,
+  SiteBlocksCategorySlugRoute: SiteBlocksCategorySlugRoute,
+  SiteComponentUiCategorySlugRoute: SiteComponentUiCategorySlugRoute,
+  SiteBlocksCategoryIndexRoute: SiteBlocksCategoryIndexRoute,
+  SiteComponentUiCategoryIndexRoute: SiteComponentUiCategoryIndexRoute,
 }
 
-const ProfileRouteWithChildren =
-  ProfileRoute._addFileChildren(ProfileRouteChildren)
+const SiteRouteRouteWithChildren = SiteRouteRoute._addFileChildren(
+  SiteRouteRouteChildren,
+)
 
 interface AdminRouteChildren {
   AdminSplatRoute: typeof AdminSplatRoute
@@ -613,7 +570,7 @@ const AdminRouteChildren: AdminRouteChildren = {
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-  ProfileRoute: ProfileRouteWithChildren,
+  SiteRouteRoute: SiteRouteRouteWithChildren,
   AdminRoute: AdminRouteWithChildren,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
