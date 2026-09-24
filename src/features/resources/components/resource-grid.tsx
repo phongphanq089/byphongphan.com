@@ -1,10 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
-import { BookmarkX } from "lucide-react"
 import { useMemo, useState } from "react"
 
 import { GridContainer } from "@/app/layouts"
-import { Button } from "@/shared/ui/core"
-import { SectionEmptyState } from "@/shared/ui/system"
 
 import {
   resourceCategoriesQueryOptions,
@@ -161,11 +158,7 @@ export function ResourceGrid({
               ) : (
                 /* Empty placeholder cell for odd count of items */
                 <div className="hidden h-full w-full md:flex">
-                  <SectionEmptyState
-                    variant="cell"
-                    title="More Bookmarks Coming Soon"
-                    description="Curating additional design & dev tools."
-                  />
+                  More Bookmarks Coming Soon
                 </div>
               )}
             </div>
@@ -178,27 +171,8 @@ export function ResourceGrid({
           showCrosshairs
           className="p-6 sm:p-10 md:p-12"
         >
-          <SectionEmptyState
-            icon={<BookmarkX className="size-6" />}
-            badge="RESOURCES DIRECTORY"
-            title="No resources found"
-            description="We couldn't find any resources matching your search query or filters. Try resetting your criteria."
-            action={
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  setSelectedCategory(null)
-                  setSelectedPricing("ALL")
-                  setSortOption("featured")
-                  setSearchQuery("")
-                }}
-                className="border-pp-primary/40 bg-pp-primary/10 text-pp-primary hover:bg-pp-primary hover:text-white"
-              >
-                Clear all filters
-              </Button>
-            }
-          />
+          We couldn't find any resources matching your search query or filters.
+          Try resetting your criteria.
         </GridContainer>
       )}
     </div>

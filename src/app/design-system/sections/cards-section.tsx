@@ -2,10 +2,6 @@ import { BLOCKS_DATA } from "@/features/blocks/blocks-data"
 import { BlockCard } from "@/features/blocks/components/block-card"
 import { ComponentCard } from "@/features/component-ui/components/component-card"
 import { COMPONENTS_DATA } from "@/features/component-ui/components-data"
-import {
-  Card as GlowCard,
-  CardCanvas,
-} from "@/shared/ui/animation/animated-glow-card"
 import { XGradientCard } from "@/shared/ui/animation/x-gradient-card"
 import { Button } from "@/shared/ui/core/button"
 import {
@@ -66,21 +62,6 @@ export function CardsSection() {
             <Button size="sm">Deploy</Button>
           </CardFooter>
         </Card>
-      </ShowcaseCard>
-
-      <ShowcaseCard
-        title="Animated Glow Card Canvas"
-        description="Blueprint corner crosshairs and dynamic glow cursor"
-        tag="Animation"
-      >
-        <CardCanvas className="w-full max-w-xs">
-          <GlowCard contentClassName="space-y-2 p-6 text-center">
-            <div className="text-sm font-semibold text-primary">Glow Card</div>
-            <p className="text-xs text-muted-foreground">
-              Hover over this card to activate dynamic corner crosshair glows.
-            </p>
-          </GlowCard>
-        </CardCanvas>
       </ShowcaseCard>
 
       <ShowcaseCard

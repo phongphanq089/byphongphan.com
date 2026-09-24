@@ -12,7 +12,6 @@ import { BlueprintSection } from "./sections/blueprint-section"
 import { BrandSection } from "./sections/brand-section"
 import { ButtonsSection } from "./sections/buttons-section"
 import { CardsSection } from "./sections/cards-section"
-import { FeedbackSection } from "./sections/feedback-section"
 import { IconsSection } from "./sections/icons-section"
 import { TokensSection } from "./sections/tokens-section"
 
@@ -165,22 +164,6 @@ export function DesignSystemShowcase() {
               </h2>
             </div>
             <BlueprintSection />
-          </section>
-
-          {/* 07. States & Feedback */}
-          <section className="space-y-6">
-            <div
-              id="feedback"
-              className="scroll-mt-24 space-y-1 border-b border-border/60 pb-3"
-            >
-              <span className="text-xs font-semibold text-primary">
-                07 / FEEDBACK
-              </span>
-              <h2 className="text-xl font-bold tracking-tight text-foreground">
-                Feedback & System Indicators
-              </h2>
-            </div>
-            <FeedbackSection />
           </section>
 
           {/* 08. Tech Icons */}
