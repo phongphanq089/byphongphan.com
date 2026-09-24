@@ -9,7 +9,7 @@ import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type"
 import FilePondPluginImagePreview from "filepond-plugin-image-preview"
 import { FilePond } from "react-filepond"
 
-import { cn } from "@/shared/lib/utils"
+import { cn } from "cn"
 
 // Register plugins once
 registerPlugin(

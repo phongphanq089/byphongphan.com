@@ -50,13 +50,19 @@ export function ComponentCard({ component }: ComponentCardProps) {
               {component.count}
             </span>
           )}
-          <h3 className="text-sm font-semibold tracking-tight text-foreground transition-colors group-hover:text-pp-primary sm:text-base">
-            {component.name}
-          </h3>
+
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <h3 className="line-clamp-1 text-sm font-semibold tracking-tight text-foreground transition-colors group-hover:text-pp-primary sm:text-base">
+                {component.name}
+              </h3>
+            </TooltipTrigger>
+            <TooltipContent>{component.name}</TooltipContent>
+          </Tooltip>
           {component.isNew && (
             <Badge
               variant="outline"
-              className="h-4.5 gap-1 rounded border-primary bg-primary px-1.5 text-[9px] font-semibold tracking-wider text-white uppercase shadow-[0_0_8px_var(--pp-primary-glow)]"
+              className="h-4.5 gap-1 rounded border-primary bg-primary px-1.5 text-[9px] font-semibold tracking-wider text-white uppercase shadow-[0_0_8px_var(--pp-primary-glow)] dark:text-background"
             >
               New
             </Badge>

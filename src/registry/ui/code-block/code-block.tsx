@@ -21,7 +21,7 @@ import {
 } from "react"
 
 import { Button } from "@/registry/ui/button"
-import { cn } from "@/shared/lib/utils"
+import { cn } from "cn"
 
 import type {
   CodeBlockDiffSpec,

@@ -1,8 +1,8 @@
 import { ArrowUpRight, Cpu, Sparkles, TrendingUp } from "lucide-react"
 
-import { cn } from "@/shared/lib"
-import { Badge } from "@/shared/ui/core/badge"
-import { Button } from "@/shared/ui/core/button"
+import { cn } from "cn"
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
 
 export interface CardGradientGlassFeatureProps {
   category?: string

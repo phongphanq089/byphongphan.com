@@ -1,7 +1,7 @@
 import { Ruler } from "lucide-react"
 
 import { BackgroundGradientCursor } from "@/registry/animated/background-gradient-cursor"
-import { Badge } from "@/shared/ui/core/badge"
+import { Badge } from "@/registry/ui/badge"
 
 export function BackgroundGradientCursorBlueprint() {
   return (

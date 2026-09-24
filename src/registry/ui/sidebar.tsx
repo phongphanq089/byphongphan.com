@@ -6,9 +6,9 @@ import { PanelLeftIcon } from "lucide-react"
 import { Slot } from "radix-ui"
 import * as React from "react"
 
-import { Button } from "@/registry/ui/button"
-import { Input } from "@/registry/ui/input"
-import { Separator } from "@/registry/ui/separator"
+import { Button } from "./button"
+import { Input } from "./input"
+import { Separator } from "./separator"
 import {
   Sheet,
   SheetContent,
