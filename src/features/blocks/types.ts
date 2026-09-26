@@ -6,22 +6,6 @@ export interface BlockCategory {
   count?: number
 }
 
-export type BlockSchematicType =
-  | "not-found-brick"
-  | "social-proof-logos"
-  | "social-links-grid"
-  | "benefits-alternating"
-  | "benefits-cards"
-  | "hero-marketing"
-  | "pricing-matrix"
-  | "dashboard-overview"
-  | "feature-grid"
-  | "cta-banner"
-  | "testimonial-cards"
-  | "product-grid"
-  | "faq-accordion"
-  | "stats-metrics"
-
 /** Represents a single source file within a block */
 export interface BlockFile {
   /** Display path shown in the file tree (e.g. "app/not-found.tsx") */
@@ -37,7 +21,6 @@ export interface BlockItem {
   category: "marketing" | "application" | "ecommerce"
   description: string
   isPro?: boolean
-  schematicType: BlockSchematicType
   badge?: string
   /**
    * List of source files composing this block.

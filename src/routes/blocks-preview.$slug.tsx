@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
-import React, { lazy, Suspense } from "react"
+import React, { lazy, Suspense, useEffect } from "react"
 
 /**
  * Registry mapping block slugs to lazy-loaded root block components.
@@ -21,6 +21,59 @@ export const Route = createFileRoute("/blocks-preview/$slug")({
 function BlockPreviewFrame() {
   const { slug } = Route.useParams()
   const BlockComponent = BLOCK_COMPONENTS[slug]
+
+  // Synchronize dark/light theme with parent window & localStorage
+  useEffect(() => {
+    const syncTheme = () => {
+      try {
+        const parentDoc = window.parent?.document
+        if (parentDoc && parentDoc !== document) {
+          const parentIsDark =
+            parentDoc.documentElement.classList.contains("dark")
+          document.documentElement.classList.toggle("dark", parentIsDark)
+          document.documentElement.classList.toggle("light", !parentIsDark)
+          return
+        }
+      } catch {
+        // Cross-origin fallback
+      }
+
+      const stored = localStorage.getItem("vite-ui-theme")
+      const isDark =
+        stored === "dark" ||
+        (stored !== "light" &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches)
+      document.documentElement.classList.toggle("dark", isDark)
+      document.documentElement.classList.toggle("light", !isDark)
+    }
+
+    syncTheme()
+
+    let observer: MutationObserver | null = null
+    try {
+      if (window.parent && window.parent.document) {
+        observer = new MutationObserver(syncTheme)
+        observer.observe(window.parent.document.documentElement, {
+          attributes: true,
+          attributeFilter: ["class"],
+        })
+      }
+    } catch {
+      // Cross-origin fallback
+    }
+
+    const handleStorage = (e: StorageEvent) => {
+      if (e.key === "vite-ui-theme") {
+        syncTheme()
+      }
+    }
+    window.addEventListener("storage", handleStorage)
+
+    return () => {
+      observer?.disconnect()
+      window.removeEventListener("storage", handleStorage)
+    }
+  }, [])
 
   if (!BlockComponent) {
     return (
