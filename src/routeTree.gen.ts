@@ -15,6 +15,7 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as SiteRouteRouteImport } from './routes/_site/route'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as SiteIndexRouteImport } from './routes/_site/index'
+import { Route as BlocksPreviewSlugRouteImport } from './routes/blocks-preview.$slug'
 import { Route as AdminSettingsRouteImport } from './routes/admin/settings'
 import { Route as AdminResourcesRouteImport } from './routes/admin/resources'
 import { Route as AdminRegistryRouteImport } from './routes/admin/registry'
@@ -63,6 +64,11 @@ const SiteIndexRoute = SiteIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => SiteRouteRoute,
+} as any)
+const BlocksPreviewSlugRoute = BlocksPreviewSlugRouteImport.update({
+  id: '/blocks-preview/$slug',
+  path: '/blocks-preview/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AdminSettingsRoute = AdminSettingsRouteImport.update({
   id: '/settings',
@@ -173,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/admin/registry': typeof AdminRegistryRoute
   '/admin/resources': typeof AdminResourcesRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
   '/admin/': typeof AdminIndexRoute
   '/blog/$slug': typeof SiteBlogSlugRoute
   '/admin/posts/$id': typeof AdminPostsIdRoute
@@ -197,6 +204,7 @@ export interface FileRoutesByTo {
   '/admin/registry': typeof AdminRegistryRoute
   '/admin/resources': typeof AdminResourcesRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
   '/': typeof SiteIndexRoute
   '/admin': typeof AdminIndexRoute
   '/blog/$slug': typeof SiteBlogSlugRoute
@@ -225,6 +233,7 @@ export interface FileRoutesById {
   '/admin/registry': typeof AdminRegistryRoute
   '/admin/resources': typeof AdminResourcesRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
   '/_site/': typeof SiteIndexRoute
   '/admin/': typeof AdminIndexRoute
   '/_site/blog/$slug': typeof SiteBlogSlugRoute
@@ -254,6 +263,7 @@ export interface FileRouteTypes {
     | '/admin/registry'
     | '/admin/resources'
     | '/admin/settings'
+    | '/blocks-preview/$slug'
     | '/admin/'
     | '/blog/$slug'
     | '/admin/posts/$id'
@@ -278,6 +288,7 @@ export interface FileRouteTypes {
     | '/admin/registry'
     | '/admin/resources'
     | '/admin/settings'
+    | '/blocks-preview/$slug'
     | '/'
     | '/admin'
     | '/blog/$slug'
@@ -305,6 +316,7 @@ export interface FileRouteTypes {
     | '/admin/registry'
     | '/admin/resources'
     | '/admin/settings'
+    | '/blocks-preview/$slug'
     | '/_site/'
     | '/admin/'
     | '/_site/blog/$slug'
@@ -327,6 +339,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  BlocksPreviewSlugRoute: typeof BlocksPreviewSlugRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -372,6 +385,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof SiteIndexRouteImport
       parentRoute: typeof SiteRouteRoute
+    }
+    '/blocks-preview/$slug': {
+      id: '/blocks-preview/$slug'
+      path: '/blocks-preview/$slug'
+      fullPath: '/blocks-preview/$slug'
+      preLoaderRoute: typeof BlocksPreviewSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/admin/settings': {
       id: '/admin/settings'
@@ -574,6 +594,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  BlocksPreviewSlugRoute: BlocksPreviewSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
