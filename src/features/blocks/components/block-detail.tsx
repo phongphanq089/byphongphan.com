@@ -381,6 +381,8 @@ export function BlockDetail({ block }: BlockDetailProps) {
                 </span>
               </div>
               <BlockFileTree
+                key={block.slug}
+                files={resolvedFiles}
                 tree={fileTree}
                 activeFile={currentActivePath}
                 onSelectFile={setActiveFilePath}
