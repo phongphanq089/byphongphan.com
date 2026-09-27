@@ -79,7 +79,7 @@ export const COMMAND_MENU_ITEMS: CommandMenuItem[] = [
       "templates",
     ],
     group: "menu",
-    to: "/block",
+    to: "/blocks",
   },
   {
     id: "nav-blog",

@@ -1,4 +1,4 @@
-﻿import { Check, ChevronDown, ChevronUp, Copy } from "lucide-react"
+import { Check, ChevronDown, ChevronUp, Copy } from "lucide-react"
 import { useMemo, useState } from "react"
 
 import { REGISTRY_ITEMS } from "@/registry"
@@ -32,7 +32,10 @@ export function InstallationGuide({
   const [isExpanded, setIsExpanded] = useState(false)
 
   const registryItem = REGISTRY_ITEMS.find((r) => r.name === componentSlug)
-  const dependencies = registryItem?.dependencies ?? []
+  const dependencies = useMemo(
+    () => registryItem?.dependencies ?? [],
+    [registryItem]
+  )
   const fileName =
     registryItem?.files[0]?.target ?? `components/ui/${componentSlug}.tsx`
 

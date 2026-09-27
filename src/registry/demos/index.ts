@@ -5,6 +5,7 @@ import { CardDemo } from "./card-demo"
 import { CodeBlockDemo } from "./code-block-demo"
 import { FlipClockDemo } from "./flip-clock-demo"
 import { MapDemo } from "./map-demo"
+import { MiddleTruncationDemo } from "./middle-truncation-demo"
 import { PhongPhanIsometricDemo } from "./phong-phan-isometric-demo"
 import { PPMarkIsometricDemo } from "./pp-mark-isometric-demo"
 import { SelectDemo } from "./select-demo"
@@ -17,6 +18,7 @@ export {
   CodeBlockDemo,
   FlipClockDemo,
   MapDemo,
+  MiddleTruncationDemo,
   PhongPhanIsometricDemo,
   PPMarkIsometricDemo,
   SelectDemo,
@@ -35,4 +37,6 @@ export const REGISTRY_DEMOS: Record<string, React.ComponentType> = {
   "background-gradient-cursor": BackgroundGradientCursorDemo,
   "pp-mark-isometric": PPMarkIsometricDemo,
   "phong-phan-isometric": PhongPhanIsometricDemo,
+  "middle-truncation": MiddleTruncationDemo,
+  "middle-truncation-demo": MiddleTruncationDemo,
 }

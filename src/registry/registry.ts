@@ -5,6 +5,7 @@ import {
   CodeBlockSchematic,
   FlipClockSchematic,
   MapSchematic,
+  MiddleTruncationSchematic,
   PhongPhanIsometricSchematic,
   PPMarkIsometricSchematic,
   SelectSchematic,
@@ -13,6 +14,26 @@ import {
 } from "./schematics"
 
 export const REGISTRY_ITEMS: RegistryItem[] = [
+  {
+    name: "middle-truncation",
+    title: "Middle Truncation",
+    description:
+      "Canvas-measured binary search text truncation preserving the start and end of strings with responsive resize sync.",
+    type: "registry:ui",
+    category: "primitives",
+    schematic: MiddleTruncationSchematic,
+    schematicType: "middle-truncation",
+    isNew: true,
+    dependencies: [],
+    registryDependencies: [],
+    files: [
+      {
+        path: "ui/middle-truncation.tsx",
+        type: "registry:ui",
+        target: "components/ui/middle-truncation.tsx",
+      },
+    ],
+  },
   {
     name: "select",
     title: "Select",
@@ -233,6 +254,91 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
         path: "animated/phong-phan-isometric.tsx",
         type: "registry:component",
         target: "components/phong-phan-isometric.tsx",
+      },
+    ],
+  },
+  {
+    name: "not-found-01",
+    title: "Not Found 01",
+    description: "A 404 page with a playable brick breaker game.",
+    type: "registry:block",
+    category: "foundations",
+    isNew: true,
+    dependencies: ["lucide-react"],
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "block/not-found-01/app/not-found.tsx",
+        type: "registry:block",
+        target: "app/not-found.tsx",
+      },
+      {
+        path: "block/not-found-01/components/daikanoid/index.tsx",
+        type: "registry:block",
+        target: "components/daikanoid/index.tsx",
+      },
+      {
+        path: "block/not-found-01/components/daikanoid/component.tsx",
+        type: "registry:block",
+        target: "components/daikanoid/component.tsx",
+      },
+      {
+        path: "block/not-found-01/components/daikanoid/ball.ts",
+        type: "registry:block",
+        target: "components/daikanoid/ball.ts",
+      },
+      {
+        path: "block/not-found-01/components/daikanoid/brick.ts",
+        type: "registry:block",
+        target: "components/daikanoid/brick.ts",
+      },
+      {
+        path: "block/not-found-01/components/daikanoid/paddle.ts",
+        type: "registry:block",
+        target: "components/daikanoid/paddle.ts",
+      },
+      {
+        path: "block/not-found-01/components/daikanoid/constants.ts",
+        type: "registry:block",
+        target: "components/daikanoid/constants.ts",
+      },
+      {
+        path: "block/not-found-01/components/daikanoid/colors.ts",
+        type: "registry:block",
+        target: "components/daikanoid/colors.ts",
+      },
+      {
+        path: "block/not-found-01/components/daikanoid/types.ts",
+        type: "registry:block",
+        target: "components/daikanoid/types.ts",
+      },
+    ],
+  },
+  {
+    name: "not-found-02",
+    title: "Not Found Gravity",
+    description:
+      "Interactive 404 error page with 2D physics gravity, falling blocks, and draggable elements.",
+    type: "registry:block",
+    category: "foundations",
+    isNew: true,
+    dependencies: [
+      "matter-js",
+      "poly-decomp",
+      "svg-path-commander",
+      "lucide-react",
+    ],
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "block/not-found-02/app/not-found.tsx",
+        type: "registry:block",
+        target: "app/not-found.tsx",
+      },
+      {
+        path: "block/not-found-02/components/gravity.tsx",
+        type: "registry:block",
+        target: "components/gravity.tsx",
       },
     ],
   },

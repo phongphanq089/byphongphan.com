@@ -4,6 +4,7 @@ import { BACKGROUND_GRADIENT_CURSOR_VARIANTS } from "./background-gradient-curso
 import { CARD_VARIANTS } from "./card-variants"
 import { CODE_BLOCK_VARIANTS } from "./code-block-variants"
 import { MAP_VARIANTS } from "./map-variants"
+import { MIDDLE_TRUNCATION_VARIANTS } from "./middle-truncation-variants"
 import { PHONG_PHAN_ISOMETRIC_VARIANTS } from "./phong-phan-isometric-variants"
 import { PP_MARK_ISOMETRIC_VARIANTS } from "./pp-mark-isometric-variants"
 import { SELECT_VARIANTS } from "./select-variants"
@@ -13,6 +14,7 @@ export * from "./background-gradient-cursor-variants"
 export * from "./card-variants"
 export * from "./code-block-variants"
 export * from "./map-variants"
+export * from "./middle-truncation-variants"
 export * from "./phong-phan-isometric-variants"
 export * from "./pp-mark-isometric-variants"
 export * from "./select-variants"
@@ -27,6 +29,7 @@ export const ALL_VARIANTS: ComponentVariant[] = [
   ...BACKGROUND_GRADIENT_CURSOR_VARIANTS,
   ...PP_MARK_ISOMETRIC_VARIANTS,
   ...PHONG_PHAN_ISOMETRIC_VARIANTS,
+  ...MIDDLE_TRUNCATION_VARIANTS,
 ]
 
 export const VARIANTS_MAP = new Map<string, ComponentVariant>(
@@ -45,4 +48,5 @@ export const COMPONENT_VARIANTS: Record<string, ComponentVariant[]> = {
   "background-gradient-cursor": BACKGROUND_GRADIENT_CURSOR_VARIANTS,
   "pp-mark-isometric": PP_MARK_ISOMETRIC_VARIANTS,
   "phong-phan-isometric": PHONG_PHAN_ISOMETRIC_VARIANTS,
+  "middle-truncation": MIDDLE_TRUNCATION_VARIANTS,
 }

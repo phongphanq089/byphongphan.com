@@ -92,7 +92,7 @@ const config = defineConfig({
       },
       pages: [
         { path: "/" },
-        { path: "/block" },
+        { path: "/blocks" },
         { path: "/blog" },
         { path: "/resources" },
         { path: "/component-ui" },
