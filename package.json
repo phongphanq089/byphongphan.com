@@ -21,6 +21,8 @@
     "@excalidraw/excalidraw": "^0.18.1",
     "@fontsource-variable/geist-mono": "^5.2.7",
     "@gsap/react": "^2.1.2",
+    "@headless-tree/core": "^1.7.0",
+    "@headless-tree/react": "^1.7.0",
     "@hookform/resolvers": "^5.9.1",
     "@lexical/clipboard": "^0.51.0",
     "@lexical/code": "^0.51.0",
