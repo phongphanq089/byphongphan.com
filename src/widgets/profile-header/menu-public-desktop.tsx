@@ -4,7 +4,6 @@ import { animate } from "motion/react"
 import React, { useCallback, useEffect, useRef, useState } from "react"
 
 import { MAIN_NAV_ITEMS, type NavItemConfig } from "@/shared/config"
-import { useMediaQuery } from "@/shared/hooks/use-media-query"
 import { cn } from "@/shared/lib/utils"
 import { ModeToggle, PPPixelMark } from "@/shared/ui"
 import GenerateButton from "@/shared/ui/animation/generate-button"
@@ -251,8 +250,6 @@ export function SpotlightNavbar({
 }
 
 export function Header() {
-  const isDownLg = useMediaQuery("max-lg")
-
   return (
     <header className="flex h-12 w-full items-center justify-between bg-accent/40 backdrop-blur-md dark:bg-[#111111]">
       <Link
@@ -262,19 +259,19 @@ export function Header() {
         <PPPixelMark size={32} className="text-pp-primary" />
       </Link>
 
-      {isDownLg ? (
-        <div className="flex h-full items-center gap-3 px-3">
-          <GenerateButton hue={210} />
+      {/* Mobile header — visible below lg, hidden at lg+ */}
+      <div className="flex h-full items-center gap-3 px-3 lg:hidden">
+        <GenerateButton hue={210} />
+      </div>
+
+      {/* Desktop header — hidden below lg, visible at lg+ */}
+      <div className="ml-auto hidden h-full items-center lg:flex">
+        <SpotlightNavbar className="h-full" />
+        <div className="flex h-full items-center gap-2 border-l border-border px-3">
+          <CommandMenuTrigger compact />
+          <ModeToggle />
         </div>
-      ) : (
-        <div className="ml-auto flex h-full items-center">
-          <SpotlightNavbar className="h-full" />
-          <div className="flex h-full items-center gap-2 border-l border-border px-3">
-            <CommandMenuTrigger compact />
-            <ModeToggle />
-          </div>
-        </div>
-      )}
+      </div>
     </header>
   )
 }

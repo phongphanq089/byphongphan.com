@@ -16,7 +16,8 @@ export function getRouter() {
     defaultPreload: "intent",
     defaultErrorComponent: DefaultCatchBoundary,
     defaultNotFoundComponent: () => <NotFound />,
-    defaultViewTransition: true,
+    defaultViewTransition: false,
+    scrollRestoration: true,
   })
   setupRouterSsrQueryIntegration({
     router,
