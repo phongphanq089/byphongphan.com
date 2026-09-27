@@ -17,7 +17,10 @@ export const COMPONENT_CATEGORIES: {
  * Do not add component display metadata here; update registry.ts instead.
  */
 export const COMPONENTS_DATA: ComponentItem[] = REGISTRY_ITEMS.filter(
-  (item) => item.type !== "registry:hook" && item.type !== "registry:lib"
+  (item) =>
+    item.type !== "registry:hook" &&
+    item.type !== "registry:lib" &&
+    item.type !== "registry:block"
 ).map((item): ComponentItem => ({
   id: `comp-${item.name}`,
   name: item.title,

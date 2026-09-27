@@ -5,6 +5,7 @@ import {
   CodeBlockSchematic,
   FlipClockSchematic,
   MapSchematic,
+  MiddleTruncationSchematic,
   PhongPhanIsometricSchematic,
   PPMarkIsometricSchematic,
   SelectSchematic,
@@ -13,6 +14,26 @@ import {
 } from "./schematics"
 
 export const REGISTRY_ITEMS: RegistryItem[] = [
+  {
+    name: "middle-truncation",
+    title: "Middle Truncation",
+    description:
+      "Canvas-measured binary search text truncation preserving the start and end of strings with responsive resize sync.",
+    type: "registry:ui",
+    category: "primitives",
+    schematic: MiddleTruncationSchematic,
+    schematicType: "middle-truncation",
+    isNew: true,
+    dependencies: [],
+    registryDependencies: [],
+    files: [
+      {
+        path: "ui/middle-truncation.tsx",
+        type: "registry:ui",
+        target: "components/ui/middle-truncation.tsx",
+      },
+    ],
+  },
   {
     name: "select",
     title: "Select",
