@@ -51,12 +51,18 @@ export function BlockGrid({ category = "all" }: BlockGridProps) {
             className="w-full"
           >
             {/* Column 1 */}
-            <div className="flex h-full w-full border-b border-border p-4 sm:p-5 md:border-b-0 md:p-6">
+            <div
+              key={`${pair[0].id}-col1`}
+              className="flex h-full w-full border-b border-border p-4 sm:p-5 md:border-b-0 md:p-6"
+            >
               <BlockCard block={pair[0]} />
             </div>
 
             {/* Column 2 */}
-            <div className="flex h-full w-full p-4 sm:p-5 md:p-6">
+            <div
+              key={pair[1] ? `${pair[1].id}-col2` : `empty-col2-${rowIndex}`}
+              className="flex h-full w-full p-4 sm:p-5 md:p-6"
+            >
               {pair[1] ? (
                 <BlockCard block={pair[1]} />
               ) : (
