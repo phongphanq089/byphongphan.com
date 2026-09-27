@@ -12,14 +12,17 @@ import {
   Smartphone,
   Tablet,
 } from "lucide-react"
-import { useCallback, useMemo, useRef, useState } from "react"
+import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import type { PanelImperativeHandle } from "react-resizable-panels"
 
 import { GridContainer } from "@/app/layouts"
-import { siteConfig } from "@/shared/config"
 import { cn } from "@/shared/lib"
 import {
   Button,
   CodeBlockCommand,
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
   Tooltip,
   TooltipContent,
   TooltipTrigger,
@@ -87,20 +90,35 @@ export function BlockDetail({ block }: BlockDetailProps) {
     setIsFullscreen((prev) => !prev)
   }, [])
 
-  const viewportWidthClass = useMemo(() => {
-    switch (viewport) {
-      case "mobile":
-        return "max-w-[390px]"
-      case "tablet":
-        return "max-w-[768px]"
-      default:
-        return "w-full"
+  const panelRef = useRef<PanelImperativeHandle | null>(null)
+  const [isDragging, setIsDragging] = useState(false)
+
+  const handleSetViewport = useCallback((mode: ViewportMode) => {
+    setViewport(mode)
+    if (panelRef.current) {
+      switch (mode) {
+        case "desktop":
+          panelRef.current.resize("100%")
+          break
+        case "tablet":
+          panelRef.current.resize("60%")
+          break
+        case "mobile":
+          panelRef.current.resize("32%")
+          break
+      }
     }
-  }, [viewport])
+  }, [])
 
-  const installSource = `${siteConfig.url}/r/${block.slug}.json`
-
-  console.log(installSource, "================  installSource ============")
+  useEffect(() => {
+    const handlePointerUp = () => {
+      setIsDragging(false)
+    }
+    window.addEventListener("pointerup", handlePointerUp)
+    return () => {
+      window.removeEventListener("pointerup", handlePointerUp)
+    }
+  }, [])
 
   return (
     <div className="w-full">
@@ -233,7 +251,7 @@ export function BlockDetail({ block }: BlockDetailProps) {
                   <TooltipTrigger asChild>
                     <button
                       type="button"
-                      onClick={() => setViewport(mode)}
+                      onClick={() => handleSetViewport(mode)}
                       className={cn(
                         "flex size-7 items-center justify-center rounded-md text-muted-foreground transition-all",
                         viewport === mode
@@ -300,27 +318,56 @@ export function BlockDetail({ block }: BlockDetailProps) {
         {activeTab === "preview" && (
           <div
             className={cn(
-              "flex items-center justify-center p-4 sm:p-8 md:p-12",
+              "flex w-full items-center justify-center p-4 sm:p-8 md:p-12",
               isFullscreen && "fixed inset-0 z-50 bg-background p-0"
             )}
           >
-            <div
-              className={cn(
-                "relative mx-auto overflow-hidden rounded-2xl border border-border/60 bg-muted/20 shadow-2xl transition-all duration-300",
-                viewportWidthClass,
-                isFullscreen
-                  ? "h-full w-full rounded-none border-none"
-                  : "h-[600px] sm:h-[700px] lg:h-[800px]"
-              )}
-            >
-              <iframe
-                ref={iframeRef}
-                src={`/blocks-preview/${block.slug}`}
-                title={`${block.title} Preview`}
-                className="h-full w-full border-none bg-background"
-                sandbox="allow-scripts allow-same-origin"
-              />
-            </div>
+            {isFullscreen ? (
+              <div className="h-full w-full">
+                <iframe
+                  ref={iframeRef}
+                  src={`/blocks-preview/${block.slug}`}
+                  title={`${block.title} Preview`}
+                  className="h-full w-full border-none bg-background"
+                  sandbox="allow-scripts allow-same-origin"
+                />
+              </div>
+            ) : (
+              <div className="w-full">
+                <ResizablePanelGroup
+                  direction="horizontal"
+                  className="relative min-h-[600px] w-full rounded-2xl border border-border/60 bg-muted/10 shadow-2xl sm:min-h-[700px] lg:min-h-[800px]"
+                >
+                  <ResizablePanel
+                    panelRef={panelRef}
+                    defaultSize="100%"
+                    minSize="25%"
+                    className="relative overflow-hidden bg-background"
+                  >
+                    <div className="relative h-full w-full">
+                      {isDragging && (
+                        <div className="absolute inset-0 z-50 bg-transparent" />
+                      )}
+                      <iframe
+                        ref={iframeRef}
+                        src={`/blocks-preview/${block.slug}`}
+                        title={`${block.title} Preview`}
+                        className="h-full w-full border-none bg-background"
+                        sandbox="allow-scripts allow-same-origin"
+                      />
+                    </div>
+                  </ResizablePanel>
+
+                  <ResizableHandle
+                    withHandle
+                    className="z-20 bg-border/60"
+                    onPointerDown={() => setIsDragging(true)}
+                  />
+
+                  <ResizablePanel defaultSize="0%" minSize="0%" />
+                </ResizablePanelGroup>
+              </div>
+            )}
           </div>
         )}
 
