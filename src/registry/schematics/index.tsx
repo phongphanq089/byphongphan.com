@@ -5,6 +5,7 @@ import { CardSchematic } from "./card-schematic"
 import { CodeBlockSchematic } from "./code-block-schematic"
 import { FlipClockSchematic } from "./flip-clock-schematic"
 import { MapSchematic } from "./map-schematic"
+import { MiddleTruncationSchematic } from "./middle-truncation-schematic"
 import { PhongPhanIsometricSchematic } from "./phong-phan-isometric-schematic"
 import { PPMarkIsometricSchematic } from "./pp-mark-isometric-schematic"
 import { SelectSchematic } from "./select-schematic"
@@ -16,6 +17,7 @@ export * from "./card-schematic"
 export * from "./code-block-schematic"
 export * from "./flip-clock-schematic"
 export * from "./map-schematic"
+export * from "./middle-truncation-schematic"
 export * from "./phong-phan-isometric-schematic"
 export * from "./pp-mark-isometric-schematic"
 export * from "./select-schematic"
@@ -33,6 +35,7 @@ export type SchematicType =
   | "background-gradient-cursor"
   | "pp-mark-isometric"
   | "phong-phan-isometric"
+  | "middle-truncation"
 
 export function DefaultSchematic() {
   return (
@@ -54,6 +57,7 @@ export const SCHEMATICS_MAP: Record<SchematicType, React.ComponentType> = {
   "background-gradient-cursor": BackgroundGradientCursorSchematic,
   "pp-mark-isometric": PPMarkIsometricSchematic,
   "phong-phan-isometric": PhongPhanIsometricSchematic,
+  "middle-truncation": MiddleTruncationSchematic,
 }
 
 export function RenderSchematic({ type }: { type?: string }) {

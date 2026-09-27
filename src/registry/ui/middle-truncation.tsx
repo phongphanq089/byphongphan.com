@@ -1,6 +1,9 @@
-import { useLayoutEffect, useRef, useState } from "react"
+import { useEffect, useLayoutEffect, useRef, useState } from "react"
 
 import { cn } from "@/shared/lib"
+
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect
 
 let cachedCanvas: HTMLCanvasElement | null = null
 let cachedCtx: CanvasRenderingContext2D | null = null
@@ -8,28 +11,29 @@ let cachedCtx: CanvasRenderingContext2D | null = null
 /**
  * Returns a singleton canvas 2D context for text measurement.
  * Creates the canvas on first call and reuses it for all subsequent calls.
- *
- * @throws {Error} If canvas 2D context creation fails.
  */
-function getCanvas(): CanvasRenderingContext2D {
+function getCanvas(): CanvasRenderingContext2D | null {
+  if (typeof document === "undefined") return null
   if (!cachedCtx) {
     cachedCanvas = document.createElement("canvas")
     const ctx = cachedCanvas.getContext("2d")
     if (!ctx) {
-      throw new Error("Failed to get 2d context from canvas")
+      return null
     }
     cachedCtx = ctx
   }
   return cachedCtx
 }
 
-function measureText(text: string, font: string) {
+function measureText(text: string, font: string): number {
   const ctx = getCanvas()
+  if (!ctx) return text.length * 8
   ctx.font = font
   return ctx.measureText(text).width
 }
 
-function getComputedFont(el: HTMLElement) {
+function getComputedFont(el: HTMLElement): string {
+  if (typeof window === "undefined") return "16px sans-serif"
   const cs = window.getComputedStyle(el)
   return `${cs.fontStyle} ${cs.fontWeight} ${cs.fontSize} ${cs.fontFamily}`
 }
@@ -182,7 +186,7 @@ export function MiddleTruncation({
   const containerRef = useRef<HTMLSpanElement>(null)
   const [displayed, setDisplayed] = useState<string>(children)
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const el = containerRef.current
     if (!el) return
 

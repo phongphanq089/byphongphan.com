@@ -1,0 +1,85 @@
+---
+title: Middle Truncation
+description: Canvas-measured binary search text truncation preserving the start and end of strings with responsive resize sync.
+component: true
+---
+
+<ComponentPreview name="middle-truncation-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="manual">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="cli">
+    <CodeBlockCommand name="middle-truncation" />
+  </TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the following dependencies:</Step>
+      <CodeBlockCommand command="npm install clsx tailwind-merge" />
+      <Step>Copy and paste the component into your project.</Step>
+      <ComponentSource name="middle-truncation" title="components/ui/middle-truncation.tsx" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { MiddleTruncation } from "@/components/ui/middle-truncation"
+
+export function Example() {
+  return (
+    <div className="w-64">
+      {/* Preserves 8 characters at the end (e.g. extension) */}
+      <MiddleTruncation end={8}>
+        very-long-project-name-production-deployment-v2.final.tsx
+      </MiddleTruncation>
+
+      {/* Balanced split preserving at least 6 characters at the end */}
+      <MiddleTruncation minEnd={6} ellipsis="···">
+        0x71C6633279268a2F7c09361730a8435d8eFEb947
+      </MiddleTruncation>
+    </div>
+  )
+}
+```
+
+## Features
+
+- **Binary Search Algorithm:** Uses sub-millisecond binary search to compute the exact truncation cutoff in $O(\log N)$ time.
+- **Canvas 2D Measurement:** Accurately measures text width matching computed CSS font styling without DOM reflows.
+- **ResizeObserver with RAF Debouncing:** Syncs layout adjustments directly with the browser's paint cycle for jank-free responsiveness.
+- **SSR Safe:** Gracefully handles server-side environments with fallback measurement and isomorphic layout effects.
+
+## Examples
+
+### Resizable Card Sandbox
+
+Drag the vertical handle on the right edge to see real-time binary-search truncation recalculations:
+
+<ComponentPreview name="middle-truncation-resizable" />
+
+### File Extension Truncation
+
+Preserves the tail of a long filename so users can always identify the file format and extension:
+
+<ComponentPreview name="middle-truncation-file-name" />
+
+### Crypto Address / Hash Truncation
+
+Truncates Ethereum addresses or commit hashes with a custom minimalist ellipsis separator:
+
+<ComponentPreview name="middle-truncation-hash" />
+
+### Balanced Split with Min End
+
+Maintains an even middle split while enforcing a minimum guaranteed suffix length:
+
+<ComponentPreview name="middle-truncation-min-end" />
