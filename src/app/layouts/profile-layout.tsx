@@ -2,7 +2,6 @@ import { Outlet, useRouterState } from "@tanstack/react-router"
 import { useEffect, useState } from "react"
 
 import { HOME_TOC_ITEMS } from "@/shared/config"
-import { useMediaQuery } from "@/shared/hooks"
 import { cn } from "@/shared/lib/utils"
 import { ThemeProvider } from "@/shared/providers/theme-provider"
 import { EdgeBlur } from "@/shared/ui/system/edge-blur"
@@ -21,7 +20,6 @@ import {
 
 export function ProfileLayout({ children }: { children?: React.ReactNode }) {
   const [showMinimap, setShowMinimap] = useState(false)
-  const isDownMd = useMediaQuery("max-md")
   const currentPath = useRouterState({ select: (s) => s.location.pathname })
   const isHome = currentPath === "/" || currentPath === ""
   const isBlocks =
@@ -89,7 +87,14 @@ export function ProfileLayout({ children }: { children?: React.ReactNode }) {
             <Footer />
           </div>
         </div>
-        <EdgeBlur position="bottom" height={isDownMd ? 30 : 70} />
+        {/* Mobile EdgeBlur — smaller height, visible below md */}
+        <div className="md:hidden">
+          <EdgeBlur position="bottom" height={30} />
+        </div>
+        {/* Desktop EdgeBlur — taller height, visible at md+ */}
+        <div className="hidden md:block">
+          <EdgeBlur position="bottom" height={70} />
+        </div>
       </GridLayoutContext.Provider>
     </ThemeProvider>
   )

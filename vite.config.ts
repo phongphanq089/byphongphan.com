@@ -79,6 +79,13 @@ const config = defineConfig({
   ssr: {
     noExternal: ["gsap", "@gsap/react", "use-sound"],
   },
+  optimizeDeps: {
+    include: [
+      "@headless-tree/core",
+      "@headless-tree/react",
+      "react-resizable-panels",
+    ],
+  },
   plugins: [
     tsconfigPaths({ projects: ["./tsconfig.json"] }),
     tanstackStart({

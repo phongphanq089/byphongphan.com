@@ -167,15 +167,15 @@ export function GridContainer({
       }
 
       const borderClass = getChildBorderClasses(index, total, columns)
-      if (!borderClass) {
-        return child
-      }
-
       const existingClassName = (child.props as { className?: string })
         .className
+      const key = child.key != null ? child.key : `grid-item-${index}`
 
       return React.cloneElement(child, {
-        className: cn(existingClassName, borderClass),
+        key,
+        className: borderClass
+          ? cn(existingClassName, borderClass)
+          : existingClassName,
       } as React.HTMLAttributes<HTMLElement>)
     })
   }, [children, columns, itemBorders])

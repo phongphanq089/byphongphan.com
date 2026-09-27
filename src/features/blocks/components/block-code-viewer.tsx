@@ -1,8 +1,16 @@
-import { Check, Copy } from "lucide-react"
-import { useMemo, useState } from "react"
+import { FileCode } from "lucide-react"
+import { useMemo } from "react"
 
+import {
+  CodeBlock,
+  CodeBlockContent,
+  CodeBlockCopyButton,
+  CodeBlockHeader,
+  CodeBlockLanguage,
+  CodeBlockTitle,
+  CodeBlockWrapToggle,
+} from "@/registry/ui/code-block"
 import { cn } from "@/shared/lib"
-import { Button } from "@/shared/ui/core"
 
 import type { ResolvedBlockFile } from "../types"
 
@@ -12,72 +20,71 @@ interface BlockCodeViewerProps {
 }
 
 export function BlockCodeViewer({ file, className }: BlockCodeViewerProps) {
-  const [copied, setCopied] = useState(false)
-
-  const lines = useMemo(() => {
-    if (!file) return []
-    return file.code.split("\n")
+  const language = useMemo(() => {
+    if (!file) return "typescript"
+    const ext = file.name.split(".").pop()?.toLowerCase()
+    switch (ext) {
+      case "tsx":
+      case "jsx":
+        return "tsx"
+      case "ts":
+      case "js":
+        return "typescript"
+      case "css":
+        return "css"
+      case "json":
+        return "json"
+      case "html":
+        return "html"
+      default:
+        return "typescript"
+    }
   }, [file])
-
-  const handleCopy = () => {
-    if (!file || !navigator.clipboard) return
-    navigator.clipboard.writeText(file.code)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
 
   if (!file) {
     return (
       <div
         className={cn(
-          "flex h-full items-center justify-center text-xs text-muted-foreground",
+          "flex h-full flex-col items-center justify-center gap-2 p-8 text-center text-muted-foreground",
           className
         )}
       >
-        Select a file to view its source code.
+        <FileCode className="size-8 opacity-40" />
+        <p className="text-xs">
+          Select a file from the explorer to view its source code.
+        </p>
       </div>
     )
   }
 
   return (
-    <div className={cn("flex h-full flex-col overflow-hidden", className)}>
-      {/* File Header Bar */}
-      <div className="flex shrink-0 items-center justify-between border-b border-border/60 bg-muted/20 px-4 py-2">
-        <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-foreground">
-            {file.path}
-          </span>
+    <div
+      className={cn("flex h-full w-full flex-col overflow-hidden", className)}
+    >
+      <CodeBlock
+        key={file.path}
+        code={file.code}
+        language={language}
+        showLineNumbers
+        className="flex h-full w-full flex-col overflow-hidden rounded-none border-none bg-transparent"
+      >
+        <CodeBlockHeader className="shrink-0 border-b border-border/60 bg-muted/20 px-4 py-2">
+          <div className="flex items-center gap-2">
+            <FileCode className="size-3.5 text-primary" />
+            <CodeBlockTitle className="font-mono text-xs font-medium text-foreground">
+              {file.path}
+            </CodeBlockTitle>
+          </div>
+          <CodeBlockLanguage className="font-mono text-[11px] tracking-wider text-muted-foreground uppercase" />
+          <div className="ml-auto flex items-center gap-1">
+            <CodeBlockWrapToggle />
+            <CodeBlockCopyButton />
+          </div>
+        </CodeBlockHeader>
+        <div className="flex-1 overflow-auto">
+          <CodeBlockContent />
         </div>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon-sm"
-          onClick={handleCopy}
-          className="size-6"
-        >
-          {copied ? (
-            <Check className="size-3 text-emerald-400" />
-          ) : (
-            <Copy className="size-3" />
-          )}
-        </Button>
-      </div>
-
-      {/* Code Content with Line Numbers */}
-      <div className="flex-1 overflow-auto">
-        <pre className="min-h-full p-4 text-[13px] leading-6">
-          <code>
-            {lines.map((line, idx) => (
-              <div key={idx} className="flex">
-                <span className="inline-block w-10 shrink-0 pr-4 text-right text-muted-foreground/40 select-none">
-                  {idx + 1}
-                </span>
-                <span className="flex-1 text-foreground/90">{line || " "}</span>
-              </div>
-            ))}
-          </code>
-        </pre>
-      </div>
+      </CodeBlock>
     </div>
   )
 }

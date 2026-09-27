@@ -33,5 +33,6 @@ export * from "./switch"
 export * from "./tabs"
 export * from "./textarea"
 export * from "./tooltip"
+export * from "./tree"
 // ====== code block ui ============= //
 export * from "@/registry/ui/code-block"
