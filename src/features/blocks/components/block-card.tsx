@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router"
-import { ArrowUpRight, Gamepad2, Layout } from "lucide-react"
+import { ArrowUpRight, Boxes, Gamepad2, Layout } from "lucide-react"
 
 import { cn } from "@/shared/lib"
 
@@ -59,13 +59,11 @@ export function BlockCard({ block }: BlockCardProps) {
           {block.slug === "not-found-01" ? (
             /* Retro 404 Brick Breaker Arcade Miniature (Monochrome Blueprint) */
             <div className="flex flex-col items-center gap-2">
-              {/* Header label */}
               <div className="flex items-center gap-2 font-mono text-[8px] text-white/40">
                 <Gamepad2 className="size-3 text-white/70" />
                 <span>DAIKANOID • 404 BRICKS</span>
               </div>
 
-              {/* 404 Pixel Brick Pattern */}
               <div className="flex flex-col items-center gap-1">
                 <div className="grid grid-cols-12 gap-0.5 sm:gap-1">
                   {[
@@ -85,9 +83,23 @@ export function BlockCard({ block }: BlockCardProps) {
                   ))}
                 </div>
 
-                {/* Bouncing ball & Paddle */}
                 <div className="my-1 size-1.5 rounded-full bg-white shadow-[0_0_8px_#ffffff]" />
                 <div className="h-1 w-12 rounded-full bg-white/80 shadow-[0_0_8px_rgba(255,255,255,0.4)]" />
+              </div>
+            </div>
+          ) : block.slug === "not-found-02" ? (
+            /* 2D Physics Gravity Falling Blocks Miniature */
+            <div className="flex flex-col items-center gap-2">
+              <div className="flex items-center gap-2 font-mono text-[8px] text-white/40">
+                <Boxes className="size-3 text-white/70" />
+                <span>2D GRAVITY • PHYSICS 404</span>
+              </div>
+              <div className="relative h-14 w-36 overflow-hidden rounded-md border border-white/10 bg-white/[0.02]">
+                <div className="absolute top-1 left-3 size-5 rotate-6 rounded border border-white/20 bg-white/10" />
+                <div className="absolute top-2 left-11 size-6 -rotate-12 rounded border border-white/20 bg-white/20" />
+                <div className="absolute top-1 right-4 size-5 rotate-12 rounded border border-white/20 bg-white/15" />
+                <div className="absolute bottom-1 left-6 h-4 w-7 rotate-2 rounded border border-white/30 bg-white/30" />
+                <div className="absolute right-7 bottom-1 h-5 w-6 -rotate-6 rounded border border-white/20 bg-white/25" />
               </div>
             </div>
           ) : (
