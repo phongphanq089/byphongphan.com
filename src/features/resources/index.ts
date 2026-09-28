@@ -1,7 +1,0 @@
-export * from "./api/resource"
-export * from "./components/resource-card"
-export * from "./components/resource-filter-bar"
-export * from "./components/resource-grid"
-export * from "./components/resource-hero"
-export * from "./mock-data"
-export * from "./types"

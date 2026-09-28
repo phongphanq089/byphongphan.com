@@ -1,10 +1,11 @@
-// @ts-nocheck
-import { $isCodeNode, CodeNode, getCodeLanguageOptions } from "@lexical/code"
+import { $isCodeNode, CodeNode } from "@lexical/code"
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
 import { $getNearestNodeFromDOMNode } from "lexical"
 import { Check, Copy } from "lucide-react"
 import * as React from "react"
 import { createPortal } from "react-dom"
+
+import { getCodeLanguageOptions } from "../../utils/code-languages"
 
 export function CodeActionMenuPlugin({
   anchorElem = typeof document !== "undefined" ? document.body : null,

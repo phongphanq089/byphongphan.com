@@ -4,12 +4,12 @@ import { $getSelection, $isRangeSelection } from "lexical"
 import { Baseline, Highlighter } from "lucide-react"
 import * as React from "react"
 
-import { Button } from "@/editor/components/ui/button"
+import { Button } from "../../../components/ui/button"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/editor/components/ui/popover"
+} from "../../../components/ui/popover"
 
 const COLOR_PALETTE = [
   "#000000",

@@ -1,15 +1,14 @@
-// @ts-nocheck
-import {
-  $isCodeNode,
-  CodeNode,
-  getCodeLanguageOptions,
-  getLanguageFriendlyName,
-} from "@lexical/code"
+import { $isCodeNode, CodeNode } from "@lexical/code"
 import { $getNearestNodeOfType } from "@lexical/utils"
 import type { LexicalEditor } from "lexical"
 import { $getNodeByKey, $getSelection, $isRangeSelection } from "lexical"
 import { Check, ChevronDown } from "lucide-react"
 import * as React from "react"
+
+import {
+  getCodeLanguageOptions,
+  getLanguageFriendlyName,
+} from "../../../utils/code-languages"
 
 import { Button } from "../../../components/ui/button"
 import {

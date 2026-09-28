@@ -23,4 +23,12 @@ export const BLOCKS_DATA: BlockItem[] = [
     description:
       "Interactive 404 error page with 2D physics gravity, falling blocks, and draggable elements.",
   },
+  {
+    id: "block-editor",
+    title: "Rich Text Editor",
+    slug: "editor",
+    category: "application",
+    description:
+      "Modern Lexical rich text editor featuring top toolbar, floating bubble menu, slash commands, markdown shortcuts, and interactive widgets.",
+  },
 ]

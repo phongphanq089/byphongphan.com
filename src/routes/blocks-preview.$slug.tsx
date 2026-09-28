@@ -5,16 +5,30 @@ import React, { lazy, Suspense, useEffect } from "react"
  * Registry mapping block slugs to lazy-loaded root block components.
  * Loaded inside an isolated iframe with its own window, document.body, and scroll contexts.
  */
+function lazyWithRetry(
+  factory: () => Promise<{ default: React.ComponentType }>
+): React.LazyExoticComponent<React.ComponentType> {
+  return lazy(async () => {
+    try {
+      return await factory()
+    } catch {
+      await new Promise((resolve) => setTimeout(resolve, 600))
+      return await factory()
+    }
+  })
+}
+
 const BLOCK_COMPONENTS: Record<
   string,
   React.LazyExoticComponent<React.ComponentType>
 > = {
-  "not-found-01": lazy(
+  "not-found-01": lazyWithRetry(
     () => import("@/registry/block/not-found-01/app/not-found")
   ),
-  "not-found-02": lazy(
+  "not-found-02": lazyWithRetry(
     () => import("@/registry/block/not-found-02/app/not-found")
   ),
+  editor: lazyWithRetry(() => import("@/registry/block/editor/app/page")),
 }
 
 export const Route = createFileRoute("/blocks-preview/$slug")({

@@ -1,5 +1,13 @@
 [
   {
+    "name": "middle-truncation",
+    "type": "registry:ui",
+    "title": "Middle Truncation",
+    "description": "Canvas-measured binary search text truncation preserving the start and end of strings with responsive resize sync.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
     "name": "select",
     "type": "registry:ui",
     "title": "Select",
@@ -111,5 +119,71 @@
       "framer-motion"
     ],
     "registryDependencies": []
+  },
+  {
+    "name": "not-found-01",
+    "type": "registry:block",
+    "title": "Not Found 01",
+    "description": "A 404 page with a playable brick breaker game.",
+    "dependencies": [
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "button"
+    ]
+  },
+  {
+    "name": "not-found-02",
+    "type": "registry:block",
+    "title": "Not Found Gravity",
+    "description": "Interactive 404 error page with 2D physics gravity, falling blocks, and draggable elements.",
+    "dependencies": [
+      "matter-js",
+      "poly-decomp",
+      "svg-path-commander",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "button"
+    ]
+  },
+  {
+    "name": "editor",
+    "type": "registry:block",
+    "title": "Rich Text Editor",
+    "description": "Modern Lexical rich text editor featuring top toolbar, floating bubble menu, slash commands, markdown shortcuts, and interactive widgets.",
+    "dependencies": [
+      "@lexical/clipboard",
+      "@lexical/code",
+      "@lexical/code-prism",
+      "@lexical/extension",
+      "@lexical/file",
+      "@lexical/hashtag",
+      "@lexical/history",
+      "@lexical/html",
+      "@lexical/link",
+      "@lexical/list",
+      "@lexical/mark",
+      "@lexical/markdown",
+      "@lexical/overflow",
+      "@lexical/plain-text",
+      "@lexical/react",
+      "@lexical/rich-text",
+      "@lexical/selection",
+      "@lexical/table",
+      "@lexical/utils",
+      "@lexical/yjs",
+      "lexical",
+      "lucide-react",
+      "katex"
+    ],
+    "registryDependencies": [
+      "button",
+      "dialog",
+      "dropdown-menu",
+      "popover",
+      "tooltip",
+      "separator"
+    ]
   }
 ]
