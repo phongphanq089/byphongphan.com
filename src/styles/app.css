@@ -5,7 +5,6 @@
 @plugin "tailwindcss-animate";
 @import "./nav-bar.css";
 @import "./glow-card.css";
-@import "./filepond.css";
 @import "./scroll-fade-effect.css";
 
 @custom-variant dark (&:where(.dark, .dark *));

@@ -130,7 +130,6 @@ const config = defineConfig({
         crawlLinks: false,
         autoStaticPathsDiscovery: false,
         concurrency: 2,
-        filter: ({ path }) => !path.startsWith("/admin"),
       },
       pages: [
         { path: "/" },

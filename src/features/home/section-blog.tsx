@@ -1,23 +1,10 @@
-import { useQuery } from "@tanstack/react-query"
 import { Link } from "@tanstack/react-router"
 import { ArrowRight } from "lucide-react"
 
 import { GridContainer } from "@/app/layouts"
-import { BlogCard, blogPostsQueryOptions } from "@/features/blog"
 import { SectionHeading } from "@/shared/ui/system/section-heading"
 
 export const SectionBlog = () => {
-  const { data: posts = [] } = useQuery(blogPostsQueryOptions())
-
-  // Select top featured posts or first 2 available posts
-  const featured = posts.filter((p) => p.isFeatured)
-  const displayPosts =
-    featured.length > 0 ? featured.slice(0, 2) : posts.slice(0, 2)
-
-  if (displayPosts.length === 0) {
-    return null
-  }
-
   return (
     <>
       <GridContainer className="p-0" showCrosshairs={false}>
@@ -44,7 +31,7 @@ export const SectionBlog = () => {
         showCrosshairs={true}
         className="w-full"
       >
-        {displayPosts.map((post, idx) => (
+        {/* {displayPosts.map((post, idx) => (
           <div
             key={post._id}
             className={`flex h-full w-full ${
@@ -55,7 +42,8 @@ export const SectionBlog = () => {
           >
             <BlogCard post={post} />
           </div>
-        ))}
+        ))} */}
+        <span></span>
       </GridContainer>
     </>
   )
