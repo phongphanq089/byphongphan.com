@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router"
-import { ArrowUpRight, Boxes, Gamepad2, Layout } from "lucide-react"
+import { ArrowUpRight, Boxes, FileText, Gamepad2, Layout } from "lucide-react"
 
 import { cn } from "@/shared/lib"
 
@@ -100,6 +100,45 @@ export function BlockCard({ block }: BlockCardProps) {
                 <div className="absolute top-1 right-4 size-5 rotate-12 rounded border border-white/20 bg-white/15" />
                 <div className="absolute bottom-1 left-6 h-4 w-7 rotate-2 rounded border border-white/30 bg-white/30" />
                 <div className="absolute right-7 bottom-1 h-5 w-6 -rotate-6 rounded border border-white/20 bg-white/25" />
+              </div>
+            </div>
+          ) : block.slug === "editor" ? (
+            /* Rich Text Editor Blueprint Miniature */
+            <div className="flex w-full max-w-[190px] flex-col items-center gap-1.5">
+              <div className="flex items-center gap-1.5 font-mono text-[8px] text-white/40">
+                <FileText className="size-3 text-white/70" />
+                <span>LEXICAL • RICH TEXT EDITOR</span>
+              </div>
+              <div className="flex w-full flex-col overflow-hidden rounded-md border border-white/10 bg-white/[0.03] shadow-inner">
+                {/* Mini Toolbar */}
+                <div className="flex items-center justify-between border-b border-white/5 bg-white/[0.04] px-2 py-1">
+                  <div className="flex items-center gap-1.5 text-[8px]">
+                    <span className="font-serif font-bold text-white/80">
+                      B
+                    </span>
+                    <span className="font-serif text-white/60 italic">I</span>
+                    <span className="text-white/50 line-through">S</span>
+                    <span className="font-mono text-[7px] text-white/40">
+                      &lt;/&gt;
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <div className="size-1 rounded-full bg-white/40" />
+                    <div className="h-1.5 w-4 rounded-xs bg-white/20" />
+                  </div>
+                </div>
+                {/* Mini Document Sheet */}
+                <div className="flex flex-col gap-1.5 p-2">
+                  {/* Title Bar */}
+                  <div className="h-2 w-3/4 rounded-xs bg-white/85 shadow-[0_0_6px_rgba(255,255,255,0.2)]" />
+                  {/* Text lines */}
+                  <div className="h-1 w-full rounded-xs bg-white/40" />
+                  <div className="h-1 w-5/6 rounded-xs bg-white/30" />
+                  {/* Quote / callout line */}
+                  <div className="flex items-center gap-1.5 border-l-2 border-white/50 py-0.5 pl-1.5">
+                    <div className="h-1 w-2/3 rounded-xs bg-white/50" />
+                  </div>
+                </div>
               </div>
             </div>
           ) : (

@@ -2,7 +2,7 @@ import { Check, ChevronRight } from "lucide-react"
 import { DropdownMenu as DropdownMenuPrimitive } from "radix-ui"
 import * as React from "react"
 
-import { cn } from "@/editor/utils/cn"
+import { cn } from "../../utils/cn"
 
 const DropdownMenu = DropdownMenuPrimitive.Root
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger

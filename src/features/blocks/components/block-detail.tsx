@@ -61,7 +61,13 @@ export function BlockDetail({ block }: BlockDetailProps) {
     ) {
       return activeFilePath
     }
-    return resolvedFiles[0]?.path ?? null
+    return (
+      resolvedFiles.find((f) => f.path === "app/page.tsx")?.path ??
+      resolvedFiles.find((f) => f.path === "editor.tsx")?.path ??
+      resolvedFiles.find((f) => f.path === "app/not-found.tsx")?.path ??
+      resolvedFiles[0]?.path ??
+      null
+    )
   }, [activeFilePath, resolvedFiles])
 
   const activeFile = useMemo<ResolvedBlockFile | null>(

@@ -36,8 +36,8 @@ import {
 } from "lucide-react"
 import * as React from "react"
 
-import { Button } from "@/editor/components/ui/button"
-import { Separator } from "@/editor/components/ui/separator"
+import { Button } from "../../components/ui/button"
+import { Separator } from "../../components/ui/separator"
 
 import {
   blockTypeToBlockName,
