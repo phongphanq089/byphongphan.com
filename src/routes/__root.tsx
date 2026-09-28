@@ -10,20 +10,10 @@ import { useEffect } from "react"
 import type { JSX } from "react/jsx-runtime"
 
 import {
-  blogCategoriesQueryOptions,
-  blogGroupsQueryOptions,
-  blogPostsQueryOptions,
-} from "@/features/blog"
-import {
-  resourceCategoriesQueryOptions,
-  resourcesQueryOptions,
-} from "@/features/resources"
-import {
   createPersonJsonLd,
   createSeoMeta,
   createSiteLinks,
 } from "@/shared/config"
-import { siteSettingsQueryOptions } from "@/shared/lib"
 import { ThemeProvider } from "@/shared/providers/theme-provider"
 import { TooltipProvider } from "@/shared/ui"
 import { NotFound } from "@/shared/ui/block/not-found"
@@ -35,32 +25,9 @@ import appCss from "../styles/app.css?url"
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
 }>()({
-  loader: async ({ context }) => {
+  loader: async () => {
     try {
-      const [
-        siteSettings,
-        resources,
-        categories,
-        blogPosts,
-        blogCategories,
-        blogGroups,
-      ] = await Promise.all([
-        context.queryClient.ensureQueryData(siteSettingsQueryOptions()),
-        context.queryClient.ensureQueryData(resourcesQueryOptions()),
-        context.queryClient.ensureQueryData(resourceCategoriesQueryOptions()),
-        context.queryClient.ensureQueryData(blogPostsQueryOptions()),
-        context.queryClient.ensureQueryData(blogCategoriesQueryOptions()),
-        context.queryClient.ensureQueryData(blogGroupsQueryOptions()),
-      ])
-
-      return {
-        siteSettings,
-        resources,
-        categories,
-        blogPosts,
-        blogCategories,
-        blogGroups,
-      }
+      return {}
     } catch {
       return {
         siteSettings: null,
