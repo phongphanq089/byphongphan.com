@@ -6,11 +6,15 @@ import {
   ColophonInspirations,
   ColophonTechnology,
 } from "@/features/colophon"
-import { createSeoMeta } from "@/shared/config"
+import { createSeoMeta, siteConfig } from "@/shared/config"
 
 export const Route = createFileRoute("/_site/colophon/")({
   head: () => ({
-    meta: createSeoMeta("colophon"),
+    meta: createSeoMeta({
+      title: "Engineering Blog • Phong Phan",
+      description: "Writing on engineering, architecture, and UI.",
+      url: `${siteConfig.url}/blog`,
+    }),
   }),
   component: ColophonPage,
 })
