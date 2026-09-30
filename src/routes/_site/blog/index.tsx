@@ -1,13 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-import { createSeoMeta, siteConfig } from "@/shared/config"
+import { createSeoMeta, pagesSeoConfig, siteConfig } from "@/shared/config"
 import { UnderConstructionBlock } from "@/shared/ui"
 
 export const Route = createFileRoute("/_site/blog/")({
   head: () => ({
     meta: createSeoMeta({
-      title: "Engineering Blog • Phong Phan",
-      description: "Writing on engineering, architecture, and UI.",
+      title: pagesSeoConfig.blog.title,
+      description: pagesSeoConfig.blog.description,
       url: `${siteConfig.url}/blog`,
     }),
   }),

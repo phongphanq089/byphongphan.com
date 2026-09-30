@@ -125,12 +125,12 @@ const config = defineConfig({
     tsconfigPaths({ projects: ["./tsconfig.json"] }),
     tanstackStart({
       srcDirectory: "src",
-      // prerender: {
-      //   enabled: true,
-      //   crawlLinks: false,
-      //   autoStaticPathsDiscovery: false,
-      //   concurrency: 2,
-      // },
+      prerender: {
+        enabled: true,
+        crawlLinks: false,
+        autoStaticPathsDiscovery: false,
+        concurrency: 1,
+      },
       pages: [
         { path: "/" },
         { path: "/blocks" },
