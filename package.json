@@ -4,7 +4,7 @@
   "type": "module",
   "packageManager": "pnpm@11.17.0",
   "scripts": {
-    "dev": "node --max-old-space-size=4096 ./node_modules/vite/bin/vite.js dev --port 5731",
+    "dev": "vite dev --port 5732",
     "build": "vite build && tsc -b --noEmit",
     "preview": "vite preview --port 5731",
     "test": "vitest run --passWithNoTests",
@@ -149,13 +149,6 @@
     "vite": "^8.0.0",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.1.5"
-  },
-  "overrides": {
-    "@tanstack/react-router": "1.168.10",
-    "@tanstack/react-start": "1.167.16",
-    "@tanstack/router-core": "1.168.9",
-    "@tanstack/router-plugin": "1.167.12",
-    "@tanstack/start-plugin-core": "1.167.17"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
