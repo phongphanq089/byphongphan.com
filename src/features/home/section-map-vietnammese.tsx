@@ -2,16 +2,15 @@ import { Compass, Crosshair, Globe2, MapPin } from "lucide-react"
 import { useEffect, useState } from "react"
 
 import { GridContainer } from "@/app/layouts"
+import { Badge, Button } from "@/shared/ui"
 import {
-  Badge,
-  Button,
   Map,
   MapControls,
   MapMarker,
   MarkerContent,
   MarkerPopup,
   useMap,
-} from "@/shared/ui"
+} from "@/shared/ui/core/map"
 
 // Coordinates for Ninh Hoa town (Khanh Hoa province) & Vietnam overview
 const NINH_HOA_COORDINATES = {

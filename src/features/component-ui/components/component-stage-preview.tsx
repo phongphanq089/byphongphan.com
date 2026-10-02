@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { FileCode2 } from "lucide-react"
-import { useEffect, useRef, useState } from "react"
+import { Suspense, useEffect, useRef, useState } from "react"
 
 import { CodeBlock, CodeBlockCopyButton } from "@/registry/ui/code-block"
 import { cn } from "@/shared/lib"
@@ -112,7 +112,16 @@ export function ComponentStagePreview({
               {isInView ? (
                 LiveDemo ? (
                   <div className="flex w-full items-center justify-center">
-                    <LiveDemo />
+                    <Suspense
+                      fallback={
+                        <div className="flex flex-col items-center justify-center gap-3 text-muted-foreground/50">
+                          <div className="size-6 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
+                          <span className="text-xs">Loading demo...</span>
+                        </div>
+                      }
+                    >
+                      <LiveDemo />
+                    </Suspense>
                   </div>
                 ) : (
                   <div className="scale-110 sm:scale-125">

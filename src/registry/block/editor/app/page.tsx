@@ -24,7 +24,7 @@ Welcome to the **Lexical Rich Text Editor** block built for modern publishing, d
 `
 
 export default function EditorBlockPage() {
-  const [content, setContent] = useState(INITIAL_MARKDOWN)
+  const [content, setContent] = useState(INITIAL_MARKDOWN || "")
 
   return (
     <main className="relative flex min-h-[100dvh] w-full flex-col bg-background text-foreground select-text">

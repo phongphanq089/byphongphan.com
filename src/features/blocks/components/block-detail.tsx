@@ -19,7 +19,6 @@ import { GridContainer } from "@/app/layouts"
 import { cn } from "@/shared/lib"
 import {
   Button,
-  CodeBlockCommand,
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
@@ -27,6 +26,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/shared/ui/core"
+import { CodeBlockCommand } from "@/shared/ui/core/code-block"
 
 import { buildFileTree, resolveBlockFiles } from "../block-files"
 import { BLOCKS_DATA } from "../blocks-data"

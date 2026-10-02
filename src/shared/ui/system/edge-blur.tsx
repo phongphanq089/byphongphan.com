@@ -1,32 +1,36 @@
-"use client"
+import { cn } from "@/shared/lib"
 
 interface EdgeBlurProps {
   position?: "top" | "bottom"
   height?: number
+  className?: string
 }
 
-export function EdgeBlur({ position = "bottom", height = 75 }: EdgeBlurProps) {
-  const blurLayers = [1, 2, 3, 6, 12]
-
+export function EdgeBlur({
+  position = "bottom",
+  height = 75,
+  className,
+}: EdgeBlurProps) {
   const isTop = position === "top"
 
   return (
     <div
-      className={`pointer-events-none fixed inset-x-0 isolate z-40 ${isTop ? "top-0" : "bottom-0"}`}
+      className={cn(
+        "pointer-events-none fixed inset-x-0 isolate z-40 transition-opacity",
+        isTop ? "top-0" : "bottom-0",
+        className
+      )}
       style={{ height }}
+      aria-hidden="true"
     >
-      {blurLayers.map((blur) => (
-        <div
-          key={blur}
-          className="absolute inset-0"
-          style={{
-            backdropFilter: `blur(${blur}px)`,
-            WebkitBackdropFilter: `blur(${blur}px)`,
-            maskImage: `linear-gradient(to ${isTop ? "bottom" : "top"}, black, transparent)`,
-            WebkitMaskImage: `linear-gradient(to ${isTop ? "bottom" : "top"}, black, transparent)`,
-          }}
-        />
-      ))}
+      <div
+        className={cn(
+          "absolute inset-0",
+          isTop
+            ? "bg-gradient-to-b from-background via-background/70 to-transparent"
+            : "bg-gradient-to-t from-background via-background/70 to-transparent"
+        )}
+      />
     </div>
   )
 }

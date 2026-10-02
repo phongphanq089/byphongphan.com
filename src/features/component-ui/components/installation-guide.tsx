@@ -1,7 +1,7 @@
 import { Check, ChevronDown, ChevronUp, Copy } from "lucide-react"
 import { useMemo, useState } from "react"
 
-import { REGISTRY_ITEMS } from "@/registry"
+import { REGISTRY_ITEMS } from "@/registry/registry"
 import { siteConfig } from "@/shared/config"
 import { cn } from "@/shared/lib"
 import { Button } from "@/shared/ui/core"

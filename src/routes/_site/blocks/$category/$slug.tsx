@@ -1,7 +1,15 @@
 import { createFileRoute, notFound } from "@tanstack/react-router"
+import { Suspense } from "react"
 
-import { BlockDetail, BLOCKS_DATA } from "@/features/blocks"
+import { BLOCKS_DATA } from "@/features/blocks/blocks-data"
 import { createSeoMeta, siteConfig } from "@/shared/config"
+import { lazyWithRetry } from "@/shared/lib/lazy-with-retry"
+
+const LazyBlockDetail = lazyWithRetry(() =>
+  import("@/features/blocks/components/block-detail").then((m) => ({
+    default: m.BlockDetail,
+  }))
+)
 
 export const Route = createFileRoute("/_site/blocks/$category/$slug")({
   loader: ({ params }) => {
@@ -36,5 +44,18 @@ export const Route = createFileRoute("/_site/blocks/$category/$slug")({
 
 function BlockDetailPage() {
   const { block } = Route.useLoaderData()
-  return <BlockDetail block={block} />
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-[60vh] w-full items-center justify-center">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="size-4 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
+            <span>Loading block...</span>
+          </div>
+        </div>
+      }
+    >
+      <LazyBlockDetail block={block} />
+    </Suspense>
+  )
 }
