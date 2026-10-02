@@ -10,17 +10,16 @@ import type { MDXComponents } from "mdx/types"
 import { useMemo } from "react"
 
 import { GridContainer } from "@/app/layouts"
-import { REGISTRY_ITEMS } from "@/registry"
 import { CopyButton } from "@/registry/animated/button/copy-button"
 import { REGISTRY_DEMOS } from "@/registry/demos"
+import { REGISTRY_ITEMS } from "@/registry/registry"
 import { siteConfig } from "@/shared/config"
 import { extractTocFromMarkdown } from "@/shared/lib"
+import { Badge, Button } from "@/shared/ui/core"
 import {
-  Badge,
-  Button,
   CodeBlockCommand,
   convertNpmCommand,
-} from "@/shared/ui/core"
+} from "@/shared/ui/core/code-block"
 import { TOCMinimap } from "@/shared/ui/system/toc-minimap"
 
 import { COMPONENTS_DATA } from "../components-data"

@@ -4,16 +4,10 @@ import { GridContainer } from "@/app/layouts"
 import { PPMarkIsometric } from "@/shared/ui"
 import { SquigglyText } from "@/shared/ui/animation/squiggly-text"
 import TextBurnNeon from "@/shared/ui/animation/text-burn-neon"
-import { StripedPattern } from "@/shared/ui/system"
 
 export default function BannerHero() {
   return (
     <>
-      <StripedPattern
-        variant="absolute"
-        className="opacity-40 dark:opacity-20"
-      />
-
       <GridContainer
         borderBottom={true}
         borderLeft={true}
