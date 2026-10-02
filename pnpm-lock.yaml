@@ -215,6 +215,9 @@ importers:
       motion:
         specifier: ^12.40.0
         version: 12.43.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      page-mascot:
+        specifier: ^0.1.0
+        version: 0.1.0(react@19.2.8)
       poly-decomp:
         specifier: ^0.3.0
         version: 0.3.0
@@ -8028,6 +8031,12 @@ packages:
 
   package-manager-detector@1.8.0:
     resolution: {integrity: sha512-yQA4H19AmPEoMUeavPMDIe1higySl/gH/yaQrkT/s07Qp+7pp2hYz30N3z2l5BkjVkF9Ow6o0wjJamm2y7Sn0A==}
+
+  page-mascot@0.1.0:
+    resolution: {integrity: sha512-sw/BIqRKJ7nUfaxAGtmwQqm534I+lb2ZiXLDWZNexR1VF1RkmRl6BLVtj7hH+PrsiCPKtxHhA3IpVkXEm72FeA==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      react: '>=18'
 
   pako@2.0.3:
     resolution: {integrity: sha512-WjR1hOeg+kki3ZIOjaf4b5WVcay1jaliKSYiEaB1XzwhMQZJxRdQRv0V31EKBYlxb4T7SK3hjfc/jxyU64BoSw==}
@@ -17878,6 +17887,10 @@ snapshots:
   package-json-from-dist@1.0.1: {}
 
   package-manager-detector@1.8.0: {}
+
+  page-mascot@0.1.0(react@19.2.8):
+    dependencies:
+      react: 19.2.8
 
   pako@2.0.3: {}
 
