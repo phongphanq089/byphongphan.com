@@ -15,7 +15,7 @@ import {
 } from "@/registry/ui/table"
 import { siteConfig } from "@/shared/config"
 import { cn, extractTextFromNode, slugify } from "@/shared/lib"
-import { CodeBlockCommand } from "@/shared/ui/core"
+import { CodeBlockCommand } from "@/shared/ui/core/code-block"
 
 import { ApiReference } from "./api-reference"
 import { InstallationGuide } from "./installation-guide"

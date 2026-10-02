@@ -69,7 +69,13 @@ const config = defineConfig({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-    dedupe: ["react", "react-dom", "styled-components"],
+    dedupe: [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react/jsx-dev-runtime",
+      "styled-components",
+    ],
   },
   server: {
     hmr: {
@@ -81,6 +87,24 @@ const config = defineConfig({
   },
   optimizeDeps: {
     include: [
+      "react",
+      "react-dom",
+      "react/jsx-runtime",
+      "react/jsx-dev-runtime",
+      "matter-js",
+      "poly-decomp",
+      "svg-path-commander",
+      "maplibre-gl",
+      "shiki",
+      "@number-flow/react",
+      "page-mascot",
+      "use-sound",
+      "lucide-react",
+      "clsx",
+      "tailwind-merge",
+      "motion",
+      "motion/react",
+      "framer-motion",
       "@headless-tree/core",
       "@headless-tree/react",
       "react-resizable-panels",

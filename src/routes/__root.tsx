@@ -6,7 +6,7 @@ import {
   Outlet,
   Scripts,
 } from "@tanstack/react-router"
-import { useEffect } from "react"
+import { Suspense, useEffect } from "react"
 import type { JSX } from "react/jsx-runtime"
 
 import {
@@ -14,11 +14,28 @@ import {
   createSeoMeta,
   createSiteLinks,
 } from "@/shared/config"
+import { lazyWithRetry } from "@/shared/lib/lazy-with-retry"
 import { ThemeProvider } from "@/shared/providers/theme-provider"
-import { TooltipProvider } from "@/shared/ui"
-import { NotFound } from "@/shared/ui/block/not-found"
+import { TooltipProvider } from "@/shared/ui/core/tooltip"
 import { DefaultCatchBoundary } from "@/shared/ui/system/default-catch-boundary"
-import { CommandMenu } from "@/widgets/command-menu"
+
+const LazyCommandMenu = lazyWithRetry(() =>
+  import("@/widgets/command-menu").then((m) => ({ default: m.CommandMenu }))
+)
+
+const LazyNotFound = lazyWithRetry(() =>
+  import("@/shared/ui/block/not-found").then((m) => ({
+    default: m.default || m.NotFound,
+  }))
+)
+
+function NotFoundComponent() {
+  return (
+    <Suspense fallback={<div className="fixed inset-0 bg-background" />}>
+      <LazyNotFound />
+    </Suspense>
+  )
+}
 
 import appCss from "../styles/app.css?url"
 
@@ -75,7 +92,7 @@ export const Route = createRootRouteWithContext<{
       </RootDocument>
     )
   },
-  notFoundComponent: () => <NotFound />,
+  notFoundComponent: NotFoundComponent,
   component: RootComponent,
 })
 
@@ -166,7 +183,9 @@ function RootLayoutBody({
   return (
     <TooltipProvider>
       {children}
-      <CommandMenu />
+      <Suspense fallback={null}>
+        <LazyCommandMenu />
+      </Suspense>
     </TooltipProvider>
   )
 }

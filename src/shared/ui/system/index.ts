@@ -1,5 +1,3 @@
-export * from "../block/gravity"
-export * from "../block/not-found"
 export * from "./border-box"
 export * from "./default-catch-boundary"
 export * from "./edge-blur"

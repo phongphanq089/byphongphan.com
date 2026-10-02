@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react"
 
-import { REGISTRY_ITEMS } from "@/registry"
 import { REGISTRY_DEMOS } from "@/registry/demos"
+import { REGISTRY_ITEMS } from "@/registry/registry"
 import {
   CodeBlock,
   CodeBlockCopyButton,

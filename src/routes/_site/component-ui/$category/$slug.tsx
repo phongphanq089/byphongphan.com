@@ -1,7 +1,15 @@
 import { createFileRoute, notFound } from "@tanstack/react-router"
+import { Suspense } from "react"
 
-import { ComponentDetail, COMPONENTS_DATA } from "@/features/component-ui"
+import { COMPONENTS_DATA } from "@/features/component-ui/components-data"
 import { createSeoMeta, siteConfig } from "@/shared/config"
+import { lazyWithRetry } from "@/shared/lib/lazy-with-retry"
+
+const LazyComponentDetail = lazyWithRetry(() =>
+  import("@/features/component-ui/components/component-detail").then((m) => ({
+    default: m.ComponentDetail,
+  }))
+)
 
 export const Route = createFileRoute("/_site/component-ui/$category/$slug")({
   loader: ({ params }) => {
@@ -36,5 +44,18 @@ export const Route = createFileRoute("/_site/component-ui/$category/$slug")({
 
 function ComponentDetailPage() {
   const { component } = Route.useLoaderData()
-  return <ComponentDetail component={component} />
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-[60vh] w-full items-center justify-center">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="size-4 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
+            <span>Loading component...</span>
+          </div>
+        </div>
+      }
+    >
+      <LazyComponentDetail component={component} />
+    </Suspense>
+  )
 }

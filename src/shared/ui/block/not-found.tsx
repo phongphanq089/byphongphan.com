@@ -353,3 +353,5 @@ export function NotFound({ children }: { children?: React.ReactNode }) {
     </main>
   )
 }
+
+export default NotFound

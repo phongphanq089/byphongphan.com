@@ -18,21 +18,11 @@ const NumbersSimulation = () => {
     const wrapper =
       containerRef.current?.closest(".min-h-screen") || document.body
 
-    // Observe size changes
+    // Observe container and document size changes via ResizeObserver
     const resizeObserver = new ResizeObserver(() => {
       requestAnimationFrame(updateLineCount)
     })
     resizeObserver.observe(wrapper)
-
-    // Observe DOM mutations that might change scrollHeight without changing clientHeight
-    const mutationObserver = new MutationObserver(() => {
-      requestAnimationFrame(updateLineCount)
-    })
-    mutationObserver.observe(wrapper, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-    })
 
     updateLineCount()
 
@@ -40,7 +30,6 @@ const NumbersSimulation = () => {
 
     return () => {
       resizeObserver.disconnect()
-      mutationObserver.disconnect()
       window.removeEventListener("resize", updateLineCount)
     }
   }, [])

@@ -1,4 +1,5 @@
 import { motion } from "motion/react"
+import { Mascot } from "page-mascot"
 import { Suspense } from "react"
 
 import { GridContainer } from "@/app/layouts"
@@ -29,11 +30,11 @@ const SectionAbout = () => {
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
           <div className="flex w-full gap-3">
             <GridContainer showCrosshairs={false} borderTop={true}>
-              <div className="h-30 w-30 overflow-hidden">
-                <img
-                  src="/avatar.gif"
-                  alt="Phong Phan"
-                  className="h-full w-full object-cover"
+              <div className="h-auto w-30">
+                <Mascot
+                  className="mx-auto"
+                  directions="/assets/kamran-directions.webp"
+                  reactions="/assets/kamran-reactions.webp"
                 />
               </div>
             </GridContainer>
