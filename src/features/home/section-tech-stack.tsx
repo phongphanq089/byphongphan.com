@@ -1,13 +1,14 @@
 import { GridContainer } from "@/app/layouts"
 import { TECH_STACK } from "@/shared/config"
 import { iconComponents } from "@/shared/ui"
+import TextBurnNeon from "@/shared/ui/animation/text-burn-neon"
 
 const SectionTechStack = () => {
   return (
     <section id="tech-stack">
       <GridContainer borderTop className="px-8 py-2">
-        <h2 className="text-2xl font-semibold tracking-tight text-foreground uppercase">
-          Tech Stack
+        <h2 className="mt-1 text-2xl leading-[0.88] font-black tracking-tighter text-primary">
+          <TextBurnNeon>Tech Stack</TextBurnNeon>
         </h2>
       </GridContainer>
       <GridContainer showCrosshairs={false} className="p-8">
