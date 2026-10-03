@@ -87,7 +87,6 @@
     "marked": "^15.0.8",
     "matter-js": "^0.20.0",
     "motion": "^12.40.0",
-    "page-mascot": "^0.1.0",
     "poly-decomp": "^0.3.0",
     "radix-ui": "^1.4.3",
     "react": "^19.2.6",

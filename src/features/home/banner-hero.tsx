@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 
 import { GridContainer } from "@/app/layouts"
-import { useIsClient } from "@/shared/hooks"
+import { useIsClient, useMediaQuery } from "@/shared/hooks"
 import { lazyWithRetry } from "@/shared/lib"
 import { PPMarkIsometric, Skeleton } from "@/shared/ui"
 
@@ -12,7 +12,7 @@ const LazyTechText = lazyWithRetry(
 function TechTextSkeleton() {
   return (
     <div
-      className="relative flex h-[150px] w-full items-center justify-center px-2 select-none sm:px-6"
+      className="relative flex h-[70px] w-full items-center justify-center px-2 select-none sm:px-6 md:h-[150px]"
 
       aria-busy="true"
       aria-label="Loading interactive typography..."
@@ -61,6 +61,8 @@ function TechTextSkeleton() {
 
 export default function BannerHero() {
   const isClient = useIsClient()
+
+  const isMd = useMediaQuery("md")
   return (
     <>
       <GridContainer
@@ -88,7 +90,7 @@ export default function BannerHero() {
         showCrosshairs={false}
         className="relative z-10"
       >
-        <div className="mx-auto py-8 text-center">
+        <div className="mx-auto py-4 text-center md:py-8">
           <div style={{ width: "100%", position: "relative" }}>
             {isClient ? (
               <Suspense fallback={<TechTextSkeleton />}>
@@ -96,7 +98,7 @@ export default function BannerHero() {
                   text="PHONG PHAN"
                   fontWeight={600}
                   fontSize={450}
-                  height={150}
+                  height={isMd ? 150 : 70}
                   reveal="area"
                   dashLength={5}
                   dashGap={2}

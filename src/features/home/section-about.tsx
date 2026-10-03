@@ -1,5 +1,4 @@
 import { motion } from "motion/react"
-import { Mascot } from "page-mascot"
 import { Suspense } from "react"
 
 import { GridContainer } from "@/app/layouts"
@@ -10,7 +9,6 @@ import {
   GitHubContributions,
   GitHubContributionsFallback,
 } from "@/shared/ui/system/github-contributions"
-import { SectionHeading } from "@/shared/ui/system/section-heading"
 
 const HobbyTag = ({ label }: { label: string }) => (
   <motion.span className="group inline-flex cursor-pointer items-center gap-2 rounded-sm border border-border bg-foreground/3 px-3.5 py-1 text-[11px] text-foreground transition-colors duration-300">
@@ -26,44 +24,38 @@ const SectionAbout = () => {
   const contributions = getCachedContributions(GITHUB_USERNAME)
   return (
     <>
-      <GridContainer className="px-4 py-3 md:px-8" borderTop>
-        <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-          <div className="flex w-full gap-3">
-            <GridContainer showCrosshairs={false} borderTop={true}>
-              <div className="h-auto w-30">
-                <Mascot
-                  className="mx-auto"
-                  directions="/assets/kamran-directions.webp"
-                  reactions="/assets/kamran-reactions.webp"
-                />
-              </div>
-            </GridContainer>
-
-            <div className="flex w-full flex-col gap-2">
-              <GridContainer
-                showCrosshairs={false}
-                borderTop={true}
-                className="w-full p-0"
-              >
-                <SectionHeading id="about" heading="About Me" />
-              </GridContainer>
-              <GridContainer
-                showCrosshairs={false}
-                borderTop={true}
-                className="w-full p-3"
-              >
-                <p className="text-[11px] tracking-wider text-muted-foreground/90">
-                  Frontend Engineer · Fullstack Capable · Viet Nam
-                </p>
-              </GridContainer>
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <SkeletonHover
-              text1="There are tons of awesome frameworks like React, Angular, Vue, and Svelte that can make your life... easier (or a complete mess, depending on your code)"
-              text2="DELUSIONAL"
+      <GridContainer
+        columns={2}
+        borderTop={true}
+        borderBottom={true}
+        showCrosshairs={true}
+        className="p-0"
+      >
+        <div className="flex h-full flex-row items-stretch">
+          <div className="relative w-28 shrink-0 overflow-hidden bg-card sm:w-32 md:w-36">
+            <img
+              src="/avatar-about.jpg"
+              alt="Phong Phan"
+              className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
             />
           </div>
+          <div className="flex flex-1 flex-col justify-between">
+            <div className="relative flex flex-1 items-center px-4 py-2.5 sm:px-5">
+              <p className="font-semibold text-foreground">About Me</p>
+            </div>
+            <div className="flex flex-1 items-center bg-accent px-4 py-2.5 sm:px-5">
+              <p className="text-[11px] tracking-wider text-muted-foreground/90 sm:text-xs">
+                Frontend Engineer · Fullstack Capable
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex h-full flex-col justify-center bg-card/10 p-4 sm:p-5 md:p-6">
+          <SkeletonHover
+            text1="There are tons of awesome frameworks like React, Angular, Vue, and Svelte that can make your life... easier (or a complete mess, depending on your code)"
+            text2="DELUSIONAL"
+          />
         </div>
       </GridContainer>
 
