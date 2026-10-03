@@ -1,5 +1,6 @@
 import { ArrowUpRight } from "lucide-react"
 import { motion } from "motion/react"
+import React from "react"
 
 import { GridContainer } from "@/app/layouts"
 import { TECH_STACK } from "@/shared/config"

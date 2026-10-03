@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowRight } from "lucide-react"
+import React from "react"
 
 import { GridContainer } from "@/app/layouts"
 import { BLOCKS_DATA } from "@/features/blocks/blocks-data"

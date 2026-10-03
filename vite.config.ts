@@ -97,7 +97,6 @@ const config = defineConfig({
       "maplibre-gl",
       "shiki",
       "@number-flow/react",
-      "page-mascot",
       "use-sound",
       "lucide-react",
       "clsx",

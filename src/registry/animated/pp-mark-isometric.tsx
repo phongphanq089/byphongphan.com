@@ -9,7 +9,7 @@ import {
   useSpring,
   useTransform,
 } from "framer-motion"
-import { useEffect, useId, useRef } from "react"
+import React, { useEffect, useId, useRef } from "react"
 
 import { useSound } from "@/shared/hooks/use-sound"
 import { uMiniMapOpenSound } from "@/shared/lib/u-mini-map-open"
@@ -24,6 +24,7 @@ const transition: Transition = {
 export interface PPMarkIsometricProps {
   className?: string
   enableSound?: boolean
+  IsometricBlueprint?: boolean
 }
 
 /**
@@ -34,6 +35,7 @@ export interface PPMarkIsometricProps {
 export function PPMarkIsometric({
   className,
   enableSound = true,
+  IsometricBlueprint = true,
 }: PPMarkIsometricProps) {
   const id = useId()
   const ids = {
@@ -335,23 +337,26 @@ export function PPMarkIsometric({
       </defs>
 
       {/* Isometric Blueprint Construction Guide Lines (Full Extended Grid) */}
-      <g
-        className="stroke-foreground/20 dark:stroke-white/15"
-        strokeWidth="1"
-        strokeDasharray="4 3"
-      >
-        {/* Axis 1 (Down-Right 30° Tracks) */}
-        <path d="M-3000 -1387L4000 2655" />
-        <path d="M-3000 -1467L4000 2575" />
-        <path d="M-3000 -2005L4000 2037" />
-        <path d="M-3000 -1765L4000 2277" />
 
-        {/* Axis 2 (Up-Right 30° Tracks) */}
-        <path d="M-3000 2085L4000 -1957" />
-        <path d="M-3000 2245L4000 -1797" />
-        <path d="M-3000 2325L4000 -1717" />
-        <path d="M-3000 2478L4000 -1564" />
-      </g>
+      {IsometricBlueprint ? (
+        <g
+          className="stroke-foreground/20 dark:stroke-white/15"
+          strokeWidth="1"
+          strokeDasharray="4 3"
+        >
+          {/* Axis 1 (Down-Right 30° Tracks) */}
+          <path d="M-3000 -1387L4000 2655" />
+          <path d="M-3000 -1467L4000 2575" />
+          <path d="M-3000 -2005L4000 2037" />
+          <path d="M-3000 -1765L4000 2277" />
+
+          {/* Axis 2 (Up-Right 30° Tracks) */}
+          <path d="M-3000 2085L4000 -1957" />
+          <path d="M-3000 2245L4000 -1797" />
+          <path d="M-3000 2325L4000 -1717" />
+          <path d="M-3000 2478L4000 -1564" />
+        </g>
+      ) : null}
 
       {/* Solid 3D Side faces (occludes back lines and gives 3D depth) */}
       <g className="fill-background" fillRule="evenodd" clipRule="evenodd">

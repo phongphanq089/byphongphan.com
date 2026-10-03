@@ -1,5 +1,5 @@
 import { motion } from "motion/react"
-import { Suspense } from "react"
+import React, { Suspense } from "react"
 
 import { GridContainer } from "@/app/layouts"
 import { siteConfig } from "@/shared/config"

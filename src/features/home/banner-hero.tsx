@@ -1,9 +1,12 @@
-import { Suspense } from "react"
+import React, { Suspense } from "react"
 
-import { GridContainer } from "@/app/layouts"
 import { useIsClient, useMediaQuery } from "@/shared/hooks"
 import { lazyWithRetry } from "@/shared/lib"
-import { PPMarkIsometric, Skeleton } from "@/shared/ui"
+import {
+  BlueprintCanvasBackground,
+  PPMarkIsometric,
+  Skeleton,
+} from "@/shared/ui"
 
 const LazyTechText = lazyWithRetry(
   () => import("@/shared/ui/animation/tech-text")
@@ -12,7 +15,7 @@ const LazyTechText = lazyWithRetry(
 function TechTextSkeleton() {
   return (
     <div
-      className="relative flex h-[70px] w-full items-center justify-center px-2 select-none sm:px-6 md:h-[150px]"
+      className="relative mx-auto flex h-[70px] w-full max-w-7xl items-center justify-center px-2 select-none sm:px-6 md:h-[150px]"
 
       aria-busy="true"
       aria-label="Loading interactive typography..."
@@ -64,62 +67,46 @@ export default function BannerHero() {
 
   const isMd = useMediaQuery("md")
   return (
-    <>
-      <GridContainer
-        borderTop={true}
-        borderBottom={true}
-        borderLeft={true}
-        borderRight={true}
-        showCrosshairs={false}
-        className="relative z-10"
-      >
-        <div className="w-fulL mx-automax-w-[1400px] relative z-10 px-4 md:px-8">
-          <div className="group relative mx-auto flex flex-col items-center justify-center">
-            <div className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-3xl">
-              <PPMarkIsometric />
-            </div>
-          </div>
-        </div>
-      </GridContainer>
+    <section className="relative flex w-full flex-col justify-between overflow-hidden border-b border-border bg-background lg:min-h-[calc(100vh-3.5rem)]">
+      {/* ─── Full-Bleed CAD / Blueprint Vector Canvas Background ─── */}
+      <BlueprintCanvasBackground />
 
-      <GridContainer
-        borderTop={false}
-        borderBottom={false}
-        borderLeft={true}
-        borderRight={true}
-        showCrosshairs={false}
-        className="relative z-10"
-      >
-        <div className="mx-auto py-4 text-center md:py-8">
-          <div style={{ width: "100%", position: "relative" }}>
-            {isClient ? (
-              <Suspense fallback={<TechTextSkeleton />}>
-                <LazyTechText
-                  text="PHONG PHAN"
-                  fontWeight={600}
-                  fontSize={450}
-                  height={isMd ? 150 : 70}
-                  reveal="area"
-                  dashLength={5}
-                  dashGap={2}
-                  specks={10}
-                  letterSpacing={-0.05}
-                  reach={200}
-                  softness={0.7}
-                  strokeWidth={1}
-                  speed={1}
-                  lineStyle="dashed"
-                  selection
-                  labels
-                  sweep
-                />
-              </Suspense>
-            ) : (
-              <TechTextSkeleton />
-            )}
-          </div>
+      {/* ─── Hero Monogram Mark Section (Centered & Elevated) ─── */}
+      <div className="relative z-10 flex w-full flex-1 items-center justify-center px-4 py-8 sm:py-12 md:px-8 md:py-16">
+        <div className="group relative mx-auto flex w-full max-w-sm flex-col items-center justify-center sm:max-w-md md:max-w-lg lg:max-w-4xl">
+          <PPMarkIsometric IsometricBlueprint={false} />
         </div>
-      </GridContainer>
-    </>
+      </div>
+
+      <div className="relative z-10 w-full border-t border-border/40 py-4 text-center md:py-8">
+        <div style={{ width: "100%", position: "relative" }}>
+          {isClient ? (
+            <Suspense fallback={<TechTextSkeleton />}>
+              <LazyTechText
+                text="PHONG PHAN"
+                fontWeight={600}
+                fontSize={400}
+                height={isMd ? 170 : 70}
+                reveal="area"
+                dashLength={5}
+                dashGap={2}
+                specks={10}
+                letterSpacing={-0.05}
+                reach={200}
+                softness={0.7}
+                strokeWidth={1}
+                speed={1}
+                lineStyle="dashed"
+                selection
+                labels
+                sweep
+              />
+            </Suspense>
+          ) : (
+            <TechTextSkeleton />
+          )}
+        </div>
+      </div>
+    </section>
   )
 }
