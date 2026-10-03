@@ -1,67 +1,68 @@
-import { ArrowDownRight } from "lucide-react"
+import { Suspense } from "react"
 
 import { GridContainer } from "@/app/layouts"
-import { PPMarkIsometric } from "@/shared/ui"
-import { SquigglyText } from "@/shared/ui/animation/squiggly-text"
-import TextBurnNeon from "@/shared/ui/animation/text-burn-neon"
+import { useIsClient } from "@/shared/hooks"
+import { lazyWithRetry } from "@/shared/lib"
+import { PPMarkIsometric, Skeleton } from "@/shared/ui"
 
-export default function BannerHero() {
+const LazyTechText = lazyWithRetry(
+  () => import("@/shared/ui/animation/tech-text")
+)
+
+function TechTextSkeleton() {
   return (
-    <>
-      <GridContainer
-        borderBottom={true}
-        borderLeft={true}
-        borderRight={true}
-        showCrosshairs={false}
-        className="relative z-10"
-      >
-        <div className="flex items-center justify-end gap-3 px-4 py-3 text-xs text-muted-foreground/80 sm:px-8">
-          <span className="font-semibold tracking-widest text-foreground/80 uppercase">
-            PHONG PHAN
-          </span>
-          <span className="rounded-full border border-border px-2 py-0.5 text-[10px] text-muted-foreground">
-            FRONTEND / UI ENGINEER
-          </span>
+    <div
+      className="relative flex h-[150px] w-full items-center justify-center px-2 select-none sm:px-6"
+
+      aria-busy="true"
+      aria-label="Loading interactive typography..."
+    >
+      <div className="flex h-full w-full items-center gap-1.5 py-3 sm:gap-2.5 md:gap-3.5">
+        <div className="flex h-full flex-[5] items-center gap-1 sm:gap-2 md:gap-2.5">
+          <div className="relative flex h-full flex-1 items-center justify-center">
+            <div className="relative flex h-full w-full items-center justify-center rounded-sm border border-dashed border-foreground/80 p-1 dark:border-white/80">
+              <span className="absolute -top-1 -left-1 h-1.5 w-1.5 bg-foreground dark:bg-white" />
+              <span className="absolute -top-1 -right-1 h-1.5 w-1.5 bg-foreground dark:bg-white" />
+              <span className="absolute -bottom-1 -left-1 h-1.5 w-1.5 bg-foreground dark:bg-white" />
+              <span className="absolute -right-1 -bottom-1 h-1.5 w-1.5 bg-foreground dark:bg-white" />
+
+              <span className="absolute -top-4.5 left-0 font-mono text-[9px] tracking-tight whitespace-nowrap text-foreground/80 dark:text-white/80">
+                P 72 x 106
+              </span>
+
+              <Skeleton className="h-full w-full animate-pulse rounded-sm bg-foreground/20 dark:bg-white/20" />
+            </div>
+          </div>
+
+          <Skeleton className="h-full flex-1 animate-pulse rounded-sm bg-accent" />
+
+          <Skeleton className="h-full flex-1 animate-pulse rounded-sm bg-accent" />
+
+          <Skeleton className="h-full flex-1 animate-pulse rounded-sm bg-accent" />
+
+          <Skeleton className="h-full flex-1 animate-pulse rounded-sm bg-accent" />
         </div>
-      </GridContainer>
 
-      <div className="w-ful relative z-10 mx-auto my-4 max-w-[1400px] px-4 md:px-8">
-        <div className="group relative mx-auto flex flex-col items-center justify-center">
-          {/* Left Column — Title + Disciplines */}
-          <div className="absolute top-12 left-0 flex flex-col gap-2.5 text-[11px] text-muted-foreground/80 sm:top-20">
-            <div className="relative z-10 mx-auto mb-6 flex flex-col select-none">
-              <h1 className="text-3xl leading-[0.88] font-black tracking-tighter text-foreground sm:text-5xl md:text-6xl lg:text-7xl">
-                FRONTEND
-              </h1>
-              <TextBurnNeon className="mt-1 text-3xl leading-[0.88] font-black tracking-tighter text-primary sm:text-5xl md:text-6xl lg:text-7xl">
-                ENGINEER
-              </TextBurnNeon>
-            </div>
+        <div className="w-3 shrink-0 sm:w-6 md:w-8" />
 
-            <span className="text-[10px] font-bold tracking-widest text-primary/80 uppercase">
-              DISCIPLINES
-            </span>
-            <div className="flex flex-col gap-1.5 text-foreground/70 max-xs:text-[10px]">
-              <span className="transition-colors hover:text-primary">
-                INTERACTIVE UI & MOTION
-              </span>
-              <span className="transition-colors hover:text-primary">
-                DESIGN SYSTEMS & TOKENS
-              </span>
-              <span className="transition-colors hover:text-primary">
-                FULL-STACK CAPABILITY
-              </span>
-            </div>
-          </div>
+        <div className="flex h-full flex-[4] items-center gap-1 sm:gap-2 md:gap-2.5">
+          <Skeleton className="h-full flex-1 animate-pulse rounded-sm bg-accent" />
 
-          {/* Isometric Logo */}
-          <div className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl">
-            <PPMarkIsometric />
-          </div>
+          <Skeleton className="h-full flex-1 animate-pulse rounded-sm bg-accent" />
+
+          <Skeleton className="h-full flex-1 animate-pulse rounded-sm bg-accent" />
+
+          <Skeleton className="h-full flex-1 animate-pulse rounded-sm bg-accent" />
         </div>
       </div>
+    </div>
+  )
+}
 
-      {/* Tagline */}
+export default function BannerHero() {
+  const isClient = useIsClient()
+  return (
+    <>
       <GridContainer
         borderTop={true}
         borderBottom={true}
@@ -70,44 +71,51 @@ export default function BannerHero() {
         showCrosshairs={false}
         className="relative z-10"
       >
-        <div className="mx-auto max-w-2xl px-4 py-4 text-center sm:px-8">
-          <p className="text-xs leading-relaxed font-semibold tracking-wide text-muted-foreground sm:text-lg">
-            <SquigglyText scale={2}>
-              One day you'll leave this world behind so live a life you will
-              remember
-            </SquigglyText>
-          </p>
+        <div className="w-fulL mx-automax-w-[1400px] relative z-10 px-4 md:px-8">
+          <div className="group relative mx-auto flex flex-col items-center justify-center">
+            <div className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-3xl">
+              <PPMarkIsometric />
+            </div>
+          </div>
         </div>
       </GridContainer>
 
-      {/* Footer — Portfolio Year + Recent Work */}
       <GridContainer
-        columns={2}
-        borderBottom={false}
+        borderTop={false}
+        borderBottom={true}
         borderLeft={true}
         borderRight={true}
         showCrosshairs={false}
         className="relative z-10"
       >
-        <div className="flex items-center gap-3 px-4 py-4 text-[11px] text-muted-foreground sm:px-8">
-          <div className="flex flex-col text-center">
-            <span className="font-semibold text-foreground">
-              PORTFOLIO &apos;26
-            </span>
-            <span className="text-[10px] text-muted-foreground/70">
-              CRAFTED WITH PRECISION
-            </span>
+        <div className="mx-auto py-8 text-center">
+          <div style={{ width: "100%", position: "relative" }}>
+            {isClient ? (
+              <Suspense fallback={<TechTextSkeleton />}>
+                <LazyTechText
+                  text="PHONG PHAN"
+                  fontWeight={600}
+                  fontSize={450}
+                  height={150}
+                  reveal="area"
+                  dashLength={5}
+                  dashGap={2}
+                  specks={10}
+                  letterSpacing={-0.05}
+                  reach={200}
+                  softness={0.7}
+                  strokeWidth={1}
+                  speed={1}
+                  lineStyle="dashed"
+                  selection
+                  labels
+                  sweep
+                />
+              </Suspense>
+            ) : (
+              <TechTextSkeleton />
+            )}
           </div>
-        </div>
-
-        <div className="flex flex-col items-end justify-center px-4 py-4 text-right sm:px-8">
-          <div className="flex items-center gap-1.5 text-[10px] tracking-widest text-muted-foreground uppercase">
-            <span>RECENT WORK</span>
-            <ArrowDownRight className="h-3 w-3 text-primary" />
-          </div>
-          <span className="text-xs font-semibold tracking-tight text-foreground uppercase sm:text-sm">
-            CRAFTED WITH PRECISION
-          </span>
         </div>
       </GridContainer>
     </>

@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = 'pp-portfolio-v1';
+const CACHE_NAME = 'pp-portfolio-v1';
 const PRECACHE_ASSETS = [
   '/',
   '/site.webmanifest',
@@ -11,6 +11,10 @@ const PRECACHE_ASSETS = [
 ];
 
 self.addEventListener('install', (event) => {
+  if (self.location.hostname === 'localhost' || self.location.hostname === '127.0.0.1') {
+    self.skipWaiting();
+    return;
+  }
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(PRECACHE_ASSETS);
@@ -19,6 +23,14 @@ self.addEventListener('install', (event) => {
 });
 
 self.addEventListener('activate', (event) => {
+  if (self.location.hostname === 'localhost' || self.location.hostname === '127.0.0.1') {
+    event.waitUntil(
+      caches.keys().then((cacheNames) => {
+        return Promise.all(cacheNames.map((name) => caches.delete(name)));
+      }).then(() => self.registration.unregister())
+    );
+    return;
+  }
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -42,13 +54,17 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(request.url);
 
-  // Skip browser extensions, Sanity CMS studio and API, and dev server sockets
+  // Completely bypass dev server, localhost, Vite HMR, and CMS
   if (
+    url.hostname === 'localhost' ||
+    url.hostname === '127.0.0.1' ||
     url.protocol.startsWith('chrome-extension') ||
     url.hostname.includes('sanity.io') ||
     url.pathname.startsWith('/studio') ||
-    url.pathname.includes('vite-hmr') ||
-    url.pathname.includes('__vite')
+    url.pathname.startsWith('/src/') ||
+    url.pathname.startsWith('/@') ||
+    url.pathname.includes('vite') ||
+    url.search.includes('t=')
   ) {
     return;
   }
