@@ -61,7 +61,7 @@ export function SectionHeading({
       {/* Full Absolute Blueprint Striped Background Pattern */}
       <StripedPattern
         variant="absolute"
-        className="opacity-60 dark:opacity-90"
+        className="opacity-60 dark:opacity-30"
       />
 
       {/* ── Left info: Heading + Count ── */}

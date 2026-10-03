@@ -5,7 +5,6 @@ import { GridContainer } from "@/app/layouts"
 import BannerHero from "@/features/home/banner-hero"
 import SectionAbout from "@/features/home/section-about"
 import { SectionBlocks } from "@/features/home/section-blocks"
-import { SectionBookmarks } from "@/features/home/section-bookmarks"
 import SectionTechStack from "@/features/home/section-tech-stack"
 import UiComponentsSection from "@/features/home/section-ui-components"
 import { createSeoMeta } from "@/shared/config"
@@ -103,9 +102,6 @@ function HomePage() {
 
       {/* 7. Curated Resources Section */}
       {/* <SectionResources /> */}
-
-      {/* 8. Bookmarks Section */}
-      <SectionBookmarks />
 
       {/* 9. Location & Vietnam Map Section */}
       <section id="vietnam-map">
