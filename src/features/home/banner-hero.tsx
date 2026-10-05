@@ -1,6 +1,7 @@
 import React, { Suspense } from "react"
 
 import { GridContainer } from "@/app/layouts"
+import { siteConfig } from "@/shared/config"
 import { useIsClient, useMediaQuery } from "@/shared/hooks"
 import { lazyWithRetry } from "@/shared/lib"
 import { BlueprintCanvasBackground } from "@/shared/ui/animation/blueprint-canvas-background"
@@ -67,6 +68,7 @@ export default function BannerHero() {
   const isMd = useMediaQuery("md")
   return (
     <section className="relative flex w-full flex-col justify-between gap-4 overflow-hidden bg-background lg:min-h-[calc(100vh-5rem)]">
+      <h1 className="sr-only">{siteConfig.title}</h1>
       <BlueprintCanvasBackground />
 
       {/* ─── Hero Monogram Mark Section (Centered & Elevated) ─── */}

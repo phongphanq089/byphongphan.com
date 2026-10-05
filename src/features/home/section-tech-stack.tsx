@@ -4,25 +4,19 @@ import React from "react"
 
 import { GridContainer } from "@/app/layouts"
 import { TECH_STACK } from "@/shared/config"
-import { iconComponents, StripedPattern } from "@/shared/ui"
-import TextBurnNeon from "@/shared/ui/animation/text-burn-neon"
+import { SectionHeading } from "@/shared/ui"
+import { iconComponents } from "@/shared/ui/icons"
 
 const SectionTechStack = () => {
   return (
     <section id="tech-stack">
       {/* Blueprint Heading with Striped Pattern Background */}
       <GridContainer borderTop className="relative p-0" showCrosshairs={false}>
-        <div className="relative flex w-full items-center justify-between overflow-hidden px-4 py-3 sm:px-6 md:px-8">
-          <StripedPattern
-            variant="absolute"
-            className="opacity-60 dark:opacity-30"
-          />
-          <div className="relative z-10 flex items-center gap-3">
-            <h2 className="text-xl font-bold tracking-tight text-primary sm:text-2xl">
-              <TextBurnNeon>Tech Stack</TextBurnNeon>
-            </h2>
-          </div>
-        </div>
+        <SectionHeading
+          id="tech-stack"
+          heading="Tech Stack"
+          count={TECH_STACK.length}
+        />
       </GridContainer>
 
       {/* Tech Cards Responsive Grid with Motion */}

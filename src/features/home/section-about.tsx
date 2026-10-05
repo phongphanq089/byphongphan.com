@@ -30,6 +30,7 @@ const SectionAbout = () => {
         borderBottom={true}
         showCrosshairs={true}
         className="p-0"
+        as="section"
       >
         <div className="flex h-full flex-row items-stretch">
           <div className="relative w-28 shrink-0 overflow-hidden bg-card sm:w-32 md:w-36">
@@ -41,7 +42,7 @@ const SectionAbout = () => {
           </div>
           <div className="flex flex-1 flex-col justify-between">
             <div className="relative flex flex-1 items-center px-4 py-2.5 sm:px-5">
-              <p className="font-semibold text-foreground">About Me</p>
+              <h2 className="font-semibold text-foreground">About Me</h2>
             </div>
             <div className="flex flex-1 items-center bg-accent px-4 py-2.5 sm:px-5">
               <p className="text-[11px] tracking-wider text-muted-foreground/90 sm:text-xs">
