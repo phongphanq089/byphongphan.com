@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 
 import { createSeoMeta } from "@/shared/config"
-import { UnderConstructionBlock } from "@/shared/ui"
+import { UnderConstructionBlock } from "@/shared/ui/system/under-construction-block"
 
 export const Route = createFileRoute("/_site/resources/")({
   head: () => ({

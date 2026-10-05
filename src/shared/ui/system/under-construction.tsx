@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router"
 import { ArrowDownRight, Terminal } from "lucide-react"
 import { useEffect, useState } from "react"
 
-import { PPMarkIsometric } from "@/shared/ui"
+import { PPMarkIsometric } from "@/shared/ui/animation/pp-mark-isometric"
 import TextBurnNeon from "@/shared/ui/animation/text-burn-neon"
 
 export interface UnderConstructionProps {

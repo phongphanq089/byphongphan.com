@@ -2,7 +2,7 @@ import { SearchIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 
 import { cn } from "@/shared/lib/utils"
-import { Button } from "@/shared/ui"
+import { Button } from "@/shared/ui/core/button"
 import { Kbd } from "@/shared/ui/core/kbd"
 
 import { openCommandMenu } from "./use-command-menu"
