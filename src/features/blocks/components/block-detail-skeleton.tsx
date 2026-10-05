@@ -60,7 +60,7 @@ export function BlockDetailSkeleton({
                   <Skeleton className="h-9 w-52 sm:h-12 sm:w-80" />
                 )}
                 {category ? (
-                  <span className="rounded-full border border-border bg-muted/60 px-2.5 py-0.5 text-[10px] font-semibold text-muted-foreground uppercase">
+                  <span className="rounded-sm border border-border bg-muted/60 px-2.5 py-0.5 text-[10px] font-semibold text-muted-foreground uppercase">
                     {category}
                   </span>
                 ) : (

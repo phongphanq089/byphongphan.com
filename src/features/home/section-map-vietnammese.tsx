@@ -1,3 +1,4 @@
+import { cn } from "cn"
 import { Compass, Crosshair, Globe2, MapPin } from "lucide-react"
 import { useEffect, useState } from "react"
 
@@ -76,9 +77,9 @@ export function SectionMapVietnamese() {
         borderLeft={false}
         borderRight={false}
         borderBottom
-        className="flex flex-wrap items-center justify-between gap-4 px-4 py-4 sm:px-6"
+        className="flex items-center justify-between max-lg:flex-wrap"
       >
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex items-center gap-2 px-4 py-4 whitespace-nowrap sm:px-6">
           <span className="text-xs font-semibold tracking-wide text-foreground">
             {NINH_HOA_COORDINATES.name}, {NINH_HOA_COORDINATES.province},{" "}
             {NINH_HOA_COORDINATES.country}
@@ -90,21 +91,25 @@ export function SectionMapVietnamese() {
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="relative z-10 flex w-full items-stretch border-l border-border bg-background/50 backdrop-blur-xs max-lg:border-t">
           <Button
-            variant={viewMode === "ninh-hoa" ? "default" : "outline"}
-            size="sm"
+            variant="ghost"
             onClick={() => setViewMode("ninh-hoa")}
-            className="h-8 gap-1.5 text-xs font-medium"
+            className={cn(
+              "group/btn h-full shrink-0 rounded-none border-0 border-l border-border px-3.5 py-4 font-mono text-[11px] font-medium text-foreground transition-all duration-200 hover:bg-accent/60 hover:text-foreground active:bg-accent sm:px-6 sm:text-xs",
+              viewMode === "ninh-hoa" && "bg-accent!"
+            )}
           >
             <Crosshair className="size-3.5" />
             Focus Ninh Hoà
           </Button>
           <Button
-            variant={viewMode === "vietnam" ? "default" : "outline"}
-            size="sm"
+            variant="ghost"
             onClick={() => setViewMode("vietnam")}
-            className="h-8 gap-1.5 text-xs font-medium"
+            className={cn(
+              "group/btn h-full shrink-0 rounded-none border-0 border-l border-border px-3.5 py-4 font-mono text-[11px] font-medium text-foreground transition-all duration-200 hover:bg-accent/60 hover:text-foreground active:bg-accent sm:px-6 sm:text-xs",
+              viewMode === "vietnam" && "bg-accent!"
+            )}
           >
             <Globe2 className="size-3.5" />
             Vietnam Overview
