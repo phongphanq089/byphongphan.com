@@ -1,6 +1,4 @@
-"use client"
-
-import React, { useId } from "react"
+import { useId } from "react"
 
 import { cn } from "@/shared/lib/utils"
 
@@ -59,12 +57,11 @@ export function BlueprintCanvasBackground({
     <div
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-0 z-0 h-full w-full overflow-hidden opacity-60 transition-opacity duration-300 select-none",
+        "pointer-events-none absolute inset-0 z-0 h-full w-full overflow-hidden opacity-100 transition-opacity duration-300 select-none",
         className
       )}
     >
-      {/* ─── 1. Full-Bleed CAD Dotted Matrix Grid ─── */}
-      {!showGrid && (
+      {showGrid && (
         <svg
           className="absolute inset-0 h-full w-full"
           xmlns="http://www.w3.org/2000/svg"
@@ -85,7 +82,7 @@ export function BlueprintCanvasBackground({
                 stroke="currentColor"
                 strokeWidth="0.75"
                 strokeDasharray="1 3"
-                className="text-foreground/[0.07] dark:text-white/[0.08]"
+                className="text-foreground/[0.09] dark:text-white/[0.08]"
               />
               {/* Subtle dashed horizontal grid line */}
               <line
@@ -96,7 +93,7 @@ export function BlueprintCanvasBackground({
                 stroke="currentColor"
                 strokeWidth="0.75"
                 strokeDasharray="1 3"
-                className="text-foreground/[0.07] dark:text-white/[0.08]"
+                className="text-foreground/[0.09] dark:text-white/[0.08]"
               />
               {/* Intersection coordinate dot */}
               <circle
@@ -115,8 +112,6 @@ export function BlueprintCanvasBackground({
           />
         </svg>
       )}
-
-      {/* ─── 3. Main Vector Drafting Geometry Canvas ─── */}
       <svg
         className="absolute inset-0 h-full w-full"
         viewBox="0 0 1440 680"
@@ -131,7 +126,7 @@ export function BlueprintCanvasBackground({
             cx="280"
             cy="340"
             r="190"
-            className="fill-foreground/[0.045] stroke-foreground/25 dark:fill-white/[0.04] dark:stroke-white/25"
+            className="fill-foreground/[0.045] stroke-foreground/10 dark:fill-white/[0.04] dark:stroke-white/10"
             strokeWidth="1"
           />
 
@@ -141,7 +136,7 @@ export function BlueprintCanvasBackground({
             y1="340"
             x2="280"
             y2="0"
-            className="stroke-foreground/25 dark:stroke-white/25"
+            className="stroke-foreground/10 dark:stroke-white/10"
             strokeWidth="1"
           />
 
@@ -151,7 +146,7 @@ export function BlueprintCanvasBackground({
             y1="340"
             x2="540"
             y2="340"
-            className="stroke-foreground/25 dark:stroke-white/25"
+            className="stroke-foreground/10 dark:stroke-white/10"
             strokeWidth="1"
           />
 
@@ -161,7 +156,7 @@ export function BlueprintCanvasBackground({
             y1="0"
             x2="540"
             y2="340"
-            className="stroke-foreground/25 dark:stroke-white/25"
+            className="stroke-foreground/10 dark:stroke-white/10"
             strokeWidth="1"
           />
 
@@ -171,7 +166,7 @@ export function BlueprintCanvasBackground({
             y1="60"
             x2="620"
             y2="680"
-            className="stroke-foreground/30 dark:stroke-white/30"
+            className="stroke-foreground/10 dark:stroke-white/10"
             strokeWidth="1"
           />
 
@@ -181,7 +176,7 @@ export function BlueprintCanvasBackground({
             y="337"
             width="6"
             height="6"
-            className="fill-background stroke-foreground/70 dark:fill-neutral-950 dark:stroke-white/80"
+            className="fill-background stroke-foreground/40 dark:fill-neutral-950 dark:stroke-white/40"
             strokeWidth="1"
           />
 
@@ -191,7 +186,7 @@ export function BlueprintCanvasBackground({
             y={340 - 190 * 0.7071 - 3}
             width="6"
             height="6"
-            className="fill-background stroke-foreground/70 dark:fill-neutral-950 dark:stroke-white/80"
+            className="fill-background stroke-foreground/40 dark:fill-neutral-950 dark:stroke-white/40"
             strokeWidth="1"
           />
 
@@ -201,7 +196,7 @@ export function BlueprintCanvasBackground({
             y={340 + 190 * 0.7071 - 3}
             width="6"
             height="6"
-            className="fill-background stroke-foreground/70 dark:fill-neutral-950 dark:stroke-white/80"
+            className="fill-background stroke-foreground/40 dark:fill-neutral-950 dark:stroke-white/40"
             strokeWidth="1"
           />
 
@@ -211,7 +206,7 @@ export function BlueprintCanvasBackground({
             y="337"
             width="6"
             height="6"
-            className="fill-background stroke-foreground/70 dark:fill-neutral-950 dark:stroke-white/80"
+            className="fill-background stroke-foreground/40 dark:fill-neutral-950 dark:stroke-white/40"
             strokeWidth="1"
           />
         </g>
@@ -221,7 +216,7 @@ export function BlueprintCanvasBackground({
           <path
             d="M 595 0 A 85 85 0 0 0 765 0"
             fill="none"
-            className="stroke-foreground/25 dark:stroke-white/25"
+            className="stroke-foreground/10 dark:stroke-white/10"
             strokeWidth="1"
           />
         </g>
@@ -231,7 +226,7 @@ export function BlueprintCanvasBackground({
           <path
             d="M 1120 0 A 85 85 0 0 0 1290 0"
             fill="none"
-            className="stroke-foreground/25 dark:stroke-white/25"
+            className="stroke-foreground/10 dark:stroke-white/10"
             strokeWidth="1"
           />
         </g>
@@ -244,7 +239,7 @@ export function BlueprintCanvasBackground({
             y="10"
             width="260"
             height="225"
-            className="fill-foreground/[0.045] stroke-foreground/25 dark:fill-white/[0.04] dark:stroke-white/25"
+            className="fill-foreground/[0.045] stroke-foreground/10 dark:fill-white/[0.04] dark:stroke-white/10"
             strokeWidth="1"
           />
 
@@ -254,7 +249,7 @@ export function BlueprintCanvasBackground({
             y1="10"
             x2="530"
             y2="520"
-            className="stroke-foreground/30 dark:stroke-white/30"
+            className="stroke-foreground/10 dark:stroke-white/10"
             strokeWidth="1"
           />
 
@@ -264,7 +259,7 @@ export function BlueprintCanvasBackground({
             y="119.5"
             width="6"
             height="6"
-            className="fill-background stroke-foreground/70 dark:fill-neutral-950 dark:stroke-white/80"
+            className="fill-background stroke-foreground/20 dark:fill-neutral-950 dark:stroke-white/40"
             strokeWidth="1"
           />
 
@@ -274,7 +269,7 @@ export function BlueprintCanvasBackground({
             y="232"
             width="6"
             height="6"
-            className="fill-background stroke-foreground/70 dark:fill-neutral-950 dark:stroke-white/80"
+            className="fill-background stroke-foreground/20 dark:fill-neutral-950 dark:stroke-white/40"
             strokeWidth="1"
           />
 
@@ -284,7 +279,7 @@ export function BlueprintCanvasBackground({
             y="232"
             width="6"
             height="6"
-            className="fill-background stroke-foreground/70 dark:fill-neutral-950 dark:stroke-white/80"
+            className="fill-background stroke-foreground/50 dark:fill-neutral-950 dark:stroke-white/40"
             strokeWidth="1"
           />
         </g>
@@ -294,7 +289,7 @@ export function BlueprintCanvasBackground({
           {/* Shaded Triangle/Polygon between diagonal hypotenuse and horizontal baseline */}
           <polygon
             points="530,520 1440,520 1440,235 860,235"
-            className="fill-foreground/[0.035] stroke-foreground/20 dark:fill-white/[0.03] dark:stroke-white/20"
+            className="fill-foreground/[0.035] stroke-foreground/10 dark:fill-white/[0.03] dark:stroke-white/10"
             strokeWidth="1"
           />
 
@@ -304,7 +299,7 @@ export function BlueprintCanvasBackground({
             y1="520"
             x2="1440"
             y2="520"
-            className="stroke-foreground/25 dark:stroke-white/25"
+            className="stroke-foreground/10 dark:stroke-white/10"
             strokeWidth="1"
           />
 
@@ -314,7 +309,7 @@ export function BlueprintCanvasBackground({
             y="517"
             width="6"
             height="6"
-            className="fill-background stroke-foreground/70 dark:fill-neutral-950 dark:stroke-white/80"
+            className="fill-background stroke-foreground/40 dark:fill-neutral-950 dark:stroke-white/40"
             strokeWidth="1"
           />
         </g>
@@ -328,7 +323,7 @@ export function BlueprintCanvasBackground({
               y={node.y - 3}
               width="6"
               height="6"
-              className="fill-background stroke-foreground/50 transition-opacity duration-300 dark:fill-neutral-950 dark:stroke-white/50"
+              className="fill-background stroke-foreground/40 transition-opacity duration-300 dark:fill-neutral-950 dark:stroke-white/40"
               strokeWidth="1"
             />
           ))}

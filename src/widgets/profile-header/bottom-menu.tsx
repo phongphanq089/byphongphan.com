@@ -240,7 +240,7 @@ const BottomMenu = () => {
               }
               aria-label={view === "menu" ? "Close menu" : "Open menu"}
               className={cn(
-                "flex size-9 items-center justify-center rounded-full transition-all duration-200 active:scale-95 md:hidden",
+                "flex size-9 items-center justify-center rounded-full transition-all duration-200 active:scale-95 lg:hidden",
                 view === "menu"
                   ? "bg-accent text-foreground"
                   : "text-muted-foreground hover:bg-muted/70 hover:text-foreground"
@@ -276,7 +276,7 @@ const BottomMenu = () => {
           </TooltipContent>
         </Tooltip>
 
-        <div className="mx-0.5 h-4 w-[1px] bg-border/60 md:hidden dark:bg-white/10" />
+        <div className="mx-0.5 h-4 w-[1px] bg-border/60 lg:hidden dark:bg-white/10" />
         <Tooltip>
           <TooltipTrigger asChild>
             <button
@@ -286,7 +286,7 @@ const BottomMenu = () => {
                 openCommandMenu()
               }}
               aria-label="Search commands"
-              className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-all duration-200 hover:bg-muted/70 hover:text-foreground active:scale-95 md:hidden"
+              className="flex size-9 items-center justify-center rounded-full text-muted-foreground transition-all duration-200 hover:bg-muted/70 hover:text-foreground active:scale-95 lg:hidden"
             >
               <Search className="size-4" />
             </button>
@@ -305,7 +305,7 @@ const BottomMenu = () => {
               }
               aria-label="Toggle theme mode"
               className={cn(
-                "flex size-9 items-center justify-center rounded-full transition-all duration-200 active:scale-95 md:hidden",
+                "flex size-9 items-center justify-center rounded-full transition-all duration-200 active:scale-95 lg:hidden",
                 view === "theme"
                   ? "bg-accent text-foreground"
                   : "text-muted-foreground hover:bg-muted/70 hover:text-foreground"

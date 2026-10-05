@@ -1,12 +1,11 @@
 import React, { Suspense } from "react"
 
+import { GridContainer } from "@/app/layouts"
 import { useIsClient, useMediaQuery } from "@/shared/hooks"
 import { lazyWithRetry } from "@/shared/lib"
-import {
-  BlueprintCanvasBackground,
-  PPMarkIsometric,
-  Skeleton,
-} from "@/shared/ui"
+import { BlueprintCanvasBackground } from "@/shared/ui/animation/blueprint-canvas-background"
+import { PPMarkIsometric } from "@/shared/ui/animation/pp-mark-isometric"
+import { Skeleton } from "@/shared/ui/core/skeleton"
 
 const LazyTechText = lazyWithRetry(
   () => import("@/shared/ui/animation/tech-text")
@@ -67,18 +66,22 @@ export default function BannerHero() {
 
   const isMd = useMediaQuery("md")
   return (
-    <section className="relative flex w-full flex-col justify-between overflow-hidden border-b border-border bg-background lg:min-h-[calc(100vh-3.5rem)]">
-      {/* ─── Full-Bleed CAD / Blueprint Vector Canvas Background ─── */}
+    <section className="relative flex w-full flex-col justify-between gap-4 overflow-hidden bg-background lg:min-h-[calc(100vh-5rem)]">
       <BlueprintCanvasBackground />
 
       {/* ─── Hero Monogram Mark Section (Centered & Elevated) ─── */}
       <div className="relative z-10 flex w-full flex-1 items-center justify-center px-4 py-8 sm:py-12 md:px-8 md:py-16">
-        <div className="group relative mx-auto flex w-full max-w-sm flex-col items-center justify-center sm:max-w-md md:max-w-lg lg:max-w-4xl">
+        <div className="group relative mx-auto flex w-full max-w-sm flex-col items-center justify-center sm:max-w-md md:max-w-lg lg:max-w-2xl 4xl:max-w-4xl">
           <PPMarkIsometric IsometricBlueprint={false} />
         </div>
       </div>
 
-      <div className="relative z-10 w-full border-t border-border/40 py-4 text-center md:py-8">
+      <GridContainer
+        borderTop={true}
+        borderBottom={false}
+        showCrosshairs={false}
+        className="z-10 w-full p-0 py-4 md:py-8"
+      >
         <div style={{ width: "100%", position: "relative" }}>
           {isClient ? (
             <Suspense fallback={<TechTextSkeleton />}>
@@ -106,7 +109,7 @@ export default function BannerHero() {
             <TechTextSkeleton />
           )}
         </div>
-      </div>
+      </GridContainer>
     </section>
   )
 }
