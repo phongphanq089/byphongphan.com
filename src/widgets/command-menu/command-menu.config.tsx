@@ -20,7 +20,7 @@ import {
   Sun,
   User,
 } from "lucide-react"
-import type { ReactNode } from "react"
+import React, { type ReactNode } from "react"
 
 import { siteConfig } from "@/shared/config"
 import { GitHub } from "@/shared/ui/icons"

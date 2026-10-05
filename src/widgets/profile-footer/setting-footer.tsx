@@ -1,4 +1,4 @@
-import type React from "react"
+import React from "react"
 
 import { siteConfig } from "@/shared/config"
 import { Sanity, ShadcnUI, Tailwind, Tanstack } from "@/shared/ui/icons"

@@ -2,7 +2,7 @@ import { Compass, Crosshair, Globe2, MapPin } from "lucide-react"
 import { useEffect, useState } from "react"
 
 import { GridContainer } from "@/app/layouts"
-import { Badge, Button } from "@/shared/ui"
+import { Badge, Button } from "@/shared/ui/core"
 import {
   Map,
   MapControls,

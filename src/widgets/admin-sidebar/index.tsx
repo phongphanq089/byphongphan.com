@@ -26,7 +26,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
   useSidebar,
-} from "@/shared/ui"
+} from "@/shared/ui/core"
 
 interface NavItem {
   title: string
