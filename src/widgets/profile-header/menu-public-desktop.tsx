@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { Link, useRouterState } from "@tanstack/react-router"
+import { ArrowRight } from "lucide-react"
 import { animate } from "motion/react"
 import React, { useCallback, useEffect, useRef, useState } from "react"
 
 import { MAIN_NAV_ITEMS, type NavItemConfig } from "@/shared/config"
 import { cn } from "@/shared/lib/utils"
-import { ModeToggle, PPPixelMark } from "@/shared/ui"
-import GenerateButton from "@/shared/ui/animation/generate-button"
+import { Button } from "@/shared/ui/core"
+import { PPPixelMark } from "@/shared/ui/icons/pp-pixel-mark"
+import { ModeToggle } from "@/shared/ui/system/mode-toggle"
 
 import { CommandMenuTrigger } from "../command-menu"
 
@@ -259,9 +261,17 @@ export function Header() {
         <PPPixelMark size={32} className="text-pp-primary" />
       </Link>
 
-      {/* Mobile header — visible below lg, hidden at lg+ */}
-      <div className="flex h-full items-center gap-3 px-3 lg:hidden">
-        <GenerateButton hue={210} />
+      <div className="relative z-10 flex shrink-0 items-stretch border-l border-border bg-background/50 backdrop-blur-xs lg:hidden">
+        <Button
+          variant="ghost"
+          className="group/btn h-full rounded-none border-0 px-3.5 py-3 font-mono text-[11px] font-medium text-foreground transition-all duration-200 hover:bg-accent/60 hover:text-foreground active:bg-accent sm:px-6 sm:text-xs"
+          asChild
+        >
+          <Link to="/component-ui">
+            <span>Component UI</span>
+            <ArrowRight className="size-3.5 transition-transform duration-200 group-hover/btn:translate-x-1" />
+          </Link>
+        </Button>
       </div>
 
       {/* Desktop header — hidden below lg, visible at lg+ */}

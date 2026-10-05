@@ -132,13 +132,30 @@ function RootDocument({
   blogGroups?: unknown
 }) {
   useEffect(() => {
-    if (typeof window !== "undefined" && "serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/sw.js").catch((err) => {
-          console.warn("[PWA] Service Worker registration failed:", err)
-        })
+    if (typeof window === "undefined" || !("serviceWorker" in navigator)) return
+
+    if (import.meta.env.DEV) {
+      // In development, ensure no Service Worker intercepts Vite HMR or caches modules
+      navigator.serviceWorker.getRegistrations().then((registrations) => {
+        for (const registration of registrations) {
+          registration.unregister()
+        }
       })
+      if ("caches" in window) {
+        caches.keys().then((keys) => {
+          for (const key of keys) {
+            caches.delete(key)
+          }
+        })
+      }
+      return
     }
+
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js").catch((err) => {
+        console.warn("[PWA] Service Worker registration failed:", err)
+      })
+    })
   }, [])
 
   return (
