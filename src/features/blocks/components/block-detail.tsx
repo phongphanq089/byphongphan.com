@@ -139,30 +139,6 @@ export function BlockDetail({ block }: BlockDetailProps) {
         <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-pp-primary/10 blur-3xl dark:bg-pp-primary/15" />
 
         <div className="relative z-10 flex flex-col gap-4">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Link to="/" className="transition-colors hover:text-foreground">
-              Home
-            </Link>
-            <span>/</span>
-            <Link
-              to="/blocks"
-              className="transition-colors hover:text-foreground"
-            >
-              Blocks
-            </Link>
-            <span>/</span>
-            <Link
-              to="/blocks/$category"
-              params={{ category: block.category }}
-              className="capitalize transition-colors hover:text-foreground"
-            >
-              {block.category}
-            </Link>
-            <span>/</span>
-            <span className="font-semibold text-pp-primary">{block.title}</span>
-          </div>
-
           {/* Title Row */}
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-col gap-2">

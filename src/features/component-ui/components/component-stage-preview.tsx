@@ -4,7 +4,13 @@ import { Suspense, useEffect, useRef, useState } from "react"
 
 import { CodeBlock, CodeBlockCopyButton } from "@/registry/ui/code-block"
 import { cn } from "@/shared/lib"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/core"
+import {
+  Skeleton,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/shared/ui/core"
 import { ScrollFadeEffect } from "@/shared/ui/core/scroll-fade-effect"
 
 import type { SchematicType } from "../types"
@@ -112,14 +118,7 @@ export function ComponentStagePreview({
               {isInView ? (
                 LiveDemo ? (
                   <div className="flex w-full items-center justify-center">
-                    <Suspense
-                      fallback={
-                        <div className="flex flex-col items-center justify-center gap-3 text-muted-foreground/50">
-                          <div className="size-6 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
-                          <span className="text-xs">Loading demo...</span>
-                        </div>
-                      }
-                    >
+                    <Suspense fallback={<StageDemoSkeleton />}>
                       <LiveDemo />
                     </Suspense>
                   </div>
@@ -129,10 +128,7 @@ export function ComponentStagePreview({
                   </div>
                 )
               ) : (
-                <div className="flex flex-col items-center justify-center gap-3 text-muted-foreground/50">
-                  <div className="size-6 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
-                  <span className="text-xs">Loading preview...</span>
-                </div>
+                <StageDemoSkeleton />
               )}
             </div>
           </div>
@@ -157,6 +153,20 @@ export function ComponentStagePreview({
           )}
         </TabsContent>
       </Tabs>
+    </div>
+  )
+}
+
+function StageDemoSkeleton() {
+  return (
+    <div className="flex flex-col items-center justify-center gap-3 py-10">
+      <div className="relative flex size-14 items-center justify-center rounded-2xl border border-border/60 bg-muted/20">
+        <div className="size-6 animate-pulse rounded-md border border-primary/30 bg-primary/10" />
+      </div>
+      <div className="flex flex-col items-center gap-1.5 text-center">
+        <Skeleton className="h-3.5 w-28" />
+        <Skeleton className="h-2.5 w-16 opacity-60" />
+      </div>
     </div>
   )
 }

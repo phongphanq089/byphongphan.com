@@ -1,7 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router"
 import { Suspense } from "react"
 
-import { BLOCKS_DATA } from "@/features/blocks/blocks-data"
+import { BlockDetailSkeleton, BLOCKS_DATA } from "@/features/blocks"
 import { createSeoMeta, siteConfig } from "@/shared/config"
 import { lazyWithRetry } from "@/shared/lib/lazy-with-retry"
 
@@ -21,6 +21,7 @@ export const Route = createFileRoute("/_site/blocks/$category/$slug")({
     }
     return { block }
   },
+  pendingComponent: BlockDetailPendingComponent,
   head: ({ loaderData, params }) => {
     const title = loaderData?.block
       ? `${loaderData.block.title} • Phong Phan Blocks`
@@ -42,17 +43,32 @@ export const Route = createFileRoute("/_site/blocks/$category/$slug")({
   component: BlockDetailPage,
 })
 
+function BlockDetailPendingComponent() {
+  const { category, slug } = Route.useParams()
+  const block = BLOCKS_DATA.find(
+    (b) => b.category === category && b.slug === slug
+  )
+  return (
+    <BlockDetailSkeleton
+      title={block?.title}
+      category={category}
+      description={block?.description}
+      slug={slug}
+    />
+  )
+}
+
 function BlockDetailPage() {
   const { block } = Route.useLoaderData()
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-[60vh] w-full items-center justify-center">
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <div className="size-4 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
-            <span>Loading block...</span>
-          </div>
-        </div>
+        <BlockDetailSkeleton
+          title={block.title}
+          category={block.category}
+          description={block.description}
+          slug={block.slug}
+        />
       }
     >
       <LazyBlockDetail block={block} />

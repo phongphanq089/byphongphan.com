@@ -3,12 +3,12 @@ import { LayoutGrid } from "lucide-react"
 import { useMemo } from "react"
 
 import { GridContainer } from "@/app/layouts"
+import { PageHero } from "@/shared/ui"
 
 import { BLOCKS_DATA } from "../blocks-data"
 import type { BlockCategoryId, BlockItem } from "../types"
 import { BlockCard } from "./block-card"
 import { BlockFilterBar } from "./block-filter-bar"
-import { BlockHero } from "./block-hero"
 
 interface BlockGridProps {
   category?: BlockCategoryId
@@ -32,15 +32,17 @@ export function BlockGrid({ category = "all" }: BlockGridProps) {
 
   return (
     <div className="w-full">
-      {/* 1. Blocks Hero */}
-      <BlockHero />
+      <PageHero
+        badge="Blocks ui"
+        count={`${filteredBlocks.length} ${filteredBlocks.length === 1 ? "block" : "blocks"}`}
+        title="Beautifully designed, production-ready."
+      />
 
       {/* 2. Route-based Segmented Category Nav Tabs (0 padding so borders touch GridContainer) */}
       <GridContainer borderBottom showCrosshairs className="p-0">
         <BlockFilterBar activeCategory={category} />
       </GridContainer>
 
-      {/* 3. 2-Column Grid Container Rows */}
       {blockRows.length > 0 ? (
         blockRows.map((pair, rowIndex) => (
           <GridContainer

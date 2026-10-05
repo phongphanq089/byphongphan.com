@@ -12,6 +12,7 @@ import {
 } from "@/registry/ui/code-block"
 import { VARIANTS_MAP } from "@/registry/variants"
 import { cn } from "@/shared/lib"
+import { Skeleton } from "@/shared/ui/core"
 import {
   Tabs,
   TabsContent as TabsContentPrimitive,
@@ -372,8 +373,18 @@ export function ComponentSource({
           </CodeBlockHeader>
         </CodeBlock>
       ) : (
-        <div className="flex min-h-[140px] w-full items-center justify-center rounded-lg border border-border/60 bg-muted/20 font-mono text-xs text-muted-foreground/50">
-          Loading {displayTitle}...
+        <div className="flex min-h-[140px] w-full flex-col justify-between rounded-lg border border-border/60 bg-muted/20 p-4">
+          <div className="flex items-center justify-between border-b border-border/40 pb-2">
+            <span className="font-mono text-xs text-muted-foreground/70">
+              {displayTitle}
+            </span>
+            <Skeleton className="size-5 rounded-sm" />
+          </div>
+          <div className="space-y-2 pt-3">
+            <Skeleton className="h-3.5 w-3/4" />
+            <Skeleton className="h-3.5 w-1/2" />
+            <Skeleton className="h-3.5 w-2/3" />
+          </div>
         </div>
       )}
     </div>

@@ -1,6 +1,6 @@
 export * from "./blocks-data"
 export * from "./components/block-card"
+export * from "./components/block-detail-skeleton"
 export * from "./components/block-filter-bar"
 export * from "./components/block-grid"
-export * from "./components/block-hero"
 export * from "./types"
