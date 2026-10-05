@@ -227,7 +227,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     schematic: PPMarkIsometricSchematic,
     schematicType: "pp-mark-isometric",
     isNew: true,
-    dependencies: ["framer-motion"],
+    dependencies: ["motion"],
     registryDependencies: [],
     files: [
       {
@@ -247,7 +247,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     schematic: PhongPhanIsometricSchematic,
     schematicType: "phong-phan-isometric",
     isNew: true,
-    dependencies: ["framer-motion"],
+    dependencies: ["motion"],
     registryDependencies: [],
     files: [
       {

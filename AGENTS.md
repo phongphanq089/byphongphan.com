@@ -13,11 +13,9 @@ Welcome to **Portfolio App**, a modern, high-craft personal developer portfolio 
   - TanStack Query v5 (`@tanstack/react-query`) (server/cache state)
 - **Styling & Design System:**
   - Tailwind CSS v4 (`@tailwindcss/vite`, `tailwindcss`)
-  - Animations: Framer Motion (`framer-motion`, `motion`), GSAP (`gsap`, `@gsap/react`), Three.js (`three`), Paper Shaders
+  - Animations: Framer Motion (`motion`), GSAP (`gsap`, `@gsap/react`), Three.js (`three`), Paper Shaders
   - Utilities: `clsx`, `tailwind-merge`, `cva`, `tw-animate-css`
-- **Headless CMS & Content:**
-  - Sanity Studio v5 (`sanity`, `@sanity/client`, `@sanity/image-url`, `next-sanity`)
-- **UI Primitives:** Radix UI primitives, `@base-ui/react`, `lucide-react` icons, Vaul (drawers), Cmdk
+- **UI Primitives:** Radix UI primitives, `lucide-react` icons, Vaul (drawers), Cmdk
 - **Forms & Validation:** Zod schemas (`zod`)
 
 ---
@@ -54,7 +52,6 @@ src/
 │   ├── config/           # Shared configurations
 │   └── constants/        # Global constants
 ├── styles/               # Global CSS & Tailwind directives
-└── sanity/               # Sanity CMS studio schemas and client configurations
 ```
 
 ---
@@ -69,7 +66,7 @@ src/
 - `pnpm format` : Format code using Prettier and ESLint fix
 - `pnpm test` : Run Vitest test suite
 
----
+---prioritizes intentional design systems, not default frameworks
 
 ## 4. Development Guidelines & Rules
 
