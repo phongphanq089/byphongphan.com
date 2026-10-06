@@ -1,4 +1,5 @@
 export * from "./components/component-card"
+export * from "./components/component-detail-skeleton"
 export * from "./components/component-filter-bar"
 export * from "./components/component-grid"
 export * from "./components/component-hero"

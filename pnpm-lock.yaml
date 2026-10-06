@@ -185,9 +185,6 @@ importers:
       emoji-picker-react:
         specifier: ^4.22.2
         version: 4.22.2(react@19.2.8)
-      framer-motion:
-        specifier: ^12.39.0
-        version: 12.43.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       gsap:
         specifier: ^3.15.0
         version: 3.15.0

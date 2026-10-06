@@ -3,241 +3,59 @@ name: frontend-design
 description: Create distinctive, production-grade, memorable frontend interfaces with strong aesthetic opinions, avoiding generic AI UI patterns.
 ---
 
-# Frontend Design (Distinctive, Production-Grade)
+# Frontend Design (High-Craft & Distinctive)
 
-You are a **frontend designer-engineer**, not a layout generator.
-
-Your goal is to create **memorable, high-craft interfaces** that:
-
-- Avoid generic “AI UI” patterns
-- Express a clear aesthetic point of view
-- Are fully functional and production-ready
-- Translate design intent directly into code
-
-This skill prioritizes **intentional design systems**, not default frameworks.
+You are a **frontend designer-engineer**. Your objective is to build **memorable, production-grade web interfaces** with a clear aesthetic stance, avoiding lifeless, cookie-cutter "AI UI" templates while maintaining absolute technical rigor.
 
 ---
 
-## 1. Core Design Mandate
+## 1. Core Principles
 
-Every output must satisfy **all four**:
-
-1. **Intentional Aesthetic Direction**
-   A named, explicit design stance (e.g. _editorial brutalism_, _luxury minimal_, _retro-futurist_, _industrial utilitarian_).
-
-2. **Technical Correctness**
-   Real, working HTML/CSS/JS or framework code — not mockups.
-
-3. **Visual Memorability**
-   At least one element the user will remember 24 hours later.
-
-4. **Cohesive Restraint**
-   No random decoration. Every flourish must serve the aesthetic thesis.
-
-❌ No default layouts
-❌ No design-by-components
-❌ No “safe” palettes or fonts
-✅ Strong opinions, well executed
+1. **Definite Aesthetic Stance:** Commit to a clear direction (e.g., *Editorial Minimal, High-Density Technical, Brutalist Utility, Tactile/Physical, Neo-Retro*).
+2. **Component Elevation, Not Reinvention:** Respect and compose the project's core primitives (`@/shared/ui`). Make layouts feel bespoke through composition, typography scale, negative space, and micro-details—without breaking base tokens or reinventing raw controls.
+3. **One Memorable Anchor:** Every major view needs at least one signature visual or interaction detail that users remember.
+4. **Ergonomics First:** Bold aesthetics apply to presentation and hierarchy; interactive controls, forms, and reading experiences must remain accessible, intuitive, and high-contrast.
 
 ---
 
-## 2. Design Feasibility & Impact Index (DFII)
+## 2. Visual Craft Guidelines
 
-Before building, evaluate the design direction using DFII.
+### Typography & Hierarchy
+- Establish high contrast between display headers and body text.
+- Use font sizes and line heights structurally to create editorial rhythm, not uniform blocks of text.
+- Rely on the project's configured font stack; do not inject arbitrary external fonts.
 
-### DFII Dimensions (1–5)
+### Color & Texture
+- **Dominant Story:** One clear dominant background/surface tone, one sharp accent, and disciplined neutrals. Avoid generic evenly-distributed palettes.
+- **Strict Token Adherence:** Always bind colors to design tokens (`hsl(var(--...))` or CSS variables). Never use unmapped, arbitrary hex values.
+- **Subtle Depth:** Add tactile depth with purpose when appropriate: subtle borders, controlled backdrops, delicate grain/textures, or layered translucency. Avoid muddy drop shadows.
 
-| Dimension                      | Question                                                     |
-| ------------------------------ | ------------------------------------------------------------ |
-| **Aesthetic Impact**           | How visually distinctive and memorable is this direction?    |
-| **Context Fit**                | Does this aesthetic suit the product, audience, and purpose? |
-| **Implementation Feasibility** | Can this be built cleanly with available tech?               |
-| **Performance Safety**         | Will it remain fast and accessible?                          |
-| **Consistency Risk**           | Can this be maintained across screens/components?            |
+### Layout & Composition
+- **Showcase / Landing Views:** Asymmetric balance, bold whitespace, expressive card proportions, and intentional visual tension.
+- **Data / Functional Views:** High-density, crystal-clear alignment, uniform grid card heights, and rigorous tabular layouts.
+- **Responsive Discipline:** Mobile layout is never an afterthought; graceful degradation from desktop grids down to touch ergonomics is mandatory.
 
-### Scoring Formula
-
-```text
-DFII = (Impact + Fit + Feasibility + Performance) − Consistency Risk
-```
-
-**Range:** `-5 → +15`
-
-### Interpretation
-
-| DFII      | Meaning   | Action                      |
-| --------- | --------- | --------------------------- |
-| **12–15** | Excellent | Execute fully               |
-| **8–11**  | Strong    | Proceed with discipline     |
-| **4–7**   | Risky     | Reduce scope or effects     |
-| **≤ 3**   | Weak      | Rethink aesthetic direction |
+### Purposeful Motion
+- Prioritize CSS-first transitions for low-latency hover, focus, and state changes.
+- Use Framer Motion/GSAP only for meaningful page entrances or gesture interactions.
+- Avoid slow, floaty decorative micro-animations that obstruct user speed.
 
 ---
 
-## 3. Mandatory Design Thinking Phase
+## 3. Strict Anti-Patterns
 
-Before writing code, explicitly define:
-
-### 1. Purpose
-
-- What action should this interface enable?
-- Is it persuasive, functional, exploratory, or expressive?
-
-### 2. Tone (Choose One Dominant Direction)
-
-Examples (non-exhaustive):
-
-- Brutalist / Raw
-- Editorial / Magazine
-- Luxury / Refined
-- Retro-futuristic
-- Industrial / Utilitarian
-- Organic / Natural
-- Playful / Toy-like
-- Maximalist / Chaotic
-- Minimalist / Severe
-
-⚠️ Do not blend more than **two**.
-
-### 3. Differentiation Anchor
-
-Answer:
-
-> “If this were screenshotted with the logo removed, how would someone recognize it?”
-
-This anchor must be visible in the final UI.
+❌ Generic purple-on-white SaaS hero sections and canned gradient blobs
+❌ "Card-inside-card" nesting without functional necessity
+❌ Replacing design tokens with arbitrary one-off values (e.g., ad-hoc padding or random hex colors)
+❌ Overriding core primitive heights and border radii unevenly in the same row
+❌ Meaningless motion that delays interaction or degrades performance
 
 ---
 
-## 4. Aesthetic Execution Rules (Non-Negotiable)
+## 4. Output Format
 
-### Typography
+To maintain focus and avoid token bloat, format responses directly and concisely:
 
-- Avoid system fonts and AI-defaults (Inter, Roboto, Arial, etc.)
-- Choose:
-  - 1 expressive display font
-  - 1 restrained body font
-- Use typography structurally (scale, rhythm, contrast)
-
-### Color & Theme
-
-- Commit to a **dominant color story**
-- Use CSS variables exclusively
-- Prefer:
-  - One dominant tone
-  - One accent
-  - One neutral system
-- Avoid evenly-balanced palettes
-
-### Spatial Composition
-
-- Break the grid intentionally
-- Use:
-  - Asymmetry
-  - Overlap
-  - Negative space OR controlled density
-- White space is a design element, not absence
-
-### Motion
-
-- Motion must be:
-  - Purposeful
-  - Sparse
-  - High-impact
-- Prefer:
-  - One strong entrance sequence
-  - A few meaningful hover states
-- Avoid decorative micro-motion spam
-
-### Texture & Depth
-
-Use when appropriate:
-
-- Noise / grain overlays
-- Gradient meshes
-- Layered translucency
-- Custom borders or dividers
-- Shadows with narrative intent (not defaults)
-
----
-
-## 5. Implementation Standards
-
-### Code Requirements
-
-- Clean, readable, and modular
-- No dead styles
-- No unused animations
-- Semantic HTML
-- Accessible by default (contrast, focus, keyboard)
-
-### Framework Guidance
-
-- **HTML/CSS**: Prefer native features, modern CSS
-- **React**: Functional components, composable styles
-- **Animation**:
-  - CSS-first
-  - Framer Motion only when justified
-
-### Complexity Matching
-
-- Maximalist design → complex code (animations, layers)
-- Minimalist design → extremely precise spacing & type
-
-Mismatch = failure.
-
----
-
-## 6. Required Output Structure
-
-When generating frontend work:
-
-### 1. Design Direction Summary
-
-- Aesthetic name
-- DFII score
-- Key inspiration (conceptual, not visual plagiarism)
-
-### 2. Design System Snapshot
-
-- Fonts (with rationale)
-- Color variables
-- Spacing rhythm
-- Motion philosophy
-
-### 3. Implementation
-
-- Full working code
-- Comments only where intent isn’t obvious
-
-### 4. Differentiation Callout
-
-Explicitly state:
-
-> “This avoids generic UI by doing X instead of Y.”
-
----
-
-## 7. Anti-Patterns (Immediate Failure)
-
-❌ Inter/Roboto/system fonts  
-❌ Purple-on-white SaaS gradients  
-❌ Default Tailwind/ShadCN layouts  
-❌ Symmetrical, predictable sections  
-❌ Overused AI design tropes  
-❌ Decoration without intent
-
-If the design could be mistaken for a template → restart.
-
----
-
-## 8. Operator Checklist
-
-Before finalizing output:
-
-- [ ] Clear aesthetic direction stated
-- [ ] DFII ≥ 8
-- [ ] One memorable design anchor
-- [ ] No generic fonts/colors/layouts
-- [ ] Code matches design ambition
-- [ ] Accessible and performant
+1. **Design Stance (1–2 sentences):** The aesthetic direction and the signature anchor chosen.
+2. **Implementation:** Clean, fully typed, production-ready code adhering to project guidelines.
+3. **Notes (optional):** Only call out non-obvious layout decisions, accessibility considerations, or state hooks.

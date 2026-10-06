@@ -2,6 +2,8 @@ import React from "react"
 
 import { GridContainer } from "@/app/layouts"
 import { cn } from "@/shared/lib/utils"
+
+import TextBurnNeon from "../animation/text-burn-neon"
 export interface PageHeroBadge {
   label: string
   icon?: React.ReactNode
@@ -60,8 +62,8 @@ export function PageHero({
               {badge && (
                 <>
                   {typeof badge === "string" ? (
-                    <span className="text-xs font-semibold text-muted-foreground/80 sm:text-sm">
-                      {badge}
+                    <span className="text-xs font-semibold text-muted-foreground/80 uppercase sm:text-sm">
+                      <TextBurnNeon>{badge}</TextBurnNeon>
                     </span>
                   ) : React.isValidElement(badge) ? (
                     badge
@@ -71,14 +73,16 @@ export function PageHero({
                         <span className="size-1.5 animate-pulse rounded-full bg-pp-primary" />
                       )}
                       {badge.icon}
-                      {badge.label}
+                      <span className="text-xs font-semibold text-muted-foreground/80 uppercase sm:text-sm">
+                        <TextBurnNeon>{badge.label}</TextBurnNeon>
+                      </span>
                     </span>
                   ) : null}
                 </>
               )}
 
               {count !== undefined && (
-                <span className="flex items-center gap-1 rounded-full border border-border bg-muted/50 px-2 py-0.5 text-[10px] font-medium text-muted-foreground">
+                <span className="flex items-center gap-1 rounded-sm border border-border bg-muted/50 px-2 py-0.5 text-[10px] font-medium text-foreground">
                   {countIcon}
                   <span>{count}</span>
                 </span>

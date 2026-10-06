@@ -1,7 +1,10 @@
 import { createFileRoute, notFound } from "@tanstack/react-router"
 import { Suspense } from "react"
 
-import { COMPONENTS_DATA } from "@/features/component-ui/components-data"
+import {
+  ComponentDetailSkeleton,
+  COMPONENTS_DATA,
+} from "@/features/component-ui"
 import { createSeoMeta, siteConfig } from "@/shared/config"
 import { lazyWithRetry } from "@/shared/lib/lazy-with-retry"
 
@@ -21,6 +24,7 @@ export const Route = createFileRoute("/_site/component-ui/$category/$slug")({
     }
     return { component }
   },
+  pendingComponent: ComponentDetailPendingComponent,
   head: ({ loaderData, params }) => {
     const title = loaderData?.component
       ? `${loaderData.component.name} Component • Phong Phan`
@@ -42,17 +46,32 @@ export const Route = createFileRoute("/_site/component-ui/$category/$slug")({
   component: ComponentDetailPage,
 })
 
+function ComponentDetailPendingComponent() {
+  const { category, slug } = Route.useParams()
+  const component = COMPONENTS_DATA.find(
+    (c) => c.category === category && c.slug === slug
+  )
+  return (
+    <ComponentDetailSkeleton
+      name={component?.name}
+      category={category}
+      description={component?.description}
+      slug={slug}
+    />
+  )
+}
+
 function ComponentDetailPage() {
   const { component } = Route.useLoaderData()
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-[60vh] w-full items-center justify-center">
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <div className="size-4 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
-            <span>Loading component...</span>
-          </div>
-        </div>
+        <ComponentDetailSkeleton
+          name={component.name}
+          category={component.category}
+          description={component.description}
+          slug={component.slug}
+        />
       }
     >
       <LazyComponentDetail component={component} />
