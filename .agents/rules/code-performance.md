@@ -17,6 +17,9 @@ Follow these rules to maintain high performance, prevent memory leaks, and ensur
 
 - **Leverage Query Caching:** Utilize TanStack Query's cache and built-in loading/error states (`isLoading`, `isFetching`, `error`) rather than maintaining duplicate local `loading`/`error` useState variables.
 - **Query Selectors:** Use the `select` option in `useQuery` to derive or transform specific slices of server data, avoiding unnecessary re-renders when other fields change.
+- **Atomic Selectors (Mandatory):** Never destructure the entire store (`const { user, theme } = useStore()`). Always extract state via fine-grained atomic selectors to isolate re-renders:
+  ```ts
+  const user = useStore((state) => state.user);
 
 ## 3. Forms & Data Validation
 

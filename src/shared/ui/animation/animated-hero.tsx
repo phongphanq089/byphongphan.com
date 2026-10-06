@@ -1,5 +1,5 @@
-import { motion } from "framer-motion"
 import { MoveRight, PhoneCall } from "lucide-react"
+import { motion } from "motion/react"
 import { useEffect, useMemo, useState } from "react"
 
 import { Button } from "@/shared/ui/core/button"

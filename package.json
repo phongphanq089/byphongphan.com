@@ -5,7 +5,7 @@
   "packageManager": "pnpm@11.17.0",
   "scripts": {
     "dev": "vite dev --port 5731",
-    "build": "vite build && tsc -b --noEmit",
+    "build": "pnpm type-check && vite build",
     "preview": "vite preview --port 5731",
     "test": "vitest run --passWithNoTests",
     "lint": "eslint .",
@@ -13,8 +13,6 @@
     "check": "prettier --check .",
     "type-check": "tsc -b --noEmit",
     "prepare": "husky",
-    "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio",
     "build:registry": "tsx scripts/build-registry.ts"
   },
   "dependencies": {
@@ -77,7 +75,6 @@
     "date-fns": "^4.4.0",
     "dotenv": "^17.4.2",
     "emoji-picker-react": "^4.22.2",
-    "framer-motion": "^12.39.0",
     "gsap": "^3.15.0",
     "input-otp": "^1.5.0",
     "katex": "^0.18.7",

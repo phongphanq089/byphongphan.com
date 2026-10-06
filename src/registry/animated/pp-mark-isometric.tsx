@@ -1,6 +1,6 @@
 "use client"
 
-import type { Transition } from "framer-motion"
+import type { Transition } from "motion/react"
 import {
   motion,
   useInView,
@@ -8,7 +8,7 @@ import {
   useReducedMotion,
   useSpring,
   useTransform,
-} from "framer-motion"
+} from "motion/react"
 import React, { useEffect, useId, useRef } from "react"
 
 import { useSound } from "@/shared/hooks/use-sound"

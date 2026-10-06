@@ -106,7 +106,7 @@
     "title": "Isometric Monogram Mark",
     "description": "Interactive 3D voxel isometric monogram mark featuring procedural diagonal hatching, wireframe edges, cursor-tracking radial flashlight, and spring press physics with audio feedback.",
     "dependencies": [
-      "framer-motion"
+      "motion"
     ],
     "registryDependencies": []
   },
@@ -116,7 +116,7 @@
     "title": "Isometric Block Typography",
     "description": "Horizontal 3D block typography extruded along an isometric blueprint grid, equipped with interactive dynamic lighting, sound feedback, and edge-to-edge/padded layout variants.",
     "dependencies": [
-      "framer-motion"
+      "motion"
     ],
     "registryDependencies": []
   },
