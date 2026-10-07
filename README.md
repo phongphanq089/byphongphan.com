@@ -1,55 +1,70 @@
-<!-- # [chanhdai.com](https://chanhdai.com) -->
+# [phongphandev.netlify.app](https://phongphandev.netlify.app)
 
 <p>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="" /><img alt="header" src="" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://ik.imagekit.io/htnacim0q/byphongphan.com/README-1.jpg" /><img alt="header" src="https://ik.imagekit.io/htnacim0q/byphongphan.com/README-1.jpg" /></picture>
 </p>
 
 <p>
-  <a href="https://github.com/ncdai/chanhdai.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/github/ncdai/chanhdai.com/license.svg?variant=outline&amp;font=geist" /><img alt="license" src="https://shieldcn.dev/github/ncdai/chanhdai.com/license.svg?variant=outline&amp;mode=light&amp;font=geist" /></picture></a>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://www.shieldcn.dev/github/stars/ncdai/chanhdai.com.svg?variant=outline&amp;mode=dark&amp;font=geist"><img alt="GitHub Stars" src="https://www.shieldcn.dev/github/stars/ncdai/chanhdai.com.svg?variant=outline&amp;mode=light&amp;font=geist"></picture>
-  <a href="https://github.com/ncdai/chanhdai.com"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/views/repo/ncdai/chanhdai.com.svg?base=8541&amp;variant=outline&amp;font=geist" /><img alt="repo views" src="https://shieldcn.dev/views/repo/ncdai/chanhdai.com.svg?base=43218&amp;variant=outline&amp;mode=light&amp;font=geist" /></picture></a>
+  <a href="https://github.com/phongphanq089/phong-dev-portfiolio"><img alt="license" src="https://img.shields.io/github/license/phongphanq089/phong-dev-portfiolio?style=flat-square" /></a>
+  <img alt="GitHub Stars" src="https://img.shields.io/github/stars/phongphanq089/phong-dev-portfiolio?style=flat-square" />
 </p>
 
-A pixel-perfect dev portfolio and shadcn registry showcasing my work as a Design Engineer.
+A pixel-perfect dev portfolio and shadcn registry showcasing my work as a Frontend Engineer — featuring interactive 3D isometric typography, 2D physics, WebGL shaders, vector maps, a custom sound engine, and a full-featured Lexical rich text editor.
 
-→ Live site: [chanhdai.com](https://chanhdai.com)
+→ Live site: [phongphandev.netlify.app](https://phongphandev.netlify.app)
 
-[![screenshot-dark](https://assets.chanhdai.com/images/screenshot-desktop-dark.webp?t=1778602757#gh-dark-mode-only)](https://chanhdai.com#gh-dark-mode-only)
-[![screenshot-light](https://assets.chanhdai.com/images/screenshot-desktop-light.webp?t=1778602757#gh-light-mode-only)](https://chanhdai.com#gh-light-mode-only)
+![screenshot](https://ik.imagekit.io/htnacim0q/byphongphan.com/README-2.png)
 
 ## Overview
 
 ### Stack
 
-- Next.js 16
-- Tailwind CSS v4
-- shadcn/ui
+- React 19
+- TanStack Start + TanStack Router
+- TanStack Query v5
+- Vite 8
+- Tailwind CSS v4 (OKLCH tokens)
+- shadcn/ui + Radix UI
+- Netlify (deploy & SSR adapter)
+- TypeScript
+
+### Interactive & Animation Engines
+
+- [Motion](https://motion.dev) (Framer Motion) — spring physics, layout animations
+- [GSAP](https://gsap.com) — timeline-based animations
+- [Matter.js](https://brm.io/matter-js) — 2D physics (gravity, draggable blocks)
+- [Three.js](https://threejs.org) + WebGL shaders — canvas effects
+- Custom Web Audio sound engine — audio feedback & lofi music toggle
 
 ### Featured
 
-- Clean & modern design
+- Clean & modern blueprint-themed design
 - Light/Dark themes
+- 3D isometric block typography with dynamic lighting & sound
+- Interactive Vietnam vector map ([MapLibre GL](https://maplibre.org))
+- 2D physics sandbox (Matter.js gravity simulation)
+- Command menu (⌘K)
+- Web Audio sound engine with haptic feedback
+- Floating dynamic dock with scroll progress & TOC minimap
+- Code gutter numbers simulation
 - vCard integration
 - SEO optimized ([JSON-LD schema](https://json-ld.org), sitemap, robots)
-- AI-ready with [/llms.txt](https://llmstxt.org)
-- Spam-protected email
-- Installable as PWA
-- Analytics with [OpenPanel](https://openpanel.dev)
+- Dynamic OG image generation
+- Installable as PWA (custom service worker)
+- Colophon page (architecture, design tokens, typography specimens)
 
 ### Content
 
 Centralized document system powered by MDX:
 
-- Unified content layer for blog posts and component docs
+- Unified content layer for component & hook docs
 - Category-based content organization
-- Raw `.md` endpoints for AI readability
-- Syntax highlighting with code blocks
+- Syntax highlighting with [Shiki](https://shiki.style) + rehype-pretty-code
 - Dynamic OG images for rich link previews
-- RSS feed for content distribution
 
 ### Registry
 
-Easily build and distribute reusable components, hooks, and pages using a custom registry powered by the [shadcn CLI](https://ui.shadcn.com/docs/cli).
+Custom registry powered by the [shadcn CLI](https://ui.shadcn.com/docs/cli) with a build system (`scripts/build-registry.ts`) that outputs installable JSON to `public/r/`.
 
 Each entry is well-documented and includes:
 
@@ -57,24 +72,92 @@ Each entry is well-documented and includes:
 - Beautiful, readable code blocks
 - One-click command blocks (pnpm, npm, yarn, bun)
 
+#### UI Primitives
+
+| Component         | Description                                                                   |
+| ----------------- | ----------------------------------------------------------------------------- |
+| Card              | Card with header, content, and footer                                         |
+| Select            | Radix-powered select with search                                              |
+| Code Block        | Shiki syntax highlighting with line numbers, diff mode, copy actions          |
+| Map               | Interactive vector map with MapLibre GL (themes, markers, routes, clustering) |
+| Middle Truncation | Canvas-measured binary search text truncation                                 |
+
+#### Animated Components
+
+| Component                  | Description                                                          |
+| -------------------------- | -------------------------------------------------------------------- |
+| Flip Clock                 | Mechanical split-flap counter with real-time, timer, stopwatch modes |
+| Unboxing Bucket            | 3D unboxing animation with spring-physics feature chips              |
+| Text Hover Effect          | SVG stroke reveal with radial gradient cursor tracking               |
+| Background Gradient Cursor | Cursor-tracking canvas with procedural dots & grid                   |
+| Isometric Block Typography | 3D extruded text on blueprint grid with dynamic lighting             |
+| Isometric Monogram Mark    | 3D voxel monogram with hatching, wireframe & flashlight              |
+
+#### Blocks
+
+| Block             | Description                                                          |
+| ----------------- | -------------------------------------------------------------------- |
+| Not Found 01      | 404 page with a playable brick breaker game                          |
+| Not Found Gravity | 404 page with Matter.js 2D physics & draggable blocks                |
+| Rich Text Editor  | Full Lexical editor with toolbar, slash commands, Excalidraw, embeds |
+
+#### Hooks
+
+| Hook          | Description                                      |
+| ------------- | ------------------------------------------------ |
+| useMediaQuery | Responsive media query listener with SSR support |
+
 ## Development
 
 Please refer to the [Development Guide](./DEVELOPMENT.md) for more details.
 
+### Quick Start
+
+```bash
+pnpm install
+pnpm dev
+```
+
+### Available Scripts
+
+| Script                | Description                            |
+| --------------------- | -------------------------------------- |
+| `pnpm dev`            | Start dev server with Vite (port 5731) |
+| `pnpm build`          | Type-check & production build          |
+| `pnpm preview`        | Preview production build               |
+| `pnpm test`           | Run tests with Vitest                  |
+| `pnpm lint`           | Run ESLint                             |
+| `pnpm type-check`     | Run TypeScript type checking           |
+| `pnpm format`         | Format with Prettier + ESLint fix      |
+| `pnpm build:registry` | Build registry JSON to `public/r/`     |
+
+## Project Structure
+
+```
+src/
+├── app/           # Layout compositions (grid-layout, profile-layout)
+├── content/       # MDX content (component & hook documentation)
+├── entities/      # Domain objects
+├── features/      # Feature modules (home, blocks, component-ui, colophon)
+├── registry/      # Custom shadcn registry (components, hooks, blocks, demos)
+├── routes/        # TanStack Router file-based routes
+├── shared/        # Shared UI, hooks, lib, config, constants, icons, providers
+├── styles/        # Global styles (Tailwind v4, OKLCH tokens)
+├── types/         # Global TypeScript definitions
+└── widgets/       # UI compositions (command-menu, profile-header, profile-footer)
+```
+
 ## License
 
-Everything in this repository is licensed under the [MIT license](./LICENSE), with one exception: my name and my logo, which are covered by the [trademark and brand policy](./TRADEMARK.md).
+Everything in this repository is licensed under the [MIT license](./LICENSE.md), with one exception: my name and my logo, which are covered by the [trademark and brand policy](./TRADEMARK.md).
 
-So the code and the writing are yours. Fork it, copy it, quote it, translate it. Just make sure to <ins>remove all my personal information</ins> and swap the branding before publishing your website. It's awesome to see my code being useful to someone!
+The code and the writing are yours. Fork it, copy it, quote it, translate it. Just make sure to <ins>remove all my personal information</ins> and swap the branding before publishing your website.
 
-## Contributors
+## Author
 
-<p>
-  <a href="https://github.com/ncdai/chanhdai.com/graphs/contributors"><picture><source media="(prefers-color-scheme: dark)" srcset="https://shieldcn.dev/contributors/ncdai/chanhdai.com.svg?title=false&amp;size=48&amp;align=left&amp;mode=dark&amp;font=geist&amp;watermark=true" /><img alt="contributors" src="https://shieldcn.dev/contributors/ncdai/chanhdai.com.svg?title=false&amp;size=48&amp;align=left&amp;mode=light&amp;font=geist&amp;watermark=true" /></picture></a>
-</p>
+**Phong Phan** — Frontend Engineer · Fullstack Capable
 
-> Found this project useful? [Sponsor me](https://github.com/sponsors/ncdai) to help with support and maintenance.
-
-## Stats
-
-![Stats](https://repobeats.axiom.co/api/embed/583bf08fbdef57c3921d3cfda902d546df3e6ed1.svg "Repobeats analytics image")
+- Website: [phongphandev.netlify.app](https://phongphandev.netlify.app)
+- GitHub: [@phongphanq089](https://github.com/phongphanq089)
+- LinkedIn: [Phong Phan](https://www.linkedin.com/in/phong-phan-719464201)
+- X: [@PhongPhanq089](https://x.com/PhongPhanq089)
