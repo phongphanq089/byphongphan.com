@@ -81,6 +81,11 @@ export function ExcalidrawComponent({
 
   // Track active theme dynamically
   const { theme } = useTheme()
+  const isDark =
+    theme === "dark" ||
+    (theme === "system" &&
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches)
 
   // Sync width & alignment from node
   React.useEffect(() => {
@@ -442,7 +447,7 @@ export function ExcalidrawComponent({
             appState={appState}
             width={currentWidth}
             height={height}
-            isDark={theme === "dark"}
+            isDark={isDark}
             className="cursor-pointer"
           />
 

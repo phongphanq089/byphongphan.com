@@ -56,16 +56,21 @@ export function ExcalidrawModal({
 
   // Track active theme (dark/light) dynamically
   const { theme } = useTheme()
+  const isDark =
+    theme === "dark" ||
+    (theme === "system" &&
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches)
 
   React.useEffect(() => {
     if (excalidrawAPI) {
       excalidrawAPI.updateScene({
         appState: {
-          theme: theme ? "dark" : "light",
+          theme: isDark ? "dark" : "light",
         },
       })
     }
-  }, [theme, excalidrawAPI])
+  }, [isDark, excalidrawAPI])
 
   React.useEffect(() => {
     modalRef.current?.focus()
@@ -100,12 +105,13 @@ export function ExcalidrawModal({
     const partialAppState: Partial<AppState> = {
       exportBackground: currentAppState?.exportBackground ?? true,
       exportScale: currentAppState?.exportScale ?? 1,
-      exportWithDarkMode: theme === "dark",
+      exportWithDarkMode: isDark,
       isLoading: false,
       name: currentAppState?.name,
-      theme: theme ? "dark" : "light",
+      theme: isDark ? "dark" : "light",
       viewBackgroundColor:
-        currentAppState?.viewBackgroundColor || (theme ? "#18181b" : "#ffffff"),
+        currentAppState?.viewBackgroundColor ||
+        (isDark ? "#18181b" : "#ffffff"),
       zoom: currentAppState?.zoom,
     }
 
@@ -185,11 +191,11 @@ export function ExcalidrawModal({
           >
             <Excalidraw
               excalidrawAPI={setExcalidrawAPI}
-              theme={theme ? "dark" : "light"}
+              theme={isDark ? "dark" : "light"}
               initialData={{
                 appState: {
                   ...initialAppState,
-                  theme: theme ? "dark" : "light",
+                  theme: isDark ? "dark" : "light",
                   isLoading: false,
                 },
                 elements: initialElements,

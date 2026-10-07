@@ -24,18 +24,9 @@ export * from "./select-schematic"
 export * from "./text-hover-effect-schematic"
 export * from "./unboxing-bucket-schematic"
 
-export type SchematicType =
-  | "select"
-  | "card"
-  | "unboxing-bucket"
-  | "code-block"
-  | "flip-clock"
-  | "map"
-  | "text-hover-effect"
-  | "background-gradient-cursor"
-  | "pp-mark-isometric"
-  | "phong-phan-isometric"
-  | "middle-truncation"
+import type { SchematicType } from "../schema"
+
+export type { SchematicType }
 
 export function DefaultSchematic() {
   return (

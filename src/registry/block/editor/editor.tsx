@@ -9,7 +9,6 @@ import { $generateHtmlFromNodes } from "@lexical/html"
 import {
   $convertFromMarkdownString,
   $convertToMarkdownString,
-  TRANSFORMERS,
 } from "@lexical/markdown"
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin"
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin"
@@ -37,6 +36,7 @@ import {
   usePageSetup,
 } from "./core/page-setup"
 import { editorTheme } from "./core/themes/editor-theme"
+import { EDITOR_TRANSFORMERS } from "./core/transformers"
 import { DEFAULT_NODES } from "./nodes"
 import { AutoEmbedPlugin } from "./plugins/auto-embed"
 import { AutoLinkPlugin } from "./plugins/auto-link"
@@ -207,13 +207,20 @@ function FooterWithShortcuts({
   )
 }
 
+type InternalSnapshots = {
+  json?: string
+  markdown?: string
+  html?: string
+  text?: string
+}
+
 function ValueSyncPlugin({
   value,
-  lastSyncValueRef,
+  lastInternalSnapshotsRef,
   onSyncState,
 }: {
   value?: string
-  lastSyncValueRef: React.MutableRefObject<string | undefined>
+  lastInternalSnapshotsRef: React.MutableRefObject<InternalSnapshots>
   onSyncState?: (data: EditorChangeData) => void
 }) {
   const [editor] = useLexicalComposerContext()
@@ -235,28 +242,47 @@ function ValueSyncPlugin({
 
       let markdown = ""
       try {
-        markdown = $convertToMarkdownString(TRANSFORMERS)
+        markdown = $convertToMarkdownString(EDITOR_TRANSFORMERS)
       } catch {}
 
-      onSyncState?.({
+      const data: EditorChangeData = {
         json,
         state: jsonState as unknown as Record<string, unknown>,
         html,
         markdown,
         text,
         isEmpty,
-      })
+      }
+
+      lastInternalSnapshotsRef.current = {
+        json,
+        markdown,
+        html,
+        text,
+      }
+
+      onSyncState?.(data)
     })
-  }, [editor, onSyncState])
+  }, [editor, onSyncState, lastInternalSnapshotsRef])
 
   // When value prop updates externally (e.g. server notes finished loading from db),
   // sync it into the Lexical editor state
   React.useEffect(() => {
-    if (!value) return
-    // If value matches what was just produced by typing inside editor, skip!
-    if (value === lastSyncValueRef.current) return
+    if (value === undefined || value === null) return
+    const snapshots = lastInternalSnapshotsRef.current
 
-    lastSyncValueRef.current = value
+    // If value matches any snapshot produced by internal typing/updates, skip re-parsing!
+    if (
+      value === snapshots.json ||
+      value === snapshots.markdown ||
+      value === snapshots.html ||
+      value === snapshots.text
+    ) {
+      return
+    }
+
+    snapshots.json = value
+    snapshots.markdown = value
 
     let isJson = false
     try {
@@ -272,13 +298,13 @@ function ValueSyncPlugin({
 
     if (!isJson) {
       editor.update(() => {
-        $convertFromMarkdownString(value, TRANSFORMERS)
+        $convertFromMarkdownString(value, EDITOR_TRANSFORMERS)
       })
     }
 
     const timer = setTimeout(broadcastCurrentState, 50)
     return () => clearTimeout(timer)
-  }, [editor, value, lastSyncValueRef, broadcastCurrentState])
+  }, [editor, value, lastInternalSnapshotsRef, broadcastCurrentState])
 
   // Fire broadcast on mount so that initial HTML/Markdown is available immediately
   React.useEffect(() => {
@@ -292,6 +318,7 @@ function ValueSyncPlugin({
 export function Editor({
   variant = "default",
   value,
+  defaultValue,
   onChange,
   onReady,
   placeholder,
@@ -387,7 +414,7 @@ export function Editor({
 
   // Validate initial editor state only on mount or when documentId changes
   // to prevent recreating LexicalComposer initialConfig on every keystroke
-  const initialValueRef = React.useRef(value)
+  const initialValueRef = React.useRef(value ?? defaultValue)
   const initialEditorState = React.useMemo(() => {
     const val = initialValueRef.current
     if (!val) return undefined
@@ -401,7 +428,7 @@ export function Editor({
     }
 
     return () => {
-      $convertFromMarkdownString(val, TRANSFORMERS)
+      $convertFromMarkdownString(val, EDITOR_TRANSFORMERS)
     }
   }, [documentId])
 
@@ -420,7 +447,10 @@ export function Editor({
     [namespace, internalReadOnly, initialEditorState]
   )
 
-  const lastSyncValueRef = React.useRef<string | undefined>(value)
+  const lastInternalSnapshotsRef = React.useRef<InternalSnapshots>({
+    json: value ?? defaultValue,
+    markdown: value ?? defaultValue,
+  })
 
   const onChangeRef = React.useRef(onChange)
   onChangeRef.current = onChange
@@ -429,7 +459,12 @@ export function Editor({
   onReadyRef.current = onReady
 
   const handleInternalChange = React.useCallback((data: EditorChangeData) => {
-    lastSyncValueRef.current = data.json
+    lastInternalSnapshotsRef.current = {
+      json: data.json,
+      markdown: data.markdown,
+      html: data.html,
+      text: data.text,
+    }
     setLatestData(data)
     onChangeRef.current?.(data)
   }, [])
@@ -547,7 +582,7 @@ export function Editor({
 
                 <HorizontalRulePlugin />
                 {markdown && (
-                  <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
+                  <MarkdownShortcutPlugin transformers={EDITOR_TRANSFORMERS} />
                 )}
                 {!internalReadOnly && floatingToolbar && (
                   <FloatingToolbarPlugin />
@@ -597,7 +632,7 @@ export function Editor({
                 {/* 6. Output Bridge & External Value Synchronizer */}
                 <ValueSyncPlugin
                   value={value}
-                  lastSyncValueRef={lastSyncValueRef}
+                  lastInternalSnapshotsRef={lastInternalSnapshotsRef}
                   onSyncState={handleSyncState}
                 />
                 <OnChangeHandlerPlugin onChange={handleInternalChange} />
