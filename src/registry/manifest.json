@@ -1,0 +1,72 @@
+{
+  "blockCategories": [
+    "application",
+    "marketing",
+    "ecommerce"
+  ],
+  "blocks": [
+    {
+      "category": "application",
+      "slug": "not-found-01"
+    },
+    {
+      "category": "application",
+      "slug": "not-found-02"
+    },
+    {
+      "category": "application",
+      "slug": "editor"
+    }
+  ],
+  "componentCategories": [
+    "primitives",
+    "animations",
+    "foundations"
+  ],
+  "components": [
+    {
+      "category": "primitives",
+      "slug": "middle-truncation"
+    },
+    {
+      "category": "primitives",
+      "slug": "select"
+    },
+    {
+      "category": "primitives",
+      "slug": "card"
+    },
+    {
+      "category": "animations",
+      "slug": "unboxing-bucket"
+    },
+    {
+      "category": "animations",
+      "slug": "flip-clock"
+    },
+    {
+      "category": "primitives",
+      "slug": "code-block"
+    },
+    {
+      "category": "primitives",
+      "slug": "map"
+    },
+    {
+      "category": "animations",
+      "slug": "text-hover-effect"
+    },
+    {
+      "category": "animations",
+      "slug": "background-gradient-cursor"
+    },
+    {
+      "category": "animations",
+      "slug": "pp-mark-isometric"
+    },
+    {
+      "category": "animations",
+      "slug": "phong-phan-isometric"
+    }
+  ]
+}

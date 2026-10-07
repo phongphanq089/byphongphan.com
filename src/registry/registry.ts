@@ -262,7 +262,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     title: "Not Found 01",
     description: "A 404 page with a playable brick breaker game.",
     type: "registry:block",
-    category: "foundations",
+    category: "application",
     isNew: true,
     dependencies: ["lucide-react"],
     registryDependencies: ["button"],
@@ -320,7 +320,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Interactive 404 error page with 2D physics gravity, falling blocks, and draggable elements.",
     type: "registry:block",
-    category: "foundations",
+    category: "application",
     isNew: true,
     dependencies: [
       "matter-js",
@@ -348,7 +348,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Modern Lexical rich text editor featuring top toolbar, floating bubble menu, slash commands, markdown shortcuts, and interactive widgets.",
     type: "registry:block",
-    category: "foundations",
+    category: "application",
     isNew: true,
     dependencies: [
       "@lexical/clipboard",
@@ -370,7 +370,6 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
       "@lexical/selection",
       "@lexical/table",
       "@lexical/utils",
-      "@lexical/yjs",
       "lexical",
       "lucide-react",
       "katex",

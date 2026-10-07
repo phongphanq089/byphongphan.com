@@ -36,7 +36,7 @@
       "lucide-react"
     ],
     "registryDependencies": [
-      "https://byphongphan.com/r/use-media-query.json"
+      "https://phongphandev.netlify.app/r/use-media-query.json"
     ]
   },
   {
@@ -172,7 +172,6 @@
       "@lexical/selection",
       "@lexical/table",
       "@lexical/utils",
-      "@lexical/yjs",
       "lexical",
       "lucide-react",
       "katex"
