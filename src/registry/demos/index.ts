@@ -16,6 +16,9 @@ export const CodeBlockDemo = lazyWithRetry(() =>
 export const FlipClockDemo = lazyWithRetry(() =>
   import("./flip-clock-demo").then((m) => ({ default: m.FlipClockDemo }))
 )
+export const LineNavDemo = lazyWithRetry(() =>
+  import("./line-nav-demo").then((m) => ({ default: m.LineNavDemo }))
+)
 export const MapDemo = lazyWithRetry(() =>
   import("./map-demo").then((m) => ({ default: m.MapDemo }))
 )
@@ -61,4 +64,6 @@ export const REGISTRY_DEMOS: Record<string, ComponentType> = {
   "phong-phan-isometric": PhongPhanIsometricDemo,
   "middle-truncation": MiddleTruncationDemo,
   "middle-truncation-demo": MiddleTruncationDemo,
+  "line-nav": LineNavDemo,
+  "line-nav-demo": LineNavDemo,
 }

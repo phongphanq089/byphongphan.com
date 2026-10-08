@@ -25,6 +25,10 @@
   ],
   "components": [
     {
+      "category": "animations",
+      "slug": "line-nav"
+    },
+    {
       "category": "primitives",
       "slug": "middle-truncation"
     },

@@ -1,0 +1,121 @@
+---
+title: Line Nav
+description: Vertical navigation with a line marker that expands on hover and active state. Inspired by Devouring Details and Skiper UI.
+component: true
+badge: "motion"
+---
+
+<ComponentPreview name="line-nav-demo" />
+
+## Overview
+
+**Line Nav** is a vertical navigation component with an authentic ruler-tick ladder indicator inspired by Devouring Details and Skiper UI.
+
+It supports both a flat **Basic** list and a structured **Grouped** hierarchy, where major category headers and active items extend prominent indicator rules with spring physics.
+
+---
+
+## Installation
+
+<CodeTabs defaultValue="manual">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="line-nav" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install dependencies:</Step>
+      <CodeBlockCommand command="npm install motion clsx tailwind-merge" />
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="line-nav" title="components/line-nav.tsx" />
+      <Step>Update the import paths to match your project aliases.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Usage
+
+### 1. Basic Navigation (Flat List)
+
+```tsx
+import { LineNav } from "@/components/line-nav"
+
+const items = [
+  { title: "Pixel preloader", href: "#pixel-preloader" },
+  { title: "Box loading preloader", href: "#box-loading-preloader" },
+  { title: "Vercel Liquid simulation", href: "#vercel-liquid" },
+  { title: "Ascii Simulation", href: "#ascii-simulation" },
+  { title: "Interactive3d Hero", href: "#interactive3d-hero" },
+]
+
+export function BasicExample() {
+  return <LineNav items={items} activeHref="#pixel-preloader" />
+}
+```
+
+### 2. Grouped Navigation (Categorized)
+
+```tsx
+import { LineNav } from "@/components/line-nav"
+
+const groups = [
+  {
+    title: "Crazy Hero",
+    href: "#crazy-hero",
+    items: [
+      { title: "Vercel Liquid simulation", href: "#vercel-liquid" },
+      { title: "Ascii Simulation", href: "#ascii-simulation" },
+    ],
+  },
+  {
+    title: "OG NavBars",
+    href: "#og-navbars",
+    items: [
+      { title: "Nike menu", href: "#nike-menu" },
+      { title: "Apple Navbar V001", href: "#apple-navbar-v001" },
+    ],
+  },
+]
+
+export function GroupedExample() {
+  return <LineNav groups={groups} activeHref="#nike-menu" />
+}
+```
+
+---
+
+## Examples
+
+### Basic Line Nav
+
+Flat list navigation with a continuous vertical ladder and spring-physics indicator lines:
+
+<ComponentPreview name="line-nav-basic" />
+
+### Grouped Line Nav
+
+Categorized sections with prominent category headers and nested sub-items:
+
+<ComponentPreview name="line-nav-grouped" />
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `items` | `LineNavItem[]` | `undefined` | Flat array of navigation items `{ title, href }`. |
+| `groups` | `LineNavGroup[]` | `undefined` | Categorized groups `{ title, href?, items }`. |
+| `activeHref` | `string` | `undefined` | Controlled active item href. |
+| `defaultActiveHref` | `string` | First item href | Uncontrolled initial active item href. |
+| `sublineCount` | `number` | `2` | Number of intermediate tick marks between entries. |
+| `scrollActiveIntoView` | `boolean` | `true` | Scroll active item into view on mount. |
+| `onItemClick` | `(item, event) => void` | `undefined` | Callback fired when an item or group header is clicked. |
+| `onActiveChange` | `(href: string) => void` | `undefined` | Callback fired when the active href changes. |

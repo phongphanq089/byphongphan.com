@@ -12,6 +12,16 @@ export const COMPONENT_CATEGORIES: {
 
 export const COMPONENTS_DATA: ComponentItem[] = [
   {
+    id: "comp-line-nav",
+    name: "Line Nav",
+    slug: "line-nav",
+    category: "animations",
+    description:
+      "Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants.",
+    schematicType: "line-nav",
+    isNew: true,
+  },
+  {
     id: "comp-middle-truncation",
     name: "Middle Truncation",
     slug: "middle-truncation",

@@ -12,6 +12,7 @@ export type SchematicType =
   | "pp-mark-isometric"
   | "phong-phan-isometric"
   | "middle-truncation"
+  | "line-nav"
 
 export type RegistryType =
   | "registry:ui"

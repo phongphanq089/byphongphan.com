@@ -4,6 +4,7 @@ import {
   CardSchematic,
   CodeBlockSchematic,
   FlipClockSchematic,
+  LineNavSchematic,
   MapSchematic,
   MiddleTruncationSchematic,
   PhongPhanIsometricSchematic,
@@ -14,6 +15,26 @@ import {
 } from "./schematics"
 
 export const REGISTRY_ITEMS: RegistryItem[] = [
+  {
+    name: "line-nav",
+    title: "Line Nav",
+    description:
+      "Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants.",
+    type: "registry:component",
+    category: "animations",
+    schematic: LineNavSchematic,
+    schematicType: "line-nav",
+    isNew: true,
+    dependencies: ["motion"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/line-nav.tsx",
+        type: "registry:component",
+        target: "components/line-nav.tsx",
+      },
+    ],
+  },
   {
     name: "middle-truncation",
     title: "Middle Truncation",

@@ -4,6 +4,26 @@
   "homepage": "https://phongphandev.netlify.app/component-ui",
   "items": [
     {
+      "name": "line-nav",
+      "type": "registry:component",
+      "title": "Line Nav",
+      "description": "Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants.",
+      "category": "animations",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/line-nav.tsx",
+          "type": "registry:component",
+          "target": "components/line-nav.tsx"
+        }
+      ]
+    },
+    {
       "name": "middle-truncation",
       "type": "registry:ui",
       "title": "Middle Truncation",
