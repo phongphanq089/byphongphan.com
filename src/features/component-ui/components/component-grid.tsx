@@ -9,7 +9,6 @@ import type { ComponentCategoryIdWithAll, ComponentItem } from "../types"
 import { ComponentCard } from "./component-card"
 import { ComponentFilterBar } from "./component-filter-bar"
 import { ComponentHero } from "./component-hero"
-import { FoundationsView } from "./foundations-view"
 
 interface ComponentGridProps {
   category?: ComponentCategoryIdWithAll
@@ -41,9 +40,7 @@ export function ComponentGrid({ category = "all" }: ComponentGridProps) {
         <ComponentFilterBar activeCategory={category} />
       </GridContainer>
 
-      {category === "foundations" ? (
-        <FoundationsView />
-      ) : componentRows.length > 0 ? (
+      {componentRows.length > 0 ? (
         componentRows.map((triplet, rowIndex) => (
           <GridContainer
             key={`component-row-${rowIndex}`}

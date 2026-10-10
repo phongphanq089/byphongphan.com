@@ -1,6 +1,7 @@
 import { ArrowUpRight, Cpu } from "lucide-react"
 
 import { GridContainer } from "@/app/layouts"
+import { StripedPattern } from "@/shared/ui"
 import { ExternalLink } from "@/shared/ui/core"
 import { iconComponents } from "@/shared/ui/icons"
 
@@ -9,29 +10,15 @@ import { COLOPHON_TECH_CATEGORIES } from "../colophon-data"
 export function ColophonTechnology() {
   return (
     <>
-      {/* Section Header */}
       <GridContainer
         borderBottom={true}
         showCrosshairs={true}
-        className="p-4 md:p-8"
+        className="relative px-4 py-2"
       >
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <span className="font-mono text-xs tracking-wider text-pp-primary uppercase">
-              01 / ARCHITECTURE
-            </span>
-            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              Technology
-            </h2>
-          </div>
-
-          <p className="max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-[17px]">
-            Built with React 19 and TypeScript, bundled via Vite 8, routed
-            through TanStack Router &amp; Start. Styled with Tailwind CSS v4
-            using OKLCH color tokens. Content managed in Sanity Studio v5,
-            deployed to Netlify Edge.
-          </p>
-        </div>
+        <StripedPattern variant="absolute" />
+        <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+          Technology
+        </h2>
       </GridContainer>
 
       {COLOPHON_TECH_CATEGORIES.map((category) => {
@@ -42,23 +29,20 @@ export function ColophonTechnology() {
 
         return (
           <div key={category.label}>
-            {/* Category Label */}
             <GridContainer
               borderBottom={true}
               showCrosshairs={false}
               className="px-4 md:px-8"
             >
               <div className="flex items-center justify-between py-3">
-                <span className="font-mono text-xs font-semibold tracking-wider text-muted-foreground uppercase">
+                <span className="text-xs font-semibold tracking-wider text-foreground uppercase">
                   {category.title}
                 </span>
-                <span className="font-mono text-[10px] text-muted-foreground/60">
+                <span className="font-mono text-[10px] text-muted-foreground">
                   {category.label}
                 </span>
               </div>
             </GridContainer>
-
-            {/* Item Rows — 2 columns per row */}
             {rows.map((row, rowIndex) => (
               <GridContainer
                 key={rowIndex}

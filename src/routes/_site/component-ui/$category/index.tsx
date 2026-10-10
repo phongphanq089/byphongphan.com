@@ -4,11 +4,7 @@ import { ComponentGrid, COMPONENTS_DATA } from "@/features/component-ui"
 import type { ComponentCategoryId } from "@/features/component-ui/types"
 import { createSeoMeta } from "@/shared/config"
 
-const VALID_CATEGORIES: ComponentCategoryId[] = [
-  "primitives",
-  "animations",
-  "foundations",
-]
+const VALID_CATEGORIES: ComponentCategoryId[] = ["primitives", "animations"]
 
 export const Route = createFileRoute("/_site/component-ui/$category/")({
   loader: ({ params }) => {

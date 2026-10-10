@@ -129,7 +129,7 @@
       "type": "registry:hook",
       "title": "useMediaQuery",
       "description": "React hook for responsive design and media query listening with SSR support.",
-      "category": "foundations",
+      "category": "primitives",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [],
       "devDependencies": [],

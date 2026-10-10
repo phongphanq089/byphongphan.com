@@ -11,22 +11,6 @@ export function ComponentHero({
   category = "all",
   totalCount = 7,
 }: ComponentHeroProps) {
-  if (category === "foundations") {
-    return (
-      <PageHero
-        badge={{ label: "Design System Foundations", pulsingDot: true }}
-        count="TOKENS & GRID"
-        title="Design tokens, fonts & containers."
-        description="Architectural design system foundations: semantic OKLCH color palettes, Geist font scales, GridContainer geometry, and elevation tokens."
-        stats={[
-          { label: "05 FOUNDATION MODULES", highlight: true },
-          { label: "GEIST SANS & MONO" },
-          { label: "TAILWIND CSS V4", hideOnMobile: true },
-        ]}
-      />
-    )
-  }
-
   if (category === "animations") {
     return (
       <PageHero
@@ -64,7 +48,7 @@ export function ComponentHero({
       badge="Components"
       count={`${totalCount} COMPONENTS`}
       title="Pixel-perfect, uniquely crafted."
-      description="A comprehensive showcase of production-grade UI primitives, motion animations, and design system foundations."
+      description="A comprehensive showcase of production-grade UI primitives, motion animations."
       stats={[
         { label: `${totalCount} COMPONENTS`, highlight: true },
         { label: "3-COLUMN BLUEPRINT" },

@@ -31,7 +31,6 @@ export function ComponentQuickNav({
   // Active path for the currently viewed component
   const activeHref = `/component-ui/${currentCategory}/${currentSlug}`
 
-  // Grouped components: excluding "all" and "foundations" (only "primitives" and "animations")
   const navGroups: LineNavGroup[] = useMemo(() => {
     const categories: { id: string; label: string }[] = [
       { id: "primitives", label: "Primitives" },

@@ -7,7 +7,6 @@ export const COMPONENT_CATEGORIES: {
   { id: "all", label: "ALL" },
   { id: "primitives", label: "PRIMITIVES" },
   { id: "animations", label: "ANIMATIONS" },
-  { id: "foundations", label: "FOUNDATIONS" },
 ]
 
 export const COMPONENTS_DATA: ComponentItem[] = [

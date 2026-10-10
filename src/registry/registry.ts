@@ -138,7 +138,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "React hook for responsive design and media query listening with SSR support.",
     type: "registry:hook",
-    category: "foundations",
+    category: "primitives",
     dependencies: [],
     registryDependencies: [],
     files: [

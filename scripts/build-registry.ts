@@ -115,7 +115,7 @@ async function buildRegistry() {
         slug: i.name,
       })
     ),
-    componentCategories: ["primitives", "animations", "foundations"],
+    componentCategories: ["primitives", "animations"],
     components: REGISTRY_ITEMS.filter(
       (i) => i.type !== "registry:block" && i.type !== "registry:hook"
     ).map((i) => ({

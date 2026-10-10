@@ -21,7 +21,7 @@ export type RegistryType =
   | "registry:block"
   | "registry:lib"
 
-export type ComponentCategoryId = "primitives" | "animations" | "foundations"
+export type ComponentCategoryId = "primitives" | "animations"
 export type BlockCategoryId = "application" | "marketing" | "ecommerce"
 
 export interface RegistryFile {
