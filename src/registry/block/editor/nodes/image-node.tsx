@@ -682,6 +682,10 @@ export class ImageNode extends DecoratorNode<React.JSX.Element> {
     return this.__altText
   }
 
+  getCaption(): string | undefined {
+    return this.getLatest().__caption
+  }
+
   getAlignment(): "left" | "center" | "right" {
     return this.__alignment
   }

@@ -12,11 +12,38 @@ import remarkFrontmatter from "remark-frontmatter"
 import remarkGfm from "remark-gfm"
 import remarkMdxFrontmatter from "remark-mdx-frontmatter"
 import { defineConfig, type Plugin } from "vite"
-import tsconfigPaths from "vite-tsconfig-paths"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const isDev = process.env.NODE_ENV !== "production"
+
+function getRegistryStaticPaths(): string[] {
+  const manifestPath = path.resolve(__dirname, "./src/registry/manifest.json")
+  if (!fs.existsSync(manifestPath)) return []
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf-8")) as {
+    blockCategories?: string[]
+    blocks?: { category: string; slug: string }[]
+    componentCategories?: string[]
+    components?: { category: string; slug: string }[]
+  }
+
+  const paths = new Set<string>()
+  for (const cat of manifest.blockCategories ?? []) {
+    paths.add(`/blocks/${cat}`)
+  }
+  for (const block of manifest.blocks ?? []) {
+    paths.add(`/blocks/${block.category}/${block.slug}`)
+  }
+  for (const cat of manifest.componentCategories ?? []) {
+    paths.add(`/component-ui/${cat}`)
+  }
+  for (const comp of manifest.components ?? []) {
+    paths.add(`/component-ui/${comp.category}/${comp.slug}`)
+  }
+  return [...paths]
+}
+
+const registryStaticPaths = getRegistryStaticPaths()
 
 function rawMdxPlugin(): Plugin {
   return {
@@ -66,6 +93,7 @@ function rawMdxPlugin(): Plugin {
 
 const config = defineConfig({
   resolve: {
+    tsconfigPaths: true,
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
@@ -129,7 +157,7 @@ const config = defineConfig({
     ],
   },
   plugins: [
-    tsconfigPaths({ projects: ["./tsconfig.json"] }),
+    // tsconfigPaths({ projects: ["./tsconfig.json"] }),
     tanstackStart({
       srcDirectory: "src",
       prerender: {
@@ -141,10 +169,11 @@ const config = defineConfig({
       pages: [
         { path: "/" },
         { path: "/blocks" },
-        { path: "/blog" },
-        { path: "/resources" },
         { path: "/component-ui" },
         { path: "/colophon" },
+        ...registryStaticPaths.map((path) => ({
+          path,
+        })),
       ],
       sitemap: {
         enabled: true,

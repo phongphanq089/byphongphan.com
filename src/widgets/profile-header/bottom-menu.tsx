@@ -30,7 +30,7 @@ const BottomMenu = () => {
   const routerState = useRouterState()
   const currentPath = routerState.location.pathname
 
-  // Handle outside click to close submenu
+  // Handle outside click to close submenudrizzl
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (

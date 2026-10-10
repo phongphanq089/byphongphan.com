@@ -1,10 +1,8 @@
 import type React from "react"
 
-import type { ComponentCategoryId } from "@/registry/schema"
-import type { SchematicType } from "@/registry/schematics"
+import type { ComponentCategoryId, SchematicType } from "@/registry/schema"
 
-export type { ComponentCategoryId } from "@/registry/schema"
-export type { SchematicType } from "@/registry/schematics"
+export type { ComponentCategoryId, SchematicType } from "@/registry/schema"
 
 /** Extends ComponentCategoryId with the "all" sentinel used by filter/grid UI */
 export type ComponentCategoryIdWithAll = "all" | ComponentCategoryId

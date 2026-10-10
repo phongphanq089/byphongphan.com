@@ -4,6 +4,7 @@ import {
   CardSchematic,
   CodeBlockSchematic,
   FlipClockSchematic,
+  LineNavSchematic,
   MapSchematic,
   MiddleTruncationSchematic,
   PhongPhanIsometricSchematic,
@@ -14,6 +15,26 @@ import {
 } from "./schematics"
 
 export const REGISTRY_ITEMS: RegistryItem[] = [
+  {
+    name: "line-nav",
+    title: "Line Nav",
+    description:
+      "Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants.",
+    type: "registry:component",
+    category: "animations",
+    schematic: LineNavSchematic,
+    schematicType: "line-nav",
+    isNew: true,
+    dependencies: ["motion"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/line-nav.tsx",
+        type: "registry:component",
+        target: "components/line-nav.tsx",
+      },
+    ],
+  },
   {
     name: "middle-truncation",
     title: "Middle Truncation",
@@ -117,7 +138,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "React hook for responsive design and media query listening with SSR support.",
     type: "registry:hook",
-    category: "foundations",
+    category: "primitives",
     dependencies: [],
     registryDependencies: [],
     files: [
@@ -262,7 +283,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     title: "Not Found 01",
     description: "A 404 page with a playable brick breaker game.",
     type: "registry:block",
-    category: "foundations",
+    category: "application",
     isNew: true,
     dependencies: ["lucide-react"],
     registryDependencies: ["button"],
@@ -320,7 +341,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Interactive 404 error page with 2D physics gravity, falling blocks, and draggable elements.",
     type: "registry:block",
-    category: "foundations",
+    category: "application",
     isNew: true,
     dependencies: [
       "matter-js",
@@ -348,7 +369,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Modern Lexical rich text editor featuring top toolbar, floating bubble menu, slash commands, markdown shortcuts, and interactive widgets.",
     type: "registry:block",
-    category: "foundations",
+    category: "application",
     isNew: true,
     dependencies: [
       "@lexical/clipboard",
@@ -370,7 +391,6 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
       "@lexical/selection",
       "@lexical/table",
       "@lexical/utils",
-      "@lexical/yjs",
       "lexical",
       "lucide-react",
       "katex",

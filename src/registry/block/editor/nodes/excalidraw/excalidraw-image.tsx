@@ -20,10 +20,8 @@ interface ExcalidrawImageProps {
   isDark?: boolean
 }
 
-// exportToSvg includes fonts and double-sized width/height that need normalization
+// exportToSvg includes double-sized width/height that need normalization with viewBox
 const normalizeSvg = (svg: SVGElement) => {
-  const styleTag = svg?.firstElementChild?.firstElementChild
-
   const viewBox = svg.getAttribute("viewBox")
   if (viewBox != null) {
     const viewBoxDimensions = viewBox.split(" ")
@@ -31,10 +29,6 @@ const normalizeSvg = (svg: SVGElement) => {
       svg.setAttribute("width", viewBoxDimensions[2])
       svg.setAttribute("height", viewBoxDimensions[3])
     }
-  }
-
-  if (styleTag && styleTag.tagName.toLowerCase() === "style") {
-    styleTag.remove()
   }
 }
 

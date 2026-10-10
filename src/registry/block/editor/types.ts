@@ -95,6 +95,8 @@ export interface EditorProps {
   variant?: EditorVariant
   /** Initial or controlled value (JSON string or Lexical State) */
   value?: string
+  /** Uncontrolled initial value (JSON string or Markdown) */
+  defaultValue?: string
   /** Callback emitted on content change */
   onChange?: (data: EditorChangeData) => void
   /** Callback emitted when editor content is initially ready or externally updated */

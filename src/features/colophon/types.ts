@@ -16,19 +16,6 @@ export interface ColophonTechCategory {
   items: ColophonTechItem[]
 }
 
-export interface ColophonFontSpecimen {
-  name: string
-  role: string
-  foundry: string
-  format: string
-  weights: string[]
-  previewText: string
-  sampleGlyphs: string
-  cssFamily: string
-  cssClass: string
-  badge: string
-}
-
 export interface ColophonColorToken {
   name: string
   variable: string

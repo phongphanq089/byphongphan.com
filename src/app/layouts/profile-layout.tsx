@@ -5,12 +5,12 @@ import { HOME_TOC_ITEMS } from "@/shared/config"
 import { cn } from "@/shared/lib/utils"
 import { ThemeProvider } from "@/shared/providers/theme-provider"
 import { EdgeBlur } from "@/shared/ui/system/edge-blur"
+import NumbersSimulation from "@/shared/ui/system/numbers-simulation"
 import ProgressWhileScroll from "@/shared/ui/system/progress-while-scroll"
 import { TOCMinimap } from "@/shared/ui/system/toc-minimap"
 import { Footer } from "@/widgets/profile-footer"
 import { Header } from "@/widgets/profile-header"
 import BottomMenu from "@/widgets/profile-header/bottom-menu"
-import { NumbersSimulation } from "@/widgets/profile-sidebar"
 
 import {
   GridContainer,

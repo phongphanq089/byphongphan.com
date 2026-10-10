@@ -1,8 +1,18 @@
 import type React from "react"
 
-import type { SchematicType } from "./schematics"
-
-export type { SchematicType } from "./schematics"
+export type SchematicType =
+  | "select"
+  | "card"
+  | "unboxing-bucket"
+  | "code-block"
+  | "flip-clock"
+  | "map"
+  | "text-hover-effect"
+  | "background-gradient-cursor"
+  | "pp-mark-isometric"
+  | "phong-phan-isometric"
+  | "middle-truncation"
+  | "line-nav"
 
 export type RegistryType =
   | "registry:ui"
@@ -11,7 +21,8 @@ export type RegistryType =
   | "registry:block"
   | "registry:lib"
 
-export type ComponentCategoryId = "primitives" | "animations" | "foundations"
+export type ComponentCategoryId = "primitives" | "animations"
+export type BlockCategoryId = "application" | "marketing" | "ecommerce"
 
 export interface RegistryFile {
   path: string
@@ -25,8 +36,8 @@ export interface RegistryItem {
   title: string
   description: string
   type: RegistryType
-  /** UI category for the component grid */
-  category: ComponentCategoryId
+  /** UI category for the component grid or block section */
+  category: ComponentCategoryId | BlockCategoryId
   /** Schematic component representing the wireframe thumbnail for this item */
   schematic?: React.ComponentType
   /** Schematic thumbnail type used on component cards */

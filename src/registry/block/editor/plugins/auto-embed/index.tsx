@@ -1,4 +1,5 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
+import { $insertNodeToNearestRoot } from "@lexical/utils"
 import {
   $getSelection,
   $isRangeSelection,
@@ -32,10 +33,12 @@ export function AutoEmbedPlugin() {
         const videoId = extractYouTubeId(payload)
         if (videoId) {
           editor.update(() => {
+            const node = $createYouTubeNode(videoId)
             const selection = $getSelection()
             if ($isRangeSelection(selection)) {
-              const node = $createYouTubeNode(videoId)
               selection.insertNodes([node])
+            } else {
+              $insertNodeToNearestRoot(node)
             }
           })
           return true
@@ -55,10 +58,12 @@ export function AutoEmbedPlugin() {
             payload.includes("figma.com/design/"))
         ) {
           editor.update(() => {
+            const node = $createFigmaNode(payload)
             const selection = $getSelection()
             if ($isRangeSelection(selection)) {
-              const node = $createFigmaNode(payload)
               selection.insertNodes([node])
+            } else {
+              $insertNodeToNearestRoot(node)
             }
           })
           return true
@@ -75,10 +80,12 @@ export function AutoEmbedPlugin() {
         const tweetId = extractTweetId(payload)
         if (tweetId) {
           editor.update(() => {
+            const node = $createTweetNode(tweetId)
             const selection = $getSelection()
             if ($isRangeSelection(selection)) {
-              const node = $createTweetNode(tweetId)
               selection.insertNodes([node])
+            } else {
+              $insertNodeToNearestRoot(node)
             }
           })
           return true

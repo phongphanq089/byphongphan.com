@@ -1,284 +1,163 @@
-Welcome to your new TanStack Start app!
+# [phongphandev.netlify.app](https://phongphandev.netlify.app)
 
-# Getting Started
+<p>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="https://ik.imagekit.io/htnacim0q/byphongphan.com/README-1.jpg" /><img alt="header" src="https://ik.imagekit.io/htnacim0q/byphongphan.com/README-1.jpg" /></picture>
+</p>
 
-To run this application:
+<p>
+  <a href="https://github.com/phongphanq089/phong-dev-portfiolio"><img alt="license" src="https://img.shields.io/github/license/phongphanq089/phong-dev-portfiolio?style=flat-square" /></a>
+  <img alt="GitHub Stars" src="https://img.shields.io/github/stars/phongphanq089/phong-dev-portfiolio?style=flat-square" />
+</p>
+
+A pixel-perfect dev portfolio and shadcn registry showcasing my work as a Frontend Engineer — featuring interactive 3D isometric typography, 2D physics, WebGL shaders, vector maps, a custom sound engine, and a full-featured Lexical rich text editor.
+
+→ Live site: [phongphandev.netlify.app](https://phongphandev.netlify.app)
+
+![screenshot](https://ik.imagekit.io/htnacim0q/byphongphan.com/README-2.png)
+
+## Overview
+
+### Stack
+
+- React 19
+- TanStack Start + TanStack Router
+- TanStack Query v5
+- Vite 8
+- Tailwind CSS v4 (OKLCH tokens)
+- shadcn/ui + Radix UI
+- Netlify (deploy & SSR adapter)
+- TypeScript
+
+### Interactive & Animation Engines
+
+- [Motion](https://motion.dev) (Framer Motion) — spring physics, layout animations
+- [GSAP](https://gsap.com) — timeline-based animations
+- [Matter.js](https://brm.io/matter-js) — 2D physics (gravity, draggable blocks)
+- [Three.js](https://threejs.org) + WebGL shaders — canvas effects
+- Custom Web Audio sound engine — audio feedback & lofi music toggle
+
+### Featured
+
+- Clean & modern blueprint-themed design
+- Light/Dark themes
+- 3D isometric block typography with dynamic lighting & sound
+- Interactive Vietnam vector map ([MapLibre GL](https://maplibre.org))
+- 2D physics sandbox (Matter.js gravity simulation)
+- Command menu (⌘K)
+- Web Audio sound engine with haptic feedback
+- Floating dynamic dock with scroll progress & TOC minimap
+- Code gutter numbers simulation
+- vCard integration
+- SEO optimized ([JSON-LD schema](https://json-ld.org), sitemap, robots)
+- Dynamic OG image generation
+- Installable as PWA (custom service worker)
+- Colophon page (architecture, design tokens, typography specimens)
+
+### Content
+
+Centralized document system powered by MDX:
+
+- Unified content layer for component & hook docs
+- Category-based content organization
+- Syntax highlighting with [Shiki](https://shiki.style) + rehype-pretty-code
+- Dynamic OG images for rich link previews
+
+### Registry
+
+Custom registry powered by the [shadcn CLI](https://ui.shadcn.com/docs/cli) with a build system (`scripts/build-registry.ts`) that outputs installable JSON to `public/r/`.
+
+Each entry is well-documented and includes:
+
+- Live preview & code snippets
+- Beautiful, readable code blocks
+- One-click command blocks (pnpm, npm, yarn, bun)
+
+#### UI Primitives
+
+| Component         | Description                                                                   |
+| ----------------- | ----------------------------------------------------------------------------- |
+| Card              | Card with header, content, and footer                                         |
+| Select            | Radix-powered select with search                                              |
+| Code Block        | Shiki syntax highlighting with line numbers, diff mode, copy actions          |
+| Map               | Interactive vector map with MapLibre GL (themes, markers, routes, clustering) |
+| Middle Truncation | Canvas-measured binary search text truncation                                 |
+
+#### Animated Components
+
+| Component                  | Description                                                          |
+| -------------------------- | -------------------------------------------------------------------- |
+| Flip Clock                 | Mechanical split-flap counter with real-time, timer, stopwatch modes |
+| Unboxing Bucket            | 3D unboxing animation with spring-physics feature chips              |
+| Text Hover Effect          | SVG stroke reveal with radial gradient cursor tracking               |
+| Background Gradient Cursor | Cursor-tracking canvas with procedural dots & grid                   |
+| Isometric Block Typography | 3D extruded text on blueprint grid with dynamic lighting             |
+| Isometric Monogram Mark    | 3D voxel monogram with hatching, wireframe & flashlight              |
+
+#### Blocks
+
+| Block             | Description                                                          |
+| ----------------- | -------------------------------------------------------------------- |
+| Not Found 01      | 404 page with a playable brick breaker game                          |
+| Not Found Gravity | 404 page with Matter.js 2D physics & draggable blocks                |
+| Rich Text Editor  | Full Lexical editor with toolbar, slash commands, Excalidraw, embeds |
+
+#### Hooks
+
+| Hook          | Description                                      |
+| ------------- | ------------------------------------------------ |
+| useMediaQuery | Responsive media query listener with SSR support |
+
+## Development
+
+Please refer to the [Development Guide](./DEVELOPMENT.md) for more details.
+
+### Quick Start
 
 ```bash
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
-# Building For Production
+### Available Scripts
 
-To build this application for production:
-
-```bash
-npm run build
-```
-
-## Testing
-
-This project uses [Vitest](https://vitest.dev/) for testing. You can run the tests with:
-
-```bash
-npm run test
-```
-
-## Styling
-
-This project uses [Tailwind CSS](https://tailwindcss.com/) for styling.
-
-### Removing Tailwind CSS
-
-If you prefer not to use Tailwind CSS:
-
-1. Remove the demo pages in `src/routes/demo/`
-2. Replace the Tailwind import in `src/styles.css` with your own styles
-3. Remove `tailwindcss()` from the plugins array in `vite.config.ts`
-4. Uninstall the packages: `npm install @tailwindcss/vite tailwindcss -D`
-
-## Linting & Formatting
-
-This project uses [Biome](https://biomejs.dev/) for linting and formatting. The following scripts are available:
-
-```bash
-npm run lint
-npm run format
-npm run check
-```
-
-# Resume Example
-
-A professional resume template built with TanStack Start and content-collections for Netlify deployment.
-
-## Features
-
-- **Content Collections**: Work experience and education managed as markdown files
-- **Skills Filter**: Interactive sidebar to filter jobs by skills/technologies
-- **Beautiful UI**: Modern design with shadcn/ui components
-- **SSR Ready**: Full server-side rendering with TanStack Start
+| Script                | Description                            |
+| --------------------- | -------------------------------------- |
+| `pnpm dev`            | Start dev server with Vite (port 5731) |
+| `pnpm build`          | Type-check & production build          |
+| `pnpm preview`        | Preview production build               |
+| `pnpm test`           | Run tests with Vitest                  |
+| `pnpm lint`           | Run ESLint                             |
+| `pnpm type-check`     | Run TypeScript type checking           |
+| `pnpm format`         | Format with Prettier + ESLint fix      |
+| `pnpm build:registry` | Build registry JSON to `public/r/`     |
 
 ## Project Structure
 
 ```
-├── content/
-│   ├── jobs/              # Work experience entries
-│   └── education/         # Education entries
-├── src/
-│   ├── components/
-│   │   └── ui/            # Shadcn UI components
-│   │       ├── badge.tsx
-│   │       ├── card.tsx
-│   │       ├── checkbox.tsx
-│   │       ├── hover-card.tsx
-│   │       └── separator.tsx
-│   ├── lib/
-│   │   └── utils.ts       # Utility functions
-│   └── routes/
-│       ├── __root.tsx     # Root layout
-│       └── index.tsx      # Resume page
-└── public/
-    └── headshot-on-white.jpg
+src/
+├── app/           # Layout compositions (grid-layout, profile-layout)
+├── content/       # MDX content (component & hook documentation)
+├── entities/      # Domain objects
+├── features/      # Feature modules (home, blocks, component-ui, colophon)
+├── registry/      # Custom shadcn registry (components, hooks, blocks, demos)
+├── routes/        # TanStack Router file-based routes
+├── shared/        # Shared UI, hooks, lib, config, constants, icons, providers
+├── styles/        # Global styles (Tailwind v4, OKLCH tokens)
+├── types/         # Global TypeScript definitions
+└── widgets/       # UI compositions (command-menu, profile-header, profile-footer)
 ```
 
-## Adding Work Experience
+## License
 
-Create a new markdown file in `content/jobs/` with the following frontmatter:
+Everything in this repository is licensed under the [MIT license](./LICENSE.md), with one exception: my name and my logo, which are covered by the [trademark and brand policy](./TRADEMARK.md).
 
-```markdown
----
-jobTitle: Your Job Title
-company: Company Name
-location: City, State
-startDate: 2024-01-01
-endDate: 2024-12-31 # Optional - omit for current position
-summary: Brief summary of your role
-tags:
-  - React
-  - TypeScript
-  - Web Development
----
+The code and the writing are yours. Fork it, copy it, quote it, translate it. Just make sure to <ins>remove all my personal information</ins> and swap the branding before publishing your website.
 
-Detailed description of your responsibilities and achievements...
-```
+## Author
 
-## Adding Education
+**Phong Phan** — Frontend Engineer · Fullstack Capable
 
-Create a new markdown file in `content/education/`:
-
-```markdown
----
-school: School Name
-summary: Degree or Program Name
-startDate: 2020-01-01
-endDate: 2024-01-01
-tags:
-  - Relevant
-  - Skills
----
-
-Details about your education...
-```
-
-## Development
-
-```bash
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-```
-
-## Routing
-
-This project uses [TanStack Router](https://tanstack.com/router) with file-based routing. Routes are managed as files in `src/routes`.
-
-### Adding A Route
-
-To add a new route to your application just add a new file in the `./src/routes` directory.
-
-TanStack will automatically generate the content of the route file for you.
-
-Now that you have two routes you can use a `Link` component to navigate between them.
-
-### Adding Links
-
-To use SPA (Single Page Application) navigation you will need to import the `Link` component from `@tanstack/react-router`.
-
-```tsx
-import { Link } from "@tanstack/react-router"
-```
-
-Then anywhere in your JSX you can use it like so:
-
-```tsx
-<Link to="/about">About</Link>
-```
-
-This will create a link that will navigate to the `/about` route.
-
-More information on the `Link` component can be found in the [Link documentation](https://tanstack.com/router/v1/docs/framework/react/api/router/linkComponent).
-
-### Using A Layout
-
-In the File Based Routing setup the layout is located in `src/routes/__root.tsx`. Anything you add to the root route will appear in all the routes. The route content will appear in the JSX where you render `{children}` in the `shellComponent`.
-
-Here is an example layout that includes a header:
-
-```tsx
-import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router"
-
-export const Route = createRootRoute({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "My App" },
-    ],
-  }),
-  shellComponent: ({ children }) => (
-    <html lang="en">
-      <head>
-        <HeadContent />
-      </head>
-      <body>
-        <header>
-          <nav>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-          </nav>
-        </header>
-        {children}
-        <Scripts />
-      </body>
-    </html>
-  ),
-})
-```
-
-More information on layouts can be found in the [Layouts documentation](https://tanstack.com/router/latest/docs/framework/react/guide/routing-concepts#layouts).
-
-## Server Functions
-
-TanStack Start provides server functions that allow you to write server-side code that seamlessly integrates with your client components.
-
-```tsx
-import { createServerFn } from "@tanstack/react-start"
-
-const getServerTime = createServerFn({
-  method: "GET",
-}).handler(async () => {
-  return new Date().toISOString()
-})
-
-// Use in a component
-function MyComponent() {
-  const [time, setTime] = useState("")
-
-  useEffect(() => {
-    getServerTime().then(setTime)
-  }, [])
-
-  return <div>Server time: {time}</div>
-}
-```
-
-## API Routes
-
-You can create API routes by using the `server` property in your route definitions:
-
-```tsx
-import { createFileRoute } from "@tanstack/react-router"
-import { json } from "@tanstack/react-start"
-
-export const Route = createFileRoute("/api/hello")({
-  server: {
-    handlers: {
-      GET: () => json({ message: "Hello, World!" }),
-    },
-  },
-})
-```
-
-## Data Fetching
-
-There are multiple ways to fetch data in your application. You can use TanStack Query to fetch data from a server. But you can also use the `loader` functionality built into TanStack Router to load the data for a route before it's rendered.
-
-For example:
-
-```tsx
-import { createFileRoute } from "@tanstack/react-router"
-
-export const Route = createFileRoute("/people")({
-  loader: async () => {
-    const response = await fetch("https://swapi.dev/api/people")
-    return response.json()
-  },
-  component: PeopleComponent,
-})
-
-function PeopleComponent() {
-  const data = Route.useLoaderData()
-  return (
-    <ul>
-      {data.results.map((person) => (
-        <li key={person.name}>{person.name}</li>
-      ))}
-    </ul>
-  )
-}
-```
-
-Loaders simplify your data fetching logic dramatically. Check out more information in the [Loader documentation](https://tanstack.com/router/latest/docs/framework/react/guide/data-loading#loader-parameters).
-
-# Demo files
-
-Files prefixed with `demo` can be safely deleted. They are there to provide a starting point for you to play around with the features you've installed.
-
-# Learn More
-
-You can learn more about all of the offerings from TanStack in the [TanStack documentation](https://tanstack.com).
-
-For TanStack Start specific documentation, visit [TanStack Start](https://tanstack.com/start).
+- Website: [phongphandev.netlify.app](https://phongphandev.netlify.app)
+- GitHub: [@phongphanq089](https://github.com/phongphanq089)
+- LinkedIn: [Phong Phan](https://www.linkedin.com/in/phong-phan-719464201)
+- X: [@PhongPhanq089](https://x.com/PhongPhanq089)
