@@ -4,10 +4,10 @@ import { cn } from "@/shared/lib"
 import { StripedPattern } from "@/shared/ui/system"
 
 import { BLOCK_CATEGORIES } from "../blocks-data"
-import type { BlockCategoryId } from "../types"
+import type { BlockCategoryIdWithAll } from "../types"
 
 interface BlockFilterBarProps {
-  activeCategory?: BlockCategoryId
+  activeCategory?: BlockCategoryIdWithAll
 }
 
 export const BlockFilterBar = ({

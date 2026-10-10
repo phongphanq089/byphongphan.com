@@ -1,10 +1,19 @@
-import { siteConfig } from "@/shared/config"
-
 import type {
   ColophonColorToken,
-  ColophonInspirationItem,
+  ColophonFontSpecimen,
+  ColophonHeroStackItem,
   ColophonTechCategory,
 } from "./types"
+
+export * from "./types"
+
+export const COLOPHON_HERO_STACK: ColophonHeroStackItem[] = [
+  { name: "React 19", label: "UI Engine" },
+  { name: "TanStack Start", label: "Routing & SSR" },
+  { name: "Tailwind CSS v4", label: "Styling" },
+  { name: "TypeScript 5.7+", label: "Type System" },
+  { name: "Shadcn ui", label: "Fully customizable UI" },
+]
 
 export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
   {
@@ -19,7 +28,6 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
         version: "^19.2",
         icon: "react",
         link: "https://react.dev/",
-        highlight: true,
       },
       {
         name: "TypeScript",
@@ -27,7 +35,6 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
         version: "5.7+",
         icon: "typescript",
         link: "https://www.typescriptlang.org/",
-        highlight: true,
       },
       {
         name: "Vite 8",
@@ -35,7 +42,6 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
         version: "^8.0",
         icon: "vite",
         link: "https://vite.dev/",
-        highlight: true,
       },
       {
         name: "TanStack Router & Start",
@@ -43,7 +49,6 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
         version: "1.168",
         icon: "tanstack",
         link: "https://tanstack.com/router",
-        highlight: true,
       },
     ],
   },
@@ -59,7 +64,6 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
         version: "^4.1",
         icon: "tailwind",
         link: "https://tailwindcss.com/",
-        highlight: true,
       },
       {
         name: "Motion (Framer)",
@@ -105,7 +109,7 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
       },
       {
         name: "Drizzle-orm",
-        role: "headless TypeScript ORM",
+        role: "Headless TypeScript ORM",
         version: "^0.45.2",
         icon: "drizzle",
         link: "https://orm.drizzle.team/",
@@ -121,7 +125,7 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
   },
 ]
 
-export const COLOPHON_FONT_SPECIMENS = [
+export const COLOPHON_FONT_SPECIMENS: ColophonFontSpecimen[] = [
   {
     name: "Mulish",
     weights: ["300", "400", "500", "700"],
@@ -139,59 +143,6 @@ export const COLOPHON_FONT_SPECIMENS = [
 ]
 
 export const COLOPHON_COLOR_TOKENS: ColophonColorToken[] = [
-  {
-    name: "PP Primary",
-    variable: "--pp-primary",
-    swatchColor: "oklch(0.985 0 0)",
-    oklchDark: "oklch(0.985 0 0)",
-    oklchLight: "oklch(0.141 0.005 285.8)",
-    description: "Main brand signature accent",
-    category: "brand",
-  },
-  {
-    name: "Background",
-    variable: "--background",
-    swatchColor: "oklch(0.12 0 0)",
-    oklchDark: "oklch(0.12 0 0)",
-    oklchLight: "oklch(1 0 0)",
-    description: "App backdrop",
-    category: "surface",
-  },
-  {
-    name: "Accent",
-    variable: "--accent",
-    swatchColor: "oklch(0.25 0 0)",
-    oklchDark: "oklch(0.25 0 0)",
-    oklchLight: "oklch(0.97 0 0)",
-    description: "Interactive hover",
-    category: "surface",
-  },
-  {
-    name: "Border",
-    variable: "--border",
-    swatchColor: "oklch(1 0 0 / 12%)",
-    oklchDark: "oklch(1 0 0 / 12%)",
-    oklchLight: "oklch(0.9 0 0)",
-    description: "Separators & borders",
-    category: "blueprint",
-  },
-]
-
-export const COLOPHON_INSPIRATIONS: ColophonInspirationItem[] = [
-  ...siteConfig.inspirations,
-]
-
-interface ColorToken {
-  name: string
-  cssVar: string
-  value: string
-  bgClass: string
-  borderClass?: string
-  description: string
-  textClass?: string
-}
-
-export const COLOR_TOKENS: ColorToken[] = [
   {
     name: "Brand Accent",
     cssVar: "--pp-primary",
@@ -254,3 +205,6 @@ export const COLOR_TOKENS: ColorToken[] = [
     description: "Status indicators, active telemetry",
   },
 ]
+
+// Backward compatibility alias
+export const COLOR_TOKENS = COLOPHON_COLOR_TOKENS

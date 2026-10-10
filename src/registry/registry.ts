@@ -394,6 +394,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
       "lexical",
       "lucide-react",
       "katex",
+      "next-themes",
     ],
     registryDependencies: [
       "button",

@@ -395,7 +395,8 @@
         "@lexical/utils",
         "lexical",
         "lucide-react",
-        "katex"
+        "katex",
+        "next-themes"
       ],
       "devDependencies": [],
       "registryDependencies": [

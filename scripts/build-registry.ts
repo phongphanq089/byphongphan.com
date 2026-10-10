@@ -2,6 +2,10 @@ import fs from "node:fs"
 import path from "node:path"
 
 import { REGISTRY_ITEMS } from "../src/registry/registry"
+import {
+  VALID_BLOCK_CATEGORY_IDS,
+  VALID_COMPONENT_CATEGORY_IDS,
+} from "../src/shared/config/categories.config"
 import { siteConfig } from "../src/shared/config/site.config"
 
 const REGISTRY_DIR = path.join(process.cwd(), "src", "registry")
@@ -28,9 +32,11 @@ async function buildRegistry() {
       // Normalize import paths for external consumers using shadcn standard aliases
       content = content.replace(/@\/shared\/lib\/utils/g, "@/lib/utils")
       content = content.replace(/@\/shared\/lib\b/g, "@/lib/utils")
+      content = content.replace(/@\/shared\/ui\/core/g, "@/components/ui")
       content = content.replace(/@\/registry\/ui/g, "@/components/ui")
       content = content.replace(/@\/registry\/hooks/g, "@/hooks")
       content = content.replace(/@\/shared\/hooks/g, "@/hooks")
+      content = content.replace(/@\/shared\/providers/g, "next-themes")
 
       return {
         path: file.path,
@@ -108,14 +114,14 @@ async function buildRegistry() {
   // Write src/registry/manifest.json for static prerendering
   const manifestPath = path.join(REGISTRY_DIR, "manifest.json")
   const manifestData = {
-    blockCategories: ["application", "marketing", "ecommerce"],
+    blockCategories: [...VALID_BLOCK_CATEGORY_IDS],
     blocks: REGISTRY_ITEMS.filter((i) => i.type === "registry:block").map(
       (i) => ({
         category: i.category,
         slug: i.name,
       })
     ),
-    componentCategories: ["primitives", "animations"],
+    componentCategories: [...VALID_COMPONENT_CATEGORY_IDS],
     components: REGISTRY_ITEMS.filter(
       (i) => i.type !== "registry:block" && i.type !== "registry:hook"
     ).map((i) => ({

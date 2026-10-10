@@ -184,7 +184,8 @@
       "@lexical/utils",
       "lexical",
       "lucide-react",
-      "katex"
+      "katex",
+      "next-themes"
     ],
     "registryDependencies": [
       "button",

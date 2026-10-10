@@ -11,8 +11,30 @@ import {
 } from "motion/react"
 import React, { useEffect, useId, useRef } from "react"
 
-import { useSound } from "@/shared/hooks/use-sound"
-import { uMiniMapOpenSound } from "@/shared/lib/u-mini-map-open"
+function playTapSound() {
+  if (typeof window === "undefined") return
+  try {
+    const AudioCtx =
+      window.AudioContext ||
+      (window as unknown as { webkitAudioContext: typeof AudioContext })
+        .webkitAudioContext
+    if (!AudioCtx) return
+    const ctx = new AudioCtx()
+    const osc = ctx.createOscillator()
+    const gain = ctx.createGain()
+    osc.type = "sine"
+    osc.frequency.setValueAtTime(540, ctx.currentTime)
+    osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.06)
+    gain.gain.setValueAtTime(0.06, ctx.currentTime)
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06)
+    osc.connect(gain)
+    gain.connect(ctx.destination)
+    osc.start()
+    osc.stop(ctx.currentTime + 0.06)
+  } catch {
+    // Ignore audio context errors
+  }
+}
 
 const transition: Transition = {
   type: "spring",
@@ -25,6 +47,7 @@ export interface PPMarkIsometricProps {
   className?: string
   enableSound?: boolean
   IsometricBlueprint?: boolean
+  onTap?: () => void
 }
 
 /**
@@ -36,6 +59,7 @@ export function PPMarkIsometric({
   className,
   enableSound = true,
   IsometricBlueprint = true,
+  onTap,
 }: PPMarkIsometricProps) {
   const id = useId()
   const ids = {
@@ -46,10 +70,6 @@ export function PPMarkIsometric({
   }
 
   const ref = useRef<SVGSVGElement>(null)
-  const [play] = useSound(uMiniMapOpenSound, {
-    volume: 0.3,
-    soundEnabled: enableSound,
-  })
 
   const shouldReduceMotion = useReducedMotion()
   const isInView = useInView(ref, { margin: "80px" })
@@ -99,7 +119,8 @@ export function PPMarkIsometric({
       initial="normal"
       whileTap="pressed"
       onTap={() => {
-        if (enableSound) play()
+        if (enableSound) playTapSound()
+        onTap?.()
       }}
     >
       <defs>

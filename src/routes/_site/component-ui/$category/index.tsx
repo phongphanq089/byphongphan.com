@@ -1,16 +1,12 @@
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router"
 
 import { ComponentGrid, COMPONENTS_DATA } from "@/features/component-ui"
-import type { ComponentCategoryId } from "@/features/component-ui/types"
-import { createSeoMeta } from "@/shared/config"
-
-const VALID_CATEGORIES: ComponentCategoryId[] = ["primitives", "animations"]
+import { createSeoMeta, isComponentCategoryId } from "@/shared/config"
 
 export const Route = createFileRoute("/_site/component-ui/$category/")({
   loader: ({ params }) => {
-    const cat = params.category as ComponentCategoryId
-    if (VALID_CATEGORIES.includes(cat)) {
-      return { category: cat }
+    if (isComponentCategoryId(params.category)) {
+      return { category: params.category }
     }
 
     // Backward compatibility: If the parameter matches a component slug directly, redirect!

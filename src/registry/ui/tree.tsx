@@ -4,7 +4,7 @@ import { Slot } from "radix-ui"
 import type { ButtonHTMLAttributes, CSSProperties, HTMLAttributes } from "react"
 import { createContext, Fragment, useContext } from "react"
 
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 
 type ToggleIconType = "chevron" | "plus-minus"
 

@@ -11,7 +11,7 @@ import {
   useState,
 } from "react"
 
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 
 export interface MaskProps {
   cursor?: boolean

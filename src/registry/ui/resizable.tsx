@@ -1,6 +1,6 @@
 import * as ResizablePrimitive from "react-resizable-panels"
 
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 
 interface ResizablePanelGroupProps extends Omit<
   ResizablePrimitive.GroupProps,

@@ -2,14 +2,14 @@ import { TerminalIcon, TextAlignStartIcon } from "lucide-react"
 import { useMemo, useState } from "react"
 
 import { siteConfig } from "@/shared/config"
-import { cn } from "cn"
 import {
   CopyButton,
   IconSwap,
   IconSwapItem,
-} from "@/shared/ui/animation/copy-button"
-import { ScrollArea } from "@/shared/ui/core/scroll-area"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/core/tabs"
+} from "@/registry/animated/button/copy-button"
+import { ScrollArea } from "@/registry/ui/scroll-area"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/registry/ui/tabs"
+import { cn } from "@/shared/lib/utils"
 
 export type PackageManager = "prompt" | "pnpm" | "yarn" | "npm" | "bun"
 

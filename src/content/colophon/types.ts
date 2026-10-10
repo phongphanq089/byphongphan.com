@@ -1,12 +1,16 @@
 import type { IconName } from "@/shared/ui/icons"
 
+export interface ColophonHeroStackItem {
+  name: string
+  label: string
+}
+
 export interface ColophonTechItem {
   name: string
   role: string
   version?: string
   icon?: IconName
   link: string
-  highlight?: boolean
 }
 
 export interface ColophonTechCategory {
@@ -16,24 +20,20 @@ export interface ColophonTechCategory {
   items: ColophonTechItem[]
 }
 
+export interface ColophonFontSpecimen {
+  name: string
+  weights: string[]
+  sampleGlyphs: string
+  cssFamily: string
+  cssClass: string
+}
+
 export interface ColophonColorToken {
   name: string
-  variable: string
-  swatchColor: string
-  oklchDark: string
-  oklchLight: string
-  description: string
-  category: "brand" | "surface" | "blueprint"
-}
-
-export interface ColophonSpacingToken {
-  name: string
-  variable: string
+  cssVar: string
   value: string
+  bgClass: string
+  borderClass?: string
   description: string
-}
-
-export interface ColophonInspirationItem {
-  name: string
-  href: string
+  textClass?: string
 }
