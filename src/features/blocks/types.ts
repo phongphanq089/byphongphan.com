@@ -1,7 +1,13 @@
-export type BlockCategoryId = "all" | "marketing" | "application" | "ecommerce"
+import type { BlockCategoryFilterId, BlockCategoryId } from "@/shared/config"
+
+export type {
+  BlockCategoryFilterId,
+  BlockCategoryId,
+  BlockCategoryIdWithAll,
+} from "@/shared/config"
 
 export interface BlockCategory {
-  id: BlockCategoryId
+  id: BlockCategoryFilterId
   label: string
   count?: number
 }
@@ -18,7 +24,7 @@ export interface BlockItem {
   id: string
   title: string
   slug: string
-  category: "marketing" | "application" | "ecommerce"
+  category: BlockCategoryId
   description: string
   isPro?: boolean
   badge?: string

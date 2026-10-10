@@ -1,13 +1,8 @@
-import type { ComponentCategoryId, ComponentItem } from "./types"
+import { COMPONENT_FILTER_TABS } from "@/shared/config"
 
-export const COMPONENT_CATEGORIES: {
-  id: "all" | ComponentCategoryId
-  label: string
-}[] = [
-  { id: "all", label: "ALL" },
-  { id: "primitives", label: "PRIMITIVES" },
-  { id: "animations", label: "ANIMATIONS" },
-]
+import type { ComponentItem } from "./types"
+
+export const COMPONENT_CATEGORIES = COMPONENT_FILTER_TABS
 
 export const COMPONENTS_DATA: ComponentItem[] = [
   {

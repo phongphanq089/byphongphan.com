@@ -1,22 +1,14 @@
 import { createFileRoute, notFound } from "@tanstack/react-router"
 
 import { BlockGrid } from "@/features/blocks"
-import type { BlockCategoryId } from "@/features/blocks/types"
-import { createSeoMeta } from "@/shared/config"
-
-const VALID_CATEGORIES: BlockCategoryId[] = [
-  "marketing",
-  "application",
-  "ecommerce",
-]
+import { createSeoMeta, isBlockCategoryId } from "@/shared/config"
 
 export const Route = createFileRoute("/_site/blocks/$category/")({
   loader: ({ params }) => {
-    const cat = params.category as BlockCategoryId
-    if (!VALID_CATEGORIES.includes(cat)) {
+    if (!isBlockCategoryId(params.category)) {
       throw notFound()
     }
-    return { category: cat }
+    return { category: params.category }
   },
   head: ({ loaderData }) => {
     const categoryName = loaderData?.category

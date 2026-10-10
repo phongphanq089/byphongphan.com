@@ -21,8 +21,9 @@ export type RegistryType =
   | "registry:block"
   | "registry:lib"
 
-export type ComponentCategoryId = "primitives" | "animations"
-export type BlockCategoryId = "application" | "marketing" | "ecommerce"
+import type { BlockCategoryId, ComponentCategoryId } from "@/shared/config"
+
+export type { BlockCategoryId, ComponentCategoryId } from "@/shared/config"
 
 export interface RegistryFile {
   path: string

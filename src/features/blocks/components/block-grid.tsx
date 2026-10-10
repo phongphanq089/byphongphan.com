@@ -6,12 +6,12 @@ import { GridContainer } from "@/app/layouts"
 import { PageHero } from "@/shared/ui"
 
 import { BLOCKS_DATA } from "../blocks-data"
-import type { BlockCategoryId, BlockItem } from "../types"
+import type { BlockCategoryIdWithAll, BlockItem } from "../types"
 import { BlockCard } from "./block-card"
 import { BlockFilterBar } from "./block-filter-bar"
 
 interface BlockGridProps {
-  category?: BlockCategoryId
+  category?: BlockCategoryIdWithAll
 }
 
 export function BlockGrid({ category = "all" }: BlockGridProps) {
