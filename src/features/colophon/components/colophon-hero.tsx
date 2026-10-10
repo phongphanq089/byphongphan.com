@@ -1,21 +1,14 @@
 import { ArrowUpRight } from "lucide-react"
 
 import { GridContainer } from "@/app/layouts"
+import { COLOPHON_HERO_STACK } from "@/content/colophon"
 import { siteConfig } from "@/shared/config"
 import TextBurnNeon from "@/shared/ui/animation/text-burn-neon"
 import { ExternalLink } from "@/shared/ui/core"
 
-const STACK_ITEMS = [
-  { name: "React 19", label: "UI Engine" },
-  { name: "TanStack Start", label: "Routing & SSR" },
-  { name: "Tailwind CSS v4", label: "Styling" },
-  { name: "TypeScript 5.7+", label: "Type System" },
-  { name: "Shadcn ui", label: "Fully customizable UI " },
-] as const
-
 export function ColophonHero() {
-  const stackRow1 = STACK_ITEMS.slice(0, 3)
-  const stackRow2 = STACK_ITEMS.slice(3, 5)
+  const stackRow1 = COLOPHON_HERO_STACK.slice(0, 3)
+  const stackRow2 = COLOPHON_HERO_STACK.slice(3, 5)
 
   return (
     <>

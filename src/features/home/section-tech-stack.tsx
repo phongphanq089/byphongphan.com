@@ -1,9 +1,8 @@
 import { ArrowUpRight } from "lucide-react"
 import { motion } from "motion/react"
-import React from "react"
 
 import { GridContainer } from "@/app/layouts"
-import { TECH_STACK } from "@/shared/config"
+import { TECH_STACK } from "@/content"
 import { SectionHeading } from "@/shared/ui"
 import { iconComponents } from "@/shared/ui/icons"
 

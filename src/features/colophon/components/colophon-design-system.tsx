@@ -1,8 +1,10 @@
 import { GridContainer } from "@/app/layouts"
+import {
+  COLOPHON_COLOR_TOKENS,
+  COLOPHON_FONT_SPECIMENS,
+} from "@/content/colophon"
 import { cn } from "@/shared/lib"
 import { StripedPattern } from "@/shared/ui"
-
-import { COLOPHON_FONT_SPECIMENS, COLOR_TOKENS } from "../colophon-data"
 
 export function ColophonDesignSystem() {
   return (
@@ -29,13 +31,13 @@ export function ColophonDesignSystem() {
       </GridContainer>
 
       <GridContainer columns={2} borderBottom showCrosshairs className="w-full">
-        {COLOR_TOKENS.map((token, idx) => (
+        {COLOPHON_COLOR_TOKENS.map((token, idx) => (
           <div
             key={token.name}
             className={cn(
               "flex flex-col justify-between p-4 sm:p-6",
               idx % 2 === 0 ? "border-b border-border md:border-b-0" : "",
-              idx < COLOR_TOKENS.length - 2
+              idx < COLOPHON_COLOR_TOKENS.length - 2
                 ? "md:border-b md:border-border"
                 : ""
             )}
@@ -75,7 +77,7 @@ export function ColophonDesignSystem() {
         className="p-3 md:px-4 md:py-2"
       >
         <h3 className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-          01. Typography
+          02. Typography
         </h3>
       </GridContainer>
 
