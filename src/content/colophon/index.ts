@@ -1,12 +1,19 @@
-import { siteConfig } from "@/shared/config"
-
 import type {
   ColophonColorToken,
   ColophonFontSpecimen,
-  ColophonInspirationItem,
-  ColophonSpacingToken,
+  ColophonHeroStackItem,
   ColophonTechCategory,
 } from "./types"
+
+export * from "./types"
+
+export const COLOPHON_HERO_STACK: ColophonHeroStackItem[] = [
+  { name: "React 19", label: "UI Engine" },
+  { name: "TanStack Start", label: "Routing & SSR" },
+  { name: "Tailwind CSS v4", label: "Styling" },
+  { name: "TypeScript 5.7+", label: "Type System" },
+  { name: "Shadcn ui", label: "Fully customizable UI" },
+]
 
 export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
   {
@@ -21,7 +28,6 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
         version: "^19.2",
         icon: "react",
         link: "https://react.dev/",
-        highlight: true,
       },
       {
         name: "TypeScript",
@@ -29,7 +35,6 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
         version: "5.7+",
         icon: "typescript",
         link: "https://www.typescriptlang.org/",
-        highlight: true,
       },
       {
         name: "Vite 8",
@@ -37,7 +42,6 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
         version: "^8.0",
         icon: "vite",
         link: "https://vite.dev/",
-        highlight: true,
       },
       {
         name: "TanStack Router & Start",
@@ -45,7 +49,6 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
         version: "1.168",
         icon: "tanstack",
         link: "https://tanstack.com/router",
-        highlight: true,
       },
     ],
   },
@@ -61,7 +64,6 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
         version: "^4.1",
         icon: "tailwind",
         link: "https://tailwindcss.com/",
-        highlight: true,
       },
       {
         name: "Motion (Framer)",
@@ -107,7 +109,7 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
       },
       {
         name: "Drizzle-orm",
-        role: "headless TypeScript ORM",
+        role: "Headless TypeScript ORM",
         version: "^0.45.2",
         icon: "drizzle",
         link: "https://orm.drizzle.team/",
@@ -125,115 +127,84 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
 
 export const COLOPHON_FONT_SPECIMENS: ColophonFontSpecimen[] = [
   {
+    name: "Mulish",
+    weights: ["300", "400", "500", "700"],
+    sampleGlyphs: "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm",
+    cssFamily: "var(--font-base)",
+    cssClass: "font-sans",
+  },
+  {
     name: "Geist Mono",
-    role: "Code, metadata & technical labels",
-    foundry: "Vercel",
-    format: "Variable WOFF2",
     weights: ["400", "500", "600", "700"],
-    previewText: "const craft = { precision: 1.0 };",
-    sampleGlyphs: "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789",
+    sampleGlyphs: "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm",
     cssFamily: "var(--font-mono)",
     cssClass: "font-mono",
-    badge: "MONOSPACE",
-  },
-  {
-    name: "Inter / System Sans",
-    role: "Headings, navigation & body copy",
-    foundry: "Rasmus Andersson",
-    format: "System UI",
-    weights: ["300", "400", "500", "700"],
-    previewText: "Design is how it works.",
-    sampleGlyphs: "Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm",
-    cssFamily: "var(--font-sans)",
-    cssClass: "font-sans",
-    badge: "SANS-SERIF",
-  },
-  {
-    name: "Playfair Display",
-    role: "Editorial accents & quotations",
-    foundry: "Claus Eggers Sørensen",
-    format: "Google Fonts Variable",
-    weights: ["400", "400i", "700"],
-    previewText: "Bridging technology and curiosity.",
-    sampleGlyphs: '"High Craft Portfolio & Playground"',
-    cssFamily: "var(--font-serif)",
-    cssClass: "font-serif",
-    badge: "SERIF",
   },
 ]
 
 export const COLOPHON_COLOR_TOKENS: ColophonColorToken[] = [
   {
-    name: "PP Primary",
-    variable: "--pp-primary",
-    swatchColor: "oklch(0.985 0 0)",
-    oklchDark: "oklch(0.985 0 0)",
-    oklchLight: "oklch(0.141 0.005 285.8)",
-    description: "Main brand signature accent",
-    category: "brand",
+    name: "Brand Accent",
+    cssVar: "--pp-primary",
+    value: "#dc2626 / oklch(0.55 0.22 27)",
+    bgClass: "bg-pp-primary",
+    description: "Main signature brand red accent",
   },
   {
-    name: "Background",
-    variable: "--background",
-    swatchColor: "oklch(0.12 0 0)",
-    oklchDark: "oklch(0.12 0 0)",
-    oklchLight: "oklch(1 0 0)",
-    description: "App backdrop",
-    category: "surface",
+    name: "Canvas Backdrop",
+    cssVar: "--background",
+    value: "#09090b / oklch(0.12 0 0)",
+    bgClass: "bg-background",
+    borderClass: "border border-border",
+    description: "Default page background color",
   },
   {
-    name: "Accent",
-    variable: "--accent",
-    swatchColor: "oklch(0.25 0 0)",
-    oklchDark: "oklch(0.25 0 0)",
-    oklchLight: "oklch(0.97 0 0)",
-    description: "Interactive hover",
-    category: "surface",
+    name: "Surface Card",
+    cssVar: "--card",
+    value: "#121215 / oklch(0.15 0 0)",
+    bgClass: "bg-card",
+    borderClass: "border border-border",
+    description: "Surface card container level",
   },
   {
-    name: "Border",
-    variable: "--border",
-    swatchColor: "oklch(1 0 0 / 12%)",
-    oklchDark: "oklch(1 0 0 / 12%)",
-    oklchLight: "oklch(0.9 0 0)",
-    description: "Separators & borders",
-    category: "blueprint",
+    name: "Muted Background",
+    cssVar: "--muted",
+    value: "#18181b / oklch(0.20 0 0)",
+    bgClass: "bg-muted",
+    borderClass: "border border-border/40",
+    textClass: "text-muted-foreground",
+    description: "Secondary subdued panels and chips",
+  },
+  {
+    name: "Accent Hover",
+    cssVar: "--accent",
+    value: "#27272a / oklch(0.25 0 0)",
+    bgClass: "bg-accent",
+    borderClass: "border border-border/60",
+    description: "Interactive hover surfaces",
+  },
+  {
+    name: "Dividing Border",
+    cssVar: "--border",
+    value: "oklch(1 0 0 / 12%)",
+    bgClass: "bg-border",
+    description: "Grid lines, dividers, and card borders",
+  },
+  {
+    name: "Destructive Alert",
+    cssVar: "--destructive",
+    value: "#ef4444 / oklch(0.60 0.20 25)",
+    bgClass: "bg-destructive",
+    description: "Error states, destructive actions",
+  },
+  {
+    name: "Online / Success",
+    cssVar: "--success",
+    value: "#10b981 / oklch(0.65 0.17 160)",
+    bgClass: "bg-emerald-500",
+    description: "Status indicators, active telemetry",
   },
 ]
 
-export const COLOPHON_SPACING_TOKENS: ColophonSpacingToken[] = [
-  {
-    name: "Base Radius",
-    variable: "--radius",
-    value: "0.75rem",
-    description: "Default border radius",
-  },
-  {
-    name: "Radius SM",
-    variable: "--radius-sm",
-    value: "calc(var(--radius) - 4px)",
-    description: "Small elements",
-  },
-  {
-    name: "Radius MD",
-    variable: "--radius-md",
-    value: "calc(var(--radius) - 2px)",
-    description: "Medium elements",
-  },
-  {
-    name: "Radius LG",
-    variable: "--radius-lg",
-    value: "var(--radius)",
-    description: "Cards & containers",
-  },
-  {
-    name: "Radius XL",
-    variable: "--radius-xl",
-    value: "calc(var(--radius) + 4px)",
-    description: "Large containers",
-  },
-]
-
-export const COLOPHON_INSPIRATIONS: ColophonInspirationItem[] = [
-  ...siteConfig.inspirations,
-]
+// Backward compatibility alias
+export const COLOR_TOKENS = COLOPHON_COLOR_TOKENS

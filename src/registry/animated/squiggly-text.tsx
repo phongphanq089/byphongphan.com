@@ -1,6 +1,6 @@
 import React, { useId } from "react"
 import { motion, useTime, useTransform } from "motion/react"
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 
 export interface SquigglyTextProps {
   /**

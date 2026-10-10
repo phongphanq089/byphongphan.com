@@ -13,7 +13,7 @@
     "lucide-react"
   ],
   "registryDependencies": [
-    "https://byphongphan.com/r/use-media-query.json"
+    "https://phongphandev.netlify.app/r/use-media-query.json"
   ],
   "files": [
     {

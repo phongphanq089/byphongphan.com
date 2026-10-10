@@ -15,7 +15,7 @@ import {
 } from "@/registry/ui/command"
 import { Field } from "@/registry/ui/field"
 import { Popover, PopoverContent, PopoverTrigger } from "@/registry/ui/popover"
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 
 const organizations = [
   {

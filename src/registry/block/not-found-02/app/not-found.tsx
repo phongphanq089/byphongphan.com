@@ -1,7 +1,7 @@
 import { Dices, Lightbulb, RotateCcw } from "lucide-react"
 import { useEffect, useRef } from "react"
 
-import { Button } from "@/shared/ui/core/button"
+import { Button } from "@/registry/ui/button"
 
 import { Gravity, type GravityRef, MatterBody } from "../components/gravity"
 

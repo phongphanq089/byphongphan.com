@@ -1,7 +1,7 @@
 import { Play, RotateCcw, Volume2, VolumeX } from "lucide-react"
 import { useCallback, useEffect, useRef, useState } from "react"
 
-import { Button } from "@/shared/ui/core"
+import { Button } from "@/registry/ui/button"
 
 import {
   checkBallBrickCollision,

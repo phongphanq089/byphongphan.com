@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react"
 
 import { GridContainer } from "@/app/layouts"
 import { siteConfig } from "@/shared/config"
+import { StripedPattern } from "@/shared/ui"
 import { ExternalLink } from "@/shared/ui/core"
 
 export function ColophonInspirations() {
@@ -15,30 +16,17 @@ export function ColophonInspirations() {
 
   return (
     <>
-      {/* Section Header */}
       <GridContainer
         borderBottom={true}
         showCrosshairs={true}
-        className="p-4 md:p-8"
+        className="relative px-4 py-2"
       >
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <span className="font-mono text-xs tracking-wider text-pp-primary uppercase">
-              03 / INFLUENCES &amp; CREDITS
-            </span>
-            <h2 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
-              Inspirations
-            </h2>
-          </div>
-
-          <p className="max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-[17px]">
-            Design sources and references that influenced this website, in no
-            particular order.
-          </p>
-        </div>
+        <StripedPattern variant="absolute" />
+        <h3 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
+          Inspirations
+        </h3>
       </GridContainer>
 
-      {/* Inspiration Rows — 2 columns per row */}
       {rows.map((row, rowIndex) => (
         <GridContainer
           key={rowIndex}

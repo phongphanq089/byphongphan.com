@@ -1,10 +1,12 @@
 "use client"
 
 import { cva, type VariantProps } from "class-variance-authority"
-import { cn } from "cn"
 import { PanelLeftIcon } from "lucide-react"
 import { Slot } from "radix-ui"
 import * as React from "react"
+
+import { useIsMobile } from "@/registry/hooks/use-media-query"
+import { cn } from "@/shared/lib/utils"
 
 import { Button } from "./button"
 import { Input } from "./input"
@@ -18,7 +20,6 @@ import {
 } from "@/registry/ui/sheet"
 import { Skeleton } from "@/registry/ui/skeleton"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/registry/ui/tooltip"
-import { useIsMobile } from "@/shared/hooks/use-mobile"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7

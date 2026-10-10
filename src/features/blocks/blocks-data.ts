@@ -1,11 +1,8 @@
-import type { BlockCategory, BlockItem } from "./types"
+import { BLOCK_FILTER_TABS } from "@/shared/config"
 
-export const BLOCK_CATEGORIES: BlockCategory[] = [
-  { id: "all", label: "ALL" },
-  { id: "application", label: "APPLICATION" },
-  { id: "marketing", label: "MARKETING" },
-  { id: "ecommerce", label: "ECOMMERCE" },
-]
+import type { BlockItem } from "./types"
+
+export const BLOCK_CATEGORIES = BLOCK_FILTER_TABS
 
 export const BLOCKS_DATA: BlockItem[] = [
   {

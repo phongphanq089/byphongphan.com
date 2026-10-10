@@ -5,7 +5,7 @@ import type { ComponentProps } from "react"
 
 import { Button } from "@/registry/ui/button"
 import { type CopyState, useCopyToClipboard } from "@/shared/hooks"
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 
 export type CopyStateIconProps = {
   state: CopyState

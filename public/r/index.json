@@ -1,5 +1,15 @@
 [
   {
+    "name": "line-nav",
+    "type": "registry:component",
+    "title": "Line Nav",
+    "description": "Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
+  },
+  {
     "name": "middle-truncation",
     "type": "registry:ui",
     "title": "Middle Truncation",
@@ -36,7 +46,7 @@
       "lucide-react"
     ],
     "registryDependencies": [
-      "https://byphongphan.com/r/use-media-query.json"
+      "https://phongphandev.netlify.app/r/use-media-query.json"
     ]
   },
   {
@@ -172,10 +182,10 @@
       "@lexical/selection",
       "@lexical/table",
       "@lexical/utils",
-      "@lexical/yjs",
       "lexical",
       "lucide-react",
-      "katex"
+      "katex",
+      "next-themes"
     ],
     "registryDependencies": [
       "button",

@@ -1,6 +1,6 @@
 import { ArrowRight, Home, SearchX } from "lucide-react"
 
-import { Button } from "@/shared/ui/core"
+import { Button } from "@/registry/ui/button"
 
 import { Daikanoid } from "../components/daikanoid"
 

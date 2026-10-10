@@ -1,10 +1,11 @@
 import { $generateHtmlFromNodes } from "@lexical/html"
-import { $convertToMarkdownString, TRANSFORMERS } from "@lexical/markdown"
+import { $convertToMarkdownString } from "@lexical/markdown"
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin"
 import type { EditorState, LexicalEditor } from "lexical"
 import { $getRoot } from "lexical"
 import * as React from "react"
 
+import { EDITOR_TRANSFORMERS } from "../../core/transformers"
 import type { EditorChangeData } from "../../types"
 
 export function OnChangeHandlerPlugin({
@@ -36,7 +37,7 @@ export function OnChangeHandlerPlugin({
 
         let markdown = ""
         try {
-          markdown = $convertToMarkdownString(TRANSFORMERS)
+          markdown = $convertToMarkdownString(EDITOR_TRANSFORMERS)
         } catch (e) {
           console.warn("[Editor] Failed to generate Markdown:", e)
         }

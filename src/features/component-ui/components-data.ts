@@ -1,16 +1,20 @@
-import type { ComponentCategoryId, ComponentItem } from "./types"
+import { COMPONENT_FILTER_TABS } from "@/shared/config"
 
-export const COMPONENT_CATEGORIES: {
-  id: "all" | ComponentCategoryId
-  label: string
-}[] = [
-  { id: "all", label: "ALL" },
-  { id: "primitives", label: "PRIMITIVES" },
-  { id: "animations", label: "ANIMATIONS" },
-  { id: "foundations", label: "FOUNDATIONS" },
-]
+import type { ComponentItem } from "./types"
+
+export const COMPONENT_CATEGORIES = COMPONENT_FILTER_TABS
 
 export const COMPONENTS_DATA: ComponentItem[] = [
+  {
+    id: "comp-line-nav",
+    name: "Line Nav",
+    slug: "line-nav",
+    category: "animations",
+    description:
+      "Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants.",
+    schematicType: "line-nav",
+    isNew: true,
+  },
   {
     id: "comp-middle-truncation",
     name: "Middle Truncation",

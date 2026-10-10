@@ -2,6 +2,10 @@ import fs from "node:fs"
 import path from "node:path"
 
 import { REGISTRY_ITEMS } from "../src/registry/registry"
+import {
+  VALID_BLOCK_CATEGORY_IDS,
+  VALID_COMPONENT_CATEGORY_IDS,
+} from "../src/shared/config/categories.config"
 import { siteConfig } from "../src/shared/config/site.config"
 
 const REGISTRY_DIR = path.join(process.cwd(), "src", "registry")
@@ -28,9 +32,11 @@ async function buildRegistry() {
       // Normalize import paths for external consumers using shadcn standard aliases
       content = content.replace(/@\/shared\/lib\/utils/g, "@/lib/utils")
       content = content.replace(/@\/shared\/lib\b/g, "@/lib/utils")
+      content = content.replace(/@\/shared\/ui\/core/g, "@/components/ui")
       content = content.replace(/@\/registry\/ui/g, "@/components/ui")
       content = content.replace(/@\/registry\/hooks/g, "@/hooks")
       content = content.replace(/@\/shared\/hooks/g, "@/hooks")
+      content = content.replace(/@\/shared\/providers/g, "next-themes")
 
       return {
         path: file.path,
@@ -96,10 +102,112 @@ async function buildRegistry() {
 
   // Write index.json (list of all available registry components)
   const indexPath = path.join(OUTPUT_DIR, "index.json")
-  fs.writeFileSync(indexPath, JSON.stringify(indexItems, null, 2), "utf-8")
+  fs.writeFileSync(
+    indexPath,
+    JSON.stringify(indexItems, null, 2) + "\n",
+    "utf-8"
+  )
   console.log(
     `\n📦 Successfully bundled ${indexItems.length} registry items to public/r/`
   )
+
+  // Write src/registry/manifest.json for static prerendering
+  const manifestPath = path.join(REGISTRY_DIR, "manifest.json")
+  const manifestData = {
+    blockCategories: [...VALID_BLOCK_CATEGORY_IDS],
+    blocks: REGISTRY_ITEMS.filter((i) => i.type === "registry:block").map(
+      (i) => ({
+        category: i.category,
+        slug: i.name,
+      })
+    ),
+    componentCategories: [...VALID_COMPONENT_CATEGORY_IDS],
+    components: REGISTRY_ITEMS.filter(
+      (i) => i.type !== "registry:block" && i.type !== "registry:hook"
+    ).map((i) => ({
+      category: i.category,
+      slug: i.name,
+    })),
+  }
+  fs.writeFileSync(
+    manifestPath,
+    JSON.stringify(manifestData, null, 2) + "\n",
+    "utf-8"
+  )
+  console.log(`  ✓ Generated: src/registry/manifest.json`)
+
+  // Compute stats
+  const countByType: Record<string, number> = {}
+  for (const item of REGISTRY_ITEMS) {
+    countByType[item.type] = (countByType[item.type] || 0) + 1
+  }
+
+  const registryStats = {
+    total: REGISTRY_ITEMS.length,
+    countByType,
+    updatedAt: new Date().toISOString(),
+  }
+
+  // Generate official shadcn registry master index (registry.json)
+  const registryPayload = {
+    $schema: "https://ui.shadcn.com/schema/registry.json",
+    name: "phongphan",
+    homepage: `${siteConfig.url}/component-ui`,
+    items: REGISTRY_ITEMS.map((item) => ({
+      name: item.name,
+      type: item.type,
+      title: item.title,
+      description: item.description,
+      category: item.category,
+      author: `${siteConfig.author.name} <${siteConfig.author.email}>`,
+      dependencies: item.dependencies ?? [],
+      devDependencies: item.devDependencies ?? [],
+      registryDependencies: (item.registryDependencies ?? []).map((dep) => {
+        if (
+          dep.startsWith("http://") ||
+          dep.startsWith("https://") ||
+          dep.startsWith("@")
+        ) {
+          return dep
+        }
+        const isInternalItem = REGISTRY_ITEMS.some((reg) => reg.name === dep)
+        return isInternalItem ? `${siteConfig.url}/r/${dep}.json` : dep
+      }),
+      files: item.files.map((f) => ({
+        path: `src/registry/${f.path}`,
+        type: f.type,
+        target: f.target ?? `components/${f.path}`,
+      })),
+    })),
+  }
+
+  // Write to root and public directories for GitHub browsing & direct URL access
+  const rootDir = process.cwd()
+  const publicDir = path.join(rootDir, "public")
+
+  fs.writeFileSync(
+    path.join(rootDir, "registry.json"),
+    JSON.stringify(registryPayload, null, 2) + "\n",
+    "utf-8"
+  )
+  fs.writeFileSync(
+    path.join(publicDir, "registry.json"),
+    JSON.stringify(registryPayload, null, 2) + "\n",
+    "utf-8"
+  )
+  console.log(`  ✓ Generated: registry.json (root & public)`)
+
+  fs.writeFileSync(
+    path.join(rootDir, "registry-stats.json"),
+    JSON.stringify(registryStats, null, 2) + "\n",
+    "utf-8"
+  )
+  fs.writeFileSync(
+    path.join(publicDir, "registry-stats.json"),
+    JSON.stringify(registryStats, null, 2) + "\n",
+    "utf-8"
+  )
+  console.log(`  ✓ Generated: registry-stats.json (root & public)`)
 }
 
 buildRegistry().catch((err) => {

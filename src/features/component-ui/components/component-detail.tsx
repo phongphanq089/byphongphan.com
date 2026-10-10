@@ -24,6 +24,7 @@ import { TOCMinimap } from "@/shared/ui/system/toc-minimap"
 
 import { COMPONENTS_DATA } from "../components-data"
 import type { ComponentItem } from "../types"
+import { ComponentQuickNav } from "./component-quick-nav"
 import { ComponentStagePreview } from "./component-stage-preview"
 import { mdxComponents } from "./mdx-components"
 
@@ -125,6 +126,11 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
 
   return (
     <div className="relative w-full">
+      <ComponentQuickNav
+        currentCategory={component.category}
+        currentSlug={component.slug}
+      />
+
       {tocItems.length > 0 && (
         <div className="fixed top-1/2 right-0 z-40 hidden -translate-y-1/2 lg:block">
           <TOCMinimap items={tocItems} />

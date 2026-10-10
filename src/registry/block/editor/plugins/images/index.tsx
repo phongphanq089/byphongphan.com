@@ -1,6 +1,7 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext"
 import { $insertNodeToNearestRoot, mergeRegister } from "@lexical/utils"
 import {
+  $createParagraphNode,
   COMMAND_PRIORITY_EDITOR,
   COMMAND_PRIORITY_HIGH,
   DROP_COMMAND,
@@ -40,6 +41,9 @@ export function ImagesPlugin({
           editor.update(() => {
             const imageNode = $createImageNode(payload)
             $insertNodeToNearestRoot(imageNode)
+            const paragraph = $createParagraphNode()
+            imageNode.insertAfter(paragraph)
+            paragraph.select()
           })
           return true
         },

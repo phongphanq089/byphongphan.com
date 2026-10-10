@@ -2,7 +2,11 @@ import { createFileRoute } from "@tanstack/react-router"
 
 import { BLOCKS_DATA } from "@/features/blocks"
 import { COMPONENTS_DATA } from "@/features/component-ui"
-import { siteConfig } from "@/shared/config"
+import {
+  siteConfig,
+  VALID_BLOCK_CATEGORY_IDS,
+  VALID_COMPONENT_CATEGORY_IDS,
+} from "@/shared/config"
 
 interface SitemapRoute {
   path: string
@@ -54,24 +58,6 @@ export const Route = createFileRoute("/sitemap.xml")({
             priority: "0.8",
           },
           {
-            path: "/component-ui/primitives",
-            lastmod: now,
-            changefreq: "weekly",
-            priority: "0.8",
-          },
-          {
-            path: "/component-ui/animations",
-            lastmod: now,
-            changefreq: "weekly",
-            priority: "0.8",
-          },
-          {
-            path: "/component-ui/foundations",
-            lastmod: now,
-            changefreq: "weekly",
-            priority: "0.8",
-          },
-          {
             path: "/design-system",
             lastmod: now,
             changefreq: "monthly",
@@ -80,6 +66,25 @@ export const Route = createFileRoute("/sitemap.xml")({
         ]
 
         const dynamicRoutes: SitemapRoute[] = []
+
+        // 1. Dynamic Category Pages (Component UI & Blocks)
+        VALID_COMPONENT_CATEGORY_IDS.forEach((cat) => {
+          dynamicRoutes.push({
+            path: `/component-ui/${cat}`,
+            lastmod: now,
+            changefreq: "weekly",
+            priority: "0.8",
+          })
+        })
+
+        VALID_BLOCK_CATEGORY_IDS.forEach((cat) => {
+          dynamicRoutes.push({
+            path: `/blocks/${cat}`,
+            lastmod: now,
+            changefreq: "weekly",
+            priority: "0.8",
+          })
+        })
 
         // 2. Dynamic Component UI Pages
         COMPONENTS_DATA.forEach((component) => {

@@ -3,7 +3,7 @@ import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@/shared/ui/core/resizable"
+} from "@/registry/ui/resizable"
 
 export function MiddleTruncationDemo() {
   return (

@@ -18,7 +18,7 @@ import {
   type FlipClockVariant,
 } from "@/registry/animated/flip-clock"
 import { cn } from "@/shared/lib/utils"
-import { Button } from "@/shared/ui/core"
+import { Button } from "@/registry/ui/button"
 
 export function FlipClockDemo() {
   const [mode, setMode] = useState<FlipClockMode>("clock")

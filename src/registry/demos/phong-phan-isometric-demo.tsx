@@ -1,7 +1,7 @@
 import { MousePointer2, Volume2 } from "lucide-react"
 
 import { PhongPhanIsometric } from "@/registry/animated/phong-phan-isometric"
-import { Badge } from "@/shared/ui/core/badge"
+import { Badge } from "@/registry/ui/badge"
 
 export function PhongPhanIsometricDemo() {
   return (

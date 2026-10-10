@@ -1,66 +1,26 @@
 import { ArrowUpRight } from "lucide-react"
 
 import { GridContainer } from "@/app/layouts"
+import { COLOPHON_HERO_STACK } from "@/content/colophon"
 import { siteConfig } from "@/shared/config"
-import { Badge, ExternalLink } from "@/shared/ui/core"
-
-const STACK_ITEMS = [
-  { name: "React 19", label: "UI Engine" },
-  { name: "TanStack Start", label: "Routing & SSR" },
-  { name: "Tailwind CSS v4", label: "Styling" },
-  { name: "TypeScript 5.7+", label: "Type System" },
-  { name: "Sanity Studio v5", label: "Headless CMS" },
-] as const
+import TextBurnNeon from "@/shared/ui/animation/text-burn-neon"
+import { ExternalLink } from "@/shared/ui/core"
 
 export function ColophonHero() {
-  // Split stack items into rows of 3
-  const stackRow1 = STACK_ITEMS.slice(0, 3)
-  const stackRow2 = STACK_ITEMS.slice(3, 5)
+  const stackRow1 = COLOPHON_HERO_STACK.slice(0, 3)
+  const stackRow2 = COLOPHON_HERO_STACK.slice(3, 5)
 
   return (
     <>
       <GridContainer
         borderBottom={true}
         showCrosshairs={true}
-        className="px-4 md:px-8"
+        className="p-4 md:px-8 md:py-4"
       >
-        <div className="flex flex-wrap items-center justify-between gap-3 py-4">
-          <div className="flex items-center gap-2">
-            <span className="font-mono text-xs tracking-wider text-pp-primary uppercase">
-              COLOPHON
-            </span>
-            <span className="text-muted-foreground/40">•</span>
-            <span className="font-mono text-xs text-muted-foreground">
-              REV_2026
-            </span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Badge
-              variant="outline"
-              className="gap-1.5 border-border/80 bg-card/60 font-mono text-[11px] text-muted-foreground"
-            >
-              <span>OPERATIONAL</span>
-            </Badge>
-            <Badge
-              variant="outline"
-              className="hidden border-border/80 bg-card/60 font-mono text-[11px] text-muted-foreground sm:inline-flex"
-            >
-              <span>EDGE_NETLIFY</span>
-            </Badge>
-          </div>
-        </div>
-      </GridContainer>
-
-      <GridContainer
-        borderBottom={true}
-        showCrosshairs={true}
-        className="p-4 md:p-8"
-      >
-        <div className="space-y-4">
-          <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-5xl">
-            Colophon
-          </h1>
+        <div className="space-y-2">
+          <h2 className="text-2xl font-extrabold tracking-tight text-foreground sm:text-3xl">
+            <TextBurnNeon>Colophon</TextBurnNeon>
+          </h2>
           <p className="max-w-3xl text-base leading-relaxed text-muted-foreground sm:text-lg">
             Technical stack, design tokens, and inspirations behind{" "}
             <span className="font-semibold text-foreground">
