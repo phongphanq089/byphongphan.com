@@ -8,7 +8,8 @@ import {
   MarkerPopup,
   MarkerTooltip,
 } from "@/registry/ui/map"
-import { Badge, Button } from "@/shared/ui/core"
+import { Badge } from "@/registry/ui/badge"
+import { Button } from "@/registry/ui/button"
 
 const LOCATIONS = [
   {

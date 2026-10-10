@@ -1,7 +1,7 @@
 import { MousePointer2, Volume2 } from "lucide-react"
 
 import { PPMarkIsometric } from "@/registry/animated/pp-mark-isometric"
-import { Badge } from "@/shared/ui/core/badge"
+import { Badge } from "@/registry/ui/badge"
 
 export function PPMarkIsometricDemo() {
   return (

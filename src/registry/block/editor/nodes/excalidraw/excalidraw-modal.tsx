@@ -12,7 +12,7 @@ import type {
 import * as React from "react"
 import { createPortal } from "react-dom"
 
-import { Button } from "@/shared/ui/core/button"
+import { Button } from "../../components/ui/button"
 import { useTheme } from "@/shared/providers"
 
 // Dynamic lazy load of Excalidraw to ensure Cloudflare Workers SSR safety

@@ -30,7 +30,7 @@
     },
     {
       "path": "ui/code-block/index.ts",
-      "content": "﻿export * from \"./code-block\"\nexport * from \"./code-block-command\"\nexport * from \"./code-block-highlight\"\n",
+      "content": "export * from \"./code-block\"\nexport * from \"./code-block-highlight\"\n",
       "type": "registry:ui",
       "target": "components/ui/code-block/index.ts"
     }
