@@ -1,5 +1,6 @@
 /* eslint-disable no-self-assign */
 import { Link, useNavigate } from "@tanstack/react-router"
+import { play } from "cuelume"
 import {
   AppWindowIcon,
   ArrowLeft,
@@ -238,7 +239,14 @@ export function BlockDetail({ block }: BlockDetailProps) {
           {prevBlock && (
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  asChild
+                  onClick={() =>
+                    play("attention", { direction: "back", emphasis: "subtle" })
+                  }
+                >
                   <Link
                     to="/blocks/$category/$slug"
                     params={{
@@ -262,7 +270,17 @@ export function BlockDetail({ block }: BlockDetailProps) {
           {nextBlock && (
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" size="icon" asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  asChild
+                  onClick={() =>
+                    play("attention", {
+                      direction: "forward",
+                      emphasis: "subtle",
+                    })
+                  }
+                >
                   <Link
                     to="/blocks/$category/$slug"
                     params={{

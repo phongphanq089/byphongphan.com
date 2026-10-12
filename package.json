@@ -13,7 +13,9 @@
     "check": "prettier --check .",
     "type-check": "tsc -b --noEmit",
     "prepare": "husky",
-    "build:registry": "tsx scripts/build-registry.ts"
+    "build:registry": "tsx scripts/build-registry.ts",
+    "dev:force": "vite --force",
+    "clean:vite": "node -e \"fs.rmSync('node_modules/.vite', { recursive: true, force: true })\""
   },
   "dependencies": {
     "@excalidraw/excalidraw": "^0.18.1",
@@ -73,6 +75,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "cn": "^0.2.6",
+    "cuelume": "^0.2.4",
     "date-fns": "^4.4.0",
     "dotenv": "^17.4.2",
     "emoji-picker-react": "^4.22.2",
