@@ -48,6 +48,7 @@
     "@lexical/tailwind": "^0.51.0",
     "@lexical/text": "^0.51.0",
     "@lexical/utils": "^0.51.0",
+    "@lucasmarkes/hairline": "^0.5.0",
     "@neondatabase/serverless": "^1.1.0",
     "@number-flow/react": "^0.6.2",
     "@paper-design/shaders-react": "^0.0.76",

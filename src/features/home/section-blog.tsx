@@ -1,42 +1,29 @@
-import React from "react"
+import { Riffle } from "@lucasmarkes/hairline/react"
 
 import { GridContainer } from "@/app/layouts"
 import { SectionHeading } from "@/shared/ui/system/section-heading"
 
 export const SectionBlog = () => {
   return (
-    <>
-      <GridContainer className="p-0" showCrosshairs={false}>
-        <SectionHeading
-          id="blog"
-          heading="Articles & Notes"
-          actionHref="/blog"
-          actionLabel="All articles"
-        />
+    <section>
+      <GridContainer borderTop className="relative p-0" showCrosshairs={false}>
+        <SectionHeading id="#blog" heading="Blog" />
       </GridContainer>
 
-      {/* 2-Column Grid of Featured Blog Posts */}
       <GridContainer
-        columns={2}
-        borderTop={false}
-        borderBottom={true}
-        showCrosshairs={true}
-        className="w-full"
+        showCrosshairs={false}
+        className="flex flex-col items-center justify-center p-4 text-center sm:p-6 md:p-8"
       >
-        {/* {displayPosts.map((post, idx) => (
-          <div
-            key={post._id}
-            className={`flex h-full w-full ${
-              idx === 0 && displayPosts.length > 1
-                ? "border-b border-border md:border-r md:border-b-0"
-                : ""
-            }`}
-          >
-            <BlogCard post={post} />
-          </div>
-        ))} */}
-        <span></span>
+        <Riffle style={{ width: 400 }} label="Coming soon" />
+
+        <h3 className="text-lg font-bold text-foreground sm:text-xl">
+          Coming soon
+        </h3>
+
+        <p className="mt-1 max-w-sm text-xs leading-relaxed text-muted-foreground sm:text-sm">
+          We’re currently building for this blog. Check back soon!
+        </p>
       </GridContainer>
-    </>
+    </section>
   )
 }

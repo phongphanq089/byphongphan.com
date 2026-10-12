@@ -258,7 +258,7 @@ export function Header() {
         to="/"
         className="flex h-full items-center gap-2 border-r border-border px-4 text-sm font-medium text-muted-foreground transition-all hover:bg-accent/60 hover:text-foreground"
       >
-        <PPPixelMark size={32} className="text-pp-primary" />
+        <PPPixelMark size={32} className="text-pp-primary" variant="glow" />
       </Link>
 
       <div className="relative z-10 flex shrink-0 items-stretch border-l border-border bg-background/50 backdrop-blur-xs lg:hidden">

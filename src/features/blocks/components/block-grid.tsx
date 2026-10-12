@@ -1,3 +1,4 @@
+import { Slow } from "@lucasmarkes/hairline/react"
 import { Link } from "@tanstack/react-router"
 import { LayoutGrid } from "lucide-react"
 import { useMemo } from "react"
@@ -84,6 +85,7 @@ export function BlockGrid({ category = "all" }: BlockGridProps) {
           showCrosshairs
           className="flex flex-col items-center justify-center py-16 text-center sm:py-24"
         >
+          <Slow style={{ width: 400 }} label="An empty sieve" />
           <h3 className="text-lg font-bold text-foreground sm:text-xl">
             No blocks in this category
           </h3>

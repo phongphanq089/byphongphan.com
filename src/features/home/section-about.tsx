@@ -41,7 +41,10 @@ const SectionAbout = () => {
             />
           </div>
           <div className="flex flex-1 flex-col justify-between">
-            <div className="relative flex flex-1 items-center px-4 py-2.5 sm:px-5">
+            <div
+              className="relative flex flex-1 items-center px-4 py-2.5 sm:px-5"
+              id="about"
+            >
               <h2 className="font-semibold text-foreground">About Me</h2>
             </div>
             <div className="flex flex-1 items-center bg-accent px-4 py-2.5 sm:px-5">
