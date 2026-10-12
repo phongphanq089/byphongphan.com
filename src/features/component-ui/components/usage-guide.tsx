@@ -1,5 +1,5 @@
 ﻿import { CodeBlock, CodeBlockCopyButton } from "@/registry/ui/code-block"
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 
 interface UsageGuideProps {
   importCode: string

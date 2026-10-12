@@ -36,10 +36,6 @@ export const siteConfig = {
       name: "Email",
       href: "mailto:phongphanq089@gmail.com",
     },
-    phone: {
-      name: "Phone",
-      href: "tel:0706113210",
-    },
   },
 
   inspirations: [
@@ -60,5 +56,4 @@ export const SOCIALINK = {
   linkedin: { name: "Linkedin", link: siteConfig.social.linkedin.href },
   twiter: { name: "X (TWITTER)", link: siteConfig.social.twitter.href },
   mail: siteConfig.social.email.href,
-  phone: siteConfig.social.phone.href,
 }

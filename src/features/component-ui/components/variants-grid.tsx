@@ -1,7 +1,7 @@
 ﻿import { Code2 } from "lucide-react"
 import { useState } from "react"
 
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 import {
   Button,
   Tooltip,

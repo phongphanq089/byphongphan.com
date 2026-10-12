@@ -7,7 +7,7 @@ import { useTree } from "@headless-tree/react"
 import { File, Folder, FolderOpen } from "lucide-react"
 import { useEffect, useMemo } from "react"
 
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 import { Tree, TreeItem, TreeItemLabel } from "@/shared/ui/core/tree"
 
 import type { FileTreeNode, ResolvedBlockFile } from "../types"

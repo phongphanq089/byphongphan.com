@@ -3,7 +3,7 @@ import { FileCode2 } from "lucide-react"
 import { Suspense, useEffect, useRef, useState } from "react"
 
 import { CodeBlock, CodeBlockCopyButton } from "@/registry/ui/code-block"
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 import {
   Skeleton,
   Tabs,

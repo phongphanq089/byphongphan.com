@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router"
 
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 import { StripedPattern } from "@/shared/ui/system"
 
 import { BLOCK_CATEGORIES } from "../blocks-data"

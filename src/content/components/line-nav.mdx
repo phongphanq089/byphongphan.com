@@ -109,13 +109,13 @@ Categorized sections with prominent category headers and nested sub-items:
 
 ## Props
 
-| Prop | Type | Default | Description |
-| :--- | :--- | :--- | :--- |
-| `items` | `LineNavItem[]` | `undefined` | Flat array of navigation items `{ title, href }`. |
-| `groups` | `LineNavGroup[]` | `undefined` | Categorized groups `{ title, href?, items }`. |
-| `activeHref` | `string` | `undefined` | Controlled active item href. |
-| `defaultActiveHref` | `string` | First item href | Uncontrolled initial active item href. |
-| `sublineCount` | `number` | `2` | Number of intermediate tick marks between entries. |
-| `scrollActiveIntoView` | `boolean` | `true` | Scroll active item into view on mount. |
-| `onItemClick` | `(item, event) => void` | `undefined` | Callback fired when an item or group header is clicked. |
-| `onActiveChange` | `(href: string) => void` | `undefined` | Callback fired when the active href changes. |
+| Prop                   | Type                     | Default         | Description                                             |
+| :--------------------- | :----------------------- | :-------------- | :------------------------------------------------------ |
+| `items`                | `LineNavItem[]`          | `undefined`     | Flat array of navigation items `{ title, href }`.       |
+| `groups`               | `LineNavGroup[]`         | `undefined`     | Categorized groups `{ title, href?, items }`.           |
+| `activeHref`           | `string`                 | `undefined`     | Controlled active item href.                            |
+| `defaultActiveHref`    | `string`                 | First item href | Uncontrolled initial active item href.                  |
+| `sublineCount`         | `number`                 | `2`             | Number of intermediate tick marks between entries.      |
+| `scrollActiveIntoView` | `boolean`                | `true`          | Scroll active item into view on mount.                  |
+| `onItemClick`          | `(item, event) => void`  | `undefined`     | Callback fired when an item or group header is clicked. |
+| `onActiveChange`       | `(href: string) => void` | `undefined`     | Callback fired when the active href changes.            |
