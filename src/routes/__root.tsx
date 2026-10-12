@@ -9,6 +9,8 @@ import {
 import { Suspense, useEffect } from "react"
 import type { JSX } from "react/jsx-runtime"
 
+import { DefaultCatchBoundary } from "@/app/boundaries/default-catch-boundary"
+import NotFoundBoundary from "@/app/boundaries/not-found-boundary"
 import {
   createPersonJsonLd,
   createSeoMeta,
@@ -17,25 +19,9 @@ import {
 import { lazyWithRetry } from "@/shared/lib/lazy-with-retry"
 import { ThemeProvider } from "@/shared/providers/theme-provider"
 import { TooltipProvider } from "@/shared/ui/core/tooltip"
-import { DefaultCatchBoundary } from "@/shared/ui/system/default-catch-boundary"
-
 const LazyCommandMenu = lazyWithRetry(() =>
   import("@/widgets/command-menu").then((m) => ({ default: m.CommandMenu }))
 )
-
-const LazyNotFound = lazyWithRetry(() =>
-  import("@/shared/ui/block/not-found").then((m) => ({
-    default: m.default || m.NotFound,
-  }))
-)
-
-function NotFoundComponent() {
-  return (
-    <Suspense fallback={<div className="fixed inset-0 bg-background" />}>
-      <LazyNotFound />
-    </Suspense>
-  )
-}
 
 import appCss from "../styles/app.css?url"
 
@@ -92,7 +78,7 @@ export const Route = createRootRouteWithContext<{
       </RootDocument>
     )
   },
-  notFoundComponent: NotFoundComponent,
+  notFoundComponent: NotFoundBoundary,
   component: RootComponent,
 })
 

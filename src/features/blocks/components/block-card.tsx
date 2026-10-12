@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowUpRight, Boxes, FileText, Gamepad2, Layout } from "lucide-react"
 
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 
 import type { BlockItem } from "../types"
 

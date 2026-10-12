@@ -2,7 +2,7 @@ import { Headphones } from "lucide-react"
 import { motion } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/core"
 
 const AUDIO_SRC =

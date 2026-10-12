@@ -1,47 +1,4 @@
-import React from "react"
-
-import { siteConfig } from "@/shared/config"
-import { Sanity, ShadcnUI, Tailwind, Tanstack } from "@/shared/ui/icons"
-
-export interface ArchitectureSpec {
-  role: string
-  tech: string
-  detail: string
-  href: string
-}
-
-export const architectureSpecs: ArchitectureSpec[] = [
-  {
-    role: "ENGINE",
-    tech: "TanStack Start + React 19",
-    detail: "SSR, typed routes & server functions",
-    href: "https://tanstack.com/start",
-  },
-  {
-    role: "STYLING",
-    tech: "Tailwind CSS v4",
-    detail: "OKLCH color engine & design tokens",
-    href: "https://tailwindcss.com",
-  },
-  {
-    role: "CONTENT",
-    tech: "Sanity Studio v5",
-    detail: "Headless CMS & real-time GROQ lake",
-    href: "https://www.sanity.io",
-  },
-  {
-    role: "PRIMITIVES",
-    tech: "Radix UI + shadcn/ui",
-    detail: "Accessible WAI-ARIA composable blocks",
-    href: "https://ui.shadcn.com",
-  },
-  {
-    role: "HOSTING",
-    tech: "Netlify Edge",
-    detail: "Global CDN & serverless edge runtime",
-    href: "https://www.netlify.com",
-  },
-]
+import { MAIN_NAV_ITEMS, siteConfig } from "@/shared/config"
 
 export interface FooterNavItem {
   name: string
@@ -50,29 +7,12 @@ export interface FooterNavItem {
   badge?: string
 }
 
-export const footerNavigation: FooterNavItem[] = [
-  { name: "Home", href: "/", badge: "LIVE", shortcut: "H P" },
-  { name: "Blog", href: "/blog", badge: "COMING_SOON", shortcut: "B L" },
-  {
-    name: "Component UI",
-    href: "/component-ui",
-    badge: "LIVE",
-    shortcut: "C U",
-  },
-  { name: "Blocks", href: "/blocks", badge: "COMING_SOON", shortcut: "B L" },
-  {
-    name: "Resources",
-    href: "/resources",
-    badge: "COMING_SOON",
-    shortcut: "B L",
-  },
-  {
-    name: "colophon",
-    href: "/colophon",
-    badge: "LIVE",
-    shortcut: "C P",
-  },
-]
+export const footerNavigation: FooterNavItem[] = MAIN_NAV_ITEMS.map((item) => ({
+  name: item.title,
+  href: item.link,
+  badge: item.badge,
+  shortcut: item.shortcut?.join(" "),
+}))
 
 export interface FooterSocial {
   name: string
@@ -83,84 +23,40 @@ export interface FooterSocial {
 
 export const footerSocials: FooterSocial[] = [
   {
-    name: "GitHub",
-    handle: `@${siteConfig.author.githubUsername}`,
+    name: siteConfig.social.github.name,
+    handle: `@${siteConfig.social.github.username || siteConfig.author.githubUsername}`,
     href: siteConfig.social.github.href,
     iconName: "github",
   },
   {
-    name: "LinkedIn",
-    handle: "in/phong-phan",
+    name: siteConfig.social.linkedin.name,
+    handle: siteConfig.social.linkedin.href
+      .replace(/^https?:\/\//, "")
+      .replace(/^www\./, "")
+      .replace(/^linkedin\.com\//, ""),
     href: `https://${siteConfig.social.linkedin.href.replace(/^https?:\/\//, "")}`,
     iconName: "linkedin",
   },
   {
-    name: "X (Twitter)",
-    handle: "@PhongPhanq089",
+    name: siteConfig.social.twitter.name,
+    handle: siteConfig.social.twitter.href
+      .replace(/^https?:\/\//, "")
+      .replace(/^x\.com\//, "@")
+      .replace(/^twitter\.com\//, "@"),
     href: siteConfig.social.twitter.href,
     iconName: "twitter",
   },
   {
-    name: "Email",
+    name: siteConfig.social.email.name,
     handle: siteConfig.author.email,
     href: siteConfig.social.email.href,
     iconName: "email",
   },
 ]
 
-export const inspriedBy = siteConfig.inspirations
-
-export interface TechCredit {
-  name: string
-  title: string
-  description: string
-  href: string
-  icon: React.ComponentType<{ className?: string; size?: number | string }>
-  badge: string
-}
-
-export const coreTechnologies: TechCredit[] = [
-  {
-    name: "Tailwind CSS",
-    title: "Tailwind CSS",
-    description:
-      "Utility-first styling engine, custom design tokens, and OKLCH color palettes.",
-    href: "https://tailwindcss.com",
-    icon: Tailwind,
-    badge: "Design & CSS",
-  },
-  {
-    name: "shadcn/ui",
-    title: "shadcn/ui",
-    description:
-      "Accessible, beautifully crafted UI primitives and reusable React components.",
-    href: "https://ui.shadcn.com",
-    icon: ShadcnUI,
-    badge: "UI Library",
-  },
-  {
-    name: "TanStack",
-    title: "TanStack",
-    description:
-      "Headless, type-safe, composable tools for building modern web applications that work naturally for developers and reliably for agents",
-    href: "https://tanstack.com",
-    icon: Tanstack,
-    badge: "Framework",
-  },
-  {
-    name: "Sanity",
-    title: "Sanity CMS",
-    description:
-      "Headless content platform, real-time schema modeling, and embedded Studio.",
-    href: "https://www.sanity.io",
-    icon: Sanity,
-    badge: "Content CMS",
-  },
-]
-
 export const scocialLinks = [
   {
-    name: "GitHub",
+    name: siteConfig.social.github.name,
     href: siteConfig.social.github.href,
     icon: (
       <svg
@@ -174,8 +70,8 @@ export const scocialLinks = [
     ),
   },
   {
-    name: "LinkedIn",
-    href: siteConfig.social.linkedin.href,
+    name: siteConfig.social.linkedin.name,
+    href: `https://${siteConfig.social.linkedin.href.replace(/^https?:\/\//, "")}`,
     icon: (
       <svg
         className="h-4 w-4"
@@ -188,7 +84,7 @@ export const scocialLinks = [
     ),
   },
   {
-    name: "X (Twitter)",
+    name: siteConfig.social.twitter.name,
     href: siteConfig.social.twitter.href,
     icon: (
       <svg
@@ -202,7 +98,7 @@ export const scocialLinks = [
     ),
   },
   {
-    name: "Email",
+    name: siteConfig.social.email.name,
     href: siteConfig.social.email.href,
     icon: (
       <svg

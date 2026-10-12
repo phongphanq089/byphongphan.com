@@ -3,7 +3,7 @@ import { useMemo, useState } from "react"
 
 import { REGISTRY_ITEMS } from "@/registry/registry"
 import { siteConfig } from "@/shared/config"
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 import { Button } from "@/shared/ui/core"
 
 interface InstallationGuideProps {

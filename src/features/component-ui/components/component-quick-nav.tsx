@@ -1,4 +1,5 @@
 import { useNavigate } from "@tanstack/react-router"
+import { play } from "cuelume"
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react"
 import { motion } from "motion/react"
 import { useEffect, useMemo, useState } from "react"
@@ -129,7 +130,10 @@ export function ComponentQuickNav({
       {/* Single Toggle Button */}
       <motion.button
         type="button"
-        onClick={() => setOpen((prev) => !prev)}
+        onClick={() => {
+          setOpen((prev) => !prev)
+          play("toggle", { direction: "back", emphasis: "subtle" })
+        }}
         initial={false}
         animate={{
           x: open ? PANEL_WIDTH + -40 : 0,

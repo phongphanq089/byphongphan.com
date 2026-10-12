@@ -3,7 +3,7 @@ import {
   COLOPHON_COLOR_TOKENS,
   COLOPHON_FONT_SPECIMENS,
 } from "@/content/colophon"
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 import { StripedPattern } from "@/shared/ui"
 
 export function ColophonDesignSystem() {

@@ -11,7 +11,7 @@ import {
   CodeBlockTitle,
 } from "@/registry/ui/code-block"
 import { VARIANTS_MAP } from "@/registry/variants"
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 import { Skeleton } from "@/shared/ui/core"
 import {
   Tabs,

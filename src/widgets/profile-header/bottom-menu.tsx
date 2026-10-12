@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from "react"
 import useMeasure from "react-use-measure"
 
 import { MAIN_NAV_ITEMS } from "@/shared/config"
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 import { useTheme } from "@/shared/providers/theme-provider"
 import { Kbd, Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/core"
 import { MusicToggleButton } from "@/shared/ui/system/music-toggle-button"
