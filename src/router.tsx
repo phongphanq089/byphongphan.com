@@ -1,22 +1,11 @@
 import { QueryClient } from "@tanstack/react-query"
 import { createRouter } from "@tanstack/react-router"
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query"
-import { Suspense } from "react"
 
-import { lazyWithRetry } from "@/shared/lib/lazy-with-retry"
-import { DefaultCatchBoundary } from "@/shared/ui/system/default-catch-boundary"
+import { DefaultCatchBoundary } from "@/app/boundaries/default-catch-boundary"
+import NotFoundBoundary from "@/app/boundaries/not-found-boundary"
 
 import { routeTree } from "./routeTree.gen"
-
-const LazyNotFound = lazyWithRetry(() => import("@/shared/ui/block/not-found"))
-
-function NotFoundComponent() {
-  return (
-    <Suspense fallback={<div className="fixed inset-0 bg-background" />}>
-      <LazyNotFound />
-    </Suspense>
-  )
-}
 
 export function getRouter() {
   const queryClient = new QueryClient()
@@ -26,7 +15,7 @@ export function getRouter() {
     context: { queryClient },
     defaultPreload: "intent",
     defaultErrorComponent: DefaultCatchBoundary,
-    defaultNotFoundComponent: NotFoundComponent,
+    defaultNotFoundComponent: NotFoundBoundary,
     defaultViewTransition: false,
     scrollRestoration: true,
   })

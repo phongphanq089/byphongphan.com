@@ -1,5 +1,4 @@
 export * from "./border-box"
-export * from "./default-catch-boundary"
 export * from "./edge-blur"
 export * from "./external-link"
 export * from "./intersection"
