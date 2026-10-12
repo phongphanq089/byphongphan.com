@@ -47,7 +47,7 @@ export default function Footer() {
               01 SITEMAP
             </span>
             <span className="font-mono text-[10px] text-muted-foreground">
-              06 ROUTES
+              {String(footerNavigation.length).padStart(2, "0")} ROUTES
             </span>
           </GridContainer>
 

@@ -1,11 +1,12 @@
 import {
-  Activity,
   Atom,
   Bookmark,
   BookOpen,
+  Code,
   Code2,
+  Component,
+  CookingPot,
   ExternalLink,
-  Flame,
   Globe,
   Home,
   Laptop,
@@ -13,17 +14,26 @@ import {
   Mail,
   Moon,
   Newspaper,
-  Palette,
   Phone,
   Radio,
-  Sparkles,
   Sun,
   User,
+  Wrench,
 } from "lucide-react"
-import React, { type ReactNode } from "react"
+import { type ReactNode } from "react"
 
-import { siteConfig } from "@/shared/config"
+import { REGISTRY_ITEMS } from "@/registry/registry"
+import type { RegistryItem } from "@/registry/schema"
+import {
+  HOME_TOC_ITEMS,
+  MAIN_NAV_ITEMS,
+  type NavItemConfig,
+  siteConfig,
+  type TOCItemConfig,
+} from "@/shared/config"
 import { GitHub } from "@/shared/ui/icons"
+
+// ── Types ─────────────────────────────────────────────────────────────
 
 export type CommandMenuItem = {
   id: string
@@ -45,213 +55,124 @@ export type CommandMenuGroup = {
   heading: string
 }
 
+// ── Groups Definition ────────────────────────────────────────────────
+
 export const COMMAND_GROUPS: CommandMenuGroup[] = [
   { id: "menu", heading: "Menu" },
   { id: "sections", heading: "Sections" },
-  { id: "components", heading: "Components" },
+  { id: "components-ui", heading: "Component UI" },
+  { id: "blocks", heading: "Blocks" },
+  { id: "showcase", heading: "Components Showcase" },
   { id: "theme", heading: "Theme & System" },
   { id: "social", heading: "Social & Contact" },
 ]
 
-export const COMMAND_MENU_ITEMS: CommandMenuItem[] = [
-  // ─── 1. Navigation Pages (Menu) ──────────────────────────────────────────
-  {
-    id: "nav-home",
-    title: "Home",
-    description: "Go to homepage",
-    icon: <Home className="size-4 text-pp-primary" />,
-    shortcut: ["G", "H"],
-    keywords: ["home", "trang chu", "main", "landing"],
-    group: "menu",
-    to: "/",
-  },
-  {
-    id: "nav-blocks",
-    title: "Blocks",
-    description: "Beautifully designed, production-ready blocks",
-    icon: <Layers className="size-4 text-pp-primary" />,
-    shortcut: ["G", "B"],
-    keywords: [
-      "blocks",
-      "khoi giao dien",
-      "sections",
-      "components",
-      "templates",
-    ],
-    group: "menu",
-    to: "/blocks",
-  },
-  {
-    id: "nav-blog",
-    title: "Blog",
-    description: "Read technical articles and insights",
-    icon: <Newspaper className="size-4 text-pp-primary" />,
-    shortcut: ["G", "L"],
-    keywords: ["blog", "bai viet", "articles", "news"],
-    group: "menu",
-    to: "/blog",
-  },
-  {
-    id: "nav-resources",
-    title: "Resources",
-    description: "Curated tools, bookmarks and resources",
-    icon: <Bookmark className="size-4 text-pp-primary" />,
-    shortcut: ["G", "R"],
-    keywords: ["resources", "tai nguyen", "tools", "bookmarks"],
-    group: "menu",
-    to: "/resources",
-  },
-  {
-    id: "nav-component-ui",
-    title: "Component UI",
-    description: "Pixel-perfect, uniquely crafted UI primitives",
-    icon: <Atom className="size-4 text-pp-primary" />,
-    shortcut: ["G", "C"],
-    keywords: ["components", "ui", "primitives", "widgets"],
-    group: "menu",
-    to: "/component-ui",
-  },
-  {
-    id: "nav-design-system",
-    title: "Design System",
-    description: "Explore color tokens, buttons, cards & typography",
-    icon: <Palette className="size-4 text-pp-primary" />,
-    shortcut: ["G", "D"],
-    keywords: ["design system", "tokens", "components", "palette", "styles"],
-    group: "menu",
-    to: "/design-system",
-  },
-  {
-    id: "nav-colophon",
-    title: "Colophon",
-    description: "System specifications, tech stack, typography & inspirations",
-    icon: <BookOpen className="size-4 text-pp-primary" />,
-    shortcut: ["G", "P"],
-    keywords: [
-      "colophon",
-      "tech stack",
-      "design",
-      "typography",
-      "inspirations",
-      "specs",
-      "credits",
-    ],
-    group: "menu",
-    to: "/colophon",
-  },
-  {
-    id: "nav-studio",
-    title: "Studio (Sanity CMS)",
-    description: "Interactive UI & Sanity CMS development studio",
-    icon: <Sparkles className="size-4 text-pp-primary" />,
-    shortcut: ["G", "S"],
-    keywords: ["studio", "cms", "sanity", "editor", "playground"],
-    group: "menu",
-    to: "/studio/$",
-  },
+// ── 1. Navigation items (derived directly from MAIN_NAV_ITEMS) ───────
 
-  // ─── 2. Homepage Sections (Scroll anchors) ──────────────────────────────
-  {
-    id: "sec-banner",
-    title: "Banner Hero",
-    description: "Interactive terminal hero section",
-    icon: <Radio className="size-4 text-pp-primary" />,
-    shortcut: ["#", "1"],
-    keywords: ["banner", "hero", "header", "terminal"],
-    group: "sections",
-    to: "/#banner",
-  },
-  {
-    id: "sec-about",
-    title: "About Me",
-    description: "Biography, skills & technical background",
-    icon: <User className="size-4 text-pp-primary" />,
-    shortcut: ["#", "2"],
-    keywords: ["about", "gioi thieu", "bio", "experience", "profile"],
-    group: "sections",
-    to: "/#about",
-  },
-  {
-    id: "sec-tech-stack",
-    title: "Tech Stack",
-    description: "Core technologies, libraries & frameworks",
-    icon: <Code2 className="size-4 text-pp-primary" />,
-    shortcut: ["#", "3"],
-    keywords: ["tech stack", "skills", "react", "typescript", "tools"],
-    group: "sections",
-    to: "/#tech-stack",
-  },
-  {
-    id: "sec-components",
-    title: "UI Components Section",
-    description: "Interactive component showpieces",
-    icon: <Atom className="size-4 text-pp-primary" />,
-    shortcut: ["#", "4"],
-    keywords: ["components", "ui showcase", "widgets", "interactive"],
-    group: "sections",
-    to: "/#components-ui",
-  },
-  {
-    id: "sec-vietnam-map",
-    title: "Location (Viet Nam)",
-    description: "Interactive geographic spotlight of Viet Nam",
-    icon: <Globe className="size-4 text-pp-primary" />,
-    shortcut: ["#", "5"],
-    keywords: ["vietnam", "map", "location", "origin", "viet nam"],
-    group: "sections",
-    to: "/#vietnam-map",
-  },
+const NAVIGATION_ICON_MAP: Record<string, ReactNode> = {
+  home: <Home className="size-4 text-pp-primary" />,
+  block: <Layers className="size-4 text-pp-primary" />,
+  blog: <Newspaper className="size-4 text-pp-primary" />,
+  resources: <Bookmark className="size-4 text-pp-primary" />,
+  "component-ui": <Atom className="size-4 text-pp-primary" />,
+  colophon: <BookOpen className="size-4 text-pp-primary" />,
+}
 
-  // ─── 3. Components Showcase ─────────────────────────────────────────────
-  {
-    id: "comp-text-burn",
-    title: "Text Burn Neon",
-    description: "Char-by-char fire animation via GSAP",
-    icon: <Flame className="size-4 text-pp-primary" />,
-    shortcut: ["C", "1"],
-    keywords: ["text burn neon", "fire", "gsap", "animation"],
-    group: "components",
-    badge: "New",
-    to: "/#components-ui",
-  },
-  {
-    id: "comp-liquid-metal",
-    title: "Liquid Metal Button",
-    description: "Fluid shader distortion button",
-    icon: <Sparkles className="size-4 text-pp-primary" />,
-    keywords: ["liquid metal button", "shader", "webgl"],
-    group: "components",
-    to: "/design-system",
-  },
-  {
-    id: "comp-creepy-button",
-    title: "Creepy Eye Button",
-    description: "Interactive pupil tracking button",
-    icon: <Activity className="size-4 text-pp-primary" />,
-    keywords: ["creepy button", "eye", "tracking"],
-    group: "components",
-    to: "/design-system",
-  },
-  {
-    id: "comp-dotted-glow",
-    title: "Dotted Glow Background",
-    description: "Canvas grid with reactive glow",
-    icon: <Layers className="size-4 text-pp-primary" />,
-    keywords: ["dotted glow background", "grid", "canvas", "particles"],
-    group: "components",
-    to: "/design-system",
-  },
-  {
-    id: "comp-blueprint-lint",
-    title: "Blueprint Lint Mark",
-    description: "Technical blueprint reticle indicator",
-    icon: <Code2 className="size-4 text-pp-primary" />,
-    keywords: ["blueprint", "reticle", "crosshair", "technical"],
-    group: "components",
-    to: "/design-system",
-  },
+function buildNavigationMenuItems(): CommandMenuItem[] {
+  return MAIN_NAV_ITEMS.map((item: NavItemConfig) => ({
+    id: `nav-${item.id}`,
+    title: item.title,
+    description: item.description ?? `Go to ${item.title}`,
+    icon: NAVIGATION_ICON_MAP[item.id] ?? (
+      <Home className="size-4 text-pp-primary" />
+    ),
+    shortcut: item.shortcut,
+    keywords: item.keywords ?? [item.id, item.title.toLowerCase()],
+    group: "menu",
+    to: item.link,
+  }))
+}
 
-  // ─── 4. Theme & System Actions ──────────────────────────────────────────
+// ── 2. Section scroll items (derived directly from HOME_TOC_ITEMS) ───
+
+const SECTION_ICON_MAP: Record<string, ReactNode> = {
+  banner: <Radio className="size-4 text-pp-primary" />,
+  about: <User className="size-4 text-pp-primary" />,
+  "tech-stack": <Code2 className="size-4 text-pp-primary" />,
+  blocks: <CookingPot className="size-4 text-pp-primary" />,
+  "components-ui": <Atom className="size-4 text-pp-primary" />,
+  blog: <Newspaper className="size-4 text-pp-primary" />,
+  resources: <Bookmark className="size-4 text-pp-primary" />,
+  bookmarks: <Bookmark className="size-4 text-pp-primary" />,
+  "vietnam-map": <Globe className="size-4 text-pp-primary" />,
+}
+
+function buildSectionMenuItems(): CommandMenuItem[] {
+  return HOME_TOC_ITEMS.map((item: TOCItemConfig, index: number) => {
+    const hash = item.url.startsWith("#") ? item.url : `#${item.url}`
+    const id = hash.replace("#", "")
+    const title = typeof item.title === "string" ? item.title : id
+
+    return {
+      id: `sec-${id}`,
+      title,
+      description: item.description ?? `Jump to ${title} section`,
+      icon: SECTION_ICON_MAP[id] ?? (
+        <Radio className="size-4 text-pp-primary" />
+      ),
+      shortcut: item.shortcut ?? ["#", String(index + 1)],
+      keywords: item.keywords ?? [id, title.toLowerCase()],
+      group: "sections",
+      to: `/${hash}`,
+    }
+  })
+}
+
+// ── 3. Registry items (derived directly from REGISTRY_ITEMS) ─────────
+
+const CATEGORY_ICON_MAP: Record<string, ReactNode> = {
+  primitives: <Component className="size-4 text-pp-primary" />,
+  animations: <Layers className="size-4 text-pp-primary" />,
+  application: <CookingPot className="size-4 text-pp-primary" />,
+  marketing: <CookingPot className="size-4 text-pp-primary" />,
+  ecommerce: <CookingPot className="size-4 text-pp-primary" />,
+}
+
+const TYPE_ICON_MAP: Record<string, ReactNode> = {
+  "registry:hook": <Code className="size-4 text-pp-primary" />,
+  "registry:lib": <Wrench className="size-4 text-pp-primary" />,
+}
+
+function buildRegistryMenuItems(): CommandMenuItem[] {
+  return REGISTRY_ITEMS.map((item: RegistryItem) => {
+    const isBlock = item.type === "registry:block"
+    const basePath = isBlock ? "/blocks" : "/component-ui"
+    const categorySlug = item.category
+
+    return {
+      id: `registry-${item.name}`,
+      title: item.title,
+      description: item.description,
+      icon: CATEGORY_ICON_MAP[item.category] ?? TYPE_ICON_MAP[item.type] ?? (
+        <Component className="size-4 text-pp-primary" />
+      ),
+      keywords: [
+        item.name,
+        item.title.toLowerCase(),
+        item.category,
+        item.type.replace("registry:", ""),
+        ...(item.dependencies ?? []),
+      ],
+      group: isBlock ? "blocks" : "components-ui",
+      badge: item.isNew ? "New" : undefined,
+      to: `${basePath}/${categorySlug}/${item.name}`,
+    }
+  })
+}
+
+// ── 5. Theme & System Actions ────────────────────────────────────────
+
+const THEME_ACTION_ITEMS: CommandMenuItem[] = [
   {
     id: "action-theme-dark",
     title: "Dark Mode",
@@ -282,51 +203,63 @@ export const COMMAND_MENU_ITEMS: CommandMenuItem[] = [
     group: "theme",
     action: "theme-system",
   },
+]
 
-  // ─── 5. Social & Contact ────────────────────────────────────────────────
-  {
-    id: "social-github",
-    title: "GitHub Profile",
-    description: "Check open-source code and contributions",
-    icon: <GitHub size={16} className="text-pp-primary" />,
-    keywords: ["github", "code", "repo", "git"],
-    group: "social",
-    externalUrl: siteConfig.social.github.href,
-  },
-  {
-    id: "social-linkedin",
-    title: "LinkedIn Profile",
-    description: "Connect with Phong Phan on LinkedIn",
-    icon: <ExternalLink className="size-4 text-pp-primary" />,
-    keywords: ["linkedin", "connect", "recruitment", "cv"],
-    group: "social",
-    externalUrl: siteConfig.social.linkedin.href,
-  },
-  {
-    id: "social-twitter",
-    title: "X (Twitter)",
-    description: "Follow updates and dev discussions",
-    icon: <ExternalLink className="size-4 text-pp-primary" />,
-    keywords: ["twitter", "x", "social"],
-    group: "social",
-    externalUrl: siteConfig.social.twitter.href,
-  },
-  {
-    id: "social-email",
-    title: "Send Email",
-    description: `Get in touch: ${siteConfig.author.email}`,
-    icon: <Mail className="size-4 text-pp-primary" />,
-    keywords: ["email", "mail", "contact", "lien he", "gmail"],
-    group: "social",
-    externalUrl: siteConfig.social.email.href,
-  },
-  {
-    id: "social-phone",
-    title: "Call Phone",
-    description: `Direct phone contact: ${siteConfig.author.phone}`,
-    icon: <Phone className="size-4 text-pp-primary" />,
-    keywords: ["phone", "call", "dien thoai", "so dien thoai"],
-    group: "social",
-    externalUrl: siteConfig.social.phone.href,
-  },
+// ── 6. Social & Contact items (derived directly from siteConfig) ─────
+
+const SOCIAL_ICON_MAP: Record<string, ReactNode> = {
+  github: <GitHub size={16} className="text-pp-primary" />,
+  linkedin: <ExternalLink className="size-4 text-pp-primary" />,
+  twitter: <ExternalLink className="size-4 text-pp-primary" />,
+  email: <Mail className="size-4 text-pp-primary" />,
+  phone: <Phone className="size-4 text-pp-primary" />,
+}
+
+function buildSocialMenuItems(): CommandMenuItem[] {
+  return Object.entries(siteConfig.social).map(([key, item]) => {
+    const isEmail = key === "email"
+    const isPhone = key === "phone"
+    const href =
+      item.href.startsWith("http://") ||
+      item.href.startsWith("https://") ||
+      item.href.startsWith("mailto:") ||
+      item.href.startsWith("tel:")
+        ? item.href
+        : `https://${item.href}`
+
+    let description = `Open ${item.name}`
+    if (isEmail) {
+      description = `Get in touch: ${siteConfig.author.email}`
+    } else if (isPhone) {
+      description = `Direct phone contact: ${siteConfig.author.phone}`
+    } else if ("username" in item && item.username) {
+      description = `Check profile @${item.username}`
+    }
+
+    return {
+      id: `social-${key}`,
+      title: isEmail
+        ? "Send Email"
+        : isPhone
+          ? "Call Phone"
+          : `${item.name} Profile`,
+      description,
+      icon: SOCIAL_ICON_MAP[key] ?? (
+        <ExternalLink className="size-4 text-pp-primary" />
+      ),
+      keywords: [key, item.name.toLowerCase(), "social", "contact", "lien he"],
+      group: "social",
+      externalUrl: href,
+    }
+  })
+}
+
+// ── Merged items for Command Palette ─────────────────────────────────
+
+export const COMMAND_MENU_ITEMS: CommandMenuItem[] = [
+  ...buildNavigationMenuItems(),
+  ...buildSectionMenuItems(),
+  ...buildRegistryMenuItems(),
+  ...THEME_ACTION_ITEMS,
+  ...buildSocialMenuItems(),
 ]
