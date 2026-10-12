@@ -1,6 +1,6 @@
 import type React from "react"
 
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 
 export interface PropDefinition {
   /** Name of the prop, e.g. "variant", "size", "className" */

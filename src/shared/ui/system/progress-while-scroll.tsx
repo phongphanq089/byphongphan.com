@@ -7,7 +7,7 @@ import {
 } from "motion/react"
 import { useState } from "react"
 
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/core"
 
 const ProgressWhileScroll = () => {
@@ -36,8 +36,6 @@ const ProgressWhileScroll = () => {
 
   return (
     <motion.div
-      drag
-      dragMomentum={false}
       className={cn(
         "group relative cursor-grab items-center gap-1 active:cursor-grabbing"
       )}

@@ -14,7 +14,8 @@ import {
   TableRow,
 } from "@/registry/ui/table"
 import { siteConfig } from "@/shared/config"
-import { cn, extractTextFromNode, slugify } from "@/shared/lib"
+import { extractTextFromNode, slugify } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 import { CodeBlockCommand } from "@/shared/ui/core/code-block"
 
 import { ApiReference } from "./api-reference"

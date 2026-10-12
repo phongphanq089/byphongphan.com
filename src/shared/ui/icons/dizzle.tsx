@@ -1,4 +1,4 @@
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 
 import type { IconProps } from "./index"
 const DrizzleORM = ({ size = 24, className, ...props }: IconProps) => (

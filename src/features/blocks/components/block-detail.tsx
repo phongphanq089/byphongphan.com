@@ -15,7 +15,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { PanelImperativeHandle } from "react-resizable-panels"
 
 import { GridContainer } from "@/app/layouts"
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 import {
   Button,
   ResizableHandle,

@@ -10,7 +10,7 @@ import {
   CodeBlockTitle,
   CodeBlockWrapToggle,
 } from "@/registry/ui/code-block"
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 
 import type { ResolvedBlockFile } from "../types"
 

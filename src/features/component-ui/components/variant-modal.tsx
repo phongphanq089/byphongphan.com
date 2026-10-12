@@ -2,7 +2,7 @@ import { Check, Copy } from "lucide-react"
 import { useMemo, useState } from "react"
 
 import { siteConfig } from "@/shared/config"
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 import {
   Button,
   Dialog,

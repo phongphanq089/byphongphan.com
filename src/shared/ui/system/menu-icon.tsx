@@ -1,7 +1,7 @@
 import { motion } from "motion/react"
 import { useState } from "react"
 
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 
 export const MenuIcon = ({ className }: { className?: string }) => {
   const [toggle, setToggle] = useState(false)

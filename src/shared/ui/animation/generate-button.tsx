@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-import { cn } from "@/shared/lib"
+import { cn } from "@/shared/lib/utils"
 
 export interface GenerateButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
