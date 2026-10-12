@@ -9,24 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SiteRouteRouteImport } from './routes/_site/route'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SiteIndexRouteImport } from './routes/_site/index'
 import { Route as BlocksPreviewSlugRouteImport } from './routes/blocks-preview.$slug'
-import { Route as SiteResourcesIndexRouteImport } from './routes/_site/resources/index'
-import { Route as SiteComponentUiIndexRouteImport } from './routes/_site/component-ui/index'
-import { Route as SiteColophonIndexRouteImport } from './routes/_site/colophon/index'
-import { Route as SiteBlogIndexRouteImport } from './routes/_site/blog/index'
 import { Route as SiteBlocksIndexRouteImport } from './routes/_site/blocks/index'
-import { Route as SiteComponentUiCategoryIndexRouteImport } from './routes/_site/component-ui/$category/index'
+import { Route as SiteBlogIndexRouteImport } from './routes/_site/blog/index'
+import { Route as SiteColophonIndexRouteImport } from './routes/_site/colophon/index'
+import { Route as SiteComponentUiIndexRouteImport } from './routes/_site/component-ui/index'
+import { Route as SiteResourcesIndexRouteImport } from './routes/_site/resources/index'
 import { Route as SiteBlocksCategoryIndexRouteImport } from './routes/_site/blocks/$category/index'
-import { Route as SiteComponentUiCategorySlugRouteImport } from './routes/_site/component-ui/$category/$slug'
 import { Route as SiteBlocksCategorySlugRouteImport } from './routes/_site/blocks/$category/$slug'
+import { Route as SiteComponentUiCategoryIndexRouteImport } from './routes/_site/component-ui/$category/index'
+import { Route as SiteComponentUiCategorySlugRouteImport } from './routes/_site/component-ui/$category/$slug'
 
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
+const SiteRouteRoute = SiteRouteRouteImport.update({
+  id: '/_site',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
@@ -34,8 +33,9 @@ const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   path: '/robots.txt',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SiteRouteRoute = SiteRouteRouteImport.update({
-  id: '/_site',
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SiteIndexRoute = SiteIndexRouteImport.update({
@@ -48,19 +48,9 @@ const BlocksPreviewSlugRoute = BlocksPreviewSlugRouteImport.update({
   path: '/blocks-preview/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SiteResourcesIndexRoute = SiteResourcesIndexRouteImport.update({
-  id: '/resources/',
-  path: '/resources/',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
-const SiteComponentUiIndexRoute = SiteComponentUiIndexRouteImport.update({
-  id: '/component-ui/',
-  path: '/component-ui/',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
-const SiteColophonIndexRoute = SiteColophonIndexRouteImport.update({
-  id: '/colophon/',
-  path: '/colophon/',
+const SiteBlocksIndexRoute = SiteBlocksIndexRouteImport.update({
+  id: '/blocks/',
+  path: '/blocks/',
   getParentRoute: () => SiteRouteRoute,
 } as any)
 const SiteBlogIndexRoute = SiteBlogIndexRouteImport.update({
@@ -68,9 +58,29 @@ const SiteBlogIndexRoute = SiteBlogIndexRouteImport.update({
   path: '/blog/',
   getParentRoute: () => SiteRouteRoute,
 } as any)
-const SiteBlocksIndexRoute = SiteBlocksIndexRouteImport.update({
-  id: '/blocks/',
-  path: '/blocks/',
+const SiteColophonIndexRoute = SiteColophonIndexRouteImport.update({
+  id: '/colophon/',
+  path: '/colophon/',
+  getParentRoute: () => SiteRouteRoute,
+} as any)
+const SiteComponentUiIndexRoute = SiteComponentUiIndexRouteImport.update({
+  id: '/component-ui/',
+  path: '/component-ui/',
+  getParentRoute: () => SiteRouteRoute,
+} as any)
+const SiteResourcesIndexRoute = SiteResourcesIndexRouteImport.update({
+  id: '/resources/',
+  path: '/resources/',
+  getParentRoute: () => SiteRouteRoute,
+} as any)
+const SiteBlocksCategoryIndexRoute = SiteBlocksCategoryIndexRouteImport.update({
+  id: '/blocks/$category/',
+  path: '/blocks/$category/',
+  getParentRoute: () => SiteRouteRoute,
+} as any)
+const SiteBlocksCategorySlugRoute = SiteBlocksCategorySlugRouteImport.update({
+  id: '/blocks/$category/$slug',
+  path: '/blocks/$category/$slug',
   getParentRoute: () => SiteRouteRoute,
 } as any)
 const SiteComponentUiCategoryIndexRoute =
@@ -79,22 +89,12 @@ const SiteComponentUiCategoryIndexRoute =
     path: '/component-ui/$category/',
     getParentRoute: () => SiteRouteRoute,
   } as any)
-const SiteBlocksCategoryIndexRoute = SiteBlocksCategoryIndexRouteImport.update({
-  id: '/blocks/$category/',
-  path: '/blocks/$category/',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
 const SiteComponentUiCategorySlugRoute =
   SiteComponentUiCategorySlugRouteImport.update({
     id: '/component-ui/$category/$slug',
     path: '/component-ui/$category/$slug',
     getParentRoute: () => SiteRouteRoute,
   } as any)
-const SiteBlocksCategorySlugRoute = SiteBlocksCategorySlugRouteImport.update({
-  id: '/blocks/$category/$slug',
-  path: '/blocks/$category/$slug',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
@@ -201,11 +201,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
+    '/_site': {
+      id: '/_site'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof SiteRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/robots.txt': {
@@ -215,11 +215,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RobotsDottxtRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_site': {
-      id: '/_site'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof SiteRouteRouteImport
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_site/': {
@@ -236,25 +236,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlocksPreviewSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_site/resources/': {
-      id: '/_site/resources/'
-      path: '/resources'
-      fullPath: '/resources/'
-      preLoaderRoute: typeof SiteResourcesIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_site/component-ui/': {
-      id: '/_site/component-ui/'
-      path: '/component-ui'
-      fullPath: '/component-ui/'
-      preLoaderRoute: typeof SiteComponentUiIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_site/colophon/': {
-      id: '/_site/colophon/'
-      path: '/colophon'
-      fullPath: '/colophon/'
-      preLoaderRoute: typeof SiteColophonIndexRouteImport
+    '/_site/blocks/': {
+      id: '/_site/blocks/'
+      path: '/blocks'
+      fullPath: '/blocks/'
+      preLoaderRoute: typeof SiteBlocksIndexRouteImport
       parentRoute: typeof SiteRouteRoute
     }
     '/_site/blog/': {
@@ -264,18 +250,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteBlogIndexRouteImport
       parentRoute: typeof SiteRouteRoute
     }
-    '/_site/blocks/': {
-      id: '/_site/blocks/'
-      path: '/blocks'
-      fullPath: '/blocks/'
-      preLoaderRoute: typeof SiteBlocksIndexRouteImport
+    '/_site/colophon/': {
+      id: '/_site/colophon/'
+      path: '/colophon'
+      fullPath: '/colophon/'
+      preLoaderRoute: typeof SiteColophonIndexRouteImport
       parentRoute: typeof SiteRouteRoute
     }
-    '/_site/component-ui/$category/': {
-      id: '/_site/component-ui/$category/'
-      path: '/component-ui/$category'
-      fullPath: '/component-ui/$category/'
-      preLoaderRoute: typeof SiteComponentUiCategoryIndexRouteImport
+    '/_site/component-ui/': {
+      id: '/_site/component-ui/'
+      path: '/component-ui'
+      fullPath: '/component-ui/'
+      preLoaderRoute: typeof SiteComponentUiIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
+    }
+    '/_site/resources/': {
+      id: '/_site/resources/'
+      path: '/resources'
+      fullPath: '/resources/'
+      preLoaderRoute: typeof SiteResourcesIndexRouteImport
       parentRoute: typeof SiteRouteRoute
     }
     '/_site/blocks/$category/': {
@@ -285,18 +278,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteBlocksCategoryIndexRouteImport
       parentRoute: typeof SiteRouteRoute
     }
-    '/_site/component-ui/$category/$slug': {
-      id: '/_site/component-ui/$category/$slug'
-      path: '/component-ui/$category/$slug'
-      fullPath: '/component-ui/$category/$slug'
-      preLoaderRoute: typeof SiteComponentUiCategorySlugRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
     '/_site/blocks/$category/$slug': {
       id: '/_site/blocks/$category/$slug'
       path: '/blocks/$category/$slug'
       fullPath: '/blocks/$category/$slug'
       preLoaderRoute: typeof SiteBlocksCategorySlugRouteImport
+      parentRoute: typeof SiteRouteRoute
+    }
+    '/_site/component-ui/$category/': {
+      id: '/_site/component-ui/$category/'
+      path: '/component-ui/$category'
+      fullPath: '/component-ui/$category/'
+      preLoaderRoute: typeof SiteComponentUiCategoryIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
+    }
+    '/_site/component-ui/$category/$slug': {
+      id: '/_site/component-ui/$category/$slug'
+      path: '/component-ui/$category/$slug'
+      fullPath: '/component-ui/$category/$slug'
+      preLoaderRoute: typeof SiteComponentUiCategorySlugRouteImport
       parentRoute: typeof SiteRouteRoute
     }
   }
