@@ -15,9 +15,11 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { PanelImperativeHandle } from "react-resizable-panels"
 
 import { GridContainer } from "@/app/layouts"
+import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
 import { cn } from "@/shared/lib/utils"
 import {
   Button,
+  Kbd,
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
@@ -88,12 +90,51 @@ export function BlockDetail({ block }: BlockDetailProps) {
   const { prevBlock, nextBlock } = useMemo(() => {
     const currentIndex = BLOCKS_DATA.findIndex((b) => b.id === block.id)
     const prev = currentIndex > 0 ? BLOCKS_DATA[currentIndex - 1] : undefined
+
     const next =
       currentIndex < BLOCKS_DATA.length - 1
         ? BLOCKS_DATA[currentIndex + 1]
         : undefined
     return { prevBlock: prev, nextBlock: next }
   }, [block.id])
+
+  useKeyboardShortcuts(
+    "left",
+    () => {
+      if (!prevBlock) return
+
+      navigation({
+        to: "/blocks/$category/$slug",
+        params: {
+          category: prevBlock.category,
+          slug: prevBlock.slug,
+        },
+      })
+    },
+    {
+      enabled: Boolean(prevBlock),
+      preventDefault: true,
+    }
+  )
+
+  useKeyboardShortcuts(
+    "right",
+    () => {
+      if (!nextBlock) return
+
+      navigation({
+        to: "/blocks/$category/$slug",
+        params: {
+          category: nextBlock.category,
+          slug: nextBlock.slug,
+        },
+      })
+    },
+    {
+      enabled: Boolean(nextBlock),
+      preventDefault: true,
+    }
+  )
 
   const handleReloadIframe = useCallback(() => {
     if (iframeRef.current) {
@@ -210,7 +251,10 @@ export function BlockDetail({ block }: BlockDetailProps) {
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="top" className="text-[10px]">
-                Previous Block
+                Previous Block{" "}
+                <Kbd>
+                  <ArrowLeft />
+                </Kbd>
               </TooltipContent>
             </Tooltip>
           )}
@@ -231,7 +275,10 @@ export function BlockDetail({ block }: BlockDetailProps) {
                 </Button>
               </TooltipTrigger>
               <TooltipContent side="top" className="text-[10px]">
-                Next Block
+                Next Block{" "}
+                <Kbd>
+                  <ArrowRight />
+                </Kbd>
               </TooltipContent>
             </Tooltip>
           )}
