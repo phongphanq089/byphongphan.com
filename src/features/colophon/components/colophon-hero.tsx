@@ -4,7 +4,7 @@ import { GridContainer } from "@/app/layouts"
 import { COLOPHON_HERO_STACK } from "@/content/colophon"
 import { siteConfig } from "@/shared/config"
 import TextBurnNeon from "@/shared/ui/animation/text-burn-neon"
-import { ExternalLink } from "@/shared/ui/core"
+import { ExternalLink } from "@/shared/ui/system"
 
 export function ColophonHero() {
   const stackRow1 = COLOPHON_HERO_STACK.slice(0, 3)
@@ -60,7 +60,6 @@ export function ColophonHero() {
         <ExternalLink
           href={siteConfig.repoUrl}
           utm={{
-            source: "byphongphan.com",
             medium: "colophon",
             campaign: "hero",
           }}

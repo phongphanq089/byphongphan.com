@@ -3,8 +3,8 @@ import { ArrowUpRight, Cpu } from "lucide-react"
 import { GridContainer } from "@/app/layouts"
 import { COLOPHON_TECH_CATEGORIES } from "@/content/colophon"
 import { StripedPattern } from "@/shared/ui"
-import { ExternalLink } from "@/shared/ui/core"
 import { iconComponents } from "@/shared/ui/icons"
+import { ExternalLink } from "@/shared/ui/system"
 
 export function ColophonTechnology() {
   return (

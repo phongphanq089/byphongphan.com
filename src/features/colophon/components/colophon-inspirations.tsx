@@ -3,7 +3,7 @@ import { ArrowUpRight } from "lucide-react"
 import { GridContainer } from "@/app/layouts"
 import { siteConfig } from "@/shared/config"
 import { StripedPattern } from "@/shared/ui"
-import { ExternalLink } from "@/shared/ui/core"
+import { ExternalLink } from "@/shared/ui/system"
 
 export function ColophonInspirations() {
   const inspirations = siteConfig.inspirations
@@ -39,7 +39,6 @@ export function ColophonInspirations() {
               key={item.name}
               href={item.href}
               utm={{
-                source: "byphongphan.com",
                 medium: "colophon",
                 campaign: "inspirations",
               }}
