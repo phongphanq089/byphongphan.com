@@ -13,6 +13,7 @@ import {
   PhongPhanIsometricSchematic,
   PPMarkIsometricSchematic,
   SelectSchematic,
+  SpotlightCardSchematic,
   TextHoverEffectSchematic,
   UnboxingBucketSchematic,
 } from "./schematics"
@@ -278,6 +279,26 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
         path: "animated/phong-phan-isometric.tsx",
         type: "registry:component",
         target: "components/phong-phan-isometric.tsx",
+      },
+    ],
+  },
+  {
+    name: "spotlight-card",
+    title: "Spotlight Card",
+    description:
+      "Interactive surface with radial cursor spotlight illumination, dynamic 1px masked border glow, and smooth 3D tilt perspective.",
+    type: "registry:component",
+    category: "animations",
+    schematic: SpotlightCardSchematic,
+    schematicType: "spotlight-card",
+    isNew: true,
+    dependencies: [],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/spotlight-card.tsx",
+        type: "registry:component",
+        target: "components/spotlight-card.tsx",
       },
     ],
   },

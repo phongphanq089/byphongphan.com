@@ -1,10 +1,10 @@
 {
-  "total": 16,
+  "total": 17,
   "countByType": {
-    "registry:component": 7,
+    "registry:component": 8,
     "registry:ui": 5,
     "registry:hook": 1,
     "registry:block": 3
   },
-  "updatedAt": "2026-10-14T04:37:39.351Z"
+  "updatedAt": "2026-10-14T04:54:10.794Z"
 }

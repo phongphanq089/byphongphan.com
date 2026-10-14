@@ -124,4 +124,14 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     schematicType: "phong-phan-isometric",
     isNew: true,
   },
+  {
+    id: "comp-spotlight-card",
+    name: "Spotlight Card",
+    slug: "spotlight-card",
+    category: "animations",
+    description:
+      "Interactive surface with radial cursor spotlight illumination, dynamic 1px masked border glow, and smooth 3D tilt perspective.",
+    schematicType: "spotlight-card",
+    isNew: true,
+  },
 ]

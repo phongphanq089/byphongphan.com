@@ -13,6 +13,7 @@ export type ComponentSchematicType =
   | "phong-phan-isometric"
   | "middle-truncation"
   | "line-nav"
+  | "spotlight-card"
 
 export type BlockSchematicType = "not-found-01" | "not-found-02" | "editor"
 

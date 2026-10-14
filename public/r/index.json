@@ -131,6 +131,14 @@
     "registryDependencies": []
   },
   {
+    "name": "spotlight-card",
+    "type": "registry:component",
+    "title": "Spotlight Card",
+    "description": "Interactive surface with radial cursor spotlight illumination, dynamic 1px masked border glow, and smooth 3D tilt perspective.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
     "name": "not-found-01",
     "type": "registry:block",
     "title": "Not Found 01",

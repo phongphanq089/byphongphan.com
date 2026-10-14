@@ -275,6 +275,24 @@
       ]
     },
     {
+      "name": "spotlight-card",
+      "type": "registry:component",
+      "title": "Spotlight Card",
+      "description": "Interactive surface with radial cursor spotlight illumination, dynamic 1px masked border glow, and smooth 3D tilt perspective.",
+      "category": "animations",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/spotlight-card.tsx",
+          "type": "registry:component",
+          "target": "components/spotlight-card.tsx"
+        }
+      ]
+    },
+    {
       "name": "not-found-01",
       "type": "registry:block",
       "title": "Not Found 01",

@@ -70,6 +70,10 @@
     {
       "category": "animations",
       "slug": "phong-phan-isometric"
+    },
+    {
+      "category": "animations",
+      "slug": "spotlight-card"
     }
   ]
 }

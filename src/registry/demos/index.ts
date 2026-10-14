@@ -40,6 +40,11 @@ export const PPMarkIsometricDemo = lazyWithRetry(() =>
 export const SelectDemo = lazyWithRetry(() =>
   import("./select-demo").then((m) => ({ default: m.SelectDemo }))
 )
+export const SpotlightCardDemo = lazyWithRetry(() =>
+  import("./spotlight-card-demo").then((m) => ({
+    default: m.SpotlightCardDemo,
+  }))
+)
 export const TextHoverEffectDemo = lazyWithRetry(() =>
   import("./text-hover-effect-demo").then((m) => ({
     default: m.TextHoverEffectDemo,
@@ -66,4 +71,6 @@ export const REGISTRY_DEMOS: Record<string, ComponentType> = {
   "middle-truncation-demo": MiddleTruncationDemo,
   "line-nav": LineNavDemo,
   "line-nav-demo": LineNavDemo,
+  "spotlight-card": SpotlightCardDemo,
+  "spotlight-card-demo": SpotlightCardDemo,
 }
