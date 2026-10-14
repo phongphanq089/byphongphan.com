@@ -134,4 +134,14 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     schematicType: "spotlight-card",
     isNew: true,
   },
+  {
+    id: "comp-border-glow",
+    name: "Border Glow",
+    slug: "border-glow",
+    category: "animations",
+    description:
+      "Interactive surface with cursor-tracking mesh gradient edge illumination, outer atmospheric aura, and entry sweep animation.",
+    schematicType: "border-glow",
+    isNew: true,
+  },
 ]

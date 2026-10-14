@@ -1,6 +1,7 @@
 import type { RegistryItem } from "./schema"
 import {
   BackgroundGradientCursorSchematic,
+  BorderGlowSchematic,
   CardSchematic,
   CodeBlockSchematic,
   EditorSchematic,
@@ -299,6 +300,26 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
         path: "animated/spotlight-card.tsx",
         type: "registry:component",
         target: "components/spotlight-card.tsx",
+      },
+    ],
+  },
+  {
+    name: "border-glow",
+    title: "Border Glow",
+    description:
+      "Interactive surface with cursor-tracking mesh gradient edge illumination, outer atmospheric aura, and entry sweep animation.",
+    type: "registry:component",
+    category: "animations",
+    schematic: BorderGlowSchematic,
+    schematicType: "border-glow",
+    isNew: true,
+    dependencies: [],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/border-glow.tsx",
+        type: "registry:component",
+        target: "components/border-glow.tsx",
       },
     ],
   },

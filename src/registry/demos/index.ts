@@ -7,6 +7,11 @@ export const BackgroundGradientCursorDemo = lazyWithRetry(() =>
     default: m.BackgroundGradientCursorDemo,
   }))
 )
+export const BorderGlowDemo = lazyWithRetry(() =>
+  import("./border-glow-demo").then((m) => ({
+    default: m.BorderGlowDemo,
+  }))
+)
 export const CardDemo = lazyWithRetry(() =>
   import("./card-demo").then((m) => ({ default: m.CardDemo }))
 )
@@ -73,4 +78,6 @@ export const REGISTRY_DEMOS: Record<string, ComponentType> = {
   "line-nav-demo": LineNavDemo,
   "spotlight-card": SpotlightCardDemo,
   "spotlight-card-demo": SpotlightCardDemo,
+  "border-glow": BorderGlowDemo,
+  "border-glow-demo": BorderGlowDemo,
 }

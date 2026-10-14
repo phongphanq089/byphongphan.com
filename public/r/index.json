@@ -139,6 +139,14 @@
     "registryDependencies": []
   },
   {
+    "name": "border-glow",
+    "type": "registry:component",
+    "title": "Border Glow",
+    "description": "Interactive surface with cursor-tracking mesh gradient edge illumination, outer atmospheric aura, and entry sweep animation.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
     "name": "not-found-01",
     "type": "registry:block",
     "title": "Not Found 01",

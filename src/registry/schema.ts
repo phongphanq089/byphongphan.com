@@ -14,6 +14,7 @@ export type ComponentSchematicType =
   | "middle-truncation"
   | "line-nav"
   | "spotlight-card"
+  | "border-glow"
 
 export type BlockSchematicType = "not-found-01" | "not-found-02" | "editor"
 

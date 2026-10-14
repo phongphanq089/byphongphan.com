@@ -2,6 +2,7 @@ import type React from "react"
 
 import type { SchematicType } from "../../schema"
 import { BackgroundGradientCursorSchematic } from "./background-gradient-cursor-schematic"
+import { BorderGlowSchematic } from "./border-glow-schematic"
 import { CardSchematic } from "./card-schematic"
 import { CodeBlockSchematic } from "./code-block-schematic"
 import { FlipClockSchematic } from "./flip-clock-schematic"
@@ -16,6 +17,7 @@ import { TextHoverEffectSchematic } from "./text-hover-effect-schematic"
 import { UnboxingBucketSchematic } from "./unboxing-bucket-schematic"
 
 export * from "./background-gradient-cursor-schematic"
+export * from "./border-glow-schematic"
 export * from "./card-schematic"
 export * from "./code-block-schematic"
 export * from "./flip-clock-schematic"
@@ -52,6 +54,7 @@ export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
   "middle-truncation": MiddleTruncationSchematic,
   "line-nav": LineNavSchematic,
   "spotlight-card": SpotlightCardSchematic,
+  "border-glow": BorderGlowSchematic,
 }
 
 export function RenderComponentSchematic({ type }: { type?: string }) {

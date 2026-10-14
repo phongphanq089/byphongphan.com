@@ -74,6 +74,10 @@
     {
       "category": "animations",
       "slug": "spotlight-card"
+    },
+    {
+      "category": "animations",
+      "slug": "border-glow"
     }
   ]
 }

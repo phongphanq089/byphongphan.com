@@ -293,6 +293,24 @@
       ]
     },
     {
+      "name": "border-glow",
+      "type": "registry:component",
+      "title": "Border Glow",
+      "description": "Interactive surface with cursor-tracking mesh gradient edge illumination, outer atmospheric aura, and entry sweep animation.",
+      "category": "animations",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/border-glow.tsx",
+          "type": "registry:component",
+          "target": "components/border-glow.tsx"
+        }
+      ]
+    },
+    {
       "name": "not-found-01",
       "type": "registry:block",
       "title": "Not Found 01",
