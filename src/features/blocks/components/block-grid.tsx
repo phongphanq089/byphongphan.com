@@ -1,4 +1,4 @@
-import { Slow } from "@lucasmarkes/hairline/react"
+import { Riffle, Slow } from "@lucasmarkes/hairline/react"
 import { Link } from "@tanstack/react-router"
 import { LayoutGrid } from "lucide-react"
 import { useMemo } from "react"
@@ -69,10 +69,14 @@ export function BlockGrid({ category = "all" }: BlockGridProps) {
               {pair[1] ? (
                 <BlockCard block={pair[1]} />
               ) : (
-                <div className="hidden h-full w-full items-center justify-center rounded-lg bg-accent p-8 text-center md:flex">
-                  <span className="text-[10px] tracking-wider text-muted-foreground/30 uppercase">
-                    More Blocks Coming Soon
-                  </span>
+                <div className="hidden h-full w-full items-center justify-center rounded-lg bg-background p-8 text-center md:flex">
+                  <div className="-mt-10 flex flex-col items-center justify-center p-4 text-center sm:p-6 md:p-8">
+                    <Riffle style={{ width: 400 }} label="Coming soon" />
+
+                    <h3 className="text-lg font-bold text-foreground/60 sm:text-xl dark:text-white/30">
+                      More block coming soon
+                    </h3>
+                  </div>
                 </div>
               )}
             </div>

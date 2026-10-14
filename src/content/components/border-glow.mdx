@@ -1,0 +1,66 @@
+---
+title: Border Glow
+description: Interactive surface with cursor-tracking mesh gradient edge illumination, outer atmospheric aura, and entry sweep animation.
+component: true
+---
+
+<ComponentPreview name="border-glow-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="border-glow" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the component into your project.</Step>
+      <ComponentSource name="border-glow" title="components/border-glow.tsx" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { BorderGlow } from "@/shared/ui/core/border-glow"
+
+export function Example() {
+  return (
+    <BorderGlow
+      animated
+      borderRadius={20}
+      edgeSensitivity={25}
+      glowRadius={40}
+      className="p-6"
+    >
+      <h3 className="font-semibold text-foreground">Glowing Perimeter Card</h3>
+      <p className="text-sm text-muted-foreground">
+        Move your mouse near the edges of this card to observe the responsive mesh beam.
+      </p>
+    </BorderGlow>
+  )
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `edgeSensitivity` | `number` | `30` | Distance threshold in percentage before the edge glow triggers. |
+| `glowColor` | `string` | `"40 80 80"` | HSL string `h s l` representing outer halo color. |
+| `borderRadius` | `number \| string` | `20` | Border radius in pixels or CSS unit. |
+| `glowRadius` | `number` | `36` | Radius of the external blurred atmospheric glow. |
+| `glowIntensity` | `number` | `1.0` | Multiplier for the multi-layered box shadow intensity. |
+| `coneSpread` | `number` | `25` | Angle spread percentage for the conic gradient beam. |
+| `animated` | `boolean` | `false` | Triggers a sweeping intro animation on initial mount. |
+| `colors` | `string[]` | `["#c084fc", "#f472b6", "#38bdf8"]` | Array of colors forming the multi-stop mesh gradient. |
+| `fillOpacity` | `number` | `0.5` | Opacity of the inner mesh wash near the borders. |
+| `contentClassName` | `string` | `undefined` | Custom classes for the inner content container. |

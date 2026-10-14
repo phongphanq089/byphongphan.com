@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SiteRouteRouteImport } from './routes/_site/route'
+import { Route as BrandAppRouteImport } from './routes/brand-app'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SiteIndexRouteImport } from './routes/_site/index'
@@ -26,6 +27,11 @@ import { Route as SiteComponentUiCategorySlugRouteImport } from './routes/_site/
 
 const SiteRouteRoute = SiteRouteRouteImport.update({
   id: '/_site',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandAppRoute = BrandAppRouteImport.update({
+  id: '/brand-app',
+  path: '/brand-app',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
@@ -98,6 +104,7 @@ const SiteComponentUiCategorySlugRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
+  '/brand-app': typeof BrandAppRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
@@ -112,6 +119,7 @@ export interface FileRoutesByFullPath {
   '/component-ui/$category/': typeof SiteComponentUiCategoryIndexRoute
 }
 export interface FileRoutesByTo {
+  '/brand-app': typeof BrandAppRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
@@ -129,6 +137,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_site': typeof SiteRouteRouteWithChildren
+  '/brand-app': typeof BrandAppRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
@@ -147,6 +156,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/brand-app'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/blocks-preview/$slug'
@@ -161,6 +171,7 @@ export interface FileRouteTypes {
     | '/component-ui/$category/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/brand-app'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/blocks-preview/$slug'
@@ -177,6 +188,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_site'
+    | '/brand-app'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/blocks-preview/$slug'
@@ -194,6 +206,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   SiteRouteRoute: typeof SiteRouteRouteWithChildren
+  BrandAppRoute: typeof BrandAppRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlocksPreviewSlugRoute: typeof BlocksPreviewSlugRoute
@@ -206,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: '/'
       preLoaderRoute: typeof SiteRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brand-app': {
+      id: '/brand-app'
+      path: '/brand-app'
+      fullPath: '/brand-app'
+      preLoaderRoute: typeof BrandAppRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/robots.txt': {
@@ -334,6 +354,7 @@ const SiteRouteRouteWithChildren = SiteRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   SiteRouteRoute: SiteRouteRouteWithChildren,
+  BrandAppRoute: BrandAppRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlocksPreviewSlugRoute: BlocksPreviewSlugRoute,

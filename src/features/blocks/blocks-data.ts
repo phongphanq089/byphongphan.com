@@ -11,6 +11,7 @@ export const BLOCKS_DATA: BlockItem[] = [
     slug: "not-found-01",
     category: "application",
     description: "A 404 page with a playable brick breaker game.",
+    schematicType: "not-found-01",
   },
   {
     id: "block-not-found-02",
@@ -19,6 +20,7 @@ export const BLOCKS_DATA: BlockItem[] = [
     category: "application",
     description:
       "Interactive 404 error page with 2D physics gravity, falling blocks, and draggable elements.",
+    schematicType: "not-found-02",
   },
   {
     id: "block-editor",
@@ -27,5 +29,6 @@ export const BLOCKS_DATA: BlockItem[] = [
     category: "application",
     description:
       "Modern Lexical rich text editor featuring top toolbar, floating bubble menu, slash commands, markdown shortcuts, and interactive widgets.",
+    schematicType: "editor",
   },
 ]

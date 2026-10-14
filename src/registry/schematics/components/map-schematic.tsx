@@ -2,7 +2,7 @@ import { MapPin, Minus, Navigation, Plus } from "lucide-react"
 
 export function MapSchematic() {
   return (
-    <div className="relative flex h-[130px] w-full max-w-[210px] flex-col justify-between overflow-hidden rounded-xl border border-white/15 bg-neutral-950 p-2.5 shadow-lg select-none">
+    <div className="relative flex h-[150px] w-full max-w-[410px] flex-col justify-between overflow-hidden rounded-md border bg-muted p-2.5 select-none dark:bg-neutral-950">
       {/* Background Grid & Contour lines */}
       <svg
         className="absolute inset-0 size-full stroke-white/[0.07]"
@@ -31,14 +31,14 @@ export function MapSchematic() {
 
       {/* Top Bar: Controls & Compass */}
       <div className="relative z-10 flex items-center justify-between">
-        <div className="flex items-center gap-1 rounded-md border border-white/10 bg-white/[0.04] px-1.5 py-0.5 backdrop-blur-xs">
+        <div className="flex items-center gap-1 rounded border border-white/10 bg-black px-1.5 py-0.5 backdrop-blur-xs dark:bg-white/[0.04]">
           <Navigation className="size-2.5 rotate-45 text-white/70" />
           <span className="font-mono text-[9px] tracking-wider text-white/60">
             37°N
           </span>
         </div>
 
-        <div className="flex flex-col gap-0.5 rounded-md border border-white/10 bg-white/[0.04] p-0.5 backdrop-blur-xs">
+        <div className="drak:bg-white/[0.04] flex flex-col gap-0.5 rounded-[3px] border border-white/10 bg-black p-0.5 backdrop-blur-xs">
           <div className="flex size-3.5 items-center justify-center rounded text-white/70">
             <Plus className="size-2.5" />
           </div>
@@ -52,7 +52,7 @@ export function MapSchematic() {
       {/* Center Marker with Pulse Effect */}
       <div className="relative z-10 flex items-center justify-center">
         <div className="relative flex items-center justify-center">
-          <span className="absolute size-5 animate-ping rounded-full bg-primary/30" />
+          <span className="absolute size-5 rounded-full bg-primary/10" />
           <div className="flex size-5 items-center justify-center rounded-full border border-primary/40 bg-primary/20 shadow-xs">
             <MapPin className="size-3 text-primary" />
           </div>

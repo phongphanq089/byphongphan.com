@@ -124,4 +124,24 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     schematicType: "phong-phan-isometric",
     isNew: true,
   },
+  {
+    id: "comp-spotlight-card",
+    name: "Spotlight Card",
+    slug: "spotlight-card",
+    category: "animations",
+    description:
+      "Interactive surface with radial cursor spotlight illumination, dynamic 1px masked border glow, and smooth 3D tilt perspective.",
+    schematicType: "spotlight-card",
+    isNew: true,
+  },
+  {
+    id: "comp-border-glow",
+    name: "Border Glow",
+    slug: "border-glow",
+    category: "animations",
+    description:
+      "Interactive surface with cursor-tracking mesh gradient edge illumination, outer atmospheric aura, and entry sweep animation.",
+    schematicType: "border-glow",
+    isNew: true,
+  },
 ]

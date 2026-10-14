@@ -1,6 +1,6 @@
 export function FlipClockSchematic() {
   return (
-    <div className="flex items-center justify-center gap-1 rounded-xl border border-white/10 bg-neutral-950/60 px-8 py-2 font-mono shadow-md select-none">
+    <div className="flex items-center justify-center gap-1 rounded-xl border border-white/10 bg-accent px-8 py-4 font-mono shadow-md select-none dark:bg-neutral-950/60">
       {/* Flap 1 */}
       <div className="relative flex h-13 w-9 flex-col overflow-hidden rounded-md border border-white/15 bg-neutral-900 shadow-sm">
         <div className="h-1/2 w-full border-b border-black bg-neutral-800/80" />
