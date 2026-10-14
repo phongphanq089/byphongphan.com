@@ -57,7 +57,7 @@ export function ComponentGrid({ category = "all" }: ComponentGridProps) {
                 <ComponentCard component={triplet[1]} />
               ) : (
                 <div className="hidden h-full w-full items-center justify-center rounded-lg bg-muted p-8 text-center lg:flex">
-                  <span className="text-[10px] tracking-wider text-muted-foreground uppercase">
+                  <span className="text-xs tracking-wider text-muted-foreground uppercase">
                     More Coming Soon
                   </span>
                 </div>
@@ -69,7 +69,7 @@ export function ComponentGrid({ category = "all" }: ComponentGridProps) {
                 <ComponentCard component={triplet[2]} />
               ) : (
                 <div className="hidden h-full w-full items-center justify-center rounded-lg bg-muted p-8 text-center lg:flex">
-                  <span className="text-[10px] tracking-wider text-muted-foreground uppercase">
+                  <span className="text-xs tracking-wider text-muted-foreground uppercase">
                     More Coming Soon
                   </span>
                 </div>

@@ -4,11 +4,11 @@ import { AnimatePresence, motion } from "motion/react"
 import { useEffect, useMemo, useRef, useState } from "react"
 import useMeasure from "react-use-measure"
 
+import { MusicPlayer, MusicToggleButton } from "@/features/music"
 import { MAIN_NAV_ITEMS } from "@/shared/config"
 import { cn } from "@/shared/lib/utils"
 import { useTheme } from "@/shared/providers/theme-provider"
 import { Kbd, Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/core"
-import { MusicToggleButton } from "@/shared/ui/system/music-toggle-button"
 import { openCommandMenu } from "@/widgets/command-menu"
 
 const NAV_ITEMS = MAIN_NAV_ITEMS
@@ -18,7 +18,7 @@ const THEME_OPTIONS = [
   { key: "dark", icon: Moon, text: "Dark" },
 ] as const
 
-type MenuView = "default" | "menu" | "theme"
+type MenuView = "default" | "menu" | "theme" | "music"
 
 const BottomMenu = () => {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -136,6 +136,9 @@ const BottomMenu = () => {
           </div>
         )
 
+      case "music":
+        return <MusicPlayer onClose={() => setView("default")} />
+
       default:
         return null
     }
@@ -192,11 +195,11 @@ const BottomMenu = () => {
             style={{
               transformOrigin: "bottom center",
             }}
-            className="absolute bottom-[58px] overflow-hidden"
+            className="absolute bottom-[58px] overflow-hidden rounded-xl"
           >
             <div
               ref={elementRef}
-              className="rounded-[18px] border border-border/80 bg-background/95 shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-2xl dark:border-white/15 dark:bg-[#121215]/95"
+              className="overflow-hidden rounded-xl border border-border/80 bg-accent shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-2xl dark:border-white/15 dark:bg-background"
             >
               <AnimatePresence initial={false} mode="popLayout">
                 <motion.div
@@ -324,7 +327,12 @@ const BottomMenu = () => {
         </Tooltip>
 
         <div className="flex items-center">
-          <MusicToggleButton autoPlay={false} />
+          <MusicToggleButton
+            active={view === "music"}
+            onClick={() =>
+              setView((prev) => (prev === "music" ? "default" : "music"))
+            }
+          />
         </div>
       </div>
     </div>

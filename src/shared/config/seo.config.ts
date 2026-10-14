@@ -15,6 +15,8 @@ export interface DynamicSiteSettings {
   favicon?: string
   favicon16?: string
   favicon32?: string
+  faviconSvg?: string
+  faviconDarkSvg?: string
   appleTouchIcon?: string
   safariMaskIcon?: string
   // Social links  Structured Data (JSON-LD)
@@ -270,6 +272,8 @@ export function createSeoMeta(
 export function createSiteLinks(siteSettings?: DynamicSiteSettings | null) {
   const canonicalUrl = siteSettings?.siteUrl?.trim() || siteConfig.url
   const favicon = siteSettings?.favicon || "/favicon.ico"
+  const faviconSvg = siteSettings?.faviconSvg || "/favicon.svg"
+  const faviconDarkSvg = siteSettings?.faviconDarkSvg || "/favicon-dark.svg"
   const favicon16 = siteSettings?.favicon16 || "/favicon-16x16.png"
   const favicon32 = siteSettings?.favicon32 || "/favicon-32x32.png"
   const appleTouchIcon = siteSettings?.appleTouchIcon || "/apple-touch-icon.png"
@@ -280,9 +284,22 @@ export function createSiteLinks(siteSettings?: DynamicSiteSettings | null) {
     type?: string
     sizes?: string
     color?: string
+    media?: string
   }> = [
     { rel: "canonical", href: canonicalUrl },
     { rel: "apple-touch-icon", sizes: "180x180", href: appleTouchIcon },
+    {
+      rel: "icon",
+      type: "image/svg+xml",
+      href: faviconSvg,
+      media: "(prefers-color-scheme: light)",
+    },
+    {
+      rel: "icon",
+      type: "image/svg+xml",
+      href: faviconDarkSvg,
+      media: "(prefers-color-scheme: dark)",
+    },
     { rel: "icon", type: "image/png", sizes: "32x32", href: favicon32 },
     { rel: "icon", type: "image/png", sizes: "16x16", href: favicon16 },
     {

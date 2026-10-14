@@ -2,7 +2,7 @@ import { MousePointer2 } from "lucide-react"
 
 export function TextHoverEffectSchematic() {
   return (
-    <div className="relative flex h-[130px] w-full max-w-[210px] flex-col items-center justify-center overflow-hidden rounded-xl border border-white/15 bg-neutral-950 p-3 shadow-lg select-none">
+    <div className="relative flex h-[150px] w-full max-w-[410px] flex-col items-center justify-center overflow-hidden rounded-md border bg-muted p-3 select-none dark:bg-neutral-950">
       {/* Background ambient glow */}
       <div className="absolute top-1/2 left-1/2 size-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/20 blur-2xl" />
 
@@ -24,18 +24,6 @@ export function TextHoverEffectSchematic() {
           <span className="rounded-full bg-white/10 px-1.5 py-0.5 font-mono text-[8px] text-white/80 backdrop-blur-xs">
             cursor
           </span>
-        </div>
-      </div>
-
-      {/* Bottom badge */}
-      <div className="absolute right-3 bottom-2 left-3 flex items-center justify-between border-t border-white/10 pt-1.5">
-        <span className="font-mono text-[9px] text-white/50">
-          SVG Stroke + Mask
-        </span>
-        <div className="flex gap-1">
-          <span className="size-1.5 rounded-full bg-amber-400" />
-          <span className="size-1.5 rounded-full bg-rose-400" />
-          <span className="size-1.5 rounded-full bg-cyan-400" />
         </div>
       </div>
     </div>

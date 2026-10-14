@@ -3,6 +3,8 @@ const PRECACHE_ASSETS = [
   '/',
   '/site.webmanifest',
   '/favicon.ico',
+  '/favicon.svg',
+  '/favicon-dark.svg',
   '/favicon-16x16.png',
   '/favicon-32x32.png',
   '/android-chrome-192x192.png',

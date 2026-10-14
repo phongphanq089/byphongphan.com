@@ -1,0 +1,65 @@
+import type React from "react"
+
+import type { SchematicType } from "../../schema"
+import { BackgroundGradientCursorSchematic } from "./background-gradient-cursor-schematic"
+import { BorderGlowSchematic } from "./border-glow-schematic"
+import { CardSchematic } from "./card-schematic"
+import { CodeBlockSchematic } from "./code-block-schematic"
+import { FlipClockSchematic } from "./flip-clock-schematic"
+import { LineNavSchematic } from "./line-nav-schematic"
+import { MapSchematic } from "./map-schematic"
+import { MiddleTruncationSchematic } from "./middle-truncation-schematic"
+import { PhongPhanIsometricSchematic } from "./phong-phan-isometric-schematic"
+import { PPMarkIsometricSchematic } from "./pp-mark-isometric-schematic"
+import { SelectSchematic } from "./select-schematic"
+import { SpotlightCardSchematic } from "./spotlight-card-schematic"
+import { TextHoverEffectSchematic } from "./text-hover-effect-schematic"
+import { UnboxingBucketSchematic } from "./unboxing-bucket-schematic"
+
+export * from "./background-gradient-cursor-schematic"
+export * from "./border-glow-schematic"
+export * from "./card-schematic"
+export * from "./code-block-schematic"
+export * from "./flip-clock-schematic"
+export * from "./line-nav-schematic"
+export * from "./map-schematic"
+export * from "./middle-truncation-schematic"
+export * from "./phong-phan-isometric-schematic"
+export * from "./pp-mark-isometric-schematic"
+export * from "./select-schematic"
+export * from "./spotlight-card-schematic"
+export * from "./text-hover-effect-schematic"
+export * from "./unboxing-bucket-schematic"
+
+export function DefaultComponentSchematic() {
+  return (
+    <div className="flex h-20 w-32 flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-white/15 bg-white/[0.02] p-2 text-center font-sans select-none">
+      <div className="size-4 rounded-full border border-white/20 bg-white/5" />
+      <div className="h-1.5 w-12 rounded-full bg-white/20" />
+    </div>
+  )
+}
+
+export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
+  select: SelectSchematic,
+  card: CardSchematic,
+  "unboxing-bucket": UnboxingBucketSchematic,
+  "code-block": CodeBlockSchematic,
+  "flip-clock": FlipClockSchematic,
+  map: MapSchematic,
+  "text-hover-effect": TextHoverEffectSchematic,
+  "background-gradient-cursor": BackgroundGradientCursorSchematic,
+  "pp-mark-isometric": PPMarkIsometricSchematic,
+  "phong-phan-isometric": PhongPhanIsometricSchematic,
+  "middle-truncation": MiddleTruncationSchematic,
+  "line-nav": LineNavSchematic,
+  "spotlight-card": SpotlightCardSchematic,
+  "border-glow": BorderGlowSchematic,
+}
+
+export function RenderComponentSchematic({ type }: { type?: string }) {
+  if (!type) return <DefaultComponentSchematic />
+  const Component = COMPONENT_SCHEMATICS_MAP[type]
+  if (!Component) return <DefaultComponentSchematic />
+  return <Component />
+}

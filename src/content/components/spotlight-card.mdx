@@ -1,0 +1,55 @@
+---
+title: Spotlight Card
+description: Interactive surface with radial cursor illumination, dynamic 1px masked border glow, and smooth 3D tilt perspective.
+component: true
+---
+
+<ComponentPreview name="spotlight-card-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="spotlight-card" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the component into your project.</Step>
+      <ComponentSource name="spotlight-card" title="components/spotlight-card.tsx" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { SpotlightCard } from "@/shared/ui/core/spotlight-card"
+
+export function Example() {
+  return (
+    <SpotlightCard enableTilt spotlightSize={300} className="p-6">
+      <h3 className="font-semibold text-foreground">Interactive Card</h3>
+      <p className="text-sm text-muted-foreground">
+        Move your mouse over this card to see the spotlight and 3D tilt effect.
+      </p>
+    </SpotlightCard>
+  )
+}
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `spotlightSize` | `number` | `280` | Diameter of the radial spotlight in pixels. |
+| `enableTilt` | `boolean` | `false` | Enables 3D perspective tilt following cursor position. |
+| `glowRgb` | `string` | `undefined` | Custom RGB string (e.g. `"220, 38, 38"`). Defaults to adaptive light/dark values. |
+| `glowColor` | `"neutral" \| "primary"` | `"neutral"` | Preset color for the spotlight glow. |
+| `contentClassName` | `string` | `undefined` | Additional classes for the inner content wrapper. |

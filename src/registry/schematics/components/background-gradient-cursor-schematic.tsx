@@ -2,7 +2,7 @@ import { MousePointer2 } from "lucide-react"
 
 export function BackgroundGradientCursorSchematic() {
   return (
-    <div className="relative flex h-[130px] w-full max-w-[210px] flex-col items-center justify-center overflow-hidden rounded-xl border border-white/15 bg-neutral-950 p-3 shadow-lg select-none">
+    <div className="relative flex h-[150px] w-full max-w-[410px] flex-col items-center justify-center overflow-hidden rounded-md border bg-muted p-3 select-none dark:bg-neutral-950">
       {/* Background grid canvas */}
       <div
         className="pointer-events-none absolute inset-0 opacity-25"
@@ -37,21 +37,9 @@ export function BackgroundGradientCursorSchematic() {
       <div className="relative z-10 flex flex-col items-center gap-1">
         <div className="flex items-center gap-1.5">
           <MousePointer2 className="size-4 fill-emerald-400 text-emerald-300 drop-shadow-[0_2px_8px_rgba(16,185,129,0.7)]" />
-          <span className="rounded-full border border-emerald-500/30 bg-emerald-950/60 px-1.5 py-0.5 font-mono text-[8px] text-emerald-300 backdrop-blur-xs">
+          <span className="rounded border border-emerald-500/30 bg-emerald-950/60 px-1.5 py-0.5 font-mono text-[8px] text-emerald-300 backdrop-blur-xs">
             x: 128 y: 46
           </span>
-        </div>
-        <div className="h-1 w-8 rounded-full bg-white/20" />
-      </div>
-
-      {/* Bottom status badge */}
-      <div className="absolute right-3 bottom-2 left-3 flex items-center justify-between border-t border-white/10 pt-1.5">
-        <span className="font-mono text-[9px] text-white/50">
-          Grid + Cursor Mask
-        </span>
-        <div className="flex items-center gap-1">
-          <span className="size-1.5 rounded-full bg-emerald-400" />
-          <span className="size-1.5 rounded-full bg-cyan-400" />
         </div>
       </div>
     </div>

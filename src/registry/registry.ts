@@ -1,15 +1,20 @@
 import type { RegistryItem } from "./schema"
 import {
   BackgroundGradientCursorSchematic,
+  BorderGlowSchematic,
   CardSchematic,
   CodeBlockSchematic,
+  EditorSchematic,
   FlipClockSchematic,
   LineNavSchematic,
   MapSchematic,
   MiddleTruncationSchematic,
+  NotFound01Schematic,
+  NotFound02Schematic,
   PhongPhanIsometricSchematic,
   PPMarkIsometricSchematic,
   SelectSchematic,
+  SpotlightCardSchematic,
   TextHoverEffectSchematic,
   UnboxingBucketSchematic,
 } from "./schematics"
@@ -279,11 +284,53 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     ],
   },
   {
+    name: "spotlight-card",
+    title: "Spotlight Card",
+    description:
+      "Interactive surface with radial cursor spotlight illumination, dynamic 1px masked border glow, and smooth 3D tilt perspective.",
+    type: "registry:component",
+    category: "animations",
+    schematic: SpotlightCardSchematic,
+    schematicType: "spotlight-card",
+    isNew: true,
+    dependencies: [],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/spotlight-card.tsx",
+        type: "registry:component",
+        target: "components/spotlight-card.tsx",
+      },
+    ],
+  },
+  {
+    name: "border-glow",
+    title: "Border Glow",
+    description:
+      "Interactive surface with cursor-tracking mesh gradient edge illumination, outer atmospheric aura, and entry sweep animation.",
+    type: "registry:component",
+    category: "animations",
+    schematic: BorderGlowSchematic,
+    schematicType: "border-glow",
+    isNew: true,
+    dependencies: [],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/border-glow.tsx",
+        type: "registry:component",
+        target: "components/border-glow.tsx",
+      },
+    ],
+  },
+  {
     name: "not-found-01",
     title: "Not Found 01",
     description: "A 404 page with a playable brick breaker game.",
     type: "registry:block",
     category: "application",
+    schematic: NotFound01Schematic,
+    schematicType: "not-found-01",
     isNew: true,
     dependencies: ["lucide-react"],
     registryDependencies: ["button"],
@@ -342,6 +389,8 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
       "Interactive 404 error page with 2D physics gravity, falling blocks, and draggable elements.",
     type: "registry:block",
     category: "application",
+    schematic: NotFound02Schematic,
+    schematicType: "not-found-02",
     isNew: true,
     dependencies: [
       "matter-js",
@@ -370,6 +419,8 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
       "Modern Lexical rich text editor featuring top toolbar, floating bubble menu, slash commands, markdown shortcuts, and interactive widgets.",
     type: "registry:block",
     category: "application",
+    schematic: EditorSchematic,
+    schematicType: "editor",
     isNew: true,
     dependencies: [
       "@lexical/clipboard",
