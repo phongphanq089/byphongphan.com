@@ -96,7 +96,7 @@ export function ComponentCard({ component }: ComponentCardProps) {
       </div>
       <div className="relative flex h-48 w-full items-center justify-center overflow-hidden rounded-sm border border-black/5 bg-background p-4 transition-colors group-hover:border-white/10 sm:h-52 dark:border-white/5 dark:bg-black/60">
         <div className="pointer-events-none absolute inset-0 bg-radial from-white/[0.04] to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-        <div className="relative z-10 flex items-center justify-center transition-transform duration-300 will-change-transform group-hover:scale-[1.02]">
+        <div className="relative z-10 flex w-full items-center justify-center transition-transform duration-300 will-change-transform group-hover:scale-[1.02]">
           <RenderSchematic type={component.schematicType} />
         </div>
       </div>
