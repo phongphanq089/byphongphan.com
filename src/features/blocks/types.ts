@@ -1,5 +1,7 @@
+import type { BlockSchematicType } from "@/registry/schema"
 import type { BlockCategoryFilterId, BlockCategoryId } from "@/shared/config"
 
+export type { BlockSchematicType } from "@/registry/schema"
 export type {
   BlockCategoryFilterId,
   BlockCategoryId,
@@ -28,6 +30,7 @@ export interface BlockItem {
   description: string
   isPro?: boolean
   badge?: string
+  schematicType?: BlockSchematicType | string
   /**
    * List of source files composing this block.
    * Raw code is auto-loaded via Vite `import.meta.glob(?raw)`.
