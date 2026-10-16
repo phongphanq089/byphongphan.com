@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable no-self-assign */
 import { Link, useNavigate } from "@tanstack/react-router"
 import { play } from "cuelume"
@@ -53,6 +54,11 @@ export function BlockDetail({ block }: BlockDetailProps) {
   const [activeTab, setActiveTab] = useState<TabMode>(initialTab)
   const navigation = useNavigate()
   const iframeRef = useRef<HTMLIFrameElement>(null)
+  const [isIframeLoading, setIsIframeLoading] = useState(true)
+
+  useEffect(() => {
+    setIsIframeLoading(true)
+  }, [block.slug])
 
   const handleTabChange = (value: string) => {
     const nextTab = value as TabMode
@@ -441,12 +447,21 @@ export function BlockDetail({ block }: BlockDetailProps) {
                       {isDragging && (
                         <div className="absolute inset-0 z-50 bg-transparent" />
                       )}
+                      {isIframeLoading && (
+                        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-background">
+                          <div className="size-6 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
+                          <span className="font-mono text-xs text-muted-foreground">
+                            Loading block preview...
+                          </span>
+                        </div>
+                      )}
                       <iframe
                         ref={iframeRef}
                         src={`/blocks-preview/${block.slug}`}
                         title={`${block.title} Preview`}
                         className="h-full w-full bg-background"
                         sandbox="allow-scripts allow-same-origin"
+                        onLoad={() => setIsIframeLoading(false)}
                       />
                     </div>
                   </ResizablePanel>

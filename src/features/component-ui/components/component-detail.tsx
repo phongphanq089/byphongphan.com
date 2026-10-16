@@ -290,7 +290,6 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
         >
           <ComponentStagePreview
             slug={component.slug}
-            schematicType={component.schematicType}
             liveDemo={LiveDemo}
             code={`// ${component.name} — documentation coming soon.\n// Install via:\n// ${baseCommand}`}
           />
