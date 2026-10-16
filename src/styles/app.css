@@ -273,6 +273,13 @@
   @apply mx-auto max-w-[1400px] px-5 lg:px-10 3xl:max-w-screen-2xl;
 }
 
+/* Smooth View Transition for Theme Switching */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .page-container {
   view-transition-name: active-page;
 }
