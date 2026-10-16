@@ -1,18 +1,11 @@
 import { createFileRoute, notFound } from "@tanstack/react-router"
-import { Suspense } from "react"
 
 import {
   ComponentDetailSkeleton,
   COMPONENTS_DATA,
 } from "@/features/component-ui"
+import { ComponentDetail } from "@/features/component-ui/components/component-detail"
 import { createSeoMeta, siteConfig } from "@/shared/config"
-import { lazyWithRetry } from "@/shared/lib/lazy-with-retry"
-
-const LazyComponentDetail = lazyWithRetry(() =>
-  import("@/features/component-ui/components/component-detail").then((m) => ({
-    default: m.ComponentDetail,
-  }))
-)
 
 export const Route = createFileRoute("/_site/component-ui/$category/$slug")({
   loader: ({ params }) => {
@@ -63,18 +56,5 @@ function ComponentDetailPendingComponent() {
 
 function ComponentDetailPage() {
   const { component } = Route.useLoaderData()
-  return (
-    <Suspense
-      fallback={
-        <ComponentDetailSkeleton
-          name={component.name}
-          category={component.category}
-          description={component.description}
-          slug={component.slug}
-        />
-      }
-    >
-      <LazyComponentDetail component={component} />
-    </Suspense>
-  )
+  return <ComponentDetail component={component} />
 }
