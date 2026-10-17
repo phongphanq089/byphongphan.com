@@ -26,16 +26,6 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     isNew: true,
   },
   {
-    id: "comp-select",
-    name: "Select",
-    slug: "select",
-    category: "primitives",
-    description:
-      "Displays a list of options for the user to pick from—triggered by a button.",
-    schematicType: "select",
-    isNew: true,
-  },
-  {
     id: "comp-card",
     name: "Card",
     slug: "card",
