@@ -8,7 +8,7 @@
       "type": "registry:component",
       "title": "Line Nav",
       "description": "Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants.",
-      "category": "animations",
+      "category": "navigation",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [
         "motion"
@@ -28,7 +28,7 @@
       "type": "registry:ui",
       "title": "Middle Truncation",
       "description": "Canvas-measured binary search text truncation preserving the start and end of strings with responsive resize sync.",
-      "category": "primitives",
+      "category": "text",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [],
       "devDependencies": [],
@@ -42,32 +42,11 @@
       ]
     },
     {
-      "name": "select",
-      "type": "registry:ui",
-      "title": "Select",
-      "description": "Displays a list of options for the user to pick from—triggered by a button.",
-      "category": "primitives",
-      "author": "Phong Phan <phongphanq089@gmail.com>",
-      "dependencies": [
-        "radix-ui",
-        "lucide-react"
-      ],
-      "devDependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "src/registry/ui/select.tsx",
-          "type": "registry:ui",
-          "target": "components/ui/select.tsx"
-        }
-      ]
-    },
-    {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",
       "description": "Displays a card with header, content, and footer.",
-      "category": "primitives",
+      "category": "card",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [],
       "devDependencies": [],
@@ -85,7 +64,7 @@
       "type": "registry:component",
       "title": "Unboxing Bucket",
       "description": "Interactive 3D unboxing container animation with emerging spring-physics feature chips.",
-      "category": "animations",
+      "category": "interactive",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [
         "motion",
@@ -108,7 +87,7 @@
       "type": "registry:component",
       "title": "Flip Clock",
       "description": "Mechanical 2D split-flap counter and clock with real-time, timer, stopwatch, and date-time display modes.",
-      "category": "animations",
+      "category": "interactive",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [
         "motion",
@@ -129,7 +108,7 @@
       "type": "registry:hook",
       "title": "useMediaQuery",
       "description": "React hook for responsive design and media query listening with SSR support.",
-      "category": "primitives",
+      "category": "interactive",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [],
       "devDependencies": [],
@@ -147,7 +126,7 @@
       "type": "registry:ui",
       "title": "Code Block",
       "description": "Syntax-highlighted code surface powered by Shiki with line numbers, line highlighting, collapsible blocks, diff mode, and copy actions.",
-      "category": "primitives",
+      "category": "data-display",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [
         "shiki",
@@ -180,7 +159,7 @@
       "type": "registry:ui",
       "title": "Map",
       "description": "High-performance interactive vector map powered by MapLibre GL with dark/light themes, custom markers, popups, controls, routes, arcs, GeoJSON, and clustering.",
-      "category": "primitives",
+      "category": "data-display",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [
         "maplibre-gl",
@@ -201,7 +180,7 @@
       "type": "registry:component",
       "title": "Text Hover Effect",
       "description": "Interactive typographic SVG reveal effect that traces strokes on mount and reveals a vibrant radial gradient mask following cursor movement.",
-      "category": "animations",
+      "category": "text",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [
         "motion"
@@ -221,7 +200,7 @@
       "type": "registry:component",
       "title": "Background Gradient Cursor",
       "description": "Interactive ambient canvas surface featuring cursor-tracking radial mask, procedural dots, dynamic grid lines, and directional linear gradients.",
-      "category": "animations",
+      "category": "background",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [],
       "devDependencies": [],
@@ -239,7 +218,7 @@
       "type": "registry:component",
       "title": "Isometric Monogram Mark",
       "description": "Interactive 3D voxel isometric monogram mark featuring procedural diagonal hatching, wireframe edges, cursor-tracking radial flashlight, and spring press physics with audio feedback.",
-      "category": "animations",
+      "category": "interactive",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [
         "motion"
@@ -259,7 +238,7 @@
       "type": "registry:component",
       "title": "Isometric Block Typography",
       "description": "Horizontal 3D block typography extruded along an isometric blueprint grid, equipped with interactive dynamic lighting, sound feedback, and edge-to-edge/padded layout variants.",
-      "category": "animations",
+      "category": "text",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [
         "motion"
@@ -279,7 +258,7 @@
       "type": "registry:component",
       "title": "Spotlight Card",
       "description": "Interactive surface with radial cursor spotlight illumination, dynamic 1px masked border glow, and smooth 3D tilt perspective.",
-      "category": "animations",
+      "category": "card",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [],
       "devDependencies": [],
@@ -297,7 +276,7 @@
       "type": "registry:component",
       "title": "Border Glow",
       "description": "Interactive surface with cursor-tracking mesh gradient edge illumination, outer atmospheric aura, and entry sweep animation.",
-      "category": "animations",
+      "category": "card",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [],
       "devDependencies": [],
@@ -315,7 +294,7 @@
       "type": "registry:block",
       "title": "Not Found 01",
       "description": "A 404 page with a playable brick breaker game.",
-      "category": "application",
+      "category": "404-page",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [
         "lucide-react"
@@ -377,7 +356,7 @@
       "type": "registry:block",
       "title": "Not Found Gravity",
       "description": "Interactive 404 error page with 2D physics gravity, falling blocks, and draggable elements.",
-      "category": "application",
+      "category": "404-page",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [
         "matter-js",
@@ -407,7 +386,7 @@
       "type": "registry:block",
       "title": "Rich Text Editor",
       "description": "Modern Lexical rich text editor featuring top toolbar, floating bubble menu, slash commands, markdown shortcuts, and interactive widgets.",
-      "category": "application",
+      "category": "editor",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [
         "@lexical/clipboard",

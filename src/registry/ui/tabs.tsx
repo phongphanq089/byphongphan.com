@@ -1,11 +1,10 @@
 import { cva, type VariantProps } from "class-variance-authority"
 import { motion } from "motion/react"
-import { Tabs as TabsPrimitive } from "radix-ui"
+import { Tabs as TabsPrimitive } from "@base-ui/react/tabs"
 import * as React from "react"
 
 import { cn } from "cn"
 
-// Context để đồng bộ tab active cho hiệu ứng Motion Indicator
 type TabsContextType = {
   value?: string
   tabsId: string
@@ -35,20 +34,24 @@ function Tabs({
   const currentValue = isControlled ? controlledValue : uncontrolledValue
 
   const handleValueChange = React.useCallback(
-    (val: string) => {
+    (val: any, eventDetails: any) => {
+      const strVal = String(val)
       if (!isControlled) {
-        setUncontrolledValue(val)
+        setUncontrolledValue(strVal)
       }
-      onValueChange?.(val)
+      onValueChange?.(val, eventDetails)
     },
     [isControlled, onValueChange]
   )
 
   return (
-    <TabsContext.Provider value={{ value: currentValue, tabsId }}>
+    <TabsContext.Provider
+      value={{ value: currentValue as string | undefined, tabsId }}
+    >
       <TabsPrimitive.Root
         data-slot="tabs"
         data-orientation={orientation}
+        orientation={orientation}
         value={currentValue}
         onValueChange={handleValueChange}
         className={cn(
@@ -103,7 +106,7 @@ function TabsTrigger({
   children,
   value,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
+}: React.ComponentProps<typeof TabsPrimitive.Tab>) {
   const tabsContext = React.useContext(TabsContext)
   const { variant } = React.useContext(TabsListContext)
 
@@ -111,7 +114,7 @@ function TabsTrigger({
   const tabsId = tabsContext?.tabsId ?? "tabs"
 
   return (
-    <TabsPrimitive.Trigger
+    <TabsPrimitive.Tab
       data-slot="tabs-trigger"
       value={value}
       className={cn(
@@ -121,7 +124,7 @@ function TabsTrigger({
 
         // Text Colors & State
         "text-muted-foreground transition-colors duration-150 hover:text-foreground",
-        "data-active:text-foreground",
+        "data-[selected]:text-foreground",
 
         // Focus & Disabled
         "focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/40 focus-visible:outline-none",
@@ -167,7 +170,7 @@ function TabsTrigger({
       <span className="relative z-10 flex items-center gap-1.5">
         {children}
       </span>
-    </TabsPrimitive.Trigger>
+    </TabsPrimitive.Tab>
   )
 }
 
@@ -175,9 +178,9 @@ function TabsContent({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Content>) {
+}: React.ComponentProps<typeof TabsPrimitive.Panel>) {
   return (
-    <TabsPrimitive.Content
+    <TabsPrimitive.Panel
       data-slot="tabs-content"
       className={cn("flex-1 text-sm outline-none", className)}
       {...props}
@@ -189,7 +192,7 @@ function TabsContent({
       >
         {children}
       </motion.div>
-    </TabsPrimitive.Content>
+    </TabsPrimitive.Panel>
   )
 }
 

@@ -18,6 +18,7 @@
     "clean:vite": "node -e \"fs.rmSync('node_modules/.vite', { recursive: true, force: true })\""
   },
   "dependencies": {
+    "@base-ui/react": "^1.9.0",
     "@excalidraw/excalidraw": "^0.18.1",
     "@fontsource-variable/geist-mono": "^5.2.7",
     "@fontsource-variable/mulish": "^5.3.0",
@@ -54,10 +55,6 @@
     "@neondatabase/serverless": "^1.1.0",
     "@number-flow/react": "^0.6.2",
     "@paper-design/shaders-react": "^0.0.76",
-    "@radix-ui/react-checkbox": "^1.2.2",
-    "@radix-ui/react-hover-card": "^1.1.10",
-    "@radix-ui/react-separator": "^1.1.4",
-    "@radix-ui/react-slot": "^1.2.4",
     "@rexa-developer/tiks": "^0.3.0",
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-devtools": "^0.10.0",
@@ -89,7 +86,6 @@
     "matter-js": "^0.20.0",
     "motion": "^12.40.0",
     "poly-decomp": "^0.3.0",
-    "radix-ui": "^1.4.3",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-filepond": "^7.1.3",

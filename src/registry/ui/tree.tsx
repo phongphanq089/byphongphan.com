@@ -1,6 +1,6 @@
 import type { ItemInstance } from "@headless-tree/core"
 import { ChevronDownIcon, MinusIcon, PlusIcon } from "lucide-react"
-import { Slot } from "radix-ui"
+import { Slot } from "./slot"
 import type { ButtonHTMLAttributes, CSSProperties, HTMLAttributes } from "react"
 import { createContext, Fragment, useContext } from "react"
 

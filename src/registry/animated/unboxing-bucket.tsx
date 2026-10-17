@@ -35,7 +35,7 @@ const DEFAULT_CHIPS: UnboxingChipItem[] = [
   {
     id: 3,
     title: "Accessible Primitives",
-    description: "Radix UI & keyboard compliance",
+    description: "Base UI & keyboard compliance",
     icon: Users,
   },
   {

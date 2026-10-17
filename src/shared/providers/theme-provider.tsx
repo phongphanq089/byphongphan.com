@@ -1,24 +1,85 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 import { createContext, useContext, useEffect, useState } from "react"
 
-type Theme = "dark" | "light" | "system"
+export type Theme = "dark" | "light" | "system"
+export type ResolvedTheme = "dark" | "light"
 
-type ThemeProviderProps = {
+export type ThemeProviderProps = {
   children: React.ReactNode
   defaultTheme?: Theme
   storageKey?: string
 }
 
-type ThemeProviderState = {
+export type ThemeProviderState = {
   theme: Theme
+  resolvedTheme: ResolvedTheme
+  isDark: boolean
   setTheme: (theme: Theme) => void
 }
 
 const initialState: ThemeProviderState = {
   theme: "system",
+  resolvedTheme: "dark",
+  isDark: true,
   setTheme: () => null,
 }
 
 const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
+
+function applyThemeToDOM(t: Theme) {
+  if (typeof window === "undefined") return
+  const root = window.document.documentElement
+  root.classList.remove("light", "dark")
+
+  if (t === "system") {
+    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+      .matches
+      ? "dark"
+      : "light"
+    root.classList.add(systemTheme)
+    return
+  }
+
+  root.classList.add(t)
+}
+
+function disableTransitionsTemporarily() {
+  if (typeof document === "undefined") return () => {}
+  const css = document.createElement("style")
+  css.appendChild(
+    document.createTextNode(
+      `*, *::before, *::after {
+        -webkit-transition: none !important;
+        -moz-transition: none !important;
+        -o-transition: none !important;
+        -ms-transition: none !important;
+        transition: none !important;
+      }`
+    )
+  )
+  document.head.appendChild(css)
+
+  return () => {
+    // Force a DOM reflow
+    void window.getComputedStyle(document.body).opacity
+
+    // Re-enable transitions on next tick
+    setTimeout(() => {
+      if (document.head.contains(css)) {
+        document.head.removeChild(css)
+      }
+    }, 1)
+  }
+}
+
+const getSystemTheme = (): ResolvedTheme => {
+  if (typeof window !== "undefined") {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light"
+  }
+  return "dark"
+}
 
 export function ThemeProvider({
   children,
@@ -33,32 +94,62 @@ export function ThemeProvider({
     return defaultTheme
   })
 
-  useEffect(() => {
-    const root = window.document.documentElement
+  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() => {
+    if (theme === "system") {
+      return getSystemTheme()
+    }
+    return theme
+  })
 
-    root.classList.remove("light", "dark")
+  useEffect(() => {
+    applyThemeToDOM(theme)
 
     if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light"
+      setResolvedTheme(getSystemTheme())
+      const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
+      const handleChange = () => {
+        applyThemeToDOM("system")
+        setResolvedTheme(mediaQuery.matches ? "dark" : "light")
+      }
+      mediaQuery.addEventListener("change", handleChange)
+      return () => mediaQuery.removeEventListener("change", handleChange)
+    } else {
+      setResolvedTheme(theme)
+    }
+  }, [theme])
 
-      root.classList.add(systemTheme)
+  const switchTheme = (newTheme: Theme) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(storageKey, newTheme)
+    }
+
+    const restoreTransitions = disableTransitionsTemporarily()
+
+    const updateStateAndDOM = () => {
+      applyThemeToDOM(newTheme)
+      setTheme(newTheme)
+      setResolvedTheme(newTheme === "system" ? getSystemTheme() : newTheme)
+      restoreTransitions()
+    }
+
+    const hasViewTransition =
+      typeof document !== "undefined" &&
+      "startViewTransition" in document &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+
+    if (hasViewTransition) {
+      document.startViewTransition(updateStateAndDOM)
       return
     }
 
-    root.classList.add(theme)
-  }, [theme])
+    updateStateAndDOM()
+  }
 
   const value = {
     theme,
-    setTheme: (theme: Theme) => {
-      if (typeof window !== "undefined") {
-        localStorage.setItem(storageKey, theme)
-      }
-      setTheme(theme)
-    },
+    resolvedTheme,
+    isDark: resolvedTheme === "dark",
+    setTheme: switchTheme,
   }
 
   return (

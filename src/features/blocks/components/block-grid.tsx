@@ -15,6 +15,52 @@ interface BlockGridProps {
   category?: BlockCategoryIdWithAll
 }
 
+const BLOCK_CATEGORY_HERO_CONFIG: Record<
+  string,
+  {
+    badge: string
+    title: string
+    description?: string
+  }
+> = {
+  "404-page": {
+    badge: "404 Error Pages",
+    title: "Playable games & gravity 404 pages.",
+    description:
+      "Interactive 404 error experiences featuring playable brick breaker games and 2D physics gravity blocks.",
+  },
+  editor: {
+    badge: "Editor Surfaces",
+    title: "Modern Lexical rich text editors.",
+    description:
+      "Production-grade extensible rich text editor with slash commands, markdown shortcuts, and floating bubble toolbar.",
+  },
+  auth: {
+    badge: "Authentication",
+    title: "Clean, accessible authentication screens.",
+    description:
+      "Production-ready sign-in, sign-up, password reset, and multi-factor authentication block layouts.",
+  },
+  marketing: {
+    badge: "Marketing Sections",
+    title: "High-converting marketing sections.",
+    description:
+      "Modern hero banners, feature grids, pricing tables, and social proof sections.",
+  },
+  ecommerce: {
+    badge: "E-Commerce",
+    title: "Modern commerce cards & checkout.",
+    description:
+      "Product showcase grids, interactive cart sheets, and frictionless checkout block flows.",
+  },
+  application: {
+    badge: "Application",
+    title: "Application layouts & functional blocks.",
+    description:
+      "Dashboard shells, activity streams, settings forms, and workspace containers.",
+  },
+}
+
 export function BlockGrid({ category = "all" }: BlockGridProps) {
   // Filter blocks by category route
   const filteredBlocks = useMemo(() => {
@@ -31,12 +77,16 @@ export function BlockGrid({ category = "all" }: BlockGridProps) {
     return rows
   }, [filteredBlocks])
 
+  const heroConfig =
+    category !== "all" ? BLOCK_CATEGORY_HERO_CONFIG[category] : undefined
+
   return (
     <div className="w-full">
       <PageHero
-        badge="Blocks ui"
+        badge={heroConfig?.badge ?? "Blocks ui"}
         count={`${filteredBlocks.length} ${filteredBlocks.length === 1 ? "block" : "blocks"}`}
-        title="Beautifully designed, production-ready."
+        title={heroConfig?.title ?? "Beautifully designed, production-ready."}
+        description={heroConfig?.description}
       />
 
       {/* 2. Route-based Segmented Category Nav Tabs (0 padding so borders touch GridContainer) */}
@@ -73,7 +123,7 @@ export function BlockGrid({ category = "all" }: BlockGridProps) {
                   <div className="-mt-10 flex flex-col items-center justify-center p-4 text-center sm:p-6 md:p-8">
                     <Riffle style={{ width: 400 }} label="Coming soon" />
 
-                    <h3 className="text-lg font-bold text-foreground/60 sm:text-xl dark:text-white/30">
+                    <h3 className="text-lg font-medium text-foreground/60 sm:text-xl dark:text-white/30">
                       More block coming soon
                     </h3>
                   </div>
@@ -98,7 +148,7 @@ export function BlockGrid({ category = "all" }: BlockGridProps) {
           </p>
           <Link
             to="/blocks"
-            className="mt-5 flex items-center gap-2 rounded-lg border border-pp-primary/40 bg-pp-primary/10 px-4 py-2 text-xs font-semibold text-pp-primary transition-all duration-200 hover:bg-pp-primary hover:text-white"
+            className="mt-5 flex items-center gap-2 rounded-lg border border-pp-primary/40 bg-pp-primary/10 px-4 py-2 text-xs font-semibold text-pp-primary transition-all duration-200 hover:bg-pp-primary hover:text-pp-primary-foreground"
           >
             <LayoutGrid className="size-3.5" />
             <span>Show all blocks</span>
