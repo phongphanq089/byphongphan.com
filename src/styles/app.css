@@ -45,14 +45,14 @@
   color-scheme: dark;
 
   /* ─── Brand Base Tokens (PP Identity) ─── */
-  --pp-primary: oklch(0.985 0 0); /* Red-600 */
+  --pp-primary: oklch(0.985 0 0);
   --pp-primary-foreground: oklch(0.15 0 0);
-  --pp-primary-glow: rgba(220, 38, 38, 0.25);
+  --pp-primary-glow: rgba(255, 255, 255, 0.25);
 
   /* ─── Semantic Surface & Content Tokens ─── */
   --background: oklch(0.12 0 0);
   --foreground: oklch(0.985 0 0);
-  --card: var(--color-muted);
+  --card: oklch(0.16 0 0);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.15 0 0);
   --popover-foreground: oklch(0.985 0 0);
@@ -158,6 +158,7 @@
 
 @theme inline {
   --color-pp-primary: var(--pp-primary);
+  --color-pp-primary-foreground: var(--pp-primary-foreground);
   --color-pp-glow: var(--pp-primary-glow);
   --color-background: var(--background);
   --color-foreground: var(--foreground);

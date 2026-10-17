@@ -49,7 +49,7 @@
       "category": "primitives",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [
-        "radix-ui",
+        "@base-ui/react",
         "lucide-react"
       ],
       "devDependencies": [],

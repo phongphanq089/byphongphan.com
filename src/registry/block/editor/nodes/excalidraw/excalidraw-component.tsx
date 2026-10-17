@@ -456,14 +456,14 @@ export function ExcalidrawComponent({
             <>
               <div
                 onPointerDown={(e) => handlePointerDownResize(e, "left")}
-                className="absolute top-1/2 -left-2 z-20 flex h-9 w-2.5 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border border-border/80 bg-background shadow-md transition-transform hover:scale-125 hover:bg-primary hover:text-white"
+                className="absolute top-1/2 -left-2 z-20 flex h-9 w-2.5 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border border-border/80 bg-background shadow-md transition-transform hover:scale-125 hover:bg-primary hover:text-primary-foreground"
                 title="Drag to resize width"
               >
                 <div className="h-3 w-0.5 rounded-full bg-muted-foreground/60" />
               </div>
               <div
                 onPointerDown={(e) => handlePointerDownResize(e, "right")}
-                className="absolute top-1/2 -right-2 z-20 flex h-9 w-2.5 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border border-border/80 bg-background shadow-md transition-transform hover:scale-125 hover:bg-primary hover:text-white"
+                className="absolute top-1/2 -right-2 z-20 flex h-9 w-2.5 -translate-y-1/2 cursor-ew-resize items-center justify-center rounded-full border border-border/80 bg-background shadow-md transition-transform hover:scale-125 hover:bg-primary hover:text-primary-foreground"
                 title="Drag to resize width"
               >
                 <div className="h-3 w-0.5 rounded-full bg-muted-foreground/60" />

@@ -70,7 +70,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     schematic: SelectSchematic,
     schematicType: "select",
     isNew: true,
-    dependencies: ["radix-ui", "lucide-react"],
+    dependencies: ["@base-ui/react", "lucide-react"],
     registryDependencies: [],
     files: [
       {

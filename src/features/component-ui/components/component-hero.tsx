@@ -33,10 +33,10 @@ export function ComponentHero({
         badge="Core Primitives"
         count={`${totalCount} PRIMITIVES`}
         title="Pixel-perfect, accessible primitives."
-        description="Production-grade core UI components compliant with Radix UI and Tailwind CSS v4."
+        description="Production-grade core UI components compliant with Base UI and Tailwind CSS v4."
         stats={[
           { label: `${totalCount} PRIMITIVES`, highlight: true },
-          { label: "RADIX UI PRIMITIVES" },
+          { label: "BASE UI PRIMITIVES" },
           { label: "TAILWIND CSS V4", hideOnMobile: true },
         ]}
       />

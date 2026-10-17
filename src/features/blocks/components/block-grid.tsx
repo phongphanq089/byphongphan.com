@@ -73,7 +73,7 @@ export function BlockGrid({ category = "all" }: BlockGridProps) {
                   <div className="-mt-10 flex flex-col items-center justify-center p-4 text-center sm:p-6 md:p-8">
                     <Riffle style={{ width: 400 }} label="Coming soon" />
 
-                    <h3 className="text-lg font-bold text-foreground/60 sm:text-xl dark:text-white/30">
+                    <h3 className="text-lg font-medium text-foreground/60 sm:text-xl dark:text-white/30">
                       More block coming soon
                     </h3>
                   </div>
@@ -98,7 +98,7 @@ export function BlockGrid({ category = "all" }: BlockGridProps) {
           </p>
           <Link
             to="/blocks"
-            className="mt-5 flex items-center gap-2 rounded-lg border border-pp-primary/40 bg-pp-primary/10 px-4 py-2 text-xs font-semibold text-pp-primary transition-all duration-200 hover:bg-pp-primary hover:text-white"
+            className="mt-5 flex items-center gap-2 rounded-lg border border-pp-primary/40 bg-pp-primary/10 px-4 py-2 text-xs font-semibold text-pp-primary transition-all duration-200 hover:bg-pp-primary hover:text-pp-primary-foreground"
           >
             <LayoutGrid className="size-3.5" />
             <span>Show all blocks</span>

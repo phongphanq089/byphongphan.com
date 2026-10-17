@@ -271,30 +271,57 @@ export const mdxComponents = {
     />
   ),
   table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="">
-      <Table className={cn("w-full", className)} {...props} />
+    <div className="my-6 w-full overflow-hidden rounded-xl border border-border/60 bg-background/40 shadow-2xs dark:border-white/10 dark:bg-white/[0.01]">
+      <Table
+        className={cn("w-full border-collapse text-sm", className)}
+        {...props}
+      />
     </div>
   ),
   thead: ({
     className,
     ...props
   }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-    <TableHeader className={cn("", className)} {...props} />
+    <TableHeader
+      className={cn(
+        "border-b border-border/60 bg-muted/40 dark:border-white/10 dark:bg-white/[0.03] [&_tr]:border-b-0",
+        className
+      )}
+      {...props}
+    />
   ),
   tbody: ({
     className,
     ...props
   }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-    <TableBody className={cn("", className)} {...props} />
+    <TableBody
+      className={cn(
+        "divide-y divide-border/50 dark:divide-white/[0.07] [&_tr:last-child]:border-0",
+        className
+      )}
+      {...props}
+    />
   ),
   tr: ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
-    <TableRow className={cn("", className)} {...props} />
+    <TableRow
+      className={cn(
+        "border-b border-border/50 transition-colors hover:bg-muted/25 data-[state=selected]:bg-muted dark:border-white/[0.07] dark:hover:bg-white/[0.02]",
+        className
+      )}
+      {...props}
+    />
   ),
   th: ({
     className,
     ...props
   }: React.ThHTMLAttributes<HTMLTableCellElement>) => (
-    <TableHead className={cn("", className)} {...props} />
+    <TableHead
+      className={cn(
+        "h-10 px-4 text-left align-middle text-xs font-semibold tracking-tight text-foreground select-none",
+        className
+      )}
+      {...props}
+    />
   ),
   td: ({
     className,
@@ -306,9 +333,18 @@ export const mdxComponents = {
       (children.trim() === "-" || children.trim() === "—")
 
     return (
-      <TableCell className={cn("", className)} {...props}>
+      <TableCell
+        className={cn(
+          "px-4 py-3 align-middle text-[13px] leading-relaxed text-muted-foreground",
+          "first:font-medium first:text-foreground",
+          className
+        )}
+        {...props}
+      >
         {isDash ? (
-          <span className="font-mono text-xs text-muted-foreground/60">-</span>
+          <span className="font-mono text-xs text-muted-foreground/40 select-none">
+            —
+          </span>
         ) : (
           children
         )}
