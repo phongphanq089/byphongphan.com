@@ -1,7 +1,11 @@
 import { createFileRoute, notFound } from "@tanstack/react-router"
 
 import { BlockGrid } from "@/features/blocks"
-import { createSeoMeta, isBlockCategoryId } from "@/shared/config"
+import {
+  BLOCK_CATEGORIES,
+  createSeoMeta,
+  isBlockCategoryId,
+} from "@/shared/config"
 
 export const Route = createFileRoute("/_site/blocks/$category/")({
   loader: ({ params }) => {
@@ -11,10 +15,10 @@ export const Route = createFileRoute("/_site/blocks/$category/")({
     return { category: params.category }
   },
   head: ({ loaderData }) => {
-    const categoryName = loaderData?.category
-      ? loaderData.category.charAt(0).toUpperCase() +
-        loaderData.category.slice(1)
-      : "Blocks"
+    const categoryConfig = BLOCK_CATEGORIES.find(
+      (c) => c.id === loaderData?.category
+    )
+    const categoryName = categoryConfig?.label ?? "Blocks"
     return {
       meta: createSeoMeta({
         title: `${categoryName} Blocks • Phong Phan`,

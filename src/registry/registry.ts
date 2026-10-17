@@ -25,7 +25,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants.",
     type: "registry:component",
-    category: "animations",
+    category: "navigation",
     schematic: LineNavSchematic,
     schematicType: "line-nav",
     isNew: true,
@@ -45,7 +45,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Canvas-measured binary search text truncation preserving the start and end of strings with responsive resize sync.",
     type: "registry:ui",
-    category: "primitives",
+    category: "text",
     schematic: MiddleTruncationSchematic,
     schematicType: "middle-truncation",
     isNew: true,
@@ -64,7 +64,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     title: "Card",
     description: "Displays a card with header, content, and footer.",
     type: "registry:ui",
-    category: "primitives",
+    category: "card",
     schematic: CardSchematic,
     schematicType: "card",
     dependencies: [],
@@ -83,7 +83,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Interactive 3D unboxing container animation with emerging spring-physics feature chips.",
     type: "registry:component",
-    category: "animations",
+    category: "interactive",
     schematic: UnboxingBucketSchematic,
     schematicType: "unboxing-bucket",
     dependencies: ["motion", "lucide-react"],
@@ -102,7 +102,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Mechanical 2D split-flap counter and clock with real-time, timer, stopwatch, and date-time display modes.",
     type: "registry:component",
-    category: "animations",
+    category: "interactive",
     schematic: FlipClockSchematic,
     schematicType: "flip-clock",
     isNew: true,
@@ -122,7 +122,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "React hook for responsive design and media query listening with SSR support.",
     type: "registry:hook",
-    category: "primitives",
+    category: "interactive",
     dependencies: [],
     registryDependencies: [],
     files: [
@@ -139,7 +139,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Syntax-highlighted code surface powered by Shiki with line numbers, line highlighting, collapsible blocks, diff mode, and copy actions.",
     type: "registry:ui",
-    category: "primitives",
+    category: "data-display",
     schematic: CodeBlockSchematic,
     schematicType: "code-block",
     dependencies: ["shiki", "lucide-react"],
@@ -168,7 +168,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "High-performance interactive vector map powered by MapLibre GL with dark/light themes, custom markers, popups, controls, routes, arcs, GeoJSON, and clustering.",
     type: "registry:ui",
-    category: "primitives",
+    category: "data-display",
     schematic: MapSchematic,
     schematicType: "map",
     isNew: true,
@@ -188,7 +188,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Interactive typographic SVG reveal effect that traces strokes on mount and reveals a vibrant radial gradient mask following cursor movement.",
     type: "registry:component",
-    category: "animations",
+    category: "text",
     schematic: TextHoverEffectSchematic,
     schematicType: "text-hover-effect",
     isNew: true,
@@ -208,7 +208,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Interactive ambient canvas surface featuring cursor-tracking radial mask, procedural dots, dynamic grid lines, and directional linear gradients.",
     type: "registry:component",
-    category: "animations",
+    category: "background",
     schematic: BackgroundGradientCursorSchematic,
     schematicType: "background-gradient-cursor",
     isNew: true,
@@ -228,7 +228,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Interactive 3D voxel isometric monogram mark featuring procedural diagonal hatching, wireframe edges, cursor-tracking radial flashlight, and spring press physics with audio feedback.",
     type: "registry:component",
-    category: "animations",
+    category: "interactive",
     schematic: PPMarkIsometricSchematic,
     schematicType: "pp-mark-isometric",
     isNew: true,
@@ -248,7 +248,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Horizontal 3D block typography extruded along an isometric blueprint grid, equipped with interactive dynamic lighting, sound feedback, and edge-to-edge/padded layout variants.",
     type: "registry:component",
-    category: "animations",
+    category: "text",
     schematic: PhongPhanIsometricSchematic,
     schematicType: "phong-phan-isometric",
     isNew: true,
@@ -268,7 +268,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Interactive surface with radial cursor spotlight illumination, dynamic 1px masked border glow, and smooth 3D tilt perspective.",
     type: "registry:component",
-    category: "animations",
+    category: "card",
     schematic: SpotlightCardSchematic,
     schematicType: "spotlight-card",
     isNew: true,
@@ -288,7 +288,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Interactive surface with cursor-tracking mesh gradient edge illumination, outer atmospheric aura, and entry sweep animation.",
     type: "registry:component",
-    category: "animations",
+    category: "card",
     schematic: BorderGlowSchematic,
     schematicType: "border-glow",
     isNew: true,
@@ -307,7 +307,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     title: "Not Found 01",
     description: "A 404 page with a playable brick breaker game.",
     type: "registry:block",
-    category: "application",
+    category: "404-page",
     schematic: NotFound01Schematic,
     schematicType: "not-found-01",
     isNew: true,
@@ -367,7 +367,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Interactive 404 error page with 2D physics gravity, falling blocks, and draggable elements.",
     type: "registry:block",
-    category: "application",
+    category: "404-page",
     schematic: NotFound02Schematic,
     schematicType: "not-found-02",
     isNew: true,
@@ -397,7 +397,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     description:
       "Modern Lexical rich text editor featuring top toolbar, floating bubble menu, slash commands, markdown shortcuts, and interactive widgets.",
     type: "registry:block",
-    category: "application",
+    category: "editor",
     schematic: EditorSchematic,
     schematicType: "editor",
     isNew: true,

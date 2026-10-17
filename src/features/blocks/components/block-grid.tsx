@@ -15,6 +15,52 @@ interface BlockGridProps {
   category?: BlockCategoryIdWithAll
 }
 
+const BLOCK_CATEGORY_HERO_CONFIG: Record<
+  string,
+  {
+    badge: string
+    title: string
+    description?: string
+  }
+> = {
+  "404-page": {
+    badge: "404 Error Pages",
+    title: "Playable games & gravity 404 pages.",
+    description:
+      "Interactive 404 error experiences featuring playable brick breaker games and 2D physics gravity blocks.",
+  },
+  editor: {
+    badge: "Editor Surfaces",
+    title: "Modern Lexical rich text editors.",
+    description:
+      "Production-grade extensible rich text editor with slash commands, markdown shortcuts, and floating bubble toolbar.",
+  },
+  auth: {
+    badge: "Authentication",
+    title: "Clean, accessible authentication screens.",
+    description:
+      "Production-ready sign-in, sign-up, password reset, and multi-factor authentication block layouts.",
+  },
+  marketing: {
+    badge: "Marketing Sections",
+    title: "High-converting marketing sections.",
+    description:
+      "Modern hero banners, feature grids, pricing tables, and social proof sections.",
+  },
+  ecommerce: {
+    badge: "E-Commerce",
+    title: "Modern commerce cards & checkout.",
+    description:
+      "Product showcase grids, interactive cart sheets, and frictionless checkout block flows.",
+  },
+  application: {
+    badge: "Application",
+    title: "Application layouts & functional blocks.",
+    description:
+      "Dashboard shells, activity streams, settings forms, and workspace containers.",
+  },
+}
+
 export function BlockGrid({ category = "all" }: BlockGridProps) {
   // Filter blocks by category route
   const filteredBlocks = useMemo(() => {
@@ -31,12 +77,16 @@ export function BlockGrid({ category = "all" }: BlockGridProps) {
     return rows
   }, [filteredBlocks])
 
+  const heroConfig =
+    category !== "all" ? BLOCK_CATEGORY_HERO_CONFIG[category] : undefined
+
   return (
     <div className="w-full">
       <PageHero
-        badge="Blocks ui"
+        badge={heroConfig?.badge ?? "Blocks ui"}
         count={`${filteredBlocks.length} ${filteredBlocks.length === 1 ? "block" : "blocks"}`}
-        title="Beautifully designed, production-ready."
+        title={heroConfig?.title ?? "Beautifully designed, production-ready."}
+        description={heroConfig?.description}
       />
 
       {/* 2. Route-based Segmented Category Nav Tabs (0 padding so borders touch GridContainer) */}

@@ -1,7 +1,11 @@
 import { createFileRoute, notFound, redirect } from "@tanstack/react-router"
 
 import { ComponentGrid, COMPONENTS_DATA } from "@/features/component-ui"
-import { createSeoMeta, isComponentCategoryId } from "@/shared/config"
+import {
+  COMPONENT_CATEGORIES,
+  createSeoMeta,
+  isComponentCategoryId,
+} from "@/shared/config"
 
 export const Route = createFileRoute("/_site/component-ui/$category/")({
   loader: ({ params }) => {
@@ -26,10 +30,10 @@ export const Route = createFileRoute("/_site/component-ui/$category/")({
     throw notFound()
   },
   head: ({ loaderData }) => {
-    const categoryName = loaderData?.category
-      ? loaderData.category.charAt(0).toUpperCase() +
-        loaderData.category.slice(1)
-      : "UI Components"
+    const categoryConfig = COMPONENT_CATEGORIES.find(
+      (c) => c.id === loaderData?.category
+    )
+    const categoryName = categoryConfig?.label ?? "UI Components"
     return {
       meta: createSeoMeta({
         title: `${categoryName} Components • Phong Phan`,

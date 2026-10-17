@@ -131,11 +131,18 @@ function buildSectionMenuItems(): CommandMenuItem[] {
 // ── 3. Registry items (derived directly from REGISTRY_ITEMS) ─────────
 
 const CATEGORY_ICON_MAP: Record<string, ReactNode> = {
-  primitives: <Component className="size-4 text-pp-primary" />,
-  animations: <Layers className="size-4 text-pp-primary" />,
-  application: <CookingPot className="size-4 text-pp-primary" />,
-  marketing: <CookingPot className="size-4 text-pp-primary" />,
+  card: <Component className="size-4 text-pp-primary" />,
+  background: <Layers className="size-4 text-pp-primary" />,
+  navigation: <Radio className="size-4 text-pp-primary" />,
+  text: <Code2 className="size-4 text-pp-primary" />,
+  interactive: <Atom className="size-4 text-pp-primary" />,
+  "data-display": <Code className="size-4 text-pp-primary" />,
+  "404-page": <CookingPot className="size-4 text-pp-primary" />,
+  auth: <User className="size-4 text-pp-primary" />,
+  editor: <BookOpen className="size-4 text-pp-primary" />,
+  marketing: <Layers className="size-4 text-pp-primary" />,
   ecommerce: <CookingPot className="size-4 text-pp-primary" />,
+  application: <CookingPot className="size-4 text-pp-primary" />,
 }
 
 const TYPE_ICON_MAP: Record<string, ReactNode> = {
@@ -144,30 +151,32 @@ const TYPE_ICON_MAP: Record<string, ReactNode> = {
 }
 
 function buildRegistryMenuItems(): CommandMenuItem[] {
-  return REGISTRY_ITEMS.map((item: RegistryItem) => {
-    const isBlock = item.type === "registry:block"
-    const basePath = isBlock ? "/blocks" : "/component-ui"
-    const categorySlug = item.category
+  return REGISTRY_ITEMS.filter((item) => item.type !== "registry:hook").map(
+    (item: RegistryItem) => {
+      const isBlock = item.type === "registry:block"
+      const basePath = isBlock ? "/blocks" : "/component-ui"
+      const categorySlug = item.category
 
-    return {
-      id: `registry-${item.name}`,
-      title: item.title,
-      description: item.description,
-      icon: CATEGORY_ICON_MAP[item.category] ?? TYPE_ICON_MAP[item.type] ?? (
-        <Component className="size-4 text-pp-primary" />
-      ),
-      keywords: [
-        item.name,
-        item.title.toLowerCase(),
-        item.category,
-        item.type.replace("registry:", ""),
-        ...(item.dependencies ?? []),
-      ],
-      group: isBlock ? "blocks" : "components-ui",
-      badge: item.isNew ? "New" : undefined,
-      to: `${basePath}/${categorySlug}/${item.name}`,
+      return {
+        id: `registry-${item.name}`,
+        title: item.title,
+        description: item.description,
+        icon: CATEGORY_ICON_MAP[item.category] ?? TYPE_ICON_MAP[item.type] ?? (
+          <Component className="size-4 text-pp-primary" />
+        ),
+        keywords: [
+          item.name,
+          item.title.toLowerCase(),
+          item.category,
+          item.type.replace("registry:", ""),
+          ...(item.dependencies ?? []),
+        ],
+        group: isBlock ? "blocks" : "components-ui",
+        badge: item.isNew ? "New" : undefined,
+        to: `${basePath}/${categorySlug}/${item.name}`,
+      }
     }
-  })
+  )
 }
 
 // ── 5. Theme & System Actions ────────────────────────────────────────

@@ -9,7 +9,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-line-nav",
     name: "Line Nav",
     slug: "line-nav",
-    category: "animations",
+    category: "navigation",
     description:
       "Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants.",
     schematicType: "line-nav",
@@ -19,7 +19,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-middle-truncation",
     name: "Middle Truncation",
     slug: "middle-truncation",
-    category: "primitives",
+    category: "text",
     description:
       "Canvas-measured binary search text truncation preserving the start and end of strings with responsive resize sync.",
     schematicType: "middle-truncation",
@@ -29,7 +29,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-card",
     name: "Card",
     slug: "card",
-    category: "primitives",
+    category: "card",
     description: "Displays a card with header, content, and footer.",
     schematicType: "card",
     isNew: false,
@@ -38,7 +38,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-unboxing-bucket",
     name: "Unboxing Bucket",
     slug: "unboxing-bucket",
-    category: "animations",
+    category: "interactive",
     description:
       "Interactive 3D unboxing container animation with emerging spring-physics feature chips.",
     schematicType: "unboxing-bucket",
@@ -48,7 +48,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-flip-clock",
     name: "Flip Clock",
     slug: "flip-clock",
-    category: "animations",
+    category: "interactive",
     description:
       "Mechanical 2D split-flap counter and clock with real-time, timer, stopwatch, and date-time display modes.",
     schematicType: "flip-clock",
@@ -58,7 +58,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-code-block",
     name: "Code Block",
     slug: "code-block",
-    category: "primitives",
+    category: "data-display",
     description:
       "Syntax-highlighted code surface powered by Shiki with line numbers, line highlighting, collapsible blocks, diff mode, and copy actions.",
     schematicType: "code-block",
@@ -68,7 +68,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-map",
     name: "Map",
     slug: "map",
-    category: "primitives",
+    category: "data-display",
     description:
       "High-performance interactive vector map powered by MapLibre GL with dark/light themes, custom markers, popups, controls, routes, arcs, GeoJSON, and clustering.",
     schematicType: "map",
@@ -78,7 +78,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-text-hover-effect",
     name: "Text Hover Effect",
     slug: "text-hover-effect",
-    category: "animations",
+    category: "text",
     description:
       "Interactive typographic SVG reveal effect that traces strokes on mount and reveals a vibrant radial gradient mask following cursor movement.",
     schematicType: "text-hover-effect",
@@ -88,7 +88,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-background-gradient-cursor",
     name: "Background Gradient Cursor",
     slug: "background-gradient-cursor",
-    category: "animations",
+    category: "background",
     description:
       "Interactive ambient canvas surface featuring cursor-tracking radial mask, procedural dots, dynamic grid lines, and directional linear gradients.",
     schematicType: "background-gradient-cursor",
@@ -98,7 +98,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-pp-mark-isometric",
     name: "Isometric Monogram Mark",
     slug: "pp-mark-isometric",
-    category: "animations",
+    category: "interactive",
     description:
       "Interactive 3D voxel isometric monogram mark featuring procedural diagonal hatching, wireframe edges, cursor-tracking radial flashlight, and spring press physics with audio feedback.",
     schematicType: "pp-mark-isometric",
@@ -108,7 +108,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-phong-phan-isometric",
     name: "Isometric Block Typography",
     slug: "phong-phan-isometric",
-    category: "animations",
+    category: "text",
     description:
       "Horizontal 3D block typography extruded along an isometric blueprint grid, equipped with interactive dynamic lighting, sound feedback, and edge-to-edge/padded layout variants.",
     schematicType: "phong-phan-isometric",
@@ -118,7 +118,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-spotlight-card",
     name: "Spotlight Card",
     slug: "spotlight-card",
-    category: "animations",
+    category: "card",
     description:
       "Interactive surface with radial cursor spotlight illumination, dynamic 1px masked border glow, and smooth 3D tilt perspective.",
     schematicType: "spotlight-card",
@@ -128,7 +128,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     id: "comp-border-glow",
     name: "Border Glow",
     slug: "border-glow",
-    category: "animations",
+    category: "card",
     description:
       "Interactive surface with cursor-tracking mesh gradient edge illumination, outer atmospheric aura, and entry sweep animation.",
     schematicType: "border-glow",
