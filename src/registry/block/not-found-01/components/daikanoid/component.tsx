@@ -468,8 +468,7 @@ export function Daikanoid({ className, onScoreChange }: DaikanoidProps) {
         className="h-full w-full cursor-pointer touch-none"
       />
 
-      {/* Subtle Bottom Controls Hint */}
-      <div className="pointer-events-none absolute inset-x-4 bottom-3 z-20 flex items-center justify-between font-mono text-[10px] tracking-wider text-muted-foreground/50 sm:inset-x-8 sm:bottom-4">
+      <div className="pointer-events-none absolute inset-x-4 bottom-3 z-20 flex flex-wrap items-center justify-between font-mono text-[10px] tracking-wider text-muted-foreground/50 max-sm:hidden max-sm:justify-center sm:inset-x-8 sm:bottom-4">
         <span>Move mouse or [A / D / ← / →] to steer</span>
         <span>Click / Space / Enter to launch</span>
       </div>
@@ -504,18 +503,13 @@ export function Daikanoid({ className, onScoreChange }: DaikanoidProps) {
                 <span className="font-mono text-xs font-semibold tracking-widest text-muted-foreground uppercase">
                   Game Over
                 </span>
-                <h3 className="mt-2 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">
+                <h3 className="mt-2 text-xl font-bold tracking-tight text-foreground sm:text-3xl">
                   Final Score: {score}
                 </h3>
                 <p className="mt-1 text-xs text-muted-foreground">
                   Press Enter or click below to retry.
                 </p>
-                <Button
-                  variant="default"
-                  size="default"
-                  onClick={resetGame}
-                  className="mt-5 gap-2 rounded-xl px-5 font-semibold"
-                >
+                <Button onClick={resetGame} className="mt-3">
                   <RotateCcw className="size-3.5" />
                   <span>Play Again</span>
                   <span className="ml-1 rounded border border-primary-foreground/30 bg-primary-foreground/15 px-1.5 py-0.5 text-[9px] font-normal tracking-normal">

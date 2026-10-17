@@ -75,8 +75,8 @@ export default function NotFound({ children }: { children?: React.ReactNode }) {
             angle={-3}
             matterBodyOptions={{ friction: 0.3, restitution: 0.2 }}
           >
-            <div className="flex h-[155px] w-[100px] flex-col items-center justify-center rounded-xl border border-black/10 bg-[#9cd517] text-[#05461c] shadow-lg transition-colors select-none sm:h-[230px] sm:w-[200px] dark:border-white/10 dark:bg-[#1d320d] dark:text-[#a3e635]">
-              <Lightbulb className="size-16 stroke-[2.5] sm:size-32" />
+            <div className="flex h-[110px] w-[75px] flex-col items-center justify-center rounded-xl border border-black/10 bg-[#9cd517] text-[#05461c] shadow-lg transition-colors select-none sm:h-[170px] sm:w-[140px] md:h-[230px] md:w-[200px] dark:border-white/10 dark:bg-[#1d320d] dark:text-[#a3e635]">
+              <Lightbulb className="size-10 stroke-[2] sm:size-18 md:size-28" />
             </div>
           </MatterBody>
 
@@ -87,10 +87,9 @@ export default function NotFound({ children }: { children?: React.ReactNode }) {
             angle={2}
             matterBodyOptions={{ friction: 0.3, restitution: 0.2 }}
           >
-            <div className="flex h-[155px] w-[100px] flex-col items-center justify-center gap-2.5 rounded-xl border border-black/10 bg-[#f97316] shadow-lg transition-colors select-none sm:h-[230px] sm:w-[200px] sm:gap-4 dark:border-white/10 dark:bg-[#3a1306]">
+            <div className="flex h-[110px] w-[75px] flex-col items-center justify-center gap-1.5 rounded-xl border border-black/10 bg-[#f97316] shadow-lg transition-colors select-none sm:h-[170px] sm:w-[140px] sm:gap-3 md:h-[230px] md:w-[200px] md:gap-4 dark:border-white/10 dark:bg-[#3a1306]">
               <svg
-                width="80px"
-                height="80px"
+                className="size-10 sm:size-16 md:size-20"
                 viewBox="0 0 20 20"
                 version="1.1"
                 xmlns="http://www.w3.org/2000/svg"
@@ -116,13 +115,11 @@ export default function NotFound({ children }: { children?: React.ReactNode }) {
             angle={-2}
             matterBodyOptions={{ friction: 0.3, restitution: 0.2 }}
           >
-            <div className="flex h-[95px] w-[135px] items-center justify-center rounded-xl border border-black/10 bg-[#fad246] p-6 px-3 text-[#3f1d0b] shadow-lg transition-colors select-none sm:h-[135px] sm:w-[200px] dark:border-white/10 dark:bg-[#352605] dark:text-[#fde047]">
+            <div className="flex h-[75px] w-[100px] items-center justify-center rounded-xl border border-black/10 bg-[#fad246] p-2 text-[#3f1d0b] shadow-lg transition-colors select-none sm:h-[110px] sm:w-[150px] sm:p-4 md:h-[135px] md:w-[200px] md:p-6 dark:border-white/10 dark:bg-[#352605] dark:text-[#fde047]">
               <svg
-                className="fill-white/90 stroke-4"
+                className="size-10 fill-white/90 stroke-4 sm:size-16 md:size-20"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 32 32"
-                width="80px"
-                height="80px"
               >
                 <path d="M31,31.36H1v-0.72h30V31.36z M31,28.36H1v-0.72h30V28.36z M31,25.36H1v-0.72h30V25.36z M31,22.36H1c-0.199,0-0.36-0.161-0.36-0.36V1c0-0.199,0.161-0.36,0.36-0.36h30c0.199,0,0.36,0.161,0.36,0.36v21 C31.36,22.199,31.199,22.36,31,22.36z M1.36,21.64h29.28V4.36H1.36V21.64z M1.36,3.64h29.28V1.36H1.36V3.64z M29,2.5 C29,2.776,28.776,3,28.5,3S28,2.776,28,2.5S28.224,2,28.5,2S29,2.224,29,2.5z M26.5,2C26.224,2,26,2.224,26,2.5S26.224,3,26.5,3 S27,2.776,27,2.5S26.776,2,26.5,2z M24.5,2C24.224,2,24,2.224,24,2.5S24.224,3,24.5,3S25,2.776,25,2.5S24.776,2,24.5,2z M10,14.36H4 v-0.72h6V14.36z M10,11.36H4v-0.72h6V11.36z M10,8.36H4V7.64h6V8.36z" />
               </svg>
@@ -136,11 +133,9 @@ export default function NotFound({ children }: { children?: React.ReactNode }) {
             angle={3}
             matterBodyOptions={{ friction: 0.3, restitution: 0.2 }}
           >
-            <div className="relative flex h-[150px] w-[100px] items-center justify-center overflow-hidden rounded-xl border border-black/10 bg-[#67164b] shadow-lg transition-colors select-none sm:h-[220px] sm:w-[150px] dark:border-white/10 dark:bg-[#2b0720]">
+            <div className="relative flex h-[110px] w-[75px] items-center justify-center overflow-hidden rounded-xl border border-black/10 bg-[#67164b] p-2 shadow-lg transition-colors select-none sm:h-[160px] sm:w-[110px] sm:p-3 md:h-[220px] md:w-[150px] md:p-4 dark:border-white/10 dark:bg-[#2b0720]">
               <svg
-                className="fill-white/90"
-                width="800px"
-                height="800px"
+                className="size-12 fill-white/90 sm:size-20 md:size-28"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
               >
@@ -156,13 +151,11 @@ export default function NotFound({ children }: { children?: React.ReactNode }) {
             angle={-2}
             matterBodyOptions={{ friction: 0.3, restitution: 0.2 }}
           >
-            <div className="relative flex h-[185px] w-[100px] items-center justify-center rounded-xl border border-black/10 bg-[#1e293b] p-3 shadow-lg transition-colors select-none sm:h-[290px] sm:w-[250px]! sm:p-4 dark:border-white/10 dark:bg-[#0f172a]">
+            <div className="relative flex h-[130px] w-[85px] items-center justify-center rounded-xl border border-black/10 bg-[#1e293b] p-2 shadow-lg transition-colors select-none sm:h-[210px] sm:w-[180px] sm:p-3 md:h-[290px] md:w-[250px] md:p-4 dark:border-white/10 dark:bg-[#0f172a]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="120px"
-                height="120px"
                 viewBox="0 0 32 32"
-                className="fill-white/90"
+                className="size-14 fill-white/90 sm:size-22 md:size-28"
               >
                 <path d="M29,4H3C1.343,4,0,5.343,0,7v16c0,1.657,1.343,3,3,3h9v3h-1.5c-0.276,0-0.5,0.224-0.5,0.5l0,0 c0,0.276,0.224,0.5,0.5,0.5h11c0.276,0,0.5-0.224,0.5-0.5l0,0c0-0.276-0.224-0.5-0.5-0.5H20v-3h9c1.657,0,3-1.343,3-3V7 C32,5.343,30.657,4,29,4z M19,29h-6v-3h6V29z M31,23c0,1.105-0.895,2-2,2H3c-1.105,0-2-0.895-2-2V7c0-1.105,0.895-2,2-2h26 c1.105,0,2,0.895,2,2V23z M25.805,9.03c-0.782-0.154-1.475,0.3-1.713,0.97H18V9h-4v1H7.908C7.67,9.33,6.976,8.876,6.195,9.03 c-0.573,0.113-1.04,0.572-1.16,1.144C4.83,11.145,5.565,12,6.5,12c0.652,0,1.202-0.419,1.408-1H14v0.224 c-4.388,0.897-7.745,4.658-7.986,9.246C5.999,20.757,6.227,21,6.515,21h0c0.263,0,0.484-0.204,0.497-0.467 c0.209-4.065,3.134-7.41,6.988-8.289V13h4v-0.757c3.854,0.88,6.779,4.225,6.988,8.289C25.002,20.796,25.222,21,25.485,21h0 c0.288,0,0.516-0.243,0.501-0.53c-0.241-4.588-3.598-8.349-7.986-9.246V11h6.092c0.207,0.581,0.756,1,1.408,1 c0.935,0,1.67-0.855,1.466-1.826C26.845,9.602,26.378,9.143,25.805,9.03z M6.5,11C6.224,11,6,10.776,6,10.5S6.224,10,6.5,10 S7,10.224,7,10.5S6.776,11,6.5,11z M17,12h-2v-2h2V12z M25.5,11c-0.276,0-0.5-0.224-0.5-0.5s0.224-0.5,0.5-0.5s0.5,0.224,0.5,0.5 S25.776,11,25.5,11z" />
               </svg>
@@ -176,10 +169,9 @@ export default function NotFound({ children }: { children?: React.ReactNode }) {
             angle={3}
             matterBodyOptions={{ friction: 0.3, restitution: 0.2 }}
           >
-            <div className="relative flex h-[185px] w-[100px] items-center justify-center rounded-xl border border-black/10 bg-[#c5b4f8] p-3 shadow-lg transition-colors select-none sm:h-[290px] sm:w-[150px] sm:p-4 dark:border-white/10 dark:bg-[#240f3b]">
+            <div className="relative flex h-[130px] w-[85px] items-center justify-center rounded-xl border border-black/10 bg-[#c5b4f8] p-2 shadow-lg transition-colors select-none sm:h-[210px] sm:w-[120px] sm:p-3 md:h-[290px] md:w-[150px] md:p-4 dark:border-white/10 dark:bg-[#240f3b]">
               <svg
-                width="800px"
-                height="800px"
+                className="size-14 sm:size-20 md:size-28"
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
@@ -223,8 +215,8 @@ export default function NotFound({ children }: { children?: React.ReactNode }) {
             angle={-2}
             matterBodyOptions={{ friction: 0.3, restitution: 0.2 }}
           >
-            <div className="flex h-[118px] w-[118px] items-center justify-end rounded-xl border border-black/10 bg-[#fa501e] pr-2.5 shadow-lg transition-colors select-none sm:h-[180px] sm:w-[180px] sm:pr-4 dark:border-white/10 dark:bg-[#441208]">
-              <span className="-rotate-90 text-[78px] leading-none font-black tracking-tight text-[#3b0764] select-none sm:text-[120px] dark:text-[#fca5a5]">
+            <div className="flex h-[80px] w-[80px] items-center justify-end rounded-xl border border-black/10 bg-[#fa501e] pr-2 shadow-lg transition-colors select-none sm:h-[130px] sm:w-[130px] sm:pr-3 md:h-[180px] md:w-[180px] md:pr-4 dark:border-white/10 dark:bg-[#441208]">
+              <span className="text-[36px] leading-none font-black text-[#3b0764] select-none sm:text-[56px] md:text-[80px] dark:text-[#fca5a5]">
                 Aa
               </span>
             </div>
@@ -237,13 +229,11 @@ export default function NotFound({ children }: { children?: React.ReactNode }) {
             angle={4}
             matterBodyOptions={{ friction: 0.3, restitution: 0.2 }}
           >
-            <div className="relative flex h-[200px] w-[100px] items-center justify-center rounded-xl border border-black/10 bg-[#30c6e8] shadow-lg transition-colors select-none sm:h-[310px] sm:w-[200px] dark:border-white/10 dark:bg-[#082f49]">
+            <div className="relative flex h-[140px] w-[80px] items-center justify-center rounded-xl border border-black/10 bg-[#30c6e8] p-2 shadow-lg transition-colors select-none sm:h-[220px] sm:w-[140px] sm:p-3 md:h-[310px] md:w-[200px] md:p-4 dark:border-white/10 dark:bg-[#082f49]">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="800px"
-                height="800px"
                 viewBox="0 0 32 32"
-                className="fill-white/90"
+                className="size-14 fill-white/90 sm:size-22 md:size-28"
               >
                 <rect x="9" y="1" width="13" height="2" />
                 <path d="M24.598,12.998C22.318,11.098,21,8.284,21,5.316V4H10v1.316c0,2.968-1.318,5.782-3.598,7.682 L4,15l11,16V19.95c-1.141-0.232-2-1.24-2-2.45c0-1.381,1.119-2.5,2.5-2.5s2.5,1.119,2.5,2.5c0,1.209-0.859,2.218-2,2.45V31l11-16 L24.598,12.998z" />
@@ -256,17 +246,17 @@ export default function NotFound({ children }: { children?: React.ReactNode }) {
       <div className="pointer-events-none h-[60px] w-full shrink-0" />
 
       {/* ── 404 Headline & Actions ── */}
-      <header className="pointer-events-none relative z-20 mx-auto flex w-full max-w-4xl shrink-0 flex-col items-center px-4 py-8 text-center md:py-10">
-        <h1 className="pointer-events-auto mb-4 text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl md:text-5xl">
+      <header className="pointer-events-none relative z-20 mx-auto flex w-full max-w-4xl shrink-0 flex-col items-center px-4 py-6 text-center sm:py-8 md:py-10">
+        <h1 className="pointer-events-auto mb-2 text-2xl font-extrabold tracking-tight text-foreground sm:mb-4 sm:text-4xl md:text-5xl">
           Page not found
         </h1>
-        <p className="pointer-events-auto mb-4 text-sm text-muted-foreground sm:text-base">
+        <p className="pointer-events-auto mb-4 text-xs text-muted-foreground sm:text-sm md:text-base">
           We couldn&apos;t find the page you were looking for.{" "}
           <Button
             variant="ghost"
             size="sm"
             onClick={handleBack}
-            className="h-auto p-0 font-semibold underline"
+            className="h-auto p-0 text-xs font-semibold underline sm:text-sm md:text-base"
           >
             Go back
           </Button>

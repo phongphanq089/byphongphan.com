@@ -1,7 +1,4 @@
-import { Compass, Sparkles } from "lucide-react"
-
 import { BackgroundGradientCursor } from "@/registry/animated/background-gradient-cursor"
-import { Badge } from "@/registry/ui/badge"
 
 export function BackgroundGradientCursorDemo() {
   return (
@@ -41,15 +38,7 @@ export function BackgroundGradientCursorDemo() {
       />
 
       <div className="relative z-10 flex max-w-md flex-col items-center gap-3 text-center">
-        <Badge
-          variant="outline"
-          className="border-emerald-500/30 bg-emerald-950/40 text-emerald-400 backdrop-blur-md"
-        >
-          <Sparkles className="mr-1.5 size-3 text-emerald-400" />
-          Interactive Canvas Stage
-        </Badge>
-
-        <h3 className="text-xl font-bold tracking-tight text-white sm:text-2xl">
+        <h3 className="text-xl font-bold tracking-tight sm:text-2xl dark:text-white">
           Move your cursor across this surface
         </h3>
 
@@ -58,11 +47,6 @@ export function BackgroundGradientCursorDemo() {
           hardware-accelerated requestAnimationFrame easing, unveiling
           procedural grid layers and multi-stop directional gradients.
         </p>
-
-        <div className="mt-2 flex items-center gap-2 font-mono text-[11px] text-neutral-500">
-          <Compass className="size-3.5 text-emerald-500" />
-          <span>Interactive coordinates: dynamic GPU radial blur</span>
-        </div>
       </div>
     </div>
   )
