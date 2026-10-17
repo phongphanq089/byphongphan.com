@@ -119,19 +119,20 @@ export function MusicPlayer({
   return (
     <div
       className={cn(
-        "flex w-[330px] max-w-[calc(100vw-32px)] flex-col overflow-hidden bg-transparent text-foreground select-none sm:w-[380px]",
+        "flex w-[min(calc(100vw-36px),300px)] max-w-[340px] flex-col overflow-hidden bg-transparent text-foreground select-none sm:w-[330px]",
         className
       )}
     >
-      <div className="flex items-center justify-between border-b border-border/50 px-3.5 py-2.5 dark:border-white/10">
+      {/* 1. Header */}
+      <div className="flex items-center justify-between border-b border-border/50 px-3 py-2 dark:border-white/10">
         <div className="flex items-center gap-2">
-          <div className="flex size-6 items-center justify-center rounded-md bg-pp-primary/15 text-pp-primary">
-            <ListMusic className="size-3.5" />
+          <div className="flex size-5.5 items-center justify-center rounded-md bg-pp-primary/15 text-pp-primary">
+            <ListMusic className="size-3" />
           </div>
           <span className="text-xs font-semibold tracking-wide text-foreground">
             Lo-Fi Player
           </span>
-          <span className="py-0.2 rounded-full border border-border/60 bg-muted/50 px-1.5 font-mono text-[9px] text-muted-foreground">
+          <span className="rounded-full border border-border/60 bg-muted/50 px-1.5 py-0.5 font-mono text-[9px] text-muted-foreground">
             {currentIndex + 1}/{tracks.length}
           </span>
         </div>
@@ -142,20 +143,21 @@ export function MusicPlayer({
               type="button"
               onClick={onClose}
               size={"icon-xs"}
-              className="rounded!"
-              variant={"secondary"}
+              className="size-6 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
+              variant={"ghost"}
+              aria-label="Close music player"
             >
-              <X className="size-4" />
+              <X className="size-3.5" />
             </Button>
           )}
         </div>
       </div>
 
       {/* 2. Now Playing Section */}
-      <div className="flex flex-col gap-3 p-3.5">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col gap-2.5 p-3 sm:gap-3 sm:p-3.5">
+        <div className="flex items-center gap-2.5 sm:gap-3">
           {/* Artwork */}
-          <div className="relative size-14 shrink-0 overflow-hidden rounded-lg border border-black/10 shadow-sm dark:border-white/15">
+          <div className="relative size-12 shrink-0 overflow-hidden rounded-lg border border-black/10 shadow-xs sm:size-13 dark:border-white/15">
             {currentTrack.artwork ? (
               <img
                 src={currentTrack.artwork}
@@ -167,7 +169,7 @@ export function MusicPlayer({
               />
             ) : (
               <div className="flex size-full items-center justify-center bg-muted text-muted-foreground">
-                <ListMusic className="size-6" />
+                <ListMusic className="size-5" />
               </div>
             )}
             {isPlaying && (
@@ -177,14 +179,14 @@ export function MusicPlayer({
 
           {/* Track Info */}
           <div className="flex min-w-0 flex-1 flex-col justify-center">
-            <h4 className="truncate text-sm font-semibold tracking-tight text-foreground">
+            <h4 className="truncate text-xs font-semibold tracking-tight text-foreground sm:text-sm">
               {currentTrack.title}
             </h4>
-            <p className="truncate text-xs text-muted-foreground">
+            <p className="truncate text-[11px] text-muted-foreground sm:text-xs">
               {currentTrack.artist}
             </p>
             {currentTrack.album && (
-              <span className="truncate text-[10px] text-muted-foreground/70">
+              <span className="truncate text-[10px] text-muted-foreground/60">
                 {currentTrack.album}
               </span>
             )}
@@ -202,11 +204,12 @@ export function MusicPlayer({
             onClick={toggleLoop}
             aria-label={loop ? "Disable repeat" : "Enable repeat"}
             className={cn(
-              "flex size-7 items-center justify-center rounded-lg transition-colors",
+              "flex size-7 items-center justify-center rounded-lg transition-colors active:scale-95",
               loop
                 ? "bg-pp-primary/15 text-pp-primary"
                 : "text-muted-foreground hover:bg-muted/70 hover:text-foreground"
             )}
+            title={loop ? "Repeat: On" : "Repeat: Off"}
           >
             {loop ? (
               <Repeat className="size-3.5" />
@@ -216,46 +219,46 @@ export function MusicPlayer({
           </button>
 
           {/* Center: Prev, Play/Pause, Next */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1 sm:gap-1.5">
             <button
               type="button"
-              onClick={prevTrack}
+              onClick={() => prevTrack()}
               aria-label="Previous track"
-              className="flex size-8 items-center justify-center rounded-full text-foreground/80 transition-all hover:bg-muted/80 hover:text-foreground active:scale-95"
+              className="flex size-7.5 items-center justify-center rounded-full text-foreground/80 transition-all hover:bg-muted/80 hover:text-foreground active:scale-95"
             >
-              <SkipBack className="size-4 fill-current" />
+              <SkipBack className="size-3.5 fill-current" />
             </button>
 
             <button
               type="button"
               onClick={togglePlay}
               aria-label={isPlaying ? "Pause" : "Play"}
-              className="flex size-10 items-center justify-center rounded-full bg-primary text-background shadow-[0_0_16px_var(--pp-primary-glow)] transition-all hover:scale-105 active:scale-95"
+              className="flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-[0_0_14px_var(--pp-primary-glow)] transition-all hover:scale-105 active:scale-95 sm:size-9.5"
             >
               {isPlaying ? (
-                <Pause className="size-4.5 fill-current" />
+                <Pause className="size-4 fill-current" />
               ) : (
-                <Play className="ml-0.5 size-4.5 fill-current" />
+                <Play className="ml-0.5 size-4 fill-current" />
               )}
             </button>
 
             <button
               type="button"
-              onClick={nextTrack}
+              onClick={() => nextTrack()}
               aria-label="Next track"
-              className="flex size-8 items-center justify-center rounded-full text-foreground/80 transition-all hover:bg-muted/80 hover:text-foreground active:scale-95"
+              className="flex size-7.5 items-center justify-center rounded-full text-foreground/80 transition-all hover:bg-muted/80 hover:text-foreground active:scale-95"
             >
-              <SkipForward className="size-4 fill-current" />
+              <SkipForward className="size-3.5 fill-current" />
             </button>
           </div>
 
           {/* Volume Mute Toggle */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1 sm:gap-1.5">
             <button
               type="button"
               onClick={toggleMute}
               aria-label={isMuted ? "Unmute" : "Mute"}
-              className="flex size-7 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
+              className="flex size-7 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground active:scale-95"
             >
               {isMuted || volume === 0 ? (
                 <VolumeX className="size-3.5 text-muted-foreground" />
@@ -271,14 +274,14 @@ export function MusicPlayer({
               value={isMuted ? 0 : volume}
               onChange={(e) => setVolume(Number.parseFloat(e.target.value))}
               aria-label="Volume slider"
-              className="h-1 w-12 cursor-pointer accent-pp-primary"
+              className="h-1 w-9 cursor-pointer accent-pp-primary sm:w-12"
             />
           </div>
         </div>
       </div>
 
-      {/* 3. Playlist / Track List (Collapsible) */}
-      <div className="border-t border-border/50 px-3.5 pt-2 pb-2.5 dark:border-white/10">
+      {/* 3. Playlist / Track List (Collapsible - Default Closed) */}
+      <div className="border-t border-border/50 px-3 pt-2 pb-2.5 sm:px-3.5 dark:border-white/10">
         <button
           type="button"
           onClick={togglePlaylistCollapsed}
@@ -290,7 +293,7 @@ export function MusicPlayer({
         >
           <div className="flex items-center gap-1.5">
             <span>Playlist</span>
-            <span className="py-0.2 rounded-full border border-border/60 bg-muted/60 px-1.5 font-mono text-[9px] text-muted-foreground">
+            <span className="rounded-full border border-border/60 bg-muted/60 px-1.5 py-0.5 font-mono text-[9px] text-muted-foreground">
               {tracks.length}
             </span>
           </div>
@@ -313,7 +316,7 @@ export function MusicPlayer({
               transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
               className="overflow-hidden pt-1.5"
             >
-              <div className="flex max-h-[160px] flex-col gap-1 overflow-y-auto pr-1 text-xs">
+              <div className="no-scrollbar flex max-h-[140px] flex-col gap-0.5 overflow-y-auto pr-0.5 text-xs">
                 {tracks.map((t: MusicTrack, idx: number) => {
                   const isCurrent = idx === currentIndex
                   return (
@@ -322,14 +325,14 @@ export function MusicPlayer({
                       type="button"
                       onClick={() => selectTrack(idx)}
                       className={cn(
-                        "group/track flex w-full items-center gap-2.5 rounded-md px-2.5 py-1.5 text-left transition-all active:scale-98",
+                        "group/track flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left transition-all active:scale-[0.99]",
                         isCurrent
-                          ? "bg-pp-primary/10 font-medium text-pp-primary shadow-xs"
+                          ? "bg-pp-primary/10 font-semibold text-pp-primary shadow-xs"
                           : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
                       )}
                     >
-                      {/* Number or Equalizer animation */}
-                      <div className="flex size-4 shrink-0 items-center justify-center font-mono text-[10px]">
+                      {/* STT or Equalizer animation */}
+                      <div className="flex size-4.5 shrink-0 items-center justify-center font-mono text-[10px]">
                         {isCurrent && isPlaying ? (
                           <div className="flex items-end gap-[1.5px]">
                             <span className="h-2.5 w-[2px] animate-pulse rounded-full bg-pp-primary" />
@@ -337,20 +340,22 @@ export function MusicPlayer({
                             <span className="h-1.5 w-[2px] animate-pulse rounded-full bg-pp-primary delay-150" />
                           </div>
                         ) : (
-                          <span className="opacity-60">{idx + 1}</span>
+                          <span
+                            className={cn(
+                              "font-mono text-[10px]",
+                              isCurrent
+                                ? "font-bold text-pp-primary"
+                                : "text-muted-foreground/60 group-hover/track:text-foreground"
+                            )}
+                          >
+                            {String(idx + 1).padStart(2, "0")}
+                          </span>
                         )}
                       </div>
 
-                      {/* Track Details */}
+                      {/* Track Details: Title only, no duration */}
                       <div className="min-w-0 flex-1">
-                        <div className="truncate text-xs font-medium">
-                          {t.title}
-                        </div>
-                      </div>
-
-                      {/* Duration */}
-                      <div className="shrink-0 font-mono text-[10px] opacity-60">
-                        {formatTime(t.duration || 0)}
+                        <div className="truncate text-xs">{t.title}</div>
                       </div>
                     </button>
                   )

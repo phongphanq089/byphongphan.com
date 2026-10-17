@@ -22,8 +22,8 @@ export interface MusicState {
   play: () => void
   pause: () => void
   togglePlay: () => void
-  nextTrack: () => void
-  prevTrack: () => void
+  nextTrack: (autoPlay?: boolean) => void
+  prevTrack: (autoPlay?: boolean) => void
   selectTrack: (index: number) => void
   seek: (time: number) => void
   setVolume: (volume: number) => void
@@ -66,10 +66,13 @@ function getAudio(): HTMLAudioElement | null {
 
     audioInstance.addEventListener("ended", () => {
       const state = useMusicStore.getState()
-      if (state.loop && state.tracks.length > 0) {
-        state.nextTrack()
+      if (state.tracks.length === 0) return
+
+      // Automatically advance to next track and play when current song ends
+      if (state.loop || state.currentIndex < state.tracks.length - 1) {
+        state.nextTrack(true)
       } else {
-        useMusicStore.setState({ isPlaying: false })
+        useMusicStore.setState({ isPlaying: false, currentTime: 0 })
       }
     })
 
@@ -105,7 +108,7 @@ export const useMusicStore = create<MusicState>((set, get) => ({
   isMuted: false,
   loop: true,
   isOpen: false,
-  isPlaylistCollapsed: false,
+  isPlaylistCollapsed: true,
 
   getCurrentTrack: () => {
     const { tracks, currentIndex } = get()
@@ -138,25 +141,27 @@ export const useMusicStore = create<MusicState>((set, get) => ({
     }
   },
 
-  nextTrack: () => {
+  nextTrack: (autoPlay?: boolean) => {
     const { tracks, currentIndex, isPlaying } = get()
     if (tracks.length === 0) return
+    const shouldPlay = autoPlay !== undefined ? autoPlay : isPlaying
     const nextIndex = (currentIndex + 1) % tracks.length
     set({ currentIndex: nextIndex })
     const nextTrack = tracks[nextIndex]
     if (nextTrack) {
-      loadAndPlayTrack(nextTrack.src, isPlaying)
+      loadAndPlayTrack(nextTrack.src, shouldPlay)
     }
   },
 
-  prevTrack: () => {
+  prevTrack: (autoPlay?: boolean) => {
     const { tracks, currentIndex, isPlaying } = get()
     if (tracks.length === 0) return
+    const shouldPlay = autoPlay !== undefined ? autoPlay : isPlaying
     const prevIndex = (currentIndex - 1 + tracks.length) % tracks.length
     set({ currentIndex: prevIndex })
     const prevTrack = tracks[prevIndex]
     if (prevTrack) {
-      loadAndPlayTrack(prevTrack.src, isPlaying)
+      loadAndPlayTrack(prevTrack.src, shouldPlay)
     }
   },
 

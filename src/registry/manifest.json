@@ -1,82 +1,85 @@
 {
   "blockCategories": [
-    "application",
+    "404-page",
+    "auth",
+    "editor",
     "marketing",
-    "ecommerce"
+    "ecommerce",
+    "application"
   ],
   "blocks": [
     {
-      "category": "application",
+      "category": "404-page",
       "slug": "not-found-01"
     },
     {
-      "category": "application",
+      "category": "404-page",
       "slug": "not-found-02"
     },
     {
-      "category": "application",
+      "category": "editor",
       "slug": "editor"
     }
   ],
   "componentCategories": [
-    "primitives",
-    "animations"
+    "card",
+    "background",
+    "navigation",
+    "text",
+    "interactive",
+    "data-display"
   ],
   "components": [
     {
-      "category": "animations",
+      "category": "navigation",
       "slug": "line-nav"
     },
     {
-      "category": "primitives",
+      "category": "text",
       "slug": "middle-truncation"
     },
     {
-      "category": "primitives",
-      "slug": "select"
-    },
-    {
-      "category": "primitives",
+      "category": "card",
       "slug": "card"
     },
     {
-      "category": "animations",
+      "category": "interactive",
       "slug": "unboxing-bucket"
     },
     {
-      "category": "animations",
+      "category": "interactive",
       "slug": "flip-clock"
     },
     {
-      "category": "primitives",
+      "category": "data-display",
       "slug": "code-block"
     },
     {
-      "category": "primitives",
+      "category": "data-display",
       "slug": "map"
     },
     {
-      "category": "animations",
+      "category": "text",
       "slug": "text-hover-effect"
     },
     {
-      "category": "animations",
+      "category": "background",
       "slug": "background-gradient-cursor"
     },
     {
-      "category": "animations",
+      "category": "interactive",
       "slug": "pp-mark-isometric"
     },
     {
-      "category": "animations",
+      "category": "text",
       "slug": "phong-phan-isometric"
     },
     {
-      "category": "animations",
+      "category": "card",
       "slug": "spotlight-card"
     },
     {
-      "category": "animations",
+      "category": "card",
       "slug": "border-glow"
     }
   ]

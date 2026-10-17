@@ -4,6 +4,7 @@ import { PanelLeftClose, PanelLeftOpen } from "lucide-react"
 import { motion } from "motion/react"
 import { useEffect, useMemo, useState } from "react"
 
+import { COMPONENT_CATEGORIES } from "@/shared/config"
 import { cn } from "@/shared/lib/utils"
 import {
   LineNav,
@@ -33,12 +34,7 @@ export function ComponentQuickNav({
   const activeHref = `/component-ui/${currentCategory}/${currentSlug}`
 
   const navGroups: LineNavGroup[] = useMemo(() => {
-    const categories: { id: string; label: string }[] = [
-      { id: "primitives", label: "Primitives" },
-      { id: "animations", label: "Animations" },
-    ]
-
-    return categories.map((cat) => {
+    return COMPONENT_CATEGORIES.map((cat) => {
       const items = COMPONENTS_DATA.filter((comp) => comp.category === cat.id)
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((comp) => ({
@@ -57,7 +53,7 @@ export function ComponentQuickNav({
         href: `/component-ui/${cat.id}`,
         items,
       }
-    })
+    }).filter((group) => group.items.length > 0)
   }, [])
 
   const totalCount = useMemo(

@@ -148,6 +148,7 @@ export interface ComponentPreviewProps {
   previewClassName?: string
   direction?: "ltr" | "rtl"
   className?: string
+  eager?: boolean
 }
 
 export function ComponentPreview({

@@ -195,7 +195,7 @@ const BottomMenu = () => {
             style={{
               transformOrigin: "bottom center",
             }}
-            className="absolute bottom-[58px] overflow-hidden rounded-xl"
+            className="absolute bottom-[58px] max-w-[calc(100vw-24px)] overflow-hidden rounded-xl lg:right-0"
           >
             <div
               ref={elementRef}

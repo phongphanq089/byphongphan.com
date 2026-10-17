@@ -5,22 +5,54 @@
 // 1. Definition as const
 export const COMPONENT_CATEGORIES = [
   {
-    id: "primitives",
-    label: "Primitives",
-    description: "Foundational UI primitives and essential controls.",
+    id: "card",
+    label: "Card",
+    description: "Card surfaces, spotlight effects, and glowing containers.",
   },
   {
-    id: "animations",
-    label: "Animations",
-    description: "Interactive animated components and micro-interactions.",
+    id: "background",
+    label: "Background",
+    description: "Ambient canvas backdrops and cursor gradient patterns.",
+  },
+  {
+    id: "navigation",
+    label: "Navigation",
+    description: "Animated navigation lines, spring indicators, and menus.",
+  },
+  {
+    id: "text",
+    label: "Text",
+    description:
+      "Interactive typographic effects, 3D text, and truncation utilities.",
+  },
+  {
+    id: "interactive",
+    label: "Interactive",
+    description: "Physics-based containers, flip clocks, and isometric marks.",
+  },
+  {
+    id: "data-display",
+    label: "Data Display",
+    description:
+      "Syntax-highlighted code blocks, vector maps, and data visualizers.",
   },
 ] as const
 
 export const BLOCK_CATEGORIES = [
   {
-    id: "application",
-    label: "Application",
-    description: "Application layout and functional blocks.",
+    id: "404-page",
+    label: "404 Page",
+    description: "Playable games and 2D physics gravity error pages.",
+  },
+  {
+    id: "auth",
+    label: "Auth",
+    description: "Authentication screens, login, registration, and forms.",
+  },
+  {
+    id: "editor",
+    label: "Editor",
+    description: "Rich text editor and document creation surfaces.",
   },
   {
     id: "marketing",
@@ -30,7 +62,12 @@ export const BLOCK_CATEGORIES = [
   {
     id: "ecommerce",
     label: "E-Commerce",
-    description: "Product cards and checkout components.",
+    description: "Product cards, cart sheets, and checkout layouts.",
+  },
+  {
+    id: "application",
+    label: "Application",
+    description: "Application layout and functional dashboard blocks.",
   },
 ] as const
 

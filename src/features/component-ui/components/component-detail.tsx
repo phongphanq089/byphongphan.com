@@ -1,4 +1,5 @@
-import { Link } from "@tanstack/react-router"
+import { Link, useNavigate } from "@tanstack/react-router"
+import { play } from "cuelume"
 import {
   ArrowLeft,
   ArrowRight,
@@ -14,8 +15,16 @@ import { CopyButton } from "@/registry/animated/button/copy-button"
 import { REGISTRY_DEMOS } from "@/registry/demos"
 import { REGISTRY_ITEMS } from "@/registry/registry"
 import { siteConfig } from "@/shared/config"
+import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
 import { extractTocFromMarkdown } from "@/shared/lib"
-import { Badge, Button } from "@/shared/ui/core"
+import {
+  Badge,
+  Button,
+  Kbd,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/shared/ui/core"
 import {
   CodeBlockCommand,
   convertNpmCommand,
@@ -91,6 +100,46 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
         : undefined
     return { prevComponent: prev, nextComponent: next }
   }, [component.id])
+
+  const navigation = useNavigate()
+
+  useKeyboardShortcuts(
+    "left",
+    () => {
+      if (!prevComponent) return
+      play("attention", { direction: "back", emphasis: "subtle" })
+      navigation({
+        to: "/component-ui/$category/$slug",
+        params: {
+          category: prevComponent.category,
+          slug: prevComponent.slug,
+        },
+      })
+    },
+    {
+      enabled: Boolean(prevComponent),
+      preventDefault: true,
+    }
+  )
+
+  useKeyboardShortcuts(
+    "right",
+    () => {
+      if (!nextComponent) return
+      play("attention", { direction: "forward", emphasis: "subtle" })
+      navigation({
+        to: "/component-ui/$category/$slug",
+        params: {
+          category: nextComponent.category,
+          slug: nextComponent.slug,
+        },
+      })
+    },
+    {
+      enabled: Boolean(nextComponent),
+      preventDefault: true,
+    }
+  )
 
   // A component is in the custom registry when it has a corresponding registry entry
   const registryItem = REGISTRY_ITEMS.find((r) => r.name === component.slug)
@@ -238,31 +287,71 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
 
               <div className="flex items-center gap-2">
                 {prevComponent ? (
-                  <Button variant="secondary" size="icon" asChild>
-                    <Link
-                      to="/component-ui/$category/$slug"
-                      params={{
-                        category: prevComponent.category,
-                        slug: prevComponent.slug,
-                      }}
-                    >
-                      <ArrowLeft className="size-4" />
-                    </Link>
-                  </Button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="secondary"
+                        size="icon"
+                        asChild
+                        onClick={() =>
+                          play("attention", {
+                            direction: "back",
+                            emphasis: "subtle",
+                          })
+                        }
+                      >
+                        <Link
+                          to="/component-ui/$category/$slug"
+                          params={{
+                            category: prevComponent.category,
+                            slug: prevComponent.slug,
+                          }}
+                        >
+                          <ArrowLeft className="size-4 opacity-50" />
+                        </Link>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="text-[10px]">
+                      Previous Component{" "}
+                      <Kbd>
+                        <ArrowLeft />
+                      </Kbd>
+                    </TooltipContent>
+                  </Tooltip>
                 ) : null}
 
                 {nextComponent ? (
-                  <Button variant="secondary" size="icon" asChild>
-                    <Link
-                      to="/component-ui/$category/$slug"
-                      params={{
-                        category: nextComponent.category,
-                        slug: nextComponent.slug,
-                      }}
-                    >
-                      <ArrowRight className="size-4" />
-                    </Link>
-                  </Button>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button
+                        variant="secondary"
+                        size="icon"
+                        asChild
+                        onClick={() =>
+                          play("attention", {
+                            direction: "forward",
+                            emphasis: "subtle",
+                          })
+                        }
+                      >
+                        <Link
+                          to="/component-ui/$category/$slug"
+                          params={{
+                            category: nextComponent.category,
+                            slug: nextComponent.slug,
+                          }}
+                        >
+                          <ArrowRight className="size-4 opacity-50" />
+                        </Link>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top" className="text-[10px]">
+                      Next Component{" "}
+                      <Kbd>
+                        <ArrowRight />
+                      </Kbd>
+                    </TooltipContent>
+                  </Tooltip>
                 ) : null}
               </div>
             </div>
@@ -290,7 +379,6 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
         >
           <ComponentStagePreview
             slug={component.slug}
-            schematicType={component.schematicType}
             liveDemo={LiveDemo}
             code={`// ${component.name} — documentation coming soon.\n// Install via:\n// ${baseCommand}`}
           />

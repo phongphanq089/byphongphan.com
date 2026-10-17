@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 /* eslint-disable no-self-assign */
 import { Link, useNavigate } from "@tanstack/react-router"
 import { play } from "cuelume"
@@ -53,6 +54,11 @@ export function BlockDetail({ block }: BlockDetailProps) {
   const [activeTab, setActiveTab] = useState<TabMode>(initialTab)
   const navigation = useNavigate()
   const iframeRef = useRef<HTMLIFrameElement>(null)
+  const [isIframeLoading, setIsIframeLoading] = useState(true)
+
+  useEffect(() => {
+    setIsIframeLoading(true)
+  }, [block.slug])
 
   const handleTabChange = (value: string) => {
     const nextTab = value as TabMode
@@ -182,7 +188,6 @@ export function BlockDetail({ block }: BlockDetailProps) {
         showCrosshairs
         className="relative flex flex-col justify-between gap-6 overflow-hidden px-4 py-8 sm:px-8 md:py-12"
       >
-        {/* Ambient Radial Glow */}
         <div className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full bg-pp-primary/10 blur-3xl dark:bg-pp-primary/15" />
 
         <div className="relative z-10 flex flex-col gap-4">
@@ -422,34 +427,48 @@ export function BlockDetail({ block }: BlockDetailProps) {
                 "flex w-full items-center justify-center px-3 py-3 sm:px-4"
               )}
             >
-              <div className="w-full">
+              <div className="relative w-full overflow-hidden border md:rounded-xl lg:rounded-2xl">
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 z-0 bg-accent [background-image:radial-gradient(circle,var(--dot)_1px,transparent_1px)] [background-size:12px_12px] [--dot:#e4e4e7] dark:[--dot:rgba(255,255,255,0.08)]"
+                />
+
                 <ResizablePanelGroup
                   direction="horizontal"
-                  className="relative min-h-[600px] w-full rounded-md border border-border/60 bg-accent shadow-2xl sm:min-h-[700px] md:rounded-xl lg:min-h-[800px] lg:rounded-2xl"
+                  className="relative z-10 min-h-[600px] w-full sm:min-h-[700px] lg:min-h-[800px]"
                 >
                   <ResizablePanel
                     panelRef={panelRef}
                     defaultSize="100%"
                     minSize="25%"
-                    className="relative overflow-hidden bg-background"
+                    className="relative bg-background"
                   >
                     <div className="relative h-full w-full">
                       {isDragging && (
                         <div className="absolute inset-0 z-50 bg-transparent" />
                       )}
+                      {isIframeLoading && (
+                        <div className="absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 bg-background">
+                          <div className="size-6 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
+                          <span className="font-mono text-xs text-muted-foreground">
+                            Loading block preview...
+                          </span>
+                        </div>
+                      )}
                       <iframe
                         ref={iframeRef}
                         src={`/blocks-preview/${block.slug}`}
                         title={`${block.title} Preview`}
-                        className="h-full w-full border-none bg-background"
+                        className="h-full w-full bg-background"
                         sandbox="allow-scripts allow-same-origin"
+                        onLoad={() => setIsIframeLoading(false)}
                       />
                     </div>
                   </ResizablePanel>
 
                   <ResizableHandle
                     withHandle
-                    className="z-20 bg-border/60"
+                    className="mr-0.3 z-20"
                     onPointerDown={() => setIsDragging(true)}
                   />
 

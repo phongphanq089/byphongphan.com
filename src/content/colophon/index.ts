@@ -73,11 +73,11 @@ export const COLOPHON_TECH_CATEGORIES: ColophonTechCategory[] = [
         link: "https://motion.dev/",
       },
       {
-        name: "Radix UI Primitives",
-        role: "Accessible Primitives",
-        version: "^1.2",
+        name: "Base UI Primitives",
+        role: "Accessible Headless Primitives",
+        version: "^1.9",
         icon: "shadcnui",
-        link: "https://www.radix-ui.com/",
+        link: "https://base-ui.com/",
       },
       {
         name: "Paper Shaders & Three.js",
