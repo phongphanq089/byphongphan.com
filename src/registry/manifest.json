@@ -2,7 +2,6 @@
   "blockCategories": [
     "404-page",
     "auth",
-    "editor",
     "marketing",
     "ecommerce",
     "application"
@@ -15,10 +14,6 @@
     {
       "category": "404-page",
       "slug": "not-found-02"
-    },
-    {
-      "category": "editor",
-      "slug": "editor"
     }
   ],
   "componentCategories": [

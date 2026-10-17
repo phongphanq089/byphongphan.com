@@ -139,7 +139,6 @@ const CATEGORY_ICON_MAP: Record<string, ReactNode> = {
   "data-display": <Code className="size-4 text-pp-primary" />,
   "404-page": <CookingPot className="size-4 text-pp-primary" />,
   auth: <User className="size-4 text-pp-primary" />,
-  editor: <BookOpen className="size-4 text-pp-primary" />,
   marketing: <Layers className="size-4 text-pp-primary" />,
   ecommerce: <CookingPot className="size-4 text-pp-primary" />,
   application: <CookingPot className="size-4 text-pp-primary" />,
