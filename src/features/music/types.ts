@@ -21,8 +21,8 @@ export interface MusicContextValue {
   play: () => void
   pause: () => void
   togglePlay: () => void
-  nextTrack: () => void
-  prevTrack: () => void
+  nextTrack: (autoPlay?: boolean) => void
+  prevTrack: (autoPlay?: boolean) => void
   selectTrack: (index: number) => void
   seek: (time: number) => void
   setVolume: (volume: number) => void
