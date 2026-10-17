@@ -22,6 +22,7 @@
     "hooks": "@/shared/hooks"
   },
   "registries": {
+    "@byphongphan": "https://phongphandev.netlify.app/r/{name}.json",
     "@soundcn": "https://soundcn.xyz/r/{name}.json",
     "@ncdai": "https://chanhdai.com/r/{name}.json",
     "@animate-ui": "https://animate-ui.com/r/{name}.json",

@@ -13,7 +13,6 @@ import { useMemo } from "react"
 import { GridContainer } from "@/app/layouts"
 import { CopyButton } from "@/registry/animated/button/copy-button"
 import { REGISTRY_DEMOS } from "@/registry/demos"
-import { REGISTRY_ITEMS } from "@/registry/registry"
 import { siteConfig } from "@/shared/config"
 import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
 import { extractTocFromMarkdown } from "@/shared/lib"
@@ -25,10 +24,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/shared/ui/core"
-import {
-  CodeBlockCommand,
-  convertNpmCommand,
-} from "@/shared/ui/core/code-block"
+import { CodeBlockCommand } from "@/shared/ui/core/code-block"
 import { TOCMinimap } from "@/shared/ui/system/toc-minimap"
 
 import { COMPONENTS_DATA } from "../components-data"
@@ -141,14 +137,6 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
     }
   )
 
-  // A component is in the custom registry when it has a corresponding registry entry
-  const registryItem = REGISTRY_ITEMS.find((r) => r.name === component.slug)
-  const source = registryItem
-    ? `${siteConfig.url}/r/${component.slug}.json`
-    : component.slug
-
-  const baseCommand = `npx shadcn@latest add ${source}`
-
   const rawMdxContent = useMemo(() => {
     const matchingKey = Object.keys(rawMdxModules).find((filePath) => {
       const cleanPath = filePath.replace(/\?.*$/, "")
@@ -257,7 +245,7 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
             </div>
           </div>
 
-          <CodeBlockCommand {...convertNpmCommand(baseCommand)} />
+          <CodeBlockCommand name={component.slug} />
         </div>
 
         <GridContainer
@@ -380,7 +368,7 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
           <ComponentStagePreview
             slug={component.slug}
             liveDemo={LiveDemo}
-            code={`// ${component.name} — documentation coming soon.\n// Install via:\n// ${baseCommand}`}
+            code={`// ${component.name} — documentation coming soon.\n// Install via:\n// npx shadcn@latest add ${siteConfig.registry.namespace}/${component.slug}`}
           />
         </GridContainer>
       ) : (

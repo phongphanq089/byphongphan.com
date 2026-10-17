@@ -33,22 +33,22 @@ export function VariantModal({
   const [copiedInstall, setCopiedInstall] = useState(false)
   const [copiedCode, setCopiedCode] = useState(false)
 
-  const registryUrl = `${siteConfig.url}/r/${componentSlug}.json`
+  const target = `${siteConfig.registry.namespace}/${componentSlug}`
 
   const installCommand = useMemo(() => {
     switch (packageManager) {
       case "pnpm":
-        return `pnpm dlx shadcn@latest add ${registryUrl}`
+        return `pnpm dlx shadcn@latest add ${target}`
       case "npm":
-        return `npx shadcn@latest add ${registryUrl}`
+        return `npx shadcn@latest add ${target}`
       case "yarn":
-        return `npx shadcn@latest add ${registryUrl}`
+        return `npx shadcn@latest add ${target}`
       case "bun":
-        return `bunx --bun shadcn@latest add ${registryUrl}`
+        return `bunx --bun shadcn@latest add ${target}`
       default:
-        return `npx shadcn@latest add ${registryUrl}`
+        return `npx shadcn@latest add ${target}`
     }
-  }, [packageManager, registryUrl])
+  }, [packageManager, target])
 
   const handleCopyInstall = () => {
     if (navigator.clipboard) {
