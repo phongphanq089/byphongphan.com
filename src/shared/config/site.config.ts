@@ -50,7 +50,7 @@ export const siteConfig = {
     { name: "reUI", href: "https://reui.io" },
     { name: "Better Auth", href: "https://www.better-auth.com" },
     { name: "useLayouts", href: "https://uselayouts.com" },
-    { name: "Feral UI", href: "https://feralui.dev" },
+    { name: "Reactbits", href: "https://reactbits.dev/" },
     { name: "Aceternity UI", href: "https://ui.aceternity.com" },
     { name: "chanhdai.com", href: "https://chanhdai.com" },
   ],
