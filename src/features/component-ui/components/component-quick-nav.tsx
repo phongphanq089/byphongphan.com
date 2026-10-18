@@ -137,7 +137,7 @@ export function ComponentQuickNav({
         transition={{ type: "spring", damping: 28, stiffness: 280 }}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="pointer-events-auto absolute top-6 flex size-9 -translate-y-1/2 items-center justify-center rounded-md border border-border/80 bg-muted text-muted-foreground shadow-xl backdrop-blur-md transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
+        className="pointer-events-auto absolute top-5 flex size-8 -translate-y-1/2 items-center justify-center rounded-md border border-border/80 bg-muted text-muted-foreground shadow-xl backdrop-blur-md transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none"
         aria-label={
           open ? "Collapse component navigation" : "Open component navigation"
         }
