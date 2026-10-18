@@ -29,6 +29,12 @@ const BLOCK_COMPONENTS: Record<
   "not-found-02": lazyWithRetry(
     () => import("@/registry/block/not-found-02/app/not-found")
   ),
+  "not-found-03": lazyWithRetry(
+    () => import("@/registry/block/not-found-03/app/not-found")
+  ),
+  "stats-cards-01": lazyWithRetry(
+    () => import("@/registry/block/stats-cards-01/page")
+  ),
 }
 
 export const Route = createFileRoute("/blocks-preview/$slug")({

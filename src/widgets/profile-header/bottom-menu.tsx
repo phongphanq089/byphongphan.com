@@ -121,7 +121,7 @@ const BottomMenu = () => {
                   className={cn(
                     "flex items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-medium transition-all duration-150",
                     isSelected
-                      ? "bg-accent text-foreground shadow-xs"
+                      ? "border bg-accent text-foreground shadow-xs"
                       : "text-muted-foreground hover:bg-muted/70 hover:text-foreground"
                   )}
                 >

@@ -12,6 +12,7 @@ export const BLOCKS_DATA: BlockItem[] = [
     category: "404-page",
     description: "A 404 page with a playable brick breaker game.",
     schematicType: "not-found-01",
+    isNew: true,
   },
   {
     id: "block-not-found-02",
@@ -21,6 +22,17 @@ export const BLOCKS_DATA: BlockItem[] = [
     description:
       "Interactive 404 error page with 2D physics gravity, falling blocks, and draggable elements.",
     schematicType: "not-found-02",
+    isNew: true,
+  },
+  {
+    id: "block-not-found-03",
+    title: "Not Found Pixel Trail",
+    slug: "not-found-03",
+    category: "404-page",
+    description:
+      "Interactive 404 digital void experience featuring dynamic cursor pixel trails and terminal status diagnostics.",
+    schematicType: "not-found-03",
+    isNew: true,
   },
   {
     id: "block-login-01",
@@ -30,6 +42,16 @@ export const BLOCKS_DATA: BlockItem[] = [
     description:
       "Split-screen modern authentication screen with photography hero, tracked typography, and full dark mode support.",
     schematicType: "login-01",
+    isNew: true,
+  },
+  {
+    id: "block-stats-cards-01",
+    title: "Stats Cards 01",
+    slug: "stats-cards-01",
+    category: "marketing",
+    description:
+      "Overlapping interactive marketing stats cards with spring physics hover, metrics showcase, and dark mode support.",
+    schematicType: "stats-cards-01",
     isNew: true,
   },
 ]

@@ -8,11 +8,15 @@ import {
 import { Login01Schematic } from "./login-01-schematic"
 import { NotFound01Schematic } from "./not-found-01-schematic"
 import { NotFound02Schematic } from "./not-found-02-schematic"
+import { NotFound03Schematic } from "./not-found-03-schematic"
+import { StatsCards01Schematic } from "./stats-cards-01-schematic"
 
 export * from "./default-block-schematic"
 export * from "./login-01-schematic"
 export * from "./not-found-01-schematic"
 export * from "./not-found-02-schematic"
+export * from "./not-found-03-schematic"
+export * from "./stats-cards-01-schematic"
 
 export const BLOCK_SCHEMATICS_MAP: Record<
   BlockSchematicType,
@@ -21,6 +25,8 @@ export const BLOCK_SCHEMATICS_MAP: Record<
   "login-01": Login01Schematic,
   "not-found-01": NotFound01Schematic,
   "not-found-02": NotFound02Schematic,
+  "not-found-03": NotFound03Schematic,
+  "stats-cards-01": StatsCards01Schematic,
 }
 
 export function RenderBlockSchematic({

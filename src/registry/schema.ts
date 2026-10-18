@@ -16,7 +16,12 @@ export type ComponentSchematicType =
   | "spotlight-card"
   | "border-glow"
 
-export type BlockSchematicType = "not-found-01" | "not-found-02" | "login-01"
+export type BlockSchematicType =
+  | "not-found-01"
+  | "not-found-02"
+  | "not-found-03"
+  | "login-01"
+  | "stats-cards-01"
 
 export type SchematicType = ComponentSchematicType | BlockSchematicType
 

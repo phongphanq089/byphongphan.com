@@ -11,9 +11,11 @@ import {
   MiddleTruncationSchematic,
   NotFound01Schematic,
   NotFound02Schematic,
+  NotFound03Schematic,
   PhongPhanIsometricSchematic,
   PPMarkIsometricSchematic,
   SpotlightCardSchematic,
+  StatsCards01Schematic,
   TextHoverEffectSchematic,
   UnboxingBucketSchematic,
 } from "./schematics"
@@ -392,6 +394,31 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     ],
   },
   {
+    name: "not-found-03",
+    title: "Not Found Pixel Trail",
+    description:
+      "Interactive 404 digital void experience featuring dynamic cursor pixel trails and terminal status diagnostics.",
+    type: "registry:block",
+    category: "404-page",
+    schematic: NotFound03Schematic,
+    schematicType: "not-found-03",
+    isNew: true,
+    dependencies: ["motion", "lucide-react"],
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "block/not-found-03/app/not-found.tsx",
+        type: "registry:block",
+        target: "app/not-found.tsx",
+      },
+      {
+        path: "block/not-found-03/components/pixel-trail.tsx",
+        type: "registry:block",
+        target: "components/pixel-trail.tsx",
+      },
+    ],
+  },
+  {
     name: "login-01",
     title: "Login 01",
     description:
@@ -413,6 +440,31 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
         path: "block/login-01/components/login-form.tsx",
         type: "registry:block",
         target: "components/login-form.tsx",
+      },
+    ],
+  },
+  {
+    name: "stats-cards-01",
+    title: "Stats Cards 01",
+    description:
+      "Overlapping interactive marketing stats cards with spring physics hover, metrics showcase, and dark mode support.",
+    type: "registry:block",
+    category: "marketing",
+    schematic: StatsCards01Schematic,
+    schematicType: "stats-cards-01",
+    isNew: true,
+    dependencies: ["motion"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "block/stats-cards-01/page.tsx",
+        type: "registry:block",
+        target: "app/marketing/stats-cards/page.tsx",
+      },
+      {
+        path: "block/stats-cards-01/components/stats-cards.tsx",
+        type: "registry:block",
+        target: "components/stats-cards.tsx",
       },
     ],
   },

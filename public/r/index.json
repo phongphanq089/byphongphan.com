@@ -163,6 +163,19 @@
     ]
   },
   {
+    "name": "not-found-03",
+    "type": "registry:block",
+    "title": "Not Found Pixel Trail",
+    "description": "Interactive 404 digital void experience featuring dynamic cursor pixel trails and terminal status diagnostics.",
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "button"
+    ]
+  },
+  {
     "name": "login-01",
     "type": "registry:block",
     "title": "Login 01",
@@ -175,5 +188,15 @@
       "input",
       "label"
     ]
+  },
+  {
+    "name": "stats-cards-01",
+    "type": "registry:block",
+    "title": "Stats Cards 01",
+    "description": "Overlapping interactive marketing stats cards with spring physics hover, metrics showcase, and dark mode support.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
   }
 ]

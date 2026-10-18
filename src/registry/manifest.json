@@ -16,8 +16,16 @@
       "slug": "not-found-02"
     },
     {
+      "category": "404-page",
+      "slug": "not-found-03"
+    },
+    {
       "category": "auth",
       "slug": "login-01"
+    },
+    {
+      "category": "marketing",
+      "slug": "stats-cards-01"
     }
   ],
   "componentCategories": [
