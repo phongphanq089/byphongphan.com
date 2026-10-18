@@ -29,6 +29,7 @@ export interface BlockItem {
   category: BlockCategoryId
   description: string
   isPro?: boolean
+  isNew?: boolean
   badge?: string
   schematicType?: BlockSchematicType | string
   /**

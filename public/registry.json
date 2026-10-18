@@ -380,6 +380,35 @@
           "target": "components/gravity.tsx"
         }
       ]
+    },
+    {
+      "name": "login-01",
+      "type": "registry:block",
+      "title": "Login 01",
+      "description": "Split-screen modern authentication screen with photography hero, tracked typography, and full dark mode support.",
+      "category": "auth",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [
+        "button",
+        "input",
+        "label"
+      ],
+      "files": [
+        {
+          "path": "src/registry/block/login-01/page.tsx",
+          "type": "registry:block",
+          "target": "app/login/page.tsx"
+        },
+        {
+          "path": "src/registry/block/login-01/components/login-form.tsx",
+          "type": "registry:block",
+          "target": "components/login-form.tsx"
+        }
+      ]
     }
   ]
 }

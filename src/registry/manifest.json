@@ -14,6 +14,10 @@
     {
       "category": "404-page",
       "slug": "not-found-02"
+    },
+    {
+      "category": "auth",
+      "slug": "login-01"
     }
   ],
   "componentCategories": [

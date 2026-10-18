@@ -161,5 +161,19 @@
     "registryDependencies": [
       "button"
     ]
+  },
+  {
+    "name": "login-01",
+    "type": "registry:block",
+    "title": "Login 01",
+    "description": "Split-screen modern authentication screen with photography hero, tracked typography, and full dark mode support.",
+    "dependencies": [
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "button",
+      "input",
+      "label"
+    ]
   }
 ]

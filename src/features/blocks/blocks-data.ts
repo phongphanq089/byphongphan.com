@@ -22,4 +22,14 @@ export const BLOCKS_DATA: BlockItem[] = [
       "Interactive 404 error page with 2D physics gravity, falling blocks, and draggable elements.",
     schematicType: "not-found-02",
   },
+  {
+    id: "block-login-01",
+    title: "Login 01",
+    slug: "login-01",
+    category: "auth",
+    description:
+      "Split-screen modern authentication screen with photography hero, tracked typography, and full dark mode support.",
+    schematicType: "login-01",
+    isNew: true,
+  },
 ]
