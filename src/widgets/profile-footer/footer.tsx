@@ -7,6 +7,7 @@ import { siteConfig } from "@/shared/config"
 import { PhongPhanIsometric } from "@/shared/ui/animation"
 import { Button } from "@/shared/ui/core"
 import { FlipClock } from "@/shared/ui/core/flip-clock"
+import { ExternalLink } from "@/shared/ui/system"
 
 import { footerNavigation, footerSocials } from "./setting-footer"
 
@@ -138,6 +139,44 @@ export default function Footer() {
         </div>
       </GridContainer>
 
+      {/* ─── 03. Inspired By Section ─── */}
+      <GridContainer
+        borderTop
+        showCrosshairs={false}
+        className="flex items-center justify-between px-4 py-4 sm:px-6"
+      >
+        <span className="text-xs font-bold tracking-widest text-muted-foreground uppercase">
+          03 INSPIRED BY
+        </span>
+        <span className="font-mono text-[10px] text-muted-foreground">
+          {String(siteConfig.inspirations.length).padStart(2, "0")} LINKS
+        </span>
+      </GridContainer>
+
+      <GridContainer
+        columns={3}
+        borderBottom
+        showCrosshairs={false}
+        className="w-full"
+      >
+        {siteConfig.inspirations.map((item) => (
+          <ExternalLink
+            key={item.name}
+            href={item.href}
+            utm={{
+              medium: "footer",
+              campaign: "inspirations",
+            }}
+            className="group flex w-full items-center justify-between px-4 py-3.5 transition-colors duration-150 hover:bg-accent/50 sm:px-6"
+          >
+            <span className="text-sm font-medium text-foreground transition-colors group-hover:text-pp-primary">
+              {item.name}
+            </span>
+            <ArrowUpRight className="size-3.5 text-muted-foreground/60 transition-all duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-pp-primary" />
+          </ExternalLink>
+        ))}
+      </GridContainer>
+
       {/* ─── 2. Signature 3D Isometric Art Canvas ────────────────────────── */}
       <div className="relative w-full overflow-hidden py-6 sm:py-10">
         <PhongPhanIsometric padding />
@@ -147,7 +186,7 @@ export default function Footer() {
       <GridContainer
         borderTop
         showCrosshairs
-        className="flex flex-col items-center justify-between gap-3.5 px-6 py-4 text-xs text-muted-foreground sm:flex-row sm:px-8"
+        className="flex flex-col items-center justify-between gap-3.5 px-6 pt-4 pb-10 text-xs text-muted-foreground sm:flex-row sm:px-8"
       >
         <div className="flex items-center gap-2 text-[11px]">
           <span className="font-medium text-foreground/90">

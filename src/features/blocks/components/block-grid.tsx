@@ -133,7 +133,11 @@ export function BlockGrid({ category = "all" }: BlockGridProps) {
           showCrosshairs
           className="flex flex-col items-center justify-center py-16 text-center sm:py-24"
         >
-          <Slow style={{ width: 400 }} label="An empty sieve" />
+          <Slow
+            style={{ width: 400 }}
+            label="An empty sieve"
+            className="-mt-15"
+          />
           <h3 className="text-lg font-bold text-foreground sm:text-xl">
             No blocks in this category
           </h3>

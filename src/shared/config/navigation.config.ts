@@ -21,6 +21,16 @@ export const MAIN_NAV_ITEMS: NavItemConfig[] = [
     keywords: ["home", "trang chu", "main", "landing"],
   },
   {
+    id: "component-ui",
+    label: "COMPONENT-UI",
+    title: "Component UI",
+    link: "/component-ui",
+    shortcut: ["G", "C"],
+    badge: "LIVE",
+    description: "Pixel-perfect, uniquely crafted UI primitives",
+    keywords: ["components", "ui", "primitives", "widgets"],
+  },
+  {
     id: "block",
     label: "BLOCKS",
     title: "Blocks",
@@ -50,16 +60,7 @@ export const MAIN_NAV_ITEMS: NavItemConfig[] = [
     description: "Curated tools, bookmarks and resources",
     keywords: ["resources", "tai nguyen", "tools", "bookmarks"],
   },
-  {
-    id: "component-ui",
-    label: "COMPONENT-UI",
-    title: "Component UI",
-    link: "/component-ui",
-    shortcut: ["G", "C"],
-    badge: "LIVE",
-    description: "Pixel-perfect, uniquely crafted UI primitives",
-    keywords: ["components", "ui", "primitives", "widgets"],
-  },
+
   {
     id: "colophon",
     label: "COLOPHON",

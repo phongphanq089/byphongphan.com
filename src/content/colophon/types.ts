@@ -8,7 +8,7 @@ export interface ColophonHeroStackItem {
 export interface ColophonTechItem {
   name: string
   role: string
-  version?: string
+  badge?: string
   icon?: IconName
   link: string
 }

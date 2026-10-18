@@ -22,11 +22,18 @@ const BLOCK_COMPONENTS: Record<
   string,
   React.LazyExoticComponent<React.ComponentType>
 > = {
+  "login-01": lazyWithRetry(() => import("@/registry/block/login-01/page")),
   "not-found-01": lazyWithRetry(
     () => import("@/registry/block/not-found-01/app/not-found")
   ),
   "not-found-02": lazyWithRetry(
     () => import("@/registry/block/not-found-02/app/not-found")
+  ),
+  "not-found-03": lazyWithRetry(
+    () => import("@/registry/block/not-found-03/app/not-found")
+  ),
+  "stats-cards-01": lazyWithRetry(
+    () => import("@/registry/block/stats-cards-01/page")
   ),
 }
 
