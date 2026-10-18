@@ -230,7 +230,7 @@ export function CodeBlockCommand({
           setPackageManager(value as PackageManager)
         }}
       >
-        <div className="mb-2 flex items-center justify-between gap-2 pr-8">
+        <div className="mb-2 flex flex-wrap items-center justify-between gap-2 pr-8">
           <ScrollArea>
             <TabsList
               className={cn(
@@ -311,7 +311,7 @@ export function CodeBlockCommand({
       {format === "namespace" && (
         <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 px-1 text-[11px] text-muted-foreground">
           <span className="flex items-center gap-1.5">
-            <span className="size-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_var(--color-emerald-500)]" />
+            <span className="-mt-[0.3px] size-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_var(--color-emerald-500)]" />
             <span>
               Requires{" "}
               <code className="rounded bg-muted/80 px-1 py-0.5 font-mono text-[10px] text-foreground">
