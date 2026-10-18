@@ -44,12 +44,15 @@ export const siteConfig = {
   },
 
   inspirations: [
-    { name: "tailwindcss.com", href: "https://tailwindcss.com" },
-    { name: "ui.shadcn.com", href: "https://ui.shadcn.com" },
-    { name: "vercel.com", href: "https://vercel.com" },
-    { name: "aceternity.com", href: "https://www.aceternity.com/" },
+    { name: "shadcn/ui", href: "https://ui.shadcn.com" },
+    { name: "Tailwind CSS", href: "https://tailwindcss.com" },
+    { name: "Skiper UI", href: "https://skiper-ui.com" },
+    { name: "reUI", href: "https://reui.io" },
+    { name: "Better Auth", href: "https://www.better-auth.com" },
+    { name: "useLayouts", href: "https://uselayouts.com" },
+    { name: "Feral UI", href: "https://feralui.dev" },
+    { name: "Aceternity UI", href: "https://ui.aceternity.com" },
     { name: "chanhdai.com", href: "https://chanhdai.com" },
-    { name: "ui-layouts.com", href: "https://www.ui-layouts.com" },
   ],
 } as const
 
