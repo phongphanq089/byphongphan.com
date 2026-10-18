@@ -1,5 +1,4 @@
 export * from "./components/colophon-design-system"
 export * from "./components/colophon-hero"
-export * from "./components/colophon-inspirations"
 export * from "./components/colophon-technology"
 export * from "@/content/colophon"

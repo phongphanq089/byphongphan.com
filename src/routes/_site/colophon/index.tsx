@@ -3,7 +3,6 @@ import { createFileRoute } from "@tanstack/react-router"
 import {
   ColophonDesignSystem,
   ColophonHero,
-  ColophonInspirations,
   ColophonTechnology,
 } from "@/features/colophon"
 import { createSeoMeta, pagesSeoConfig, siteConfig } from "@/shared/config"
@@ -27,8 +26,6 @@ function ColophonPage() {
       <ColophonTechnology />
 
       <ColophonDesignSystem />
-
-      <ColophonInspirations />
     </div>
   )
 }

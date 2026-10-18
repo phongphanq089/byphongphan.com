@@ -380,6 +380,88 @@
           "target": "components/gravity.tsx"
         }
       ]
+    },
+    {
+      "name": "not-found-03",
+      "type": "registry:block",
+      "title": "Not Found Pixel Trail",
+      "description": "Interactive 404 digital void experience featuring dynamic cursor pixel trails and terminal status diagnostics.",
+      "category": "404-page",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [
+        "button"
+      ],
+      "files": [
+        {
+          "path": "src/registry/block/not-found-03/app/not-found.tsx",
+          "type": "registry:block",
+          "target": "app/not-found.tsx"
+        },
+        {
+          "path": "src/registry/block/not-found-03/components/pixel-trail.tsx",
+          "type": "registry:block",
+          "target": "components/pixel-trail.tsx"
+        }
+      ]
+    },
+    {
+      "name": "login-01",
+      "type": "registry:block",
+      "title": "Login 01",
+      "description": "Split-screen modern authentication screen with photography hero, tracked typography, and full dark mode support.",
+      "category": "auth",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [
+        "button",
+        "input",
+        "label"
+      ],
+      "files": [
+        {
+          "path": "src/registry/block/login-01/page.tsx",
+          "type": "registry:block",
+          "target": "app/login/page.tsx"
+        },
+        {
+          "path": "src/registry/block/login-01/components/login-form.tsx",
+          "type": "registry:block",
+          "target": "components/login-form.tsx"
+        }
+      ]
+    },
+    {
+      "name": "stats-cards-01",
+      "type": "registry:block",
+      "title": "Stats Cards 01",
+      "description": "Overlapping interactive marketing stats cards with spring physics hover, metrics showcase, and dark mode support.",
+      "category": "marketing",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/block/stats-cards-01/page.tsx",
+          "type": "registry:block",
+          "target": "app/marketing/stats-cards/page.tsx"
+        },
+        {
+          "path": "src/registry/block/stats-cards-01/components/stats-cards.tsx",
+          "type": "registry:block",
+          "target": "components/stats-cards.tsx"
+        }
+      ]
     }
   ]
 }

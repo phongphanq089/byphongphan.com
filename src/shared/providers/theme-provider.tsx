@@ -60,15 +60,12 @@ function disableTransitionsTemporarily() {
   document.head.appendChild(css)
 
   return () => {
-    // Force a DOM reflow
-    void window.getComputedStyle(document.body).opacity
-
-    // Re-enable transitions on next tick
-    setTimeout(() => {
+    // Re-enable transitions on next animation frame without forcing synchronous layout reflow
+    requestAnimationFrame(() => {
       if (document.head.contains(css)) {
         document.head.removeChild(css)
       }
-    }, 1)
+    })
   }
 }
 
@@ -123,13 +120,10 @@ export function ThemeProvider({
       localStorage.setItem(storageKey, newTheme)
     }
 
-    const restoreTransitions = disableTransitionsTemporarily()
-
     const updateStateAndDOM = () => {
       applyThemeToDOM(newTheme)
       setTheme(newTheme)
       setResolvedTheme(newTheme === "system" ? getSystemTheme() : newTheme)
-      restoreTransitions()
     }
 
     const hasViewTransition =
@@ -142,7 +136,10 @@ export function ThemeProvider({
       return
     }
 
+    // Fallback for browsers without View Transitions API
+    const restoreTransitions = disableTransitionsTemporarily()
     updateStateAndDOM()
+    restoreTransitions()
   }
 
   const value = {
