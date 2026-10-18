@@ -7,14 +7,14 @@ export const SectionBlog = () => {
   return (
     <section>
       <GridContainer borderTop className="relative p-0" showCrosshairs={false}>
-        <SectionHeading id="#blog" heading="Blog" />
+        <SectionHeading id="blog" heading="Blog" />
       </GridContainer>
 
       <GridContainer
         showCrosshairs={false}
         className="flex flex-col items-center justify-center p-4 text-center sm:p-6 md:p-8"
       >
-        <Riffle style={{ width: 400 }} label="Coming soon" />
+        <Riffle style={{ width: 400 }} label="Coming soon" className="-mt-10" />
 
         <h3 className="text-lg font-bold text-foreground sm:text-xl">
           Coming soon
