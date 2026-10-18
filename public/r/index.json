@@ -161,44 +161,5 @@
     "registryDependencies": [
       "button"
     ]
-  },
-  {
-    "name": "editor",
-    "type": "registry:block",
-    "title": "Rich Text Editor",
-    "description": "Modern Lexical rich text editor featuring top toolbar, floating bubble menu, slash commands, markdown shortcuts, and interactive widgets.",
-    "dependencies": [
-      "@lexical/clipboard",
-      "@lexical/code",
-      "@lexical/code-prism",
-      "@lexical/extension",
-      "@lexical/file",
-      "@lexical/hashtag",
-      "@lexical/history",
-      "@lexical/html",
-      "@lexical/link",
-      "@lexical/list",
-      "@lexical/mark",
-      "@lexical/markdown",
-      "@lexical/overflow",
-      "@lexical/plain-text",
-      "@lexical/react",
-      "@lexical/rich-text",
-      "@lexical/selection",
-      "@lexical/table",
-      "@lexical/utils",
-      "lexical",
-      "lucide-react",
-      "katex",
-      "next-themes"
-    ],
-    "registryDependencies": [
-      "button",
-      "dialog",
-      "dropdown-menu",
-      "popover",
-      "tooltip",
-      "separator"
-    ]
   }
 ]

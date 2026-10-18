@@ -1,4 +1,4 @@
-import { TerminalIcon, TextAlignStartIcon } from "lucide-react"
+import { Check, Copy, TerminalIcon, TextAlignStartIcon } from "lucide-react"
 import { useMemo, useState } from "react"
 
 import { siteConfig } from "@/shared/config"
@@ -123,6 +123,11 @@ export type CodeBlockCommandProps = {
    * />
    * ```
    */
+  /**
+   * Preferred format for registry command: "namespace" (@byphongphan/name) or "url" (full URL).
+   * Defaults to "namespace".
+   */
+  defaultFormat?: "namespace" | "url"
   onCopyError?: (error: Error) => void
 }
 
@@ -135,23 +140,46 @@ export function CodeBlockCommand({
   npm,
   bun,
   className,
+  defaultFormat,
   onCopySuccess,
   onCopyError,
 }: CodeBlockCommandProps) {
   const [packageManager, setPackageManager] = usePackageManager()
+  const [format, setFormat] = useState<"namespace" | "url">(
+    defaultFormat ?? "namespace"
+  )
+  const [copiedConfig, setCopiedConfig] = useState(false)
 
   const normalizedCommand = useMemo(() => {
     if (name) {
-      return `npx shadcn@latest add ${siteConfig.url}/r/${name}.json`
+      return format === "namespace"
+        ? `npx shadcn@latest add ${siteConfig.registry.namespace}/${name}`
+        : `npx shadcn@latest add ${siteConfig.url}/r/${name}.json`
     }
     if (command) {
-      return command
+      let cmd = command
         .replaceAll("@site", siteConfig.url)
         .replaceAll("{{siteUrl}}", siteConfig.url)
         .replaceAll("{siteUrl}", siteConfig.url)
+
+      if (format === "namespace" && cmd.includes(`${siteConfig.url}/r/`)) {
+        cmd = cmd.replace(
+          new RegExp(`${siteConfig.url}/r/([^/\\s]+)\\.json`, "g"),
+          `${siteConfig.registry.namespace}/$1`
+        )
+      } else if (
+        format === "url" &&
+        cmd.includes(siteConfig.registry.namespace)
+      ) {
+        cmd = cmd.replace(
+          new RegExp(`${siteConfig.registry.namespace}/([^/\\s]+)`, "g"),
+          `${siteConfig.url}/r/$1.json`
+        )
+      }
+      return cmd
     }
     return undefined
-  }, [name, command])
+  }, [name, command, format])
 
   const converted = useMemo(
     () =>
@@ -179,6 +207,15 @@ export function CodeBlockCommand({
     [tabs]
   )
 
+  const handleCopyConfig = () => {
+    const configSnippet = `"${siteConfig.registry.namespace}": "${siteConfig.registry.urlTemplate}"`
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(configSnippet)
+      setCopiedConfig(true)
+      setTimeout(() => setCopiedConfig(false), 2000)
+    }
+  }
+
   return (
     <div
       className={cn(
@@ -193,31 +230,60 @@ export function CodeBlockCommand({
           setPackageManager(value as PackageManager)
         }}
       >
-        <ScrollArea>
-          <TabsList
-            className={cn(
-              "mb-2 bg-transparent px-4 inset-ring-0 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
-            )}
-          >
-            <IconSwap>
-              <IconSwapItem className="mr-2" key={packageManager}>
-                {getIconForPackageManager(packageManager)}
-              </IconSwapItem>
-            </IconSwap>
+        <div className="mb-2 flex items-center justify-between gap-2 pr-8">
+          <ScrollArea>
+            <TabsList
+              className={cn(
+                "bg-transparent px-4 inset-ring-0 [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground"
+              )}
+            >
+              <IconSwap>
+                <IconSwapItem className="mr-2" key={packageManager}>
+                  {getIconForPackageManager(packageManager)}
+                </IconSwapItem>
+              </IconSwap>
 
-            {tabsFiltered.map(([key]) => {
-              return (
-                <TabsTrigger
-                  key={key}
-                  className="rounded-sm p-0 px-2"
-                  value={key}
-                >
-                  <span className="-translate-y-[2px]">{key}</span>
-                </TabsTrigger>
-              )
-            })}
-          </TabsList>
-        </ScrollArea>
+              {tabsFiltered.map(([key]) => {
+                return (
+                  <TabsTrigger
+                    key={key}
+                    className="rounded-sm p-0 px-2"
+                    value={key}
+                  >
+                    <span className="-translate-y-[2px]">{key}</span>
+                  </TabsTrigger>
+                )
+              })}
+            </TabsList>
+          </ScrollArea>
+
+          <div className="flex items-center rounded-md border border-border/60 bg-muted/40 p-0.5 text-[10px]">
+            <button
+              type="button"
+              onClick={() => setFormat("namespace")}
+              className={cn(
+                "cursor-pointer rounded px-1.5 py-0.5 font-medium transition-colors",
+                format === "namespace"
+                  ? "bg-background font-semibold text-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              {siteConfig.registry.namespace}
+            </button>
+            <button
+              type="button"
+              onClick={() => setFormat("url")}
+              className={cn(
+                "cursor-pointer rounded px-1.5 py-0.5 font-medium transition-colors",
+                format === "url"
+                  ? "bg-background font-semibold text-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              URL
+            </button>
+          </div>
+        </div>
 
         {tabsFiltered.map(([key, value]) => {
           return (
@@ -241,6 +307,41 @@ export function CodeBlockCommand({
           )
         })}
       </Tabs>
+
+      {format === "namespace" && (
+        <div className="mt-2.5 flex flex-wrap items-center justify-between gap-2 px-1 text-[11px] text-muted-foreground">
+          <span className="flex items-center gap-1.5">
+            <span className="size-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_var(--color-emerald-500)]" />
+            <span>
+              Requires{" "}
+              <code className="rounded bg-muted/80 px-1 py-0.5 font-mono text-[10px] text-foreground">
+                {siteConfig.registry.namespace}
+              </code>{" "}
+              in{" "}
+              <code className="rounded bg-muted/80 px-1 py-0.5 font-mono text-[10px] text-foreground">
+                components.json
+              </code>
+            </span>
+          </span>
+          <button
+            type="button"
+            onClick={handleCopyConfig}
+            className="inline-flex cursor-pointer items-center gap-1 font-mono text-[10px] font-medium text-pp-primary hover:underline"
+          >
+            {copiedConfig ? (
+              <>
+                <Check className="size-3 text-emerald-400" />
+                <span>Copied config!</span>
+              </>
+            ) : (
+              <>
+                <Copy className="size-3" />
+                <span>Copy config</span>
+              </>
+            )}
+          </button>
+        </div>
+      )}
 
       <CopyButton
         className="absolute top-2 right-2 z-10 size-6 rounded-md border-none [&_svg:not([class*='size-'])]:size-3.5"
