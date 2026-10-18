@@ -4,6 +4,11 @@ export const siteConfig = {
   description:
     "Portfolio of Phong Phan. Frontend Engineer with a solid fullstack foundation, specializing in React, TypeScript, TanStack, fluid interactions, and UI craftsmanship.",
   url: "https://phongphandev.netlify.app",
+  registry: {
+    namespace: "@byphongphan",
+    name: "byphongphan",
+    urlTemplate: "https://phongphandev.netlify.app/r/{name}.json",
+  },
   ogImage: "/og-image.jpg",
   repoUrl: "https://github.com/phongphanq089/byphongphan.com",
 

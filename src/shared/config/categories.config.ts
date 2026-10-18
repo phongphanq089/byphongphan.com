@@ -50,11 +50,6 @@ export const BLOCK_CATEGORIES = [
     description: "Authentication screens, login, registration, and forms.",
   },
   {
-    id: "editor",
-    label: "Editor",
-    description: "Rich text editor and document creation surfaces.",
-  },
-  {
     id: "marketing",
     label: "Marketing",
     description: "Landing page and hero marketing sections.",

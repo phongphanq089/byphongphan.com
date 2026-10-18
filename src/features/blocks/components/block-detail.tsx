@@ -81,7 +81,6 @@ export function BlockDetail({ block }: BlockDetailProps) {
     }
     return (
       resolvedFiles.find((f) => f.path === "app/page.tsx")?.path ??
-      resolvedFiles.find((f) => f.path === "editor.tsx")?.path ??
       resolvedFiles.find((f) => f.path === "app/not-found.tsx")?.path ??
       resolvedFiles[0]?.path ??
       null

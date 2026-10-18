@@ -39,22 +39,39 @@ export function InstallationGuide({
   const fileName =
     registryItem?.files[0]?.target ?? `components/ui/${componentSlug}.tsx`
 
-  const registryUrl = `${siteConfig.url}/r/${componentSlug}.json`
+  const [commandFormat, setCommandFormat] = useState<"namespace" | "url">(
+    "namespace"
+  )
+  const [copiedConfig, setCopiedConfig] = useState(false)
+
+  const cliTarget =
+    commandFormat === "namespace"
+      ? `${siteConfig.registry.namespace}/${componentSlug}`
+      : `${siteConfig.url}/r/${componentSlug}.json`
 
   const cliCommand = useMemo(() => {
     switch (packageManager) {
       case "pnpm":
-        return `pnpm dlx shadcn@latest add ${registryUrl}`
+        return `pnpm dlx shadcn@latest add ${cliTarget}`
       case "npm":
-        return `npx shadcn@latest add ${registryUrl}`
+        return `npx shadcn@latest add ${cliTarget}`
       case "yarn":
-        return `npx shadcn@latest add ${registryUrl}`
+        return `npx shadcn@latest add ${cliTarget}`
       case "bun":
-        return `bunx --bun shadcn@latest add ${registryUrl}`
+        return `bunx --bun shadcn@latest add ${cliTarget}`
       default:
-        return `npx shadcn@latest add ${registryUrl}`
+        return `npx shadcn@latest add ${cliTarget}`
     }
-  }, [packageManager, registryUrl])
+  }, [packageManager, cliTarget])
+
+  const handleCopyConfig = () => {
+    const configSnippet = `"${siteConfig.registry.namespace}": "${siteConfig.registry.urlTemplate}"`
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(configSnippet)
+      setCopiedConfig(true)
+      setTimeout(() => setCopiedConfig(false), 2000)
+    }
+  }
 
   const depCommand = useMemo(() => {
     const depString = dependencies.join(" ")
@@ -153,25 +170,89 @@ export function cn(...inputs: ClassValue[]) {
               ))}
             </div>
 
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon-xs"
-              onClick={() => copyToClipboard(cliCommand, setCopiedCli)}
-              className="size-6 text-muted-foreground hover:text-foreground"
-            >
-              {copiedCli ? (
-                <Check className="size-3.5 text-emerald-400" />
-              ) : (
-                <Copy className="size-3.5" />
-              )}
-            </Button>
+            <div className="flex items-center gap-2">
+              <div className="flex items-center rounded-md border border-border/60 bg-background/60 p-0.5 text-[10px]">
+                <button
+                  type="button"
+                  onClick={() => setCommandFormat("namespace")}
+                  className={cn(
+                    "cursor-pointer rounded px-1.5 py-0.5 font-medium transition-colors",
+                    commandFormat === "namespace"
+                      ? "bg-muted font-semibold text-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  {siteConfig.registry.namespace}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCommandFormat("url")}
+                  className={cn(
+                    "cursor-pointer rounded px-1.5 py-0.5 font-medium transition-colors",
+                    commandFormat === "url"
+                      ? "bg-muted font-semibold text-foreground shadow-xs"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  URL
+                </button>
+              </div>
+
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon-xs"
+                onClick={() => copyToClipboard(cliCommand, setCopiedCli)}
+                className="size-6 text-muted-foreground hover:text-foreground"
+              >
+                {copiedCli ? (
+                  <Check className="size-3.5 text-emerald-400" />
+                ) : (
+                  <Copy className="size-3.5" />
+                )}
+              </Button>
+            </div>
           </div>
 
           <div className="p-4">
             <code className="text-xs break-all text-foreground">
               {cliCommand}
             </code>
+
+            {commandFormat === "namespace" && (
+              <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-border/60 pt-3 text-[11px] text-muted-foreground">
+                <span className="flex items-center gap-1.5">
+                  <span className="size-1.5 rounded-full bg-emerald-500 shadow-[0_0_6px_var(--color-emerald-500)]" />
+                  <span>
+                    Requires{" "}
+                    <code className="rounded bg-muted px-1 py-0.5 font-mono text-[10px] text-foreground">
+                      {siteConfig.registry.namespace}
+                    </code>{" "}
+                    in{" "}
+                    <code className="rounded bg-muted px-1 py-0.5 font-mono text-[10px] text-foreground">
+                      components.json
+                    </code>
+                  </span>
+                </span>
+                <button
+                  type="button"
+                  onClick={handleCopyConfig}
+                  className="inline-flex cursor-pointer items-center gap-1 font-mono text-[10px] font-medium text-pp-primary hover:underline"
+                >
+                  {copiedConfig ? (
+                    <>
+                      <Check className="size-3 text-emerald-400" />
+                      <span>Copied config!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="size-3" />
+                      <span>Copy config</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}

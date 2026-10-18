@@ -29,12 +29,6 @@ const BLOCK_CATEGORY_HERO_CONFIG: Record<
     description:
       "Interactive 404 error experiences featuring playable brick breaker games and 2D physics gravity blocks.",
   },
-  editor: {
-    badge: "Editor Surfaces",
-    title: "Modern Lexical rich text editors.",
-    description:
-      "Production-grade extensible rich text editor with slash commands, markdown shortcuts, and floating bubble toolbar.",
-  },
   auth: {
     badge: "Authentication",
     title: "Clean, accessible authentication screens.",
