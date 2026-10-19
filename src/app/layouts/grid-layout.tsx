@@ -191,7 +191,7 @@ export function GridContainer({
     >
       <div
         className={cn(
-          "relative mx-auto h-full transition-[max-width] duration-300 ease-in-out",
+          "transition-[max-width relative mx-auto h-full",
           borderLeft && "border-l border-border",
           borderRight && "border-r border-border",
           maxWidthClass,

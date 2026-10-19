@@ -2,6 +2,7 @@ import { Outlet, useRouterState } from "@tanstack/react-router"
 import { useEffect, useState } from "react"
 
 import { HOME_TOC_ITEMS } from "@/shared/config"
+import { useScrollToTop } from "@/shared/hooks/use-scroll-to-top"
 import { cn } from "@/shared/lib/utils"
 import { ThemeProvider } from "@/shared/providers/theme-provider"
 import { EdgeBlur } from "@/shared/ui/system/edge-blur"
@@ -19,6 +20,10 @@ import {
 } from "./grid-layout"
 
 export function ProfileLayout({ children }: { children?: React.ReactNode }) {
+  // Reset scroll position immediately on route changes to prevent delayed scrolling
+  // caused by scroll restoration or smooth-scroll behavior.
+  useScrollToTop()
+
   const [showMinimap, setShowMinimap] = useState(false)
   const currentPath = useRouterState({ select: (s) => s.location.pathname })
   const isHome = currentPath === "/" || currentPath === ""
@@ -66,7 +71,7 @@ export function ProfileLayout({ children }: { children?: React.ReactNode }) {
               <GridContainer
                 borderTop={false}
                 borderBottom={true}
-                className="flex justify-center p-0 transition-all duration-300"
+                className="flex justify-center p-0"
               >
                 <Header />
               </GridContainer>
