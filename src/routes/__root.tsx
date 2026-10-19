@@ -98,7 +98,25 @@ function RootComponent() {
   )
 }
 
-const themeScript = `(function(){try{var t=localStorage.getItem('vite-ui-theme')||'dark',r=document.documentElement,s=t==='system'?(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'):t;r.classList.remove('light','dark');r.classList.add(s);}catch(e){}})()`
+const themeScript = `
+(function() {
+  try {
+    var theme = localStorage.getItem('vite-ui-theme') || 'dark';
+    var resolvedTheme = theme;
+
+    if (theme === 'system') {
+      resolvedTheme = window.matchMedia(
+        '(prefers-color-scheme: dark)'
+      ).matches ? 'dark' : 'light';
+    }
+
+    var root = document.documentElement;
+
+    root.classList.remove('light', 'dark');
+    root.classList.add(resolvedTheme);
+  } catch (error) {}
+})();
+`
 
 function RootDocument({
   children,

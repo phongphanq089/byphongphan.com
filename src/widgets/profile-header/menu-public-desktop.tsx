@@ -253,7 +253,7 @@ export function SpotlightNavbar({
 
 export function Header() {
   return (
-    <header className="flex h-12 w-full items-center justify-between bg-accent/40 backdrop-blur-md dark:bg-[#111111]">
+    <header className="flex h-12 w-full items-center justify-between bg-accent/40 backdrop-blur-md dark:bg-background/90">
       <Link
         to="/"
         className="flex h-full items-center gap-2 border-r border-border px-4 text-sm font-medium text-muted-foreground transition-all hover:bg-accent/60 hover:text-foreground"
