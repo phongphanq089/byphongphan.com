@@ -1,163 +1,192 @@
-# [phongphandev.netlify.app](https://phongphandev.netlify.app)
+<div align="center">
 
-<p>
-  <picture><source media="(prefers-color-scheme: dark)" srcset="https://ik.imagekit.io/htnacim0q/byphongphan.com/README-1.jpg" /><img alt="header" src="https://ik.imagekit.io/htnacim0q/byphongphan.com/README-1.jpg" /></picture>
+# Phong Phan — Portfolio & UI Registry
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://ik.imagekit.io/htnacim0q/byphongphan.com/README-1.jpg" />
+    <img alt="Phong Phan Portfolio Header Banner" src="https://ik.imagekit.io/htnacim0q/byphongphan.com/README-1.jpg" width="100%" />
+  </picture>
 </p>
 
-<p>
-  <a href="https://github.com/phongphanq089/phong-dev-portfiolio"><img alt="license" src="https://img.shields.io/github/license/phongphanq089/phong-dev-portfiolio?style=flat-square" /></a>
-  <img alt="GitHub Stars" src="https://img.shields.io/github/stars/phongphanq089/phong-dev-portfiolio?style=flat-square" />
+[![License: MIT](https://img.shields.io/badge/License-MIT-black.svg?style=flat-square)](./LICENSE.md)
+[![GitHub Stars](https://img.shields.io/github/stars/phongphanq089/byphongphan.com?style=flat-square&color=white&labelColor=18181b)](https://github.com/phongphanq089/byphongphan.com/stargazers)
+[![TanStack Start](https://img.shields.io/badge/TanStack_Start-Fullstack_SSR-blue?style=flat-square)](https://tanstack.com/start)
+[![React 19](https://img.shields.io/badge/React_19-Modern-61dafb?style=flat-square&logo=react&logoColor=black)](https://react.dev)
+[![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS_v4-OKLCH_Tokens-38bdf8?style=flat-square&logo=tailwindcss&logoColor=white)](https://tailwindcss.com)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Strict_5.7-3178c6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![CI Status](https://img.shields.io/github/actions/workflow/status/phongphanq089/byphongphan.com/ci.yml?branch=main&style=flat-square&label=CI)](https://github.com/phongphanq089/byphongphan.com/actions)
+
+<p align="center">
+  A high-craft developer portfolio and production-ready <strong>shadcn-compatible UI registry</strong>.<br />
+  Engineered natively with <strong>TanStack Start</strong>, <strong>React 19</strong>, <strong>Tailwind CSS v4</strong>, and micro-interactive audio feedback.
 </p>
 
-A pixel-perfect dev portfolio and shadcn registry showcasing my work as a Frontend Engineer — featuring interactive 3D isometric typography, 2D physics, WebGL shaders, vector maps, a custom sound engine, and a full-featured Lexical rich text editor.
+<p align="center">
+  <strong><a href="https://byphongphan.com">Explore Live Demo → byphongphan.com</a></strong>
+</p>
 
-→ Live site: [phongphandev.netlify.app](https://phongphandev.netlify.app)
+</div>
 
-![screenshot](https://ik.imagekit.io/htnacim0q/byphongphan.com/README-2.png)
+---
 
-## Overview
+## 🌟 Highlights & Craftsmanship
 
-### Stack
+This project is built as a testament to frontend engineering excellence, combining fluid micro-interactions, strict architecture, and modern web capabilities:
 
-- React 19
-- TanStack Start + TanStack Router
-- TanStack Query v5
-- Vite 8
-- Tailwind CSS v4 (OKLCH tokens)
-- shadcn/ui + Radix UI
-- Netlify (deploy & SSR adapter)
-- TypeScript
+- **Acoustic Interaction Engine:** Integrated sensory audio feedback using Web Audio API and `cuelume` acoustic tokens on key interactions (mode toggles, action buttons, command menu).
+- **Embedded Lo-Fi Audio Player:** A minimalist ambient music player with interactive playback controls and real-time visualizers.
+- **Omnipresent ⌘K Command Palette:** High-speed, keyboard-driven navigation (`cmdk`) providing instant fuzzy search across blocks, components, pages, and external profiles.
+- **Dynamic OKLCH Color Engine:** Modern color palettes configured with perceptual OKLCH tokens (`@theme inline`), paired with View Transitions API for seamless, zero-FOUC theme switching.
+- **Physics & Interactive WebGL:** Realistic 2D rigid-body physics simulations powered by Matter.js (Unboxing Bucket block, Daikanoid game) alongside vector mapping via MapLibre GL.
+- **AI & Agent Ready (`/llms.txt` & `/index.md`):** Standardized plain-text manifest and raw markdown endpoints automatically compiled during registry build for seamless ingestion by LLMs, Cursor, and AI agents.
+- **Self-Hosted Shadcn Registry:** Distributes installable components, hooks, and full-page blocks directly into any codebase via the standard `shadcn` CLI.
+- **Zero-FOUC Hydration:** Synchronous pre-render script execution preventing theme flashes across both SSR and client hydration lifecycles.
+- **SEO & PWA Ready:** Pre-rendered routes, automated sitemaps, JSON-LD Structured Data (Person schema, BlogPosting), and offline-capable Service Worker caching.
 
-### Interactive & Animation Engines
+---
 
-- [Motion](https://motion.dev) (Framer Motion) — spring physics, layout animations
-- [GSAP](https://gsap.com) — timeline-based animations
-- [Matter.js](https://brm.io/matter-js) — 2D physics (gravity, draggable blocks)
-- [Three.js](https://threejs.org) + WebGL shaders — canvas effects
-- Custom Web Audio sound engine — audio feedback & lofi music toggle
+## ⚡ Tech Stack & Architecture
 
-### Featured
-
-- Clean & modern blueprint-themed design
-- Light/Dark themes
-- 3D isometric block typography with dynamic lighting & sound
-- Interactive Vietnam vector map ([MapLibre GL](https://maplibre.org))
-- 2D physics sandbox (Matter.js gravity simulation)
-- Command menu (⌘K)
-- Web Audio sound engine with haptic feedback
-- Floating dynamic dock with scroll progress & TOC minimap
-- Code gutter numbers simulation
-- vCard integration
-- SEO optimized ([JSON-LD schema](https://json-ld.org), sitemap, robots)
-- Dynamic OG image generation
-- Installable as PWA (custom service worker)
-- Colophon page (architecture, design tokens, typography specimens)
-
-### Content
-
-Centralized document system powered by MDX:
-
-- Unified content layer for component & hook docs
-- Category-based content organization
-- Syntax highlighting with [Shiki](https://shiki.style) + rehype-pretty-code
-- Dynamic OG images for rich link previews
-
-### Registry
-
-Custom registry powered by the [shadcn CLI](https://ui.shadcn.com/docs/cli) with a build system (`scripts/build-registry.ts`) that outputs installable JSON to `public/r/`.
-
-Each entry is well-documented and includes:
-
-- Live preview & code snippets
-- Beautiful, readable code blocks
-- One-click command blocks (pnpm, npm, yarn, bun)
-
-#### UI Primitives
-
-| Component         | Description                                                                   |
-| ----------------- | ----------------------------------------------------------------------------- |
-| Card              | Card with header, content, and footer                                         |
-| Select            | Radix-powered select with search                                              |
-| Code Block        | Shiki syntax highlighting with line numbers, diff mode, copy actions          |
-| Map               | Interactive vector map with MapLibre GL (themes, markers, routes, clustering) |
-| Middle Truncation | Canvas-measured binary search text truncation                                 |
-
-#### Animated Components
-
-| Component                  | Description                                                          |
-| -------------------------- | -------------------------------------------------------------------- |
-| Flip Clock                 | Mechanical split-flap counter with real-time, timer, stopwatch modes |
-| Unboxing Bucket            | 3D unboxing animation with spring-physics feature chips              |
-| Text Hover Effect          | SVG stroke reveal with radial gradient cursor tracking               |
-| Background Gradient Cursor | Cursor-tracking canvas with procedural dots & grid                   |
-| Isometric Block Typography | 3D extruded text on blueprint grid with dynamic lighting             |
-| Isometric Monogram Mark    | 3D voxel monogram with hatching, wireframe & flashlight              |
-
-#### Blocks
-
-| Block             | Description                                                          |
-| ----------------- | -------------------------------------------------------------------- |
-| Not Found 01      | 404 page with a playable brick breaker game                          |
-| Not Found Gravity | 404 page with Matter.js 2D physics & draggable blocks                |
-| Rich Text Editor  | Full Lexical editor with toolbar, slash commands, Excalidraw, embeds |
-
-#### Hooks
-
-| Hook          | Description                                      |
-| ------------- | ------------------------------------------------ |
-| useMediaQuery | Responsive media query listener with SSR support |
-
-## Development
-
-Please refer to the [Development Guide](./DEVELOPMENT.md) for more details.
-
-### Quick Start
-
-```bash
-pnpm install
-pnpm dev
-```
-
-### Available Scripts
-
-| Script                | Description                            |
-| --------------------- | -------------------------------------- |
-| `pnpm dev`            | Start dev server with Vite (port 5731) |
-| `pnpm build`          | Type-check & production build          |
-| `pnpm preview`        | Preview production build               |
-| `pnpm test`           | Run tests with Vitest                  |
-| `pnpm lint`           | Run ESLint                             |
-| `pnpm type-check`     | Run TypeScript type checking           |
-| `pnpm format`         | Format with Prettier + ESLint fix      |
-| `pnpm build:registry` | Build registry JSON to `public/r/`     |
-
-## Project Structure
+Inspired by **Feature-Sliced Design (FSD)**, the codebase prioritizes unidirectional dependencies, strict TypeScript typing, and modular boundaries:
 
 ```
 src/
-├── app/           # Layout compositions (grid-layout, profile-layout)
-├── content/       # MDX content (component & hook documentation)
-├── entities/      # Domain objects
-├── features/      # Feature modules (home, blocks, component-ui, colophon)
-├── registry/      # Custom shadcn registry (components, hooks, blocks, demos)
-├── routes/        # TanStack Router file-based routes
-├── shared/        # Shared UI, hooks, lib, config, constants, icons, providers
-├── styles/        # Global styles (Tailwind v4, OKLCH tokens)
-├── types/         # Global TypeScript definitions
-└── widgets/       # UI compositions (command-menu, profile-header, profile-footer)
+├── app/               # Root layouts, application providers, and global error boundaries
+├── content/           # MDX source content for components, hooks, and guides
+├── entities/          # Domain entities & shared business data models
+├── features/          # Self-contained feature slices (home, blocks, component-ui, colophon)
+├── registry/          # Shadcn registry source code (ui, animated, blocks, hooks, variants)
+├── routes/            # File-based routing & server functions (TanStack Router)
+├── shared/            # Reusable domain-agnostic UI primitives, sound engine, and configs
+├── styles/            # OKLCH tokens, global Tailwind CSS v4 variables, and utility classes
+└── widgets/           # Composed sections (profile header, footer, command menu)
 ```
 
-## License
+### Core Technologies
 
-Everything in this repository is licensed under the [MIT license](./LICENSE.md), with one exception: my name and my logo, which are covered by the [trademark and brand policy](./TRADEMARK.md).
+| Category               | Technology                                                                     |
+| ---------------------- | ------------------------------------------------------------------------------ |
+| **Framework**          | [TanStack Start](https://tanstack.com/start) (React 19 SSR & Server Functions) |
+| **Routing**            | [TanStack Router](https://tanstack.com/router) (100% type-safe file routes)    |
+| **Styling**            | [Tailwind CSS v4](https://tailwindcss.com) + OKLCH Design Tokens               |
+| **Animation & Motion** | Motion, GSAP, Canvas 2D, and View Transitions API                              |
+| **Sound & Haptics**    | Web Audio API, `cuelume`, and Web Haptics                                      |
+| **Component Registry** | Custom automated shadcn builder (`scripts/build-registry.ts`)                  |
+| **Hosting & Edge**     | Netlify Edge SSR                                                               |
 
-The code and the writing are yours. Fork it, copy it, quote it, translate it. Just make sure to <ins>remove all my personal information</ins> and swap the branding before publishing your website.
+---
 
-## Author
+## 📦 Component Registry (shadcn CLI Compatible)
 
-**Phong Phan** — Frontend Engineer · Fullstack Capable
+All custom components, animated hooks, and block templates are packaged into standard shadcn JSON manifests under `public/r/`.
 
-- Website: [phongphandev.netlify.app](https://phongphandev.netlify.app)
-- GitHub: [@phongphanq089](https://github.com/phongphanq089)
-- LinkedIn: [Phong Phan](https://www.linkedin.com/in/phong-phan-719464201)
-- X: [@PhongPhanq089](https://x.com/PhongPhanq089)
+You can install any component from this portfolio directly into your own project:
+
+```bash
+# Add using the direct manifest URL
+pnpm dlx shadcn@latest add https://byphongphan.com/r/line-nav.json
+pnpm dlx shadcn@latest add https://byphongphan.com/r/middle-truncation.json
+pnpm dlx shadcn@latest add https://byphongphan.com/r/flip-clock.json
+```
+
+Or configure the custom registry in your `components.json`:
+
+```json
+{
+  "registries": {
+    "@byphongphan": "https://byphongphan.com/r/{name}.json"
+  }
+}
+```
+
+Then install simply by name:
+
+```bash
+pnpm dlx shadcn@latest add @byphongphan/line-nav
+```
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) `>= 22.0.0`
+- [pnpm](https://pnpm.io/) `>= 10.0.0`
+
+### Installation
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/phongphanq089/byphongphan.com.git
+cd byphongphan.com
+
+# 2. Install dependencies
+pnpm install
+
+# 3. Setup environment variables (optional for local UI development)
+cp .env.example .env
+
+# 4. Start local development server
+pnpm dev
+```
+
+Visit [http://localhost:5731](http://localhost:5731) to view the live site locally.
+
+---
+
+## 🛠️ Verification & Quality Checks
+
+Ensure all quality gates pass before submitting contributions:
+
+```bash
+pnpm type-check      # Strict TypeScript verification (tsc -b --noEmit)
+pnpm lint            # ESLint code analysis
+pnpm check           # Prettier formatting check
+pnpm test            # Vitest unit test suite
+pnpm build:registry  # Compile registry JSON payloads to public/r/
+pnpm build           # Production SSR build verification
+```
+
+---
+
+## 🗺️ Roadmap
+
+- [x] **v0.1: Core Showcase & Public Registry (Current Release)**
+  - [x] SSR hydration with TanStack Start & React 19
+  - [x] Acoustic UI feedback engine & embedded Lo-Fi audio player
+  - [x] Interactive block templates & Matter.js physics demonstrations
+  - [x] Automated shadcn registry compilation pipeline
+  - [x] Zero-FOUC View Transitions theme engine
+
+- [ ] **v0.2: Full-Stack Starter & Headless Architecture (In Development)**
+  - [ ] **Data Persistence:** Serverless PostgreSQL via **Neon**
+  - [ ] **Authentication:** Session & OAuth management via **Better Auth**
+  - [ ] **Media & Storage:** Asset pipelines powered by ImageKit and Cloudflare R2
+  - [ ] **Communications:** Transactional email flows powered by Resend
+
+---
+
+## ⚖️ License & Brand Guidelines
+
+- **Code & Components:** Licensed under the [MIT License](./LICENSE.md). You are free to fork, study, adapt, and use the code in personal and commercial projects.
+- **Personal Brand & Likeness:** The name **Phong Phan**, personal avatar, photographs, PP monogram, and the domain **byphongphan.com** are protected assets. Please see our [Trademark & Brand Policy](./TRADEMARK.md) for complete details before publishing a fork.
+
+---
+
+## 👨‍💻 Author
+
+**Phong Phan** — Frontend Engineer · UI Craftsman · Fullstack Capable
+
+- **Website:** [byphongphan.com](https://byphongphan.com)
+- **GitHub:** [@phongphanq089](https://github.com/phongphanq089)
+- **LinkedIn:** [Phong Phan](https://www.linkedin.com/in/phong-phan-719464201)
+- **X (Twitter):** [@PhongPhanq089](https://x.com/PhongPhanq089)
+- **Email:** [phongphanq089@gmail.com](mailto:phongphanq089@gmail.com)
+
+---
+
+<p align="center">
+  If you find this codebase inspiring or helpful, please consider giving it a <strong>star ⭐️</strong> on <a href="https://github.com/phongphanq089/byphongphan.com">GitHub</a>!
+</p>

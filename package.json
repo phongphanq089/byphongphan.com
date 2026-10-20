@@ -1,8 +1,31 @@
 {
-  "name": "portfolio-app",
+  "name": "byphongphan.com",
+  "version": "0.1.0",
+  "description": "High-craft developer portfolio & shadcn-compatible UI registry built natively with TanStack Start, React 19, and Tailwind CSS v4.",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@11.17.0",
+  "homepage": "https://byphongphan.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/phongphanq089/byphongphan.com.git"
+  },
+  "bugs": {
+    "url": "https://github.com/phongphanq089/byphongphan.com/issues"
+  },
+  "author": "Phong Phan <phongphanq089@gmail.com> (https://byphongphan.com)",
+  "license": "MIT",
+  "keywords": [
+    "tanstack-start",
+    "react-19",
+    "tailwindcss-v4",
+    "shadcn-registry",
+    "design-system",
+    "creative-developer",
+    "ui-engineering",
+    "motion",
+    "typescript"
+  ],
   "scripts": {
     "dev": "vite dev --port 5731",
     "build": "pnpm build:registry && pnpm type-check && vite build",

@@ -1,17 +1,26 @@
 # Development Guide
 
-## Requirements
+This guide covers everything needed to set up, build, test, and contribute to **byphongphan.com**.
 
-- [Node.js](https://nodejs.org) 22+
-- [pnpm](https://pnpm.io) 10+
+---
 
-## Setup
+## Prerequisites
+
+Ensure you have the following runtime and package manager installed:
+
+- **Node.js:** `>= 22.0.0`
+- **pnpm:** `>= 10.0.0` (v11/v12 recommended)
+- **Git**
+
+---
+
+## Getting Started
 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/phongphanq089/phong-dev-portfiolio.git
-cd phong-dev-portfiolio
+git clone https://github.com/phongphanq089/byphongphan.com.git
+cd byphongphan.com
 ```
 
 ### 2. Install dependencies
@@ -20,163 +29,138 @@ cd phong-dev-portfiolio
 pnpm install
 ```
 
-### 3. Configure environment variables
+### 3. Environment Variables Setup (Optional)
+
+The application works out-of-the-box with sensible defaults. To customize external endpoints, copy the example environment configuration:
 
 ```bash
 cp .env.example .env
 ```
 
-Fill in the required values:
+| Variable                                        | Scope        | Description                                | Default / Required               |
+| ----------------------------------------------- | ------------ | ------------------------------------------ | -------------------------------- |
+| `VITE_SITE_PUBLIC_GITHUB_CONTRIBUTIONS_API_URL` | Client (SSR) | GitHub contributions calendar API endpoint | Optional (has built-in fallback) |
 
-| Variable                                        | Description                        | Required |
-| ----------------------------------------------- | ---------------------------------- | -------- |
-| `VITE_SITE_PUBLIC_GITHUB_CONTRIBUTIONS_API_URL` | GitHub contributions API endpoint  | ✅       |
-| `DATABASE_URL`                                  | Neon Postgres connection string    | ✅       |
-| `VITE_IMAGEKIT_URL_ENDPOINT`                    | ImageKit CDN URL                   | ✅       |
-| `VITE_IMAGEKIT_PUBLIC_KEY`                      | ImageKit public key                | ✅       |
-| `IMAGEKIT_PRIVATE_KEY`                          | ImageKit private key (server-side) | ✅       |
-| `RESEND_API_KEY`                                | Resend API key for emails          | ✅       |
+> **Note:** Zero complex setup required for local development. The project runs immediately without external database or third-party service dependencies.
 
-> **Note:** Variables prefixed with `VITE_` are exposed to the client bundle. Never put secrets in `VITE_` variables.
-
-### 4. Start the dev server
+### 4. Run the Development Server
 
 ```bash
 pnpm dev
 ```
 
-The app will be available at [http://localhost:5731](http://localhost:5731).
+The application will be accessible at [http://localhost:5731](http://localhost:5731) with Vite Hot Module Replacement (HMR).
 
-## Scripts
+---
 
-| Script                | Description                                  |
-| --------------------- | -------------------------------------------- |
-| `pnpm dev`            | Start Vite dev server (port 5731)            |
-| `pnpm build`          | Type-check + production build                |
-| `pnpm preview`        | Preview production build locally             |
-| `pnpm test`           | Run tests with Vitest                        |
-| `pnpm lint`           | Run ESLint                                   |
-| `pnpm type-check`     | TypeScript type checking (`tsc -b --noEmit`) |
-| `pnpm format`         | Format with Prettier + ESLint auto-fix       |
-| `pnpm check`          | Check formatting without writing             |
-| `pnpm build:registry` | Build registry JSON files to `public/r/`     |
+## Available Scripts
 
-## Project Structure
+| Script                | Description                                                            |
+| --------------------- | ---------------------------------------------------------------------- |
+| `pnpm dev`            | Launches Vite development server on port 5731                          |
+| `pnpm build`          | Full production build: registry build + type-check + Vite SSR build    |
+| `pnpm preview`        | Serves production output locally on port 5731                          |
+| `pnpm test`           | Executes unit and component tests with Vitest                          |
+| `pnpm lint`           | Runs ESLint across TypeScript, TSX, and configuration files            |
+| `pnpm format`         | Formats code with Prettier and automatically fixes ESLint warnings     |
+| `pnpm check`          | Verifies code formatting without altering files                        |
+| `pnpm type-check`     | Executes strict TypeScript checking (`tsc -b --noEmit`)                |
+| `pnpm build:registry` | Bundles custom shadcn registry items into `public/r/` and JSON indices |
+| `pnpm dev:force`      | Forces Vite dependency re-optimization                                 |
+| `pnpm clean:vite`     | Clears Vite cache directory                                            |
 
-```
+---
+
+## Architectural Layout
+
+The project follows a decoupled, domain-oriented architecture inspired by Feature-Sliced Design (FSD):
+
+```text
 src/
-├── app/               # Layout compositions (grid-layout, profile-layout)
-├── content/           # MDX documentation (component & hook docs)
-│   └── components/    # Per-component .mdx files
-├── entities/          # Domain objects
-├── features/          # Feature modules
-│   ├── home/          # Home page sections
-│   ├── blocks/        # Blocks showcase
-│   ├── component-ui/  # Component UI showcase
-│   └── colophon/      # Colophon page
-├── registry/          # Custom shadcn registry
-│   ├── ui/            # UI primitives (card, select, code-block, map, etc.)
-│   ├── animated/      # Animated components (flip-clock, text-hover-effect, etc.)
-│   ├── block/         # Full-page blocks (editor, not-found, etc.)
-│   ├── hooks/         # Registry hooks
-│   ├── demos/         # Component demos
-│   ├── schematics/    # Component schematics
-│   └── variants/      # Component variants
-├── routes/            # TanStack Router file-based routes
-├── shared/            # Domain-agnostic shared code
-│   ├── ui/            # UI primitives (core, animation, block, icons, system)
-│   ├── hooks/         # Shared hooks (use-sound, use-media-query, etc.)
-│   ├── lib/           # Utilities (sound engine, TOC parser, lazy loading)
-│   ├── config/        # Site config, SEO config, constants
-│   ├── providers/     # ThemeProvider
-│   └── icons/         # Icon components
-├── styles/            # Global CSS (Tailwind v4, OKLCH tokens, glow-card, etc.)
-├── types/             # Global TypeScript definitions
-└── widgets/           # Large UI compositions
-    ├── command-menu/   # ⌘K command palette
-    ├── profile-header/ # Site header
-    └── profile-footer/ # Site footer
+├── app/               # Application-level layouts, root boundaries, and composition
+├── content/           # MDX documentation & editorial source materials
+├── entities/          # Domain entities and business logic representations
+├── features/          # High-cohesion domain features (home, blocks, component-ui, colophon)
+├── registry/          # Custom shadcn component source files, schematics, and variants
+│   ├── animated/      # Motion & physics-driven components (line-nav, flip-clock, etc.)
+│   ├── block/         # Full-section modular blocks
+│   ├── demos/         # Interactive preview sandboxes
+│   ├── hooks/         # Custom registry React hooks
+│   ├── ui/            # Reusable UI primitives
+│   └── variants/      # Visual & functional component variants
+├── routes/            # File-based routes managed by TanStack Router
+├── shared/            # Pure, domain-agnostic shared modules
+│   ├── config/        # Centralized configuration (site, SEO, categories, TOC)
+│   ├── hooks/         # Reusable utility hooks
+│   ├── lib/           # Deterministic helper functions & utilities (cn, sound-engine)
+│   ├── providers/     # Theme and context providers
+│   └── ui/            # Primitive UI design system elements
+├── styles/            # OKLCH design tokens, Tailwind CSS v4 setup, global animations
+└── widgets/           # Multi-feature UI sections (header, footer, command-menu)
 ```
 
-## Routes
+---
 
-TanStack Router file-based routing under `src/routes/`:
+## Working with the Component Registry
 
-| Route                           | Page                                                    |
-| ------------------------------- | ------------------------------------------------------- |
-| `/`                             | Home (hero, about, tech stack, blocks, components, map) |
-| `/blocks`                       | Blocks showcase                                         |
-| `/blocks/:category/:slug`       | Individual block page                                   |
-| `/component-ui`                 | UI components showcase                                  |
-| `/component-ui/:category/:slug` | Individual component page                               |
-| `/blog`                         | Blog (under construction)                               |
-| `/resources`                    | Resources (under construction)                          |
-| `/colophon`                     | Colophon (architecture, design tokens, typography)      |
-| `/blocks-preview/:slug`         | Isolated full-screen block preview                      |
-| `/robots.txt`                   | Dynamic robots.txt                                      |
-| `/sitemap.xml`                  | Dynamic sitemap                                         |
+This project acts as an official **shadcn registry provider**. Custom components and blocks can be installed into any React application using the standard `shadcn` CLI.
 
-## UI Rules
+### Building Registry Artifacts
 
-- All shared UI components must be imported from `@/shared/ui`
-- Do not create duplicate components — search for existing ones first
-- Use `@/shared/lib/utils` for the `cn()` utility
-- Hooks go in `@/shared/hooks` (domain-agnostic) or within their feature module
-
-## Adding shadcn Components
-
-The project uses the [shadcn CLI](https://ui.shadcn.com/docs/cli) with custom registries configured in `components.json`:
-
-```bash
-# Add from default shadcn registry
-pnpm dlx shadcn@latest add button
-
-# Add from custom registries
-pnpm dlx shadcn@latest add @soundcn/component-name
-pnpm dlx shadcn@latest add @animate-ui/component-name
-pnpm dlx shadcn@latest add @mapcn/component-name
-```
-
-## Building the Registry
-
-To build the custom component registry (outputs JSON to `public/r/`):
+Whenever you modify or add items in `src/registry/`, rebuild the public distribution files:
 
 ```bash
 pnpm build:registry
 ```
 
-This generates installable JSON files that consumers can add via:
+This compiles:
+
+- `public/r/{component-name}.json` — Individual installable payloads
+- `public/r/index.json` — Indexed directory of available components
+- `registry.json` (root & public) — Registry master metadata schema
+- `src/registry/manifest.json` — Static prerender paths for TanStack Start
+
+### Installing Components in Downstream Projects
+
+Consumers can install your components directly with:
 
 ```bash
-pnpm dlx shadcn@latest add https://phongphandev.netlify.app/r/component-name.json
+pnpm dlx shadcn@latest add https://byphongphan.com/r/{component-name}.json
 ```
+
+Or configure `@byphongphan` in their `components.json`:
+
+```json
+{
+  "registries": {
+    "@byphongphan": "https://byphongphan.com/r/{name}.json"
+  }
+}
+```
+
+Then install by name:
+
+```bash
+pnpm dlx shadcn@latest add @byphongphan/line-nav
+```
+
+---
+
+## Quality Standards & CI
+
+All pull requests must pass the automated CI pipeline:
+
+1. **TypeScript Type Safety:** Run `pnpm type-check` with zero errors.
+2. **Linting & Formatting:** Adhere to ESLint and Prettier rules (`pnpm lint`).
+3. **Commit Convention:** Use Conventional Commits (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`).
+4. **Pre-commit Hooks:** Managed via Husky and lint-staged on every git commit.
+
+---
 
 ## Deployment
 
-The project deploys to **Netlify** via `netlify.toml`:
+Production deployments are automated via **Netlify** on push to the `main` branch.
 
-```toml
-[build]
-  command = "pnpm run build"
-  publish = "dist/client"
-```
-
-Push to `main` to trigger automatic deployment.
-
-## Code Quality
-
-The project uses [Husky](https://typicode.github.io/husky) + lint-staged for pre-commit hooks.
-
-Before committing, the following checks run automatically:
-
-- **Prettier** — code formatting
-- **ESLint** — linting
-
-To run checks manually:
-
-```bash
-pnpm type-check    # TypeScript
-pnpm lint          # ESLint
-pnpm check         # Prettier (check only)
-pnpm test          # Vitest
-```
+- **Adapter:** `@netlify/vite-plugin-tanstack-start`
+- **Output:** Client assets in `dist/client`, Server functions in `.netlify/functions-internal`
+- **Domain:** [https://byphongphan.com](https://byphongphan.com)

@@ -1,58 +1,70 @@
 # Security Policy
 
+We take the security of this project, its distributed components, and the privacy of its users seriously. This document outlines our vulnerability disclosure policy and security guidelines.
+
+---
+
 ## Supported Versions
 
-| Version              | Supported |
-| -------------------- | --------- |
-| Latest (main branch) | ✅        |
-| Older commits        | ❌        |
+Only the latest release deployed on the production branch and live at [byphongphan.com](https://byphongphan.com) is actively maintained and supported with security updates.
 
-Only the latest version deployed at [phongphandev.netlify.app](https://phongphandev.netlify.app) is actively supported.
+| Version / Target     | Supported          | Notes                                      |
+| -------------------- | ------------------ | ------------------------------------------ |
+| `main` branch        | :white_check_mark: | Actively monitored and patched             |
+| Live production site | :white_check_mark: | Deployed at https://byphongphan.com        |
+| Historical commits   | :x:                | Please update to `main` for security fixes |
+
+---
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability, **please do not open a public issue**.
+If you discover a security vulnerability or security-related flaw within this repository or the live site, **please do not report it through public GitHub issues or discussions.**
 
-Instead, report it privately via email:
+Instead, please send a responsible disclosure report directly via email:
 
-📧 **phongphanq089@gmail.com**
+:e-mail: **phongphanq089@gmail.com**
 
-Please include:
+### Please include in your report:
 
-- A clear description of the vulnerability
-- Steps to reproduce (if applicable)
-- The potential impact
-- Any suggested fix (optional but appreciated)
+1. **Type of issue:** (e.g., Cross-Site Scripting, Dependency vulnerability, SSR data exposure, Cache poisoning).
+2. **Detailed steps to reproduce:** Include minimal reproduction code, curl commands, or screenshots.
+3. **Potential impact:** How an attacker could exploit the issue and what user data or system state could be affected.
+4. **Suggested remediation:** A patch, PR diff, or architectural recommendation if available.
 
-## Response Timeline
+---
 
-| Stage              | Timeframe           |
-| ------------------ | ------------------- |
-| Acknowledgment     | Within 48 hours     |
-| Initial assessment | Within 7 days       |
-| Fix & disclosure   | Depends on severity |
+## Response Timeline & SLA
 
-I will do my best to respond promptly. Critical issues will be prioritized.
+We are committed to handling security vulnerability reports promptly:
+
+| Phase                   | Timeframe                | Commitment                                                    |
+| ----------------------- | ------------------------ | ------------------------------------------------------------- |
+| **Initial Response**    | Within 24–48 hours       | Acknowledgment of receipt and confirmation of review          |
+| **Triage & Assessment** | Within 3–5 business days | Validation of vulnerability severity and impact assessment    |
+| **Patch Release**       | Based on severity        | High/Critical patched within 72 hours; coordinated disclosure |
+
+---
 
 ## Scope
 
-The following are in scope for security reports:
+### In-Scope:
 
-- The live site at [phongphandev.netlify.app](https://phongphandev.netlify.app)
-- Source code in this repository
-- Registry components distributed via `public/r/`
-- Dependencies with known CVEs affecting this project
+- The production site at [byphongphan.com](https://byphongphan.com)
+- Source code in the official [byphongphan.com repository](https://github.com/phongphanq089/byphongphan.com)
+- Custom Shadcn registry items distributed under `public/r/`
+- Direct dependencies with known, exploitable CVEs affecting this project
 
-## Out of Scope
+### Out-of-Scope:
 
-- Forked or self-hosted versions of this project
-- Third-party services (Netlify, MapLibre, ImageKit, etc.)
-- Issues that require physical access to a user's device
-- Social engineering attacks
-- Denial of service (DoS) attacks
+- Forked, modified, or self-hosted versions of this codebase
+- Denial of Service (DoS / DDoS) attacks against third-party edge providers (Netlify, Cloudflare)
+- Social engineering, phishing, or physical attacks
+- Issues on external third-party services and APIs (MapLibre tiles, ImageKit CDN)
 
-## Acknowledgments
+---
 
-Security researchers who responsibly disclose vulnerabilities will be credited (with permission) in this section.
+## Hall of Fame & Acknowledgments
 
-Thank you for helping keep this project safe.
+Security researchers who responsibly disclose vulnerabilities according to this policy will be credited and publicly thanked (with their permission) in our release notes and documentation.
+
+Thank you for helping keep this project and the developer community safe.

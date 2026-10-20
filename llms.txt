@@ -1,0 +1,61 @@
+# Phong Phan — Dev Portfolio & UI Registry
+
+> A pixel-perfect dev portfolio and modern component registry built natively on TanStack Start, Tailwind CSS v4, and Base UI.
+
+Personal portfolio and engineering showcase of Phong Phan. Frontend Engineer specializing in the TanStack ecosystem, React 19, TypeScript, fluid micro-interactions, acoustic UI design, and production-grade component architectures.
+
+## Core Information
+
+- Name: Phong Phan
+- Role: Frontend Engineer · Fullstack Capable
+- Location: Viet Nam
+- Website: https://byphongphan.com
+- GitHub: https://github.com/phongphanq089
+- LinkedIn: www.linkedin.com/in/phong-phan-719464201
+- X (Twitter): https://x.com/PhongPhanq089
+- Email: phongphanq089@gmail.com
+- Raw Profile: https://byphongphan.com/index.md
+- LLM Index: https://byphongphan.com/llms.txt
+- Registry Manifest: https://byphongphan.com/r/index.json
+
+## Primary Documentation & Navigation
+
+- [Home](https://byphongphan.com): Interactive portfolio, featured case studies, and engineering background.
+- [Component Registry](https://byphongphan.com/component-ui): Directory of customizable, accessible UI primitives and interactive micro-interactions.
+- [Blocks](https://byphongphan.com/blocks): Ready-to-use, production-grade page sections and complex interface layouts.
+- [Colophon](https://byphongphan.com/colophon): System specifications, design tokens, typography, and architecture.
+- [Raw Profile (Markdown)](https://byphongphan.com/index.md): Full raw markdown portfolio document for text consumption.
+
+## UI Components & Primitives
+
+- [Line Nav](https://byphongphan.com/component-ui/navigation/line-nav): Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/line-nav.json`)
+- [Middle Truncation](https://byphongphan.com/component-ui/text/middle-truncation): Canvas-measured binary search text truncation preserving the start and end of strings with responsive resize sync. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/middle-truncation.json`)
+- [Card](https://byphongphan.com/component-ui/card/card): Displays a card with header, content, and footer. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/card.json`)
+- [Unboxing Bucket](https://byphongphan.com/component-ui/interactive/unboxing-bucket): Interactive 3D unboxing container animation with emerging spring-physics feature chips. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/unboxing-bucket.json`)
+- [Flip Clock](https://byphongphan.com/component-ui/interactive/flip-clock): Mechanical 2D split-flap counter and clock with real-time, timer, stopwatch, and date-time display modes. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/flip-clock.json`)
+- [Code Block](https://byphongphan.com/component-ui/data-display/code-block): Syntax-highlighted code surface powered by Shiki with line numbers, line highlighting, collapsible blocks, diff mode, and copy actions. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/code-block.json`)
+- [Map](https://byphongphan.com/component-ui/data-display/map): High-performance interactive vector map powered by MapLibre GL with dark/light themes, custom markers, popups, controls, routes, arcs, GeoJSON, and clustering. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/map.json`)
+- [Text Hover Effect](https://byphongphan.com/component-ui/text/text-hover-effect): Interactive typographic SVG reveal effect that traces strokes on mount and reveals a vibrant radial gradient mask following cursor movement. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/text-hover-effect.json`)
+- [Background Gradient Cursor](https://byphongphan.com/component-ui/background/background-gradient-cursor): Interactive ambient canvas surface featuring cursor-tracking radial mask, procedural dots, dynamic grid lines, and directional linear gradients. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/background-gradient-cursor.json`)
+- [Isometric Monogram Mark](https://byphongphan.com/component-ui/interactive/pp-mark-isometric): Interactive 3D voxel isometric monogram mark featuring procedural diagonal hatching, wireframe edges, cursor-tracking radial flashlight, and spring press physics with audio feedback. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/pp-mark-isometric.json`)
+- [Isometric Block Typography](https://byphongphan.com/component-ui/text/phong-phan-isometric): Horizontal 3D block typography extruded along an isometric blueprint grid, equipped with interactive dynamic lighting, sound feedback, and edge-to-edge/padded layout variants. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/phong-phan-isometric.json`)
+- [Spotlight Card](https://byphongphan.com/component-ui/card/spotlight-card): Interactive surface with radial cursor spotlight illumination, dynamic 1px masked border glow, and smooth 3D tilt perspective. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/spotlight-card.json`)
+- [Border Glow](https://byphongphan.com/component-ui/card/border-glow): Interactive surface with cursor-tracking mesh gradient edge illumination, outer atmospheric aura, and entry sweep animation. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/border-glow.json`)
+
+## Interactive Blocks
+
+- [Not Found 01](https://byphongphan.com/blocks/404-page/not-found-01): A 404 page with a playable brick breaker game. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/not-found-01.json`)
+- [Not Found Gravity](https://byphongphan.com/blocks/404-page/not-found-02): Interactive 404 error page with 2D physics gravity, falling blocks, and draggable elements. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/not-found-02.json`)
+- [Not Found Pixel Trail](https://byphongphan.com/blocks/404-page/not-found-03): Interactive 404 digital void experience featuring dynamic cursor pixel trails and terminal status diagnostics. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/not-found-03.json`)
+- [Login 01](https://byphongphan.com/blocks/auth/login-01): Split-screen modern authentication screen with photography hero, tracked typography, and full dark mode support. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/login-01.json`)
+- [Stats Cards 01](https://byphongphan.com/blocks/marketing/stats-cards-01): Overlapping interactive marketing stats cards with spring physics hover, metrics showcase, and dark mode support. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/stats-cards-01.json`)
+
+## Custom Hooks
+
+- [useMediaQuery](https://byphongphan.com/r/use-media-query.json): React hook for responsive design and media query listening with SSR support. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-media-query.json`)
+
+## Optional & Upcoming Features (Roadmap v0.2)
+
+- [Technical Blog](https://byphongphan.com/blog): Articles on browser rendering, hydration, and database internals.
+- [Developer Resources](https://byphongphan.com/resources): Curated bookmarks and developer tools.
+- [Admin CMS]: Planned headless management interface powered by Neon Postgres, Drizzle ORM, and Better Auth.
