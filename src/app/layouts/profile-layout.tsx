@@ -4,7 +4,6 @@ import { useEffect, useState } from "react"
 import { HOME_TOC_ITEMS } from "@/shared/config"
 import { useScrollToTop } from "@/shared/hooks/use-scroll-to-top"
 import { cn } from "@/shared/lib/utils"
-import { ThemeProvider } from "@/shared/providers/theme-provider"
 import { EdgeBlur } from "@/shared/ui/system/edge-blur"
 import NumbersSimulation from "@/shared/ui/system/numbers-simulation"
 import ProgressWhileScroll from "@/shared/ui/system/progress-while-scroll"
@@ -47,60 +46,58 @@ export function ProfileLayout({ children }: { children?: React.ReactNode }) {
   }, [isHome])
 
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <GridLayoutContext.Provider value={{ maxWidth: layoutMaxWidth }}>
-        <div className="relative flex min-h-screen w-full overflow-x-clip bg-background text-foreground selection:bg-primary/20">
-          {isHome && (
-            <div
-              className={cn(
-                "fixed top-1/2 right-0 z-50 -translate-y-1/2 transition-all duration-500",
-                isMinimapVisible
-                  ? "translate-x-0 opacity-100"
-                  : "pointer-events-none translate-x-10 opacity-0"
-              )}
+    <GridLayoutContext.Provider value={{ maxWidth: layoutMaxWidth }}>
+      <div className="relative flex min-h-screen w-full overflow-x-clip bg-background text-foreground selection:bg-primary/20">
+        {isHome && (
+          <div
+            className={cn(
+              "fixed top-1/2 right-0 z-50 -translate-y-1/2 transition-all duration-500",
+              isMinimapVisible
+                ? "translate-x-0 opacity-100"
+                : "pointer-events-none translate-x-10 opacity-0"
+            )}
+          >
+            <TOCMinimap items={HOME_TOC_ITEMS} />
+          </div>
+        )}
+        <div className="pointer-events-none relative z-1 hidden w-12 shrink-0 border-r border-border md:block">
+          <NumbersSimulation />
+        </div>
+
+        <div className="flex min-w-0 flex-1 flex-col">
+          <div className="sticky top-0 z-50 w-full">
+            <GridContainer
+              borderTop={false}
+              borderBottom={true}
+              className="flex justify-center p-0"
             >
-              <TOCMinimap items={HOME_TOC_ITEMS} />
-            </div>
-          )}
-          <div className="pointer-events-none relative z-1 hidden w-12 shrink-0 border-r border-border md:block">
-            <NumbersSimulation />
+              <Header />
+            </GridContainer>
           </div>
 
-          <div className="flex min-w-0 flex-1 flex-col">
-            <div className="sticky top-0 z-50 w-full">
-              <GridContainer
-                borderTop={false}
-                borderBottom={true}
-                className="flex justify-center p-0"
-              >
-                <Header />
-              </GridContainer>
+          {/* Bottom Floating Dynamic Dock & Scroll Progress */}
+          <div className="mf:translate-x-0 fixed bottom-6 left-1/2 z-50 -translate-x-1/2 lg:right-8 lg:bottom-8 lg:left-auto">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <BottomMenu />
+              <ProgressWhileScroll />
             </div>
-
-            {/* Bottom Floating Dynamic Dock & Scroll Progress */}
-            <div className="mf:translate-x-0 fixed bottom-6 left-1/2 z-50 -translate-x-1/2 lg:right-8 lg:bottom-8 lg:left-auto">
-              <div className="flex items-center gap-2 sm:gap-3">
-                <BottomMenu />
-                <ProgressWhileScroll />
-              </div>
-            </div>
-
-            <main className="flex w-full flex-1 flex-col overflow-x-clip">
-              {children ?? <Outlet />}
-            </main>
-
-            <Footer />
           </div>
+
+          <main className="flex w-full flex-1 flex-col overflow-x-clip">
+            {children ?? <Outlet />}
+          </main>
+
+          <Footer />
         </div>
-        {/* Mobile EdgeBlur — smaller height, visible below md */}
-        <div className="md:hidden">
-          <EdgeBlur position="bottom" height={30} />
-        </div>
-        {/* Desktop EdgeBlur — taller height, visible at md+ */}
-        <div className="hidden md:block">
-          <EdgeBlur position="bottom" height={70} />
-        </div>
-      </GridLayoutContext.Provider>
-    </ThemeProvider>
+      </div>
+      {/* Mobile EdgeBlur — smaller height, visible below md */}
+      <div className="md:hidden">
+        <EdgeBlur position="bottom" height={30} />
+      </div>
+      {/* Desktop EdgeBlur — taller height, visible at md+ */}
+      <div className="hidden md:block">
+        <EdgeBlur position="bottom" height={70} />
+      </div>
+    </GridLayoutContext.Provider>
   )
 }
