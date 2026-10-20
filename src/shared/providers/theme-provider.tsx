@@ -29,18 +29,18 @@ const ThemeProviderContext = createContext<ThemeProviderState>(initialState)
 function applyThemeToDOM(t: Theme) {
   if (typeof window === "undefined") return
   const root = window.document.documentElement
-  root.classList.remove("light", "dark")
 
-  if (t === "system") {
-    const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-      .matches
-      ? "dark"
-      : "light"
-    root.classList.add(systemTheme)
-    return
-  }
+  const resolved =
+    t === "system"
+      ? window.matchMedia("(prefers-color-scheme: dark)").matches
+        ? "dark"
+        : "light"
+      : t
 
-  root.classList.add(t)
+  // Use classList.toggle to avoid a frame where neither class is present,
+  // which would trigger the FOUC-prevention visibility:hidden rule.
+  root.classList.toggle("dark", resolved === "dark")
+  root.classList.toggle("light", resolved === "light")
 }
 
 function disableTransitionsTemporarily() {
