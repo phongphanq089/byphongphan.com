@@ -111,9 +111,13 @@ const themeScript = `
     }
 
     var root = document.documentElement;
-
-    root.classList.remove('light', 'dark');
-    root.classList.add(resolvedTheme);
+    if (resolvedTheme === 'light') {
+      root.classList.add('light');
+      root.classList.remove('dark');
+    } else {
+      root.classList.add('dark');
+      root.classList.remove('light');
+    }
   } catch (error) {}
 })();
 `
@@ -163,7 +167,7 @@ function RootDocument({
   }, [])
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript as string }} />
         <HeadContent />

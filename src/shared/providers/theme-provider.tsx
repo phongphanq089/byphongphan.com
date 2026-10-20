@@ -37,10 +37,20 @@ function applyThemeToDOM(t: Theme) {
         : "light"
       : t
 
-  // Use classList.toggle to avoid a frame where neither class is present,
-  // which would trigger the FOUC-prevention visibility:hidden rule.
-  root.classList.toggle("dark", resolved === "dark")
-  root.classList.toggle("light", resolved === "light")
+  const isDark = root.classList.contains("dark")
+  const isLight = root.classList.contains("light")
+
+  // Bail out early if DOM already has the desired theme class to avoid layout reflows
+  if (resolved === "dark" && isDark && !isLight) return
+  if (resolved === "light" && isLight && !isDark) return
+
+  if (resolved === "dark") {
+    root.classList.add("dark")
+    root.classList.remove("light")
+  } else {
+    root.classList.add("light")
+    root.classList.remove("dark")
+  }
 }
 
 function disableTransitionsTemporarily() {
