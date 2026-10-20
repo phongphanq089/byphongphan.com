@@ -220,11 +220,6 @@
     @apply border-border outline-ring/50;
   }
 
-  /* Prevent FOUC: hide page until the inline theme script sets .dark/.light */
-  html:not(.dark):not(.light) {
-    visibility: hidden;
-  }
-
   html {
     @apply scroll-smooth bg-background font-base text-foreground;
   }
