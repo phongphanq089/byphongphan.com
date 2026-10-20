@@ -208,6 +208,234 @@ async function buildRegistry() {
     "utf-8"
   )
   console.log(`  ✓ Generated: registry-stats.json (root & public)`)
+
+  // Generate index.md and llms.txt for AI agents and raw markdown readers
+  const DOCS_DOMAIN = "https://byphongphan.com"
+  const indexMdContent = generateIndexMdContent(
+    REGISTRY_ITEMS,
+    siteConfig,
+    DOCS_DOMAIN
+  )
+  const llmsTxtContent = generateLlmsTxtContent(
+    REGISTRY_ITEMS,
+    siteConfig,
+    DOCS_DOMAIN
+  )
+
+  fs.writeFileSync(path.join(rootDir, "index.md"), indexMdContent, "utf-8")
+  fs.writeFileSync(path.join(publicDir, "index.md"), indexMdContent, "utf-8")
+  console.log(`  ✓ Generated: index.md (root & public)`)
+
+  fs.writeFileSync(path.join(rootDir, "llms.txt"), llmsTxtContent, "utf-8")
+  fs.writeFileSync(path.join(publicDir, "llms.txt"), llmsTxtContent, "utf-8")
+  console.log(`  ✓ Generated: llms.txt (root & public)`)
+}
+
+function generateIndexMdContent(
+  items: typeof REGISTRY_ITEMS,
+  config: typeof siteConfig,
+  docsUrl: string = "https://byphongphan.com"
+): string {
+  const components = items.filter(
+    (i) => i.type === "registry:component" || i.type === "registry:ui"
+  )
+  const blocks = items.filter((i) => i.type === "registry:block")
+  const hooks = items.filter((i) => i.type === "registry:hook")
+
+  return `# Phong Phan — Dev Portfolio & UI Registry
+
+> A pixel-perfect dev portfolio and modern component registry built natively on TanStack Start, Tailwind CSS v4, and Base UI.
+
+## About the Author
+
+- **Name:** ${config.author.name}
+- **Role:** ${config.author.role} · Fullstack Capable
+- **Expertise:** TanStack ecosystem, React 19, TypeScript, Design Systems, Serverless Architecture (Neon + Drizzle).
+- **Website:** ${docsUrl}
+- **GitHub:** ${config.social.github.href}
+- **LinkedIn:** ${config.social.linkedin.href}
+- **X (Twitter):** ${config.social.twitter.href}
+- **Email:** ${config.author.email}
+
+## Core Tech Stack
+
+- **Framework:** TanStack Start (SSR / SSG, type-safe routing)
+- **Styling & UI:** Tailwind CSS v4, Base UI, Motion
+- **Backend (Roadmap v0.2):** Neon Postgres, Drizzle ORM, Better Auth
+- **Hosting:** Netlify
+
+## Quick Navigation
+
+- [Home & Full Bio](${docsUrl}/index.md): Full raw markdown profile of Phong Phan.
+- [Component Registry](${docsUrl}/component-ui): UI primitives, interactive cards, and responsive blocks.
+- [Blocks Directory](${docsUrl}/blocks): Production-grade page sections and application blocks.
+- [Registry Manifest](${docsUrl}/r/index.json): Machine-readable JSON for shadcn CLI installation.
+- [Colophon](${docsUrl}/colophon): Architecture, design tokens, and technical stack details.
+- [Technical Blog (In Development)](${docsUrl}/blog): Deep dives into Browser Rendering, Hydration, and Database Internals.
+- [Developer Resources (In Development)](${docsUrl}/resources): Curated developer bookmarks, tools, and libraries.
+
+## CLI Usage
+
+Install components directly via shadcn CLI:
+
+\`\`\`bash
+# Add using the direct manifest URL
+pnpm dlx shadcn add ${docsUrl}/r/<component-name>.json
+\`\`\`
+
+Or configure custom registry in \`components.json\`:
+
+\`\`\`json
+{
+  "registries": {
+    "${config.registry.namespace}": "${docsUrl}/r/{name}.json"
+  }
+}
+\`\`\`
+
+Then install by name:
+
+\`\`\`bash
+pnpm dlx shadcn add ${config.registry.namespace}/<component-name>
+\`\`\`
+
+---
+
+## UI Components & Primitives (${components.length})
+
+| Component | Category | Description | Direct Install |
+| :--- | :--- | :--- | :--- |
+${components
+  .map(
+    (c) =>
+      `| [${c.title}](${docsUrl}/component-ui/${c.category}/${c.name}) | \`${c.category}\` | ${c.description} | \`pnpm dlx shadcn add ${docsUrl}/r/${c.name}.json\` |`
+  )
+  .join("\n")}
+
+---
+
+## Interactive Blocks (${blocks.length})
+
+| Block | Category | Description | Live Preview | Direct Install |
+| :--- | :--- | :--- | :--- | :--- |
+${blocks
+  .map(
+    (b) =>
+      `| [${b.title}](${docsUrl}/blocks/${b.category}/${b.name}) | \`${b.category}\` | ${b.description} | [Preview](${docsUrl}/blocks-preview/${b.name}) | \`pnpm dlx shadcn add ${docsUrl}/r/${b.name}.json\` |`
+  )
+  .join("\n")}
+
+${
+  hooks.length > 0
+    ? `
+---
+
+## Custom Hooks (${hooks.length})
+
+| Hook | Description | Direct Install |
+| :--- | :--- | :--- |
+${hooks
+  .map(
+    (h) =>
+      `| [${h.title}](${docsUrl}/r/${h.name}.json) | ${h.description} | \`pnpm dlx shadcn add ${docsUrl}/r/${h.name}.json\` |`
+  )
+  .join("\n")}
+`
+    : ""
+}
+---
+
+## Technical Blog (Roadmap v0.2)
+
+- Upcoming deep dives covering React 19 concurrent rendering, TanStack Start internals, fluid animation physics, and fullstack serverless architecture.
+
+---
+
+## Admin CMS & Content Platform (Roadmap v0.2)
+
+- Serverless PostgreSQL with **Neon** + **Drizzle ORM**
+- Social authentication & session management with **Better Auth**
+- Cloudflare R2 / ImageKit media CDN pipeline
+- Transactional notification delivery with **Resend**
+`
+}
+
+function generateLlmsTxtContent(
+  items: typeof REGISTRY_ITEMS,
+  config: typeof siteConfig,
+  docsUrl: string = "https://byphongphan.com"
+): string {
+  const components = items.filter(
+    (i) => i.type === "registry:component" || i.type === "registry:ui"
+  )
+  const blocks = items.filter((i) => i.type === "registry:block")
+  const hooks = items.filter((i) => i.type === "registry:hook")
+
+  return `# Phong Phan — Dev Portfolio & UI Registry
+
+> A pixel-perfect dev portfolio and modern component registry built natively on TanStack Start, Tailwind CSS v4, and Base UI.
+
+Personal portfolio and engineering showcase of Phong Phan. Frontend Engineer specializing in the TanStack ecosystem, React 19, TypeScript, fluid micro-interactions, acoustic UI design, and production-grade component architectures.
+
+## Core Information
+
+- Name: ${config.author.name}
+- Role: ${config.author.role} · Fullstack Capable
+- Location: ${config.author.location}
+- Website: ${docsUrl}
+- GitHub: ${config.social.github.href}
+- LinkedIn: ${config.social.linkedin.href}
+- X (Twitter): ${config.social.twitter.href}
+- Email: ${config.author.email}
+- Raw Profile: ${docsUrl}/index.md
+- LLM Index: ${docsUrl}/llms.txt
+- Registry Manifest: ${docsUrl}/r/index.json
+
+## Primary Documentation & Navigation
+
+- [Home](${docsUrl}): Interactive portfolio, featured case studies, and engineering background.
+- [Component Registry](${docsUrl}/component-ui): Directory of customizable, accessible UI primitives and interactive micro-interactions.
+- [Blocks](${docsUrl}/blocks): Ready-to-use, production-grade page sections and complex interface layouts.
+- [Colophon](${docsUrl}/colophon): System specifications, design tokens, typography, and architecture.
+- [Raw Profile (Markdown)](${docsUrl}/index.md): Full raw markdown portfolio document for text consumption.
+
+## UI Components & Primitives
+
+${components
+  .map(
+    (c) =>
+      `- [${c.title}](${docsUrl}/component-ui/${c.category}/${c.name}): ${c.description} (CLI: \`pnpm dlx shadcn add ${docsUrl}/r/${c.name}.json\`)`
+  )
+  .join("\n")}
+
+## Interactive Blocks
+
+${blocks
+  .map(
+    (b) =>
+      `- [${b.title}](${docsUrl}/blocks/${b.category}/${b.name}): ${b.description} (CLI: \`pnpm dlx shadcn add ${docsUrl}/r/${b.name}.json\`)`
+  )
+  .join("\n")}
+
+${
+  hooks.length > 0
+    ? `## Custom Hooks
+
+${hooks
+  .map(
+    (h) =>
+      `- [${h.title}](${docsUrl}/r/${h.name}.json): ${h.description} (CLI: \`pnpm dlx shadcn add ${docsUrl}/r/${h.name}.json\`)`
+  )
+  .join("\n")}
+`
+    : ""
+}
+## Optional & Upcoming Features (Roadmap v0.2)
+
+- [Technical Blog](${docsUrl}/blog): Articles on browser rendering, hydration, and database internals.
+- [Developer Resources](${docsUrl}/resources): Curated bookmarks and developer tools.
+- [Admin CMS]: Planned headless management interface powered by Neon Postgres, Drizzle ORM, and Better Auth.
+`
 }
 
 buildRegistry().catch((err) => {
