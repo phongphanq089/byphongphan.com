@@ -1,7 +1,7 @@
 import React from "react"
 
 import { cn } from "@/shared/lib/utils"
-import { useTheme } from "@/shared/providers"
+import { useTheme } from "@/shared/providers/theme-provider"
 
 export interface PPPixelMarkProps extends React.SVGProps<SVGSVGElement> {
   size?: number | string

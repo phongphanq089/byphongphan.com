@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react"
+import { usePostHog } from "posthog-js/react"
 import type * as React from "react"
 
 import { siteConfig } from "@/shared/config"
@@ -133,17 +134,30 @@ export function ExternalLink({
   rel = "noopener noreferrer",
   className,
   children,
+  onClick,
   ...rest
 }: ExternalLinkProps) {
+  const posthog = usePostHog()
   const resolvedHref = buildExternalUrl(href, {
     utm,
     params,
     defaultSource,
   })
+  const linkType = href.startsWith("mailto:")
+    ? "email"
+    : href.startsWith("tel:")
+      ? "phone"
+      : /^https?:\/\//i.test(href) || href.startsWith("//")
+        ? "external"
+        : "internal"
 
   return (
     <a
       href={resolvedHref}
+      onClick={(event) => {
+        posthog.capture("external_link_opened", { link_type: linkType })
+        onClick?.(event)
+      }}
       target={target}
       rel={rel}
       className={cn(

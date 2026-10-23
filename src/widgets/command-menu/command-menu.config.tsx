@@ -41,6 +41,7 @@ export type CommandMenuItem = {
   description?: string
   icon?: ReactNode
   shortcut?: string[]
+  sequence?: string[]
   keywords?: string[]
   group: string
   to?: string
@@ -187,7 +188,8 @@ const THEME_ACTION_ITEMS: CommandMenuItem[] = [
     description: "Switch interface to dark blueprint theme",
     icon: <Moon className="size-4 text-pp-primary" />,
     shortcut: ["T", "D"],
-    keywords: ["theme dark", "toi", "dark mode", "night"],
+    sequence: ["t", "d"],
+    keywords: ["theme dark", "dark mode", "night"],
     group: "theme",
     action: "theme-dark",
   },
@@ -197,7 +199,8 @@ const THEME_ACTION_ITEMS: CommandMenuItem[] = [
     description: "Switch interface to clean light theme",
     icon: <Sun className="size-4 text-pp-primary" />,
     shortcut: ["T", "L"],
-    keywords: ["theme light", "sang", "light mode", "day"],
+    sequence: ["t", "l"],
+    keywords: ["theme light", "light mode", "day"],
     group: "theme",
     action: "theme-light",
   },
@@ -207,7 +210,8 @@ const THEME_ACTION_ITEMS: CommandMenuItem[] = [
     description: "Sync theme with your OS preference",
     icon: <Laptop className="size-4 text-pp-primary" />,
     shortcut: ["T", "S"],
-    keywords: ["theme system", "he thong", "auto"],
+    sequence: ["t", "s"],
+    keywords: ["theme system", "auto"],
     group: "theme",
     action: "theme-system",
   },

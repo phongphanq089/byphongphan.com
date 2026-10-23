@@ -1,6 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router"
 import { Moon, Search, Sun } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
+import { usePostHog } from "posthog-js/react"
 import { useEffect, useMemo, useRef, useState } from "react"
 import useMeasure from "react-use-measure"
 
@@ -27,6 +28,7 @@ const BottomMenu = () => {
   const [view, setView] = useState<MenuView>("default")
 
   const { theme, setTheme } = useTheme()
+  const posthog = usePostHog()
   const routerState = useRouterState()
   const currentPath = routerState.location.pathname
 
@@ -116,6 +118,10 @@ const BottomMenu = () => {
                   type="button"
                   onClick={() => {
                     setTheme(key)
+                    posthog.capture("theme_changed", {
+                      theme: key,
+                      source: "bottom_menu",
+                    })
                     setView("default")
                   }}
                   className={cn(
@@ -142,7 +148,7 @@ const BottomMenu = () => {
       default:
         return null
     }
-  }, [view, theme, currentPath, setTheme])
+  }, [view, theme, currentPath, posthog, setTheme])
 
   return (
     <div ref={containerRef} className="relative flex flex-col items-center">

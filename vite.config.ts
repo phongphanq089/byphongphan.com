@@ -137,7 +137,7 @@ const config = defineConfig({
       ],
       sitemap: {
         enabled: true,
-        host: "https://phongphandev.netlify.app",
+        host: "https://byphongphan.com",
       },
     }),
     viteReact(),

@@ -1,16 +1,12 @@
-import React, { Suspense } from "react"
+import { Suspense } from "react"
 
 import { GridContainer } from "@/app/layouts"
 import { siteConfig } from "@/shared/config"
-import { useIsClient, useMediaQuery } from "@/shared/hooks"
-import { lazyWithRetry } from "@/shared/lib"
+import { useIsClient } from "@/shared/hooks"
+import { TextHoverEffect } from "@/shared/ui"
 import { BlueprintCanvasBackground } from "@/shared/ui/animation/blueprint-canvas-background"
 import { PPMarkIsometric } from "@/shared/ui/animation/pp-mark-isometric"
 import { Skeleton } from "@/shared/ui/core/skeleton"
-
-const LazyTechText = lazyWithRetry(
-  () => import("@/shared/ui/animation/tech-text")
-)
 
 function TechTextSkeleton() {
   return (
@@ -22,20 +18,7 @@ function TechTextSkeleton() {
     >
       <div className="flex h-full w-full items-center gap-1.5 py-3 sm:gap-2.5 md:gap-3.5">
         <div className="flex h-full flex-[5] items-center gap-1 sm:gap-2 md:gap-2.5">
-          <div className="relative flex h-full flex-1 items-center justify-center">
-            <div className="relative flex h-full w-full items-center justify-center rounded-sm border border-dashed border-foreground/80 p-1 dark:border-white/80">
-              <span className="absolute -top-1 -left-1 h-1.5 w-1.5 bg-foreground dark:bg-white" />
-              <span className="absolute -top-1 -right-1 h-1.5 w-1.5 bg-foreground dark:bg-white" />
-              <span className="absolute -bottom-1 -left-1 h-1.5 w-1.5 bg-foreground dark:bg-white" />
-              <span className="absolute -right-1 -bottom-1 h-1.5 w-1.5 bg-foreground dark:bg-white" />
-
-              <span className="absolute -top-4.5 left-0 font-mono text-[9px] tracking-tight whitespace-nowrap text-foreground/80 dark:text-white/80">
-                P 72 x 106
-              </span>
-
-              <Skeleton className="h-full w-full animate-pulse rounded-sm bg-foreground/20 dark:bg-white/20" />
-            </div>
-          </div>
+          <Skeleton className="h-full flex-1 animate-pulse rounded-sm bg-accent" />
 
           <Skeleton className="h-full flex-1 animate-pulse rounded-sm bg-accent" />
 
@@ -65,47 +48,31 @@ function TechTextSkeleton() {
 export default function BannerHero() {
   const isClient = useIsClient()
 
-  const isMd = useMediaQuery("md")
+  const NEON_PALETTE = ["#00f5d4", "#00bbf9", "#7b2cbf", "#f72585"]
   return (
-    <section className="relative flex w-full flex-col justify-between gap-4 overflow-hidden bg-background lg:min-h-[calc(100vh-5rem)]">
+    <section className="relative flex min-h-[calc(100svh-10rem)] w-full flex-col justify-between gap-2 overflow-hidden bg-background lg:h-[calc(100svh-3rem)] lg:min-h-0">
       <h1 className="sr-only">{siteConfig.title}</h1>
-      <BlueprintCanvasBackground />
 
-      {/* ─── Hero Monogram Mark Section (Centered & Elevated) ─── */}
-      <div className="relative z-10 flex w-full flex-1 items-center justify-center px-4 py-8 sm:py-12 md:px-8 md:py-16">
+      <BlueprintCanvasBackground showGrid={false} />
+
+      {/* Main visual */}
+      <div className="relative z-10 flex min-h-0 w-full flex-1 items-center justify-center px-4 py-3 sm:px-8 sm:py-5 lg:py-2">
         <div className="group relative mx-auto flex w-full max-w-sm flex-col items-center justify-center sm:max-w-md md:max-w-lg lg:max-w-2xl 4xl:max-w-4xl">
           <PPMarkIsometric IsometricBlueprint={false} />
         </div>
       </div>
 
+      {/* Bottom typography */}
       <GridContainer
         borderTop={true}
         borderBottom={false}
         showCrosshairs={false}
-        className="z-10 w-full p-0 py-4 md:py-8"
+        className="relative z-10 w-full shrink-0 p-0 py-2 sm:py-3 lg:py-0"
       >
-        <div style={{ width: "100%", position: "relative" }}>
+        <div className="relative w-full">
           {isClient ? (
             <Suspense fallback={<TechTextSkeleton />}>
-              <LazyTechText
-                text="PHONG PHAN"
-                fontWeight={600}
-                fontSize={400}
-                height={isMd ? 170 : 70}
-                reveal="area"
-                dashLength={5}
-                dashGap={2}
-                specks={10}
-                letterSpacing={-0.05}
-                reach={200}
-                softness={0.7}
-                strokeWidth={1}
-                speed={1}
-                lineStyle="dashed"
-                selection
-                labels
-                sweep
-              />
+              <TextHoverEffect text="PHONG PHAN" colors={NEON_PALETTE} />
             </Suspense>
           ) : (
             <TechTextSkeleton />
