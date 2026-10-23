@@ -111,7 +111,7 @@ const config = defineConfig({
     },
   },
   ssr: {
-    noExternal: ["gsap", "@gsap/react", "use-sound"],
+    noExternal: ["gsap", "@gsap/react", "use-sound", "posthog-js"],
   },
   optimizeDeps: {
     include: ["matter-js", "poly-decomp", "svg-path-commander", "maplibre-gl"],
