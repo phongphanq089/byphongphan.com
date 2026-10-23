@@ -49,7 +49,7 @@ You may not:
 If you fork this repository to build your own portfolio or application, please complete the following steps before publishing to production:
 
 - [ ] Update `src/shared/config/site.config.ts` with your own name, bio, social links, email, and domain.
-- [ ] Replace avatar images (`public/avatar-about.jpg`, favicons) and Open Graph images (`public/og-image.jpg`).
+- [ ] Replace avatar images (`public/avatar-about.jpg`, favicons) and Open Graph images (`public/og-image.png`).
 - [ ] Replace or customize the PP logo/monogram in header, footer, and navigation.
 - [ ] Update `public/site.webmanifest` and SEO metadata with your own branding.
 - [ ] Configure your own deployment domain and environment variables.
