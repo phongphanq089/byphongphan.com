@@ -1,7 +1,9 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowUpRight, Check, Copy } from "lucide-react"
+import { usePostHog } from "posthog-js/react"
 import { useState } from "react"
 
+import { posthogInteractionLogger } from "@/shared/lib/posthog-logger"
 import { cn } from "@/shared/lib/utils"
 import {
   Badge,
@@ -21,12 +23,21 @@ interface ComponentCardProps {
 
 export function ComponentCard({ component }: ComponentCardProps) {
   const [copied, setCopied] = useState(false)
+  const posthog = usePostHog()
 
   const handleCopy = (e: React.MouseEvent) => {
     e.stopPropagation()
     e.preventDefault()
     if (navigator.clipboard) {
       navigator.clipboard.writeText(component.name)
+      posthog.capture("component_name_copied", {
+        component_category: component.category,
+        component_slug: component.slug,
+      })
+      posthogInteractionLogger.componentNameCopied(posthog, {
+        component_category: component.category,
+        component_slug: component.slug,
+      })
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     }

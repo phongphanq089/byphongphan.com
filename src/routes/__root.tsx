@@ -23,6 +23,8 @@ const LazyCommandMenu = lazyWithRetry(() =>
   import("@/widgets/command-menu").then((m) => ({ default: m.CommandMenu }))
 )
 
+import { PostHogRootProvider } from "@/shared/providers/posthog-provider"
+
 import appCss from "../styles/app.css?url"
 
 export const Route = createRootRouteWithContext<{
@@ -176,18 +178,20 @@ function RootDocument({
         className="relative wrap-anywhere antialiased"
         suppressHydrationWarning
       >
-        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <RootLayoutBody
-            siteSettings={siteSettings}
-            resources={resources}
-            categories={categories}
-            blogPosts={blogPosts}
-            blogCategories={blogCategories}
-            blogGroups={blogGroups}
-          >
-            {children}
-          </RootLayoutBody>
-        </ThemeProvider>
+        <PostHogRootProvider>
+          <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+            <RootLayoutBody
+              siteSettings={siteSettings}
+              resources={resources}
+              categories={categories}
+              blogPosts={blogPosts}
+              blogCategories={blogCategories}
+              blogGroups={blogGroups}
+            >
+              {children}
+            </RootLayoutBody>
+          </ThemeProvider>
+        </PostHogRootProvider>
         <Scripts />
       </body>
     </html>

@@ -13,11 +13,13 @@ import {
   Smartphone,
   Tablet,
 } from "lucide-react"
+import { usePostHog } from "posthog-js/react"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { PanelImperativeHandle } from "react-resizable-panels"
 
 import { GridContainer } from "@/app/layouts"
 import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
+import { posthogInteractionLogger } from "@/shared/lib/posthog-logger"
 import { cn } from "@/shared/lib/utils"
 import {
   Button,
@@ -53,6 +55,7 @@ export function BlockDetail({ block }: BlockDetailProps) {
   const [viewport, setViewport] = useState<ViewportMode>("desktop")
   const [activeTab, setActiveTab] = useState<TabMode>(initialTab)
   const navigation = useNavigate()
+  const posthog = usePostHog()
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [isIframeLoading, setIsIframeLoading] = useState(true)
 
@@ -151,22 +154,33 @@ export function BlockDetail({ block }: BlockDetailProps) {
   const panelRef = useRef<PanelImperativeHandle | null>(null)
   const [isDragging, setIsDragging] = useState(false)
 
-  const handleSetViewport = useCallback((mode: ViewportMode) => {
-    setViewport(mode)
-    if (panelRef.current) {
-      switch (mode) {
-        case "desktop":
-          panelRef.current.resize("100%")
-          break
-        case "tablet":
-          panelRef.current.resize("60%")
-          break
-        case "mobile":
-          panelRef.current.resize("32%")
-          break
+  const handleSetViewport = useCallback(
+    (mode: ViewportMode) => {
+      setViewport(mode)
+      posthog.capture("block_viewport_changed", {
+        block_category: block.category,
+        viewport: mode,
+      })
+      posthogInteractionLogger.blockViewportChanged(posthog, {
+        block_category: block.category,
+        viewport: mode,
+      })
+      if (panelRef.current) {
+        switch (mode) {
+          case "desktop":
+            panelRef.current.resize("100%")
+            break
+          case "tablet":
+            panelRef.current.resize("60%")
+            break
+          case "mobile":
+            panelRef.current.resize("32%")
+            break
+        }
       }
-    }
-  }, [])
+    },
+    [block.category, posthog]
+  )
 
   useEffect(() => {
     const handlePointerUp = () => {

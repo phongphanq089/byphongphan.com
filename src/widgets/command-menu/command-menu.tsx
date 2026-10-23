@@ -1,7 +1,10 @@
 import { useNavigate } from "@tanstack/react-router"
 import { CornerDownLeft } from "lucide-react"
-import React, { useCallback } from "react"
+import { usePostHog } from "posthog-js/react"
+import React, { useCallback, useEffect, useState } from "react"
 
+import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
+import { posthogInteractionLogger } from "@/shared/lib/posthog-logger"
 import { useTheme } from "@/shared/providers/theme-provider"
 import {
   CommandDialog,
@@ -27,9 +30,24 @@ export function CommandMenu() {
   const { open, setOpen } = useCommandMenu()
   const navigate = useNavigate()
   const { setTheme } = useTheme()
+  const posthog = usePostHog()
 
   const handleSelect = useCallback(
     (item: CommandMenuItem) => {
+      const commandType = item.action
+        ? "action"
+        : item.externalUrl
+          ? "external"
+          : "navigation"
+
+      posthog.capture("command_menu_item_selected", {
+        command_group: item.group,
+        command_type: commandType,
+      })
+      posthogInteractionLogger.commandMenuItemSelected(posthog, {
+        command_group: item.group,
+        command_type: commandType,
+      })
       setOpen(false)
 
       if (item.action) {
@@ -72,8 +90,59 @@ export function CommandMenu() {
         navigate({ to: item.to })
       }
     },
-    [navigate, setOpen, setTheme]
+    [navigate, posthog, setOpen, setTheme]
   )
+
+  const [sequencePending, setSequencePending] = useState(false)
+
+  const handleSequenceStart = useCallback(() => {
+    setSequencePending(true)
+  }, [])
+
+  useKeyboardShortcuts("t", handleSequenceStart, {
+    enabled: !open,
+    preventDefault: true,
+  })
+
+  useEffect(() => {
+    if (!sequencePending || open) return
+
+    const timeoutId = window.setTimeout(() => {
+      setSequencePending(false)
+    }, 1000)
+
+    const handleNextKey = (event: KeyboardEvent) => {
+      if (["Shift", "Control", "Alt", "Meta"].includes(event.key)) {
+        return
+      }
+
+      const nextKey = event.key.toLowerCase()
+
+      const matchedItem = COMMAND_MENU_ITEMS.find((item) => {
+        const sequence = item.sequence
+
+        return (
+          sequence?.length === 2 &&
+          sequence[0] === "t" &&
+          sequence[1] === nextKey
+        )
+      })
+
+      setSequencePending(false)
+
+      if (matchedItem) {
+        event.preventDefault()
+        handleSelect(matchedItem)
+      }
+    }
+
+    window.addEventListener("keydown", handleNextKey)
+
+    return () => {
+      window.clearTimeout(timeoutId)
+      window.removeEventListener("keydown", handleNextKey)
+    }
+  }, [sequencePending, open, handleSelect])
 
   return (
     <CommandDialog
@@ -102,7 +171,7 @@ export function CommandMenu() {
                     key={item.id}
                     value={`${item.title} ${item.description || ""} ${item.keywords?.join(" ") || ""}`}
                     onSelect={() => handleSelect(item)}
-                    className="flex items-center gap-3 px-3 py-2.5"
+                    className="group flex items-center gap-3 px-3 py-2.5"
                   >
                     {item.icon && (
                       <div className="flex size-6 shrink-0 items-center justify-center rounded-md border border-border/40 bg-muted/40 text-muted-foreground group-data-[selected=true]/command-item:border-pp-primary/40 group-data-[selected=true]/command-item:bg-pp-primary/10 group-data-[selected=true]/command-item:text-pp-primary">
