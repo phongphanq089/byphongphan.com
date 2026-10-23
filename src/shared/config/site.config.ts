@@ -9,7 +9,7 @@ export const siteConfig = {
     name: "byphongphan",
     urlTemplate: "https://byphongphan.com/r/{name}.json",
   },
-  ogImage: "/og-image.jpg",
+  ogImage: "/og-image.png",
   repoUrl: "https://github.com/phongphanq089/byphongphan.com",
   githubLicense:
     "https://github.com/phongphanq089/byphongphan.com/blob/main/LICENSE.md",

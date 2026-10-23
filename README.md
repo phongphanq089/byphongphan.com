@@ -4,8 +4,8 @@
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://ik.imagekit.io/htnacim0q/byphongphan.com/README-1.jpg" />
-    <img alt="Phong Phan Portfolio Header Banner" src="https://ik.imagekit.io/htnacim0q/byphongphan.com/README-1.jpg" width="100%" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://ik.imagekit.io/htnacim0q/byphongphan.com/og-image.png" />
+    <img alt="Phong Phan Portfolio Header Banner" src="https://ik.imagekit.io/htnacim0q/byphongphan.com/og-image.png" width="100%" />
   </picture>
 </p>
 
