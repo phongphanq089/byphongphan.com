@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
   "name": "phongphan",
-  "homepage": "https://phongphandev.netlify.app/component-ui",
+  "homepage": "https://byphongphan.com/component-ui",
   "items": [
     {
       "name": "line-nav",
@@ -72,7 +72,7 @@
       ],
       "devDependencies": [],
       "registryDependencies": [
-        "https://phongphandev.netlify.app/r/use-media-query.json"
+        "https://byphongphan.com/r/use-media-query.json"
       ],
       "files": [
         {

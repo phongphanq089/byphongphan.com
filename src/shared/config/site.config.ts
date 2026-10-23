@@ -3,15 +3,16 @@ export const siteConfig = {
   title: "Phong Phan • Frontend Engineer",
   description:
     "Portfolio of Phong Phan. Frontend Engineer with a solid fullstack foundation, specializing in React, TypeScript, TanStack, fluid interactions, and UI craftsmanship.",
-  url: "https://phongphandev.netlify.app",
+  url: "https://byphongphan.com",
   registry: {
     namespace: "@byphongphan",
     name: "byphongphan",
-    urlTemplate: "https://phongphandev.netlify.app/r/{name}.json",
+    urlTemplate: "https://byphongphan.com/r/{name}.json",
   },
   ogImage: "/og-image.jpg",
   repoUrl: "https://github.com/phongphanq089/byphongphan.com",
-
+  githubLicense:
+    "https://github.com/phongphanq089/byphongphan.com/blob/main/LICENSE.md",
   author: {
     name: "Phong Phan",
     role: "Frontend Engineer",
@@ -44,6 +45,7 @@ export const siteConfig = {
   },
 
   inspirations: [
+    { name: "chanhdai.com", href: "https://chanhdai.com" },
     { name: "shadcn/ui", href: "https://ui.shadcn.com" },
     { name: "Tailwind CSS", href: "https://tailwindcss.com" },
     { name: "Skiper UI", href: "https://skiper-ui.com" },
@@ -52,7 +54,6 @@ export const siteConfig = {
     { name: "useLayouts", href: "https://uselayouts.com" },
     { name: "Reactbits", href: "https://reactbits.dev/" },
     { name: "Aceternity UI", href: "https://ui.aceternity.com" },
-    { name: "chanhdai.com", href: "https://chanhdai.com" },
   ],
 } as const
 
