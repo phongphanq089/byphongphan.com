@@ -42,17 +42,6 @@ export function BlueprintCanvasBackground({
   const patternId = useId()
   const gridPatternId = `blueprint-grid-pattern-${patternId}`
 
-  // Rhythmic snap nodes at grid intersections (matches reference image placement)
-  const snapNodes = [
-    { x: 680, y: 160 },
-    { x: 680, y: 340 },
-    { x: 680, y: 520 },
-    { x: 990, y: 520 },
-    { x: 414, y: 600 },
-    { x: 680, y: 600 },
-    { x: 990, y: 600 },
-  ]
-
   return (
     <div
       aria-hidden="true"
@@ -312,21 +301,6 @@ export function BlueprintCanvasBackground({
             className="fill-background stroke-foreground/40 dark:fill-neutral-950 dark:stroke-white/40"
             strokeWidth="1"
           />
-        </g>
-
-        {/* ─── Rhythmic Grid Snap Nodes (CAD / Figma Vector Handles) ─── */}
-        <g id="drafting-snap-nodes">
-          {snapNodes.map((node, index) => (
-            <rect
-              key={`snap-node-${index}`}
-              x={node.x - 3}
-              y={node.y - 3}
-              width="6"
-              height="6"
-              className="fill-background stroke-foreground/40 transition-opacity duration-300 dark:fill-neutral-950 dark:stroke-white/40"
-              strokeWidth="1"
-            />
-          ))}
         </g>
 
         {/* ─── Optional Subtle Blueprint Coordinate Labels ─── */}
