@@ -37,6 +37,20 @@
     "registryDependencies": []
   },
   {
+    "name": "drawer",
+    "type": "registry:ui",
+    "title": "Drawer",
+    "description": "An interactive overlay and bottom sheet component powered by Base UI with swipe-to-dismiss, snap points, nested stacks, customizable positions, and inset or straight variants.",
+    "dependencies": [
+      "@base-ui/react",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "button",
+      "https://byphongphan.com/r/scroll-area.json"
+    ]
+  },
+  {
     "name": "unboxing-bucket",
     "type": "registry:component",
     "title": "Unboxing Bucket",

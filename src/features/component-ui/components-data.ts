@@ -45,6 +45,16 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     isNew: true,
   },
   {
+    id: "comp-drawer",
+    name: "Drawer",
+    slug: "drawer",
+    category: "interactive",
+    description:
+      "An interactive drawer and bottom sheet powered by Base UI with swipe gestures, snap points, nested stacks, and multi-directional slide-ins.",
+    schematicType: "drawer",
+    isNew: true,
+  },
+  {
     id: "comp-unboxing-bucket",
     name: "Unboxing Bucket",
     slug: "unboxing-bucket",

@@ -1,0 +1,159 @@
+---
+title: Drawer
+description: An interactive overlay and bottom sheet component powered by Base UI with swipe-to-dismiss, snap points, nested stacks, customizable positions, and inset or straight variants.
+component: true
+---
+
+<ComponentPreview name="drawer-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="manual">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="drawer" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the following dependencies:</Step>
+      <CodeBlockCommand command="npm install @base-ui/react lucide-react" />
+      <Step>Copy and paste the drawer component into your project.</Step>
+      <ComponentSource name="drawer" title="components/ui/drawer.tsx" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { Button } from "@/components/ui/button"
+import {
+  Drawer,
+  DrawerClose,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerPanel,
+  DrawerPopup,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+
+export function DrawerDemo() {
+  return (
+    <Drawer>
+      <DrawerTrigger render={<Button variant="outline" />}>
+        Open Drawer
+      </DrawerTrigger>
+      <DrawerPopup showBar>
+        <div className="mx-auto w-full max-w-sm">
+          <DrawerHeader>
+            <DrawerTitle>Drawer Title</DrawerTitle>
+            <DrawerDescription>
+              Drawer description goes here.
+            </DrawerDescription>
+          </DrawerHeader>
+          <DrawerPanel>
+            <p className="text-sm text-muted-foreground">Drawer content...</p>
+          </DrawerPanel>
+          <DrawerFooter variant="bare">
+            <Button>Submit</Button>
+            <DrawerClose render={<Button variant="outline" />}>
+              Cancel
+            </DrawerClose>
+          </DrawerFooter>
+        </div>
+      </DrawerPopup>
+    </Drawer>
+  )
+}
+```
+
+## Examples
+
+### Inset Positioning
+
+Floating detached drawer variant with margin offsets across all 4 screen edges: right, left, top, and bottom.
+
+<ComponentPreview name="drawer-inset" />
+
+### Straight Corners
+
+Minimalist architectural variant with sharp rectangular corners (`variant="straight"`) and no nested scaling.
+
+<ComponentPreview name="drawer-straight" />
+
+### Scrollable Content
+
+Built-in smooth scrolling with overflow handling and automatic scroll fade indicators for long list views.
+
+<ComponentPreview name="drawer-scrollable" />
+
+### Nested Drawers
+
+Multi-step nested drawer stack with dynamic depth scaling, peek offsets, and smooth breadcrumb progression.
+
+<ComponentPreview name="drawer-nested" />
+
+### Snap Points
+
+Preset intermediate snap positions (such as 35%, 70%, and 100%) with velocity-aware drag thresholds and programmatic control.
+
+<ComponentPreview name="drawer-snap-points" />
+
+### Max Width Popup
+
+Limits the entire `DrawerPopup` sheet width (e.g. `mx-auto max-w-lg sm:border-x`) on desktop viewports with clean side borders, while expanding to full width on mobile devices.
+
+<ComponentPreview name="drawer-max-width" />
+
+---
+
+## Props
+
+### Drawer
+
+| Prop                      | Type                                                 | Default     | Description                                                                              |
+| :------------------------ | :--------------------------------------------------- | :---------- | :--------------------------------------------------------------------------------------- |
+| `position`                | `"bottom" \| "top" \| "left" \| "right"`             | `"bottom"`  | Screen edge from which the drawer slides in.                                             |
+| `swipeDirection`          | `"down" \| "up" \| "left" \| "right"`                | (auto)      | Swipe direction to dismiss; automatically synced to `position` when omitted.             |
+| `snapPoints`              | `Array<number \| string>`                            | `undefined` | Preset snap points (fractions e.g. `0.5`, pixel heights e.g. `400`, or CSS strings).     |
+| `snapPoint`               | `number \| string \| null`                           | `undefined` | Controlled active snap point value.                                                      |
+| `defaultSnapPoint`        | `number \| string \| null`                           | `undefined` | Initial snap point when uncontrolled.                                                    |
+| `onSnapPointChange`       | `(snapPoint, details) => void`                       | `undefined` | Callback fired when the active snap point changes.                                       |
+| `open`                    | `boolean`                                            | `undefined` | Controlled open state of the drawer.                                                     |
+| `defaultOpen`             | `boolean`                                            | `false`     | Initial open state when uncontrolled.                                                    |
+| `onOpenChange`            | `(open, details) => void`                            | `undefined` | Event handler called when the drawer opens or closes.                                    |
+| `modal`                   | `boolean \| "trap-focus"`                            | `true`      | Traps focus and locks background page scrolling when active.                             |
+| `disablePointerDismissal` | `boolean`                                            | `false`     | Prevents the drawer from closing when pressing outside the popup.                        |
+
+### DrawerPopup
+
+| Prop              | Type                                     | Default     | Description                                                                    |
+| :---------------- | :--------------------------------------- | :---------- | :----------------------------------------------------------------------------- |
+| `variant`         | `"default" \| "straight" \| "inset"`     | `"default"` | Visual style for corners and edge margins (straight corners or floating inset). |
+| `position`        | `"bottom" \| "top" \| "left" \| "right"` | (context)   | Overrides the parent drawer position context if specified.                     |
+| `showBar`         | `boolean`                                | `false`     | Whether to display the tactile grab handle bar.                                |
+| `showCloseButton` | `boolean`                                | `false`     | Displays an absolute close button in the top-end corner.                       |
+| `portalProps`     | `DrawerPortalProps`                      | `undefined` | Optional props forwarded to the underlying `DrawerPortal`.                     |
+
+### DrawerPanel
+
+| Prop             | Type      | Default | Description                                                                |
+| :--------------- | :-------- | :------ | :------------------------------------------------------------------------- |
+| `scrollable`     | `boolean` | `true`  | Automatically wraps panel content in a responsive Base UI `ScrollArea`.    |
+| `scrollFade`     | `boolean` | `true`  | Shows smooth top/bottom mask fade gradients when content overflows.        |
+| `allowSelection` | `boolean` | `true`  | Allows text selection inside the panel without triggering swipe gestures.  |
+
+### DrawerFooter
+
+| Prop             | Type                    | Default     | Description                                                                 |
+| :--------------- | :---------------------- | :---------- | :-------------------------------------------------------------------------- |
+| `variant`        | `"default" \| "bare"`   | `"default"` | `"default"` has a subtle top border and background; `"bare"` has no border. |
+| `allowSelection` | `boolean`               | `true`      | Allows text and button interaction without swipe drag interference.         |

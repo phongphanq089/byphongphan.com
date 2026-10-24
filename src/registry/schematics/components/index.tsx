@@ -12,6 +12,7 @@ import { MiddleTruncationSchematic } from "./middle-truncation-schematic"
 import { PhongPhanIsometricSchematic } from "./phong-phan-isometric-schematic"
 import { PPMarkIsometricSchematic } from "./pp-mark-isometric-schematic"
 import { ScrollAreaSchematic } from "./scroll-area-schematic"
+import { DrawerSchematic } from "./drawer-schematic"
 import { SelectSchematic } from "./select-schematic"
 import { SpotlightCardSchematic } from "./spotlight-card-schematic"
 import { TextHoverEffectSchematic } from "./text-hover-effect-schematic"
@@ -28,6 +29,7 @@ export * from "./middle-truncation-schematic"
 export * from "./phong-phan-isometric-schematic"
 export * from "./pp-mark-isometric-schematic"
 export * from "./scroll-area-schematic"
+export * from "./drawer-schematic"
 export * from "./select-schematic"
 export * from "./spotlight-card-schematic"
 export * from "./text-hover-effect-schematic"
@@ -58,6 +60,7 @@ export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
   "spotlight-card": SpotlightCardSchematic,
   "border-glow": BorderGlowSchematic,
   "scroll-area": ScrollAreaSchematic,
+  drawer: DrawerSchematic,
 }
 
 export function RenderComponentSchematic({ type }: { type?: string }) {
