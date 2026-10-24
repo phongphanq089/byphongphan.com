@@ -155,7 +155,7 @@ const BottomMenu = () => {
       {/* Hidden for measurement */}
       <div
         ref={hiddenRef}
-        className="pointer-events-none invisible absolute top-[-9999px] left-[-9999px]"
+        className="pointer-events-none invisible absolute top-[-9999px] left-[-9999px] max-w-[calc(100vw-24px)]"
       >
         <div className="rounded-[18px] border border-border bg-background/95 py-1">
           {content}
@@ -165,77 +165,79 @@ const BottomMenu = () => {
       {/* Animated submenu */}
       <AnimatePresence mode="wait">
         {view !== "default" && (
-          <motion.div
-            key="submenu"
-            initial={{
-              opacity: 0,
-              scaleY: 0.9,
-              scaleX: 0.95,
-              height: 0,
-              width: 0,
-              originY: 1,
-              originX: 0.5,
-            }}
-            animate={{
-              opacity: 1,
-              scaleY: 1,
-              scaleX: 1,
-              height: hiddenBounds.height || "auto",
-              width: hiddenBounds.width || "auto",
-              originY: 1,
-              originX: 0.5,
-            }}
-            exit={{
-              opacity: 0,
-              scaleY: 0.9,
-              scaleX: 0.95,
-              height: 0,
-              width: 0,
-              originY: 1,
-              originX: 0.5,
-            }}
-            transition={{
-              duration: 0.3,
-              ease: [0.45, 0, 0.25, 1],
-            }}
-            style={{
-              transformOrigin: "bottom center",
-            }}
-            className="absolute bottom-[58px] max-w-[calc(100vw-24px)] overflow-hidden rounded-xl lg:right-0"
-          >
-            <div
-              ref={elementRef}
-              className="overflow-hidden rounded-xl border border-border/80 bg-accent shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-2xl dark:border-white/15 dark:bg-background"
+          <div className="pointer-events-none fixed bottom-[78px] left-1/2 z-50 max-w-[calc(100vw-24px)] -translate-x-1/2 lg:pointer-events-auto lg:absolute lg:right-0 lg:bottom-[58px] lg:left-auto lg:max-w-none lg:translate-x-0">
+            <motion.div
+              key="submenu"
+              initial={{
+                opacity: 0,
+                scaleY: 0.9,
+                scaleX: 0.95,
+                height: 0,
+                width: 0,
+                originY: 1,
+                originX: 0.5,
+              }}
+              animate={{
+                opacity: 1,
+                scaleY: 1,
+                scaleX: 1,
+                height: hiddenBounds.height || "auto",
+                width: hiddenBounds.width || "auto",
+                originY: 1,
+                originX: 0.5,
+              }}
+              exit={{
+                opacity: 0,
+                scaleY: 0.9,
+                scaleX: 0.95,
+                height: 0,
+                width: 0,
+                originY: 1,
+                originX: 0.5,
+              }}
+              transition={{
+                duration: 0.3,
+                ease: [0.45, 0, 0.25, 1],
+              }}
+              style={{
+                transformOrigin: "bottom center",
+              }}
+              className="pointer-events-auto overflow-hidden rounded-xl"
             >
-              <AnimatePresence initial={false} mode="popLayout">
-                <motion.div
-                  key={view}
-                  initial={{
-                    opacity: 0,
-                    scale: 0.96,
-                    filter: "blur(10px)",
-                  }}
-                  animate={{
-                    opacity: 1,
-                    scale: 1,
-                    filter: "blur(0px)",
-                  }}
-                  exit={{
-                    opacity: 0,
-                    scale: 0.95,
-                    filter: "blur(12px)",
-                  }}
-                  transition={{
-                    duration: 0.25,
-                    ease: [0.42, 0, 0.58, 1],
-                  }}
-                  className="py-1"
-                >
-                  {content}
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </motion.div>
+              <div
+                ref={elementRef}
+                className="overflow-hidden rounded-xl border border-border/80 bg-accent shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-2xl dark:border-white/15 dark:bg-background"
+              >
+                <AnimatePresence initial={false} mode="popLayout">
+                  <motion.div
+                    key={view}
+                    initial={{
+                      opacity: 0,
+                      scale: 0.96,
+                      filter: "blur(10px)",
+                    }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      filter: "blur(0px)",
+                    }}
+                    exit={{
+                      opacity: 0,
+                      scale: 0.95,
+                      filter: "blur(12px)",
+                    }}
+                    transition={{
+                      duration: 0.25,
+                      ease: [0.42, 0, 0.58, 1],
+                    }}
+                    className="py-1"
+                  >
+                    {content}
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
 
