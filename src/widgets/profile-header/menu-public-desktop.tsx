@@ -11,6 +11,7 @@ import { PPPixelMark } from "@/shared/ui/icons/pp-pixel-mark"
 import { ModeToggle } from "@/shared/ui/system/mode-toggle"
 
 import { CommandMenuTrigger } from "../command-menu"
+import { GitHubStarButton } from "./github-star-button"
 
 function isRouteActive(itemLink: string, currentPath: string): boolean {
   if (itemLink === "/") {
@@ -262,6 +263,9 @@ export function Header() {
       </Link>
 
       <div className="relative z-10 flex shrink-0 items-stretch border-l border-border bg-background/50 backdrop-blur-xs lg:hidden">
+        <div className="flex items-center border-r border-border">
+          <GitHubStarButton />
+        </div>
         <Button
           variant="ghost"
           className="group/btn h-full rounded-none border-0 px-3.5 py-3 font-mono text-[11px] font-medium text-foreground transition-all duration-200 hover:bg-accent/60 hover:text-foreground active:bg-accent sm:px-6 sm:text-xs"
@@ -277,8 +281,13 @@ export function Header() {
       {/* Desktop header — hidden below lg, visible at lg+ */}
       <div className="ml-auto hidden h-full items-center lg:flex">
         <SpotlightNavbar className="h-full" />
-        <div className="flex h-full items-center gap-2 border-l border-border px-3">
+        <div className="flex h-full items-center border-l border-border px-3">
           <CommandMenuTrigger compact />
+        </div>
+        <div className="flex h-full items-center border-l border-border">
+          <GitHubStarButton />
+        </div>
+        <div className="flex h-full items-center border-l border-border px-3">
           <ModeToggle />
         </div>
       </div>
