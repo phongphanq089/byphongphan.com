@@ -72,6 +72,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     schematic: CardSchematic,
     schematicType: "card",
     dependencies: [],
+    isNew: true,
     registryDependencies: [],
     files: [
       {
@@ -132,6 +133,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     schematicType: "unboxing-bucket",
     dependencies: ["motion", "lucide-react"],
     registryDependencies: ["use-media-query"],
+    isNew: true,
     files: [
       {
         path: "animated/unboxing-bucket.tsx",
@@ -169,6 +171,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     category: "interactive",
     dependencies: [],
     registryDependencies: [],
+    isNew: true,
     files: [
       {
         path: "hooks/use-media-query.ts",
@@ -188,6 +191,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     schematicType: "code-block",
     dependencies: ["shiki", "lucide-react"],
     registryDependencies: ["button"],
+    isNew: true,
     files: [
       {
         path: "ui/code-block/code-block.tsx",

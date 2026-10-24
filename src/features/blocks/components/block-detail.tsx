@@ -42,6 +42,7 @@ import { BLOCKS_DATA } from "../blocks-data"
 import type { BlockItem, ResolvedBlockFile } from "../types"
 import { BlockCodeViewer } from "./block-code-viewer"
 import { BlockFileTree } from "./block-file-tree"
+import { BlockQuickNav } from "./block-quick-nav"
 
 interface BlockDetailProps {
   block: BlockItem
@@ -193,7 +194,13 @@ export function BlockDetail({ block }: BlockDetailProps) {
   }, [])
 
   return (
-    <div className="w-full">
+    <div className="relative w-full">
+      <BlockQuickNav
+        currentCategory={block.category}
+        currentSlug={block.slug}
+        currentTitle={block.title}
+      />
+
       {/* ── 1. Hero Header ── */}
       <GridContainer
         borderTop

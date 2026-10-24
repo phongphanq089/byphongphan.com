@@ -32,7 +32,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     category: "card",
     description: "Displays a card with header, content, and footer.",
     schematicType: "card",
-    isNew: false,
+    isNew: true,
   },
   {
     id: "comp-scroll-area",
@@ -62,7 +62,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     description:
       "Interactive 3D unboxing container animation with emerging spring-physics feature chips.",
     schematicType: "unboxing-bucket",
-    isNew: false,
+    isNew: true,
   },
   {
     id: "comp-flip-clock",
@@ -82,7 +82,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     description:
       "Syntax-highlighted code surface powered by Shiki with line numbers, line highlighting, collapsible blocks, diff mode, and copy actions.",
     schematicType: "code-block",
-    isNew: false,
+    isNew: true,
   },
   {
     id: "comp-map",
