@@ -26,7 +26,7 @@ export interface ComponentItem {
   category: ComponentCategoryId
   description: string
   count?: number
-  schematicType: SchematicType
+  schematicType?: SchematicType
   badge?: string
   isNew?: boolean
 }

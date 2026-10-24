@@ -45,6 +45,11 @@ export const PPMarkIsometricDemo = lazyWithRetry(() =>
 export const SelectDemo = lazyWithRetry(() =>
   import("./select-demo").then((m) => ({ default: m.SelectDemo }))
 )
+export const ScrollAreaDemo = lazyWithRetry(() =>
+  import("./scroll-area-demo").then((m) => ({
+    default: m.ScrollAreaDemo,
+  }))
+)
 export const SpotlightCardDemo = lazyWithRetry(() =>
   import("./spotlight-card-demo").then((m) => ({
     default: m.SpotlightCardDemo,
@@ -80,4 +85,6 @@ export const REGISTRY_DEMOS: Record<string, ComponentType> = {
   "spotlight-card-demo": SpotlightCardDemo,
   "border-glow": BorderGlowDemo,
   "border-glow-demo": BorderGlowDemo,
+  "scroll-area": ScrollAreaDemo,
+  "scroll-area-demo": ScrollAreaDemo,
 }

@@ -32,7 +32,27 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     category: "card",
     description: "Displays a card with header, content, and footer.",
     schematicType: "card",
-    isNew: false,
+    isNew: true,
+  },
+  {
+    id: "comp-scroll-area",
+    name: "Scroll Area",
+    slug: "scroll-area",
+    category: "data-display",
+    description:
+      "Cross-browser scroll area with auto, hover, and always visibility modes, custom variants, scrollbar gutter reserve, keyboard navigation, and high-contrast styling.",
+    schematicType: "scroll-area",
+    isNew: true,
+  },
+  {
+    id: "comp-drawer",
+    name: "Drawer",
+    slug: "drawer",
+    category: "interactive",
+    description:
+      "An interactive drawer and bottom sheet powered by Base UI with swipe gestures, snap points, nested stacks, and multi-directional slide-ins.",
+    schematicType: "drawer",
+    isNew: true,
   },
   {
     id: "comp-unboxing-bucket",
@@ -42,7 +62,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     description:
       "Interactive 3D unboxing container animation with emerging spring-physics feature chips.",
     schematicType: "unboxing-bucket",
-    isNew: false,
+    isNew: true,
   },
   {
     id: "comp-flip-clock",
@@ -62,7 +82,7 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     description:
       "Syntax-highlighted code surface powered by Shiki with line numbers, line highlighting, collapsible blocks, diff mode, and copy actions.",
     schematicType: "code-block",
-    isNew: false,
+    isNew: true,
   },
   {
     id: "comp-map",

@@ -4,6 +4,7 @@ import {
   BorderGlowSchematic,
   CardSchematic,
   CodeBlockSchematic,
+  DrawerSchematic,
   FlipClockSchematic,
   LineNavSchematic,
   Login01Schematic,
@@ -14,6 +15,7 @@ import {
   NotFound03Schematic,
   PhongPhanIsometricSchematic,
   PPMarkIsometricSchematic,
+  ScrollAreaSchematic,
   SpotlightCardSchematic,
   StatsCards01Schematic,
   TextHoverEffectSchematic,
@@ -70,12 +72,53 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     schematic: CardSchematic,
     schematicType: "card",
     dependencies: [],
+    isNew: true,
     registryDependencies: [],
     files: [
       {
         path: "ui/card.tsx",
         type: "registry:ui",
         target: "components/ui/card.tsx",
+      },
+    ],
+  },
+  {
+    name: "scroll-area",
+    title: "Scroll Area",
+    description:
+      "Augments native scroll functionality with auto, hover, and always visibility modes, custom variants, scrollbar gutter reserve, keyboard navigation, and high-contrast styling.",
+    type: "registry:ui",
+    category: "data-display",
+    schematic: ScrollAreaSchematic,
+    schematicType: "scroll-area",
+    isNew: true,
+    dependencies: ["@base-ui/react", "class-variance-authority"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "ui/scroll-area.tsx",
+        type: "registry:ui",
+        target: "components/ui/scroll-area.tsx",
+      },
+    ],
+  },
+  {
+    name: "drawer",
+    title: "Drawer",
+    description:
+      "An interactive overlay and bottom sheet component powered by Base UI with swipe-to-dismiss, snap points, nested stacks, customizable positions, and inset or straight variants.",
+    type: "registry:ui",
+    category: "interactive",
+    schematic: DrawerSchematic,
+    schematicType: "drawer",
+    isNew: true,
+    dependencies: ["@base-ui/react", "lucide-react"],
+    registryDependencies: ["button", "scroll-area"],
+    files: [
+      {
+        path: "ui/drawer.tsx",
+        type: "registry:ui",
+        target: "components/ui/drawer.tsx",
       },
     ],
   },
@@ -90,6 +133,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     schematicType: "unboxing-bucket",
     dependencies: ["motion", "lucide-react"],
     registryDependencies: ["use-media-query"],
+    isNew: true,
     files: [
       {
         path: "animated/unboxing-bucket.tsx",
@@ -127,6 +171,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     category: "interactive",
     dependencies: [],
     registryDependencies: [],
+    isNew: true,
     files: [
       {
         path: "hooks/use-media-query.ts",
@@ -146,6 +191,7 @@ export const REGISTRY_ITEMS: RegistryItem[] = [
     schematicType: "code-block",
     dependencies: ["shiki", "lucide-react"],
     registryDependencies: ["button"],
+    isNew: true,
     files: [
       {
         path: "ui/code-block/code-block.tsx",
