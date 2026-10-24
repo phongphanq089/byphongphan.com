@@ -11,6 +11,7 @@ import {
   CodeBlockWrapToggle,
 } from "@/registry/ui/code-block"
 import { cn } from "@/shared/lib/utils"
+import { ScrollArea } from "@/shared/ui"
 
 import type { ResolvedBlockFile } from "../types"
 
@@ -81,9 +82,9 @@ export function BlockCodeViewer({ file, className }: BlockCodeViewerProps) {
             <CodeBlockCopyButton />
           </div>
         </CodeBlockHeader>
-        <div className="flex-1 overflow-auto">
+        <ScrollArea scrollFade>
           <CodeBlockContent />
-        </div>
+        </ScrollArea>
       </CodeBlock>
     </div>
   )

@@ -88,6 +88,7 @@ function buildNavigationMenuItems(): CommandMenuItem[] {
       <Home className="size-4 text-pp-primary" />
     ),
     shortcut: item.shortcut,
+    sequence: item.shortcut?.map((k) => k.toLowerCase()),
     keywords: item.keywords ?? [item.id, item.title.toLowerCase()],
     group: "menu",
     to: item.link,
@@ -113,6 +114,7 @@ function buildSectionMenuItems(): CommandMenuItem[] {
     const hash = item.url.startsWith("#") ? item.url : `#${item.url}`
     const id = hash.replace("#", "")
     const title = typeof item.title === "string" ? item.title : id
+    const shortcut = item.shortcut ?? ["#", String(index + 1)]
 
     return {
       id: `sec-${id}`,
@@ -121,7 +123,8 @@ function buildSectionMenuItems(): CommandMenuItem[] {
       icon: SECTION_ICON_MAP[id] ?? (
         <Radio className="size-4 text-pp-primary" />
       ),
-      shortcut: item.shortcut ?? ["#", String(index + 1)],
+      shortcut,
+      sequence: shortcut.map((k) => k.toLowerCase()),
       keywords: item.keywords ?? [id, title.toLowerCase()],
       group: "sections",
       to: `/${hash}`,

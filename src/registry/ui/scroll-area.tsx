@@ -1,53 +1,78 @@
-"use client"
-
+import { cn } from "@/shared/lib/utils"
 import { ScrollArea as ScrollAreaPrimitive } from "@base-ui/react/scroll-area"
-import { cn } from "cn"
+import type React from "react"
 
-function ScrollArea({
+export function ScrollArea({
   className,
+  classNameViewport,
   children,
+  scrollFade = false,
+  scrollbarGutter = false,
+  fill = false,
+  clampContentMinWidth = true,
+  overscrollContain = false,
   ...props
-}: ScrollAreaPrimitive.Root.Props) {
+}: ScrollAreaPrimitive.Root.Props & {
+  classNameViewport?: string
+  scrollFade?: boolean
+  scrollbarGutter?: boolean
+  fill?: boolean
+  clampContentMinWidth?: boolean
+  overscrollContain?: boolean
+}): React.ReactElement {
   return (
     <ScrollAreaPrimitive.Root
-      data-slot="scroll-area"
-      className={cn("relative", className)}
+      className={cn("relative min-h-0 min-w-0", className)}
       {...props}
     >
       <ScrollAreaPrimitive.Viewport
+        className={cn(
+          "h-full max-h-[inherit] rounded-[inherit] transition-shadow outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:ring-offset-background",
+          classNameViewport,
+          overscrollContain &&
+            "data-has-overflow-x:overscroll-x-contain data-has-overflow-y:overscroll-y-contain",
+          scrollFade && "scroll-fade-effect-x scroll-fade-effect-y",
+          scrollbarGutter &&
+            "data-has-overflow-x:pb-2.5 data-has-overflow-y:pe-2.5"
+        )}
         data-slot="scroll-area-viewport"
-        className="size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1"
       >
-        {children}
+        <ScrollAreaPrimitive.Content
+          className={cn(fill && "size-full")}
+          data-slot="scroll-area-content"
+          style={clampContentMinWidth ? { minWidth: 0 } : undefined}
+        >
+          {children}
+        </ScrollAreaPrimitive.Content>
       </ScrollAreaPrimitive.Viewport>
-      <ScrollBar />
-      <ScrollAreaPrimitive.Corner />
+      <ScrollBar orientation="vertical" />
+      <ScrollBar orientation="horizontal" />
+      <ScrollAreaPrimitive.Corner data-slot="scroll-area-corner" />
     </ScrollAreaPrimitive.Root>
   )
 }
 
-function ScrollBar({
+export function ScrollBar({
   className,
   orientation = "vertical",
   ...props
-}: ScrollAreaPrimitive.Scrollbar.Props) {
+}: ScrollAreaPrimitive.Scrollbar.Props): React.ReactElement {
   return (
     <ScrollAreaPrimitive.Scrollbar
-      data-slot="scroll-area-scrollbar"
-      data-orientation={orientation}
-      orientation={orientation}
       className={cn(
-        "flex touch-none p-px transition-colors select-none data-horizontal:h-2.5 data-horizontal:flex-col data-horizontal:border-t data-horizontal:border-t-transparent data-vertical:h-full data-vertical:w-2.5 data-vertical:border-l data-vertical:border-l-transparent",
+        "m-1 flex opacity-0 transition-opacity delay-300 data-hovering:opacity-100 data-hovering:delay-0 data-hovering:duration-100 data-scrolling:opacity-100 data-scrolling:delay-0 data-scrolling:duration-100 data-[orientation=horizontal]:h-1.5 data-[orientation=horizontal]:flex-col data-[orientation=vertical]:w-1.5",
         className
       )}
+      data-slot="scroll-area-scrollbar"
+      orientation={orientation}
       {...props}
     >
       <ScrollAreaPrimitive.Thumb
+        className="relative flex-1 rounded-full bg-foreground/20"
         data-slot="scroll-area-thumb"
-        className="relative flex-1 rounded-full bg-border"
       />
     </ScrollAreaPrimitive.Scrollbar>
   )
 }
 
-export { ScrollArea, ScrollBar }
+export { ScrollAreaPrimitive }

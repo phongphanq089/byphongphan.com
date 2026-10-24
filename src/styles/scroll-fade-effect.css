@@ -28,7 +28,6 @@
   --mask-offset-bottom: 0px;
   --scroll-buffer: 2rem;
 
-  /* Set up the mask layers */
   mask-image:
     linear-gradient(to top, transparent, black 90%),
     linear-gradient(to bottom, transparent 0%, black 100%),
@@ -38,12 +37,14 @@
     100% var(--top-mask-height),
     100% var(--bottom-mask-height),
     100% 100%;
+
   mask-repeat: no-repeat, no-repeat, no-repeat;
+
   mask-position:
     0 var(--mask-offset-top),
     0 calc(100% - var(--mask-offset-bottom)),
     0 0;
-  /* Exclude the gradient areas from the solid mask */
+
   mask-composite: exclude;
 
   animation-name: show-top-mask, hide-bottom-mask;
@@ -69,11 +70,14 @@
     var(--left-mask-width) 100%,
     var(--right-mask-width) 100%,
     100% 100%;
+
   mask-repeat: no-repeat, no-repeat, no-repeat;
+
   mask-position:
     var(--mask-offset-left) 0,
     calc(100% - var(--mask-offset-right)) 0,
     0 0;
+
   mask-composite: exclude;
 
   animation-name: show-left-mask, hide-right-mask;
@@ -84,7 +88,6 @@
   animation-fill-mode: both;
 }
 
-/* ─── Scroll Fade Animation Keyframes ─────────────────────────────── */
 @keyframes show-top-mask {
   to {
     --top-mask-height: var(--mask-height);
