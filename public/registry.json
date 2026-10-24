@@ -60,6 +60,51 @@
       ]
     },
     {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "Augments native scroll functionality with auto, hover, and always visibility modes, custom variants, scrollbar gutter reserve, keyboard navigation, and high-contrast styling.",
+      "category": "data-display",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/ui/scroll-area.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/scroll-area.tsx"
+        }
+      ]
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "An interactive overlay and bottom sheet component powered by Base UI with swipe-to-dismiss, snap points, nested stacks, customizable positions, and inset or straight variants.",
+      "category": "interactive",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [
+        "button",
+        "https://byphongphan.com/r/scroll-area.json"
+      ],
+      "files": [
+        {
+          "path": "src/registry/ui/drawer.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/drawer.tsx"
+        }
+      ]
+    },
+    {
       "name": "unboxing-bucket",
       "type": "registry:component",
       "title": "Unboxing Bucket",

@@ -1,0 +1,104 @@
+---
+title: Scroll Area
+description: Augments native scroll functionality with auto, hover, and always visibility modes, scrollbar variants, gutter reserve, keyboard navigation, and high-contrast support.
+component: true
+---
+
+<ComponentPreview name="scroll-area-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="manual">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="scroll-area" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the following dependencies:</Step>
+      <CodeBlockCommand command="npm install @base-ui/react class-variance-authority" />
+      <Step>Copy and paste the scroll-area component into your project.</Step>
+      <ComponentSource name="scroll-area" title="components/ui/scroll-area.tsx" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { ScrollArea } from "@/registry/ui/scroll-area"
+
+export function ScrollAreaDemo() {
+  return (
+    <ScrollArea
+      className="h-72 w-52 rounded-md border p-4"
+      variant="default"
+      size="default"
+      type="hover"
+      scrollbarGutter="auto"
+    >
+      <div className="space-y-2">
+        <h4 className="text-sm font-semibold">Title</h4>
+        <p className="text-xs text-muted-foreground">Long content...</p>
+      </div>
+    </ScrollArea>
+  )
+}
+```
+
+## Examples
+
+### Horizontal Scrolling
+
+ScrollArea with horizontal orientation for scrolling horizontal photo feeds, tag carousels, or metric cards.
+
+<ComponentPreview name="scroll-area-horizontal" />
+
+### Minimal Hairline
+
+Ultra-compact zero-margin scrollbar for dense data tables, code editors, and side panels.
+
+<ComponentPreview name="scroll-area-minimal" />
+
+### Bordered Track
+
+Defined track border separating the scroll gutter from overflowing content.
+
+<ComponentPreview name="scroll-area-bordered" />
+
+### Floating Island
+
+Elevated floating thumb with soft shadow and inset padding for card surfaces and modal overlays.
+
+<ComponentPreview name="scroll-area-floating" />
+
+### Scroll Fade Mask
+
+Top and bottom content fade masks indicating offscreen overflowing content.
+
+<ComponentPreview name="scroll-area-scroll-fade" />
+
+---
+
+## Props
+
+| Prop                   | Type                                                 | Default     | Description                                                          |
+| :--------------------- | :--------------------------------------------------- | :---------- | :------------------------------------------------------------------- |
+| `type`                 | `"hover" \| "auto" \| "always"`                      | `"hover"`   | Visibility behavior for the scrollbars.                              |
+| `variant`              | `"default" \| "minimal" \| "bordered" \| "floating"` | `"default"` | Visual aesthetic variant for the scrollbar track and thumb.          |
+| `size`                 | `"sm" \| "default" \| "lg"`                          | `"default"` | Thickness of the scrollbar track (4px, 6px, or 10px).                |
+| `orientation`          | `"vertical" \| "horizontal" \| "both" \| "none"`     | `"both"`    | Orientation of the automatically managed built-in scrollbars.        |
+| `scrollbarGutter`      | `boolean \| "auto" \| "stable"`                      | `false`     | Controls reserve gutter spacing to eliminate layout shifts.          |
+| `scrollFade`           | `boolean`                                            | `false`     | Adds smooth mask fade gradient at the overflowing edges.             |
+| `overscrollContain`    | `boolean`                                            | `false`     | Prevents scroll chaining to parent containers on boundary edges.     |
+| `fill`                 | `boolean`                                            | `false`     | Stretches viewport content container to 100% width and height.       |
+| `clampContentMinWidth` | `boolean`                                            | `true`      | Constrains content `min-width: 0` to enable responsive resizing.     |
+| `classNameViewport`    | `string`                                             | `undefined` | Additional CSS class names applied directly to the Viewport element. |
+| `tabIndex`             | `number`                                             | `0`         | Keyboard focus tab index for keyboard-navigable scrolling.           |
+| `role`                 | `string`                                             | `"region"`  | Accessible ARIA role for screen-reader region identification.        |

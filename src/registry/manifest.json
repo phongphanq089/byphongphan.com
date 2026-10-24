@@ -50,6 +50,14 @@
       "slug": "card"
     },
     {
+      "category": "data-display",
+      "slug": "scroll-area"
+    },
+    {
+      "category": "interactive",
+      "slug": "drawer"
+    },
+    {
       "category": "interactive",
       "slug": "unboxing-bucket"
     },

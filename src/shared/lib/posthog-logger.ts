@@ -17,21 +17,21 @@ type BlockViewportLogAttributes = {
 
 export const posthogInteractionLogger = {
   commandMenuItemSelected(
-    posthog: PostHog,
+    posthog: PostHog | undefined,
     attributes: CommandMenuLogAttributes
   ) {
-    posthog.logger.info("command menu item selected", attributes)
+    posthog?.logger?.info?.("command menu item selected", attributes)
   },
   componentNameCopied(
-    posthog: PostHog,
+    posthog: PostHog | undefined,
     attributes: ComponentCopyLogAttributes
   ) {
-    posthog.logger.info("component name copied", attributes)
+    posthog?.logger?.info?.("component name copied", attributes)
   },
   blockViewportChanged(
-    posthog: PostHog,
+    posthog: PostHog | undefined,
     attributes: BlockViewportLogAttributes
   ) {
-    posthog.logger.info("block preview viewport changed", attributes)
+    posthog?.logger?.info?.("block preview viewport changed", attributes)
   },
 }

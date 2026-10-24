@@ -166,6 +166,7 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
       <ComponentQuickNav
         currentCategory={component.category}
         currentSlug={component.slug}
+        currentTitle={title}
       />
 
       {tocItems.length > 0 && (

@@ -1,9 +1,8 @@
 import { useNavigate } from "@tanstack/react-router"
 import { CornerDownLeft } from "lucide-react"
 import { usePostHog } from "posthog-js/react"
-import React, { useCallback, useEffect, useState } from "react"
+import React, { useCallback, useEffect } from "react"
 
-import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
 import { posthogInteractionLogger } from "@/shared/lib/posthog-logger"
 import { useTheme } from "@/shared/providers/theme-provider"
 import {
@@ -93,56 +92,104 @@ export function CommandMenu() {
     [navigate, posthog, setOpen, setTheme]
   )
 
-  const [sequencePending, setSequencePending] = useState(false)
-
-  const handleSequenceStart = useCallback(() => {
-    setSequencePending(true)
-  }, [])
-
-  useKeyboardShortcuts("t", handleSequenceStart, {
-    enabled: !open,
-    preventDefault: true,
-  })
-
   useEffect(() => {
-    if (!sequencePending || open) return
+    if (open) return
 
-    const timeoutId = window.setTimeout(() => {
-      setSequencePending(false)
-    }, 1000)
+    let timeoutId: ReturnType<typeof setTimeout> | undefined
+    let buffer: string[] = []
 
-    const handleNextKey = (event: KeyboardEvent) => {
+    const resetBuffer = () => {
+      buffer = []
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+        timeoutId = undefined
+      }
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.tagName === "SELECT" ||
+          target.isContentEditable)
+      ) {
+        return
+      }
+
       if (["Shift", "Control", "Alt", "Meta"].includes(event.key)) {
         return
       }
 
-      const nextKey = event.key.toLowerCase()
+      if (event.ctrlKey || event.metaKey || event.altKey) {
+        return
+      }
 
+      const key = event.key.toLowerCase()
+      const candidateBuffer = [...buffer, key]
+
+      // 1. Check if candidateBuffer matches a complete sequence
       const matchedItem = COMMAND_MENU_ITEMS.find((item) => {
-        const sequence = item.sequence
-
-        return (
-          sequence?.length === 2 &&
-          sequence[0] === "t" &&
-          sequence[1] === nextKey
+        if (!item.sequence || item.sequence.length === 0) return false
+        if (item.sequence.length !== candidateBuffer.length) return false
+        return item.sequence.every(
+          (k, idx) => k.toLowerCase() === candidateBuffer[idx]
         )
       })
 
-      setSequencePending(false)
-
       if (matchedItem) {
         event.preventDefault()
+        event.stopPropagation()
+        resetBuffer()
         handleSelect(matchedItem)
+        return
       }
+
+      // 2. Check if candidateBuffer is a prefix of any sequence
+      const isCandidatePrefix = COMMAND_MENU_ITEMS.some((item) => {
+        if (!item.sequence || item.sequence.length <= candidateBuffer.length) {
+          return false
+        }
+        return candidateBuffer.every(
+          (k, idx) => item.sequence![idx].toLowerCase() === k
+        )
+      })
+
+      if (isCandidatePrefix) {
+        event.preventDefault()
+        event.stopPropagation()
+        buffer = candidateBuffer
+        if (timeoutId) clearTimeout(timeoutId)
+        timeoutId = setTimeout(resetBuffer, 1200)
+        return
+      }
+
+      // 3. Fallback: Check if the new key alone could start a new sequence
+      const isSingleKeyPrefix = COMMAND_MENU_ITEMS.some((item) => {
+        if (!item.sequence || item.sequence.length <= 1) return false
+        return item.sequence[0].toLowerCase() === key
+      })
+
+      if (isSingleKeyPrefix) {
+        event.preventDefault()
+        event.stopPropagation()
+        buffer = [key]
+        if (timeoutId) clearTimeout(timeoutId)
+        timeoutId = setTimeout(resetBuffer, 1200)
+        return
+      }
+
+      resetBuffer()
     }
 
-    window.addEventListener("keydown", handleNextKey)
+    window.addEventListener("keydown", handleKeyDown, true)
 
     return () => {
-      window.clearTimeout(timeoutId)
-      window.removeEventListener("keydown", handleNextKey)
+      resetBuffer()
+      window.removeEventListener("keydown", handleKeyDown, true)
     }
-  }, [sequencePending, open, handleSelect])
+  }, [open, handleSelect])
 
   return (
     <CommandDialog

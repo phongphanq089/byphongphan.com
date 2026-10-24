@@ -1555,11 +1555,17 @@ function CodeBlockSurface({
     counterReset: `cb-line ${startLine - 1}`,
   } as CSSProperties
 
+  useEffect(() => {
+    if (visibleLines && viewportRef.current) {
+      viewportRef.current.scrollTop = 0
+    }
+  }, [visibleLines])
+
   return (
     <div
       data-slot="code-block-content"
       className={cn(
-        "relative min-w-0 rounded-[inherit]",
+        "relative min-w-0",
         /* Clipping is the scroll-mode contract only: composed, a clipped pre
            would hide its own width from the ancestor's viewport and the
            horizontal scrollbar would never render. */
@@ -1596,12 +1602,12 @@ function CodeBlockSurface({
         className={cn(
           "relative min-w-0 rounded-[inherit] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
           /* Composed under an ancestor scroller the surface scrolls NOTHING
-             itself: both axes belong to the ancestor, whose viewport picks up
-             the pre's overflowing width, and the sticky number cell anchors
-             to that viewport instead. Mixed ownership shipped once and read
+            itself: both axes belong to the ancestor, whose viewport picks up
+            the pre's overflowing width, and the sticky number cell anchors
+            to that viewport instead. Mixed ownership shipped once and read
              as two scrollbar styles on one block. */
-          scroll && "custom-scrollbar overflow-auto",
-          scroll && visibleLines && "max-h-(--cb-max-height)",
+          scroll && "custom-scrollbar no-scrollbar overflow-auto",
+          scroll && visibleLines && "max-h-(--cb-max-height) overflow-y-hidden",
           className
         )}
         style={
@@ -1625,18 +1631,18 @@ function CodeBlockSurface({
           onPointerLeave={clearActive}
           onFocus={trackActive}
           className={cn(
-            "w-max min-w-full py-(--code-block-padding) font-mono text-(length:--code-block-font-size)",
+            "w-max min-w-full py-0 font-mono text-(length:--code-block-font-size)",
             TOKEN_COLOR_CLASS,
             TOKEN_MOTION_CLASS,
             /* `min-w-0` must beat the `min-w-full` above, or the pre keeps
-                   a floor of 100% of a scroll container that is itself wider
-                   than the viewport, and wrapping still leaves a stray
+              a floor of 100% of a scroll container that is itself wider
+              than the viewport, and wrapping still leaves a stray
                    horizontal scrollbar. */
             wrap && "w-full max-w-full min-w-0 break-words whitespace-pre-wrap",
             showLineNumbers && "pl-(--code-block-gutter-width)",
             /* The expand control floats over the surface in BOTH states, so
-                   an expanded block reserves a row of clearance rather than
-                   growing a bordered footer under the code. */
+            an expanded block reserves a row of clearance rather than
+            growing a bordered footer under the code. */
             expandClearance && "pb-(--code-block-expand-clearance)"
           )}
           style={surfaceStyle}
@@ -1942,7 +1948,7 @@ function CodeBlockWrapToggle({
 function CodeBlockExpandButton({
   className,
   children,
-  variant = "ghost",
+  variant = "outline",
   size = "sm",
   onClick,
   ...props
@@ -1962,12 +1968,12 @@ function CodeBlockExpandButton({
            column as a bordered strip, which read as a card footer and moved the
            block's bottom edge on the first click; the surface reserves a row of
            clearance instead, so only the label changes. */
-        "absolute inset-x-0 bottom-0 z-10 order-last flex items-end justify-center pt-10 pb-2",
+        "pointer-events-none absolute inset-x-0 bottom-0 z-10 order-last flex items-end justify-center pt-12 pb-3",
         /* The fade means "there is more below", so it belongs to the collapsed
            state only. Expanded, the surface already reserves a clear row for
            this control, and keeping the gradient just dimmed the last real
            line of code. */
-        !expanded && "bg-gradient-to-t from-card via-card/85 to-transparent",
+        !expanded && "bg-gradient-to-t from-card via-card/90 to-transparent",
         className
       )}
     >
@@ -1977,6 +1983,7 @@ function CodeBlockExpandButton({
         aria-controls={contentId}
         variant={variant}
         size={size}
+        className="pointer-events-auto shadow-sm"
         onClick={(event) => {
           onClick?.(event)
           if (!event.defaultPrevented) setExpanded(!expanded)

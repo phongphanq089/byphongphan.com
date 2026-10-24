@@ -3,8 +3,13 @@ import { Suspense } from "react"
 
 import { CodeBlock, CodeBlockCopyButton } from "@/registry/ui/code-block"
 import { cn } from "@/shared/lib/utils"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/core"
-import { ScrollFadeEffect } from "@/shared/ui/core/scroll-fade-effect"
+import {
+  ScrollArea,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/shared/ui/core"
 
 export interface ComponentStagePreviewProps {
   slug: string
@@ -80,14 +85,14 @@ export function ComponentStagePreview({
           value="code"
           className="m-0 flex-1 rounded-lg bg-background outline-none"
         >
-          <ScrollFadeEffect className="max-h-[520px] w-full">
+          <ScrollArea className="max-h-[520px] w-full" scrollFade>
             <CodeBlock
               code={code}
               language="tsx"
               showLineNumbers
               className="rounded-none border-0 bg-transparent"
             />
-          </ScrollFadeEffect>
+          </ScrollArea>
         </TabsContent>
       </Tabs>
     </div>
