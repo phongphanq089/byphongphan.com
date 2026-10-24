@@ -308,7 +308,7 @@ export default function Footer() {
         </div>
       </GridContainer>
 
-      <div className="relative w-full overflow-hidden py-4 sm:py-8">
+      <div className="relative w-full overflow-hidden py-4 pb-20 sm:pt-8">
         <PhongPhanIsometric padding />
       </div>
     </footer>
