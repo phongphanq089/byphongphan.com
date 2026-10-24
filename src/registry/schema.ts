@@ -15,6 +15,7 @@ export type ComponentSchematicType =
   | "line-nav"
   | "spotlight-card"
   | "border-glow"
+  | "scroll-area"
 
 export type BlockSchematicType =
   | "not-found-01"

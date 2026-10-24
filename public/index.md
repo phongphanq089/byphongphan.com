@@ -57,13 +57,14 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## UI Components & Primitives (13)
+## UI Components & Primitives (14)
 
 | Component | Category | Description | Direct Install |
 | :--- | :--- | :--- | :--- |
 | [Line Nav](https://byphongphan.com/component-ui/navigation/line-nav) | `navigation` | Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants. | `pnpm dlx shadcn add https://byphongphan.com/r/line-nav.json` |
 | [Middle Truncation](https://byphongphan.com/component-ui/text/middle-truncation) | `text` | Canvas-measured binary search text truncation preserving the start and end of strings with responsive resize sync. | `pnpm dlx shadcn add https://byphongphan.com/r/middle-truncation.json` |
 | [Card](https://byphongphan.com/component-ui/card/card) | `card` | Displays a card with header, content, and footer. | `pnpm dlx shadcn add https://byphongphan.com/r/card.json` |
+| [Scroll Area](https://byphongphan.com/component-ui/data-display/scroll-area) | `data-display` | Augments native scroll functionality with auto, hover, and always visibility modes, custom variants, scrollbar gutter reserve, keyboard navigation, and high-contrast styling. | `pnpm dlx shadcn add https://byphongphan.com/r/scroll-area.json` |
 | [Unboxing Bucket](https://byphongphan.com/component-ui/interactive/unboxing-bucket) | `interactive` | Interactive 3D unboxing container animation with emerging spring-physics feature chips. | `pnpm dlx shadcn add https://byphongphan.com/r/unboxing-bucket.json` |
 | [Flip Clock](https://byphongphan.com/component-ui/interactive/flip-clock) | `interactive` | Mechanical 2D split-flap counter and clock with real-time, timer, stopwatch, and date-time display modes. | `pnpm dlx shadcn add https://byphongphan.com/r/flip-clock.json` |
 | [Code Block](https://byphongphan.com/component-ui/data-display/code-block) | `data-display` | Syntax-highlighted code surface powered by Shiki with line numbers, line highlighting, collapsible blocks, diff mode, and copy actions. | `pnpm dlx shadcn add https://byphongphan.com/r/code-block.json` |

@@ -35,6 +35,16 @@ export const COMPONENTS_DATA: ComponentItem[] = [
     isNew: false,
   },
   {
+    id: "comp-scroll-area",
+    name: "Scroll Area",
+    slug: "scroll-area",
+    category: "data-display",
+    description:
+      "Cross-browser scroll area with auto, hover, and always visibility modes, custom variants, scrollbar gutter reserve, keyboard navigation, and high-contrast styling.",
+    schematicType: "scroll-area",
+    isNew: true,
+  },
+  {
     id: "comp-unboxing-bucket",
     name: "Unboxing Bucket",
     slug: "unboxing-bucket",

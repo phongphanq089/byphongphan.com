@@ -26,6 +26,17 @@
     "registryDependencies": []
   },
   {
+    "name": "scroll-area",
+    "type": "registry:ui",
+    "title": "Scroll Area",
+    "description": "Augments native scroll functionality with auto, hover, and always visibility modes, custom variants, scrollbar gutter reserve, keyboard navigation, and high-contrast styling.",
+    "dependencies": [
+      "@base-ui/react",
+      "class-variance-authority"
+    ],
+    "registryDependencies": []
+  },
+  {
     "name": "unboxing-bucket",
     "type": "registry:component",
     "title": "Unboxing Bucket",
