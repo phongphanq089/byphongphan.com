@@ -369,9 +369,9 @@ export function ComponentSource({
             <CodeBlockLanguage />
             <div className="ml-auto flex items-center gap-1">
               <CodeBlockCopyButton />
-              <CodeBlockExpandButton />
             </div>
           </CodeBlockHeader>
+          <CodeBlockExpandButton />
         </CodeBlock>
       ) : (
         <div className="flex min-h-[140px] w-full flex-col justify-between rounded-lg border border-border/60 bg-muted/20 p-4">

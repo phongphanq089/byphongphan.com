@@ -1555,6 +1555,12 @@ function CodeBlockSurface({
     counterReset: `cb-line ${startLine - 1}`,
   } as CSSProperties
 
+  useEffect(() => {
+    if (visibleLines && viewportRef.current) {
+      viewportRef.current.scrollTop = 0
+    }
+  }, [visibleLines])
+
   return (
     <div
       data-slot="code-block-content"
@@ -1601,7 +1607,7 @@ function CodeBlockSurface({
             to that viewport instead. Mixed ownership shipped once and read
              as two scrollbar styles on one block. */
           scroll && "custom-scrollbar no-scrollbar overflow-auto",
-          scroll && visibleLines && "max-h-(--cb-max-height)",
+          scroll && visibleLines && "max-h-(--cb-max-height) overflow-y-hidden",
           className
         )}
         style={
@@ -1942,7 +1948,7 @@ function CodeBlockWrapToggle({
 function CodeBlockExpandButton({
   className,
   children,
-  variant = "ghost",
+  variant = "outline",
   size = "sm",
   onClick,
   ...props
@@ -1962,12 +1968,12 @@ function CodeBlockExpandButton({
            column as a bordered strip, which read as a card footer and moved the
            block's bottom edge on the first click; the surface reserves a row of
            clearance instead, so only the label changes. */
-        "absolute inset-x-0 bottom-0 z-10 order-last flex items-end justify-center pt-10 pb-2",
+        "pointer-events-none absolute inset-x-0 bottom-0 z-10 order-last flex items-end justify-center pt-12 pb-3",
         /* The fade means "there is more below", so it belongs to the collapsed
            state only. Expanded, the surface already reserves a clear row for
            this control, and keeping the gradient just dimmed the last real
            line of code. */
-        !expanded && "bg-gradient-to-t from-card via-card/85 to-transparent",
+        !expanded && "bg-gradient-to-t from-card via-card/90 to-transparent",
         className
       )}
     >
@@ -1977,6 +1983,7 @@ function CodeBlockExpandButton({
         aria-controls={contentId}
         variant={variant}
         size={size}
+        className="pointer-events-auto shadow-sm"
         onClick={(event) => {
           onClick?.(event)
           if (!event.defaultPrevented) setExpanded(!expanded)
