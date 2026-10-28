@@ -223,6 +223,15 @@ export function BlockDetail({ block }: BlockDetailProps) {
                 <h1 className="section-heading text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
                   {block.title}
                 </h1>
+                {block.isNew ? (
+                  <span className="flex items-center rounded border border-primary bg-primary px-2 py-0.5 text-[9px] font-semibold tracking-wider text-background uppercase shadow-[0_0_8px_var(--pp-primary-glow)]">
+                    New
+                  </span>
+                ) : block.isUpdated ? (
+                  <span className="flex items-center rounded border border-emerald-500/30 bg-emerald-500/15 px-2 py-0.5 text-[9px] font-semibold tracking-wider text-emerald-600 uppercase shadow-[0_0_8px_rgba(16,185,129,0.25)] dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-400">
+                    Updated
+                  </span>
+                ) : null}
                 <span className="rounded-sm border border-border bg-muted/60 px-2.5 py-0.5 text-[10px] font-semibold text-muted-foreground uppercase">
                   {block.category}
                 </span>

@@ -59,6 +59,10 @@ export interface RegistryItem {
   schematicType?: SchematicType | string
   /** Whether the component is newly added (renders "New" badge on card) */
   isNew?: boolean
+  /** Whether the component was recently upgraded or enhanced (renders "Updated" badge on card) */
+  isUpdated?: boolean
+  /** Legacy slug aliases for automatic 301 redirects and backwards compatibility */
+  aliases?: string[]
   author?: string
   dependencies?: string[]
   devDependencies?: string[]

@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router"
+import { createFileRoute, notFound, redirect } from "@tanstack/react-router"
 
 import {
   ComponentDetailSkeleton,
@@ -9,13 +9,32 @@ import { createSeoMeta, siteConfig } from "@/shared/config"
 
 export const Route = createFileRoute("/_site/component-ui/$category/$slug")({
   loader: ({ params }) => {
+    // 1. Direct match on current category & slug
     const component = COMPONENTS_DATA.find(
       (c) => c.category === params.category && c.slug === params.slug
     )
-    if (!component) {
-      throw notFound()
+    if (component) {
+      return { component }
     }
-    return { component }
+
+    // 2. Check aliases or cross-category renames for 301 redirection
+    const aliasComponent = COMPONENTS_DATA.find(
+      (c) =>
+        c.aliases?.includes(params.slug) ||
+        (c.slug === params.slug && c.category !== params.category)
+    )
+    if (aliasComponent) {
+      throw redirect({
+        to: "/component-ui/$category/$slug",
+        params: {
+          category: aliasComponent.category,
+          slug: aliasComponent.slug,
+        },
+        statusCode: 301,
+      })
+    }
+
+    throw notFound()
   },
   pendingComponent: ComponentDetailPendingComponent,
   head: ({ loaderData, params }) => {
