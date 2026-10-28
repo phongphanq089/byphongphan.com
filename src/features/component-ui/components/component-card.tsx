@@ -78,14 +78,21 @@ export function ComponentCard({ component }: ComponentCardProps) {
               </TooltipTrigger>
               <TooltipContent>{component.name}</TooltipContent>
             </Tooltip>
-            {component.isNew && (
+            {component.isNew ? (
               <Badge
                 variant="outline"
                 className="h-4.5 gap-1 rounded border-primary bg-primary px-1.5 text-[9px] font-semibold tracking-wider text-white uppercase shadow-[0_0_8px_var(--pp-primary-glow)] dark:text-background"
               >
                 New
               </Badge>
-            )}
+            ) : component.isUpdated ? (
+              <Badge
+                variant="outline"
+                className="h-4.5 gap-1 rounded border-emerald-500/30 bg-emerald-500/10 px-1.5 text-[9px] font-semibold tracking-wider text-emerald-600 uppercase shadow-[0_0_8px_rgba(16,185,129,0.3)] dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-400"
+              >
+                Updated
+              </Badge>
+            ) : null}
           </div>
 
           <div className="flex items-center gap-1.5">

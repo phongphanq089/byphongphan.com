@@ -29,6 +29,8 @@ export interface ComponentItem {
   schematicType?: SchematicType
   badge?: string
   isNew?: boolean
+  isUpdated?: boolean
+  aliases?: string[]
 }
 
 export interface PropItem {

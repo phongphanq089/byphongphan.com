@@ -231,6 +231,34 @@ async function buildRegistry() {
   fs.writeFileSync(path.join(publicDir, "llms.txt"), llmsTxtContent, "utf-8")
   console.log(`  ✓ Generated: llms.txt (root & public)`)
 
+  // Generate dynamic 301 redirects for Netlify / Cloudflare from component and block aliases
+  const redirectLines: string[] = [
+    "# Auto-generated 301 redirects by scripts/build-registry.ts - DO NOT EDIT MANUALLY",
+    "# Maps legacy/renamed component and block slugs to their canonical URLs",
+  ]
+
+  for (const item of REGISTRY_ITEMS) {
+    if (item.aliases && item.aliases.length > 0) {
+      const isBlock = item.type === "registry:block"
+      const basePath = isBlock
+        ? `/blocks/${item.category}`
+        : `/component-ui/${item.category}`
+
+      for (const alias of item.aliases) {
+        redirectLines.push(
+          `${basePath}/${alias}  ${basePath}/${item.name}  301!`
+        )
+        redirectLines.push(`/r/${alias}.json  /r/${item.name}.json  301!`)
+      }
+    }
+  }
+
+  const redirectsPath = path.join(publicDir, "_redirects")
+  fs.writeFileSync(redirectsPath, redirectLines.join("\n") + "\n", "utf-8")
+  console.log(
+    `  ✓ Generated: public/_redirects (${Math.max(0, redirectLines.length - 2)} active redirect rules)`
+  )
+
   // Generate dynamic telemetry configuration for the Blueprint Footer
   // Auto-detect commit hash across Netlify (COMMIT_REF), GitHub Actions (GITHUB_SHA), or local Git
   let commitHash =

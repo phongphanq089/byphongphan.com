@@ -53,6 +53,11 @@ export function BlockQuickNav({
               aria-label="New block"
               className="size-1.5 shrink-0 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.85)]"
             />
+          ) : b.isUpdated ? (
+            <span
+              aria-label="Updated block"
+              className="size-1.5 shrink-0 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.85)]"
+            />
           ) : undefined,
         }))
 
