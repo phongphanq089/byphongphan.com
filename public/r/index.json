@@ -223,5 +223,13 @@
       "motion"
     ],
     "registryDependencies": []
+  },
+  {
+    "name": "koi-background",
+    "type": "registry:block",
+    "title": "Koi Background",
+    "description": "Interactive ambient koi pond background surface featuring fluid dynamics, water caustics, multi-joint fish flocking, and mouse-feeding mechanics.",
+    "dependencies": [],
+    "registryDependencies": []
   }
 ]

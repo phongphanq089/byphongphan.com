@@ -54,4 +54,14 @@ export const BLOCKS_DATA: BlockItem[] = [
     schematicType: "stats-cards-01",
     isNew: true,
   },
+  {
+    id: "block-koi-background",
+    title: "Koi Background",
+    slug: "koi-background",
+    category: "marketing",
+    description:
+      "Interactive ambient koi pond background surface featuring fluid dynamics, water caustics, multi-joint fish flocking, and mouse-feeding mechanics.",
+    schematicType: "koi-background",
+    isNew: true,
+  },
 ]

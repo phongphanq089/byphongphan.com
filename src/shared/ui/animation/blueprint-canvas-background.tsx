@@ -6,37 +6,30 @@ export interface BlueprintCanvasBackgroundProps {
   className?: string
   /** Whether to show the dotted background matrix grid (default: true) */
   showGrid?: boolean
-  /** Whether to show the left edge measurement scale ticks (default: true) */
+  /** Optional legacy ruler prop (deprecated: rulers removed for clean minimalist geometry) */
   showRuler?: boolean
   /** Whether to show subtle technical coordinate annotations (default: false) */
   showCoordinates?: boolean
 }
 
 /**
- * Technical CAD / Blueprint Vector Canvas Background
+ * Modern Minimalist Architectural Blueprint Vector Background
  *
- * Faithfully replicates the vector drafting layout from the reference image:
- * - Subtle CAD dotted grid matrix (32px tile) spanning full screen width and height
- * - Precision viewport measurement ruler pinned to the left edge with major/minor ticks
- * - Left circle drafting complex:
- *     - Shaded circle with 1px stroke
- *     - Center anchor node and coordinate axes (vertical up to edge, horizontal extension with drop-line)
- *     - Exact 45-degree diagonal guideline passing through circle center
- *     - Perimeter vector anchor handles (top-right, bottom-right, extension node)
- * - Top center drafting arc
- * - Top right bounding rectangle:
- *     - Shaded translucent fill and 1px stroke
- *     - Diagonal line passing from top-right corner through center node to bottom-left corner
- *     - Corner and center anchor nodes
- * - Top right drafting arc connecting to top-right corner of rectangle
- * - Bottom right shaded drafting triangle/polygon with horizontal baseline
- * - Rhythmic CAD snap handles (square node handles) aligned to grid coordinates
- * - Seamless adaptation for both dark & light themes using design tokens
+ * Symmetrical, sophisticated geometric layout focusing on pure Squares & Circles:
+ * - Perfect bilateral symmetry centered on (720, 340) in a 1440×680 viewBox
+ * - Balanced Left & Right Modular Geometric Complexes:
+ *     - 240×240 primary squares with inscribed precision circles (Ø240) and concentric inner rings (Ø120)
+ *     - Symmetrical corner-to-corner diagonal bisectors
+ *     - Top & Bottom 240×100 architectural framing rectangles with bisectors
+ * - Central Radial Framing:
+ *     - 320×320 center framing square with inscribed circle (Ø320) and outer orbital ring (Ø520)
+ *     - Elegant symmetrical bridging arches connecting left and right complexes
+ * - Clean continuous structural datum alignment lines across the canvas (no choppy short lines or rulers)
+ * - Seamless adaptation for dark & light themes using semantic design tokens
  */
 export function BlueprintCanvasBackground({
   className,
   showGrid = true,
-
   showCoordinates = false,
 }: BlueprintCanvasBackgroundProps) {
   const patternId = useId()
@@ -101,6 +94,7 @@ export function BlueprintCanvasBackground({
           />
         </svg>
       )}
+
       <svg
         className="absolute inset-0 h-full w-full"
         viewBox="0 0 1440 680"
@@ -108,212 +102,369 @@ export function BlueprintCanvasBackground({
         xmlns="http://www.w3.org/2000/svg"
         shapeRendering="geometricPrecision"
       >
-        {/* ─── Circle Drafting Complex ─── */}
-        <g id="drafting-circle-group">
-          {/* Shaded circle body */}
+        {/* ─── 1. Continuous Structural Alignment Guidelines (Full Bleed Edge-to-Edge) ─── */}
+        <g id="structural-alignment-lines" strokeWidth="1" fill="none">
+          {/* Main Horizontal Datum (Y = 340) */}
+          <line
+            x1="-2000"
+            y1="340"
+            x2="3500"
+            y2="340"
+            className="stroke-foreground/[0.12] dark:stroke-white/[0.12]"
+          />
+
+          {/* Main Vertical Center Datum (X = 720) - Dashed */}
+          <line
+            x1="720"
+            y1="-2000"
+            x2="720"
+            y2="3000"
+            strokeDasharray="4 6"
+            className="stroke-foreground/[0.10] dark:stroke-white/[0.10]"
+          />
+
+          {/* Left & Right Circle Center Vertical Axes - Dashed */}
+          <line
+            x1="240"
+            y1="-2000"
+            x2="240"
+            y2="3000"
+            strokeDasharray="4 6"
+            className="stroke-foreground/[0.08] dark:stroke-white/[0.08]"
+          />
+          <line
+            x1="1200"
+            y1="-2000"
+            x2="1200"
+            y2="3000"
+            strokeDasharray="4 6"
+            className="stroke-foreground/[0.08] dark:stroke-white/[0.08]"
+          />
+
+          {/* Horizontal Tangent Alignment Datums */}
+          <line
+            x1="-2000"
+            y1="220"
+            x2="3500"
+            y2="220"
+            className="stroke-foreground/[0.07] dark:stroke-white/[0.07]"
+          />
+          <line
+            x1="-2000"
+            y1="460"
+            x2="3500"
+            y2="460"
+            className="stroke-foreground/[0.07] dark:stroke-white/[0.07]"
+          />
+          <line
+            x1="-2000"
+            y1="180"
+            x2="3500"
+            y2="180"
+            className="stroke-foreground/[0.06] dark:stroke-white/[0.06]"
+          />
+          <line
+            x1="-2000"
+            y1="500"
+            x2="3500"
+            y2="500"
+            className="stroke-foreground/[0.06] dark:stroke-white/[0.06]"
+          />
+          <line
+            x1="-2000"
+            y1="70"
+            x2="3500"
+            y2="70"
+            className="stroke-foreground/[0.05] dark:stroke-white/[0.05]"
+          />
+          <line
+            x1="-2000"
+            y1="610"
+            x2="3500"
+            y2="610"
+            className="stroke-foreground/[0.05] dark:stroke-white/[0.05]"
+          />
+
+          {/* Vertical Grid Struts (Full Bleed Top-to-Bottom) */}
+          <line
+            x1="120"
+            y1="-2000"
+            x2="120"
+            y2="3000"
+            className="stroke-foreground/[0.07] dark:stroke-white/[0.07]"
+          />
+          <line
+            x1="360"
+            y1="-2000"
+            x2="360"
+            y2="3000"
+            className="stroke-foreground/[0.07] dark:stroke-white/[0.07]"
+          />
+          <line
+            x1="560"
+            y1="-2000"
+            x2="560"
+            y2="3000"
+            className="stroke-foreground/[0.06] dark:stroke-white/[0.06]"
+          />
+          <line
+            x1="880"
+            y1="-2000"
+            x2="880"
+            y2="3000"
+            className="stroke-foreground/[0.06] dark:stroke-white/[0.06]"
+          />
+          <line
+            x1="1080"
+            y1="-2000"
+            x2="1080"
+            y2="3000"
+            className="stroke-foreground/[0.07] dark:stroke-white/[0.07]"
+          />
+          <line
+            x1="1320"
+            y1="-2000"
+            x2="1320"
+            y2="3000"
+            className="stroke-foreground/[0.07] dark:stroke-white/[0.07]"
+          />
+        </g>
+
+        {/* ─── 2. Center Geometric Composition (Framing Square & Circles) ─── */}
+        <g id="center-geometric-complex">
+          {/* Outer Orbital Circle */}
           <circle
-            cx="280"
+            cx="720"
             cy="340"
-            r="190"
-            className="fill-foreground/[0.045] stroke-foreground/10 dark:fill-white/[0.04] dark:stroke-white/10"
+            r="260"
+            strokeDasharray="4 6"
+            className="stroke-foreground/[0.08] dark:stroke-white/[0.08]"
             strokeWidth="1"
-          />
-
-          {/* Vertical axis: center to top */}
-          <line
-            x1="280"
-            y1="340"
-            x2="280"
-            y2="0"
-            className="stroke-foreground/10 dark:stroke-white/10"
-            strokeWidth="1"
-          />
-
-          {/* Horizontal axis: center to right extension */}
-          <line
-            x1="280"
-            y1="340"
-            x2="540"
-            y2="340"
-            className="stroke-foreground/10 dark:stroke-white/10"
-            strokeWidth="1"
-          />
-
-          {/* Vertical guide from right extension to top */}
-          <line
-            x1="540"
-            y1="0"
-            x2="540"
-            y2="340"
-            className="stroke-foreground/10 dark:stroke-white/10"
-            strokeWidth="1"
-          />
-
-          {/* 45° Diagonal line passing precisely through circle center */}
-          <line
-            x1="0"
-            y1="60"
-            x2="620"
-            y2="680"
-            className="stroke-foreground/10 dark:stroke-white/10"
-            strokeWidth="1"
-          />
-
-          {/* Circle Center Anchor Node */}
-          <rect
-            x="277"
-            y="337"
-            width="6"
-            height="6"
-            className="fill-background stroke-foreground/40 dark:fill-neutral-950 dark:stroke-white/40"
-            strokeWidth="1"
-          />
-
-          {/* Perimeter 45° Top-Right Node */}
-          <rect
-            x={280 + 190 * 0.7071 - 3}
-            y={340 - 190 * 0.7071 - 3}
-            width="6"
-            height="6"
-            className="fill-background stroke-foreground/40 dark:fill-neutral-950 dark:stroke-white/40"
-            strokeWidth="1"
-          />
-
-          {/* Perimeter -45° Bottom-Right Node */}
-          <rect
-            x={280 + 190 * 0.7071 - 3}
-            y={340 + 190 * 0.7071 - 3}
-            width="6"
-            height="6"
-            className="fill-background stroke-foreground/40 dark:fill-neutral-950 dark:stroke-white/40"
-            strokeWidth="1"
-          />
-
-          {/* Right Extension Guide Node */}
-          <rect
-            x="537"
-            y="337"
-            width="6"
-            height="6"
-            className="fill-background stroke-foreground/40 dark:fill-neutral-950 dark:stroke-white/40"
-            strokeWidth="1"
-          />
-        </g>
-
-        {/* ─── Top Center Arc ─── */}
-        <g id="drafting-top-center-arc">
-          <path
-            d="M 595 0 A 85 85 0 0 0 765 0"
             fill="none"
-            className="stroke-foreground/10 dark:stroke-white/10"
+          />
+
+          {/* Center Framing Square (320 × 320) */}
+          <rect
+            x="560"
+            y="180"
+            width="320"
+            height="320"
+            className="fill-foreground/[0.015] stroke-foreground/[0.10] dark:fill-white/[0.015] dark:stroke-white/10"
             strokeWidth="1"
           />
-        </g>
 
-        {/* ─── Top Right Arc ─── */}
-        <g id="drafting-top-right-arc">
+          {/* Inscribed Center Circle (Ø320) */}
+          <circle
+            cx="720"
+            cy="340"
+            r="160"
+            className="fill-foreground/[0.02] stroke-foreground/[0.12] dark:fill-white/[0.02] dark:stroke-white/12"
+            strokeWidth="1"
+          />
+
+          {/* Symmetrical Bridging Arcs */}
           <path
-            d="M 1120 0 A 85 85 0 0 0 1290 0"
+            d="M 360 120 A 360 100 0 0 1 1080 120"
+            className="stroke-foreground/[0.08] dark:stroke-white/[0.08]"
+            strokeWidth="1"
             fill="none"
-            className="stroke-foreground/10 dark:stroke-white/10"
+          />
+          <path
+            d="M 360 560 A 360 100 0 0 0 1080 560"
+            className="stroke-foreground/[0.08] dark:stroke-white/[0.08]"
             strokeWidth="1"
+            fill="none"
           />
         </g>
 
-        {/* ─── Top Right Rectangle Group ─── */}
-        <g id="drafting-rectangle-group">
-          {/* Shaded Rectangle */}
+        {/* ─── 3. Left Symmetrical Modular Blocks (Squares & Circles) ─── */}
+        <g id="left-geometric-blocks">
+          {/* Top Architectural Rectangle */}
           <rect
-            x="860"
-            y="10"
-            width="260"
-            height="225"
-            className="fill-foreground/[0.045] stroke-foreground/10 dark:fill-white/[0.04] dark:stroke-white/10"
+            x="120"
+            y="70"
+            width="240"
+            height="100"
+            className="fill-foreground/[0.02] stroke-foreground/[0.10] dark:fill-white/[0.02] dark:stroke-white/10"
             strokeWidth="1"
           />
-
-          {/* Diagonal bisector extending from top-right corner down towards baseline */}
           <line
-            x1="1120"
-            y1="10"
-            x2="530"
-            y2="520"
-            className="stroke-foreground/10 dark:stroke-white/10"
+            x1="120"
+            y1="70"
+            x2="360"
+            y2="170"
+            className="stroke-foreground/[0.06] dark:stroke-white/[0.06]"
             strokeWidth="1"
           />
 
-          {/* Center Anchor Node */}
+          {/* Primary Left Square (240 × 240) */}
           <rect
-            x="987"
-            y="119.5"
-            width="6"
-            height="6"
-            className="fill-background stroke-foreground/20 dark:fill-neutral-950 dark:stroke-white/40"
+            x="120"
+            y="220"
+            width="240"
+            height="240"
+            className="fill-foreground/[0.025] stroke-foreground/[0.12] dark:fill-white/[0.025] dark:stroke-white/12"
             strokeWidth="1"
           />
 
-          {/* Bottom-Left Corner Node */}
-          <rect
-            x="857"
-            y="232"
-            width="6"
-            height="6"
-            className="fill-background stroke-foreground/20 dark:fill-neutral-950 dark:stroke-white/40"
-            strokeWidth="1"
-          />
-
-          {/* Bottom-Right Corner Node */}
-          <rect
-            x="1117"
-            y="232"
-            width="6"
-            height="6"
-            className="fill-background stroke-foreground/50 dark:fill-neutral-950 dark:stroke-white/40"
-            strokeWidth="1"
-          />
-        </g>
-
-        {/* ─── Bottom Right Triangle / Slanted Drafting Ramp ─── */}
-        <g id="drafting-triangle-group">
-          {/* Shaded Triangle/Polygon between diagonal hypotenuse and horizontal baseline */}
-          <polygon
-            points="530,520 1440,520 1440,235 860,235"
-            className="fill-foreground/[0.035] stroke-foreground/10 dark:fill-white/[0.03] dark:stroke-white/10"
-            strokeWidth="1"
-          />
-
-          {/* Horizontal drafting baseline at y=520 */}
+          {/* Corner-to-Corner Diagonal Bisectors */}
           <line
-            x1="530"
-            y1="520"
-            x2="1440"
-            y2="520"
-            className="stroke-foreground/10 dark:stroke-white/10"
+            x1="120"
+            y1="220"
+            x2="360"
+            y2="460"
+            className="stroke-foreground/[0.07] dark:stroke-white/[0.07]"
+            strokeWidth="1"
+          />
+          <line
+            x1="120"
+            y1="460"
+            x2="360"
+            y2="220"
+            className="stroke-foreground/[0.07] dark:stroke-white/[0.07]"
             strokeWidth="1"
           />
 
-          {/* Apex node at triangle start on baseline (530, 520) */}
+          {/* Inscribed Precision Circle (Ø240) */}
+          <circle
+            cx="240"
+            cy="340"
+            r="120"
+            className="fill-foreground/[0.02] stroke-foreground/[0.12] dark:fill-white/[0.02] dark:stroke-white/12"
+            strokeWidth="1"
+          />
+
+          {/* Inner Concentric Circle (Ø120) */}
+          <circle
+            cx="240"
+            cy="340"
+            r="60"
+            strokeDasharray="3 5"
+            className="stroke-foreground/[0.10] dark:stroke-white/10"
+            strokeWidth="1"
+            fill="none"
+          />
+
+          {/* Bottom Architectural Rectangle */}
           <rect
-            x="527"
-            y="517"
-            width="6"
-            height="6"
-            className="fill-background stroke-foreground/40 dark:fill-neutral-950 dark:stroke-white/40"
+            x="120"
+            y="510"
+            width="240"
+            height="100"
+            className="fill-foreground/[0.02] stroke-foreground/[0.10] dark:fill-white/[0.02] dark:stroke-white/10"
+            strokeWidth="1"
+          />
+          <line
+            x1="120"
+            y1="610"
+            x2="360"
+            y2="510"
+            className="stroke-foreground/[0.06] dark:stroke-white/[0.06]"
             strokeWidth="1"
           />
         </g>
 
-        {/* ─── Optional Subtle Blueprint Coordinate Labels ─── */}
+        {/* ─── 4. Right Symmetrical Modular Blocks (Exact Mirror of Left) ─── */}
+        <g id="right-geometric-blocks">
+          {/* Top Architectural Rectangle */}
+          <rect
+            x="1080"
+            y="70"
+            width="240"
+            height="100"
+            className="fill-foreground/[0.02] stroke-foreground/[0.10] dark:fill-white/[0.02] dark:stroke-white/10"
+            strokeWidth="1"
+          />
+          <line
+            x1="1080"
+            y1="70"
+            x2="1320"
+            y2="170"
+            className="stroke-foreground/[0.06] dark:stroke-white/[0.06]"
+            strokeWidth="1"
+          />
+
+          {/* Primary Right Square (240 × 240) */}
+          <rect
+            x="1080"
+            y="220"
+            width="240"
+            height="240"
+            className="fill-foreground/[0.025] stroke-foreground/[0.12] dark:fill-white/[0.025] dark:stroke-white/12"
+            strokeWidth="1"
+          />
+
+          {/* Corner-to-Corner Diagonal Bisectors */}
+          <line
+            x1="1080"
+            y1="220"
+            x2="1320"
+            y2="460"
+            className="stroke-foreground/[0.07] dark:stroke-white/[0.07]"
+            strokeWidth="1"
+          />
+          <line
+            x1="1080"
+            y1="460"
+            x2="1320"
+            y2="220"
+            className="stroke-foreground/[0.07] dark:stroke-white/[0.07]"
+            strokeWidth="1"
+          />
+
+          {/* Inscribed Precision Circle (Ø240) */}
+          <circle
+            cx="1200"
+            cy="340"
+            r="120"
+            className="fill-foreground/[0.02] stroke-foreground/[0.12] dark:fill-white/[0.02] dark:stroke-white/12"
+            strokeWidth="1"
+          />
+
+          {/* Inner Concentric Circle (Ø120) */}
+          <circle
+            cx="1200"
+            cy="340"
+            r="60"
+            strokeDasharray="3 5"
+            className="stroke-foreground/[0.10] dark:stroke-white/10"
+            strokeWidth="1"
+            fill="none"
+          />
+
+          {/* Bottom Architectural Rectangle */}
+          <rect
+            x="1080"
+            y="510"
+            width="240"
+            height="100"
+            className="fill-foreground/[0.02] stroke-foreground/[0.10] dark:fill-white/[0.02] dark:stroke-white/10"
+            strokeWidth="1"
+          />
+          <line
+            x1="1080"
+            y1="610"
+            x2="1320"
+            y2="510"
+            className="stroke-foreground/[0.06] dark:stroke-white/[0.06]"
+            strokeWidth="1"
+          />
+        </g>
+
+        {/* ─── 5. Optional Minimalist Technical Typography ─── */}
         {showCoordinates && (
-          <g className="fill-foreground/30 font-mono text-[9px] tracking-tight select-none dark:fill-white/30">
-            <text x="290" y="335">
-              C(280, 340) • R190
+          <g className="fill-foreground/35 font-mono text-[9px] tracking-widest uppercase select-none dark:fill-white/30">
+            <text x="720" y="34" textAnchor="middle">
+              MODULE // 01 · RATIO 1:1 · GRID 1440 × 680
             </text>
-            <text x="870" y="30">
-              W260 × H225
+            <text x="240" y="345" textAnchor="middle">
+              240 × 240 // Ø 240
             </text>
-            <text x="50" y="100">
-              ∠ 45.0°
+            <text x="1200" y="345" textAnchor="middle">
+              240 × 240 // Ø 240
+            </text>
+            <text x="720" y="654" textAnchor="middle">
+              CENTER // 720.00 · 340.00
             </text>
           </g>
         )}

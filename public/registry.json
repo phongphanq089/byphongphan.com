@@ -507,6 +507,44 @@
           "target": "components/stats-cards.tsx"
         }
       ]
+    },
+    {
+      "name": "koi-background",
+      "type": "registry:block",
+      "title": "Koi Background",
+      "description": "Interactive ambient koi pond background surface featuring fluid dynamics, water caustics, multi-joint fish flocking, and mouse-feeding mechanics.",
+      "category": "marketing",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/block/koi-background/page.tsx",
+          "type": "registry:block",
+          "target": "app/marketing/koi-background/page.tsx"
+        },
+        {
+          "path": "src/registry/block/koi-background/components/koi-pond.tsx",
+          "type": "registry:block",
+          "target": "components/koi-pond.tsx"
+        },
+        {
+          "path": "src/registry/block/koi-background/components/renderer.ts",
+          "type": "registry:block",
+          "target": "components/renderer.ts"
+        },
+        {
+          "path": "src/registry/block/koi-background/components/shape.ts",
+          "type": "registry:block",
+          "target": "components/shape.ts"
+        },
+        {
+          "path": "src/registry/block/koi-background/components/world.ts",
+          "type": "registry:block",
+          "target": "components/world.ts"
+        }
+      ]
     }
   ]
 }
