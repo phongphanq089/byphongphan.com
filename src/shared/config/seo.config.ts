@@ -112,30 +112,60 @@ export const pagesSeoConfig: Record<string, SeoConfig> = {
 }
 
 /**
+ * Converts a relative or root-relative path to a fully qualified absolute URL.
+ * Required for Open Graph (og:image) and Twitter cards to load in crawlers.
+ */
+export function toAbsoluteUrl(urlPath?: string): string {
+  if (!urlPath || urlPath.trim() === "") return ""
+  const trimmed = urlPath.trim()
+  if (trimmed.startsWith("http://") || trimmed.startsWith("https://")) {
+    return trimmed
+  }
+  const cleanBase = siteConfig.url.replace(/\/+$/, "")
+  const cleanPath = trimmed.startsWith("/") ? trimmed : `/${trimmed}`
+  return `${cleanBase}${cleanPath}`
+}
+
+/**
+ * Derives image MIME type from URL extension.
+ */
+export function getImageMimeType(url: string): string {
+  const lower = url.toLowerCase().split("?")[0]
+  if (lower.endsWith(".png")) return "image/png"
+  if (lower.endsWith(".jpg") || lower.endsWith(".jpeg")) return "image/jpeg"
+  if (lower.endsWith(".webp")) return "image/webp"
+  if (lower.endsWith(".gif")) return "image/gif"
+  if (lower.endsWith(".svg")) return "image/svg+xml"
+  return "image/png"
+}
+
+/**
  * Resolves Open Graph image URL with fallback logic:
  * 1. Explicit custom image URL passed in route config
  * 2. Sanity Site Settings ogImage asset (optimized via urlFor)
  * 3. Default predefined ogImage
+ * Always guarantees a fully qualified absolute URL with protocol and domain.
  */
 export function resolveImageUrl(
   customImage?: string | { url?: string } | null,
   fallbackImage?: string
 ): string {
+  let rawUrl = ""
   if (typeof customImage === "string" && customImage.trim() !== "") {
-    return customImage.trim()
-  }
-
-  if (
+    rawUrl = customImage.trim()
+  } else if (
     typeof customImage === "object" &&
     customImage !== null &&
     "url" in customImage &&
     typeof customImage.url === "string" &&
     customImage.url.trim() !== ""
   ) {
-    return customImage.url.trim()
+    rawUrl = customImage.url.trim()
+  } else {
+    rawUrl = fallbackImage?.trim() || defaultSeoConfig.ogImage
   }
 
-  return fallbackImage?.trim() || defaultSeoConfig.ogImage
+  return toAbsoluteUrl(rawUrl)
 }
 
 /**
@@ -204,8 +234,14 @@ export function createSeoMeta(
   // Image handling: root page hoặc bất kỳ page nào có ảnh riêng/ảnh dynamic từ BE
   const image = resolveImageUrl(resolved.ogImage, siteSettings?.ogImage)
   if (isRoot || resolved.ogImage || siteSettings?.ogImage) {
+    const mimeType = getImageMimeType(image)
     metaList.push(
       { property: "og:image", content: image },
+      { property: "og:image:secure_url", content: image },
+      { property: "og:image:type", content: mimeType },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: title },
       { name: "twitter:image", content: image }
     )
   }
@@ -372,7 +408,7 @@ export function createBlogArticleJsonLd({
       "@type": "WebPage",
       "@id": url,
     },
-    ...(image ? { image: [image] } : {}),
+    ...(image ? { image: [toAbsoluteUrl(image)] } : {}),
     ...(datePublished ? { datePublished } : {}),
     author: {
       "@type": "Person",
