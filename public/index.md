@@ -79,7 +79,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## Interactive Blocks (5)
+## Interactive Blocks (6)
 
 | Block | Category | Description | Live Preview | Direct Install |
 | :--- | :--- | :--- | :--- | :--- |
@@ -88,6 +88,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [Not Found Pixel Trail](https://byphongphan.com/blocks/404-page/not-found-03) | `404-page` | Interactive 404 digital void experience featuring dynamic cursor pixel trails and terminal status diagnostics. | [Preview](https://byphongphan.com/blocks-preview/not-found-03) | `pnpm dlx shadcn add https://byphongphan.com/r/not-found-03.json` |
 | [Login 01](https://byphongphan.com/blocks/auth/login-01) | `auth` | Split-screen modern authentication screen with photography hero, tracked typography, and full dark mode support. | [Preview](https://byphongphan.com/blocks-preview/login-01) | `pnpm dlx shadcn add https://byphongphan.com/r/login-01.json` |
 | [Stats Cards 01](https://byphongphan.com/blocks/marketing/stats-cards-01) | `marketing` | Overlapping interactive marketing stats cards with spring physics hover, metrics showcase, and dark mode support. | [Preview](https://byphongphan.com/blocks-preview/stats-cards-01) | `pnpm dlx shadcn add https://byphongphan.com/r/stats-cards-01.json` |
+| [Koi Background](https://byphongphan.com/blocks/marketing/koi-background) | `marketing` | Interactive ambient koi pond background surface featuring fluid dynamics, water caustics, multi-joint fish flocking, and mouse-feeding mechanics. | [Preview](https://byphongphan.com/blocks-preview/koi-background) | `pnpm dlx shadcn add https://byphongphan.com/r/koi-background.json` |
 
 
 ---
