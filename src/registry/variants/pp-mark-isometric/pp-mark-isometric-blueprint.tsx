@@ -13,7 +13,7 @@ export function PPMarkIsometricBlueprint() {
         }}
       />
       <div className="relative z-10 w-full max-w-md py-4">
-        <PPMarkIsometric className="[--pattern:rgba(56,189,248,0.25)] [--stroke:rgba(56,189,248,0.35)]" />
+        <PPMarkIsometric className="[--pattern:rgba(56,189,248,0.32)] [--stroke:rgba(56,189,248,0.60)]" />
       </div>
     </div>
   )

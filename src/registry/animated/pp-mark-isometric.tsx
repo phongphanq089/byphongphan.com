@@ -11,6 +11,8 @@ import {
 } from "motion/react"
 import React, { useEffect, useId, useRef } from "react"
 
+import { cn } from "@/shared/lib/utils"
+
 function playTapSound() {
   if (typeof window === "undefined") return
   try {
@@ -36,12 +38,37 @@ function playTapSound() {
   }
 }
 
+// Snappy mechanical keycap switch spring transition
 const transition: Transition = {
   type: "spring",
-  mass: 0.5,
-  damping: 18,
-  stiffness: 200,
+  stiffness: 480,
+  damping: 26,
+  mass: 0.45,
 }
+
+// Canonical unpressed wireframe stroke paths (height = 40px)
+const STROKE_NORMAL_D =
+  "M0 345L0 385M0 345L69.28 305M0 345L346.41 545M0 385L346.41 585M68.64 305L68.64 345M68.64 305L137.92 345M68.64 305L207.21 225M68.64 345L137.92 385M69.28 305L415.69 505M137.92 345L137.92 385M137.92 345L276.49 265M137.92 385L276.49 305M207 225L207 265M207 225L276.28 185M207 225L345.56 305M207 225L345.57 305M207 265L345.56 345M207.21 225L276.49 265M250 360L250 400M250 360L319.28 400M250 360L414.55 265M250 400L319.28 440M276.28 185L414.85 265M276.49 265L276.49 305M319.28 400L319.28 440M319.28 400L483.83 305M319.28 440L483.83 345M334 160L334 200M334 160L403.28 120M334 160L680.41 360M334 200L680.41 400M345.56 305L345.56 345M345.56 305L414.85 265M345.56 345L414.85 305M345.57 305L414.85 265M346.41 545L346.41 585M346.41 545L415.69 505M346.41 585L415.69 545M402.64 120L402.64 160M402.64 120L471.92 160M402.64 120L541.21 40M402.64 160L471.92 200M403.28 120L749.69 320M414.55 265L483.83 305M414.85 265L414.85 305M415.69 505L415.69 545M471.92 160L471.92 200M471.92 160L610.49 80M471.92 200L610.49 120M483.83 305L483.83 345M541 40L541 80M541 40L610.28 0M541 40L679.56 120M541 40L679.57 120M541 80L679.56 160M541.21 40L610.49 80M584 175L584 215M584 175L653.28 215M584 175L748.54 80M584 215L653.28 255M610.28 0L748.85 80M610.49 80L610.49 120M653.28 215L653.28 255M653.28 215L817.83 120M653.28 255L817.83 160M679.56 120L679.56 160M679.56 120L748.85 80M679.56 160L748.85 120M679.57 120L748.85 80M680.41 360L680.41 400M680.41 360L749.69 320M680.41 400L749.69 360M748.54 80L817.83 120M748.85 80L748.85 120M749.69 320L749.69 360M817.83 120L817.83 160"
+
+// Keycap pressed wireframe stroke paths: BASE STAYS FIXED, TOP COMPRESSES DOWN by 24px (height = 16px)
+const STROKE_PRESSED_D =
+  "M0 369L0 385M0 369L69.28 329M0 369L346.41 569M0 385L346.41 585M68.64 329L68.64 345M68.64 329L137.92 369M68.64 329L207.21 249M68.64 345L137.92 385M69.28 329L415.69 529M137.92 369L137.92 385M137.92 369L276.49 289M137.92 385L276.49 305M207 249L207 265M207 249L276.28 209M207 249L345.56 329M207 249L345.57 329M207 265L345.56 345M207.21 249L276.49 289M250 384L250 400M250 384L319.28 424M250 384L414.55 289M250 400L319.28 440M276.28 209L414.85 289M276.49 289L276.49 305M319.28 424L319.28 440M319.28 424L483.83 329M319.28 440L483.83 345M334 184L334 200M334 184L403.28 144M334 184L680.41 384M334 200L680.41 400M345.56 329L345.56 345M345.56 329L414.85 289M345.56 345L414.85 305M345.57 329L414.85 289M346.41 569L346.41 585M346.41 569L415.69 529M346.41 585L415.69 545M402.64 144L402.64 160M402.64 144L471.92 184M402.64 144L541.21 64M402.64 160L471.92 200M403.28 144L749.69 344M414.55 289L483.83 329M414.85 289L414.85 305M415.69 529L415.69 545M471.92 184L471.92 200M471.92 184L610.49 104M471.92 200L610.49 120M483.83 329L483.83 345M541 64L541 80M541 64L610.28 24M541 64L679.56 144M541 64L679.57 144M541 80L679.56 160M541.21 64L610.49 104M584 199L584 215M584 199L653.28 239M584 199L748.54 104M584 215L653.28 255M610.28 24L748.85 104M610.49 104L610.49 120M653.28 239L653.28 255M653.28 239L817.83 144M653.28 255L817.83 160M679.56 144L679.56 160M679.56 144L748.85 104M679.56 160L748.85 120M679.57 144L748.85 104M680.41 384L680.41 400M680.41 384L749.69 344M680.41 400L749.69 360M748.54 104L817.83 144M748.85 104L748.85 120M749.69 344L749.69 360M817.83 144L817.83 160"
+
+// Canonical unpressed solid 3D side faces (height = 40px)
+const SIDE_NORMAL_D =
+  "M541 40L679.56 120L679.56 160L541 80ZM679.56 120L748.85 80L748.85 120L679.56 160ZM402.64 120L471.92 160L471.92 200L402.64 160ZM471.92 160L610.49 80L610.49 120L471.92 200ZM334 160L680.41 360L680.41 400L334 200ZM680.41 360L749.69 320L749.69 360L680.41 400ZM584 175L653.28 215L653.28 255L584 215ZM653.28 215L817.83 120L817.83 160L653.28 255ZM207 225L345.56 305L345.56 345L207 265ZM345.56 305L414.85 265L414.85 305L345.56 345ZM68.64 305L137.92 345L137.92 385L68.64 345ZM137.92 345L276.49 265L276.49 305L137.92 385ZM0 345L346.41 545L346.41 585L0 385ZM346.41 545L415.69 505L415.69 545L346.41 585ZM250 360L319.28 400L319.28 440L250 400ZM319.28 400L483.83 305L483.83 345L319.28 440Z"
+
+// Keycap pressed solid 3D side faces: BASE STAYS FIXED, TOP COMPRESSES DOWN by 24px (height = 16px)
+const SIDE_PRESSED_D =
+  "M541 64L679.56 144L679.56 160L541 80ZM679.56 144L748.85 104L748.85 120L679.56 160ZM402.64 144L471.92 184L471.92 200L402.64 160ZM471.92 184L610.49 104L610.49 120L471.92 200ZM334 184L680.41 384L680.41 400L334 200ZM680.41 384L749.69 344L749.69 360L680.41 400ZM584 199L653.28 239L653.28 255L584 215ZM653.28 239L817.83 144L817.83 160L653.28 255ZM207 249L345.56 329L345.56 345L207 265ZM345.56 329L414.85 289L414.85 305L345.56 345ZM68.64 329L137.92 369L137.92 385L68.64 345ZM137.92 369L276.49 289L276.49 305L137.92 385ZM0 369L346.41 569L346.41 585L0 385ZM346.41 569L415.69 529L415.69 545L346.41 585ZM250 384L319.28 424L319.28 440L250 400ZM319.28 424L483.83 329L483.83 345L319.28 440Z"
+
+// Canonical unpressed solid top faces (8 polygons)
+const TOP_NORMAL_D =
+  "M610.28 0L748.85 80L679.57 120L541 40ZM541.21 40L610.49 80L471.92 160L402.64 120ZM403.28 120L749.69 320L680.41 360L334 160ZM748.54 80L817.83 120L653.28 215L584 175ZM276.28 185L414.85 265L345.57 305L207 225ZM207.21 225L276.49 265L137.92 345L68.64 305ZM69.28 305L415.69 505L346.41 545L0 345ZM414.55 265L483.83 305L319.28 400L250 360Z"
+
+// Keycap pressed solid top faces: TOP COMPRESSES DOWN by 24px (all Y coordinates +24)
+const TOP_PRESSED_D =
+  "M610.28 24L748.85 104L679.57 144L541 64ZM541.21 64L610.49 104L471.92 184L402.64 144ZM403.28 144L749.69 344L680.41 384L334 184ZM748.54 104L817.83 144L653.28 239L584 199ZM276.28 209L414.85 289L345.57 329L207 249ZM207.21 249L276.49 289L137.92 369L68.64 329ZM69.28 329L415.69 529L346.41 569L0 369ZM414.55 289L483.83 329L319.28 424L250 384Z"
 
 export interface PPMarkIsometricProps {
   className?: string
@@ -53,7 +80,7 @@ export interface PPMarkIsometricProps {
 /**
  * Phong Phan (PP) Isometric Monogram Mark
  * Isometric 3D Voxel Interactive Blueprint Design with diagonal hatching,
- * wireframe edges, mouse-following radial flashlight, and spring physics.
+ * sharp wireframe edges, mouse-following radial flashlight, and true 3D keycap press physics.
  */
 export function PPMarkIsometric({
   className,
@@ -64,8 +91,6 @@ export function PPMarkIsometric({
   const id = useId()
   const ids = {
     facePattern: `pp-face-pattern-${id}`,
-    faceFill: `pp-face-fill-${id}`,
-    stroke: `pp-stroke-${id}`,
     radialGradient: `pp-radial-gradient-${id}`,
   }
 
@@ -111,10 +136,16 @@ export function PPMarkIsometric({
   return (
     <motion.svg
       ref={ref}
-      className={`h-auto w-full cursor-pointer touch-manipulation overflow-visible select-none [--pattern:color-mix(in_oklab,var(--foreground)_14%,transparent)] [--stroke:color-mix(in_oklab,var(--foreground)_18%,transparent)] ${className ?? ""}`}
+      className={cn(
+        "h-auto w-full cursor-pointer touch-manipulation overflow-visible select-none",
+        "[--pattern:color-mix(in_oklab,var(--foreground)_25%,transparent)]",
+        "[--stroke:color-mix(in_oklab,var(--foreground)_38%,transparent)]",
+        className
+      )}
       viewBox="0 0 818 585"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      shapeRendering="geometricPrecision"
       aria-label="Phong Phan Isometric Mark"
       initial="normal"
       whileTap="pressed"
@@ -124,7 +155,7 @@ export function PPMarkIsometric({
       }}
     >
       <defs>
-        {/* Diagonal Hatching Pattern */}
+        {/* Diagonal Hatching Pattern with enhanced sharpness */}
         <pattern
           id={ids.facePattern}
           x="0"
@@ -136,203 +167,9 @@ export function PPMarkIsometric({
           <path
             d="M-1 1l2 -2M0 10l10 -10M9 11l2 -2"
             stroke="var(--pattern)"
-            strokeWidth="1.2"
+            strokeWidth="1.25"
           />
         </pattern>
-
-        {/* Top faces of both P letters with interactive press translation */}
-        <motion.g
-          id={ids.faceFill}
-          variants={{
-            normal: {
-              transform: "translate(0px, 0px)",
-            },
-            pressed: {
-              transform: "translate(0px, 16px)",
-            },
-          }}
-          transition={transition}
-        >
-          <path d="M610.28 0.0L748.85 80.0L679.57 120.0L541.0 40.0Z" />
-          <path d="M541.21 40.0L610.49 80.0L471.92 160.0L402.64 120.0Z" />
-          <path d="M403.28 120.0L749.69 320.0L680.41 360.0L334.0 160.0Z" />
-          <path d="M748.54 80.0L817.83 120.0L653.28 215.0L584.0 175.0Z" />
-          <path d="M276.28 185.0L414.85 265.0L345.57 305.0L207.0 225.0Z" />
-          <path d="M207.21 225.0L276.49 265.0L137.92 345.0L68.64 305.0Z" />
-          <path d="M69.28 305.0L415.69 505.0L346.41 545.0L-0.0 345.0Z" />
-          <path d="M414.55 265.0L483.83 305.0L319.28 400.0L250.0 360.0Z" />
-        </motion.g>
-
-        {/* Stroke outlines with normal and pressed wireframe edges */}
-        <motion.path
-          id={ids.stroke}
-          variants={{
-            normal: {
-              d: [
-                "M0.0 345.0L0.0 385.0",
-                "M-0.0 345.0L69.28 305.0",
-                "M-0.0 345.0L346.41 545.0",
-                "M0.0 385.0L346.41 585.0",
-                "M68.64 305.0L68.64 345.0",
-                "M68.64 305.0L137.92 345.0",
-                "M68.64 305.0L207.21 225.0",
-                "M68.64 345.0L137.92 385.0",
-                "M69.28 305.0L415.69 505.0",
-                "M137.92 345.0L137.92 385.0",
-                "M137.92 345.0L276.49 265.0",
-                "M137.92 385.0L276.49 305.0",
-                "M207.0 225.0L207.0 265.0",
-                "M207.0 225.0L276.28 185.0",
-                "M207.0 225.0L345.56 305.0",
-                "M207.0 225.0L345.57 305.0",
-                "M207.0 265.0L345.56 345.0",
-                "M207.21 225.0L276.49 265.0",
-                "M250.0 360.0L250.0 400.0",
-                "M250.0 360.0L319.28 400.0",
-                "M250.0 360.0L414.55 265.0",
-                "M250.0 400.0L319.28 440.0",
-                "M276.28 185.0L414.85 265.0",
-                "M276.49 265.0L276.49 305.0",
-                "M319.28 400.0L319.28 440.0",
-                "M319.28 400.0L483.83 305.0",
-                "M319.28 440.0L483.83 345.0",
-                "M334.0 160.0L334.0 200.0",
-                "M334.0 160.0L403.28 120.0",
-                "M334.0 160.0L680.41 360.0",
-                "M334.0 200.0L680.41 400.0",
-                "M345.56 305.0L345.56 345.0",
-                "M345.56 305.0L414.85 265.0",
-                "M345.56 345.0L414.85 305.0",
-                "M345.57 305.0L414.85 265.0",
-                "M346.41 545.0L346.41 585.0",
-                "M346.41 545.0L415.69 505.0",
-                "M346.41 585.0L415.69 545.0",
-                "M402.64 120.0L402.64 160.0",
-                "M402.64 120.0L471.92 160.0",
-                "M402.64 120.0L541.21 40.0",
-                "M402.64 160.0L471.92 200.0",
-                "M403.28 120.0L749.69 320.0",
-                "M414.55 265.0L483.83 305.0",
-                "M414.85 265.0L414.85 305.0",
-                "M415.69 505.0L415.69 545.0",
-                "M471.92 160.0L471.92 200.0",
-                "M471.92 160.0L610.49 80.0",
-                "M471.92 200.0L610.49 120.0",
-                "M483.83 305.0L483.83 345.0",
-                "M541.0 40.0L541.0 80.0",
-                "M541.0 40.0L610.28 0.0",
-                "M541.0 40.0L679.56 120.0",
-                "M541.0 40.0L679.57 120.0",
-                "M541.0 80.0L679.56 160.0",
-                "M541.21 40.0L610.49 80.0",
-                "M584.0 175.0L584.0 215.0",
-                "M584.0 175.0L653.28 215.0",
-                "M584.0 175.0L748.54 80.0",
-                "M584.0 215.0L653.28 255.0",
-                "M610.28 0.0L748.85 80.0",
-                "M610.49 80.0L610.49 120.0",
-                "M653.28 215.0L653.28 255.0",
-                "M653.28 215.0L817.83 120.0",
-                "M653.28 255.0L817.83 160.0",
-                "M679.56 120.0L679.56 160.0",
-                "M679.56 120.0L748.85 80.0",
-                "M679.56 160.0L748.85 120.0",
-                "M679.57 120.0L748.85 80.0",
-                "M680.41 360.0L680.41 400.0",
-                "M680.41 360.0L749.69 320.0",
-                "M680.41 400.0L749.69 360.0",
-                "M748.54 80.0L817.83 120.0",
-                "M748.85 80.0L748.85 120.0",
-                "M749.69 320.0L749.69 360.0",
-                "M817.83 120.0L817.83 160.0",
-              ].join(""),
-            },
-            pressed: {
-              d: [
-                "M0.00 361.00L0.00 401.00",
-                "M-0.00 361.00L69.28 321.00",
-                "M-0.00 361.00L346.41 561.00",
-                "M0.00 401.00L346.41 601.00",
-                "M68.64 321.00L68.64 361.00",
-                "M68.64 321.00L137.92 361.00",
-                "M68.64 321.00L207.21 241.00",
-                "M68.64 361.00L137.92 401.00",
-                "M69.28 321.00L415.69 521.00",
-                "M137.92 361.00L137.92 401.00",
-                "M137.92 361.00L276.49 281.00",
-                "M137.92 401.00L276.49 321.00",
-                "M207.00 241.00L207.00 281.00",
-                "M207.00 241.00L276.28 201.00",
-                "M207.00 241.00L345.56 321.00",
-                "M207.00 241.00L345.57 321.00",
-                "M207.00 281.00L345.56 361.00",
-                "M207.21 241.00L276.49 281.00",
-                "M250.00 376.00L250.00 416.00",
-                "M250.00 376.00L319.28 416.00",
-                "M250.00 376.00L414.55 281.00",
-                "M250.00 416.00L319.28 456.00",
-                "M276.28 201.00L414.85 281.00",
-                "M276.49 281.00L276.49 321.00",
-                "M319.28 416.00L319.28 456.00",
-                "M319.28 416.00L483.83 321.00",
-                "M319.28 456.00L483.83 361.00",
-                "M334.00 176.00L334.00 216.00",
-                "M334.00 176.00L403.28 136.00",
-                "M334.00 176.00L680.41 376.00",
-                "M334.00 216.00L680.41 416.00",
-                "M345.56 321.00L345.56 361.00",
-                "M345.56 321.00L414.85 281.00",
-                "M345.56 361.00L414.85 321.00",
-                "M345.57 321.00L414.85 281.00",
-                "M346.41 561.00L346.41 601.00",
-                "M346.41 561.00L415.69 521.00",
-                "M346.41 601.00L415.69 561.00",
-                "M402.64 136.00L402.64 176.00",
-                "M402.64 136.00L471.92 176.00",
-                "M402.64 136.00L541.21 56.00",
-                "M402.64 176.00L471.92 216.00",
-                "M403.28 136.00L749.69 336.00",
-                "M414.55 281.00L483.83 321.00",
-                "M414.85 281.00L414.85 321.00",
-                "M415.69 521.00L415.69 561.00",
-                "M471.92 176.00L471.92 216.00",
-                "M471.92 176.00L610.49 96.00",
-                "M471.92 216.00L610.49 136.00",
-                "M483.83 321.00L483.83 361.00",
-                "M541.00 56.00L541.00 96.00",
-                "M541.00 56.00L610.28 16.00",
-                "M541.00 56.00L679.56 136.00",
-                "M541.00 56.00L679.57 136.00",
-                "M541.00 96.00L679.56 176.00",
-                "M541.21 56.00L610.49 96.00",
-                "M584.00 191.00L584.00 231.00",
-                "M584.00 191.00L653.28 231.00",
-                "M584.00 191.00L748.54 96.00",
-                "M584.00 231.00L653.28 271.00",
-                "M610.28 16.00L748.85 96.00",
-                "M610.49 96.00L610.49 136.00",
-                "M653.28 231.00L653.28 271.00",
-                "M653.28 231.00L817.83 136.00",
-                "M653.28 271.00L817.83 176.00",
-                "M679.56 136.00L679.56 176.00",
-                "M679.56 136.00L748.85 96.00",
-                "M679.56 176.00L748.85 136.00",
-                "M679.57 136.00L748.85 96.00",
-                "M680.41 376.00L680.41 416.00",
-                "M680.41 376.00L749.69 336.00",
-                "M680.41 416.00L749.69 376.00",
-                "M748.54 96.00L817.83 136.00",
-                "M748.85 96.00L748.85 136.00",
-                "M749.69 336.00L749.69 376.00",
-                "M817.83 136.00L817.83 176.00",
-              ].join(""),
-            },
-          }}
-          transition={transition}
-          strokeWidth="1.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
 
         {/* Cursor-following Radial Gradient Flashlight */}
         <motion.radialGradient
@@ -351,14 +188,13 @@ export function PPMarkIsometric({
             className="[stop-color:var(--primary,#ef4444)] dark:[stop-color:var(--foreground)]"
             offset="0.5"
             stopColor="var(--foreground)"
-            stopOpacity="0.4"
+            stopOpacity="0.45"
           />
           <stop offset="1" stopColor="var(--foreground)" stopOpacity="0" />
         </motion.radialGradient>
       </defs>
 
       {/* Isometric Blueprint Construction Guide Lines (Full Extended Grid) */}
-
       {IsometricBlueprint ? (
         <g
           className="stroke-foreground/20 dark:stroke-white/15"
@@ -379,28 +215,82 @@ export function PPMarkIsometric({
         </g>
       ) : null}
 
-      {/* Solid 3D Side faces (occludes back lines and gives 3D depth) */}
+      {/* 1. Solid 3D Side faces: Base anchored, top walls compress from 40px down to 16px */}
       <g className="fill-background" fillRule="evenodd" clipRule="evenodd">
         <motion.path
           variants={{
             normal: {
-              d: "M541.0 40.0L679.56 120.0L679.56 160.0L541.0 80.0ZM679.56 120.0L748.85 80.0L748.85 120.0L679.56 160.0ZM402.64 120.0L471.92 160.0L471.92 200.0L402.64 160.0ZM471.92 160.0L610.49 80.0L610.49 120.0L471.92 200.0ZM334.0 160.0L680.41 360.0L680.41 400.0L334.0 200.0ZM680.41 360.0L749.69 320.0L749.69 360.0L680.41 400.0ZM584.0 175.0L653.28 215.0L653.28 255.0L584.0 215.0ZM653.28 215.0L817.83 120.0L817.83 160.0L653.28 255.0ZM207.0 225.0L345.56 305.0L345.56 345.0L207.0 265.0ZM345.56 305.0L414.85 265.0L414.85 305.0L345.56 345.0ZM68.64 305.0L137.92 345.0L137.92 385.0L68.64 345.0ZM137.92 345.0L276.49 265.0L276.49 305.0L137.92 385.0ZM0.0 345.0L346.41 545.0L346.41 585.0L0.0 385.0ZM346.41 545.0L415.69 505.0L415.69 545.0L346.41 585.0ZM250.0 360.0L319.28 400.0L319.28 440.0L250.0 400.0ZM319.28 400.0L483.83 305.0L483.83 345.0L319.28 440.0Z",
+              d: SIDE_NORMAL_D,
             },
             pressed: {
-              d: "M541.00 56.00L679.56 136.00L679.56 176.00L541.00 96.00ZM679.56 136.00L748.85 96.00L748.85 136.00L679.56 176.00ZM402.64 136.00L471.92 176.00L471.92 216.00L402.64 176.00ZM471.92 176.00L610.49 96.00L610.49 136.00L471.92 216.00ZM334.00 176.00L680.41 376.00L680.41 416.00L334.00 216.00ZM680.41 376.00L749.69 336.00L749.69 376.00L680.41 416.00ZM584.00 191.00L653.28 231.00L653.28 271.00L584.00 231.00ZM653.28 231.00L817.83 136.00L817.83 176.00L653.28 271.00ZM207.00 241.00L345.56 321.00L345.56 361.00L207.00 281.00ZM345.56 321.00L414.85 281.00L414.85 321.00L345.56 361.00ZM68.64 321.00L137.92 361.00L137.92 401.00L68.64 361.00ZM137.92 361.00L276.49 281.00L276.49 321.00L137.92 401.00ZM0.00 361.00L346.41 561.00L346.41 601.00L0.00 401.00ZM346.41 561.00L415.69 521.00L415.69 561.00L346.41 601.00ZM250.00 376.00L319.28 416.00L319.28 456.00L250.00 416.00ZM319.28 416.00L483.83 321.00L483.83 361.00L319.28 456.00Z",
+              d: SIDE_PRESSED_D,
             },
           }}
           transition={transition}
         />
       </g>
 
-      {/* Top faces: Solid background + Diagonal hatched pattern overlay */}
-      <use href={`#${ids.faceFill}`} className="fill-background" />
-      <use href={`#${ids.faceFill}`} fill={`url(#${ids.facePattern})`} />
+      {/* 2. Top faces: Solid background occluder (100% in sync with side walls) */}
+      <motion.path
+        variants={{
+          normal: {
+            d: TOP_NORMAL_D,
+          },
+          pressed: {
+            d: TOP_PRESSED_D,
+          },
+        }}
+        transition={transition}
+        className="fill-background"
+      />
 
-      {/* Wireframe edge strokes: Base subtle stroke + Radial cursor flashlight */}
-      <use href={`#${ids.stroke}`} stroke="var(--stroke)" />
-      <use href={`#${ids.stroke}`} stroke={`url(#${ids.radialGradient})`} />
+      {/* 3. Top faces: Diagonal hatched pattern overlay (100% in sync with side walls) */}
+      <motion.path
+        variants={{
+          normal: {
+            d: TOP_NORMAL_D,
+          },
+          pressed: {
+            d: TOP_PRESSED_D,
+          },
+        }}
+        transition={transition}
+        fill={`url(#${ids.facePattern})`}
+      />
+
+      {/* 4. Structural wireframe edges: Base subtle stroke (100% in sync with top and sides) */}
+      <motion.path
+        variants={{
+          normal: {
+            d: STROKE_NORMAL_D,
+          },
+          pressed: {
+            d: STROKE_PRESSED_D,
+          },
+        }}
+        transition={transition}
+        stroke="var(--stroke)"
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+
+      {/* 5. Structural wireframe edges: Cursor radial gradient flashlight */}
+      <motion.path
+        variants={{
+          normal: {
+            d: STROKE_NORMAL_D,
+          },
+          pressed: {
+            d: STROKE_PRESSED_D,
+          },
+        }}
+        transition={transition}
+        stroke={`url(#${ids.radialGradient})`}
+        strokeWidth="1.4"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </motion.svg>
   )
 }
