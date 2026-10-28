@@ -24,6 +24,7 @@ export type BlockSchematicType =
   | "not-found-03"
   | "login-01"
   | "stats-cards-01"
+  | "koi-background"
 
 export type SchematicType = ComponentSchematicType | BlockSchematicType
 

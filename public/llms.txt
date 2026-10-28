@@ -51,6 +51,7 @@ Personal portfolio and engineering showcase of Phong Phan. Frontend Engineer spe
 - [Not Found Pixel Trail](https://byphongphan.com/blocks/404-page/not-found-03): Interactive 404 digital void experience featuring dynamic cursor pixel trails and terminal status diagnostics. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/not-found-03.json`)
 - [Login 01](https://byphongphan.com/blocks/auth/login-01): Split-screen modern authentication screen with photography hero, tracked typography, and full dark mode support. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/login-01.json`)
 - [Stats Cards 01](https://byphongphan.com/blocks/marketing/stats-cards-01): Overlapping interactive marketing stats cards with spring physics hover, metrics showcase, and dark mode support. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/stats-cards-01.json`)
+- [Koi Background](https://byphongphan.com/blocks/marketing/koi-background): Interactive ambient koi pond background surface featuring fluid dynamics, water caustics, multi-joint fish flocking, and mouse-feeding mechanics. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/koi-background.json`)
 
 ## Custom Hooks
 
