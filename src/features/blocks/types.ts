@@ -30,6 +30,8 @@ export interface BlockItem {
   description: string
   isPro?: boolean
   isNew?: boolean
+  isUpdated?: boolean
+  aliases?: string[]
   badge?: string
   schematicType?: BlockSchematicType | string
   /**

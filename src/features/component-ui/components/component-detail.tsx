@@ -188,14 +188,21 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
                   {title}
                 </h1>
 
-                {component.isNew && (
+                {component.isNew ? (
                   <Badge
                     variant="outline"
                     className="h-5 gap-1.5 rounded border-primary/30 bg-primary/10 px-2 text-[8px] font-semibold tracking-wider text-primary uppercase shadow-[0_0_10px_var(--pp-primary-glow)]"
                   >
                     New
                   </Badge>
-                )}
+                ) : component.isUpdated ? (
+                  <Badge
+                    variant="outline"
+                    className="h-5 gap-1.5 rounded border-emerald-500/30 bg-emerald-500/10 px-2 text-[8px] font-semibold tracking-wider text-emerald-600 uppercase shadow-[0_0_10px_rgba(16,185,129,0.25)] dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-400"
+                  >
+                    Updated
+                  </Badge>
+                ) : null}
 
                 {mdxData?.frontmatter?.badge && (
                   <Badge

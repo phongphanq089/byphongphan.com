@@ -44,13 +44,17 @@ export function BlockCard({ block }: BlockCardProps) {
               </span>
             </div>
 
-            {/* Right: New/Pro Badge & Arrow */}
+            {/* Right: New/Updated/Pro Badge & Arrow */}
             <div className="flex items-center gap-1.5">
-              {block.isNew && (
+              {block.isNew ? (
                 <span className="flex items-center rounded border border-primary bg-primary px-1.5 py-0.5 text-[9px] font-semibold tracking-wider text-background uppercase">
                   New
                 </span>
-              )}
+              ) : block.isUpdated ? (
+                <span className="flex items-center rounded border border-emerald-500/30 bg-emerald-500/15 px-1.5 py-0.5 text-[9px] font-semibold tracking-wider text-emerald-600 uppercase dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-400">
+                  Updated
+                </span>
+              ) : null}
               {block.isPro && (
                 <span className="flex items-center rounded border border-white/20 bg-white/10 px-1.5 py-0.5 text-[9px] font-semibold tracking-wider text-white/90 uppercase">
                   Pro
