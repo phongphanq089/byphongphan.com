@@ -75,14 +75,6 @@
     "registryDependencies": []
   },
   {
-    "name": "use-media-query",
-    "type": "registry:hook",
-    "title": "useMediaQuery",
-    "description": "React hook for responsive design and media query listening with SSR support.",
-    "dependencies": [],
-    "registryDependencies": []
-  },
-  {
     "name": "code-block",
     "type": "registry:ui",
     "title": "Code Block",
@@ -229,6 +221,14 @@
     "type": "registry:block",
     "title": "Koi Background",
     "description": "Interactive ambient koi pond background surface featuring fluid dynamics, water caustics, multi-joint fish flocking, and mouse-feeding mechanics.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-media-query",
+    "type": "registry:hook",
+    "title": "useMediaQuery",
+    "description": "React hook for responsive design and media query listening with SSR support.",
     "dependencies": [],
     "registryDependencies": []
   }
