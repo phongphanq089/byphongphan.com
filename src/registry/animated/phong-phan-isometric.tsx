@@ -1,5 +1,3 @@
-"use client"
-
 import type { Transition } from "motion/react"
 import {
   motion,

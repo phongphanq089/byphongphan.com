@@ -353,24 +353,37 @@ button {
 }
 
 @utility no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
   &::-webkit-scrollbar {
     display: none !important;
     width: 0 !important;
     height: 0 !important;
+    background: transparent !important;
   }
 }
 
 html.no-scrollbar,
-body.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+body.no-scrollbar,
+:root.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
 }
 
 html.no-scrollbar::-webkit-scrollbar,
-body.no-scrollbar::-webkit-scrollbar {
+body.no-scrollbar::-webkit-scrollbar,
+html.no-scrollbar *::-webkit-scrollbar,
+body.no-scrollbar *::-webkit-scrollbar {
   display: none !important;
   width: 0 !important;
   height: 0 !important;
+  background: transparent !important;
+}
+
+html.no-scrollbar::-webkit-scrollbar-thumb,
+body.no-scrollbar::-webkit-scrollbar-thumb,
+html.no-scrollbar *::-webkit-scrollbar-thumb,
+body.no-scrollbar *::-webkit-scrollbar-thumb {
+  display: none !important;
+  background: transparent !important;
 }

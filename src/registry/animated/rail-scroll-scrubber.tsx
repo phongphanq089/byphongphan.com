@@ -1,5 +1,3 @@
-"use client"
-
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import type { MotionValue } from "motion/react"
 import {
@@ -65,6 +63,10 @@ export interface RailScrollScrubberProps {
   accentColor?: string
   /** Whether to hide native browser scrollbars on html and body (default: true) */
   hideNativeScrollbar?: boolean
+  /** Whether to enable the Section Jump Menu on desktop when clicking the ruler rail (default: false) */
+  showDesktopSectionMenu?: boolean
+  /** Alias for showDesktopSectionMenu */
+  enableDesktopMenu?: boolean
   /** Additional CSS class names */
   className?: string
 }
@@ -321,15 +323,24 @@ const FlyingCharacter = React.memo(function FlyingCharacter({
       const baseSpacing = 11.5
       const topActiveSpacing = isCurrentActive ? 17.5 : 11.8
 
+      const spacing = Math.min(
+        24,
+        Math.max(16, Math.floor(170 / totalSections))
+      )
+      const bottomSpacing = Math.min(
+        22,
+        Math.max(14, Math.floor(155 / totalSections))
+      )
+
       const topStackY =
         sectionIndex === 0
           ? 18
           : isCurrentActive
-            ? 20 + sectionIndex * 24 + 6
-            : 18 + sectionIndex * 24
+            ? 18 + sectionIndex * spacing + 4
+            : 18 + sectionIndex * spacing
 
       const reverseSecIdx = totalSections - 1 - sectionIndex
-      const bottomStackY = viewportHeight - 28 - reverseSecIdx * 22
+      const bottomStackY = viewportHeight - 28 - reverseSecIdx * bottomSpacing
       const overviewY = 20 + section.anchor * (viewportHeight - 40)
 
       const charBottomRestX = -reverseIdx * baseSpacing
@@ -577,9 +588,14 @@ const SectionClickTarget = React.memo(function SectionClickTarget({
   onSelect,
 }: SectionClickTargetProps) {
   const y = useTransform([smoothScroll, smoothHover], ([s, h]) => {
-    const topStackY = 18 + secIdx * 26
+    const spacing = Math.min(24, Math.max(16, Math.floor(170 / totalSections)))
+    const bottomSpacing = Math.min(
+      22,
+      Math.max(14, Math.floor(155 / totalSections))
+    )
+    const topStackY = 18 + secIdx * spacing
     const reverseSecIdx = totalSections - 1 - secIdx
-    const bottomStackY = viewportHeight - 28 - reverseSecIdx * 22
+    const bottomStackY = viewportHeight - 28 - reverseSecIdx * bottomSpacing
     const overviewY = 20 + section.anchor * (viewportHeight - 40)
 
     const midFlight = (section.flightRange[0] + section.flightRange[1]) / 2
@@ -591,7 +607,11 @@ const SectionClickTarget = React.memo(function SectionClickTarget({
   return (
     <motion.button
       type="button"
+      onPointerDown={(e) => {
+        e.stopPropagation()
+      }}
       onClick={(e) => {
+        e.preventDefault()
         e.stopPropagation()
         onSelect()
       }}
@@ -630,6 +650,7 @@ const PercentReadout = React.memo(function PercentReadout({
       {isDragging && (
         <button
           type="button"
+          onPointerDown={(e) => e.stopPropagation()}
           onClick={(e) => {
             e.stopPropagation()
             onToggleMenu?.()
@@ -704,21 +725,88 @@ export function RailScrollScrubber({
   curveIntensity = 1.0,
   accentColor = "var(--primary)",
   hideNativeScrollbar = true,
+  showDesktopSectionMenu = false,
+  enableDesktopMenu = false,
   className,
 }: RailScrollScrubberProps) {
+  const allowDesktopMenu = showDesktopSectionMenu || enableDesktopMenu
   const rulerRef = useRef<HTMLDivElement>(null)
+  const menuCardRef = useRef<HTMLDivElement>(null)
+  const lastTapTimeRef = useRef(0)
   const [viewportHeight, setViewportHeight] = useState(() => {
     if (typeof window !== "undefined") return window.innerHeight
     return 800
   })
   const [isHovered, setIsHovered] = useState(false)
   const [isDragging, setIsDragging] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isSectionMenuOpen, setIsSectionMenuOpen] = useState(false)
   const [activeSectionIdx, setActiveSectionIdx] = useState(0)
+
+  // Close menu when clicking outside (without any visible blurred backdrop layer)
+  useEffect(() => {
+    if (!isSectionMenuOpen) return
+
+    const handlePointerDownOutside = (e: PointerEvent) => {
+      const target = e.target as HTMLElement | null
+      if (!target) return
+      // If clicking inside menu card or on the ruler rail, do not close
+      if (
+        menuCardRef.current?.contains(target) ||
+        rulerRef.current?.contains(target)
+      ) {
+        return
+      }
+      setIsSectionMenuOpen(false)
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsSectionMenuOpen(false)
+      }
+    }
+
+    window.addEventListener("pointerdown", handlePointerDownOutside)
+    window.addEventListener("keydown", handleKeyDown)
+
+    return () => {
+      window.removeEventListener("pointerdown", handlePointerDownOutside)
+      window.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [isSectionMenuOpen])
 
   // Automatically hide native browser scrollbars on html and body when scrubber is active
   useEffect(() => {
     if (!hideNativeScrollbar || typeof document === "undefined") return
+
+    const styleId = "rail-scroll-hide-scrollbar"
+    let styleEl = document.getElementById(styleId) as HTMLStyleElement | null
+    if (!styleEl) {
+      styleEl = document.createElement("style")
+      styleEl.id = styleId
+      styleEl.textContent = `
+        html, body {
+          scrollbar-width: none !important;
+          -ms-overflow-style: none !important;
+        }
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar,
+        ::-webkit-scrollbar {
+          width: 0px !important;
+          height: 0px !important;
+          display: none !important;
+          background: transparent !important;
+        }
+        ::-webkit-scrollbar-thumb {
+          display: none !important;
+          background: transparent !important;
+        }
+        ::-webkit-scrollbar-track {
+          display: none !important;
+          background: transparent !important;
+        }
+      `
+      document.head.appendChild(styleEl)
+    }
 
     const htmlEl = document.documentElement
     const bodyEl = document.body
@@ -728,10 +816,16 @@ export function RailScrollScrubber({
 
     htmlEl.classList.add("no-scrollbar")
     bodyEl.classList.add("no-scrollbar")
+    htmlEl.style.scrollbarWidth = "none"
+    bodyEl.style.scrollbarWidth = "none"
 
     return () => {
+      const el = document.getElementById(styleId)
+      if (el) el.remove()
       if (!prevHtmlClass) htmlEl.classList.remove("no-scrollbar")
       if (!prevBodyClass) bodyEl.classList.remove("no-scrollbar")
+      htmlEl.style.scrollbarWidth = ""
+      bodyEl.style.scrollbarWidth = ""
     }
   }, [hideNativeScrollbar])
 
@@ -831,6 +925,41 @@ export function RailScrollScrubber({
     [handleScrub]
   )
 
+  const handleJumpToSection = useCallback(
+    (sec: RailSection) => {
+      setIsSectionMenuOpen(false)
+
+      if (typeof document !== "undefined") {
+        const rawId = sec.id
+        const lowerId = rawId.toLowerCase()
+        const targetEl =
+          document.getElementById(rawId) ||
+          document.getElementById(lowerId) ||
+          document.querySelector(`[id="${rawId}"]`) ||
+          document.querySelector(`[id="${lowerId}"]`)
+
+        if (targetEl) {
+          try {
+            window.history.pushState(null, "", `#${rawId}`)
+          } catch {
+            /* ignore */
+          }
+          const headerOffset = 84
+          const elementPosition = targetEl.getBoundingClientRect().top
+          const offsetPosition = elementPosition + window.scrollY - headerOffset
+          window.scrollTo({
+            top: Math.max(0, offsetPosition),
+            behavior: "smooth",
+          })
+          return
+        }
+      }
+
+      handleScrub(sec.start + 0.005, { smooth: true })
+    },
+    [handleScrub]
+  )
+
   // Track drag velocity for momentum fling on touch/mouse release
   const dragState = useRef<{
     lastY: number
@@ -847,6 +976,9 @@ export function RailScrollScrubber({
   } | null>(null)
 
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    // If clicked on an interactive button, do not capture or start dragging
+    if ((e.target as HTMLElement).closest("button")) return
+
     e.preventDefault()
     e.currentTarget.setPointerCapture(e.pointerId)
     setIsDragging(true)
@@ -861,7 +993,14 @@ export function RailScrollScrubber({
       lastTime: performance.now(),
       velocity: 0,
     }
-    updateScrollFromClientY(e.clientY, { smooth: false })
+    // Only immediately scrub on pointerdown if desktop menu mode is NOT enabled
+    if (
+      !allowDesktopMenu &&
+      typeof window !== "undefined" &&
+      window.innerWidth >= 768
+    ) {
+      updateScrollFromClientY(e.clientY, { smooth: false })
+    }
   }
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
@@ -884,7 +1023,9 @@ export function RailScrollScrubber({
         e.clientX - dragStartInfo.current.x,
         e.clientY - dragStartInfo.current.y
       )
-      if (dist > 6) {
+      const isTouch = e.pointerType === "touch"
+      const tapDistThreshold = isTouch ? 18 : 6
+      if (dist > tapDistThreshold) {
         dragStartInfo.current.hasMoved = true
       }
     }
@@ -914,14 +1055,36 @@ export function RailScrollScrubber({
       }
       setIsDragging(false)
 
-      const wasTap = dragStartInfo.current && !dragStartInfo.current.hasMoved
+      const now = performance.now()
+      const touchDuration = dragStartInfo.current
+        ? now - dragStartInfo.current.time
+        : 9999
+      const isTouch = e.pointerType === "touch"
+      const dist = dragStartInfo.current
+        ? Math.hypot(
+            e.clientX - dragStartInfo.current.x,
+            e.clientY - dragStartInfo.current.y
+          )
+        : 999
+
+      const wasTap =
+        dragStartInfo.current &&
+        (!dragStartInfo.current.hasMoved ||
+          (isTouch && touchDuration < 320 && dist < 22) ||
+          (!isTouch && touchDuration < 250 && dist < 8))
+
       dragStartInfo.current = null
 
       if (wasTap) {
-        // Tapped without dragging -> Toggle mobile section jump menu
-        setIsMobileMenuOpen((prev) => !prev)
-        dragState.current = null
-        return
+        lastTapTimeRef.current = now
+        // Tapped without dragging -> Toggle section jump menu on mobile or desktop if enabled
+        const isMobile =
+          typeof window !== "undefined" && window.innerWidth < 768
+        if (allowDesktopMenu || isMobile) {
+          setIsSectionMenuOpen((prev) => !prev)
+          dragState.current = null
+          return
+        }
       }
 
       if (dragState.current && rulerRef.current) {
@@ -975,205 +1138,218 @@ export function RailScrollScrubber({
   )
 
   return (
-    <div
-      ref={rulerRef}
-      tabIndex={0}
-      role="region"
-      aria-label="Scroll scrubber"
-      onFocus={(e) => {
-        if (
-          e.target === rulerRef.current &&
-          typeof window !== "undefined" &&
-          window.innerWidth < 768
-        ) {
-          setIsMobileMenuOpen(true)
+    <>
+      <div
+        ref={rulerRef}
+        tabIndex={0}
+        role="region"
+        aria-label="Scroll scrubber"
+        title={
+          allowDesktopMenu
+            ? "Click to view sections or drag to scrub"
+            : "Scroll scrubber"
         }
-      }}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault()
-          setIsMobileMenuOpen((prev) => !prev)
-        } else if (e.key === "Escape") {
-          setIsMobileMenuOpen(false)
-        }
-      }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => {
-        setIsHovered(false)
-        hoverPercentMV.set(null)
-      }}
-      onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
-      onPointerCancel={handlePointerCancel}
-      className={cn(
-        "fixed inset-y-0 right-0 z-40 w-[18px] touch-none select-none focus:outline-none sm:w-[56px] md:w-[260px]",
-        isDragging ? "cursor-grabbing" : "cursor-ns-resize",
-        className
-      )}
-      style={{
-        background:
-          "linear-gradient(90deg, transparent 0%, color-mix(in oklch, var(--background) 88%, transparent) 28%, var(--background) 100%)",
-      }}
-    >
-      {/* Subtle vertical guide border */}
-      <div className="pointer-events-none absolute top-0 right-0 bottom-0 w-[18px] border-l border-border/40 sm:w-[56px]" />
-
-      {/* 1. Flying Characters along 5-Stage Rail Path (Responsive: hidden on narrow mobile/tablet screens) */}
-      <div className="pointer-events-none relative hidden h-full w-full md:block">
-        {sections.map((sec, secIdx) => {
-          const chars = sec.title.split("")
-          const isCurrentActive = secIdx === activeSectionIdx
-
-          return (
-            <React.Fragment key={sec.id}>
-              <SectionClickTarget
-                section={sec}
-                secIdx={secIdx}
-                totalSections={sections.length}
-                smoothScroll={smoothScroll}
-                smoothHover={smoothHover}
-                viewportHeight={viewportHeight}
-                onSelect={() => handleScrub(sec.start + 0.02)}
-              />
-
-              {chars.map((char, charIdx) => (
-                <FlyingCharacter
-                  key={`${sec.id}-char-${charIdx}`}
-                  char={char}
-                  charIndex={charIdx}
-                  totalChars={chars.length}
-                  sectionIndex={secIdx}
-                  totalSections={sections.length}
-                  section={sec}
-                  smoothScroll={smoothScroll}
-                  smoothHover={smoothHover}
-                  viewportHeight={viewportHeight}
-                  curveIntensity={curveIntensity}
-                  isCurrentActive={isCurrentActive}
-                />
-              ))}
-            </React.Fragment>
-          )
-        })}
-      </div>
-
-      {/* 2. Hover Overview Lens Box */}
-      <motion.div
-        style={{
-          top: lensTop,
-          height: lensHeight,
-          opacity: smoothHover,
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault()
+            setIsSectionMenuOpen((prev) => !prev)
+          } else if (e.key === "Escape") {
+            setIsSectionMenuOpen(false)
+          }
         }}
-        className="pointer-events-none absolute right-0 w-[16px] border-t border-b border-l border-primary/30 bg-primary/[0.08] backdrop-blur-[1px] sm:w-[52px]"
-      />
-
-      {/* 3. Hover Cursor Line (Isolated, 0 parent re-renders) */}
-      <HoverCursorLine
-        mouseYMV={mouseYMV}
-        hoverPercentMV={hoverPercentMV}
-        isHovered={isHovered}
-      />
-
-      {/* 4. Dynamic Ruler Ticks */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        {ticks.map((tickVal) => (
-          <RulerTick
-            key={tickVal}
-            tickValue={tickVal}
-            smoothScroll={smoothScroll}
-            smoothHover={smoothHover}
-            blueIndicatorY={blueIndicatorY}
-            viewportHeight={viewportHeight}
-            zoomScale={zoomScale}
-          />
-        ))}
-      </div>
-
-      {/* 5. Glowing Progress Line & Percentage Readout */}
-      <motion.div
-        style={{ y: blueIndicatorY }}
-        className="pointer-events-none absolute top-0 right-0 z-30 w-[18px] sm:w-[56px]"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => {
+          setIsHovered(false)
+          hoverPercentMV.set(null)
+        }}
+        onClick={(e) => {
+          if ((e.target as HTMLElement).closest("button")) return
+          const isMobile =
+            typeof window !== "undefined" && window.innerWidth < 768
+          if (allowDesktopMenu || isMobile) {
+            if (performance.now() - lastTapTimeRef.current > 350) {
+              lastTapTimeRef.current = performance.now()
+              setIsSectionMenuOpen((prev) => !prev)
+            }
+          }
+        }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerCancel}
+        className={cn(
+          "fixed inset-y-0 right-0 z-40 touch-none select-none focus:outline-none",
+          allowDesktopMenu
+            ? "w-[24px] sm:w-[56px] md:w-[56px]"
+            : "w-[24px] sm:w-[56px] md:w-[260px]",
+          isDragging
+            ? "cursor-grabbing"
+            : allowDesktopMenu ||
+                (typeof window !== "undefined" && window.innerWidth < 768)
+              ? "cursor-pointer"
+              : "cursor-ns-resize",
+          className
+        )}
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 0%, color-mix(in oklch, var(--background) 88%, transparent) 28%, var(--background) 100%)",
+        }}
       >
-        <div
-          className="relative h-[2px] w-full"
+        {/* Subtle vertical guide border */}
+        <div className="pointer-events-none absolute top-0 right-0 bottom-0 w-[18px] border-l border-border/40 sm:w-[56px]" />
+
+        {/* 1. Flying Characters along 5-Stage Rail Path (Responsive: hidden on narrow screens or when desktop menu mode is enabled) */}
+        {!allowDesktopMenu && (
+          <div className="pointer-events-none relative hidden h-full w-full md:block">
+            {sections.map((sec, secIdx) => {
+              const chars = sec.title.split("")
+              const isCurrentActive = secIdx === activeSectionIdx
+
+              return (
+                <React.Fragment key={sec.id}>
+                  <SectionClickTarget
+                    section={sec}
+                    secIdx={secIdx}
+                    totalSections={sections.length}
+                    smoothScroll={smoothScroll}
+                    smoothHover={smoothHover}
+                    viewportHeight={viewportHeight}
+                    onSelect={() => handleJumpToSection(sec)}
+                  />
+
+                  {chars.map((char, charIdx) => (
+                    <FlyingCharacter
+                      key={`${sec.id}-char-${charIdx}`}
+                      char={char}
+                      charIndex={charIdx}
+                      totalChars={chars.length}
+                      sectionIndex={secIdx}
+                      totalSections={sections.length}
+                      section={sec}
+                      smoothScroll={smoothScroll}
+                      smoothHover={smoothHover}
+                      viewportHeight={viewportHeight}
+                      curveIntensity={curveIntensity}
+                      isCurrentActive={isCurrentActive}
+                    />
+                  ))}
+                </React.Fragment>
+              )
+            })}
+          </div>
+        )}
+
+        {/* 2. Hover Overview Lens Box */}
+        <motion.div
           style={{
-            backgroundColor: accentColor,
-            boxShadow: "0 0 14px 2px var(--color-primary, var(--primary))",
+            top: lensTop,
+            height: lensHeight,
+            opacity: smoothHover,
           }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground to-primary" />
+          className="pointer-events-none absolute right-0 w-[16px] border-t border-b border-l border-primary/30 bg-primary/[0.08] backdrop-blur-[1px] sm:w-[52px]"
+        />
+
+        {/* 3. Hover Cursor Line (Isolated, 0 parent re-renders) */}
+        <HoverCursorLine
+          mouseYMV={mouseYMV}
+          hoverPercentMV={hoverPercentMV}
+          isHovered={isHovered}
+        />
+
+        {/* 4. Dynamic Ruler Ticks */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          {ticks.map((tickVal) => (
+            <RulerTick
+              key={tickVal}
+              tickValue={tickVal}
+              smoothScroll={smoothScroll}
+              smoothHover={smoothHover}
+              blueIndicatorY={blueIndicatorY}
+              viewportHeight={viewportHeight}
+              zoomScale={zoomScale}
+            />
+          ))}
         </div>
 
-        {/* Isolated Percentage Readout (Zero parent re-render on scroll) */}
-        <PercentReadout
-          smoothScroll={smoothScroll}
-          accentColor={accentColor}
-          isDragging={isDragging}
-          onToggleMenu={() => setIsMobileMenuOpen((prev) => !prev)}
-        />
-      </motion.div>
+        {/* 5. Glowing Progress Line & Percentage Readout */}
+        <motion.div
+          style={{ y: blueIndicatorY }}
+          className="pointer-events-none absolute top-0 right-0 z-30 w-[18px] sm:w-[56px]"
+        >
+          <div
+            className="relative h-[2px] w-full"
+            style={{
+              backgroundColor: accentColor,
+              boxShadow: "0 0 14px 2px var(--color-primary, var(--primary))",
+            }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground to-primary" />
+          </div>
 
-      {/* 6. Mobile Focus Section Jump Menu (Matches TOC Minimap visual format) */}
+          {/* Isolated Percentage Readout (Zero parent re-render on scroll) */}
+          <PercentReadout
+            smoothScroll={smoothScroll}
+            accentColor={accentColor}
+            isDragging={isDragging}
+            onToggleMenu={() => setIsSectionMenuOpen((prev) => !prev)}
+          />
+        </motion.div>
+      </div>
+
+      {/* 6. Section Jump Menu (Rendered OUTSIDE rulerRef, without any blurred backdrop layer) */}
       <AnimatePresence>
-        {isMobileMenuOpen && (
-          <>
-            {/* Backdrop for click outside */}
-            <motion.div
-              key="mobile-scrubber-backdrop"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.15 }}
-              onClick={(e) => {
-                e.stopPropagation()
-                setIsMobileMenuOpen(false)
-              }}
-              className="fixed inset-0 z-40 bg-background/20 backdrop-blur-[2px] md:hidden"
-            />
-
-            {/* Section Jump Card */}
-            <motion.div
-              key="mobile-scrubber-menu"
-              initial={{ opacity: 0, scale: 0.94, x: 12 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              exit={{ opacity: 0, scale: 0.94, x: 12 }}
-              transition={{ type: "spring", stiffness: 360, damping: 28 }}
-              onClick={(e) => e.stopPropagation()}
-              className="fixed top-1/2 right-6 z-50 max-h-[70vh] w-52 -translate-y-1/2 overflow-y-auto rounded-2xl border border-border/80 bg-card/95 p-4 shadow-2xl backdrop-blur-xl md:hidden"
-              style={{ scrollbarWidth: "none" }}
-            >
-              <div className="flex flex-col gap-2.5">
-                {sections.map((sec, idx) => {
-                  const isActive = idx === activeSectionIdx
-                  const displayTitle =
-                    sec.label ?? formatSectionTitle(sec.title)
-                  return (
-                    <button
-                      key={sec.id}
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleScrub(sec.start + 0.01, { smooth: true })
-                        setIsMobileMenuOpen(false)
-                      }}
-                      className={cn(
-                        "cursor-pointer text-left text-sm transition-colors select-none",
-                        isActive
-                          ? "font-semibold text-foreground"
-                          : "font-normal text-muted-foreground/80 hover:text-foreground"
-                      )}
-                    >
-                      {displayTitle}
-                    </button>
-                  )
-                })}
-              </div>
-            </motion.div>
-          </>
+        {isSectionMenuOpen && (
+          <motion.div
+            key="scrubber-section-menu-card"
+            ref={menuCardRef}
+            initial={{ opacity: 0, scale: 0.94, x: 12 }}
+            animate={{ opacity: 1, scale: 1, x: 0 }}
+            exit={{ opacity: 0, scale: 0.94, x: 12 }}
+            transition={{ type: "spring", stiffness: 360, damping: 28 }}
+            onClick={(e) => e.stopPropagation()}
+            className={cn(
+              "pointer-events-auto fixed top-1/2 z-50 max-h-[75vh] -translate-y-1/2 overflow-y-auto rounded-2xl border border-border/80 bg-card/95 p-4 shadow-2xl backdrop-blur-xl",
+              "right-6 w-56",
+              allowDesktopMenu ? "sm:right-16 md:right-16 md:w-60" : "md:hidden"
+            )}
+            style={{ scrollbarWidth: "none" }}
+          >
+            <div className="flex flex-col gap-1.5">
+              {sections.map((sec, idx) => {
+                const isActive = idx === activeSectionIdx
+                const displayTitle = sec.label ?? formatSectionTitle(sec.title)
+                return (
+                  <button
+                    key={sec.id}
+                    type="button"
+                    onPointerDown={(e) => e.stopPropagation()}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      handleJumpToSection(sec)
+                    }}
+                    className={cn(
+                      "group flex cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-sm transition-colors select-none",
+                      isActive
+                        ? "bg-primary/10 font-semibold text-foreground"
+                        : "font-normal text-muted-foreground/80 hover:bg-muted/50 hover:text-foreground"
+                    )}
+                  >
+                    <span className="truncate">{displayTitle}</span>
+                    {isActive && (
+                      <span
+                        className="ml-2 h-1.5 w-1.5 shrink-0 rounded-full"
+                        style={{ backgroundColor: accentColor }}
+                      />
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   )
 }
 

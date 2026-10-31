@@ -1,5 +1,3 @@
-"use client"
-
 import { ArrowLeft, Home, Moon, Sparkles, Sun, Terminal } from "lucide-react"
 
 import { Button } from "@/registry/ui/button"

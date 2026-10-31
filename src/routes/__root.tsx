@@ -120,6 +120,11 @@ const themeScript = `
       root.classList.add('dark');
       root.classList.remove('light');
     }
+
+    var path = window.location.pathname;
+    if (path === '/' || path === '' || path.startsWith('/component-ui/')) {
+      root.classList.add('no-scrollbar');
+    }
   } catch (error) {}
 })();
 `
