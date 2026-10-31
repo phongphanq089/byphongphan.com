@@ -28,7 +28,8 @@ export const COMPONENT_CATEGORIES = [
   {
     id: "interactive",
     label: "Interactive",
-    description: "Physics-based containers, flip clocks, and isometric marks.",
+    description:
+      "Physics-based containers, time scrubbers, and isometric marks.",
   },
   {
     id: "data-display",

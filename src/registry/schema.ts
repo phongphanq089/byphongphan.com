@@ -6,6 +6,7 @@ export type ComponentSchematicType =
   | "unboxing-bucket"
   | "code-block"
   | "flip-clock"
+  | "time-scrubber"
   | "map"
   | "text-hover-effect"
   | "background-gradient-cursor"

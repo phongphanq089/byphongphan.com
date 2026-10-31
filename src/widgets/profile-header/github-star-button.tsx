@@ -56,16 +56,16 @@ export function GitHubStarButton({
           />
 
           {isLoading ? (
-            <span className="inline-block h-3.5 w-5 animate-pulse rounded-xs bg-muted-foreground/30" />
+            <span className="hidden h-3.5 w-5 animate-pulse rounded-xs bg-muted-foreground/30" />
           ) : (
-            <span className="font-medium tracking-tight tabular-nums">
+            <span className="hidden font-medium tracking-tight tabular-nums">
               {formattedStars ?? "0"}
             </span>
           )}
         </a>
       </TooltipTrigger>
       <TooltipContent side="bottom" sideOffset={6}>
-        {tooltipLabel}
+        GIBHUB
       </TooltipContent>
     </Tooltip>
   )

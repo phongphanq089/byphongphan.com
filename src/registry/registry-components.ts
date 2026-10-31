@@ -14,6 +14,7 @@ import {
   ScrollAreaSchematic,
   SpotlightCardSchematic,
   TextHoverEffectSchematic,
+  TimeScrubberSchematic,
   UnboxingBucketSchematic,
 } from "./schematics"
 
@@ -138,22 +139,22 @@ export const REGISTRY_COMPONENTS: RegistryItem[] = [
     ],
   },
   {
-    name: "flip-clock",
-    title: "Flip Clock",
+    name: "time-scrubber",
+    title: "Time Scrubber",
     description:
-      "Mechanical 2D split-flap counter and clock with real-time, timer, stopwatch, and date-time display modes.",
+      "Tactile physics-based time dial with spring momentum, fling kinematics, rolling blur digits, and sub-pixel tick rendering.",
     type: "registry:component",
     category: "interactive",
-    schematic: FlipClockSchematic,
-    schematicType: "flip-clock",
+    schematic: TimeScrubberSchematic,
+    schematicType: "time-scrubber",
     isNew: true,
-    dependencies: ["motion", "@rexa-developer/tiks"],
+    dependencies: [],
     registryDependencies: [],
     files: [
       {
-        path: "animated/flip-clock.tsx",
+        path: "animated/time-scrubber.tsx",
         type: "registry:component",
-        target: "components/flip-clock.tsx",
+        target: "components/time-scrubber.tsx",
       },
     ],
   },

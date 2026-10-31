@@ -128,23 +128,20 @@
       ]
     },
     {
-      "name": "flip-clock",
+      "name": "time-scrubber",
       "type": "registry:component",
-      "title": "Flip Clock",
-      "description": "Mechanical 2D split-flap counter and clock with real-time, timer, stopwatch, and date-time display modes.",
+      "title": "Time Scrubber",
+      "description": "Tactile physics-based time dial with spring momentum, fling kinematics, rolling blur digits, and sub-pixel tick rendering.",
       "category": "interactive",
       "author": "Phong Phan <phongphanq089@gmail.com>",
-      "dependencies": [
-        "motion",
-        "@rexa-developer/tiks"
-      ],
+      "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [],
       "files": [
         {
-          "path": "src/registry/animated/flip-clock.tsx",
+          "path": "src/registry/animated/time-scrubber.tsx",
           "type": "registry:component",
-          "target": "components/flip-clock.tsx"
+          "target": "components/time-scrubber.tsx"
         }
       ]
     },
