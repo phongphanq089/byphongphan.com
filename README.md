@@ -87,7 +87,7 @@ You can install any component from this portfolio directly into your own project
 # Add using the direct manifest URL
 pnpm dlx shadcn@latest add https://byphongphan.com/r/line-nav.json
 pnpm dlx shadcn@latest add https://byphongphan.com/r/middle-truncation.json
-pnpm dlx shadcn@latest add https://byphongphan.com/r/flip-clock.json
+pnpm dlx shadcn@latest add https://byphongphan.com/r/time-scrubber.json
 ```
 
 Or configure the custom registry in your `components.json`:

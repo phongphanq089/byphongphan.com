@@ -114,7 +114,7 @@ const CodeBlockActionsContext = createContext<{
   ) => void
 } | null>(null)
 
-/* Next still server-renders "use client" files, and a bare useLayoutEffect
+/* Next still server-renders  files, and a bare useLayoutEffect
    logs on every SSR pass. Same alias the event calendar ships. */
 const useIsoLayoutEffect =
   typeof window !== "undefined" ? useLayoutEffect : useEffect

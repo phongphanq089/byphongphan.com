@@ -5,7 +5,7 @@ import { GridContainer } from "@/app/layouts"
 import { siteConfig, TELEMETRY_CONFIG } from "@/shared/config"
 import { ExternalLink } from "@/shared/ui"
 import { PhongPhanIsometric } from "@/shared/ui/animation"
-import { FlipClock } from "@/shared/ui/core/flip-clock"
+import { TimeScrubber } from "@/shared/ui/core/time-scrubber"
 
 import { footerNavigation, footerSocials } from "./setting-footer"
 
@@ -61,20 +61,28 @@ function SocialIcon({ name }: { name: string }) {
 export default function Footer() {
   return (
     <footer className="w-full bg-background text-foreground select-none">
-      {/* Flip Clock */}
+      {/* Time Scrubber (Full Width Precision Dial) */}
       <GridContainer
-        showCrosshairs={false}
-        className="flex items-center justify-center px-4 py-8 sm:py-12 md:px-8"
+        borderBottom
+        showCrosshairs
+        className="flex w-full flex-col items-center justify-center p-4 lg:p-8"
       >
-        <FlipClock
-          mode="clock"
-          variant="default"
-          size="full"
-          timeZone="Asia/Ho_Chi_Minh"
-          showLabels={true}
-          format12h={true}
-          showSeconds={true}
-        />
+        <div className="flex w-full flex-col items-center gap-4">
+          <TimeScrubber
+            timeZone="Asia/Ho_Chi_Minh"
+            format="12h"
+            showSeconds={true}
+            fullWidth={true}
+            live={true}
+            tickMode="smooth"
+            step={5}
+            momentum={50}
+            sound={false}
+            showReset={true}
+            variant="default"
+            className="w-full"
+          />
+        </div>
       </GridContainer>
 
       {/* 01 SITEMAP | 02 SYSTEM & AGENTS (2 Columns, 6 Aligned Rows) */}

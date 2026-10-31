@@ -5,7 +5,6 @@ import { BackgroundGradientCursorSchematic } from "./background-gradient-cursor-
 import { BorderGlowSchematic } from "./border-glow-schematic"
 import { CardSchematic } from "./card-schematic"
 import { CodeBlockSchematic } from "./code-block-schematic"
-import { FlipClockSchematic } from "./flip-clock-schematic"
 import { LineNavSchematic } from "./line-nav-schematic"
 import { MapSchematic } from "./map-schematic"
 import { MiddleTruncationSchematic } from "./middle-truncation-schematic"
@@ -16,13 +15,16 @@ import { DrawerSchematic } from "./drawer-schematic"
 import { SelectSchematic } from "./select-schematic"
 import { SpotlightCardSchematic } from "./spotlight-card-schematic"
 import { TextHoverEffectSchematic } from "./text-hover-effect-schematic"
+import { TimeScrubberSchematic } from "./time-scrubber-schematic"
+import { RailScrollScrubberSchematic } from "./rail-scroll-scrubber-schematic"
 import { UnboxingBucketSchematic } from "./unboxing-bucket-schematic"
 
 export * from "./background-gradient-cursor-schematic"
 export * from "./border-glow-schematic"
 export * from "./card-schematic"
 export * from "./code-block-schematic"
-export * from "./flip-clock-schematic"
+export * from "./time-scrubber-schematic"
+export { TimeScrubberSchematic as FlipClockSchematic } from "./time-scrubber-schematic"
 export * from "./line-nav-schematic"
 export * from "./map-schematic"
 export * from "./middle-truncation-schematic"
@@ -33,6 +35,8 @@ export * from "./drawer-schematic"
 export * from "./select-schematic"
 export * from "./spotlight-card-schematic"
 export * from "./text-hover-effect-schematic"
+export * from "./time-scrubber-schematic"
+export * from "./rail-scroll-scrubber-schematic"
 export * from "./unboxing-bucket-schematic"
 
 export function DefaultComponentSchematic() {
@@ -49,7 +53,9 @@ export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
   card: CardSchematic,
   "unboxing-bucket": UnboxingBucketSchematic,
   "code-block": CodeBlockSchematic,
-  "flip-clock": FlipClockSchematic,
+  "flip-clock": TimeScrubberSchematic,
+  "time-scrubber": TimeScrubberSchematic,
+  "rail-scroll-scrubber": RailScrollScrubberSchematic,
   map: MapSchematic,
   "text-hover-effect": TextHoverEffectSchematic,
   "background-gradient-cursor": BackgroundGradientCursorSchematic,

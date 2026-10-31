@@ -82,7 +82,7 @@ src/
 ├── entities/          # Domain entities and business logic representations
 ├── features/          # High-cohesion domain features (home, blocks, component-ui, colophon)
 ├── registry/          # Custom shadcn component source files, schematics, and variants
-│   ├── animated/      # Motion & physics-driven components (line-nav, flip-clock, etc.)
+│   ├── animated/      # Motion & physics-driven components (line-nav, time-scrubber, etc.)
 │   ├── block/         # Full-section modular blocks
 │   ├── demos/         # Interactive preview sandboxes
 │   ├── hooks/         # Custom registry React hooks

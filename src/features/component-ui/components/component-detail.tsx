@@ -12,9 +12,11 @@ import { useMemo } from "react"
 
 import { GridContainer } from "@/app/layouts"
 import { CopyButton } from "@/registry/animated/button/copy-button"
+import { RailScrollScrubber } from "@/registry/animated/rail-scroll-scrubber"
 import { REGISTRY_DEMOS } from "@/registry/demos"
 import { siteConfig } from "@/shared/config"
 import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
+import { useTocRailSections } from "@/shared/hooks/use-toc-rail-sections"
 import { extractTocFromMarkdown } from "@/shared/lib"
 import {
   Badge,
@@ -25,7 +27,6 @@ import {
   TooltipTrigger,
 } from "@/shared/ui/core"
 import { CodeBlockCommand } from "@/shared/ui/core/code-block"
-import { TOCMinimap } from "@/shared/ui/system/toc-minimap"
 
 import { COMPONENTS_DATA } from "../components-data"
 import type { ComponentItem } from "../types"
@@ -157,6 +158,8 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
     [rawMdxContent]
   )
 
+  const railSections = useTocRailSections(tocItems)
+
   const title = mdxData?.frontmatter?.title ?? component.name
   const description = mdxData?.frontmatter?.description ?? component.description
   const links = mdxData?.frontmatter?.links
@@ -169,10 +172,12 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
         currentTitle={title}
       />
 
-      {tocItems.length > 0 && (
-        <div className="fixed top-1/2 right-0 z-40 hidden -translate-y-1/2 lg:block">
-          <TOCMinimap items={tocItems} />
-        </div>
+      {railSections.length > 0 && (
+        <RailScrollScrubber
+          sections={railSections}
+          accentColor="var(--primary)"
+          showDesktopSectionMenu
+        />
       )}
 
       <GridContainer

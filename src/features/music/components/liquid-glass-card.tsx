@@ -1,5 +1,3 @@
-"use client"
-
 /**
  * @author: @dorianbaffier
  * @description: Now Playing - music card with a spinning, scrubbable disc

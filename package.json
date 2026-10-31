@@ -27,7 +27,7 @@
     "typescript"
   ],
   "scripts": {
-    "dev": "vite dev --port 5731",
+    "dev": "vite dev --port 5731 --host",
     "build": "pnpm build:registry && pnpm type-check && vite build",
     "preview": "vite preview --port 5731",
     "test": "vitest run --passWithNoTests",
