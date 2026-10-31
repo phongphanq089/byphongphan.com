@@ -17,7 +17,8 @@ export const COMPONENT_CATEGORIES = [
   {
     id: "navigation",
     label: "Navigation",
-    description: "Animated navigation lines, spring indicators, and menus.",
+    description:
+      "Animated navigation lines, rail scrubbers, and spring indicators.",
   },
   {
     id: "text",

@@ -10,6 +10,16 @@
     "registryDependencies": []
   },
   {
+    "name": "rail-scroll-scrubber",
+    "type": "registry:component",
+    "title": "Rail Scroll Scrubber",
+    "description": "Kinetic scrollbar and precision section scrubber featuring a 5-stage continuous rail path, split-character peeling, and zoom overview lens.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
+  },
+  {
     "name": "middle-truncation",
     "type": "registry:ui",
     "title": "Middle Truncation",
@@ -220,6 +230,20 @@
     "description": "Interactive ambient koi pond background surface featuring fluid dynamics, water caustics, multi-joint fish flocking, and mouse-feeding mechanics.",
     "dependencies": [],
     "registryDependencies": []
+  },
+  {
+    "name": "artcraft-scroll-01",
+    "type": "registry:block",
+    "title": "Artcraft Scroll 01",
+    "description": "Interactive 5-stage kinetic rail scroll scrubber landing page with synchronized skeleton sections, physics inspector, and overview zoom lens.",
+    "dependencies": [
+      "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "button",
+      "skeleton"
+    ]
   },
   {
     "name": "use-media-query",

@@ -1,5 +1,6 @@
 import type { RegistryItem } from "./schema"
 import {
+  ArtcraftScroll01Schematic,
   KoiBackgroundSchematic,
   Login01Schematic,
   NotFound01Schematic,
@@ -210,6 +211,31 @@ export const REGISTRY_BLOCKS: RegistryItem[] = [
         path: "block/koi-background/components/world.ts",
         type: "registry:block",
         target: "components/world.ts",
+      },
+    ],
+  },
+  {
+    name: "artcraft-scroll-01",
+    title: "Artcraft Scroll 01",
+    description:
+      "Interactive 5-stage kinetic rail scroll scrubber landing page with synchronized skeleton sections, physics inspector, and overview zoom lens.",
+    type: "registry:block",
+    category: "marketing",
+    schematic: ArtcraftScroll01Schematic,
+    schematicType: "artcraft-scroll-01",
+    isNew: true,
+    dependencies: ["motion", "lucide-react"],
+    registryDependencies: ["button", "skeleton"],
+    files: [
+      {
+        path: "block/artcraft-scroll-01/page.tsx",
+        type: "registry:block",
+        target: "app/marketing/artcraft-scroll/page.tsx",
+      },
+      {
+        path: "animated/rail-scroll-scrubber.tsx",
+        type: "registry:component",
+        target: "components/rail-scroll-scrubber.tsx",
       },
     ],
   },

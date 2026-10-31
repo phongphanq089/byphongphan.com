@@ -30,6 +30,10 @@
     {
       "category": "marketing",
       "slug": "koi-background"
+    },
+    {
+      "category": "marketing",
+      "slug": "artcraft-scroll-01"
     }
   ],
   "componentCategories": [
@@ -44,6 +48,10 @@
     {
       "category": "navigation",
       "slug": "line-nav"
+    },
+    {
+      "category": "navigation",
+      "slug": "rail-scroll-scrubber"
     },
     {
       "category": "text",

@@ -53,6 +53,11 @@ export const ScrollAreaDemo = lazyWithRetry(() =>
     default: m.ScrollAreaDemo,
   }))
 )
+export const RailScrollScrubberDemo = lazyWithRetry(() =>
+  import("./rail-scroll-scrubber-demo").then((m) => ({
+    default: m.RailScrollScrubberDemo,
+  }))
+)
 export const SpotlightCardDemo = lazyWithRetry(() =>
   import("./spotlight-card-demo").then((m) => ({
     default: m.SpotlightCardDemo,
@@ -77,6 +82,8 @@ export const REGISTRY_DEMOS: Record<string, ComponentType> = {
   "flip-clock": TimeScrubberDemo,
   "time-scrubber": TimeScrubberDemo,
   "time-scrubber-demo": TimeScrubberDemo,
+  "rail-scroll-scrubber": RailScrollScrubberDemo,
+  "rail-scroll-scrubber-demo": RailScrollScrubberDemo,
   map: MapDemo,
   "text-hover-effect": TextHoverEffectDemo,
   "background-gradient-cursor": BackgroundGradientCursorDemo,

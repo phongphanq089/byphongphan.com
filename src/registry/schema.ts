@@ -18,6 +18,7 @@ export type ComponentSchematicType =
   | "border-glow"
   | "scroll-area"
   | "drawer"
+  | "rail-scroll-scrubber"
 
 export type BlockSchematicType =
   | "not-found-01"
@@ -26,6 +27,7 @@ export type BlockSchematicType =
   | "login-01"
   | "stats-cards-01"
   | "koi-background"
+  | "artcraft-scroll-01"
 
 export type SchematicType = ComponentSchematicType | BlockSchematicType
 

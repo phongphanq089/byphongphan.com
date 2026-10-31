@@ -57,11 +57,12 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## UI Components & Primitives (15)
+## UI Components & Primitives (16)
 
 | Component | Category | Description | Direct Install |
 | :--- | :--- | :--- | :--- |
 | [Line Nav](https://byphongphan.com/component-ui/navigation/line-nav) | `navigation` | Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants. | `pnpm dlx shadcn add https://byphongphan.com/r/line-nav.json` |
+| [Rail Scroll Scrubber](https://byphongphan.com/component-ui/navigation/rail-scroll-scrubber) | `navigation` | Kinetic scrollbar and precision section scrubber featuring a 5-stage continuous rail path, split-character peeling, and zoom overview lens. | `pnpm dlx shadcn add https://byphongphan.com/r/rail-scroll-scrubber.json` |
 | [Middle Truncation](https://byphongphan.com/component-ui/text/middle-truncation) | `text` | Canvas-measured binary search text truncation preserving the start and end of strings with responsive resize sync. | `pnpm dlx shadcn add https://byphongphan.com/r/middle-truncation.json` |
 | [Card](https://byphongphan.com/component-ui/card/card) | `card` | Displays a card with header, content, and footer. | `pnpm dlx shadcn add https://byphongphan.com/r/card.json` |
 | [Scroll Area](https://byphongphan.com/component-ui/data-display/scroll-area) | `data-display` | Augments native scroll functionality with auto, hover, and always visibility modes, custom variants, scrollbar gutter reserve, keyboard navigation, and high-contrast styling. | `pnpm dlx shadcn add https://byphongphan.com/r/scroll-area.json` |
@@ -79,7 +80,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## Interactive Blocks (6)
+## Interactive Blocks (7)
 
 | Block | Category | Description | Live Preview | Direct Install |
 | :--- | :--- | :--- | :--- | :--- |
@@ -89,6 +90,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [Login 01](https://byphongphan.com/blocks/auth/login-01) | `auth` | Split-screen modern authentication screen with photography hero, tracked typography, and full dark mode support. | [Preview](https://byphongphan.com/blocks-preview/login-01) | `pnpm dlx shadcn add https://byphongphan.com/r/login-01.json` |
 | [Stats Cards 01](https://byphongphan.com/blocks/marketing/stats-cards-01) | `marketing` | Overlapping interactive marketing stats cards with spring physics hover, metrics showcase, and dark mode support. | [Preview](https://byphongphan.com/blocks-preview/stats-cards-01) | `pnpm dlx shadcn add https://byphongphan.com/r/stats-cards-01.json` |
 | [Koi Background](https://byphongphan.com/blocks/marketing/koi-background) | `marketing` | Interactive ambient koi pond background surface featuring fluid dynamics, water caustics, multi-joint fish flocking, and mouse-feeding mechanics. | [Preview](https://byphongphan.com/blocks-preview/koi-background) | `pnpm dlx shadcn add https://byphongphan.com/r/koi-background.json` |
+| [Artcraft Scroll 01](https://byphongphan.com/blocks/marketing/artcraft-scroll-01) | `marketing` | Interactive 5-stage kinetic rail scroll scrubber landing page with synchronized skeleton sections, physics inspector, and overview zoom lens. | [Preview](https://byphongphan.com/blocks-preview/artcraft-scroll-01) | `pnpm dlx shadcn add https://byphongphan.com/r/artcraft-scroll-01.json` |
 
 
 ---

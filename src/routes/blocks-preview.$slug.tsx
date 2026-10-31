@@ -38,6 +38,9 @@ const BLOCK_COMPONENTS: Record<
   "stats-cards-01": lazyWithRetry(
     () => import("@/registry/block/stats-cards-01/page")
   ),
+  "artcraft-scroll-01": lazyWithRetry(
+    () => import("@/registry/block/artcraft-scroll-01/page")
+  ),
 }
 
 export const Route = createFileRoute("/blocks-preview/$slug")({
