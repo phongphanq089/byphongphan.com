@@ -1,5 +1,3 @@
-"use client"
-
 import { KoiPond } from "./components/koi-pond"
 
 export default function KoiBackgroundPage() {

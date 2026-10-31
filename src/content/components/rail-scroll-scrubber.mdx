@@ -1,0 +1,161 @@
+---
+title: Rail Scroll Scrubber
+description: Kinetic scrollbar and precision section scrubber featuring a 5-stage continuous rail path, split-character peeling, and zoom overview lens.
+component: true
+badge: "motion"
+---
+
+<ComponentPreview name="rail-scroll-scrubber-demo" />
+
+## Live Interactive Stage
+
+The **Rail Scroll Scrubber** is an ultra-precision kinetic scroll indicator and section scrubber inspired by cutting-edge creative engine viewports. As the page scrolls, individual characters of section titles fly along a continuous 5-stage rail track: peeling off a bottom waiting stack, navigating smooth quarter-circle arcs, riding flush against vertical ruler ticks, and arriving into an expanded top active header.
+
+### Engineering Highlights
+
+- **5-Stage Continuous Rail Solver**: An analytical track geometry solver evaluates exact character positions, scale, 2D rotation, and color tint across 5 physical stages at 120fps.
+- **Split-Character Peeling**: Each letter in every section title travels independently with train-car offsets, so words like `OWNERSHIP` align vertically (`-90°`) against ruler ticks or turn corners letter-by-letter.
+- **Dual-State Overview Zoom Lens**: Renders an expanded focal view by default, but smoothly interpolates into a complete `0–100%` viewport overview with translucent lens highlighting when hovered or scrubbed.
+- **Sub-Pixel Ruler Navigation**: 0–100 calibrated ticks with glowing laser progress bar and padded monospace percentage readout (e.g. `047%`, `068%`).
+- **Interactive Drag & Snap**: Click and drag anywhere along the ruler rail to jump to sections or smoothly glide across the page.
+
+---
+
+## Installation
+
+<CodeTabs defaultValue="manual">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="rail-scroll-scrubber" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install dependencies:</Step>
+      <CodeBlockCommand command="npm install motion" />
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="rail-scroll-scrubber" title="components/rail-scroll-scrubber.tsx" />
+      <Step>Update import paths to match your project structure.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Usage
+
+### 1. Basic Window Scroll Integration
+
+Mount the scrubber to replace or augment the native scrollbar on the main window:
+
+```tsx
+import {
+  RailScrollScrubber,
+  DEFAULT_RAIL_SECTIONS,
+} from "@/components/rail-scroll-scrubber"
+
+export function Page() {
+  return (
+    <div>
+      {/* Page Content */}
+      <main className="pr-[240px]">{/* Your sections here */}</main>
+
+      {/* Fixed Kinetic Rail Scrubber */}
+      <RailScrollScrubber sections={DEFAULT_RAIL_SECTIONS} />
+    </div>
+  )
+}
+```
+
+### 2. Custom Scroll Container & Sections
+
+Connect to a dedicated scrollable container using Framer Motion's `useScroll`:
+
+```tsx
+import { useRef } from "react"
+import { useScroll } from "motion/react"
+import {
+  RailScrollScrubber,
+  type RailSection,
+} from "@/components/rail-scroll-scrubber"
+
+const MY_SECTIONS: RailSection[] = [
+  {
+    id: "hero",
+    title: "OVERVIEW",
+    start: 0.0,
+    end: 0.3,
+    anchor: 0.05,
+    flightRange: [-0.15, -0.02],
+    subtitle: "NEXT-GEN CREATIVE ENGINE",
+  },
+  {
+    id: "features",
+    title: "FEATURES",
+    start: 0.3,
+    end: 0.7,
+    anchor: 0.25,
+    flightRange: [0.12, 0.38],
+    subtitle: "PROCEDURAL PIPELINE",
+  },
+  {
+    id: "deploy",
+    title: "DEPLOY",
+    start: 0.7,
+    end: 1.0,
+    anchor: 0.75,
+    flightRange: [0.65, 0.85],
+    subtitle: "PRODUCTION READY",
+  },
+]
+
+export function CustomContainerScrubber() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ container: containerRef })
+
+  const handleScrub = (targetProgress: number) => {
+    const el = containerRef.current
+    if (!el) return
+    const maxScroll = el.scrollHeight - el.clientHeight
+    el.scrollTop = targetProgress * maxScroll
+  }
+
+  return (
+    <div className="relative h-screen w-full overflow-hidden">
+      <div
+        ref={containerRef}
+        className="h-full w-full overflow-y-auto pr-[240px]"
+      >
+        {/* Sections */}
+      </div>
+
+      <RailScrollScrubber
+        sections={MY_SECTIONS}
+        scrollProgressMV={scrollYProgress}
+        onScrubToProgress={handleScrub}
+        zoomScale={3.6}
+        curveIntensity={1.0}
+      />
+    </div>
+  )
+}
+```
+
+---
+
+## Props
+
+| Prop                | Type                         | Default                                       | Description                                                              |
+| :------------------ | :--------------------------- | :-------------------------------------------- | :----------------------------------------------------------------------- |
+| `sections`          | `RailSection[]`              | `DEFAULT_RAIL_SECTIONS`                       | Array of section descriptors with title, coordinates, and flight ranges. |
+| `scrollProgressMV`  | `MotionValue<number>`        | `window scroll`                               | Optional custom scroll progress MotionValue (0..1).                      |
+| `onScrubToProgress` | `(progress: number) => void` | `window.scrollTo`                             | Callback when dragging the ruler to scrub to a percentage.               |
+| `springConfig`      | `SpringConfig`               | `{ stiffness: 140, damping: 26, mass: 0.45 }` | Spring physics parameters for scroll smoothing.                          |
+| `zoomScale`         | `number`                     | `3.6`                                         | Magnification factor for zoomed ruler ticks.                             |
+| `curveIntensity`    | `number`                     | `1.0`                                         | Radius multiplier for top and bottom transition curves.                  |
+| `accentColor`       | `string`                     | `"var(--primary)"`                            | Color of the progress laser line and glow effects.                       |
+| `className`         | `string`                     | `undefined`                                   | Additional CSS class names.                                              |

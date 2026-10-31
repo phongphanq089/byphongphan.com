@@ -1,5 +1,3 @@
-"use client"
-
 import { motion, useAnimationControls } from "motion/react"
 import React, {
   useCallback,

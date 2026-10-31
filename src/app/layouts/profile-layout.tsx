@@ -1,13 +1,11 @@
 import { Outlet, useRouterState } from "@tanstack/react-router"
-import { useEffect, useState } from "react"
 
+import { RailScrollScrubber } from "@/registry/animated/rail-scroll-scrubber"
 import { HOME_TOC_ITEMS } from "@/shared/config"
 import { useScrollToTop } from "@/shared/hooks/use-scroll-to-top"
-import { cn } from "@/shared/lib/utils"
+import { useTocRailSections } from "@/shared/hooks/use-toc-rail-sections"
 import { EdgeBlur } from "@/shared/ui/system/edge-blur"
-import NumbersSimulation from "@/shared/ui/system/numbers-simulation"
 import ProgressWhileScroll from "@/shared/ui/system/progress-while-scroll"
-import { TOCMinimap } from "@/shared/ui/system/toc-minimap"
 import { Footer } from "@/widgets/profile-footer"
 import { Header } from "@/widgets/profile-header"
 import BottomMenu from "@/widgets/profile-header/bottom-menu"
@@ -23,46 +21,29 @@ export function ProfileLayout({ children }: { children?: React.ReactNode }) {
   // caused by scroll restoration or smooth-scroll behavior.
   useScrollToTop()
 
-  const [showMinimap, setShowMinimap] = useState(false)
   const currentPath = useRouterState({ select: (s) => s.location.pathname })
-  const isHome = currentPath === "/" || currentPath === ""
+  const isHome =
+    currentPath === "/" ||
+    currentPath === "" ||
+    currentPath.replace(/\/+$/, "") === ""
   const isBlocks =
     currentPath === "/blocks" ||
     currentPath.startsWith("/blocks/") ||
     currentPath === "/block" ||
     currentPath.startsWith("/block/")
-  const isMinimapVisible = isHome && showMinimap
   const layoutMaxWidth: GridContainerMaxWidth = isBlocks ? "wide" : "default"
 
-  useEffect(() => {
-    if (!isHome) return
-
-    const handleScroll = () => {
-      setShowMinimap(window.scrollY > 300)
-    }
-    window.addEventListener("scroll", handleScroll)
-    handleScroll()
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [isHome])
+  const homeRailSections = useTocRailSections(HOME_TOC_ITEMS)
 
   return (
     <GridLayoutContext.Provider value={{ maxWidth: layoutMaxWidth }}>
       <div className="relative flex min-h-screen w-full overflow-x-clip bg-background text-foreground selection:bg-primary/20">
         {isHome && (
-          <div
-            className={cn(
-              "fixed top-1/2 right-0 z-50 -translate-y-1/2 transition-all duration-500",
-              isMinimapVisible
-                ? "translate-x-0 opacity-100"
-                : "pointer-events-none translate-x-10 opacity-0"
-            )}
-          >
-            <TOCMinimap items={HOME_TOC_ITEMS} />
-          </div>
+          <RailScrollScrubber
+            sections={homeRailSections}
+            accentColor="var(--primary)"
+          />
         )}
-        <div className="pointer-events-none relative z-1 hidden w-12 shrink-0 border-r border-border md:block">
-          <NumbersSimulation />
-        </div>
 
         <div className="flex min-w-0 flex-1 flex-col">
           <div className="sticky top-0 z-50 w-full">

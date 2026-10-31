@@ -19,7 +19,10 @@ export const CodeBlockDemo = lazyWithRetry(() =>
   import("./code-block-demo").then((m) => ({ default: m.CodeBlockDemo }))
 )
 export const FlipClockDemo = lazyWithRetry(() =>
-  import("./flip-clock-demo").then((m) => ({ default: m.FlipClockDemo }))
+  import("./time-scrubber-demo").then((m) => ({ default: m.TimeScrubberDemo }))
+)
+export const TimeScrubberDemo = lazyWithRetry(() =>
+  import("./time-scrubber-demo").then((m) => ({ default: m.TimeScrubberDemo }))
 )
 export const LineNavDemo = lazyWithRetry(() =>
   import("./line-nav-demo").then((m) => ({ default: m.LineNavDemo }))
@@ -50,6 +53,11 @@ export const ScrollAreaDemo = lazyWithRetry(() =>
     default: m.ScrollAreaDemo,
   }))
 )
+export const RailScrollScrubberDemo = lazyWithRetry(() =>
+  import("./rail-scroll-scrubber-demo").then((m) => ({
+    default: m.RailScrollScrubberDemo,
+  }))
+)
 export const SpotlightCardDemo = lazyWithRetry(() =>
   import("./spotlight-card-demo").then((m) => ({
     default: m.SpotlightCardDemo,
@@ -71,7 +79,11 @@ export const REGISTRY_DEMOS: Record<string, ComponentType> = {
   card: CardDemo,
   "code-block": CodeBlockDemo,
   "unboxing-bucket": UnboxingBucketDemo,
-  "flip-clock": FlipClockDemo,
+  "flip-clock": TimeScrubberDemo,
+  "time-scrubber": TimeScrubberDemo,
+  "time-scrubber-demo": TimeScrubberDemo,
+  "rail-scroll-scrubber": RailScrollScrubberDemo,
+  "rail-scroll-scrubber-demo": RailScrollScrubberDemo,
   map: MapDemo,
   "text-hover-effect": TextHoverEffectDemo,
   "background-gradient-cursor": BackgroundGradientCursorDemo,

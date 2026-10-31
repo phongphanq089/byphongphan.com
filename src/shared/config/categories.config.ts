@@ -17,7 +17,8 @@ export const COMPONENT_CATEGORIES = [
   {
     id: "navigation",
     label: "Navigation",
-    description: "Animated navigation lines, spring indicators, and menus.",
+    description:
+      "Animated navigation lines, rail scrubbers, and spring indicators.",
   },
   {
     id: "text",
@@ -28,7 +29,8 @@ export const COMPONENT_CATEGORIES = [
   {
     id: "interactive",
     label: "Interactive",
-    description: "Physics-based containers, flip clocks, and isometric marks.",
+    description:
+      "Physics-based containers, time scrubbers, and isometric marks.",
   },
   {
     id: "data-display",

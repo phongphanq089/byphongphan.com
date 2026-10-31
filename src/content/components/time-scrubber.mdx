@@ -1,0 +1,134 @@
+---
+title: Time Scrubber
+description: Tactile physics-based time dial with spring momentum, fling kinematics, rolling blur digits, sub-pixel tick rendering, and live second-advancing ruler.
+component: true
+badge: "physics"
+---
+
+<ComponentPreview name="time-scrubber-demo" />
+
+## Live Interactive Stage
+
+The **Time Scrubber** is a tactile physical time dial designed for precision time exploration. Dragging the ruler moves time under a fixed center mark; flinging it coasts with realistic finger momentum and settles onto the nearest step via a calibrated spring simulation.
+
+### Engineering Highlights
+
+- **Live Second-Advancing Ruler**: When seconds mode is enabled, the entire dial moves in real-time with sub-second continuous 60fps sweeping or synchronized physical 1-second ticks.
+- **Rolling Digits with Motion Blur**: Digit cells fade through top and bottom vertical gradient masks, smearing dynamically with directional CSS blur keyframes on every step change.
+- **Unified Throw and Snap Spring**: On pointer release, the final landing target is calculated immediately based on velocity and momentum carry. A single critically damped spring brings the ruler to rest with zero seam between gliding and snapping.
+- **Full-Width Responsive Instrument**: Scales from a compact 340px control card to an expansive edge-to-edge timeline console.
+- **Micro-haptic Audio Feedback**: Synthesizes tactile clicks using Web Audio API as step intervals and hours pass under the needle without external audio assets.
+- **Horizontal Wheel & Trackpad Swiping**: Native horizontal scroll gestures interact directly with the ruler dial.
+
+---
+
+## Installation
+
+<CodeTabs defaultValue="manual">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="time-scrubber" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="time-scrubber" title="components/time-scrubber.tsx" />
+      <Step>Update the import paths to match your project structure.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Usage
+
+### 1. Full-Width Live Clock with Seconds
+
+Expands edge-to-edge with continuous 60fps moving ruler ticks and rolling seconds.
+
+```tsx
+import { TimeScrubber } from "@/components/time-scrubber"
+
+export function LiveFullDial() {
+  return (
+    <TimeScrubber
+      timeZone="Asia/Ho_Chi_Minh"
+      format="12h"
+      showSeconds={true}
+      fullWidth={true}
+      live={true}
+      tickMode="smooth"
+      showReset={true}
+      sound={false}
+      step={5}
+    />
+  )
+}
+```
+
+### 2. Basic Interactive Minute Scrubber
+
+Default 15-minute snapping step with fling momentum.
+
+```tsx
+import { TimeScrubber } from "@/components/time-scrubber"
+
+export function MinuteScrubber() {
+  return (
+    <TimeScrubber
+      step={15}
+      momentum={50}
+      format="12h"
+      onChange={(mins, info) => console.log(info.time, info.mer)}
+    />
+  )
+}
+```
+
+### 3. High-Precision 24-Hour Scrubber
+
+Fine-grained 1-second steps with 24-hour format.
+
+```tsx
+import { TimeScrubber } from "@/components/time-scrubber"
+
+export function PrecisionScrubber() {
+  return (
+    <TimeScrubber
+      format="24h"
+      showSeconds={true}
+      step={1}
+      momentum={40}
+      start={14 * 3600} // 14:00:00
+    />
+  )
+}
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `showSeconds` | `boolean` | `false` | Displays seconds readout and activates second-precision dial ruler. |
+| `fullWidth` | `boolean` | `false` | Stretches edge-to-edge across the parent container. |
+| `tickMode` | `"smooth" \| "step"` | `"smooth"` | `"smooth"` for 60fps continuous sweep, or `"step"` for physical 1s hops. |
+| `step` | `number \| string` | `5` / `15` | Snap increment (seconds if `showSeconds`, else minutes). |
+| `momentum` | `number` | `50` | Fling throw coast factor from `0` to `100`. |
+| `format` | `"12h" \| "24h"` | `"12h"` | Display time format (`12h` or `24h`). |
+| `corner` | `number` | `20` | Border radius in pixels. |
+| `start` | `number \| "now"` | `undefined` | Initial time offset. Defaults to current local/timezone time. |
+| `value` | `number` | `undefined` | Controlled value. |
+| `live` | `boolean` | `false` | Automatically advances with real time when untouched. |
+| `timeZone` | `string` | `undefined` | IANA timezone string (e.g. `"Asia/Ho_Chi_Minh"`, `"America/New_York"`). |
+| `sound` | `boolean` | `true` | Synthesizes subtle mechanical click audio on tick crossing. |
+| `showReset` | `boolean` | `false` | Displays a "Now" button when scrubbed away from current time. |
+| `showHours` | `boolean` | `true` | Shows hour / minute labels under the ruler ticks. |
+| `variant` | `"default" \| "outline" \| "card" \| "ghost"` | `"default"` | Visual style variant. |
+| `onChange` | `(value, formatted) => void` | `undefined` | Fired on time changes with value and formatted text. |

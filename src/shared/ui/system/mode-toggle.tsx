@@ -1,5 +1,3 @@
-"use client"
-
 import { play } from "cuelume"
 import * as React from "react"
 
@@ -59,7 +57,7 @@ export function ModeToggle({
             className
           )}
         >
-          {/* 
+          {/*
             GPU Hardware-accelerated CSS transforms.
             Runs on the compositor thread so it never drops frames or freezes even during heavy React re-renders.
           */}
