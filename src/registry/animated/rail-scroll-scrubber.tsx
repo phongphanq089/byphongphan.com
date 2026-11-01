@@ -63,12 +63,42 @@ export interface RailScrollScrubberProps {
   accentColor?: string
   /** Whether to hide native browser scrollbars on html and body (default: true) */
   hideNativeScrollbar?: boolean
+  /** Whether to reserve responsive layout space (padding-right) on small screens to prevent content overlap (default: true when connected to window scroll) */
+  reserveLayoutSpace?: boolean
   /** Whether to enable the Section Jump Menu on desktop when clicking the ruler rail (default: false) */
   showDesktopSectionMenu?: boolean
   /** Alias for showDesktopSectionMenu */
   enableDesktopMenu?: boolean
   /** Additional CSS class names */
   className?: string
+}
+
+export interface RailScrollScrubberSpacerProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Optional custom width */
+  width?: string
+}
+
+/**
+ * Utility spacer component that reserves the exact responsive horizontal layout
+ * gutter matching the RailScrollScrubber (22px on mobile, 56px on tablet, 0px on desktop xl).
+ */
+export function RailScrollScrubberSpacer({
+  className,
+  style,
+  ...props
+}: RailScrollScrubberSpacerProps) {
+  return (
+    <div
+      aria-hidden="true"
+      className={cn(
+        "pointer-events-none shrink-0",
+        "w-[var(--rail-scrubber-width,22px)] sm:w-[var(--rail-scrubber-width,56px)] xl:w-0",
+        className
+      )}
+      style={style}
+      {...props}
+    />
+  )
 }
 
 // ============================================================================
@@ -725,6 +755,7 @@ export function RailScrollScrubber({
   curveIntensity = 1.0,
   accentColor = "var(--primary)",
   hideNativeScrollbar = true,
+  reserveLayoutSpace,
   showDesktopSectionMenu = false,
   enableDesktopMenu = false,
   className,
@@ -774,9 +805,12 @@ export function RailScrollScrubber({
     }
   }, [isSectionMenuOpen])
 
-  // Automatically hide native browser scrollbars on html and body when scrubber is active
+  // Automatically reserve responsive layout space (padding-right) on small screens
+  // and hide native browser scrollbars on html and body when scrubber is active
   useEffect(() => {
-    if (!hideNativeScrollbar || typeof document === "undefined") return
+    if (typeof document === "undefined") return
+
+    const shouldReserve = reserveLayoutSpace ?? scrollProgressMV === undefined
 
     const styleId = "rail-scroll-hide-scrollbar"
     let styleEl = document.getElementById(styleId) as HTMLStyleElement | null
@@ -784,6 +818,41 @@ export function RailScrollScrubber({
       styleEl = document.createElement("style")
       styleEl.id = styleId
       styleEl.textContent = `
+        :root {
+          --rail-scrubber-width: 0px;
+        }
+        @media (max-width: 639px) {
+          :root.has-rail-scrubber,
+          html.has-rail-scrubber,
+          body.has-rail-scrubber {
+            --rail-scrubber-width: 22px;
+          }
+          html.has-rail-scrubber body,
+          body.has-rail-scrubber {
+            padding-right: var(--rail-scrubber-width) !important;
+          }
+        }
+        @media (min-width: 640px) and (max-width: 1279px) {
+          :root.has-rail-scrubber,
+          html.has-rail-scrubber,
+          body.has-rail-scrubber {
+            --rail-scrubber-width: 56px;
+          }
+          html.has-rail-scrubber body,
+          body.has-rail-scrubber {
+            padding-right: var(--rail-scrubber-width) !important;
+          }
+        }
+        @media (min-width: 1280px) {
+          :root.has-rail-scrubber,
+          html.has-rail-scrubber,
+          body.has-rail-scrubber {
+            --rail-scrubber-width: 0px;
+          }
+        }
+        ${
+          hideNativeScrollbar
+            ? `
         html, body {
           scrollbar-width: none !important;
           -ms-overflow-style: none !important;
@@ -796,13 +865,13 @@ export function RailScrollScrubber({
           display: none !important;
           background: transparent !important;
         }
-        ::-webkit-scrollbar-thumb {
-          display: none !important;
-          background: transparent !important;
-        }
+        ::-webkit-scrollbar-thumb,
         ::-webkit-scrollbar-track {
           display: none !important;
           background: transparent !important;
+        }
+        `
+            : ""
         }
       `
       document.head.appendChild(styleEl)
@@ -811,23 +880,41 @@ export function RailScrollScrubber({
     const htmlEl = document.documentElement
     const bodyEl = document.body
 
-    const prevHtmlClass = htmlEl.classList.contains("no-scrollbar")
-    const prevBodyClass = bodyEl.classList.contains("no-scrollbar")
+    const prevHtmlNoScroll = htmlEl.classList.contains("no-scrollbar")
+    const prevBodyNoScroll = bodyEl.classList.contains("no-scrollbar")
+    const prevHtmlHasScrubber = htmlEl.classList.contains("has-rail-scrubber")
+    const prevBodyHasScrubber = bodyEl.classList.contains("has-rail-scrubber")
 
-    htmlEl.classList.add("no-scrollbar")
-    bodyEl.classList.add("no-scrollbar")
-    htmlEl.style.scrollbarWidth = "none"
-    bodyEl.style.scrollbarWidth = "none"
+    if (shouldReserve) {
+      htmlEl.classList.add("has-rail-scrubber")
+      bodyEl.classList.add("has-rail-scrubber")
+    }
+
+    if (hideNativeScrollbar) {
+      htmlEl.classList.add("no-scrollbar")
+      bodyEl.classList.add("no-scrollbar")
+      htmlEl.style.scrollbarWidth = "none"
+      bodyEl.style.scrollbarWidth = "none"
+    }
 
     return () => {
-      const el = document.getElementById(styleId)
-      if (el) el.remove()
-      if (!prevHtmlClass) htmlEl.classList.remove("no-scrollbar")
-      if (!prevBodyClass) bodyEl.classList.remove("no-scrollbar")
-      htmlEl.style.scrollbarWidth = ""
-      bodyEl.style.scrollbarWidth = ""
+      const remaining = document.querySelectorAll("[data-rail-scrubber]")
+      if (remaining.length <= 1) {
+        const el = document.getElementById(styleId)
+        if (el) el.remove()
+        if (shouldReserve) {
+          if (!prevHtmlHasScrubber) htmlEl.classList.remove("has-rail-scrubber")
+          if (!prevBodyHasScrubber) bodyEl.classList.remove("has-rail-scrubber")
+        }
+        if (hideNativeScrollbar) {
+          if (!prevHtmlNoScroll) htmlEl.classList.remove("no-scrollbar")
+          if (!prevBodyNoScroll) bodyEl.classList.remove("no-scrollbar")
+          htmlEl.style.scrollbarWidth = ""
+          bodyEl.style.scrollbarWidth = ""
+        }
+      }
     }
-  }, [hideNativeScrollbar])
+  }, [hideNativeScrollbar, reserveLayoutSpace, scrollProgressMV])
 
   // Respect user's motion preferences
   const prefersReduced = useReducedMotion()
@@ -1141,6 +1228,7 @@ export function RailScrollScrubber({
     <>
       <div
         ref={rulerRef}
+        data-rail-scrubber="true"
         tabIndex={0}
         role="region"
         aria-label="Scroll scrubber"
@@ -1179,9 +1267,8 @@ export function RailScrollScrubber({
         onPointerCancel={handlePointerCancel}
         className={cn(
           "fixed inset-y-0 right-0 z-40 touch-none select-none focus:outline-none",
-          allowDesktopMenu
-            ? "w-[24px] sm:w-[56px] md:w-[56px]"
-            : "w-[24px] sm:w-[56px] md:w-[260px]",
+          "w-[22px] sm:w-[56px]",
+          allowDesktopMenu ? "xl:w-[56px]" : "xl:w-[260px]",
           isDragging
             ? "cursor-grabbing"
             : allowDesktopMenu ||
@@ -1196,11 +1283,11 @@ export function RailScrollScrubber({
         }}
       >
         {/* Subtle vertical guide border */}
-        <div className="pointer-events-none absolute top-0 right-0 bottom-0 w-[18px] border-l border-border/40 sm:w-[56px]" />
+        <div className="pointer-events-none absolute top-0 right-0 bottom-0 w-[22px] border-l border-border/40 sm:w-[56px]" />
 
-        {/* 1. Flying Characters along 5-Stage Rail Path (Responsive: hidden on narrow screens or when desktop menu mode is enabled) */}
+        {/* 1. Flying Characters along 5-Stage Rail Path (Responsive: shown on desktop xl when wide arc mode is enabled) */}
         {!allowDesktopMenu && (
-          <div className="pointer-events-none relative hidden h-full w-full md:block">
+          <div className="pointer-events-none relative hidden h-full w-full xl:block">
             {sections.map((sec, secIdx) => {
               const chars = sec.title.split("")
               const isCurrentActive = secIdx === activeSectionIdx
@@ -1246,7 +1333,7 @@ export function RailScrollScrubber({
             height: lensHeight,
             opacity: smoothHover,
           }}
-          className="pointer-events-none absolute right-0 w-[16px] border-t border-b border-l border-primary/30 bg-primary/[0.08] backdrop-blur-[1px] sm:w-[52px]"
+          className="pointer-events-none absolute right-0 w-[20px] border-t border-b border-l border-primary/30 bg-primary/[0.08] backdrop-blur-[1px] sm:w-[52px]"
         />
 
         {/* 3. Hover Cursor Line (Isolated, 0 parent re-renders) */}
@@ -1274,7 +1361,7 @@ export function RailScrollScrubber({
         {/* 5. Glowing Progress Line & Percentage Readout */}
         <motion.div
           style={{ y: blueIndicatorY }}
-          className="pointer-events-none absolute top-0 right-0 z-30 w-[18px] sm:w-[56px]"
+          className="pointer-events-none absolute top-0 right-0 z-30 w-[22px] sm:w-[56px]"
         >
           <div
             className="relative h-[2px] w-full"
@@ -1309,7 +1396,7 @@ export function RailScrollScrubber({
             onClick={(e) => e.stopPropagation()}
             className={cn(
               "pointer-events-auto fixed top-1/2 z-50 max-h-[75vh] -translate-y-1/2 overflow-y-auto rounded-2xl border border-border/80 bg-card/95 p-4 shadow-2xl backdrop-blur-xl",
-              "right-6 w-56",
+              "right-6 w-56 max-w-[calc(100vw-3rem)]",
               allowDesktopMenu ? "sm:right-16 md:right-16 md:w-60" : "md:hidden"
             )}
             style={{ scrollbarWidth: "none" }}

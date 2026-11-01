@@ -149,13 +149,16 @@ export function CustomContainerScrubber() {
 
 ## Props
 
-| Prop                | Type                         | Default                                       | Description                                                              |
-| :------------------ | :--------------------------- | :-------------------------------------------- | :----------------------------------------------------------------------- |
-| `sections`          | `RailSection[]`              | `DEFAULT_RAIL_SECTIONS`                       | Array of section descriptors with title, coordinates, and flight ranges. |
-| `scrollProgressMV`  | `MotionValue<number>`        | `window scroll`                               | Optional custom scroll progress MotionValue (0..1).                      |
-| `onScrubToProgress` | `(progress: number) => void` | `window.scrollTo`                             | Callback when dragging the ruler to scrub to a percentage.               |
-| `springConfig`      | `SpringConfig`               | `{ stiffness: 140, damping: 26, mass: 0.45 }` | Spring physics parameters for scroll smoothing.                          |
-| `zoomScale`         | `number`                     | `3.6`                                         | Magnification factor for zoomed ruler ticks.                             |
-| `curveIntensity`    | `number`                     | `1.0`                                         | Radius multiplier for top and bottom transition curves.                  |
-| `accentColor`       | `string`                     | `"var(--primary)"`                            | Color of the progress laser line and glow effects.                       |
-| `className`         | `string`                     | `undefined`                                   | Additional CSS class names.                                              |
+| Prop                     | Type                         | Default                                       | Description                                                              |
+| :----------------------- | :--------------------------- | :-------------------------------------------- | :----------------------------------------------------------------------- |
+| `sections`               | `RailSection[]`              | `DEFAULT_RAIL_SECTIONS`                       | Array of section descriptors with title, coordinates, and flight ranges. |
+| `scrollProgressMV`       | `MotionValue<number>`        | `window scroll`                               | Optional custom scroll progress MotionValue (0..1).                      |
+| `onScrubToProgress`      | `(progress: number) => void` | `window.scrollTo`                             | Callback when dragging the ruler to scrub to a percentage.               |
+| `springConfig`           | `SpringConfig`               | `{ stiffness: 140, damping: 26, mass: 0.45 }` | Spring physics parameters for scroll smoothing.                          |
+| `zoomScale`              | `number`                     | `3.6`                                         | Magnification factor for zoomed ruler ticks.                             |
+| `curveIntensity`         | `number`                     | `1.0`                                         | Radius multiplier for top and bottom transition curves.                  |
+| `accentColor`            | `string`                     | `"var(--primary)"`                            | Color of the progress laser line and glow effects.                       |
+| `hideNativeScrollbar`    | `boolean`                    | `true`                                        | Automatically hides native browser scrollbars on `html` and `body`.      |
+| `reserveLayoutSpace`     | `boolean`                    | `true (window scroll)`                        | Automatically reserves responsive layout padding on small screens.       |
+| `showDesktopSectionMenu` | `boolean`                    | `false`                                       | Enables interactive Section Jump Menu on desktop ruler clicks.           |
+| `className`              | `string`                     | `undefined`                                   | Additional CSS class names.                                              |
