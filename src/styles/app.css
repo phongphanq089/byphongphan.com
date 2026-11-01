@@ -387,3 +387,42 @@ body.no-scrollbar *::-webkit-scrollbar-thumb {
   display: none !important;
   background: transparent !important;
 }
+
+/* ─── Rail Scroll Scrubber Responsive Layout Space ─────────────────── */
+:root {
+  --rail-scrubber-width: 0px;
+}
+
+@media (max-width: 639px) {
+  :root.has-rail-scrubber,
+  html.has-rail-scrubber,
+  body.has-rail-scrubber {
+    --rail-scrubber-width: 22px;
+  }
+
+  html.has-rail-scrubber body,
+  body.has-rail-scrubber {
+    padding-right: var(--rail-scrubber-width) !important;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1279px) {
+  :root.has-rail-scrubber,
+  html.has-rail-scrubber,
+  body.has-rail-scrubber {
+    --rail-scrubber-width: 56px;
+  }
+
+  html.has-rail-scrubber body,
+  body.has-rail-scrubber {
+    padding-right: var(--rail-scrubber-width) !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root.has-rail-scrubber,
+  html.has-rail-scrubber,
+  body.has-rail-scrubber {
+    --rail-scrubber-width: 0px;
+  }
+}
