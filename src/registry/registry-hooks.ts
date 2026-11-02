@@ -40,6 +40,7 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
     schematicType: "media-query",
     dependencies: [],
     registryDependencies: [],
+    isNew: true,
     files: [
       {
         path: "hooks/use-media-query.ts",
@@ -77,6 +78,7 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
     schematicType: "intersection-observer",
     dependencies: [],
     registryDependencies: [],
+    isNew: true,
     files: [
       {
         path: "hooks/use-intersection-observer.ts",
@@ -114,6 +116,7 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
     schematicType: "local-storage",
     dependencies: [],
     registryDependencies: [],
+    isNew: true,
     files: [
       {
         path: "hooks/use-local-storage.ts",
@@ -151,6 +154,7 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
     schematicType: "previous",
     dependencies: [],
     registryDependencies: [],
+    isNew: true,
     files: [
       {
         path: "hooks/use-previous.ts",
