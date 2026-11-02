@@ -157,6 +157,10 @@
     {
       "category": "ui-interaction",
       "slug": "use-prevent-body-scroll"
+    },
+    {
+      "category": "ui-interaction",
+      "slug": "use-scroll-position"
     }
   ]
 }

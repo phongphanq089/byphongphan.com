@@ -67,6 +67,7 @@ Personal portfolio and engineering showcase of Phong Phan. Frontend Engineer spe
 - [usePrevious](https://byphongphan.com/r/use-previous.json): Stores previous value of a state or prop across renders. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-previous.json`)
 - [useHover](https://byphongphan.com/r/use-hover.json): Tracks hover state of a target element with optional delay. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-hover.json`)
 - [usePreventBodyScroll](https://byphongphan.com/r/use-prevent-body-scroll.json): Prevents background scrolling with layout shift compensation and iOS Safari support. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-prevent-body-scroll.json`)
+- [useScrollPosition](https://byphongphan.com/r/use-scroll-position.json): Tracks scroll coordinates and direction in real time for the window or a specific scrollable element. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-scroll-position.json`)
 
 ## Optional & Upcoming Features (Roadmap v0.2)
 

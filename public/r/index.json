@@ -324,5 +324,13 @@
     "description": "Prevents background scrolling with layout shift compensation and iOS Safari support.",
     "dependencies": [],
     "registryDependencies": []
+  },
+  {
+    "name": "use-scroll-position",
+    "type": "registry:hook",
+    "title": "useScrollPosition",
+    "description": "Tracks scroll coordinates and direction in real time for the window or a specific scrollable element.",
+    "dependencies": [],
+    "registryDependencies": []
   }
 ]

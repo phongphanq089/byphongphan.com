@@ -10,6 +10,7 @@ import { LocalStorageSchematic } from "./local-storage-schematic"
 import { MediaQuerySchematic } from "./media-query-schematic"
 import { PreventBodyScrollSchematic } from "./prevent-body-scroll-schematic"
 import { PreviousSchematic } from "./previous-schematic"
+import { ScrollPositionSchematic } from "./scroll-position-schematic"
 import { ToggleSchematic } from "./toggle-schematic"
 
 export * from "./click-outside-schematic"
@@ -22,6 +23,7 @@ export * from "./toggle-schematic"
 export * from "./previous-schematic"
 export * from "./hover-schematic"
 export * from "./prevent-body-scroll-schematic"
+export * from "./scroll-position-schematic"
 
 export function DefaultHookSchematic() {
   return (
@@ -46,6 +48,7 @@ export const HOOK_SCHEMATICS_MAP: Record<
   previous: PreviousSchematic,
   hover: HoverSchematic,
   "prevent-body-scroll": PreventBodyScrollSchematic,
+  "scroll-position": ScrollPositionSchematic,
 }
 
 export function RenderHookSchematic({ type }: { type?: string }) {

@@ -9,6 +9,7 @@ import {
   MediaQuerySchematic,
   PreventBodyScrollSchematic,
   PreviousSchematic,
+  ScrollPositionSchematic,
   ToggleSchematic,
 } from "./schematics"
 
@@ -201,6 +202,26 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
         path: "hooks/use-prevent-body-scroll.ts",
         type: "registry:hook",
         target: "hooks/use-prevent-body-scroll.ts",
+      },
+    ],
+  },
+  {
+    name: "use-scroll-position",
+    title: "useScrollPosition",
+    description:
+      "Tracks scroll coordinates and direction in real time for the window or a specific scrollable element.",
+    type: "registry:hook",
+    category: "ui-interaction",
+    schematic: ScrollPositionSchematic,
+    schematicType: "scroll-position",
+    dependencies: [],
+    registryDependencies: [],
+    isNew: true,
+    files: [
+      {
+        path: "hooks/use-scroll-position.ts",
+        type: "registry:hook",
+        target: "hooks/use-scroll-position.ts",
       },
     ],
   },

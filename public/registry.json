@@ -753,6 +753,24 @@
           "target": "hooks/use-prevent-body-scroll.ts"
         }
       ]
+    },
+    {
+      "name": "use-scroll-position",
+      "type": "registry:hook",
+      "title": "useScrollPosition",
+      "description": "Tracks scroll coordinates and direction in real time for the window or a specific scrollable element.",
+      "category": "ui-interaction",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-scroll-position.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-scroll-position.ts"
+        }
+      ]
     }
   ]
 }

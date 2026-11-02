@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-scroll-position",
+  "type": "registry:hook",
+  "title": "useScrollPosition",
+  "description": "Tracks scroll coordinates and direction in real time for the window or a specific scrollable element.",
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-scroll-position.ts",
+      "content": "import { useEffect, useLayoutEffect, useRef, useState } from \"react\"\nimport type { RefObject } from \"react\"\n\nconst useIsomorphicLayoutEffect =\n  typeof window !== \"undefined\" ? useLayoutEffect : useEffect\n\nexport type ScrollDirection = \"up\" | \"down\" | null\n\nexport interface ScrollPosition {\n  x: number\n  y: number\n  direction: ScrollDirection\n}\n\nexport interface UseScrollPositionOptions {\n  targetRef?: RefObject<HTMLElement | null>\n  enabled?: boolean\n}\n\nexport function useScrollPosition(\n  options: UseScrollPositionOptions = {}\n): ScrollPosition {\n  const { targetRef, enabled = true } = options\n\n  const [position, setPosition] = useState<ScrollPosition>({\n    x: 0,\n    y: 0,\n    direction: null,\n  })\n\n  const prevPositionRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 })\n  const rafIdRef = useRef<number | null>(null)\n\n  useIsomorphicLayoutEffect(() => {\n    if (!enabled || typeof window === \"undefined\") return\n\n    const targetElement = targetRef?.current\n\n    const getScrollPosition = (): { x: number; y: number } => {\n      if (targetElement) {\n        return {\n          x: targetElement.scrollLeft,\n          y: targetElement.scrollTop,\n        }\n      }\n      return {\n        x: window.scrollX || document.documentElement.scrollLeft || 0,\n        y: window.scrollY || document.documentElement.scrollTop || 0,\n      }\n    }\n\n    // Read initial scroll position immediately upon mount\n    const initialPos = getScrollPosition()\n    prevPositionRef.current = initialPos\n    setPosition({\n      x: initialPos.x,\n      y: initialPos.y,\n      direction: null,\n    })\n\n    const handleScroll = () => {\n      if (rafIdRef.current !== null) return\n\n      rafIdRef.current = window.requestAnimationFrame(() => {\n        const { x, y } = getScrollPosition()\n        const prev = prevPositionRef.current\n\n        if (x !== prev.x || y !== prev.y) {\n          let direction: ScrollDirection = null\n          if (y > prev.y) {\n            direction = \"down\"\n          } else if (y < prev.y) {\n            direction = \"up\"\n          }\n\n          prevPositionRef.current = { x, y }\n\n          setPosition({ x, y, direction })\n        }\n\n        rafIdRef.current = null\n      })\n    }\n\n    const targetNode: EventTarget = targetElement ?? window\n\n    targetNode.addEventListener(\"scroll\", handleScroll, { passive: true })\n\n    return () => {\n      targetNode.removeEventListener(\"scroll\", handleScroll)\n      if (rafIdRef.current !== null) {\n        window.cancelAnimationFrame(rafIdRef.current)\n        rafIdRef.current = null\n      }\n    }\n  }, [targetRef, enabled])\n\n  return position\n}\n",
+      "type": "registry:hook",
+      "target": "hooks/use-scroll-position.ts"
+    }
+  ]
+}
