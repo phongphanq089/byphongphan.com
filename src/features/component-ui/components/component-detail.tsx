@@ -11,7 +11,7 @@ import type { MDXComponents } from "mdx/types"
 import { useMemo } from "react"
 
 import { CopyButton } from "@/registry/animated/button/copy-button"
-import { REGISTRY_DEMOS } from "@/registry/demos"
+import { COMPONENT_DEMOS } from "@/registry/demos"
 import { siteConfig } from "@/shared/config"
 import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
 import { useTocRailSections } from "@/shared/hooks/use-toc-rail-sections"
@@ -83,7 +83,7 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
     }
   }, [component.slug])
 
-  const LiveDemo = REGISTRY_DEMOS[component.slug]
+  const LiveDemo = COMPONENT_DEMOS[component.slug]
 
   // Find previous and next components
   const { prevComponent, nextComponent } = useMemo(() => {

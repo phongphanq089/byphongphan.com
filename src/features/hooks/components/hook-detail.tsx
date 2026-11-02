@@ -13,7 +13,7 @@ import { useMemo } from "react"
 import { ComponentStagePreview } from "@/features/component-ui/components/component-stage-preview"
 import { mdxComponents } from "@/features/component-ui/components/mdx-components"
 import { CopyButton } from "@/registry/animated/button/copy-button"
-import { REGISTRY_DEMOS } from "@/registry/demos"
+import { HOOK_DEMOS } from "@/registry/demos"
 import { siteConfig } from "@/shared/config"
 import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
 import { useTocRailSections } from "@/shared/hooks/use-toc-rail-sections"
@@ -80,7 +80,7 @@ export function HookDetail({ hook }: HookDetailProps) {
     }
   }, [hook.slug])
 
-  const LiveDemo = REGISTRY_DEMOS[hook.slug]
+  const LiveDemo = HOOK_DEMOS[hook.slug]
 
   // Find previous and next hooks
   const { prevHook, nextHook } = useMemo(() => {
