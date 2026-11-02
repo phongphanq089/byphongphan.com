@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-network",
+  "type": "registry:hook",
+  "title": "useNetwork",
+  "description": "Tracks the browser's online and offline status and provides available network connection details such as connection type, downlink speed, and round-trip time.",
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-network.ts",
+      "content": "import { useState, useEffect } from \"react\"\n\nexport interface NetworkState {\n  online: boolean\n  since?: Date\n  downlink?: number\n  downlinkMax?: number\n  effectiveType?: \"slow-2g\" | \"2g\" | \"3g\" | \"4g\" | string\n  rtt?: number\n  saveData?: boolean\n  type?: string\n}\n\ninterface NetworkInformation extends EventTarget {\n  readonly downlink?: number\n  readonly downlinkMax?: number\n  readonly effectiveType?: \"slow-2g\" | \"2g\" | \"3g\" | \"4g\"\n  readonly rtt?: number\n  readonly saveData?: boolean\n  readonly type?: string\n}\n\ninterface NavigatorWithConnection extends Navigator {\n  connection?: NetworkInformation\n  mozConnection?: NetworkInformation\n  webkitConnection?: NetworkInformation\n}\n\nconst getConnection = (): NetworkInformation | undefined => {\n  if (typeof navigator === \"undefined\") return undefined\n  const nav = navigator as NavigatorWithConnection\n  return nav.connection || nav.mozConnection || nav.webkitConnection\n}\n\nconst getNetworkState = (): NetworkState => {\n  if (typeof navigator === \"undefined\") {\n    return { online: true }\n  }\n\n  const connection = getConnection()\n\n  return {\n    online: navigator.onLine,\n    since: new Date(),\n    downlink: connection?.downlink,\n    downlinkMax: connection?.downlinkMax,\n    effectiveType: connection?.effectiveType,\n    rtt: connection?.rtt,\n    saveData: connection?.saveData,\n    type: connection?.type,\n  }\n}\n\nexport function useNetwork(): NetworkState {\n  const [state, setState] = useState<NetworkState>(() => ({\n    online: true,\n  }))\n\n  useEffect(() => {\n    setState(getNetworkState())\n\n    const handleUpdate = () => {\n      setState(getNetworkState())\n    }\n\n    window.addEventListener(\"online\", handleUpdate, { passive: true })\n    window.addEventListener(\"offline\", handleUpdate, { passive: true })\n\n    const connection = getConnection()\n    if (connection) {\n      connection.addEventListener(\"change\", handleUpdate, { passive: true })\n    }\n\n    return () => {\n      window.removeEventListener(\"online\", handleUpdate)\n      window.removeEventListener(\"offline\", handleUpdate)\n      if (connection) {\n        connection.removeEventListener(\"change\", handleUpdate)\n      }\n    }\n  }, [])\n\n  return state\n}\n",
+      "type": "registry:hook",
+      "target": "hooks/use-network.ts"
+    }
+  ]
+}

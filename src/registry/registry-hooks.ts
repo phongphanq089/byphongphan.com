@@ -11,6 +11,7 @@ import {
   PreviousSchematic,
   ScrollPositionSchematic,
   ToggleSchematic,
+  NetworkSchematic,
 } from "./schematics"
 
 export const REGISTRY_HOOKS: RegistryItem[] = [
@@ -222,6 +223,26 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
         path: "hooks/use-scroll-position.ts",
         type: "registry:hook",
         target: "hooks/use-scroll-position.ts",
+      },
+    ],
+  },
+  {
+    name: "use-network",
+    title: "useNetwork",
+    description:
+      "Tracks the browser's online and offline status and provides available network connection details such as connection type, downlink speed, and round-trip time.",
+    type: "registry:hook",
+    category: "ui-interaction",
+    schematic: NetworkSchematic,
+    schematicType: "network",
+    dependencies: [],
+    registryDependencies: [],
+    isNew: true,
+    files: [
+      {
+        path: "hooks/use-network.ts",
+        type: "registry:hook",
+        target: "hooks/use-network.ts",
       },
     ],
   },

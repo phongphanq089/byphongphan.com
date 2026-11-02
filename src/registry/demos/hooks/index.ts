@@ -58,6 +58,12 @@ export const UseScrollPositionDemo = lazyWithRetry(() =>
   }))
 )
 
+export const UseNetworkDemo = lazyWithRetry(() =>
+  import("./use-network-demo").then((m) => ({
+    default: m.UseNetworkDemo,
+  }))
+)
+
 export const HOOK_DEMOS: Record<string, ComponentType> = {
   "use-click-outside": UseClickOutsideDemo,
   "use-click-outside-demo": UseClickOutsideDemo,
@@ -81,4 +87,6 @@ export const HOOK_DEMOS: Record<string, ComponentType> = {
   "use-prevent-body-scroll-demo": UsePreventBodyScrollDemo,
   "use-scroll-position": UseScrollPositionDemo,
   "use-scroll-position-demo": UseScrollPositionDemo,
+  "use-network": UseNetworkDemo,
+  "use-network-demo": UseNetworkDemo,
 }

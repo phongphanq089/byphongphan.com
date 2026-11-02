@@ -161,6 +161,10 @@
     {
       "category": "ui-interaction",
       "slug": "use-scroll-position"
+    },
+    {
+      "category": "ui-interaction",
+      "slug": "use-network"
     }
   ]
 }

@@ -41,6 +41,7 @@ export type HookSchematicType =
   | "hover"
   | "prevent-body-scroll"
   | "scroll-position"
+  | "network"
 
 export type SchematicType =
   ComponentSchematicType | BlockSchematicType | HookSchematicType
