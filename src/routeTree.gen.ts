@@ -17,8 +17,8 @@ import { Route as SiteIndexRouteImport } from './routes/_site/index'
 import { Route as BlocksPreviewSlugRouteImport } from './routes/blocks-preview.$slug'
 import { Route as SiteBlocksIndexRouteImport } from './routes/_site/blocks/index'
 import { Route as SiteBlogIndexRouteImport } from './routes/_site/blog/index'
-import { Route as SiteColophonIndexRouteImport } from './routes/_site/colophon/index'
 import { Route as SiteComponentUiIndexRouteImport } from './routes/_site/component-ui/index'
+import { Route as SiteHooksIndexRouteImport } from './routes/_site/hooks/index'
 import { Route as SiteResourcesIndexRouteImport } from './routes/_site/resources/index'
 import { Route as SiteBlocksCategoryIndexRouteImport } from './routes/_site/blocks/$category/index'
 import { Route as SiteBlocksCategorySlugRouteImport } from './routes/_site/blocks/$category/$slug'
@@ -64,14 +64,14 @@ const SiteBlogIndexRoute = SiteBlogIndexRouteImport.update({
   path: '/blog/',
   getParentRoute: () => SiteRouteRoute,
 } as any)
-const SiteColophonIndexRoute = SiteColophonIndexRouteImport.update({
-  id: '/colophon/',
-  path: '/colophon/',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
 const SiteComponentUiIndexRoute = SiteComponentUiIndexRouteImport.update({
   id: '/component-ui/',
   path: '/component-ui/',
+  getParentRoute: () => SiteRouteRoute,
+} as any)
+const SiteHooksIndexRoute = SiteHooksIndexRouteImport.update({
+  id: '/hooks/',
+  path: '/hooks/',
   getParentRoute: () => SiteRouteRoute,
 } as any)
 const SiteResourcesIndexRoute = SiteResourcesIndexRouteImport.update({
@@ -110,8 +110,8 @@ export interface FileRoutesByFullPath {
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
   '/blocks/': typeof SiteBlocksIndexRoute
   '/blog/': typeof SiteBlogIndexRoute
-  '/colophon/': typeof SiteColophonIndexRoute
   '/component-ui/': typeof SiteComponentUiIndexRoute
+  '/hooks/': typeof SiteHooksIndexRoute
   '/resources/': typeof SiteResourcesIndexRoute
   '/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
   '/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
@@ -126,8 +126,8 @@ export interface FileRoutesByTo {
   '/': typeof SiteIndexRoute
   '/blocks': typeof SiteBlocksIndexRoute
   '/blog': typeof SiteBlogIndexRoute
-  '/colophon': typeof SiteColophonIndexRoute
   '/component-ui': typeof SiteComponentUiIndexRoute
+  '/hooks': typeof SiteHooksIndexRoute
   '/resources': typeof SiteResourcesIndexRoute
   '/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
   '/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
@@ -144,8 +144,8 @@ export interface FileRoutesById {
   '/_site/': typeof SiteIndexRoute
   '/_site/blocks/': typeof SiteBlocksIndexRoute
   '/_site/blog/': typeof SiteBlogIndexRoute
-  '/_site/colophon/': typeof SiteColophonIndexRoute
   '/_site/component-ui/': typeof SiteComponentUiIndexRoute
+  '/_site/hooks/': typeof SiteHooksIndexRoute
   '/_site/resources/': typeof SiteResourcesIndexRoute
   '/_site/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
   '/_site/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
@@ -162,8 +162,8 @@ export interface FileRouteTypes {
     | '/blocks-preview/$slug'
     | '/blocks/'
     | '/blog/'
-    | '/colophon/'
     | '/component-ui/'
+    | '/hooks/'
     | '/resources/'
     | '/blocks/$category/$slug'
     | '/component-ui/$category/$slug'
@@ -178,8 +178,8 @@ export interface FileRouteTypes {
     | '/'
     | '/blocks'
     | '/blog'
-    | '/colophon'
     | '/component-ui'
+    | '/hooks'
     | '/resources'
     | '/blocks/$category/$slug'
     | '/component-ui/$category/$slug'
@@ -195,8 +195,8 @@ export interface FileRouteTypes {
     | '/_site/'
     | '/_site/blocks/'
     | '/_site/blog/'
-    | '/_site/colophon/'
     | '/_site/component-ui/'
+    | '/_site/hooks/'
     | '/_site/resources/'
     | '/_site/blocks/$category/$slug'
     | '/_site/component-ui/$category/$slug'
@@ -270,18 +270,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteBlogIndexRouteImport
       parentRoute: typeof SiteRouteRoute
     }
-    '/_site/colophon/': {
-      id: '/_site/colophon/'
-      path: '/colophon'
-      fullPath: '/colophon/'
-      preLoaderRoute: typeof SiteColophonIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
     '/_site/component-ui/': {
       id: '/_site/component-ui/'
       path: '/component-ui'
       fullPath: '/component-ui/'
       preLoaderRoute: typeof SiteComponentUiIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
+    }
+    '/_site/hooks/': {
+      id: '/_site/hooks/'
+      path: '/hooks'
+      fullPath: '/hooks/'
+      preLoaderRoute: typeof SiteHooksIndexRouteImport
       parentRoute: typeof SiteRouteRoute
     }
     '/_site/resources/': {
@@ -326,8 +326,8 @@ interface SiteRouteRouteChildren {
   SiteIndexRoute: typeof SiteIndexRoute
   SiteBlocksIndexRoute: typeof SiteBlocksIndexRoute
   SiteBlogIndexRoute: typeof SiteBlogIndexRoute
-  SiteColophonIndexRoute: typeof SiteColophonIndexRoute
   SiteComponentUiIndexRoute: typeof SiteComponentUiIndexRoute
+  SiteHooksIndexRoute: typeof SiteHooksIndexRoute
   SiteResourcesIndexRoute: typeof SiteResourcesIndexRoute
   SiteBlocksCategorySlugRoute: typeof SiteBlocksCategorySlugRoute
   SiteComponentUiCategorySlugRoute: typeof SiteComponentUiCategorySlugRoute
@@ -339,8 +339,8 @@ const SiteRouteRouteChildren: SiteRouteRouteChildren = {
   SiteIndexRoute: SiteIndexRoute,
   SiteBlocksIndexRoute: SiteBlocksIndexRoute,
   SiteBlogIndexRoute: SiteBlogIndexRoute,
-  SiteColophonIndexRoute: SiteColophonIndexRoute,
   SiteComponentUiIndexRoute: SiteComponentUiIndexRoute,
+  SiteHooksIndexRoute: SiteHooksIndexRoute,
   SiteResourcesIndexRoute: SiteResourcesIndexRoute,
   SiteBlocksCategorySlugRoute: SiteBlocksCategorySlugRoute,
   SiteComponentUiCategorySlugRoute: SiteComponentUiCategorySlugRoute,

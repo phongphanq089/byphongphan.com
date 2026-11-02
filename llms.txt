@@ -23,7 +23,7 @@ Personal portfolio and engineering showcase of Phong Phan. Frontend Engineer spe
 - [Home](https://byphongphan.com): Interactive portfolio, featured case studies, and engineering background.
 - [Component Registry](https://byphongphan.com/component-ui): Directory of customizable, accessible UI primitives and interactive micro-interactions.
 - [Blocks](https://byphongphan.com/blocks): Ready-to-use, production-grade page sections and complex interface layouts.
-- [Colophon](https://byphongphan.com/colophon): System specifications, design tokens, typography, and architecture.
+- [Hook Registry](https://byphongphan.com/hooks): Reusable React hooks, state management utilities, and interactive logic for building modern applications.
 - [Raw Profile (Markdown)](https://byphongphan.com/index.md): Full raw markdown portfolio document for text consumption.
 
 ## UI Components & Primitives

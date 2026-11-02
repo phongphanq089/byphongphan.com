@@ -1,7 +1,6 @@
 import {
   Atom,
   Bookmark,
-  BookOpen,
   Code,
   Code2,
   Component,
@@ -18,6 +17,7 @@ import {
   Radio,
   Sun,
   User,
+  Workflow,
   Wrench,
 } from "lucide-react"
 import { type ReactNode } from "react"
@@ -76,7 +76,7 @@ const NAVIGATION_ICON_MAP: Record<string, ReactNode> = {
   blog: <Newspaper className="size-4 text-pp-primary" />,
   resources: <Bookmark className="size-4 text-pp-primary" />,
   "component-ui": <Atom className="size-4 text-pp-primary" />,
-  colophon: <BookOpen className="size-4 text-pp-primary" />,
+  hooks: <Workflow className="size-4 text-pp-primary" />,
 }
 
 function buildNavigationMenuItems(): CommandMenuItem[] {

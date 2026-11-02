@@ -26,7 +26,7 @@
 - [Component Registry](https://byphongphan.com/component-ui): UI primitives, interactive cards, and responsive blocks.
 - [Blocks Directory](https://byphongphan.com/blocks): Production-grade page sections and application blocks.
 - [Registry Manifest](https://byphongphan.com/r/index.json): Machine-readable JSON for shadcn CLI installation.
-- [Colophon](https://byphongphan.com/colophon): Architecture, design tokens, and technical stack details.
+- [Hook Registry](https://byphongphan.com/hooks): Reusable React hooks, state management utilities, and interactive logic for building modern applications.
 - [Technical Blog (In Development)](https://byphongphan.com/blog): Deep dives into Browser Rendering, Hydration, and Database Internals.
 - [Developer Resources (In Development)](https://byphongphan.com/resources): Curated developer bookmarks, tools, and libraries.
 

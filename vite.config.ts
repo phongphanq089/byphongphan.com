@@ -130,7 +130,7 @@ const config = defineConfig({
         { path: "/" },
         { path: "/blocks" },
         { path: "/component-ui" },
-        { path: "/colophon" },
+        { path: "/hooks" },
         ...registryStaticPaths.map((path) => ({
           path,
         })),
