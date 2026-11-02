@@ -1,4 +1,14 @@
 import type { RegistryItem } from "./schema"
+import {
+  ClickOutsideSchematic,
+  CopyToClipboardSchematic,
+  DebounceSchematic,
+  IntersectionObserverSchematic,
+  LocalStorageSchematic,
+  MediaQuerySchematic,
+  PreviousSchematic,
+  ToggleSchematic,
+} from "./schematics"
 
 export const REGISTRY_HOOKS: RegistryItem[] = [
   {
@@ -7,6 +17,7 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
     description: "Detects clicks outside of a target element.",
     type: "registry:hook",
     category: "ui-interaction",
+    schematic: ClickOutsideSchematic,
     schematicType: "click-outside",
     dependencies: [],
     registryDependencies: [],
@@ -25,6 +36,7 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
     description: "Listens for media query changes and returns a boolean.",
     type: "registry:hook",
     category: "browser",
+    schematic: MediaQuerySchematic,
     schematicType: "media-query",
     dependencies: [],
     registryDependencies: [],
@@ -42,6 +54,7 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
     description: "Copies text to clipboard with feedback.",
     type: "registry:hook",
     category: "utilities",
+    schematic: CopyToClipboardSchematic,
     schematicType: "copy-to-clipboard",
     dependencies: [],
     registryDependencies: [],
@@ -60,6 +73,7 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
     description: "Triggers when an element enters or leaves the viewport.",
     type: "registry:hook",
     category: "performance",
+    schematic: IntersectionObserverSchematic,
     schematicType: "intersection-observer",
     dependencies: [],
     registryDependencies: [],
@@ -77,6 +91,7 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
     description: "Debounces a value or function for better performance.",
     type: "registry:hook",
     category: "utilities",
+    schematic: DebounceSchematic,
     schematicType: "debounce",
     dependencies: [],
     registryDependencies: [],
@@ -95,6 +110,7 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
     description: "Syncs state with localStorage across browser sessions.",
     type: "registry:hook",
     category: "browser",
+    schematic: LocalStorageSchematic,
     schematicType: "local-storage",
     dependencies: [],
     registryDependencies: [],
@@ -112,6 +128,7 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
     description: "Toggles a boolean state value with memoized handlers.",
     type: "registry:hook",
     category: "state",
+    schematic: ToggleSchematic,
     schematicType: "toggle",
     dependencies: [],
     registryDependencies: [],
@@ -130,6 +147,7 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
     description: "Stores previous value of a state or prop across renders.",
     type: "registry:hook",
     category: "state",
+    schematic: PreviousSchematic,
     schematicType: "previous",
     dependencies: [],
     registryDependencies: [],

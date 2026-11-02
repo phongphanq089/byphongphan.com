@@ -126,7 +126,7 @@ export function ComponentQuickNav({
             emphasis: "subtle",
           })
         }}
-        className="fixed inset-x-0 top-12 left-1/2 z-30 flex h-11 w-full max-w-md -translate-x-1/2 items-center justify-between bg-accent/90 px-4 backdrop-blur-md transition-colors hover:bg-accent/50 sm:rounded-md lg:hidden"
+        className="fixed inset-x-0 top-12 left-1/2 z-30 flex h-11 w-full max-w-md -translate-x-1/2 items-center justify-between bg-accent/90 pr-8 pl-4 backdrop-blur-md transition-colors hover:bg-accent/50 sm:rounded-md sm:px-4 lg:hidden"
         aria-expanded={open}
       >
         <div className="w-fullitems-center flex w-full justify-between">

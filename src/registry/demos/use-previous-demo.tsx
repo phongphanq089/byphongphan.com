@@ -1,8 +1,7 @@
-import { ArrowRight, Minus, Plus } from "lucide-react"
+import { ArrowRight, Minus, Plus, RotateCcw } from "lucide-react"
 import { useState } from "react"
 
 import { usePrevious } from "@/registry/hooks/use-previous"
-import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
 
 export function UsePreviousDemo() {
@@ -10,57 +9,83 @@ export function UsePreviousDemo() {
   const previousCount = usePrevious(count)
 
   return (
-    <div className="flex w-full max-w-md flex-col items-center gap-6 p-6">
-      <div className="flex w-full items-center justify-between">
-        <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-          Render State History
+    <div className="mx-auto flex w-full max-w-md flex-col gap-4 p-3 sm:p-5">
+      {/* Header */}
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-xs font-medium text-muted-foreground">
+          State history
         </span>
-        <Badge variant="outline" className="font-mono text-xs">
+
+        <code className="rounded-md bg-muted px-2 py-1 font-mono text-[11px] text-muted-foreground">
           usePrevious(count)
-        </Badge>
+        </code>
       </div>
 
-      <div className="flex items-center gap-4">
-        <div className="flex flex-col items-center rounded-xl border border-white/10 bg-white/[0.02] px-5 py-3">
-          <span className="text-[10px] text-muted-foreground uppercase">
+      {/* Values */}
+      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 sm:gap-3">
+        {/* Previous */}
+        <div className="flex min-w-0 flex-col gap-2 rounded-lg border border-border bg-muted/20 p-3 sm:p-4">
+          <span className="text-[10px] font-medium tracking-wide text-muted-foreground uppercase">
             Previous
           </span>
-          <span className="font-mono text-xl font-bold text-muted-foreground">
+
+          <span className="font-mono text-2xl font-medium text-muted-foreground tabular-nums sm:text-3xl">
             {previousCount !== undefined ? previousCount : "—"}
           </span>
         </div>
 
-        <ArrowRight className="size-4 text-blue-400" />
+        <ArrowRight className="size-4 text-muted-foreground/50" />
 
-        <div className="flex flex-col items-center rounded-xl border border-blue-500/50 bg-blue-500/10 px-5 py-3 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
-          <span className="text-[10px] font-semibold text-blue-400 uppercase">
+        {/* Current */}
+        <div className="flex min-w-0 flex-col gap-2 rounded-lg border border-primary/40 bg-primary/[0.06] p-3 sm:p-4">
+          <span className="text-[10px] font-medium tracking-wide text-primary uppercase">
             Current
           </span>
-          <span className="font-mono text-xl font-bold text-foreground">
+
+          <span className="font-mono text-2xl font-semibold text-foreground tabular-nums sm:text-3xl">
             {count}
           </span>
         </div>
       </div>
 
-      <div className="flex items-center gap-2">
-        <Button
-          size="sm"
-          variant="outline"
-          onClick={() => setCount((c) => c - 1)}
-          className="h-8 gap-1 text-xs"
-        >
-          <Minus className="size-3" />
-          Decrement
-        </Button>
-        <Button
-          size="sm"
-          onClick={() => setCount((c) => c + 1)}
-          className="h-8 gap-1 text-xs"
-        >
-          <Plus className="size-3" />
-          Increment
-        </Button>
+      {/* Controls */}
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-xs text-muted-foreground">Change counter</span>
+
+        <div className="flex items-center gap-1.5">
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={() => setCount((c) => c - 1)}
+            className="size-8"
+            aria-label="Decrement counter"
+          >
+            <Minus className="size-3.5" />
+          </Button>
+
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={() => setCount((c) => c + 1)}
+            className="size-8"
+            aria-label="Increment counter"
+          >
+            <Plus className="size-3.5" />
+          </Button>
+
+          <Button
+            size="icon"
+            variant="ghost"
+            onClick={() => setCount(0)}
+            className="size-8 text-muted-foreground"
+            aria-label="Reset counter"
+          >
+            <RotateCcw className="size-3.5" />
+          </Button>
+        </div>
       </div>
     </div>
   )
 }
+
+export default UsePreviousDemo

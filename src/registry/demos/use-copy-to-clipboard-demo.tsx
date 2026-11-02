@@ -1,45 +1,52 @@
 import { Check, Copy } from "lucide-react"
 
 import { useCopyToClipboard } from "@/registry/hooks/use-copy-to-clipboard"
-import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
+import { cn } from "cn"
 
 export function UseCopyToClipboardDemo() {
-  const { isCopied, copy, copiedText } = useCopyToClipboard({ timeout: 2000 })
+  const { isCopied, copy, copiedText } = useCopyToClipboard({
+    timeout: 2000,
+  })
+
   const snippet = "pnpm add @pp/hooks"
 
   return (
-    <div className="flex w-full max-w-md flex-col items-center gap-6 p-6">
-      <div className="flex w-full items-center justify-between">
-        <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-          Clipboard Feedback
+    <div className="mx-auto flex w-full max-w-md flex-col gap-3 p-3 sm:p-5">
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-xs font-medium text-muted-foreground">
+          Copy to clipboard
         </span>
-        {isCopied ? (
-          <Badge className="gap-1 border-emerald-500/30 bg-emerald-500/20 text-emerald-400">
-            <span className="size-1.5 rounded-full bg-emerald-400" />
-            Copied!
-          </Badge>
-        ) : (
-          <Badge variant="outline" className="text-muted-foreground">
-            Idle
-          </Badge>
-        )}
+
+        <span
+          className="flex items-center gap-1.5 text-xs text-muted-foreground"
+          aria-live="polite"
+        >
+          <span
+            className={cn(
+              "size-1.5 rounded-full transition-colors",
+              isCopied ? "bg-emerald-500" : "bg-muted-foreground/40"
+            )}
+          />
+          {isCopied ? "Copied to clipboard" : "Ready to copy"}
+        </span>
       </div>
 
-      <div className="flex w-full items-center justify-between rounded-xl border border-white/10 bg-[#0B0F17] px-4 py-3 shadow-inner">
-        <code className="font-mono text-xs text-foreground selection:bg-blue-500/30">
+      <div className="flex min-w-0 items-center gap-2 rounded-lg border border-border bg-muted/30 p-2 sm:p-2.5">
+        <code className="min-w-0 flex-1 truncate px-2 font-mono text-xs text-foreground sm:text-sm">
           {snippet}
         </code>
+
         <Button
           size="sm"
           variant="outline"
           onClick={() => copy(snippet)}
-          className="h-8 gap-1.5 border-white/10 bg-white/5 text-xs text-foreground hover:bg-white/10"
+          className="h-8 shrink-0 gap-1.5 px-2.5 text-xs"
         >
           {isCopied ? (
             <>
-              <Check className="size-3.5 text-emerald-400" />
-              <span className="text-emerald-400">Copied</span>
+              <Check className="size-3.5 text-emerald-500" />
+              <span>Copied</span>
             </>
           ) : (
             <>
@@ -51,10 +58,12 @@ export function UseCopyToClipboardDemo() {
       </div>
 
       {copiedText && (
-        <span className="font-mono text-[11px] text-muted-foreground">
-          Last copied: &quot;{copiedText}&quot;
-        </span>
+        <p className="truncate text-[11px] text-muted-foreground">
+          Last copied: <code className="font-mono">{copiedText}</code>
+        </p>
       )}
     </div>
   )
 }
+
+export default UseCopyToClipboardDemo

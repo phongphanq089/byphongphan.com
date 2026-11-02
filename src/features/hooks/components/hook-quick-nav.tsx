@@ -1,11 +1,6 @@
 import { useNavigate } from "@tanstack/react-router"
 import { play } from "cuelume"
-import {
-  ChevronDown,
-  LayoutGrid,
-  PanelLeftClose,
-  PanelLeftOpen,
-} from "lucide-react"
+import { LayoutGrid, PanelLeftClose, PanelLeftOpen } from "lucide-react"
 import { motion } from "motion/react"
 import { useEffect, useMemo, useState } from "react"
 
@@ -31,7 +26,6 @@ const PANEL_WIDTH = 270
 export function HookQuickNav({
   currentCategory,
   currentSlug,
-  currentTitle,
   className,
 }: HookQuickNavProps) {
   const navigate = useNavigate()
@@ -47,12 +41,6 @@ export function HookQuickNav({
   // Active path for the currently viewed hook
   const activeHref = `/hooks/${currentCategory}/${currentSlug}`
 
-  const currentHook = useMemo(
-    () => HOOKS_DATA.find((h) => h.slug === currentSlug),
-    [currentSlug]
-  )
-  const displayTitle = currentTitle || currentHook?.name || currentSlug
-
   const navGroups: LineNavGroup[] = useMemo(() => {
     return HOOK_CATEGORIES.map((cat) => {
       const items = HOOKS_DATA.filter((hook) => hook.category === cat.id)
@@ -63,7 +51,7 @@ export function HookQuickNav({
           badge: hook.isNew ? (
             <span
               aria-label="New hook"
-              className="size-1.5 shrink-0 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.85)]"
+              className="size-1.5 shrink-0 rounded-full bg-primary shadow-[0_0_8px_var(--pp-primary-glow)]"
             />
           ) : undefined,
         }))
@@ -135,15 +123,6 @@ export function HookQuickNav({
           ) : (
             <PanelLeftOpen className="size-3.5 text-primary transition-transform duration-200 group-hover:scale-110" />
           )}
-          <span className="max-w-[140px] truncate font-mono text-xs font-bold sm:max-w-[180px]">
-            {displayTitle}
-          </span>
-          <ChevronDown
-            className={cn(
-              "size-3 text-muted-foreground transition-transform duration-200",
-              open && "rotate-180"
-            )}
-          />
         </button>
       </div>
 

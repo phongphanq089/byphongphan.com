@@ -1,5 +1,4 @@
 import { useIntersectionObserver } from "@/registry/hooks/use-intersection-observer"
-import { Badge } from "@/registry/ui/badge"
 import { cn } from "@/shared/lib/utils"
 
 export function UseIntersectionObserverDemo() {
@@ -8,70 +7,101 @@ export function UseIntersectionObserverDemo() {
       threshold: 0.5,
     })
 
-  const ratio = entry?.intersectionRatio
-    ? Math.round(entry.intersectionRatio * 100)
-    : 0
+  const ratio = Math.round((entry?.intersectionRatio ?? 0) * 100)
 
   return (
-    <div className="flex w-full max-w-md flex-col items-center gap-6 p-6">
-      <div className="flex w-full items-center justify-between">
-        <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-          Viewport Intersection
+    <div className="mx-auto flex w-full max-w-md flex-col gap-4 p-3 sm:p-5">
+      {/* Status */}
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-xs font-medium text-muted-foreground">
+          Visibility observer
         </span>
-        <Badge
-          className={cn(
-            "gap-1.5 font-mono text-xs transition-colors",
-            isIntersecting
-              ? "border-blue-500/30 bg-blue-500/20 text-blue-400"
-              : "border-white/10 bg-white/5 text-muted-foreground"
-          )}
+
+        <span
+          className="flex items-center gap-1.5 text-xs text-muted-foreground"
+          aria-live="polite"
         >
           <span
             className={cn(
-              "size-2 rounded-full",
-              isIntersecting
-                ? "bg-blue-500 shadow-[0_0_8px_#3b82f6]"
-                : "bg-muted-foreground/40"
+              "size-1.5 rounded-full transition-colors",
+              isIntersecting ? "bg-primary" : "bg-muted-foreground/40"
             )}
           />
-          {isIntersecting ? `Intersecting (${ratio}%)` : "Offscreen"}
-        </Badge>
+          {isIntersecting ? "In viewport" : "Out of viewport"}
+        </span>
       </div>
 
+      {/* Observed element */}
       <div
         ref={ref}
         className={cn(
-          "flex w-full flex-col gap-3 rounded-xl border p-6 transition-all duration-300",
+          "rounded-lg border p-4 transition-colors duration-200 sm:p-5",
           isIntersecting
-            ? "border-blue-500 bg-blue-500/10 shadow-[0_0_24px_rgba(59,130,246,0.25)] ring-1 ring-blue-500/40"
-            : "border-white/10 bg-white/[0.02] opacity-60"
+            ? "border-primary/40 bg-primary/[0.04]"
+            : "border-border bg-muted/20"
         )}
       >
         <div className="flex items-center gap-3">
           <div
             className={cn(
-              "size-8 rounded-lg transition-colors",
+              "flex size-9 shrink-0 items-center justify-center rounded-md border transition-colors",
               isIntersecting
-                ? "bg-blue-500 shadow-[0_0_12px_#3b82f6]"
-                : "bg-white/10"
+                ? "border-primary/30 bg-primary/10 text-primary"
+                : "border-border bg-muted text-muted-foreground"
             )}
-          />
-          <div className="flex flex-1 flex-col gap-1.5">
+          >
+            <span className="text-sm font-semibold">01</span>
+          </div>
+
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium text-foreground">
+              Observed element
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {isIntersecting
+                ? "Element is currently visible"
+                : "Scroll to bring this element into view"}
+            </p>
+          </div>
+        </div>
+
+        {/* Intersection ratio */}
+        <div className="mt-5 space-y-2">
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-muted-foreground">Intersection ratio</span>
+            <span className="font-mono font-medium text-foreground tabular-nums">
+              {ratio}%
+            </span>
+          </div>
+
+          <div
+            className="h-1.5 overflow-hidden rounded-full bg-muted"
+            role="progressbar"
+            aria-valuenow={ratio}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-label="Intersection ratio"
+          >
             <div
               className={cn(
-                "h-2.5 rounded transition-colors",
-                isIntersecting ? "w-3/4 bg-blue-400" : "w-1/2 bg-white/10"
+                "h-full rounded-full transition-[width] duration-200",
+                isIntersecting ? "bg-primary" : "bg-muted-foreground/40"
               )}
-            />
-            <div
-              className={cn(
-                "h-2 rounded transition-colors",
-                isIntersecting ? "w-1/2 bg-blue-400/50" : "w-1/3 bg-white/5"
-              )}
+              style={{ width: `${ratio}%` }}
             />
           </div>
         </div>
       </div>
+
+      {/* Configuration */}
+      <div className="flex items-center justify-between border-t border-border pt-3 text-xs">
+        <span className="text-muted-foreground">Threshold</span>
+        <code className="rounded bg-muted px-2 py-1 font-mono text-foreground">
+          0.5
+        </code>
+      </div>
     </div>
   )
 }
+
+export default UseIntersectionObserverDemo

@@ -11,60 +11,81 @@ export function UseMediaQueryDemo() {
 
   const queries = [
     {
-      label: "Mobile (< 640px)",
+      label: "Mobile",
+      range: "< 640px",
       icon: Smartphone,
       active: isMobile,
     },
     {
-      label: "Tablet (640px - 1024px)",
+      label: "Tablet",
+      range: "640px - 1023px",
       icon: Tablet,
       active: isTablet,
     },
     {
-      label: "Desktop (> 1024px)",
+      label: "Desktop",
+      range: "≥ 1024px",
       icon: Monitor,
       active: isDesktop,
     },
   ]
 
   return (
-    <div className="flex w-full max-w-md flex-col items-center gap-6 p-6">
-      <div className="flex w-full items-center justify-between">
-        <span className="text-xs font-semibold tracking-wider text-muted-foreground uppercase">
-          Live Window matchMedia
+    <div className="mx-auto flex w-full max-w-lg flex-col gap-4 p-3 sm:gap-6 sm:p-5">
+      {/* Header */}
+      <div className="flex min-w-0 items-center justify-between gap-2">
+        <span className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase sm:text-xs">
+          Live Window MatchMedia
         </span>
+
         <Badge
           variant="outline"
-          className="gap-1.5 font-mono text-xs text-blue-400"
+          className="shrink-0 gap-1.5 px-2 py-1 font-mono text-[9px] sm:text-xs"
         >
-          <span className="size-2 rounded-full bg-blue-500 shadow-[0_0_8px_#3b82f6]" />
+          <span className="size-1.5 rounded-full bg-primary shadow-[0_0_8px_var(--pp-primary-glow)] sm:size-2" />
           SSR Synchronized
         </Badge>
       </div>
 
-      <div className="grid w-full grid-cols-3 gap-3">
+      {/* Breakpoints */}
+      <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3">
         {queries.map((q) => {
           const Icon = q.icon
+
           return (
             <div
               key={q.label}
               className={cn(
-                "flex flex-col items-center justify-center gap-2.5 rounded-xl border p-4 transition-all duration-300",
+                "flex min-w-0 flex-col items-center justify-center gap-2 rounded-xl border p-2.5 transition-all duration-300 sm:gap-3 sm:p-4",
                 q.active
-                  ? "border-blue-500 bg-blue-500/10 text-blue-400 shadow-[0_0_18px_rgba(59,130,246,0.3)] ring-1 ring-blue-500/50"
-                  : "border-white/10 bg-white/[0.02] text-muted-foreground/60"
+                  ? "border-primary/60 bg-primary/10 text-foreground shadow-[0_0_16px_var(--pp-primary-glow)] ring-1 ring-primary/30 dark:border-primary/70 dark:bg-primary/15"
+                  : "border-black/10 bg-card/50 text-muted-foreground/60 dark:border-white/10 dark:bg-neutral-900/40"
               )}
             >
-              <Icon className="size-6" />
-              <span className="text-center text-[10px] leading-tight font-medium">
-                {q.label}
-              </span>
+              <Icon
+                className={cn(
+                  "size-5 transition-colors sm:size-6",
+                  q.active ? "text-primary" : "text-muted-foreground"
+                )}
+                strokeWidth={1.8}
+              />
+
+              <div className="flex min-w-0 flex-col items-center gap-0.5">
+                <span className="text-xs font-semibold sm:text-sm">
+                  {q.label}
+                </span>
+
+                <span className="text-[9px] text-muted-foreground sm:text-[10px]">
+                  {q.range}
+                </span>
+              </div>
+
               <span
                 className={cn(
-                  "rounded-full px-2 py-0.5 text-[9px] font-bold uppercase",
+                  "rounded-full px-2 py-0.5 text-[8px] font-bold tracking-wide uppercase sm:text-[9px]",
                   q.active
-                    ? "bg-blue-500/20 text-blue-300"
-                    : "bg-white/5 text-muted-foreground/40"
+                    ? "bg-primary/20 text-primary"
+                    : "bg-muted text-muted-foreground/60"
                 )}
               >
                 {q.active ? "Matches" : "False"}
@@ -76,3 +97,5 @@ export function UseMediaQueryDemo() {
     </div>
   )
 }
+
+export default UseMediaQueryDemo
