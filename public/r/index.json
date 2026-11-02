@@ -308,5 +308,13 @@
     "description": "Stores previous value of a state or prop across renders.",
     "dependencies": [],
     "registryDependencies": []
+  },
+  {
+    "name": "use-hover",
+    "type": "registry:hook",
+    "title": "useHover",
+    "description": "Tracks hover state of a target element with optional delay.",
+    "dependencies": [],
+    "registryDependencies": []
   }
 ]

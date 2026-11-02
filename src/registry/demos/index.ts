@@ -114,6 +114,11 @@ export const UsePreviousDemo = lazyWithRetry(() =>
     default: m.UsePreviousDemo,
   }))
 )
+export const UseHoverDemo = lazyWithRetry(() =>
+  import("./use-hover-demo").then((m) => ({
+    default: m.UseHoverDemo,
+  }))
+)
 
 export const REGISTRY_DEMOS: Record<string, ComponentType> = {
   select: SelectDemo,
@@ -156,4 +161,6 @@ export const REGISTRY_DEMOS: Record<string, ComponentType> = {
   "use-toggle-demo": UseToggleDemo,
   "use-previous": UsePreviousDemo,
   "use-previous-demo": UsePreviousDemo,
+  "use-hover": UseHoverDemo,
+  "use-hover-demo": UseHoverDemo,
 }

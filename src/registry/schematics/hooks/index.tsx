@@ -4,6 +4,7 @@ import type { HookSchematicType } from "../../schema"
 import { ClickOutsideSchematic } from "./click-outside-schematic"
 import { CopyToClipboardSchematic } from "./copy-to-clipboard-schematic"
 import { DebounceSchematic } from "./debounce-schematic"
+import { HoverSchematic } from "./hover-schematic"
 import { IntersectionObserverSchematic } from "./intersection-observer-schematic"
 import { LocalStorageSchematic } from "./local-storage-schematic"
 import { MediaQuerySchematic } from "./media-query-schematic"
@@ -18,6 +19,7 @@ export * from "./debounce-schematic"
 export * from "./local-storage-schematic"
 export * from "./toggle-schematic"
 export * from "./previous-schematic"
+export * from "./hover-schematic"
 
 export function DefaultHookSchematic() {
   return (
@@ -40,6 +42,7 @@ export const HOOK_SCHEMATICS_MAP: Record<
   "local-storage": LocalStorageSchematic,
   toggle: ToggleSchematic,
   previous: PreviousSchematic,
+  hover: HoverSchematic,
 }
 
 export function RenderHookSchematic({ type }: { type?: string }) {

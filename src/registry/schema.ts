@@ -38,6 +38,7 @@ export type HookSchematicType =
   | "local-storage"
   | "toggle"
   | "previous"
+  | "hover"
 
 export type SchematicType =
   ComponentSchematicType | BlockSchematicType | HookSchematicType

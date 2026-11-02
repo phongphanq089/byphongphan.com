@@ -1,0 +1,70 @@
+---
+title: useHover
+description: Tracks hover state of a target element with optional delay.
+component: true
+---
+
+<ComponentPreview name="use-hover-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="cli">
+    <CodeBlockCommand name="use-hover" />
+  </TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-hover" title="hooks/use-hover.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { useHover } from "@/shared/hooks"
+
+export function HoverCard() {
+  const [hoverRef, isHovered] = useHover<HTMLDivElement>({
+    enterDelay: 200,
+    leaveDelay: 200,
+  })
+
+  return (
+    <div
+      ref={hoverRef}
+      className={`p-6 rounded-xl border transition-colors ${
+        isHovered ? "border-primary bg-primary/10" : "border-border bg-card"
+      }`}
+    >
+      <p>{isHovered ? "Hovered!" : "Hover over me"}</p>
+    </div>
+  )
+}
+```
+
+## Props & Parameters
+
+| Param                | Type                            | Default | Description                                                          |
+| :------------------- | :------------------------------ | :------ | :------------------------------------------------------------------- |
+| `options.enterDelay` | `number`                        | `0`     | Delay in milliseconds before triggering hover on state (`true`).    |
+| `options.leaveDelay` | `number`                        | `0`     | Delay in milliseconds before triggering hover off state (`false`).  |
+| `options.onEnter`    | `(event: PointerEvent) => void` | `—`     | Callback invoked when the pointer enters the element.                |
+| `options.onLeave`    | `(event: PointerEvent) => void` | `—`     | Callback invoked when the pointer leaves the element.                |
+| `options.enabled`    | `boolean`                       | `true`  | Whether the hover event listener is active.                          |
+| `options.ref`        | `RefObject<T \| null>`          | `—`     | Optional external ref to attach to instead of the returned ref.      |
+
+## Returns
+
+| Return Value      | Type                   | Description                                     |
+| :---------------- | :--------------------- | :---------------------------------------------- |
+| `[0]` (ref)       | `RefObject<T \| null>` | Ref object to attach to the target DOM element. |
+| `[1]` (isHovered) | `boolean`              | Current hover status of the target element.     |

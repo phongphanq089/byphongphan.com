@@ -149,6 +149,10 @@
     {
       "category": "state",
       "slug": "use-previous"
+    },
+    {
+      "category": "ui-interaction",
+      "slug": "use-hover"
     }
   ]
 }

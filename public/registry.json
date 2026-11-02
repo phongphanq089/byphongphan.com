@@ -717,6 +717,24 @@
           "target": "hooks/use-previous.ts"
         }
       ]
+    },
+    {
+      "name": "use-hover",
+      "type": "registry:hook",
+      "title": "useHover",
+      "description": "Tracks hover state of a target element with optional delay.",
+      "category": "ui-interaction",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-hover.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-hover.ts"
+        }
+      ]
     }
   ]
 }
