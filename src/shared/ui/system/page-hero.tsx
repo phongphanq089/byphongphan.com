@@ -91,7 +91,7 @@ export function PageHero({
           )}
 
           {/* Large Main Heading */}
-          <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl md:text-4xl lg:text-5xl">
+          <h1 className="text-2xl font-medium tracking-tight text-foreground sm:text-3xl md:text-4xl lg:text-5xl">
             {title}
           </h1>
 

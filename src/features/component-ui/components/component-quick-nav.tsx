@@ -1,16 +1,19 @@
 import { useNavigate } from "@tanstack/react-router"
 import { play } from "cuelume"
-import {
-  ChevronDown,
-  LayoutGrid,
-  PanelLeftClose,
-  PanelLeftOpen,
-} from "lucide-react"
-import { motion } from "motion/react"
-import { useEffect, useMemo, useState } from "react"
+import { LayoutGrid, PanelLeft } from "lucide-react"
+import { useMemo, useState } from "react"
 
 import { COMPONENT_CATEGORIES } from "@/shared/config"
 import { cn } from "@/shared/lib/utils"
+import {
+  Button,
+  Drawer,
+  DrawerHeader,
+  DrawerPanel,
+  DrawerPopup,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/shared/ui/core"
 import {
   LineNav,
   type LineNavGroup,
@@ -26,8 +29,6 @@ export interface ComponentQuickNavProps {
   className?: string
 }
 
-const PANEL_WIDTH = 270
-
 export function ComponentQuickNav({
   currentCategory,
   currentSlug,
@@ -35,14 +36,7 @@ export function ComponentQuickNav({
   className,
 }: ComponentQuickNavProps) {
   const navigate = useNavigate()
-
-  // On desktop (>= 1024px) start open, on mobile (< 1024px) start closed
-  const [open, setOpen] = useState<boolean>(() => {
-    if (typeof window !== "undefined") {
-      return window.innerWidth >= 1024
-    }
-    return true
-  })
+  const [open, setOpen] = useState(false)
 
   // Active path for the currently viewed component
   const activeHref = `/component-ui/${currentCategory}/${currentSlug}`
@@ -95,143 +89,82 @@ export function ComponentQuickNav({
     if (item.href) {
       play("tap", { emphasis: "subtle" })
       navigate({ to: item.href })
-      if (typeof window !== "undefined" && window.innerWidth < 1024) {
-        setOpen(false)
-      }
+      setOpen(false)
     }
   }
 
-  // Close with Escape key
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && open) {
-        setOpen(false)
-      }
-    }
-    window.addEventListener("keydown", handleKeyDown)
-    return () => window.removeEventListener("keydown", handleKeyDown)
-  }, [open])
+  const navContent = (
+    <div className="flex h-full flex-col">
+      <div className="flex h-11 shrink-0 items-center justify-between border-b border-border/60 px-4">
+        <div className="flex items-center gap-2">
+          <LayoutGrid className="size-3.5 text-primary" />
+          <span className="font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
+            Components ({totalCount})
+          </span>
+        </div>
+      </div>
+
+      <div className="flex-1 scrollbar-none overflow-y-auto px-2 py-3">
+        <LineNav
+          groups={navGroups}
+          activeHref={activeHref}
+          scrollActiveIntoView={true}
+          onItemClick={handleItemClick}
+        />
+      </div>
+    </div>
+  )
 
   return (
     <>
-      {/* ── 1. Mobile top spacer so fixed top-12 bar doesn't cover top page content ── */}
-      <div className="h-11 w-full lg:hidden" aria-hidden="true" />
-
-      <button
-        type="button"
-        onClick={() => {
-          setOpen((prev) => !prev)
-          play("toggle", {
-            direction: open ? "back" : "forward",
-            emphasis: "subtle",
-          })
-        }}
-        className="fixed inset-x-0 top-12 left-1/2 z-30 flex h-11 w-full max-w-md -translate-x-1/2 items-center justify-between bg-accent/90 pr-8 pl-4 backdrop-blur-md transition-colors hover:bg-accent/50 sm:rounded-md sm:px-4 lg:hidden"
-        aria-expanded={open}
+      {/* ── 1. Desktop Sticky Sidebar: always flex on laptop (lg+), hidden on mobile ── */}
+      <aside
+        aria-label="Component Navigation"
+        className={cn(
+          "boder-b sticky top-12 hidden h-[calc(100vh-3rem)] w-64 shrink-0 flex-col border-r border-border/70 bg-muted/90 backdrop-blur-xs lg:flex xl:w-70",
+          className
+        )}
       >
-        <div className="w-fullitems-center flex w-full justify-between">
-          <div className="flex max-w-[70%] items-center gap-2 truncate text-xs">
-            <LayoutGrid className="size-3.5 shrink-0 text-muted-foreground" />
-            <span className="truncate font-semibold text-foreground">
-              {displayTitle}
-            </span>
-            <span className="shrink-0 rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground uppercase">
-              {currentCategory}
-            </span>
-          </div>
-          <div className="flex items-center gap-1 text-xs font-medium text-primary">
-            <ChevronDown
-              className={cn(
-                "size-3.5 transition-transform duration-200",
-                open && "rotate-180"
-              )}
-            />
-          </div>
+        {navContent}
+      </aside>
+
+      {/* ── 2. Mobile Bar & Drawer: visible on < lg only ── */}
+      <div className="sticky top-12 z-30 flex h-11 w-full items-center justify-between border-b border-border/70 bg-background/95 px-4 backdrop-blur-md lg:hidden">
+        <div className="flex max-w-[70%] items-center gap-2 truncate text-xs">
+          <LayoutGrid className="size-3.5 shrink-0 text-muted-foreground" />
+          <span className="truncate font-semibold text-foreground">
+            {displayTitle}
+          </span>
+          <span className="shrink-0 rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground uppercase">
+            {currentCategory}
+          </span>
         </div>
-      </button>
 
-      {/* ── 3. Mobile Backdrop Overlay when Side Panel is open ── */}
-      {open && (
-        <div
-          className="fixed inset-0 z-39 bg-black/40 backdrop-blur-xs lg:hidden"
-          onClick={() => {
-            setOpen(false)
-            play("toggle", { direction: "back", emphasis: "subtle" })
-          }}
-          aria-hidden="true"
-        />
-      )}
+        <Drawer position="left" open={open} onOpenChange={setOpen}>
+          <DrawerTrigger
+            render={
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-7.5 gap-1.5 rounded-md px-2.5 text-xs font-medium"
+                onClick={() =>
+                  play("toggle", { direction: "forward", emphasis: "subtle" })
+                }
+                aria-label="Open components navigation drawer"
+              >
+                <PanelLeft className="size-3.5 text-primary" />
+                <span>Menu</span>
+              </Button>
+            }
+          />
 
-      {/* ── 4. Floating Side Panel (Both Desktop and Mobile) ── */}
-      <div className="pointer-events-none fixed top-1/2 left-0 z-40 -translate-y-1/2">
-        <motion.div
-          initial={false}
-          animate={{
-            x: open ? 0 : -(PANEL_WIDTH + 24),
-            opacity: open ? 1 : 0,
-            pointerEvents: open ? "auto" : "none",
-          }}
-          transition={{ type: "spring", damping: 28, stiffness: 280 }}
-          className="flex h-[72vh] max-h-[640px] w-[270px] flex-col overflow-hidden rounded-r-lg border border-l-0 border-border/80 bg-background/95 shadow-2xl backdrop-blur-md dark:bg-muted/95"
-        >
-          {/* Header */}
-          <div className="flex shrink-0 items-center justify-between border-b border-border/60 px-3.5 py-2.5">
-            <span className="font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
-              Components ({totalCount})
-            </span>
-          </div>
-
-          {/* Scrollable LineNav Ladder with Category Groups */}
-          <div
-            className={cn(
-              "flex h-full min-h-0 w-full flex-1 flex-col overflow-hidden",
-              className
-            )}
-          >
-            <div className="h-full min-h-0 flex-1 scrollbar-none overflow-y-auto px-2 py-1">
-              <LineNav
-                groups={navGroups}
-                activeHref={activeHref}
-                scrollActiveIntoView={true}
-                onItemClick={handleItemClick}
-              />
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Desktop Single Toggle Button (also visible on mobile when open for easy close) */}
-        <motion.button
-          type="button"
-          onClick={() => {
-            setOpen((prev) => !prev)
-            play("toggle", {
-              direction: open ? "back" : "forward",
-              emphasis: "subtle",
-            })
-          }}
-          initial={false}
-          animate={{
-            x: open ? PANEL_WIDTH - 34 : 0,
-          }}
-          transition={{ type: "spring", damping: 28, stiffness: 280 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className={cn(
-            "pointer-events-auto absolute top-4.5 flex size-8 -translate-y-1/2 items-center justify-center rounded-r-md border border-l-0 border-border/80 bg-background/95 text-muted-foreground shadow-xl backdrop-blur-md transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none dark:bg-muted/95",
-            !open && "max-lg:hidden"
-          )}
-          aria-label={
-            open ? "Collapse component navigation" : "Open component navigation"
-          }
-          title={open ? "Collapse navigation" : `Components (${totalCount})`}
-          aria-expanded={open}
-        >
-          {open ? (
-            <PanelLeftClose className="size-4" />
-          ) : (
-            <PanelLeftOpen className="size-4" />
-          )}
-        </motion.button>
+          <DrawerPopup variant="inset" showCloseButton={true}>
+            <DrawerHeader>
+              <DrawerTitle>Components Navigation</DrawerTitle>
+            </DrawerHeader>
+            <DrawerPanel>{navContent}</DrawerPanel>
+          </DrawerPopup>
+        </Drawer>
       </div>
     </>
   )

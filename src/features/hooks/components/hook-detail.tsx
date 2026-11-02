@@ -162,12 +162,6 @@ export function HookDetail({ hook }: HookDetailProps) {
 
   return (
     <div className="relative w-full">
-      <HookQuickNav
-        currentCategory={hook.category}
-        currentSlug={hook.slug}
-        currentTitle={title}
-      />
-
       {railSections.length > 0 && (
         <RailScrollScrubber
           sections={railSections}
@@ -176,230 +170,240 @@ export function HookDetail({ hook }: HookDetailProps) {
         />
       )}
 
-      {/* ── Overview Section ── */}
-      <GridContainer
-        id="overview"
-        borderBottom
-        className="relative flex flex-col justify-between gap-6"
-      >
-        <div className="relative z-10 flex flex-col gap-4 px-4 py-6 md:px-8">
-          <div className="flex flex-wrap items-center justify-between gap-4">
-            <div className="flex flex-col gap-2">
-              <div className="flex flex-wrap items-center gap-3">
-                <h1 className="font-mono text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl md:text-5xl">
-                  {title}
-                </h1>
-
-                {hook.isNew ? (
-                  <Badge
-                    variant="outline"
-                    className="h-5 gap-1.5 rounded border-primary/30 bg-primary/10 px-2 text-[8px] font-semibold tracking-wider text-primary uppercase shadow-[0_0_10px_var(--pp-primary-glow)]"
-                  >
-                    New
-                  </Badge>
-                ) : hook.isUpdated ? (
-                  <Badge
-                    variant="outline"
-                    className="h-5 gap-1.5 rounded border-emerald-500/30 bg-emerald-500/10 px-2 text-[8px] font-semibold tracking-wider text-emerald-600 uppercase shadow-[0_0_10px_rgba(16,185,129,0.25)] dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-400"
-                  >
-                    Updated
-                  </Badge>
-                ) : null}
-
-                {mdxData?.frontmatter?.badge && (
-                  <Badge
-                    variant="outline"
-                    className="h-5 gap-1.5 rounded border-primary/30 bg-primary px-2 text-[8px] font-semibold tracking-wider text-white uppercase shadow-[0_0_10px_var(--pp-primary-glow)] dark:text-background"
-                  >
-                    {mdxData.frontmatter.badge}
-                  </Badge>
-                )}
-
-                <Badge
-                  variant="outline"
-                  className="h-5 rounded border-emerald-500/30 bg-emerald-500/10 px-2 text-[8px] font-semibold text-emerald-400 uppercase"
-                >
-                  SSR SAFE
-                </Badge>
-              </div>
-
-              <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-                {description}
-              </p>
-
-              {links && (links.doc || links.api) && (
-                <div className="flex flex-wrap items-center gap-2 pt-1">
-                  {links.doc && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      asChild
-                      className="h-7 gap-1.5 rounded-lg border-border/80 text-xs text-muted-foreground hover:text-foreground"
-                    >
-                      <a href={links.doc} target="_blank" rel="noreferrer">
-                        <BookOpen className="size-3 text-pp-primary" />
-                        <span>Docs</span>
-                        <ExternalLink className="size-2.5 opacity-60" />
-                      </a>
-                    </Button>
-                  )}
-                  {links.api && (
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      asChild
-                      className="h-7 gap-1.5 rounded-lg border-border/80 text-xs text-muted-foreground hover:text-foreground"
-                    >
-                      <a href={links.api} target="_blank" rel="noreferrer">
-                        <Code2 className="size-3 text-pp-primary" />
-                        <span>API Reference</span>
-                        <ExternalLink className="size-2.5 opacity-60" />
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-
-          <CodeBlockCommand name={hook.slug} />
-        </div>
-
-        <GridContainer
-          borderTop
-          showCrosshairs={false}
-          className="relative flex flex-col justify-between gap-4 px-4 py-3 md:px-6"
-        >
-          <div className="flex items-center justify-between">
-            <Button variant="ghost" asChild>
-              <Link to="/hooks">
-                <ArrowLeft className="size-3.5" />
-                <span className="capitalize">
-                  {hook.category.replace("-", " & ")}
-                </span>
-              </Link>
-            </Button>
-
-            <div className="flex items-center gap-2">
-              {rawMdxContent && (
-                <CopyButton
-                  className="relative gap-1.5 bg-accent pr-2.5 pl-2"
-                  variant="secondary"
-                  size="lg"
-                  text={rawMdxContent}
-                >
-                  Copy Page
-                </CopyButton>
-              )}
-
-              <div className="flex items-center gap-2">
-                {prevHook && (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="secondary"
-                        size="icon"
-                        asChild
-                        onClick={() =>
-                          play("attention", {
-                            direction: "back",
-                            emphasis: "subtle",
-                          })
-                        }
-                      >
-                        <Link
-                          to="/hooks/$category/$slug"
-                          params={{
-                            category: prevHook.category,
-                            slug: prevHook.slug,
-                          }}
-                        >
-                          <ArrowLeft className="size-4 opacity-50" />
-                        </Link>
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent side="top" className="text-[10px]">
-                      Previous Hook <Kbd>[</Kbd>
-                    </TooltipContent>
-                  </Tooltip>
-                )}
-
-                {nextHook && (
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Button
-                        variant="secondary"
-                        size="icon"
-                        asChild
-                        onClick={() =>
-                          play("attention", {
-                            direction: "forward",
-                            emphasis: "subtle",
-                          })
-                        }
-                      >
-                        <Link
-                          to="/hooks/$category/$slug"
-                          params={{
-                            category: nextHook.category,
-                            slug: nextHook.slug,
-                          }}
-                        >
-                          <ArrowRight className="size-4 opacity-50" />
-                        </Link>
-                      </Button>
-                    </TooltipTrigger>
-                    <TooltipContent side="top" className="text-[10px]">
-                      Next Hook <Kbd>]</Kbd>
-                    </TooltipContent>
-                  </Tooltip>
-                )}
-              </div>
-            </div>
-          </div>
-        </GridContainer>
-      </GridContainer>
-
-      {/* ── MDX Render Content Section ── */}
-      {mdxData?.Component ? (
-        <GridContainer
-          id="mdx-content"
-          borderBottom
-          showCrosshairs
-          className="p-4 lg:p-8"
-        >
-          <div className="mx-auto w-full">
-            <mdxData.Component components={mdxComponents} />
-          </div>
-        </GridContainer>
-      ) : LiveDemo ? (
-        <GridContainer
-          id="interactive-demo"
-          borderBottom
-          showCrosshairs
-          className="p-4 lg:p-8"
-        >
-          <ComponentStagePreview
-            slug={hook.slug}
-            liveDemo={LiveDemo}
-            code={`// ${hook.name} — documentation coming soon.\n// Install via:\n// npx shadcn@latest add ${siteConfig.registry.namespace}/${hook.slug}`}
+      <GridContainer maxWidth="wide" borderBottom={false} className="p-0">
+        <div className="flex min-h-[calc(100vh-3rem)] w-full flex-col lg:flex-row">
+          <HookQuickNav
+            currentCategory={hook.category}
+            currentSlug={hook.slug}
+            currentTitle={title}
           />
-        </GridContainer>
-      ) : (
-        <GridContainer
-          id="coming-soon"
-          borderBottom
-          showCrosshairs
-          className="flex flex-col items-center justify-center gap-4 py-20 text-center"
-        >
-          <p className="text-sm font-medium text-muted-foreground">
-            Documentation coming soon.
-          </p>
-          <p className="text-xs text-muted-foreground/60">
-            Install the hook via the command above to get started.
-          </p>
-        </GridContainer>
-      )}
+
+          <div className="flex min-w-0 flex-1 flex-col">
+            {/* ── Overview Section ── */}
+            <div
+              id="overview"
+              className="relative flex flex-col justify-between gap-6 border-b border-border"
+            >
+              <div className="relative z-10 flex flex-col gap-4 px-4 py-6 md:px-8">
+                <div className="flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex flex-col gap-2">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <h1 className="font-mono text-3xl font-medium tracking-tight text-foreground sm:text-4xl md:text-5xl">
+                        {title}
+                      </h1>
+
+                      {hook.isNew ? (
+                        <Badge
+                          variant="outline"
+                          className="h-5 gap-1.5 rounded border-primary/30 bg-primary/10 px-2 text-[8px] font-semibold tracking-wider text-primary uppercase shadow-[0_0_10px_var(--pp-primary-glow)]"
+                        >
+                          New
+                        </Badge>
+                      ) : hook.isUpdated ? (
+                        <Badge
+                          variant="outline"
+                          className="h-5 gap-1.5 rounded border-emerald-500/30 bg-emerald-500/10 px-2 text-[8px] font-semibold tracking-wider text-emerald-600 uppercase shadow-[0_0_10px_rgba(16,185,129,0.25)] dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-400"
+                        >
+                          Updated
+                        </Badge>
+                      ) : null}
+
+                      {mdxData?.frontmatter?.badge && (
+                        <Badge
+                          variant="outline"
+                          className="h-5 gap-1.5 rounded border-primary/30 bg-primary px-2 text-[8px] font-semibold tracking-wider text-white uppercase shadow-[0_0_10px_var(--pp-primary-glow)] dark:text-background"
+                        >
+                          {mdxData.frontmatter.badge}
+                        </Badge>
+                      )}
+
+                      <Badge
+                        variant="outline"
+                        className="h-5 rounded border-emerald-500/30 bg-emerald-500/10 px-2 text-[8px] font-semibold text-emerald-400 uppercase"
+                      >
+                        SSR SAFE
+                      </Badge>
+                    </div>
+
+                    <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+                      {description}
+                    </p>
+
+                    {links && (links.doc || links.api) && (
+                      <div className="flex flex-wrap items-center gap-2 pt-1">
+                        {links.doc && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            asChild
+                            className="h-7 gap-1.5 rounded-lg border-border/80 text-xs text-muted-foreground hover:text-foreground"
+                          >
+                            <a
+                              href={links.doc}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <BookOpen className="size-3 text-pp-primary" />
+                              <span>Docs</span>
+                              <ExternalLink className="size-2.5 opacity-60" />
+                            </a>
+                          </Button>
+                        )}
+                        {links.api && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            asChild
+                            className="h-7 gap-1.5 rounded-lg border-border/80 text-xs text-muted-foreground hover:text-foreground"
+                          >
+                            <a
+                              href={links.api}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <Code2 className="size-3 text-pp-primary" />
+                              <span>API Reference</span>
+                              <ExternalLink className="size-2.5 opacity-60" />
+                            </a>
+                          </Button>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <CodeBlockCommand name={hook.slug} />
+              </div>
+
+              {/* Sub-bar */}
+              <div className="relative flex flex-col justify-between gap-4 border-t border-border px-4 py-3 md:px-6">
+                <div className="flex items-center justify-between">
+                  <Button variant="ghost" asChild>
+                    <Link to="/hooks">
+                      <ArrowLeft className="size-3.5" />
+                      <span className="capitalize">
+                        {hook.category.replace("-", " & ")}
+                      </span>
+                    </Link>
+                  </Button>
+
+                  <div className="flex items-center gap-2">
+                    {rawMdxContent && (
+                      <CopyButton
+                        className="relative gap-1.5 bg-accent pr-2.5 pl-2"
+                        variant="secondary"
+                        size="lg"
+                        text={rawMdxContent}
+                      >
+                        Copy Page
+                      </CopyButton>
+                    )}
+
+                    <div className="flex items-center gap-2">
+                      {prevHook && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="secondary"
+                              size="icon"
+                              asChild
+                              onClick={() =>
+                                play("attention", {
+                                  direction: "back",
+                                  emphasis: "subtle",
+                                })
+                              }
+                            >
+                              <Link
+                                to="/hooks/$category/$slug"
+                                params={{
+                                  category: prevHook.category,
+                                  slug: prevHook.slug,
+                                }}
+                              >
+                                <ArrowLeft className="size-4 opacity-50" />
+                              </Link>
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent side="top" className="text-[10px]">
+                            Previous Hook <Kbd>[</Kbd>
+                          </TooltipContent>
+                        </Tooltip>
+                      )}
+
+                      {nextHook && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <Button
+                              variant="secondary"
+                              size="icon"
+                              asChild
+                              onClick={() =>
+                                play("attention", {
+                                  direction: "forward",
+                                  emphasis: "subtle",
+                                })
+                              }
+                            >
+                              <Link
+                                to="/hooks/$category/$slug"
+                                params={{
+                                  category: nextHook.category,
+                                  slug: nextHook.slug,
+                                }}
+                              >
+                                <ArrowRight className="size-4 opacity-50" />
+                              </Link>
+                            </Button>
+                          </TooltipTrigger>
+                          <TooltipContent side="top" className="text-[10px]">
+                            Next Hook <Kbd>]</Kbd>
+                          </TooltipContent>
+                        </Tooltip>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* ── MDX Render Content Section ── */}
+            {mdxData?.Component ? (
+              <div
+                id="mdx-content"
+                className="border-b border-border p-4 lg:p-8"
+              >
+                <div className="mx-auto w-full">
+                  <mdxData.Component components={mdxComponents} />
+                </div>
+              </div>
+            ) : LiveDemo ? (
+              <div
+                id="interactive-demo"
+                className="border-b border-border p-4 lg:p-8"
+              >
+                <ComponentStagePreview
+                  slug={hook.slug}
+                  liveDemo={LiveDemo}
+                  code={`// ${hook.name} — documentation coming soon.\n// Install via:\n// npx shadcn@latest add ${siteConfig.registry.namespace}/${hook.slug}`}
+                />
+              </div>
+            ) : (
+              <div
+                id="coming-soon"
+                className="flex flex-col items-center justify-center gap-4 border-b border-border py-20 text-center"
+              >
+                <p className="text-sm font-medium text-muted-foreground">
+                  Documentation coming soon.
+                </p>
+                <p className="text-xs text-muted-foreground/60">
+                  Install the hook via the command above to get started.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </GridContainer>
     </div>
   )
 }
