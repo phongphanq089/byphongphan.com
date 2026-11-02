@@ -39,6 +39,7 @@ export type HookSchematicType =
   | "toggle"
   | "previous"
   | "hover"
+  | "prevent-body-scroll"
 
 export type SchematicType =
   ComponentSchematicType | BlockSchematicType | HookSchematicType

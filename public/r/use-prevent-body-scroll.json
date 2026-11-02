@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-prevent-body-scroll",
+  "type": "registry:hook",
+  "title": "usePreventBodyScroll",
+  "description": "Prevents background scrolling with layout shift compensation and iOS Safari support.",
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-prevent-body-scroll.ts",
+      "content": "import { useEffect, useLayoutEffect, useRef } from \"react\"\n\nconst useIsomorphicLayoutEffect =\n  typeof window !== \"undefined\" ? useLayoutEffect : useEffect\n\nlet lockCount = 0\nlet savedScrollY = 0\nlet originalStyles: {\n  overflow: string\n  position: string\n  top: string\n  left: string\n  width: string\n  paddingRight: string\n} | null = null\n\nexport function usePreventBodyScroll(isOpen: boolean = true): void {\n  // Tracks whether this instance has currently acquired a body lock\n  const isLockedByThisInstance = useRef(false)\n\n  useIsomorphicLayoutEffect(() => {\n    if (typeof window === \"undefined\" || typeof document === \"undefined\") return\n\n    if (isOpen && !isLockedByThisInstance.current) {\n      isLockedByThisInstance.current = true\n\n      if (lockCount === 0) {\n        savedScrollY = window.scrollY\n\n        const body = document.body\n        const computedStyle = window.getComputedStyle(body)\n        const existingPaddingRight = parseFloat(computedStyle.paddingRight) || 0\n        const scrollbarWidth =\n          window.innerWidth - document.documentElement.clientWidth\n\n        originalStyles = {\n          overflow: body.style.overflow,\n          position: body.style.position,\n          top: body.style.top,\n          left: body.style.left,\n          width: body.style.width,\n          paddingRight: body.style.paddingRight,\n        }\n\n        body.style.overflow = \"hidden\"\n        body.style.position = \"fixed\"\n        body.style.top = `-${savedScrollY}px`\n        body.style.left = \"0\"\n        body.style.width = \"100%\"\n\n        if (scrollbarWidth > 0) {\n          body.style.paddingRight = `${existingPaddingRight + scrollbarWidth}px`\n        }\n      }\n\n      lockCount++\n    }\n\n    return () => {\n      if (isLockedByThisInstance.current) {\n        isLockedByThisInstance.current = false\n        lockCount--\n\n        if (lockCount === 0 && originalStyles) {\n          const body = document.body\n          const html = document.documentElement\n\n          body.style.overflow = originalStyles.overflow\n          body.style.position = originalStyles.position\n          body.style.top = originalStyles.top\n          body.style.left = originalStyles.left\n          body.style.width = originalStyles.width\n          body.style.paddingRight = originalStyles.paddingRight\n\n          originalStyles = null\n\n          const originalScrollBehavior = html.style.scrollBehavior\n          html.style.scrollBehavior = \"auto\"\n\n          window.scrollTo(0, savedScrollY)\n\n          html.style.scrollBehavior = originalScrollBehavior\n        }\n      }\n    }\n  }, [isOpen])\n}\n",
+      "type": "registry:hook",
+      "target": "hooks/use-prevent-body-scroll.ts"
+    }
+  ]
+}

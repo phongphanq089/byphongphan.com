@@ -735,6 +735,24 @@
           "target": "hooks/use-hover.ts"
         }
       ]
+    },
+    {
+      "name": "use-prevent-body-scroll",
+      "type": "registry:hook",
+      "title": "usePreventBodyScroll",
+      "description": "Prevents background scrolling with layout shift compensation and iOS Safari support.",
+      "category": "ui-interaction",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-prevent-body-scroll.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-prevent-body-scroll.ts"
+        }
+      ]
     }
   ]
 }

@@ -153,6 +153,10 @@
     {
       "category": "ui-interaction",
       "slug": "use-hover"
+    },
+    {
+      "category": "ui-interaction",
+      "slug": "use-prevent-body-scroll"
     }
   ]
 }

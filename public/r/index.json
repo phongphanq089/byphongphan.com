@@ -316,5 +316,13 @@
     "description": "Tracks hover state of a target element with optional delay.",
     "dependencies": [],
     "registryDependencies": []
+  },
+  {
+    "name": "use-prevent-body-scroll",
+    "type": "registry:hook",
+    "title": "usePreventBodyScroll",
+    "description": "Prevents background scrolling with layout shift compensation and iOS Safari support.",
+    "dependencies": [],
+    "registryDependencies": []
   }
 ]

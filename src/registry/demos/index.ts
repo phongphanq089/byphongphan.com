@@ -119,6 +119,11 @@ export const UseHoverDemo = lazyWithRetry(() =>
     default: m.UseHoverDemo,
   }))
 )
+export const UsePreventBodyScrollDemo = lazyWithRetry(() =>
+  import("./use-prevent-body-scroll-demo").then((m) => ({
+    default: m.UsePreventBodyScrollDemo,
+  }))
+)
 
 export const REGISTRY_DEMOS: Record<string, ComponentType> = {
   select: SelectDemo,
@@ -163,4 +168,6 @@ export const REGISTRY_DEMOS: Record<string, ComponentType> = {
   "use-previous-demo": UsePreviousDemo,
   "use-hover": UseHoverDemo,
   "use-hover-demo": UseHoverDemo,
+  "use-prevent-body-scroll": UsePreventBodyScrollDemo,
+  "use-prevent-body-scroll-demo": UsePreventBodyScrollDemo,
 }

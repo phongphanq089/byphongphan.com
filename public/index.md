@@ -95,7 +95,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## Custom Hooks (9)
+## Custom Hooks (10)
 
 | Hook | Description | Direct Install |
 | :--- | :--- | :--- |
@@ -108,6 +108,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [useToggle](https://byphongphan.com/r/use-toggle.json) | Toggles a boolean state value with memoized handlers. | `pnpm dlx shadcn add https://byphongphan.com/r/use-toggle.json` |
 | [usePrevious](https://byphongphan.com/r/use-previous.json) | Stores previous value of a state or prop across renders. | `pnpm dlx shadcn add https://byphongphan.com/r/use-previous.json` |
 | [useHover](https://byphongphan.com/r/use-hover.json) | Tracks hover state of a target element with optional delay. | `pnpm dlx shadcn add https://byphongphan.com/r/use-hover.json` |
+| [usePreventBodyScroll](https://byphongphan.com/r/use-prevent-body-scroll.json) | Prevents background scrolling with layout shift compensation and iOS Safari support. | `pnpm dlx shadcn add https://byphongphan.com/r/use-prevent-body-scroll.json` |
 
 ---
 

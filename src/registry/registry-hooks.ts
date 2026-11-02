@@ -7,6 +7,7 @@ import {
   IntersectionObserverSchematic,
   LocalStorageSchematic,
   MediaQuerySchematic,
+  PreventBodyScrollSchematic,
   PreviousSchematic,
   ToggleSchematic,
 } from "./schematics"
@@ -180,6 +181,26 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
         path: "hooks/use-hover.ts",
         type: "registry:hook",
         target: "hooks/use-hover.ts",
+      },
+    ],
+  },
+  {
+    name: "use-prevent-body-scroll",
+    title: "usePreventBodyScroll",
+    description:
+      "Prevents background scrolling with layout shift compensation and iOS Safari support.",
+    type: "registry:hook",
+    category: "ui-interaction",
+    schematic: PreventBodyScrollSchematic,
+    schematicType: "prevent-body-scroll",
+    dependencies: [],
+    registryDependencies: [],
+    isNew: true,
+    files: [
+      {
+        path: "hooks/use-prevent-body-scroll.ts",
+        type: "registry:hook",
+        target: "hooks/use-prevent-body-scroll.ts",
       },
     ],
   },
