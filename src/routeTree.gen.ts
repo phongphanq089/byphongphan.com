@@ -24,6 +24,8 @@ import { Route as SiteBlocksCategoryIndexRouteImport } from './routes/_site/bloc
 import { Route as SiteBlocksCategorySlugRouteImport } from './routes/_site/blocks/$category/$slug'
 import { Route as SiteComponentUiCategoryIndexRouteImport } from './routes/_site/component-ui/$category/index'
 import { Route as SiteComponentUiCategorySlugRouteImport } from './routes/_site/component-ui/$category/$slug'
+import { Route as SiteHooksCategoryIndexRouteImport } from './routes/_site/hooks/$category/index'
+import { Route as SiteHooksCategorySlugRouteImport } from './routes/_site/hooks/$category/$slug'
 
 const SiteRouteRoute = SiteRouteRouteImport.update({
   id: '/_site',
@@ -101,6 +103,16 @@ const SiteComponentUiCategorySlugRoute =
     path: '/component-ui/$category/$slug',
     getParentRoute: () => SiteRouteRoute,
   } as any)
+const SiteHooksCategoryIndexRoute = SiteHooksCategoryIndexRouteImport.update({
+  id: '/hooks/$category/',
+  path: '/hooks/$category/',
+  getParentRoute: () => SiteRouteRoute,
+} as any)
+const SiteHooksCategorySlugRoute = SiteHooksCategorySlugRouteImport.update({
+  id: '/hooks/$category/$slug',
+  path: '/hooks/$category/$slug',
+  getParentRoute: () => SiteRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
@@ -115,8 +127,10 @@ export interface FileRoutesByFullPath {
   '/resources/': typeof SiteResourcesIndexRoute
   '/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
   '/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
+  '/hooks/$category/$slug': typeof SiteHooksCategorySlugRoute
   '/blocks/$category/': typeof SiteBlocksCategoryIndexRoute
   '/component-ui/$category/': typeof SiteComponentUiCategoryIndexRoute
+  '/hooks/$category/': typeof SiteHooksCategoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/brand-app': typeof BrandAppRoute
@@ -131,8 +145,10 @@ export interface FileRoutesByTo {
   '/resources': typeof SiteResourcesIndexRoute
   '/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
   '/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
+  '/hooks/$category/$slug': typeof SiteHooksCategorySlugRoute
   '/blocks/$category': typeof SiteBlocksCategoryIndexRoute
   '/component-ui/$category': typeof SiteComponentUiCategoryIndexRoute
+  '/hooks/$category': typeof SiteHooksCategoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -149,8 +165,10 @@ export interface FileRoutesById {
   '/_site/resources/': typeof SiteResourcesIndexRoute
   '/_site/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
   '/_site/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
+  '/_site/hooks/$category/$slug': typeof SiteHooksCategorySlugRoute
   '/_site/blocks/$category/': typeof SiteBlocksCategoryIndexRoute
   '/_site/component-ui/$category/': typeof SiteComponentUiCategoryIndexRoute
+  '/_site/hooks/$category/': typeof SiteHooksCategoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -167,8 +185,10 @@ export interface FileRouteTypes {
     | '/resources/'
     | '/blocks/$category/$slug'
     | '/component-ui/$category/$slug'
+    | '/hooks/$category/$slug'
     | '/blocks/$category/'
     | '/component-ui/$category/'
+    | '/hooks/$category/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/brand-app'
@@ -183,8 +203,10 @@ export interface FileRouteTypes {
     | '/resources'
     | '/blocks/$category/$slug'
     | '/component-ui/$category/$slug'
+    | '/hooks/$category/$slug'
     | '/blocks/$category'
     | '/component-ui/$category'
+    | '/hooks/$category'
   id:
     | '__root__'
     | '/_site'
@@ -200,8 +222,10 @@ export interface FileRouteTypes {
     | '/_site/resources/'
     | '/_site/blocks/$category/$slug'
     | '/_site/component-ui/$category/$slug'
+    | '/_site/hooks/$category/$slug'
     | '/_site/blocks/$category/'
     | '/_site/component-ui/$category/'
+    | '/_site/hooks/$category/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -319,6 +343,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteComponentUiCategorySlugRouteImport
       parentRoute: typeof SiteRouteRoute
     }
+    '/_site/hooks/$category/': {
+      id: '/_site/hooks/$category/'
+      path: '/hooks/$category'
+      fullPath: '/hooks/$category/'
+      preLoaderRoute: typeof SiteHooksCategoryIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
+    }
+    '/_site/hooks/$category/$slug': {
+      id: '/_site/hooks/$category/$slug'
+      path: '/hooks/$category/$slug'
+      fullPath: '/hooks/$category/$slug'
+      preLoaderRoute: typeof SiteHooksCategorySlugRouteImport
+      parentRoute: typeof SiteRouteRoute
+    }
   }
 }
 
@@ -331,8 +369,10 @@ interface SiteRouteRouteChildren {
   SiteResourcesIndexRoute: typeof SiteResourcesIndexRoute
   SiteBlocksCategorySlugRoute: typeof SiteBlocksCategorySlugRoute
   SiteComponentUiCategorySlugRoute: typeof SiteComponentUiCategorySlugRoute
+  SiteHooksCategorySlugRoute: typeof SiteHooksCategorySlugRoute
   SiteBlocksCategoryIndexRoute: typeof SiteBlocksCategoryIndexRoute
   SiteComponentUiCategoryIndexRoute: typeof SiteComponentUiCategoryIndexRoute
+  SiteHooksCategoryIndexRoute: typeof SiteHooksCategoryIndexRoute
 }
 
 const SiteRouteRouteChildren: SiteRouteRouteChildren = {
@@ -344,8 +384,10 @@ const SiteRouteRouteChildren: SiteRouteRouteChildren = {
   SiteResourcesIndexRoute: SiteResourcesIndexRoute,
   SiteBlocksCategorySlugRoute: SiteBlocksCategorySlugRoute,
   SiteComponentUiCategorySlugRoute: SiteComponentUiCategorySlugRoute,
+  SiteHooksCategorySlugRoute: SiteHooksCategorySlugRoute,
   SiteBlocksCategoryIndexRoute: SiteBlocksCategoryIndexRoute,
   SiteComponentUiCategoryIndexRoute: SiteComponentUiCategoryIndexRoute,
+  SiteHooksCategoryIndexRoute: SiteHooksCategoryIndexRoute,
 }
 
 const SiteRouteRouteWithChildren = SiteRouteRoute._addFileChildren(

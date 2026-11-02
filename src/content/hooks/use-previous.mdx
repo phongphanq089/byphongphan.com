@@ -1,0 +1,60 @@
+---
+title: usePrevious
+description: Stores previous value of a state or prop across renders.
+component: true
+---
+
+<ComponentPreview name="use-previous-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="use-previous" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-previous" title="hooks/use-previous.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { useState } from "react"
+import { usePrevious } from "@/shared/hooks"
+
+export function Counter() {
+  const [count, setCount] = useState(0)
+  const previousCount = usePrevious(count)
+
+  return (
+    <div>
+      <p>Current: {count}</p>
+      <p>Previous: {previousCount ?? "None"}</p>
+      <button onClick={() => setCount((c) => c + 1)}>Increment</button>
+    </div>
+  )
+}
+```
+
+## Props & Parameters
+
+| Param   | Type | Default | Description                                            |
+| :------ | :--- | :------ | :----------------------------------------------------- |
+| `value` | `T`  | —       | Any state or prop value to track across render cycles. |
+
+## Returns
+
+| Return          | Type             | Description                                                                    |
+| :-------------- | :--------------- | :----------------------------------------------------------------------------- |
+| `previousValue` | `T \| undefined` | The value from the previous render cycle, or `undefined` on the initial mount. |

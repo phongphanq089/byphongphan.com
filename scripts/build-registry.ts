@@ -6,6 +6,7 @@ import { REGISTRY_ITEMS } from "../src/registry/registry"
 import {
   VALID_BLOCK_CATEGORY_IDS,
   VALID_COMPONENT_CATEGORY_IDS,
+  VALID_HOOK_CATEGORY_IDS,
 } from "../src/shared/config/categories.config"
 import { siteConfig } from "../src/shared/config/site.config"
 
@@ -129,6 +130,13 @@ async function buildRegistry() {
       category: i.category,
       slug: i.name,
     })),
+    hookCategories: [...VALID_HOOK_CATEGORY_IDS],
+    hooks: REGISTRY_ITEMS.filter((i) => i.type === "registry:hook").map(
+      (i) => ({
+        category: i.category,
+        slug: i.name,
+      })
+    ),
   }
   fs.writeFileSync(
     manifestPath,

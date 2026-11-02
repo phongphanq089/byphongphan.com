@@ -1,0 +1,60 @@
+---
+title: useClickOutside
+description: Detects clicks outside of a target element.
+component: true
+---
+
+<ComponentPreview name="use-click-outside-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="use-click-outside" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-click-outside" title="hooks/use-click-outside.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { useState } from "react"
+import { useClickOutside } from "@/shared/hooks"
+
+export function DropdownMenu() {
+  const [isOpen, setIsOpen] = useState(false)
+  const menuRef = useClickOutside<HTMLDivElement>(() => setIsOpen(false))
+
+  return (
+    <div className="relative">
+      <button onClick={() => setIsOpen((prev) => !prev)}>Toggle Menu</button>
+      {isOpen && (
+        <div ref={menuRef} className="dropdown-panel">
+          <p>Click outside this panel to close it.</p>
+        </div>
+      )}
+    </div>
+  )
+}
+```
+
+## Props & Parameters
+
+| Param                | Type                                        | Default                       | Description                                                                         |
+| :------------------- | :------------------------------------------ | :---------------------------- | :---------------------------------------------------------------------------------- |
+| `handler`            | `(event: MouseEvent \| TouchEvent) => void` | —                             | Callback invoked when a click or touch event occurs outside the referenced element. |
+| `options.enabled`    | `boolean`                                   | `true`                        | Whether the click outside event listener is active.                                 |
+| `options.events`     | `string[]`                                  | `["mousedown", "touchstart"]` | Array of DOM event types to listen for.                                             |
+| `options.ignoreRefs` | `RefObject<HTMLElement>[]`                  | `[]`                          | Optional list of other element refs whose clicks will not trigger the callback.     |

@@ -246,10 +246,66 @@
     ]
   },
   {
+    "name": "use-click-outside",
+    "type": "registry:hook",
+    "title": "useClickOutside",
+    "description": "Detects clicks outside of a target element.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
     "name": "use-media-query",
     "type": "registry:hook",
     "title": "useMediaQuery",
-    "description": "React hook for responsive design and media query listening with SSR support.",
+    "description": "Listens for media query changes and returns a boolean.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-copy-to-clipboard",
+    "type": "registry:hook",
+    "title": "useCopyToClipboard",
+    "description": "Copies text to clipboard with feedback.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-intersection-observer",
+    "type": "registry:hook",
+    "title": "useIntersectionObserver",
+    "description": "Triggers when an element enters or leaves the viewport.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-debounce",
+    "type": "registry:hook",
+    "title": "useDebounce",
+    "description": "Debounces a value or function for better performance.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-local-storage",
+    "type": "registry:hook",
+    "title": "useLocalStorage",
+    "description": "Syncs state with localStorage across browser sessions.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-toggle",
+    "type": "registry:hook",
+    "title": "useToggle",
+    "description": "Toggles a boolean state value with memoized handlers.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-previous",
+    "type": "registry:hook",
+    "title": "usePrevious",
+    "description": "Stores previous value of a state or prop across renders.",
     "dependencies": [],
     "registryDependencies": []
   }

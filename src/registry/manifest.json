@@ -109,5 +109,46 @@
       "category": "card",
       "slug": "border-glow"
     }
+  ],
+  "hookCategories": [
+    "state",
+    "ui-interaction",
+    "browser",
+    "performance",
+    "utilities"
+  ],
+  "hooks": [
+    {
+      "category": "ui-interaction",
+      "slug": "use-click-outside"
+    },
+    {
+      "category": "browser",
+      "slug": "use-media-query"
+    },
+    {
+      "category": "utilities",
+      "slug": "use-copy-to-clipboard"
+    },
+    {
+      "category": "performance",
+      "slug": "use-intersection-observer"
+    },
+    {
+      "category": "utilities",
+      "slug": "use-debounce"
+    },
+    {
+      "category": "browser",
+      "slug": "use-local-storage"
+    },
+    {
+      "category": "state",
+      "slug": "use-toggle"
+    },
+    {
+      "category": "state",
+      "slug": "use-previous"
+    }
   ]
 }

@@ -1,18 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-import { UnderConstructionBlock } from "@/shared/ui"
+import { HookGrid } from "@/features/hooks"
+import { createSeoMeta } from "@/shared/config"
 
 export const Route = createFileRoute("/_site/hooks/")({
-  component: RouteComponent,
+  head: () => ({
+    meta: createSeoMeta("hooks"),
+  }),
+  component: HooksAllPage,
 })
 
-function RouteComponent() {
+function HooksAllPage() {
   return (
     <div className="w-full">
-      <UnderConstructionBlock
-        moduleName="Developer Hooks"
-        moduleBadge="HOOK_202"
-      />
+      <HookGrid category="all" />
     </div>
   )
 }

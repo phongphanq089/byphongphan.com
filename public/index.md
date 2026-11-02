@@ -95,11 +95,18 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## Custom Hooks (1)
+## Custom Hooks (8)
 
 | Hook | Description | Direct Install |
 | :--- | :--- | :--- |
-| [useMediaQuery](https://byphongphan.com/r/use-media-query.json) | React hook for responsive design and media query listening with SSR support. | `pnpm dlx shadcn add https://byphongphan.com/r/use-media-query.json` |
+| [useClickOutside](https://byphongphan.com/r/use-click-outside.json) | Detects clicks outside of a target element. | `pnpm dlx shadcn add https://byphongphan.com/r/use-click-outside.json` |
+| [useMediaQuery](https://byphongphan.com/r/use-media-query.json) | Listens for media query changes and returns a boolean. | `pnpm dlx shadcn add https://byphongphan.com/r/use-media-query.json` |
+| [useCopyToClipboard](https://byphongphan.com/r/use-copy-to-clipboard.json) | Copies text to clipboard with feedback. | `pnpm dlx shadcn add https://byphongphan.com/r/use-copy-to-clipboard.json` |
+| [useIntersectionObserver](https://byphongphan.com/r/use-intersection-observer.json) | Triggers when an element enters or leaves the viewport. | `pnpm dlx shadcn add https://byphongphan.com/r/use-intersection-observer.json` |
+| [useDebounce](https://byphongphan.com/r/use-debounce.json) | Debounces a value or function for better performance. | `pnpm dlx shadcn add https://byphongphan.com/r/use-debounce.json` |
+| [useLocalStorage](https://byphongphan.com/r/use-local-storage.json) | Syncs state with localStorage across browser sessions. | `pnpm dlx shadcn add https://byphongphan.com/r/use-local-storage.json` |
+| [useToggle](https://byphongphan.com/r/use-toggle.json) | Toggles a boolean state value with memoized handlers. | `pnpm dlx shadcn add https://byphongphan.com/r/use-toggle.json` |
+| [usePrevious](https://byphongphan.com/r/use-previous.json) | Stores previous value of a state or prop across renders. | `pnpm dlx shadcn add https://byphongphan.com/r/use-previous.json` |
 
 ---
 

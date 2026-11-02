@@ -1,0 +1,57 @@
+---
+title: useMediaQuery
+description: Listens for media query changes and returns a boolean.
+component: true
+---
+
+<ComponentPreview name="use-media-query-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="use-media-query" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-media-query" title="hooks/use-media-query.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { useMediaQuery } from "@/shared/hooks"
+
+export function ResponsiveLayout() {
+  const isDesktop = useMediaQuery("(min-width: 1024px)")
+  const isMobile = useMediaQuery("max-sm")
+
+  return (
+    <div>
+      {isDesktop ? <DesktopNavigation /> : <MobileNavigation />}
+    </div>
+  )
+}
+```
+
+## Props & Parameters
+
+| Param   | Type                                           | Default | Description                                                                          |
+| :------ | :--------------------------------------------- | :------ | :----------------------------------------------------------------------------------- |
+| `query` | `string \| BreakpointQuery \| MediaQueryInput` | —       | Media query string e.g. `"(min-width: 1024px)"` or breakpoint token like `"max-md"`. |
+
+## Returns
+
+| Return    | Type      | Description                                                                                        |
+| :-------- | :-------- | :------------------------------------------------------------------------------------------------- |
+| `matches` | `boolean` | `true` if current viewport matches the media query, `false` otherwise. Safely synchronizes on SSR. |

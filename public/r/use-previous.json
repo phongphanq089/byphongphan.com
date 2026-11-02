@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-previous",
+  "type": "registry:hook",
+  "title": "usePrevious",
+  "description": "Stores previous value of a state or prop across renders.",
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-previous.ts",
+      "content": "import { useEffect, useRef } from \"react\"\n\n/**\n * React hook that stores and returns the previous value of a state or prop across renders.\n */\nexport function usePrevious<T>(value: T): T | undefined {\n  const currentRef = useRef<T>(value)\n  const previousRef = useRef<T | undefined>(undefined)\n\n  if (currentRef.current !== value) {\n    previousRef.current = currentRef.current\n    currentRef.current = value\n  }\n\n  useEffect(() => {\n    currentRef.current = value\n  }, [value])\n\n  return previousRef.current\n}\n",
+      "type": "registry:hook",
+      "target": "hooks/use-previous.ts"
+    }
+  ]
+}

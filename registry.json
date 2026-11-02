@@ -575,11 +575,29 @@
       ]
     },
     {
+      "name": "use-click-outside",
+      "type": "registry:hook",
+      "title": "useClickOutside",
+      "description": "Detects clicks outside of a target element.",
+      "category": "ui-interaction",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-click-outside.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-click-outside.ts"
+        }
+      ]
+    },
+    {
       "name": "use-media-query",
       "type": "registry:hook",
       "title": "useMediaQuery",
-      "description": "React hook for responsive design and media query listening with SSR support.",
-      "category": "interactive",
+      "description": "Listens for media query changes and returns a boolean.",
+      "category": "browser",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [],
       "devDependencies": [],
@@ -589,6 +607,114 @@
           "path": "src/registry/hooks/use-media-query.ts",
           "type": "registry:hook",
           "target": "hooks/use-media-query.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-copy-to-clipboard",
+      "type": "registry:hook",
+      "title": "useCopyToClipboard",
+      "description": "Copies text to clipboard with feedback.",
+      "category": "utilities",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-copy-to-clipboard.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-copy-to-clipboard.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-intersection-observer",
+      "type": "registry:hook",
+      "title": "useIntersectionObserver",
+      "description": "Triggers when an element enters or leaves the viewport.",
+      "category": "performance",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-intersection-observer.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-intersection-observer.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-debounce",
+      "type": "registry:hook",
+      "title": "useDebounce",
+      "description": "Debounces a value or function for better performance.",
+      "category": "utilities",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-debounce.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-debounce.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-local-storage",
+      "type": "registry:hook",
+      "title": "useLocalStorage",
+      "description": "Syncs state with localStorage across browser sessions.",
+      "category": "browser",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-local-storage.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-local-storage.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-toggle",
+      "type": "registry:hook",
+      "title": "useToggle",
+      "description": "Toggles a boolean state value with memoized handlers.",
+      "category": "state",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-toggle.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-toggle.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-previous",
+      "type": "registry:hook",
+      "title": "usePrevious",
+      "description": "Stores previous value of a state or prop across renders.",
+      "category": "state",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-previous.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-previous.ts"
         }
       ]
     }
