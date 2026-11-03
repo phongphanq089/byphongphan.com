@@ -388,5 +388,13 @@
     "description": "A reactive Map instance synchronized with React state that triggers re-renders on mutation.",
     "dependencies": [],
     "registryDependencies": []
+  },
+  {
+    "name": "use-list-state",
+    "type": "registry:hook",
+    "title": "useListState",
+    "description": "Manages array state with declarative helper methods for insertion, removal, reordering, and item transformations.",
+    "dependencies": [],
+    "registryDependencies": []
   }
 ]

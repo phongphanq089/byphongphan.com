@@ -189,6 +189,10 @@
     {
       "category": "state",
       "slug": "use-map"
+    },
+    {
+      "category": "state",
+      "slug": "use-list-state"
     }
   ]
 }

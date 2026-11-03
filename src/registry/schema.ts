@@ -48,6 +48,7 @@ export type HookSchematicType =
   | "selection"
   | "pagination"
   | "map"
+  | "list-state"
 
 export type SchematicType =
   ComponentSchematicType | BlockSchematicType | HookSchematicType

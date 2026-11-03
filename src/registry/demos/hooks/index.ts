@@ -100,6 +100,12 @@ export const UseMapDemo = lazyWithRetry(() =>
   }))
 )
 
+export const UseListStateDemo = lazyWithRetry(() =>
+  import("./use-list-state-demo").then((m) => ({
+    default: m.UseListStateDemo,
+  }))
+)
+
 export const HOOK_DEMOS: Record<string, ComponentType> = {
   "use-click-outside": UseClickOutsideDemo,
   "use-click-outside-demo": UseClickOutsideDemo,
@@ -137,4 +143,6 @@ export const HOOK_DEMOS: Record<string, ComponentType> = {
   "use-pagination-demo": UsePaginationDemo,
   "use-map": UseMapDemo,
   "use-map-demo": UseMapDemo,
+  "use-list-state": UseListStateDemo,
+  "use-list-state-demo": UseListStateDemo,
 }

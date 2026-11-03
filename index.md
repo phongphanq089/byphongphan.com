@@ -94,7 +94,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## Custom Hooks (18)
+## Custom Hooks (19)
 
 | Hook                                                                                | Description                                                                                                                                                    | Direct Install                                                                 |
 | :---------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------- |
@@ -116,6 +116,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [useSelection](https://byphongphan.com/r/use-selection.json)                        | Manages single, multi, and batch selection states with Set-based O(1) lookups and range selection.                                                             | `pnpm dlx shadcn add https://byphongphan.com/r/use-selection.json`             |
 | [usePagination](https://byphongphan.com/r/use-pagination.json)                      | Controls dataset pagination metrics, slice bounds, and UI navigation range with ellipsis handling.                                                             | `pnpm dlx shadcn add https://byphongphan.com/r/use-pagination.json`            |
 | [useMap](https://byphongphan.com/r/use-map.json)                                    | A reactive Map instance synchronized with React state that triggers re-renders on mutation.                                                                    | `pnpm dlx shadcn add https://byphongphan.com/r/use-map.json`                   |
+| [useListState](https://byphongphan.com/r/use-list-state.json)                       | Manages array state with declarative helper methods for insertion, removal, reordering, and item transformations.                                              | `pnpm dlx shadcn add https://byphongphan.com/r/use-list-state.json`            |
 
 ---
 
