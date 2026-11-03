@@ -1,0 +1,110 @@
+---
+title: usePageLeave
+description: Detects when the cursor leaves the viewport with exit-intent filtering and trigger frequency control.
+component: true
+---
+
+<ComponentPreview name="use-page-leave-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="cli">
+    <CodeBlockCommand name="use-page-leave" />
+  </TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-page-leave" title="hooks/use-page-leave.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+### Exit-Intent Retention Dialog
+
+```tsx
+import { useState } from "react"
+import { usePageLeave } from "@/shared/hooks"
+
+export function ExitIntentOffer() {
+  const [showOffer, setShowOffer] = useState(false)
+
+  // Fires once when the user moves their cursor towards the browser tabs/address bar
+  usePageLeave(() => setShowOffer(true), {
+    onlyTop: true,
+    once: true,
+  })
+
+  if (!showOffer) return null
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <div className="rounded-xl bg-card p-6 shadow-xl max-w-sm text-center">
+        <h3 className="text-lg font-bold">Wait! Before you leave...</h3>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Enjoy 15% off your first purchase with coupon code <code>STAY15</code>.
+        </p>
+        <button
+          className="mt-4 rounded-md bg-primary px-4 py-2 text-primary-foreground text-sm font-medium"
+          onClick={() => setShowOffer(false)}
+        >
+          Claim Discount
+        </button>
+      </div>
+    </div>
+  )
+}
+```
+
+### Unsaved Draft Reminder
+
+```tsx
+import { usePageLeave } from "@/shared/hooks"
+
+export function EditorAutoSave({ hasUnsavedChanges }: { hasUnsavedChanges: boolean }) {
+  const isLeaving = usePageLeave(
+    () => {
+      if (hasUnsavedChanges) {
+        // Trigger auto-save draft to local storage
+        console.log("Draft auto-saved upon page leave")
+      }
+    },
+    { onlyTop: false }
+  )
+
+  return (
+    <div className="text-xs text-muted-foreground">
+      {isLeaving ? "Saving draft..." : "All changes up to date"}
+    </div>
+  )
+}
+```
+
+## Features
+
+- **Exit-Intent Heuristic**: Measures `clientY <= 0` to accurately capture intent when visitors aim for the browser's tab strip, address bar, or close button.
+- **Boundary Filtering**: Toggle between top-edge only (`onlyTop: true`) for exit-intent or any viewport edge (`onlyTop: false`) for general canvas applications.
+- **Trigger Frequency Control**: Supports `once: true` to prevent repetitive dialogs or notifications during a user's session.
+- **Ref-Stabilized Handlers**: Stores the `onLeave` callback in an internal ref so changes to the callback never trigger unnecessary event listener re-attachments.
+- **Root Element Delegation**: Binds to `document.documentElement` to cleanly avoid event bubbling quirks from nested child elements.
+
+## Parameters
+
+| Parameter          | Type                  | Default | Description                                                                                  |
+| :----------------- | :-------------------- | :------ | :------------------------------------------------------------------------------------------- |
+| `onLeave`          | `(() => void)`        | `—`     | Optional callback invoked when the cursor exits the configured boundary.                     |
+| `options.onlyTop`  | `boolean`             | `true`  | When `true`, triggers only when the mouse leaves through the top edge (`clientY <= 0`).       |
+| `options.once`     | `boolean`             | `false` | When `true`, the `onLeave` callback will only be executed once during the component's life. |
+
+## Returns
+
+`boolean` — Returns `true` if the cursor is currently outside the configured viewport boundary, or `false` when inside.

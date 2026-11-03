@@ -95,7 +95,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## Custom Hooks (12)
+## Custom Hooks (13)
 
 | Hook | Description | Direct Install |
 | :--- | :--- | :--- |
@@ -111,6 +111,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [usePreventBodyScroll](https://byphongphan.com/r/use-prevent-body-scroll.json) | Prevents background scrolling with layout shift compensation and iOS Safari support. | `pnpm dlx shadcn add https://byphongphan.com/r/use-prevent-body-scroll.json` |
 | [useScrollPosition](https://byphongphan.com/r/use-scroll-position.json) | Tracks scroll coordinates and direction in real time for the window or a specific scrollable element. | `pnpm dlx shadcn add https://byphongphan.com/r/use-scroll-position.json` |
 | [useNetwork](https://byphongphan.com/r/use-network.json) | Tracks the browser's online and offline status and provides available network connection details such as connection type, downlink speed, and round-trip time. | `pnpm dlx shadcn add https://byphongphan.com/r/use-network.json` |
+| [usePageLeave](https://byphongphan.com/r/use-page-leave.json) | Detects when the cursor leaves the viewport and provides exit-intent detection with configurable boundary filtering and trigger frequency. | `pnpm dlx shadcn add https://byphongphan.com/r/use-page-leave.json` |
 
 ---
 

@@ -12,6 +12,7 @@ import {
   ScrollPositionSchematic,
   ToggleSchematic,
   NetworkSchematic,
+  PageLeaveSchematic,
 } from "./schematics"
 
 export const REGISTRY_HOOKS: RegistryItem[] = [
@@ -232,7 +233,7 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
     description:
       "Tracks the browser's online and offline status and provides available network connection details such as connection type, downlink speed, and round-trip time.",
     type: "registry:hook",
-    category: "ui-interaction",
+    category: "browser",
     schematic: NetworkSchematic,
     schematicType: "network",
     dependencies: [],
@@ -243,6 +244,26 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
         path: "hooks/use-network.ts",
         type: "registry:hook",
         target: "hooks/use-network.ts",
+      },
+    ],
+  },
+  {
+    name: "use-page-leave",
+    title: "usePageLeave",
+    description:
+      "Detects when the cursor leaves the viewport and provides exit-intent detection with configurable boundary filtering and trigger frequency.",
+    type: "registry:hook",
+    category: "ui-interaction",
+    schematic: PageLeaveSchematic,
+    schematicType: "page-leave",
+    dependencies: [],
+    registryDependencies: [],
+    isNew: true,
+    files: [
+      {
+        path: "hooks/use-page-leave.ts",
+        type: "registry:hook",
+        target: "hooks/use-page-leave.ts",
       },
     ],
   },

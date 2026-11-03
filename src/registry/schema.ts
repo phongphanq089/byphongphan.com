@@ -42,6 +42,7 @@ export type HookSchematicType =
   | "prevent-body-scroll"
   | "scroll-position"
   | "network"
+  | "page-leave"
 
 export type SchematicType =
   ComponentSchematicType | BlockSchematicType | HookSchematicType

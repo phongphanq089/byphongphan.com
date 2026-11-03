@@ -13,6 +13,7 @@ import { PreviousSchematic } from "./previous-schematic"
 import { ScrollPositionSchematic } from "./scroll-position-schematic"
 import { ToggleSchematic } from "./toggle-schematic"
 import { NetworkSchematic } from "./network-schematic"
+import { PageLeaveSchematic } from "./page-leave-schematic"
 
 export * from "./click-outside-schematic"
 export * from "./media-query-schematic"
@@ -26,6 +27,7 @@ export * from "./hover-schematic"
 export * from "./prevent-body-scroll-schematic"
 export * from "./scroll-position-schematic"
 export * from "./network-schematic"
+export * from "./page-leave-schematic"
 
 export function DefaultHookSchematic() {
   return (
@@ -52,6 +54,7 @@ export const HOOK_SCHEMATICS_MAP: Record<
   "prevent-body-scroll": PreventBodyScrollSchematic,
   "scroll-position": ScrollPositionSchematic,
   network: NetworkSchematic,
+  "page-leave": PageLeaveSchematic,
 }
 
 export function RenderHookSchematic({ type }: { type?: string }) {

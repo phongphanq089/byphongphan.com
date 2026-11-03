@@ -789,6 +789,24 @@
           "target": "hooks/use-network.ts"
         }
       ]
+    },
+    {
+      "name": "use-page-leave",
+      "type": "registry:hook",
+      "title": "usePageLeave",
+      "description": "Detects when the cursor leaves the viewport and provides exit-intent detection with configurable boundary filtering and trigger frequency.",
+      "category": "ui-interaction",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-page-leave.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-page-leave.ts"
+        }
+      ]
     }
   ]
 }
