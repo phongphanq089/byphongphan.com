@@ -48,11 +48,19 @@ export const HOME_TOC_ITEMS: TOCItemConfig[] = [
     keywords: ["components", "ui showcase", "widgets", "interactive"],
   },
   {
+    title: "Hooks Section",
+    url: "#hooks",
+    depth: 1,
+    description: "Type-safe, copy-paste React hooks",
+    shortcut: ["#", "6"],
+    keywords: ["hooks", "react hooks", "utilities", "state"],
+  },
+  {
     title: "Writing Section",
     url: "#blog",
     depth: 1,
     description: "Articles, blogs, and dev notes",
-    shortcut: ["#", "6"],
+    shortcut: ["#", "7"],
     keywords: ["blog", "writing", "articles"],
   },
   {
@@ -60,7 +68,7 @@ export const HOME_TOC_ITEMS: TOCItemConfig[] = [
     url: "#resources",
     depth: 1,
     description: "Curated tools and developer resources",
-    shortcut: ["#", "7"],
+    shortcut: ["#", "8"],
     keywords: ["resources", "tools", "bookmarks"],
   },
   {

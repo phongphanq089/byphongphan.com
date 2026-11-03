@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router"
 import { lazy, Suspense, useEffect, useRef, useState } from "react"
 
 import { GridContainer } from "@/app/layouts"
-import { SectionBlog, SectionResources } from "@/features/home"
+import { SectionBlog, SectionHooks, SectionResources } from "@/features/home"
 import BannerHero from "@/features/home/banner-hero"
 import SectionAbout from "@/features/home/section-about"
 import { SectionBlocks } from "@/features/home/section-blocks"
@@ -98,10 +98,13 @@ function HomePage() {
       {/* 5. Components UI Showcase Section */}
       <UiComponentsSection />
 
-      {/* 6. Blog & Writing Section */}
+      {/* 6. React Hooks Section */}
+      <SectionHooks />
+
+      {/* 7. Blog & Writing Section */}
       <SectionBlog />
 
-      {/* 7. Curated Resources Section */}
+      {/* 8. Curated Resources Section */}
       <SectionResources />
 
       {/* 9. Location & Vietnam Map Section */}

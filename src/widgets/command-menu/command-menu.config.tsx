@@ -103,6 +103,7 @@ const SECTION_ICON_MAP: Record<string, ReactNode> = {
   "tech-stack": <Code2 className="size-4 text-pp-primary" />,
   blocks: <CookingPot className="size-4 text-pp-primary" />,
   "components-ui": <Atom className="size-4 text-pp-primary" />,
+  hooks: <Workflow className="size-4 text-pp-primary" />,
   blog: <Newspaper className="size-4 text-pp-primary" />,
   resources: <Bookmark className="size-4 text-pp-primary" />,
   bookmarks: <Bookmark className="size-4 text-pp-primary" />,
