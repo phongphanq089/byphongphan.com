@@ -1,0 +1,78 @@
+---
+title: usePreventBodyScroll
+description: Prevents background body scrolling with layout shift compensation and iOS Safari support.
+component: true
+---
+
+<ComponentPreview name="use-prevent-body-scroll-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="cli">
+    <CodeBlockCommand name="use-prevent-body-scroll" />
+  </TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-prevent-body-scroll" title="hooks/use-prevent-body-scroll.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { useState } from "react"
+import { usePreventBodyScroll } from "@/shared/hooks"
+
+export function CustomModal() {
+  const [isOpen, setIsOpen] = useState(false)
+
+  // Locks body scroll when the modal is open
+  usePreventBodyScroll(isOpen)
+
+  return (
+    <>
+      <button onClick={() => setIsOpen(true)}>Open Modal</button>
+
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+          <div className="rounded-lg bg-card p-6 shadow-xl">
+            <h3 className="text-lg font-semibold">Modal Title</h3>
+            <p className="text-sm text-muted-foreground">
+              Background scroll is locked without page shifting.
+            </p>
+            <button onClick={() => setIsOpen(false)}>Close</button>
+          </div>
+        </div>
+      )}
+    </>
+  )
+}
+```
+
+## Features
+
+- **Layout Shift Prevention**: Calculates the exact scrollbar width (`window.innerWidth - clientWidth`) and applies compensating `paddingRight` to `document.body` so content does not jump when the scrollbar disappears.
+- **iOS Safari Support**: Applies `position: fixed` clamped to `-window.scrollY` to prevent iOS WebKit momentum rubber-banding and elastic bounce scroll.
+- **Reference Counting**: Supports multiple nested modals, stacked drawers, or lightboxes. The body remains locked until the last open instance unmounts or sets `isOpen = false`.
+- **Instant Position Restoration**: Disables smooth scroll behavior (`scrollBehavior: auto`) during restore so users return to their exact scroll position without awkward animated scrolling.
+- **SSR-Safe**: Uses an isomorphic layout effect check to avoid hydration mismatch warnings in Next.js or other SSR environments.
+
+## Parameters
+
+| Parameter | Type      | Default | Description                                              |
+| :-------- | :-------- | :------ | :------------------------------------------------------- |
+| `isOpen`  | `boolean` | `true`  | Pass `true` to lock body scroll, or `false` to release. |
+
+## Returns
+
+`void` - The hook manages lifecycle and body cleanup side-effects automatically.

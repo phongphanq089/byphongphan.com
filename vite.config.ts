@@ -25,6 +25,8 @@ function getRegistryStaticPaths(): string[] {
     blocks?: { category: string; slug: string }[]
     componentCategories?: string[]
     components?: { category: string; slug: string }[]
+    hookCategories?: string[]
+    hooks?: { category: string; slug: string }[]
   }
 
   const paths = new Set<string>()
@@ -39,6 +41,12 @@ function getRegistryStaticPaths(): string[] {
   }
   for (const comp of manifest.components ?? []) {
     paths.add(`/component-ui/${comp.category}/${comp.slug}`)
+  }
+  for (const cat of manifest.hookCategories ?? []) {
+    paths.add(`/hooks/${cat}`)
+  }
+  for (const hook of manifest.hooks ?? []) {
+    paths.add(`/hooks/${hook.category}/${hook.slug}`)
   }
   return [...paths]
 }
@@ -130,7 +138,7 @@ const config = defineConfig({
         { path: "/" },
         { path: "/blocks" },
         { path: "/component-ui" },
-        { path: "/colophon" },
+        { path: "/hooks" },
         ...registryStaticPaths.map((path) => ({
           path,
         })),

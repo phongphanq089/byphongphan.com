@@ -6,6 +6,7 @@ import { REGISTRY_ITEMS } from "../src/registry/registry"
 import {
   VALID_BLOCK_CATEGORY_IDS,
   VALID_COMPONENT_CATEGORY_IDS,
+  VALID_HOOK_CATEGORY_IDS,
 } from "../src/shared/config/categories.config"
 import { siteConfig } from "../src/shared/config/site.config"
 
@@ -129,6 +130,13 @@ async function buildRegistry() {
       category: i.category,
       slug: i.name,
     })),
+    hookCategories: [...VALID_HOOK_CATEGORY_IDS],
+    hooks: REGISTRY_ITEMS.filter((i) => i.type === "registry:hook").map(
+      (i) => ({
+        category: i.category,
+        slug: i.name,
+      })
+    ),
   }
   fs.writeFileSync(
     manifestPath,
@@ -341,7 +349,7 @@ function generateIndexMdContent(
 - [Component Registry](${docsUrl}/component-ui): UI primitives, interactive cards, and responsive blocks.
 - [Blocks Directory](${docsUrl}/blocks): Production-grade page sections and application blocks.
 - [Registry Manifest](${docsUrl}/r/index.json): Machine-readable JSON for shadcn CLI installation.
-- [Colophon](${docsUrl}/colophon): Architecture, design tokens, and technical stack details.
+- [Hook Registry](${docsUrl}/hooks): Reusable React hooks, state management utilities, and interactive logic for building modern applications.
 - [Technical Blog (In Development)](${docsUrl}/blog): Deep dives into Browser Rendering, Hydration, and Database Internals.
 - [Developer Resources (In Development)](${docsUrl}/resources): Curated developer bookmarks, tools, and libraries.
 
@@ -467,7 +475,7 @@ Personal portfolio and engineering showcase of Phong Phan. Frontend Engineer spe
 - [Home](${docsUrl}): Interactive portfolio, featured case studies, and engineering background.
 - [Component Registry](${docsUrl}/component-ui): Directory of customizable, accessible UI primitives and interactive micro-interactions.
 - [Blocks](${docsUrl}/blocks): Ready-to-use, production-grade page sections and complex interface layouts.
-- [Colophon](${docsUrl}/colophon): System specifications, design tokens, typography, and architecture.
+- [Hook Registry](${docsUrl}/hooks): Reusable React hooks, state management utilities, and interactive logic for building modern applications.
 - [Raw Profile (Markdown)](${docsUrl}/index.md): Full raw markdown portfolio document for text consumption.
 
 ## UI Components & Primitives

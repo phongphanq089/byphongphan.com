@@ -1,0 +1,159 @@
+---
+title: useListState
+description: Manages array state with declarative helper methods for insertion, removal, reordering, and item transformations.
+component: true
+---
+
+<ComponentPreview name="use-list-state-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="cli">
+    <CodeBlockCommand name="use-list-state" />
+  </TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-list-state" title="hooks/use-list-state.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+### Interactive Todo List
+
+```tsx
+import { useListState } from "@/shared/hooks"
+
+interface Todo {
+  id: string
+  text: string
+  done: boolean
+}
+
+export function TodoApp() {
+  const [todos, handlers] = useListState<Todo>([
+    { id: "1", text: "Create responsive layout", done: true },
+    { id: "2", text: "Implement state management", done: false },
+  ])
+
+  return (
+    <div className="space-y-4">
+      <div className="flex gap-2">
+        <button
+          onClick={() =>
+            handlers.append({ id: String(Date.now()), text: "New Task", done: false })
+          }
+        >
+          Add Task
+        </button>
+        <button onClick={() => handlers.apply((t) => ({ ...t, done: true }))}>
+          Mark All Done
+        </button>
+      </div>
+
+      <ul className="divide-y border rounded-lg">
+        {todos.map((todo, index) => (
+          <li key={todo.id} className="p-3 flex items-center justify-between">
+            <span className={todo.done ? "line-through text-muted-foreground" : ""}>
+              {todo.text}
+            </span>
+
+            <div className="flex gap-2">
+              <button
+                onClick={() => handlers.setItemProp(index, "done", !todo.done)}
+              >
+                {todo.done ? "Undo" : "Complete"}
+              </button>
+              <button onClick={() => handlers.remove(index)}>Delete</button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+```
+
+### Reordering List Items
+
+```tsx
+import { useListState } from "@/shared/hooks"
+
+export function ReorderableList() {
+  const [items, handlers] = useListState(["Item 1", "Item 2", "Item 3", "Item 4"])
+
+  return (
+    <div className="space-y-2">
+      {items.map((item, index) => (
+        <div key={item} className="flex items-center justify-between p-2 border rounded">
+          <span>{item}</span>
+          <div className="flex gap-1">
+            <button
+              onClick={() => handlers.reorder({ from: index, to: index - 1 })}
+              disabled={index === 0}
+            >
+              Up
+            </button>
+            <button
+              onClick={() => handlers.reorder({ from: index, to: index + 1 })}
+              disabled={index === items.length - 1}
+            >
+              Down
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+```
+
+## Features
+
+- **Declarative Operations**: Provides clean immutable handlers (`append`, `prepend`, `insert`, `remove`, `setItem`) eliminating repetitive array slice and spread code.
+- **Position Reordering**: Move any item effortlessly using `.reorder({ from, to })` or `.swap({ from, to })` with built-in boundary safety.
+- **Granular Field Updates**: `.setItemProp(index, prop, value)` updates a specific property on an object item with complete TypeScript key checking.
+- **Batch Transformers**: Transform all items with `.apply()`, target matching elements with `.applyWhere()`, or filter with `.filter()`.
+- **Tuple Ergonomics**: Returns a standard `[list, handlers]` tuple matching React conventions.
+
+## Parameters
+
+| Parameter      | Type                        | Default | Description                                              |
+| :------------- | :-------------------------- | :------ | :------------------------------------------------------- |
+| `initialValue` | `T[] \| (() => T[])`        | `[]`    | Initial array values or a lazy factory initializer.      |
+
+## Returns
+
+Returns a tuple `[list, handlers]`:
+
+| Index / Property | Type                   | Description                                                |
+| :--------------- | :--------------------- | :--------------------------------------------------------- |
+| `[0]` (list)     | `T[]`                  | The active array state.                                    |
+| `[1]` (handlers) | `ListStateHandlers<T>` | Object containing all memoized array manipulation helpers. |
+
+### Handlers Methods
+
+| Method                                      | Description                                                          |
+| :------------------------------------------ | :------------------------------------------------------------------- |
+| `append(...items: T[])`                     | Appends one or more items to the end of the array.                   |
+| `prepend(...items: T[])`                    | Prepends one or more items to the beginning of the array.            |
+| `insert(index: number, ...items: T[])`      | Inserts one or more items at a specific index.                       |
+| `remove(...indices: number[])`              | Removes items at the specified index positions.                      |
+| `reorder({ from, to }: ReorderPayload)`     | Moves an item from position `from` to position `to`.                 |
+| `swap({ from, to }: ReorderPayload)`        | Swaps the positions of two items.                                    |
+| `setItem(index: number, item: T)`           | Replaces an entire item at `index`.                                  |
+| `setItemProp(index, prop, value)`           | Updates a single property of the object item at `index`.             |
+| `apply(fn: (item: T, idx: number) => T)`    | Maps through all items applying a transformer function.              |
+| `applyWhere(predicate, fn)`                 | Transforms only items matching the predicate condition.              |
+| `filter(fn: (item: T, idx: number) => boolean)` | Filters items according to a boolean predicate.                 |
+| `setState(updater)`                         | Direct React state setter for replacing the entire array.            |

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-debounce",
+  "type": "registry:hook",
+  "title": "useDebounce",
+  "description": "Debounces a value or function for better performance.",
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-debounce.ts",
+      "content": "import { useEffect, useState } from \"react\"\n\n/**\n * Debounces a fast-changing value, updating only after the specified delay.\n */\nexport function useDebounce<T>(value: T, delay = 500): T {\n  const [debouncedValue, setDebouncedValue] = useState<T>(value)\n\n  useEffect(() => {\n    const timer = setTimeout(() => {\n      setDebouncedValue(value)\n    }, delay)\n\n    return () => {\n      clearTimeout(timer)\n    }\n  }, [value, delay])\n\n  return debouncedValue\n}\n",
+      "type": "registry:hook",
+      "target": "hooks/use-debounce.ts"
+    }
+  ]
+}

@@ -44,8 +44,14 @@ export function resolveDemoSource(name?: string): string | undefined {
   if (!name) return undefined
   const cleanName = name.replace(/-demo$/, "")
 
-  // 1. Check direct demo candidates
+  // 1. Check direct demo candidates in components and hooks subfolders, then legacy root demos
   const candidates = [
+    `/demos/components/${name}.tsx`,
+    `/demos/components/${cleanName}-demo.tsx`,
+    `/demos/components/${cleanName}.tsx`,
+    `/demos/hooks/${name}.tsx`,
+    `/demos/hooks/${cleanName}-demo.tsx`,
+    `/demos/hooks/${cleanName}.tsx`,
     `/demos/${name}.tsx`,
     `/demos/${cleanName}-demo.tsx`,
     `/demos/${cleanName}.tsx`,

@@ -41,6 +41,25 @@ export const MAIN_NAV_ITEMS: NavItemConfig[] = [
     keywords: ["blocks", "sections", "components", "templates"],
   },
   {
+    id: "hooks",
+    label: "HOOKS",
+    title: "Hook Registry",
+    link: "/hooks",
+    shortcut: ["G", "H"],
+    badge: "LIVE",
+    description:
+      "Reusable React hooks, custom logic & state management utilities",
+    keywords: [
+      "hooks",
+      "react hooks",
+      "custom hooks",
+      "state management",
+      "reusable logic",
+      "interactive logic",
+      "utilities",
+    ],
+  },
+  {
     id: "blog",
     label: "BLOG",
     title: "Blog",
@@ -59,23 +78,5 @@ export const MAIN_NAV_ITEMS: NavItemConfig[] = [
     badge: "COMING_SOON",
     description: "Curated tools, bookmarks and resources",
     keywords: ["resources", "tai nguyen", "tools", "bookmarks"],
-  },
-
-  {
-    id: "colophon",
-    label: "COLOPHON",
-    title: "Colophon",
-    link: "/colophon",
-    shortcut: ["G", "D"],
-    badge: "LIVE",
-    description: "System specifications, tech stack, typography & inspirations",
-    keywords: [
-      "colophon",
-      "tech stack",
-      "design",
-      "typography",
-      "inspirations",
-      "specs",
-    ],
   },
 ]

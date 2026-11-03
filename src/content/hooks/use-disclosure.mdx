@@ -1,0 +1,135 @@
+---
+title: useDisclosure
+description: Manages boolean open/close state for modals, dialogs, drawers, and collapsibles with memoized action handlers.
+component: true
+---
+
+<ComponentPreview name="use-disclosure-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="cli">
+    <CodeBlockCommand name="use-disclosure" />
+  </TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-disclosure" title="hooks/use-disclosure.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+### Controlled Dialog Modal
+
+`useDisclosure` integrates seamlessly with UI dialogs and modals by binding `isOpen` to `open` and `handlers.set` directly to `onOpenChange`:
+
+```tsx
+import { useDisclosure } from "@/shared/hooks"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/registry/ui/dialog"
+import { Button } from "@/registry/ui/button"
+
+export function DeploymentModal() {
+  const [isOpen, handlers] = useDisclosure(false)
+
+  return (
+    <>
+      <Button onClick={handlers.open}>Open Modal</Button>
+
+      <Dialog open={isOpen} onOpenChange={handlers.set}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Deployment</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to deploy to production?
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={handlers.close}>
+              Cancel
+            </Button>
+            <Button onClick={handlers.close}>
+              Confirm
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}
+```
+
+### Lifecycle Callbacks
+
+You can track opening and closing actions, initialize resources, or report telemetry using optional `onOpen` and `onClose` callbacks:
+
+```tsx
+import { useDisclosure } from "@/shared/hooks"
+
+export function TrackedDrawer() {
+  const [isOpen, { open, close, toggle }] = useDisclosure(false, {
+    onOpen: () => {
+      console.log("Analytics: Drawer opened")
+    },
+    onClose: () => {
+      console.log("Analytics: Drawer closed")
+    },
+  })
+
+  return (
+    <div>
+      <button onClick={toggle}>Toggle Drawer</button>
+      {isOpen && <aside>Drawer Content</aside>}
+    </div>
+  )
+}
+```
+
+## Props & Parameters
+
+| Param          | Type                     | Default | Description                                                        |
+| :------------- | :----------------------- | :------ | :----------------------------------------------------------------- |
+| `initialState` | `boolean`                | `false` | Initial boolean open/close state.                                  |
+| `callbacks`    | `UseDisclosureCallbacks` | —       | Optional object containing `onOpen` and `onClose` callback events. |
+
+### UseDisclosureCallbacks
+
+| Property  | Type         | Description                                        |
+| :-------- | :----------- | :------------------------------------------------- |
+| `onOpen`  | `() => void` | Optional callback triggered when state becomes `true`. |
+| `onClose` | `() => void` | Optional callback triggered when state becomes `false`. |
+
+## Returns
+
+`useDisclosure` returns a tuple `[isOpen, handlers]`:
+
+| Return     | Type                    | Description                                                            |
+| :--------- | :---------------------- | :--------------------------------------------------------------------- |
+| `isOpen`   | `boolean`               | Current boolean open status.                                           |
+| `handlers` | `UseDisclosureHandlers` | Stable memoized object containing action helper functions.             |
+
+### UseDisclosureHandlers
+
+| Handler    | Type                      | Description                                                  |
+| :--------- | :------------------------ | :----------------------------------------------------------- |
+| `open`     | `() => void`              | Sets boolean state to `true` and triggers `onOpen`.          |
+| `close`    | `() => void`              | Sets boolean state to `false` and triggers `onClose`.        |
+| `toggle`   | `() => void`              | Toggles state and executes the corresponding callback.       |
+| `set`      | `(value: boolean) => void`| Sets the boolean value directly (ideal for `onOpenChange`). |

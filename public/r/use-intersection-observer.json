@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-intersection-observer",
+  "type": "registry:hook",
+  "title": "useIntersectionObserver",
+  "description": "Triggers when an element enters or leaves the viewport.",
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-intersection-observer.ts",
+      "content": "import { useEffect, useRef, useState } from \"react\"\n\nexport interface UseIntersectionObserverOptions extends IntersectionObserverInit {\n  /** If true, once the target element becomes visible, the observer is disconnected. Defaults to false. */\n  freezeOnceVisible?: boolean\n  /** Whether the observer is active. Defaults to true. */\n  enabled?: boolean\n  /** Callback triggered on every intersection state change */\n  onChange?: (entry: IntersectionObserverEntry) => void\n}\n\nexport interface UseIntersectionObserverReturn<\n  T extends HTMLElement = HTMLElement,\n> {\n  ref: React.RefObject<T | null>\n  entry: IntersectionObserverEntry | null\n  isIntersecting: boolean\n}\n\n/**\n * React hook that triggers when an element enters or leaves the viewport.\n */\nexport function useIntersectionObserver<T extends HTMLElement = HTMLElement>(\n  options: UseIntersectionObserverOptions = {}\n): UseIntersectionObserverReturn<T> {\n  const {\n    threshold = 0,\n    root = null,\n    rootMargin = \"0%\",\n    freezeOnceVisible = false,\n    enabled = true,\n    onChange,\n  } = options\n\n  const ref = useRef<T | null>(null)\n  const [entry, setEntry] = useState<IntersectionObserverEntry | null>(null)\n\n  const frozen = entry?.isIntersecting && freezeOnceVisible\n\n  useEffect(() => {\n    const node = ref.current\n    const hasIOSupport =\n      typeof window !== \"undefined\" && \"IntersectionObserver\" in window\n\n    if (!hasIOSupport || !enabled || frozen || !node) return\n\n    const observer = new IntersectionObserver(\n      ([firstEntry]) => {\n        if (!firstEntry) return\n        setEntry(firstEntry)\n        onChange?.(firstEntry)\n      },\n      { threshold, root, rootMargin }\n    )\n\n    observer.observe(node)\n\n    return () => {\n      observer.disconnect()\n    }\n  }, [threshold, root, rootMargin, frozen, enabled, onChange])\n\n  return {\n    ref,\n    entry,\n    isIntersecting: Boolean(entry?.isIntersecting),\n  }\n}\n",
+      "type": "registry:hook",
+      "target": "hooks/use-intersection-observer.ts"
+    }
+  ]
+}

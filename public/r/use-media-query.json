@@ -3,7 +3,7 @@
   "name": "use-media-query",
   "type": "registry:hook",
   "title": "useMediaQuery",
-  "description": "React hook for responsive design and media query listening with SSR support.",
+  "description": "Listens for media query changes and returns a boolean.",
   "dependencies": [],
   "devDependencies": [],
   "registryDependencies": [],

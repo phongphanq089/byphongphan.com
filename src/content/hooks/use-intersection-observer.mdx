@@ -1,0 +1,69 @@
+---
+title: useIntersectionObserver
+description: Triggers when an element enters or leaves the viewport.
+component: true
+---
+
+<ComponentPreview name="use-intersection-observer-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="use-intersection-observer" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-intersection-observer" title="hooks/use-intersection-observer.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { useIntersectionObserver } from "@/shared/hooks"
+
+export function LazyCard() {
+  const { ref, isIntersecting } = useIntersectionObserver<HTMLDivElement>({
+    threshold: 0.5,
+    freezeOnceVisible: true,
+  })
+
+  return (
+    <div
+      ref={ref}
+      className={isIntersecting ? "animate-fade-in" : "opacity-0"}
+    >
+      <h3>Animated Element</h3>
+      <p>Appears once 50% enters viewport.</p>
+    </div>
+  )
+}
+```
+
+## Props & Parameters
+
+| Param               | Type                          | Default | Description                                                                                     |
+| :------------------ | :---------------------------- | :------ | :---------------------------------------------------------------------------------------------- |
+| `threshold`         | `number \| number[]`          | `0`     | Either a single number or an array of numbers between 0.0 and 1.0 indicating visibility ratio.  |
+| `root`              | `Element \| Document \| null` | `null`  | The element that is used as the viewport for checking visibility. Defaults to browser viewport. |
+| `rootMargin`        | `string`                      | `"0%"`  | Margin around the root element, similar to CSS margin property.                                 |
+| `freezeOnceVisible` | `boolean`                     | `false` | When `true`, automatically unobserves element after it first enters viewport.                   |
+| `enabled`           | `boolean`                     | `true`  | Whether intersection observer is active.                                                        |
+
+## Returns
+
+| Return           | Type                                | Description                                                               |
+| :--------------- | :---------------------------------- | :------------------------------------------------------------------------ |
+| `ref`            | `RefObject<T \| null>`              | React Ref to attach to target DOM element container.                      |
+| `isIntersecting` | `boolean`                           | `true` when target is currently intersecting viewport based on threshold. |
+| `entry`          | `IntersectionObserverEntry \| null` | Raw native intersection observer entry record.                            |

@@ -1,0 +1,61 @@
+---
+title: useLocalStorage
+description: Syncs state with localStorage across browser sessions.
+component: true
+---
+
+<ComponentPreview name="use-local-storage-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="use-local-storage" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-local-storage" title="hooks/use-local-storage.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { useLocalStorage } from "@/shared/hooks"
+
+export function ThemeToggle() {
+  const [theme, setTheme] = useLocalStorage<"light" | "dark">("app_theme", "dark")
+
+  return (
+    <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+      Current Theme: {theme}
+    </button>
+  )
+}
+```
+
+## Props & Parameters
+
+| Param                  | Type                   | Default          | Description                                                       |
+| :--------------------- | :--------------------- | :--------------- | :---------------------------------------------------------------- |
+| `key`                  | `string`               | —                | Unique key identifier in browser localStorage.                    |
+| `initialValue`         | `T \| (() => T)`       | —                | Fallback initial value if no stored value exists in localStorage. |
+| `options.serializer`   | `(value: T) => string` | `JSON.stringify` | Custom serializer function for complex objects or models.         |
+| `options.deserializer` | `(value: string) => T` | `JSON.parse`     | Custom deserializer function.                                     |
+
+## Returns
+
+| Return        | Type                                     | Description                                                                |
+| :------------ | :--------------------------------------- | :------------------------------------------------------------------------- |
+| `storedValue` | `T`                                      | Current synchronized state value from localStorage.                        |
+| `setValue`    | `(value: T \| ((prev: T) => T)) => void` | Setter function supporting direct values and functional updater callbacks. |
+| `removeValue` | `() => void`                             | Removes the key from localStorage and resets state back to initial value.  |

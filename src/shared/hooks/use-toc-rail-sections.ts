@@ -15,6 +15,7 @@ const DEFAULT_SHORT_TITLES: Record<string, string> = {
   "#tech-stack": "TECH STACK",
   "#blocks": "BLOCKS",
   "#components-ui": "COMPONENTS",
+  "#hooks": "HOOKS",
   "#blog": "WRITING",
   "#resources": "RESOURCES",
   "#vietnam-map": "VIET NAM",

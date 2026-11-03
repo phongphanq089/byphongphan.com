@@ -109,5 +109,98 @@
       "category": "card",
       "slug": "border-glow"
     }
+  ],
+  "hookCategories": [
+    "state",
+    "ui-interaction",
+    "browser",
+    "performance",
+    "utilities"
+  ],
+  "hooks": [
+    {
+      "category": "ui-interaction",
+      "slug": "use-click-outside"
+    },
+    {
+      "category": "browser",
+      "slug": "use-media-query"
+    },
+    {
+      "category": "utilities",
+      "slug": "use-copy-to-clipboard"
+    },
+    {
+      "category": "performance",
+      "slug": "use-intersection-observer"
+    },
+    {
+      "category": "utilities",
+      "slug": "use-debounce"
+    },
+    {
+      "category": "utilities",
+      "slug": "use-debounced-callback"
+    },
+    {
+      "category": "browser",
+      "slug": "use-local-storage"
+    },
+    {
+      "category": "state",
+      "slug": "use-toggle"
+    },
+    {
+      "category": "state",
+      "slug": "use-previous"
+    },
+    {
+      "category": "ui-interaction",
+      "slug": "use-hover"
+    },
+    {
+      "category": "ui-interaction",
+      "slug": "use-prevent-body-scroll"
+    },
+    {
+      "category": "ui-interaction",
+      "slug": "use-scroll-position"
+    },
+    {
+      "category": "browser",
+      "slug": "use-network"
+    },
+    {
+      "category": "ui-interaction",
+      "slug": "use-page-leave"
+    },
+    {
+      "category": "state",
+      "slug": "use-is-first-render"
+    },
+    {
+      "category": "state",
+      "slug": "use-state-history"
+    },
+    {
+      "category": "ui-interaction",
+      "slug": "use-selection"
+    },
+    {
+      "category": "ui-interaction",
+      "slug": "use-pagination"
+    },
+    {
+      "category": "state",
+      "slug": "use-map"
+    },
+    {
+      "category": "state",
+      "slug": "use-list-state"
+    },
+    {
+      "category": "state",
+      "slug": "use-disclosure"
+    }
   ]
 }

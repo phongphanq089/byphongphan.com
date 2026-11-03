@@ -8,13 +8,16 @@ export type UseCopyToClipboardOptions = {
   onCopySuccess?: (text: string) => void
   onCopyError?: (error: Error) => void
   resetDelay?: number
+  timeout?: number
 }
 
 export function useCopyToClipboard({
   onCopySuccess,
   onCopyError,
   resetDelay = 1500,
+  timeout,
 }: UseCopyToClipboardOptions = {}) {
+  const effectiveDelay = timeout ?? resetDelay
   const [state, setState] = useState<CopyState>("idle")
   const resetTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
@@ -49,11 +52,11 @@ export function useCopyToClipboard({
         // Schedule reset to idle
         resetTimeoutRef.current = setTimeout(() => {
           setState("idle")
-        }, resetDelay)
+        }, effectiveDelay)
       }
     },
-    [onCopySuccess, onCopyError, haptic, tiksSuccess, tiksError, resetDelay]
+    [onCopySuccess, onCopyError, haptic, tiksSuccess, tiksError, effectiveDelay]
   )
 
-  return { state, copy } as const
+  return { state, isCopied: state === "done", copy } as const
 }

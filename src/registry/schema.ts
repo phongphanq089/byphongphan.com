@@ -29,7 +29,31 @@ export type BlockSchematicType =
   | "koi-background"
   | "artcraft-scroll-01"
 
-export type SchematicType = ComponentSchematicType | BlockSchematicType
+export type HookSchematicType =
+  | "click-outside"
+  | "media-query"
+  | "copy-to-clipboard"
+  | "intersection-observer"
+  | "debounce"
+  | "local-storage"
+  | "toggle"
+  | "previous"
+  | "hover"
+  | "prevent-body-scroll"
+  | "scroll-position"
+  | "network"
+  | "page-leave"
+  | "is-first-render"
+  | "state-history"
+  | "selection"
+  | "pagination"
+  | "map"
+  | "list-state"
+  | "debounced-callback"
+  | "disclosure"
+
+export type SchematicType =
+  ComponentSchematicType | BlockSchematicType | HookSchematicType
 
 export type RegistryType =
   | "registry:ui"
@@ -38,9 +62,17 @@ export type RegistryType =
   | "registry:block"
   | "registry:lib"
 
-import type { BlockCategoryId, ComponentCategoryId } from "@/shared/config"
+import type {
+  BlockCategoryId,
+  ComponentCategoryId,
+  HookCategoryId,
+} from "@/shared/config"
 
-export type { BlockCategoryId, ComponentCategoryId } from "@/shared/config"
+export type {
+  BlockCategoryId,
+  ComponentCategoryId,
+  HookCategoryId,
+} from "@/shared/config"
 
 export interface RegistryFile {
   path: string
@@ -55,7 +87,7 @@ export interface RegistryItem {
   description: string
   type: RegistryType
   /** UI category for the component grid or block section */
-  category: ComponentCategoryId | BlockCategoryId
+  category: ComponentCategoryId | BlockCategoryId | HookCategoryId
   /** Schematic component representing the wireframe thumbnail for this item */
   schematic?: React.ComponentType
   /** Schematic thumbnail type used on component cards */
