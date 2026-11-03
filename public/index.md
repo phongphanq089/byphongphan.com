@@ -95,7 +95,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## Custom Hooks (14)
+## Custom Hooks (15)
 
 | Hook | Description | Direct Install |
 | :--- | :--- | :--- |
@@ -113,6 +113,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [useNetwork](https://byphongphan.com/r/use-network.json) | Tracks the browser's online and offline status and provides available network connection details such as connection type, downlink speed, and round-trip time. | `pnpm dlx shadcn add https://byphongphan.com/r/use-network.json` |
 | [usePageLeave](https://byphongphan.com/r/use-page-leave.json) | Detects when the cursor leaves the viewport and provides exit-intent detection with configurable boundary filtering and trigger frequency. | `pnpm dlx shadcn add https://byphongphan.com/r/use-page-leave.json` |
 | [useIsFirstRender](https://byphongphan.com/r/use-is-first-render.json) | Determines whether the current render is the initial mount, returning true on the first render and false on subsequent re-renders. | `pnpm dlx shadcn add https://byphongphan.com/r/use-is-first-render.json` |
+| [useStateHistory](https://byphongphan.com/r/use-state-history.json) | Provides state management with undo, redo, and time-travel capabilities through a chronological history of state snapshots. | `pnpm dlx shadcn add https://byphongphan.com/r/use-state-history.json` |
 
 ---
 

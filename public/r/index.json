@@ -356,5 +356,13 @@
     "description": "Determines whether the current render is the initial mount, returning true on the first render and false on subsequent re-renders.",
     "dependencies": [],
     "registryDependencies": []
+  },
+  {
+    "name": "use-state-history",
+    "type": "registry:hook",
+    "title": "useStateHistory",
+    "description": "Provides state management with undo, redo, and time-travel capabilities through a chronological history of state snapshots.",
+    "dependencies": [],
+    "registryDependencies": []
   }
 ]

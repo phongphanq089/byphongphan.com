@@ -44,6 +44,7 @@ export type HookSchematicType =
   | "network"
   | "page-leave"
   | "is-first-render"
+  | "state-history"
 
 export type SchematicType =
   ComponentSchematicType | BlockSchematicType | HookSchematicType

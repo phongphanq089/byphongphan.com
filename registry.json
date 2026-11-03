@@ -825,6 +825,24 @@
           "target": "hooks/use-is-first-render.ts"
         }
       ]
+    },
+    {
+      "name": "use-state-history",
+      "type": "registry:hook",
+      "title": "useStateHistory",
+      "description": "Provides state management with undo, redo, and time-travel capabilities through a chronological history of state snapshots.",
+      "category": "state",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-state-history.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-state-history.ts"
+        }
+      ]
     }
   ]
 }

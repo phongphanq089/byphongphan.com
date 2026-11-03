@@ -173,6 +173,10 @@
     {
       "category": "state",
       "slug": "use-is-first-render"
+    },
+    {
+      "category": "state",
+      "slug": "use-state-history"
     }
   ]
 }

@@ -10,7 +10,7 @@
   "files": [
     {
       "path": "hooks/use-is-first-render.ts",
-      "content": "import { useEffect, useRef } from 'react';\n\n/**\n * Custom hook that returns whether the current render cycle is the initial mount.\n * Complies with React Concurrent and Strict Mode guidelines by mutating the ref\n * inside an effect rather than during the render phase.\n *\n * @returns `true` during the initial render pass, and `false` on all subsequent re-renders.\n */\nexport function useIsFirstRender(): boolean {\n  // Initialize ref as true for the initial render\n  const isFirst = useRef(true);\n\n  useEffect(() => {\n    // Flip flag after the first commit phase completes\n    isFirst.current = false;\n  }, []);\n\n  return isFirst.current;\n}\n",
+      "content": "import { useEffect, useRef } from \"react\"\n\n/**\n * Custom hook that returns whether the current render cycle is the initial mount.\n * Complies with React Concurrent and Strict Mode guidelines by mutating the ref\n * inside an effect rather than during the render phase.\n *\n * @returns `true` during the initial render pass, and `false` on all subsequent re-renders.\n */\nexport function useIsFirstRender(): boolean {\n  // Initialize ref as true for the initial render\n  const isFirst = useRef(true)\n\n  useEffect(() => {\n    // Flip flag after the first commit phase completes\n    isFirst.current = false\n  }, [])\n\n  return isFirst.current\n}\n",
       "type": "registry:hook",
       "target": "hooks/use-is-first-render.ts"
     }

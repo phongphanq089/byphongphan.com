@@ -14,6 +14,7 @@ import {
   NetworkSchematic,
   PageLeaveSchematic,
   IsFirstRenderSchematic,
+  StateHistorySchematic,
 } from "./schematics"
 
 export const REGISTRY_HOOKS: RegistryItem[] = [
@@ -285,6 +286,26 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
         path: "hooks/use-is-first-render.ts",
         type: "registry:hook",
         target: "hooks/use-is-first-render.ts",
+      },
+    ],
+  },
+  {
+    name: "use-state-history",
+    title: "useStateHistory",
+    description:
+      "Provides state management with undo, redo, and time-travel capabilities through a chronological history of state snapshots.",
+    type: "registry:hook",
+    category: "state",
+    schematic: StateHistorySchematic,
+    schematicType: "state-history",
+    dependencies: [],
+    registryDependencies: [],
+    isNew: true,
+    files: [
+      {
+        path: "hooks/use-state-history.ts",
+        type: "registry:hook",
+        target: "hooks/use-state-history.ts",
       },
     ],
   },

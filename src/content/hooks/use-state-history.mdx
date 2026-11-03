@@ -1,0 +1,123 @@
+---
+title: useStateHistory
+description: State management with undo, redo, and time-travel capabilities through a chronological history of state snapshots.
+component: true
+---
+
+<ComponentPreview name="use-state-history-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="cli">
+    <CodeBlockCommand name="use-state-history" />
+  </TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-state-history" title="hooks/use-state-history.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+### Basic Undo and Redo
+
+```tsx
+import { useStateHistory } from "@/shared/hooks"
+
+export function TextEditor() {
+  const { state: text, set: setText, undo, redo, canUndo, canRedo } =
+    useStateHistory("Hello world")
+
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="flex gap-2">
+        <button onClick={undo} disabled={!canUndo}>Undo</button>
+        <button onClick={redo} disabled={!canRedo}>Redo</button>
+      </div>
+
+      <textarea
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        rows={4}
+      />
+    </div>
+  )
+}
+```
+
+### Bounded History with Capacity Limit
+
+```tsx
+import { useStateHistory } from "@/shared/hooks"
+
+export function Counter() {
+  // Keeps at most the latest 10 snapshots in memory
+  const { state: count, set: setCount, undo, redo, history, pointer, jump } =
+    useStateHistory(0, { capacity: 10 })
+
+  return (
+    <div>
+      <p>Current Count: {count}</p>
+      <button onClick={() => setCount((c) => c + 1)}>+1</button>
+      <button onClick={undo}>Undo</button>
+      <button onClick={redo}>Redo</button>
+
+      <div>
+        <span>Snapshots: </span>
+        {history.map((val, idx) => (
+          <button
+            key={idx}
+            onClick={() => jump(idx)}
+            className={idx === pointer ? "font-bold text-primary" : ""}
+          >
+            {val}
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+```
+
+## Features
+
+- **Undo & Redo Operations**: Navigate backwards and forwards through previous state revisions with `undo()` and `redo()`.
+- **Automatic Timeline Branching**: Setting a new state while viewing an older snapshot automatically prunes obsolete future history, preserving consistent timeline integrity.
+- **Capacity Constraint**: Optional `capacity` option prevents memory consumption by dropping the oldest entries once the limit is reached.
+- **Direct Time-Travel**: `jump(index)` allows jumping directly to any arbitrary snapshot with safe index boundary clamping.
+- **Functional State Updates**: `set` accepts either raw values or updater functions `(prev) => nextVal`, matching standard React `setState` ergonomics.
+- **Lazy Initial State**: Supports factory functions `() => initialState` for expensive initial state calculations.
+
+## Parameters
+
+| Parameter          | Type                  | Default | Description                                                        |
+| :----------------- | :-------------------- | :------ | :----------------------------------------------------------------- |
+| `initialState`     | `T \| (() => T)`      | `—`     | The initial value or lazy initializer function.                    |
+| `options.capacity` | `number \| undefined` | `—`     | Maximum number of snapshots to retain. Oldest entries are purged. |
+
+## Returns
+
+Returns a `UseStateHistoryReturn<T>` object:
+
+| Property   | Type                                 | Description                                                 |
+| :--------- | :----------------------------------- | :---------------------------------------------------------- |
+| `state`    | `T`                                  | The active state snapshot.                                  |
+| `set`      | `(value: T \| ((prev: T) => T)) => void` | Pushes a new state snapshot into the timeline.           |
+| `undo`     | `() => void`                         | Reverts to the previous snapshot.                           |
+| `redo`     | `() => void`                         | Advances to the next snapshot.                              |
+| `canUndo`  | `boolean`                            | Whether backward navigation is possible (`pointer > 0`).    |
+| `canRedo`  | `boolean`                            | Whether forward navigation is possible.                     |
+| `history`  | `T[]`                                | Chronological array of all retained state snapshots.        |
+| `pointer`  | `number`                             | Current zero-based index within the `history` array.        |
+| `jump`     | `(index: number) => void`            | Directly moves the active pointer to a specific snapshot.   |
+| `reset`    | `(newInitialState?: T) => void`      | Resets the timeline with a new or initial baseline value.   |

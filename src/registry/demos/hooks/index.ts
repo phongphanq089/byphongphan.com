@@ -76,6 +76,12 @@ export const UseIsFirstRenderDemo = lazyWithRetry(() =>
   }))
 )
 
+export const UseStateHistoryDemo = lazyWithRetry(() =>
+  import("./use-state-history-demo").then((m) => ({
+    default: m.UseStateHistoryDemo,
+  }))
+)
+
 export const HOOK_DEMOS: Record<string, ComponentType> = {
   "use-click-outside": UseClickOutsideDemo,
   "use-click-outside-demo": UseClickOutsideDemo,
@@ -105,4 +111,6 @@ export const HOOK_DEMOS: Record<string, ComponentType> = {
   "use-page-leave-demo": UsePageLeaveDemo,
   "use-is-first-render": UseIsFirstRenderDemo,
   "use-is-first-render-demo": UseIsFirstRenderDemo,
+  "use-state-history": UseStateHistoryDemo,
+  "use-state-history-demo": UseStateHistoryDemo,
 }
