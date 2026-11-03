@@ -1,5 +1,6 @@
 export * from "./components"
 export * from "./blocks"
+export * from "./hooks"
 
 // Aliases for full backwards compatibility with existing consumers
 export {

@@ -1,8 +1,8 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowLeft, ArrowRight, BookOpen, Code2, Copy } from "lucide-react"
 
-import { GridContainer } from "@/app/layouts"
 import { Button, Skeleton } from "@/shared/ui/core"
+import { DocDetailSkeleton } from "@/widgets/doc-detail-layout"
 
 export interface ComponentDetailSkeletonProps {
   name?: string
@@ -18,24 +18,13 @@ export function ComponentDetailSkeleton({
   slug,
 }: ComponentDetailSkeletonProps) {
   return (
-    <div className="relative w-full">
-      {/* ── TOC Minimap Skeleton (Desktop) ── */}
-      <div className="fixed top-1/2 right-0 z-40 hidden -translate-y-1/2 p-4 lg:block">
-        <div className="flex flex-col gap-2 rounded-lg border border-border/40 bg-background/80 p-2.5 backdrop-blur-xs">
-          <Skeleton className="h-3 w-16" />
-          <Skeleton className="h-3 w-20" />
-          <Skeleton className="h-3 w-14" />
-          <Skeleton className="h-3 w-18" />
-        </div>
-      </div>
-
+    <DocDetailSkeleton sidebarTitle="Components">
       {/* ── 1. Overview Header Skeleton ── */}
-      <GridContainer
+      <div
         id="overview"
-        borderBottom
-        className="relative flex flex-col justify-between gap-6"
+        className="relative flex flex-col justify-between gap-6 border-b border-border"
       >
-        <div className="relative z-10 flex flex-col gap-4 px-4 py-3 md:px-8">
+        <div className="relative z-10 flex flex-col gap-4 px-4 py-6 md:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3">
@@ -90,14 +79,7 @@ export function ComponentDetailSkeleton({
         </div>
 
         {/* Sub-bar */}
-        <GridContainer
-          borderTop
-          showCrosshairs={false}
-          borderBottom={false}
-          borderLeft={false}
-          borderRight={false}
-          className="relative flex flex-col justify-between gap-4 px-4 py-3 md:px-4"
-        >
+        <div className="relative flex flex-col justify-between gap-4 border-t border-border px-4 py-3 md:px-6">
           <div className="flex items-center justify-between">
             {category ? (
               <Button variant="ghost" asChild>
@@ -123,16 +105,11 @@ export function ComponentDetailSkeleton({
               </div>
             </div>
           </div>
-        </GridContainer>
-      </GridContainer>
+        </div>
+      </div>
 
       {/* ── 2. Component Content (Stage Preview & MDX Documentation) ── */}
-      <GridContainer
-        id="component-content"
-        borderBottom
-        showCrosshairs
-        className="p-4 lg:p-8"
-      >
+      <div id="component-content" className="border-b border-border p-4 lg:p-8">
         <div className="mx-auto w-full space-y-8">
           {/* ComponentStagePreview Skeleton */}
           <div className="flex w-full flex-col overflow-hidden rounded-2xl border border-black/10 bg-accent px-2 pb-2 shadow transition-all duration-300 dark:border-white/10">
@@ -185,7 +162,7 @@ export function ComponentDetailSkeleton({
             </div>
           </div>
         </div>
-      </GridContainer>
-    </div>
+      </div>
+    </DocDetailSkeleton>
   )
 }

@@ -10,10 +10,8 @@ import {
 import type { MDXComponents } from "mdx/types"
 import { useMemo } from "react"
 
-import { GridContainer } from "@/app/layouts"
 import { CopyButton } from "@/registry/animated/button/copy-button"
-import { RailScrollScrubber } from "@/registry/animated/rail-scroll-scrubber"
-import { REGISTRY_DEMOS } from "@/registry/demos"
+import { COMPONENT_DEMOS } from "@/registry/demos"
 import { siteConfig } from "@/shared/config"
 import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
 import { useTocRailSections } from "@/shared/hooks/use-toc-rail-sections"
@@ -27,6 +25,7 @@ import {
   TooltipTrigger,
 } from "@/shared/ui/core"
 import { CodeBlockCommand } from "@/shared/ui/core/code-block"
+import { DocDetailLayout } from "@/widgets/doc-detail-layout"
 
 import { COMPONENTS_DATA } from "../components-data"
 import type { ComponentItem } from "../types"
@@ -84,7 +83,7 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
     }
   }, [component.slug])
 
-  const LiveDemo = REGISTRY_DEMOS[component.slug]
+  const LiveDemo = COMPONENT_DEMOS[component.slug]
 
   // Find previous and next components
   const { prevComponent, nextComponent } = useMemo(() => {
@@ -165,27 +164,22 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
   const links = mdxData?.frontmatter?.links
 
   return (
-    <div className="relative w-full">
-      <ComponentQuickNav
-        currentCategory={component.category}
-        currentSlug={component.slug}
-        currentTitle={title}
-      />
-
-      {railSections.length > 0 && (
-        <RailScrollScrubber
-          sections={railSections}
-          accentColor="var(--primary)"
-          showDesktopSectionMenu
+    <DocDetailLayout
+      sidebar={
+        <ComponentQuickNav
+          currentCategory={component.category}
+          currentSlug={component.slug}
+          currentTitle={title}
         />
-      )}
-
-      <GridContainer
+      }
+      railSections={railSections}
+    >
+      {/* ── Overview Section ── */}
+      <div
         id="overview"
-        borderBottom
-        className="relative flex flex-col justify-between gap-6"
+        className="relative flex flex-col justify-between gap-6 border-b border-border"
       >
-        <div className="relative z-10 flex flex-col gap-4 px-4 py-3 md:px-8">
+        <div className="relative z-10 flex flex-col gap-4 px-4 py-6 md:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-3">
@@ -261,11 +255,8 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
           <CodeBlockCommand name={component.slug} />
         </div>
 
-        <GridContainer
-          borderTop
-          showCrosshairs={false}
-          className="relative flex flex-col justify-between gap-4 px-4 py-3 md:px-4"
-        >
+        {/* Sub-bar */}
+        <div className="relative flex flex-col justify-between gap-4 border-t border-border px-4 py-3 md:px-6">
           <div className="flex items-center justify-between">
             <Button variant={"ghost"} asChild>
               <Link to={`/component-ui/${component.category}` as never}>
@@ -357,39 +348,31 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
               </div>
             </div>
           </div>
-        </GridContainer>
-      </GridContainer>
+        </div>
+      </div>
 
+      {/* ── Content Section (MDX / Demo) ── */}
       {mdxData?.Component ? (
-        <GridContainer
-          id="mdx-content"
-          borderBottom
-          showCrosshairs
-          className="p-4 lg:p-8"
-        >
+        <div id="mdx-content" className="border-b border-border p-4 lg:p-8">
           <div className="mx-auto w-full">
             <mdxData.Component components={mdxComponents} />
           </div>
-        </GridContainer>
+        </div>
       ) : LiveDemo ? (
-        <GridContainer
+        <div
           id="interactive-demo"
-          borderBottom
-          showCrosshairs
-          className="p-4 lg:p-8"
+          className="border-b border-border p-4 lg:p-8"
         >
           <ComponentStagePreview
             slug={component.slug}
             liveDemo={LiveDemo}
             code={`// ${component.name} — documentation coming soon.\n// Install via:\n// npx shadcn@latest add ${siteConfig.registry.namespace}/${component.slug}`}
           />
-        </GridContainer>
+        </div>
       ) : (
-        <GridContainer
+        <div
           id="coming-soon"
-          borderBottom
-          showCrosshairs
-          className="flex flex-col items-center justify-center gap-4 py-20 text-center"
+          className="flex flex-col items-center justify-center gap-4 border-b border-border py-20 text-center"
         >
           <p className="text-sm font-medium text-muted-foreground">
             Documentation coming soon.
@@ -397,8 +380,8 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
           <p className="text-xs text-muted-foreground/60">
             Install the component via the command above to get started.
           </p>
-        </GridContainer>
+        </div>
       )}
-    </div>
+    </DocDetailLayout>
   )
 }

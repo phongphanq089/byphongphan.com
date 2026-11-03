@@ -104,10 +104,10 @@ export const pagesSeoConfig: Record<string, SeoConfig> = {
     description:
       "Engineering design tokens, UI primitives, and interactive shader components created for the portfolio.",
   },
-  colophon: {
-    title: "Colophon • Phong Phan",
+  hooks: {
+    title: "Hook Registry • Phong Phan",
     description:
-      "System specifications, typography, modern tech stack, and design inspirations behind this developer portfolio.",
+      "A collection of reusable React hooks, custom logic, and state management utilities designed to simplify development and build modern interactive applications.",
   },
 }
 

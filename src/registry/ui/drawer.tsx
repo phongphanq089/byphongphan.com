@@ -214,7 +214,7 @@ export function DrawerPopup({
             <DrawerPrimitive.Close
               aria-label="Close"
               className="absolute end-2 top-2 z-1"
-              render={<Button size="icon" variant="ghost" />}
+              render={<Button size="icon" variant="secondary" />}
             >
               <XIcon />
             </DrawerPrimitive.Close>

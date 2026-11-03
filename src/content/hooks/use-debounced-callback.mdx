@@ -1,0 +1,116 @@
+---
+title: useDebouncedCallback
+description: Creates a debounced version of a callback function with cancellation, flush, and max-wait controls.
+component: true
+---
+
+<ComponentPreview name="use-debounced-callback-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="cli">
+    <CodeBlockCommand name="use-debounced-callback" />
+  </TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-debounced-callback" title="hooks/use-debounced-callback.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+### Debounced Search Input
+
+```tsx
+import { useState } from "react"
+import { useDebouncedCallback } from "@/shared/hooks"
+
+export function SearchBox() {
+  const [query, setQuery] = useState("")
+
+  const debouncedSearch = useDebouncedCallback((searchTerm: string) => {
+    // Perform API call or expensive filter
+    console.log("Searching for:", searchTerm)
+  }, 500)
+
+  return (
+    <input
+      type="text"
+      placeholder="Type to search..."
+      value={query}
+      onChange={(e) => {
+        setQuery(e.target.value)
+        debouncedSearch(e.target.value)
+      }}
+    />
+  )
+}
+```
+
+### Auto-Save on Blur with `flush`
+
+```tsx
+import { useEffect, useState } from "react"
+import { useDebouncedCallback } from "@/shared/hooks"
+
+export function NoteEditor() {
+  const [content, setContent] = useState("")
+
+  const saveNote = useDebouncedCallback((text: string) => {
+    saveToDatabase(text)
+  }, 1000, { maxWait: 5000 })
+
+  return (
+    <textarea
+      value={content}
+      onChange={(e) => {
+        setContent(e.target.value)
+        saveNote(e.target.value)
+      }}
+      onBlur={() => {
+        // Immediately save on blur instead of waiting for timer
+        saveNote.flush()
+      }}
+    />
+  )
+}
+```
+
+## Features
+
+- **No Stale Closures**: Uses an internal callback ref to access the latest component props and state without triggering re-attachments.
+- **Leading & Trailing Triggers**: Configure execution at the beginning (`leading: true`) or end (`trailing: true`) of the timeout window.
+- **Max Delay Cap (`maxWait`)**: Guarantees the callback runs at least once within `maxWait` milliseconds even under continuous user input.
+- **Execution Controls**: Includes `.cancel()` to discard pending calls, `.flush()` to execute immediately, and `.isPending()` to check active status.
+- **Unmount Safety**: Automatically cancels all pending timers when the component unmounts.
+
+## Parameters
+
+| Parameter          | Type                          | Default | Description                                                        |
+| :----------------- | :---------------------------- | :------ | :----------------------------------------------------------------- |
+| `callback`         | `(...args: TArgs) => void`    | `—`     | The target function to debounce.                                   |
+| `delay`            | `number`                      | `—`     | The debounce delay in milliseconds.                                |
+| `options.leading`  | `boolean`                     | `false` | Specify execution on the leading edge of the timeout.              |
+| `options.trailing` | `boolean`                     | `true`  | Specify execution on the trailing edge of the timeout.             |
+| `options.maxWait`  | `number`                      | `—`     | The maximum time the callback is allowed to wait before execution. |
+
+## Returns
+
+Returns a debounced function `DebouncedFunction<TArgs>` with control methods:
+
+| Method / Property | Type                   | Description                                                |
+| :---------------- | :--------------------- | :--------------------------------------------------------- |
+| `(...args)`       | `(...args: TArgs) => void` | Invokes the debounced function with latest arguments.     |
+| `cancel()`        | `() => void`           | Cancels the active timer and discards pending arguments.   |
+| `flush()`         | `() => void`           | Immediately executes any pending invocation synchronously. |
+| `isPending()`     | `() => boolean`        | Returns `true` if a timer is currently active.             |

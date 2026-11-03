@@ -15,7 +15,7 @@ function ResourcesPage() {
     <div className="w-full">
       <UnderConstructionBlock
         moduleName="Developer Resources"
-        moduleBadge="RESOURCES_202"
+        moduleBadge="RESOURCES"
       />
     </div>
   )

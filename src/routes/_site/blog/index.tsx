@@ -18,7 +18,7 @@ function BlogPage() {
     <div className="w-full">
       <UnderConstructionBlock
         moduleName="Engineering Blog"
-        moduleBadge="BLOG_202"
+        moduleBadge="BLOG"
       />
     </div>
   )

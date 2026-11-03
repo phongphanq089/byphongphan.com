@@ -575,11 +575,29 @@
       ]
     },
     {
+      "name": "use-click-outside",
+      "type": "registry:hook",
+      "title": "useClickOutside",
+      "description": "Detects clicks outside of a target element.",
+      "category": "ui-interaction",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-click-outside.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-click-outside.ts"
+        }
+      ]
+    },
+    {
       "name": "use-media-query",
       "type": "registry:hook",
       "title": "useMediaQuery",
-      "description": "React hook for responsive design and media query listening with SSR support.",
-      "category": "interactive",
+      "description": "Listens for media query changes and returns a boolean.",
+      "category": "browser",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [],
       "devDependencies": [],
@@ -589,6 +607,348 @@
           "path": "src/registry/hooks/use-media-query.ts",
           "type": "registry:hook",
           "target": "hooks/use-media-query.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-copy-to-clipboard",
+      "type": "registry:hook",
+      "title": "useCopyToClipboard",
+      "description": "Copies text to clipboard with feedback.",
+      "category": "utilities",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-copy-to-clipboard.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-copy-to-clipboard.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-intersection-observer",
+      "type": "registry:hook",
+      "title": "useIntersectionObserver",
+      "description": "Triggers when an element enters or leaves the viewport.",
+      "category": "performance",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-intersection-observer.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-intersection-observer.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-debounce",
+      "type": "registry:hook",
+      "title": "useDebounce",
+      "description": "Debounces a value or function for better performance.",
+      "category": "utilities",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-debounce.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-debounce.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-debounced-callback",
+      "type": "registry:hook",
+      "title": "useDebouncedCallback",
+      "description": "Creates a debounced version of a callback function with cancellation, flush, and max-wait controls.",
+      "category": "utilities",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-debounced-callback.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-debounced-callback.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-local-storage",
+      "type": "registry:hook",
+      "title": "useLocalStorage",
+      "description": "Syncs state with localStorage across browser sessions.",
+      "category": "browser",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-local-storage.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-local-storage.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-toggle",
+      "type": "registry:hook",
+      "title": "useToggle",
+      "description": "Toggles a boolean state value with memoized handlers.",
+      "category": "state",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-toggle.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-toggle.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-previous",
+      "type": "registry:hook",
+      "title": "usePrevious",
+      "description": "Stores previous value of a state or prop across renders.",
+      "category": "state",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-previous.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-previous.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-hover",
+      "type": "registry:hook",
+      "title": "useHover",
+      "description": "Tracks hover state of a target element with optional delay.",
+      "category": "ui-interaction",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-hover.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-hover.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-prevent-body-scroll",
+      "type": "registry:hook",
+      "title": "usePreventBodyScroll",
+      "description": "Prevents background scrolling with layout shift compensation and iOS Safari support.",
+      "category": "ui-interaction",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-prevent-body-scroll.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-prevent-body-scroll.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-scroll-position",
+      "type": "registry:hook",
+      "title": "useScrollPosition",
+      "description": "Tracks scroll coordinates and direction in real time for the window or a specific scrollable element.",
+      "category": "ui-interaction",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-scroll-position.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-scroll-position.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-network",
+      "type": "registry:hook",
+      "title": "useNetwork",
+      "description": "Tracks the browser's online and offline status and provides available network connection details such as connection type, downlink speed, and round-trip time.",
+      "category": "browser",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-network.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-network.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-page-leave",
+      "type": "registry:hook",
+      "title": "usePageLeave",
+      "description": "Detects when the cursor leaves the viewport and provides exit-intent detection with configurable boundary filtering and trigger frequency.",
+      "category": "ui-interaction",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-page-leave.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-page-leave.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-is-first-render",
+      "type": "registry:hook",
+      "title": "useIsFirstRender",
+      "description": "Determines whether the current render is the initial mount, returning true on the first render and false on subsequent re-renders.",
+      "category": "state",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-is-first-render.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-is-first-render.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-state-history",
+      "type": "registry:hook",
+      "title": "useStateHistory",
+      "description": "Provides state management with undo, redo, and time-travel capabilities through a chronological history of state snapshots.",
+      "category": "state",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-state-history.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-state-history.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-selection",
+      "type": "registry:hook",
+      "title": "useSelection",
+      "description": "Manages single, multi, and batch selection states with Set-based O(1) lookups and range selection.",
+      "category": "ui-interaction",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-selection.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-selection.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-pagination",
+      "type": "registry:hook",
+      "title": "usePagination",
+      "description": "Controls dataset pagination metrics, slice bounds, and UI navigation range with ellipsis handling.",
+      "category": "ui-interaction",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-pagination.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-pagination.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-map",
+      "type": "registry:hook",
+      "title": "useMap",
+      "description": "A reactive Map instance synchronized with React state that triggers re-renders on mutation.",
+      "category": "state",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-map.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-map.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-list-state",
+      "type": "registry:hook",
+      "title": "useListState",
+      "description": "Manages array state with declarative helper methods for insertion, removal, reordering, and item transformations.",
+      "category": "state",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-list-state.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-list-state.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-disclosure",
+      "type": "registry:hook",
+      "title": "useDisclosure",
+      "description": "Manages boolean open/close state for modals, dialogs, drawers, and collapsibles with memoized handlers.",
+      "category": "state",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-disclosure.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-disclosure.ts"
         }
       ]
     }

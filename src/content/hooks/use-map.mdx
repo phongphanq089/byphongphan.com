@@ -1,0 +1,123 @@
+---
+title: useMap
+description: A reactive Map instance synchronized with React state that triggers re-renders on mutation.
+component: true
+---
+
+<ComponentPreview name="use-map-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="cli">
+    <CodeBlockCommand name="use-map" />
+  </TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-map" title="hooks/use-map.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+### Managing Dynamic Configuration
+
+```tsx
+import { useMap } from "@/shared/hooks"
+
+export function SettingsPanel() {
+  const settings = useMap<string, string>([
+    ["theme", "dark"],
+    ["notifications", "enabled"],
+  ])
+
+  return (
+    <div className="space-y-3">
+      <p>Theme: {settings.get("theme")}</p>
+      <p>Total Settings: {settings.size}</p>
+
+      <div className="flex gap-2">
+        <button onClick={() => settings.set("theme", "light")}>
+          Set Light Theme
+        </button>
+        <button onClick={() => settings.delete("notifications")}>
+          Disable Notifications
+        </button>
+        <button onClick={() => settings.reset()}>
+          Reset Settings
+        </button>
+      </div>
+    </div>
+  )
+}
+```
+
+### Complex Object Keys or Caching
+
+```tsx
+import { useMap } from "@/shared/hooks"
+
+interface User {
+  id: string
+  name: string
+}
+
+export function ActiveUsersList() {
+  const userRoles = useMap<User, string>()
+
+  const assignRole = (user: User, role: string) => {
+    userRoles.set(user, role)
+  }
+
+  return (
+    <ul>
+      {Array.from(userRoles.entries()).map(([user, role]) => (
+        <li key={user.id}>
+          {user.name} - Role: {role}
+        </li>
+      ))}
+    </ul>
+  )
+}
+```
+
+## Features
+
+- **Full Native Compatibility**: Retains all native `Map` prototype methods (`get`, `has`, `size`, `keys`, `values`, `entries`, and `for..of` iterators).
+- **Reactive Mutations**: Invoking `.set()`, `.delete()`, or `.clear()` triggers React state updates automatically.
+- **Convenience Utilities**: Adds `.reset()` to return to initial entries and `.setAll(entries)` for atomic bulk replacements.
+- **Lazy Initial State**: Supports factory functions `() => entries` for expensive initial calculations.
+- **Type-Safe Generics**: Preserves strong typing across both key (`K`) and value (`V`) types.
+
+## Parameters
+
+| Parameter        | Type                                                                       | Default | Description                                                     |
+| :--------------- | :------------------------------------------------------------------------- | :------ | :-------------------------------------------------------------- |
+| `initialEntries` | `Iterable<readonly [K, V]> \| (() => Iterable<readonly [K, V]>)` | `—`     | Optional initial key-value pairs or a lazy initializer function. |
+
+## Returns
+
+Returns an extended `ReactiveMap<K, V>` instance:
+
+| Property / Method | Type                                                       | Description                                                       |
+| :---------------- | :--------------------------------------------------------- | :---------------------------------------------------------------- |
+| `size`            | `number`                                                   | Current number of entries in the map.                             |
+| `get(key)`        | `(key: K) => V \| undefined`                              | Retrieves the value associated with `key`.                        |
+| `has(key)`        | `(key: K) => boolean`                                      | Returns `true` if an entry with `key` exists.                     |
+| `set(key, value)` | `(key: K, value: V) => this`                               | Inserts or updates an entry and triggers a React re-render.       |
+| `delete(key)`     | `(key: K) => boolean`                                      | Removes the specified entry and triggers a React re-render.       |
+| `clear()`         | `() => void`                                               | Removes all entries and triggers a React re-render.               |
+| `reset()`         | `() => void`                                               | Restores the map back to its original initial entries.            |
+| `setAll(entries)` | `(entries: Iterable<readonly [K, V]>) => void`            | Replaces all entries with a new set of entries in one tick.       |
+| `entries()`       | `() => IterableIterator<[K, V]>`                           | Returns an iterator over `[key, value]` pairs.                    |
+| `keys()`          | `() => IterableIterator<K>`                                | Returns an iterator over all keys.                                |
+| `values()`        | `() => IterableIterator<V>`                                | Returns an iterator over all values.                              |

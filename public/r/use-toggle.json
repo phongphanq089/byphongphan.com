@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-toggle",
+  "type": "registry:hook",
+  "title": "useToggle",
+  "description": "Toggles a boolean state value with memoized handlers.",
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-toggle.ts",
+      "content": "import { useCallback, useState } from \"react\"\n\nexport interface UseToggleActions {\n  setTrue: () => void\n  setFalse: () => void\n  toggle: () => void\n  setValue: (value: boolean) => void\n}\n\n/**\n * React hook to manage boolean state with convenient memoized action helpers.\n */\nexport function useToggle(\n  initialValue = false\n): [boolean, (nextValue?: boolean) => void, UseToggleActions] {\n  const [value, setValue] = useState<boolean>(initialValue)\n\n  const toggle = useCallback((nextValue?: boolean) => {\n    setValue((prev) => (typeof nextValue === \"boolean\" ? nextValue : !prev))\n  }, [])\n\n  const setTrue = useCallback(() => setValue(true), [])\n  const setFalse = useCallback(() => setValue(false), [])\n\n  return [\n    value,\n    toggle,\n    {\n      setTrue,\n      setFalse,\n      toggle: () => toggle(),\n      setValue,\n    },\n  ]\n}\n",
+      "type": "registry:hook",
+      "target": "hooks/use-toggle.ts"
+    }
+  ]
+}

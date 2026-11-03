@@ -246,10 +246,170 @@
     ]
   },
   {
+    "name": "use-click-outside",
+    "type": "registry:hook",
+    "title": "useClickOutside",
+    "description": "Detects clicks outside of a target element.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
     "name": "use-media-query",
     "type": "registry:hook",
     "title": "useMediaQuery",
-    "description": "React hook for responsive design and media query listening with SSR support.",
+    "description": "Listens for media query changes and returns a boolean.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-copy-to-clipboard",
+    "type": "registry:hook",
+    "title": "useCopyToClipboard",
+    "description": "Copies text to clipboard with feedback.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-intersection-observer",
+    "type": "registry:hook",
+    "title": "useIntersectionObserver",
+    "description": "Triggers when an element enters or leaves the viewport.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-debounce",
+    "type": "registry:hook",
+    "title": "useDebounce",
+    "description": "Debounces a value or function for better performance.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-debounced-callback",
+    "type": "registry:hook",
+    "title": "useDebouncedCallback",
+    "description": "Creates a debounced version of a callback function with cancellation, flush, and max-wait controls.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-local-storage",
+    "type": "registry:hook",
+    "title": "useLocalStorage",
+    "description": "Syncs state with localStorage across browser sessions.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-toggle",
+    "type": "registry:hook",
+    "title": "useToggle",
+    "description": "Toggles a boolean state value with memoized handlers.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-previous",
+    "type": "registry:hook",
+    "title": "usePrevious",
+    "description": "Stores previous value of a state or prop across renders.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-hover",
+    "type": "registry:hook",
+    "title": "useHover",
+    "description": "Tracks hover state of a target element with optional delay.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-prevent-body-scroll",
+    "type": "registry:hook",
+    "title": "usePreventBodyScroll",
+    "description": "Prevents background scrolling with layout shift compensation and iOS Safari support.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-scroll-position",
+    "type": "registry:hook",
+    "title": "useScrollPosition",
+    "description": "Tracks scroll coordinates and direction in real time for the window or a specific scrollable element.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-network",
+    "type": "registry:hook",
+    "title": "useNetwork",
+    "description": "Tracks the browser's online and offline status and provides available network connection details such as connection type, downlink speed, and round-trip time.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-page-leave",
+    "type": "registry:hook",
+    "title": "usePageLeave",
+    "description": "Detects when the cursor leaves the viewport and provides exit-intent detection with configurable boundary filtering and trigger frequency.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-is-first-render",
+    "type": "registry:hook",
+    "title": "useIsFirstRender",
+    "description": "Determines whether the current render is the initial mount, returning true on the first render and false on subsequent re-renders.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-state-history",
+    "type": "registry:hook",
+    "title": "useStateHistory",
+    "description": "Provides state management with undo, redo, and time-travel capabilities through a chronological history of state snapshots.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-selection",
+    "type": "registry:hook",
+    "title": "useSelection",
+    "description": "Manages single, multi, and batch selection states with Set-based O(1) lookups and range selection.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-pagination",
+    "type": "registry:hook",
+    "title": "usePagination",
+    "description": "Controls dataset pagination metrics, slice bounds, and UI navigation range with ellipsis handling.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-map",
+    "type": "registry:hook",
+    "title": "useMap",
+    "description": "A reactive Map instance synchronized with React state that triggers re-renders on mutation.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-list-state",
+    "type": "registry:hook",
+    "title": "useListState",
+    "description": "Manages array state with declarative helper methods for insertion, removal, reordering, and item transformations.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "use-disclosure",
+    "type": "registry:hook",
+    "title": "useDisclosure",
+    "description": "Manages boolean open/close state for modals, dialogs, drawers, and collapsibles with memoized handlers.",
     "dependencies": [],
     "registryDependencies": []
   }

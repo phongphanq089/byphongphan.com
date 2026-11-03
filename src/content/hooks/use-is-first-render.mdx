@@ -1,0 +1,56 @@
+---
+title: useIsFirstRender
+description: Determines whether the current render is the initial mount.
+component: true
+---
+
+<ComponentPreview name="use-is-first-render" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="use-is-first-render" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-is-first-render" title="hooks/use-is-first-render.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { useState } from "react"
+import { useIsFirstRender } from "@/shared/hooks"
+
+export function RenderComponent() {
+  const isFirstRender = useIsFirstRender()
+  const [count, setCount] = useState(0)
+
+  return (
+    <div>
+      <p>
+        {isFirstRender
+          ? "This is the initial render."
+          : "This is a subsequent render."}
+      </p>
+
+      <p>Count: {count}</p>
+
+      <button onClick={() => setCount((prev) => prev + 1)}>
+        Trigger re-render
+      </button>
+    </div>
+  )
+}
+```

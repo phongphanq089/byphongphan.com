@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-page-leave",
+  "type": "registry:hook",
+  "title": "usePageLeave",
+  "description": "Detects when the cursor leaves the viewport and provides exit-intent detection with configurable boundary filtering and trigger frequency.",
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-page-leave.ts",
+      "content": "import { useEffect, useRef, useState } from \"react\"\n\nexport interface UsePageLeaveOptions {\n  /**\n   * Whether to trigger only when the mouse leaves from the top boundary of the viewport.\n   * Typically indicates an intent to close the tab, switch tabs, or interact with the address bar.\n   * @default true\n   */\n  onlyTop?: boolean\n\n  /**\n   * Whether the leave callback should only be triggered once during the component lifecycle.\n   * @default false\n   */\n  once?: boolean\n}\n\n/**\n * Custom hook to detect when the user's cursor leaves the page (Exit-Intent detection).\n * Commonly used for displaying retention modals, discounts, or auto-saving drafts.\n *\n * @param onLeave - Optional callback invoked when the cursor exits the viewport.\n * @param options - Configuration options for boundary filtering and trigger frequency.\n * @returns A boolean indicating whether the cursor is currently outside the viewport.\n */\nexport function usePageLeave(\n  onLeave?: () => void,\n  options: UsePageLeaveOptions = {}\n): boolean {\n  const { onlyTop = true, once = false } = options\n  const [isLeft, setIsLeft] = useState(false)\n\n  // Tracks if the callback has already been executed when `once: true`\n  const hasFiredRef = useRef(false)\n\n  // Store the latest callback in a ref to avoid re-attaching event listeners on state updates\n  const onLeaveRef = useRef(onLeave)\n  useEffect(() => {\n    onLeaveRef.current = onLeave\n  }, [onLeave])\n\n  useEffect(() => {\n    // Guard against Server-Side Rendering environments\n    if (typeof document === \"undefined\") return\n\n    const handleMouseLeave = (event: MouseEvent) => {\n      if (once && hasFiredRef.current) return\n\n      // clientY <= 0 indicates the cursor exited through the top edge of the viewport\n      const isExitingTop = event.clientY <= 0\n      const shouldTrigger = onlyTop ? isExitingTop : true\n\n      if (shouldTrigger) {\n        setIsLeft(true)\n        hasFiredRef.current = true\n        onLeaveRef.current?.()\n      }\n    }\n\n    const handleMouseEnter = () => {\n      setIsLeft(false)\n    }\n\n    // Attach to document.documentElement because 'mouseleave' does not bubble from descendants\n    document.documentElement.addEventListener(\"mouseleave\", handleMouseLeave)\n    document.documentElement.addEventListener(\"mouseenter\", handleMouseEnter)\n\n    return () => {\n      document.documentElement.removeEventListener(\n        \"mouseleave\",\n        handleMouseLeave\n      )\n      document.documentElement.removeEventListener(\n        \"mouseenter\",\n        handleMouseEnter\n      )\n    }\n  }, [onlyTop, once])\n\n  return isLeft\n}\n",
+      "type": "registry:hook",
+      "target": "hooks/use-page-leave.ts"
+    }
+  ]
+}

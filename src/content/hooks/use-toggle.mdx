@@ -1,0 +1,59 @@
+---
+title: useToggle
+description: Toggles a boolean state value with memoized handlers.
+component: true
+---
+
+<ComponentPreview name="use-toggle-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="use-toggle" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-toggle" title="hooks/use-toggle.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { useToggle } from "@/shared/hooks"
+
+export function Modal() {
+  const [isOpen, toggle, { setTrue, setFalse }] = useToggle(false)
+
+  return (
+    <div>
+      <button onClick={() => toggle()}>Toggle</button>
+      <button onClick={setTrue}>Open Modal</button>
+      <button onClick={setFalse}>Close Modal</button>
+      {isOpen && <div>Modal Content</div>}
+    </div>
+  )
+}
+```
+
+## Props & Parameters
+
+| Param          | Type      | Default | Description                  |
+| :------------- | :-------- | :------ | :--------------------------- |
+| `initialValue` | `boolean` | `false` | Initial boolean state value. |
+
+## Returns
+
+| Return                     | Type                                                    | Description                                                                                               |
+| :------------------------- | :------------------------------------------------------ | :-------------------------------------------------------------------------------------------------------- |
+| `[value, toggle, actions]` | `[boolean, (next?: boolean) => void, UseToggleActions]` | Tuple containing state, toggle callback, and memoized action helpers (`setTrue`, `setFalse`, `setValue`). |

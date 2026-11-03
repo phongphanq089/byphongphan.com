@@ -80,7 +80,7 @@ src/
 ├── app/               # Application-level layouts, root boundaries, and composition
 ├── content/           # MDX documentation & editorial source materials
 ├── entities/          # Domain entities and business logic representations
-├── features/          # High-cohesion domain features (home, blocks, component-ui, colophon)
+├── features/          # High-cohesion domain features (home, blocks, component-ui, hooks)
 ├── registry/          # Custom shadcn component source files, schematics, and variants
 │   ├── animated/      # Motion & physics-driven components (line-nav, time-scrubber, etc.)
 │   ├── block/         # Full-section modular blocks

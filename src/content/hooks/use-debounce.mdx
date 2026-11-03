@@ -1,0 +1,62 @@
+---
+title: useDebounce
+description: Debounces a value or function for better performance.
+component: true
+---
+
+<ComponentPreview name="use-debounce-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="use-debounce" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-debounce" title="hooks/use-debounce.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+```tsx
+import { useState } from "react"
+import { useDebounce } from "@/shared/hooks"
+
+export function SearchComponent() {
+  const [searchTerm, setSearchTerm] = useState("")
+  const debouncedSearch = useDebounce(searchTerm, 500)
+
+  // Trigger network search query only when debouncedSearch settles
+  return (
+    <input
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      placeholder="Search docs..."
+    />
+  )
+}
+```
+
+## Props & Parameters
+
+| Param   | Type     | Default | Description                                            |
+| :------ | :------- | :------ | :----------------------------------------------------- |
+| `value` | `T`      | —       | The rapidly changing input value to debounce.          |
+| `delay` | `number` | `500`   | Delay in milliseconds before updating debounced value. |
+
+## Returns
+
+| Return           | Type | Description                                                                     |
+| :--------------- | :--- | :------------------------------------------------------------------------------ |
+| `debouncedValue` | `T`  | The debounced value updated only after the delay timer expires without changes. |

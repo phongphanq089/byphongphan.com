@@ -1,0 +1,180 @@
+---
+title: useSelection
+description: Manages single, multi, and batch selection states with Set-based O(1) lookups and range selection.
+component: true
+---
+
+<ComponentPreview name="use-selection-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="use-selection" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the hook into your project.</Step>
+      <ComponentSource name="use-selection" title="hooks/use-selection.ts" />
+      <Step>Update the import paths to match your project setup.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+## Usage
+
+### Table Batch Selection
+
+```tsx
+import { useSelection } from "@/shared/hooks"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/registry/ui/table"
+import { Checkbox } from "@/registry/ui/checkbox"
+
+interface User {
+  id: string
+  name: string
+  email: string
+}
+
+export function UserTable({ users }: { users: User[] }) {
+  const {
+    isSelected,
+    isAllSelected,
+    isPartiallySelected,
+    toggle,
+    toggleAll,
+    selectedCount,
+  } = useSelection(users, { getKey: (u) => u.id })
+
+  return (
+    <div className="space-y-3">
+      <div className="text-sm text-muted-foreground">
+        Selected: {selectedCount} of {users.length}
+      </div>
+
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead className="w-10">
+              <Checkbox
+                checked={isAllSelected}
+                indeterminate={isPartiallySelected}
+                onCheckedChange={toggleAll}
+                aria-label="Select all"
+              />
+            </TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+          </TableRow>
+        </TableHeader>
+
+        <TableBody>
+          {users.map((user) => (
+            <TableRow
+              key={user.id}
+              data-state={isSelected(user.id) ? "selected" : undefined}
+            >
+              <TableCell className="w-10">
+                <Checkbox
+                  checked={isSelected(user.id)}
+                  onCheckedChange={() => toggle(user.id)}
+                  aria-label={`Select ${user.name}`}
+                />
+              </TableCell>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  )
+}
+```
+
+### Shift + Click Range Selection
+
+```tsx
+import { useRef } from "react"
+import { useSelection, SelectionKey } from "@/shared/hooks"
+
+export function SelectableList({ items }: { items: { id: string; label: string }[] }) {
+  const lastSelectedKeyRef = useRef<SelectionKey | null>(null)
+  const { isSelected, toggle, selectRange } = useSelection(items)
+
+  const handleItemClick = (key: string, e: React.MouseEvent) => {
+    if (e.shiftKey && lastSelectedKeyRef.current) {
+      selectRange(lastSelectedKeyRef.current, key)
+    } else {
+      toggle(key)
+      lastSelectedKeyRef.current = key
+    }
+  }
+
+  return (
+    <ul className="divide-y border rounded-lg">
+      {items.map((item) => (
+        <li
+          key={item.id}
+          onClick={(e) => handleItemClick(item.id, e)}
+          className={`p-3 cursor-pointer select-none ${
+            isSelected(item.id) ? "bg-primary/10" : ""
+          }`}
+        >
+          {item.label}
+        </li>
+      ))}
+    </ul>
+  )
+}
+```
+
+## Features
+
+- **O(1) Set Performance**: Uses native JavaScript `Set<SelectionKey>` internally for instant constant-time selection lookups.
+- **Tri-State Header Checkbox**: Accurately computes `isAllSelected` and `isPartiallySelected` for indeterminate state handling in tables and list headers.
+- **Continuous Range Selection**: Built-in `selectRange(fromKey, toKey)` allows implementing desktop-style Shift + Click multi-row selection in just one line.
+- **Derived Selected Items**: Automatically returns `selectedItems` array synchronized with `selectedKeys`.
+- **Flexible Key Resolution**: Defaults to `item.id ?? item.key ?? item`, or provide a custom `getKey` extractor for custom data models.
+
+## Parameters
+
+| Parameter                 | Type                                  | Default                                 | Description                                                      |
+| :------------------------ | :------------------------------------ | :-------------------------------------- | :--------------------------------------------------------------- |
+| `items`                   | `readonly T[]`                        | `—`                                     | The array of items available for selection.                      |
+| `options.getKey`          | `(item: T) => SelectionKey`           | `(item) => item.id ?? item.key ?? item` | Custom function to extract a unique string or number identifier. |
+| `options.initialSelected` | `SelectionKey[] \| Set<SelectionKey>` | `—`                                     | Initial keys selected on mount.                                  |
+
+## Returns
+
+Returns a `UseSelectionReturn<T>` object:
+
+| Property              | Type                                                   | Description                                                               |
+| :-------------------- | :----------------------------------------------------- | :------------------------------------------------------------------------ |
+| `selectedKeys`        | `Set<SelectionKey>`                                    | Active Set containing all selected identifiers.                           |
+| `selectedItems`       | `T[]`                                                  | Array of full item objects corresponding to the selected keys.            |
+| `selectedCount`       | `number`                                               | Number of currently selected items (`selectedKeys.size`).                 |
+| `isSelected`          | `(key: SelectionKey) => boolean`                       | Checks whether a specific item key is selected.                           |
+| `isAllSelected`       | `boolean`                                              | Whether every item in the dataset is selected.                            |
+| `isPartiallySelected` | `boolean`                                              | Whether at least one item is selected, but not all (indeterminate state). |
+| `select`              | `(keys: SelectionKey \| SelectionKey[]) => void`       | Selects one or multiple keys.                                             |
+| `deselect`            | `(keys: SelectionKey \| SelectionKey[]) => void`       | Deselects one or multiple keys.                                           |
+| `toggle`              | `(key: SelectionKey) => void`                          | Inverts the selection status of a single key.                             |
+| `selectAll`           | `() => void`                                           | Selects every item in the dataset.                                        |
+| `clear`               | `() => void`                                           | Deselects all items.                                                      |
+| `toggleAll`           | `() => void`                                           | Toggles between selecting all and deselecting all items.                  |
+| `selectRange`         | `(fromKey: SelectionKey, toKey: SelectionKey) => void` | Selects all items between `fromKey` and `toKey` inclusive (Shift-Click).  |
+| `setSelectedKeys`     | `Dispatch<SetStateAction<Set<SelectionKey>>>`          | Direct state setter for manual overrides.                                 |

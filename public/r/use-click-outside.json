@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-click-outside",
+  "type": "registry:hook",
+  "title": "useClickOutside",
+  "description": "Detects clicks outside of a target element.",
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-click-outside.ts",
+      "content": "import { useEffect, useRef } from \"react\"\n\nexport type ClickOutsideHandler = (event: MouseEvent | TouchEvent) => void\n\nexport interface UseClickOutsideOptions {\n  /** Whether the listener is active. Defaults to true. */\n  enabled?: boolean\n  /** Event types to listen for. Defaults to [\"mousedown\", \"touchstart\"]. */\n  events?: Array<\"mousedown\" | \"mouseup\" | \"click\" | \"touchstart\" | \"touchend\">\n  /** Optional array of other element refs to ignore clicks inside. */\n  ignoreRefs?: Array<React.RefObject<HTMLElement | null>>\n}\n\n/**\n * React hook that triggers a callback when a click or touch event occurs\n * outside of the referenced element (and any optional ignored elements).\n */\nexport function useClickOutside<T extends HTMLElement = HTMLElement>(\n  handler: ClickOutsideHandler,\n  options: UseClickOutsideOptions = {}\n): React.RefObject<T | null> {\n  const {\n    enabled = true,\n    events = [\"mousedown\", \"touchstart\"],\n    ignoreRefs = [],\n  } = options\n\n  const ref = useRef<T | null>(null)\n  const savedHandler = useRef<ClickOutsideHandler>(handler)\n\n  useEffect(() => {\n    savedHandler.current = handler\n  }, [handler])\n\n  useEffect(() => {\n    if (!enabled) return\n\n    const listener = (event: MouseEvent | TouchEvent) => {\n      const target = event.target as Node | null\n      const el = ref.current\n\n      // Do nothing if clicking target element or descendent\n      if (!el || !target || el.contains(target)) {\n        return\n      }\n\n      // Do nothing if clicking any of the ignored element refs\n      for (const ignoreRef of ignoreRefs) {\n        if (ignoreRef.current?.contains(target)) {\n          return\n        }\n      }\n\n      savedHandler.current(event)\n    }\n\n    events.forEach((eventName) => {\n      document.addEventListener(eventName, listener, { passive: true })\n    })\n\n    return () => {\n      events.forEach((eventName) => {\n        document.removeEventListener(eventName, listener)\n      })\n    }\n  }, [enabled, events, ignoreRefs])\n\n  return ref\n}\n",
+      "type": "registry:hook",
+      "target": "hooks/use-click-outside.ts"
+    }
+  ]
+}

@@ -64,6 +64,7 @@ export default function Footer() {
       {/* Time Scrubber (Full Width Precision Dial) */}
       <GridContainer
         borderBottom
+        borderTop
         showCrosshairs
         className="flex w-full flex-col items-center justify-center p-4 lg:p-8"
       >

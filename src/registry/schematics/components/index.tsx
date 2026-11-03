@@ -1,6 +1,4 @@
 import type React from "react"
-
-import type { SchematicType } from "../../schema"
 import { BackgroundGradientCursorSchematic } from "./background-gradient-cursor-schematic"
 import { BorderGlowSchematic } from "./border-glow-schematic"
 import { CardSchematic } from "./card-schematic"
