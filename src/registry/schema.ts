@@ -43,6 +43,7 @@ export type HookSchematicType =
   | "scroll-position"
   | "network"
   | "page-leave"
+  | "is-first-render"
 
 export type SchematicType =
   ComponentSchematicType | BlockSchematicType | HookSchematicType

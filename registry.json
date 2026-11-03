@@ -777,7 +777,7 @@
       "type": "registry:hook",
       "title": "useNetwork",
       "description": "Tracks the browser's online and offline status and provides available network connection details such as connection type, downlink speed, and round-trip time.",
-      "category": "ui-interaction",
+      "category": "browser",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [],
       "devDependencies": [],
@@ -805,6 +805,24 @@
           "path": "src/registry/hooks/use-page-leave.ts",
           "type": "registry:hook",
           "target": "hooks/use-page-leave.ts"
+        }
+      ]
+    },
+    {
+      "name": "use-is-first-render",
+      "type": "registry:hook",
+      "title": "useIsFirstRender",
+      "description": "Determines whether the current render is the initial mount, returning true on the first render and false on subsequent re-renders.",
+      "category": "state",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-is-first-render.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-is-first-render.ts"
         }
       ]
     }

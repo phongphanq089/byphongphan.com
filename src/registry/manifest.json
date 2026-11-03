@@ -163,12 +163,16 @@
       "slug": "use-scroll-position"
     },
     {
-      "category": "ui-interaction",
+      "category": "browser",
       "slug": "use-network"
     },
     {
       "category": "ui-interaction",
       "slug": "use-page-leave"
+    },
+    {
+      "category": "state",
+      "slug": "use-is-first-render"
     }
   ]
 }

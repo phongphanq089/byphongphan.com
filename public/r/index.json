@@ -348,5 +348,13 @@
     "description": "Detects when the cursor leaves the viewport and provides exit-intent detection with configurable boundary filtering and trigger frequency.",
     "dependencies": [],
     "registryDependencies": []
+  },
+  {
+    "name": "use-is-first-render",
+    "type": "registry:hook",
+    "title": "useIsFirstRender",
+    "description": "Determines whether the current render is the initial mount, returning true on the first render and false on subsequent re-renders.",
+    "dependencies": [],
+    "registryDependencies": []
   }
 ]

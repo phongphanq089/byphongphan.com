@@ -70,6 +70,12 @@ export const UsePageLeaveDemo = lazyWithRetry(() =>
   }))
 )
 
+export const UseIsFirstRenderDemo = lazyWithRetry(() =>
+  import("./use-is-first-render-demo").then((m) => ({
+    default: m.UseIsFirstRenderDemo,
+  }))
+)
+
 export const HOOK_DEMOS: Record<string, ComponentType> = {
   "use-click-outside": UseClickOutsideDemo,
   "use-click-outside-demo": UseClickOutsideDemo,
@@ -97,4 +103,6 @@ export const HOOK_DEMOS: Record<string, ComponentType> = {
   "use-network-demo": UseNetworkDemo,
   "use-page-leave": UsePageLeaveDemo,
   "use-page-leave-demo": UsePageLeaveDemo,
+  "use-is-first-render": UseIsFirstRenderDemo,
+  "use-is-first-render-demo": UseIsFirstRenderDemo,
 }

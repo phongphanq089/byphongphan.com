@@ -13,6 +13,7 @@ import {
   ToggleSchematic,
   NetworkSchematic,
   PageLeaveSchematic,
+  IsFirstRenderSchematic,
 } from "./schematics"
 
 export const REGISTRY_HOOKS: RegistryItem[] = [
@@ -264,6 +265,26 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
         path: "hooks/use-page-leave.ts",
         type: "registry:hook",
         target: "hooks/use-page-leave.ts",
+      },
+    ],
+  },
+  {
+    name: "use-is-first-render",
+    title: "useIsFirstRender",
+    description:
+      "Determines whether the current render is the initial mount, returning true on the first render and false on subsequent re-renders.",
+    type: "registry:hook",
+    category: "state",
+    schematic: IsFirstRenderSchematic,
+    schematicType: "is-first-render",
+    dependencies: [],
+    registryDependencies: [],
+    isNew: true,
+    files: [
+      {
+        path: "hooks/use-is-first-render.ts",
+        type: "registry:hook",
+        target: "hooks/use-is-first-render.ts",
       },
     ],
   },
