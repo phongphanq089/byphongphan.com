@@ -380,5 +380,13 @@
     "description": "Controls dataset pagination metrics, slice bounds, and UI navigation range with ellipsis handling.",
     "dependencies": [],
     "registryDependencies": []
+  },
+  {
+    "name": "use-map",
+    "type": "registry:hook",
+    "title": "useMap",
+    "description": "A reactive Map instance synchronized with React state that triggers re-renders on mutation.",
+    "dependencies": [],
+    "registryDependencies": []
   }
 ]

@@ -74,6 +74,7 @@ Personal portfolio and engineering showcase of Phong Phan. Frontend Engineer spe
 - [useStateHistory](https://byphongphan.com/r/use-state-history.json): Provides state management with undo, redo, and time-travel capabilities through a chronological history of state snapshots. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-state-history.json`)
 - [useSelection](https://byphongphan.com/r/use-selection.json): Manages single, multi, and batch selection states with Set-based O(1) lookups and range selection. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-selection.json`)
 - [usePagination](https://byphongphan.com/r/use-pagination.json): Controls dataset pagination metrics, slice bounds, and UI navigation range with ellipsis handling. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-pagination.json`)
+- [useMap](https://byphongphan.com/r/use-map.json): A reactive Map instance synchronized with React state that triggers re-renders on mutation. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-map.json`)
 
 ## Optional & Upcoming Features (Roadmap v0.2)
 

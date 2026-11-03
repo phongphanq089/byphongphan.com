@@ -185,6 +185,10 @@
     {
       "category": "ui-interaction",
       "slug": "use-pagination"
+    },
+    {
+      "category": "state",
+      "slug": "use-map"
     }
   ]
 }

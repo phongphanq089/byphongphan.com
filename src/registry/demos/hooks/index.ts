@@ -94,6 +94,12 @@ export const UsePaginationDemo = lazyWithRetry(() =>
   }))
 )
 
+export const UseMapDemo = lazyWithRetry(() =>
+  import("./use-map-demo").then((m) => ({
+    default: m.UseMapDemo,
+  }))
+)
+
 export const HOOK_DEMOS: Record<string, ComponentType> = {
   "use-click-outside": UseClickOutsideDemo,
   "use-click-outside-demo": UseClickOutsideDemo,
@@ -129,4 +135,6 @@ export const HOOK_DEMOS: Record<string, ComponentType> = {
   "use-selection-demo": UseSelectionDemo,
   "use-pagination": UsePaginationDemo,
   "use-pagination-demo": UsePaginationDemo,
+  "use-map": UseMapDemo,
+  "use-map-demo": UseMapDemo,
 }

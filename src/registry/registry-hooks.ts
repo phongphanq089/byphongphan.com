@@ -15,6 +15,7 @@ import {
   PageLeaveSchematic,
   PaginationSchematic,
   IsFirstRenderSchematic,
+  MapHookSchematic,
   SelectionSchematic,
   StateHistorySchematic,
 } from "./schematics"
@@ -348,6 +349,26 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
         path: "hooks/use-pagination.ts",
         type: "registry:hook",
         target: "hooks/use-pagination.ts",
+      },
+    ],
+  },
+  {
+    name: "use-map",
+    title: "useMap",
+    description:
+      "A reactive Map instance synchronized with React state that triggers re-renders on mutation.",
+    type: "registry:hook",
+    category: "state",
+    schematic: MapHookSchematic,
+    schematicType: "map",
+    dependencies: [],
+    registryDependencies: [],
+    isNew: true,
+    files: [
+      {
+        path: "hooks/use-map.ts",
+        type: "registry:hook",
+        target: "hooks/use-map.ts",
       },
     ],
   },
