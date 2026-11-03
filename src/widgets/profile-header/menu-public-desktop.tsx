@@ -1,8 +1,7 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 import { Link, useRouterState } from "@tanstack/react-router"
 import { ArrowRight } from "lucide-react"
-import { animate } from "motion/react"
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import { motion } from "motion/react"
+import React, { useRef, useState } from "react"
 
 import { MAIN_NAV_ITEMS, type NavItemConfig } from "@/shared/config"
 import { cn } from "@/shared/lib/utils"
@@ -23,234 +22,114 @@ function isRouteActive(itemLink: string, currentPath: string): boolean {
   return currentPath.startsWith(itemLink)
 }
 
-export interface SpotlightNavbarProps {
+function getDisplayTitle(item: NavItemConfig): string {
+  if (item.id === "hooks") return "Hooks"
+  return item.title
+}
+
+export interface FlashlightNavbarProps {
   items?: NavItemConfig[]
   className?: string
 }
 
-export function SpotlightNavbar({
+export function FlashlightNavbar({
   items = MAIN_NAV_ITEMS,
   className,
-}: SpotlightNavbarProps) {
+}: FlashlightNavbarProps) {
   const navRef = useRef<HTMLElement>(null)
   const currentPath = useRouterState({ select: (s) => s.location.pathname })
+  const [hoveredId, setHoveredId] = useState<string | null>(null)
 
-  const activeIndex = items.findIndex((item) =>
-    isRouteActive(item.link, currentPath)
-  )
-
-  const [isHovered, setIsHovered] = useState(false)
-  const [isReady, setIsReady] = useState(false)
-
-  const spotlightX = useRef(0)
-  const lineX = useRef(0)
-  const lineW = useRef(0)
-  const isInitial = useRef(true)
-
-  const updateActivePosition = useCallback(() => {
-    if (!navRef.current) return
-
-    if (activeIndex === -1) {
-      setIsReady(false)
-      return
-    }
-
-    const activeEl = navRef.current.querySelector<HTMLElement>(
-      `[data-index="${activeIndex}"]`
-    )
-    if (!activeEl) return
-
-    const navRect = navRef.current.getBoundingClientRect()
-    const textEl = activeEl.querySelector<HTMLElement>("span")
-    const textRect = textEl
-      ? textEl.getBoundingClientRect()
-      : activeEl.getBoundingClientRect()
-
-    // Symmetrical geometric center of the item's text relative to nav container
-    const targetCenter = textRect.left - navRect.left + textRect.width / 2
-    // Line width matches the text width with balanced subtle extension for rounded caps
-    const targetWidth = Math.round(textRect.width + 6)
-
-    if (isInitial.current) {
-      lineX.current = targetCenter
-      lineW.current = targetWidth
-      spotlightX.current = targetCenter
-      navRef.current.style.setProperty("--line-x", `${targetCenter}px`)
-      navRef.current.style.setProperty("--line-w", `${targetWidth}px`)
-      navRef.current.style.setProperty("--spotlight-x", `${targetCenter}px`)
-      isInitial.current = false
-      setIsReady(true)
-    } else {
-      setIsReady(true)
-      animate(lineX.current, targetCenter, {
-        type: "spring",
-        stiffness: 340,
-        damping: 30,
-        onUpdate: (v) => {
-          lineX.current = v
-          navRef.current?.style.setProperty("--line-x", `${v}px`)
-        },
-      })
-      animate(lineW.current, targetWidth, {
-        type: "spring",
-        stiffness: 340,
-        damping: 30,
-        onUpdate: (v) => {
-          lineW.current = v
-          navRef.current?.style.setProperty("--line-w", `${v}px`)
-        },
-      })
-
-      if (!isHovered) {
-        animate(spotlightX.current, targetCenter, {
-          type: "spring",
-          stiffness: 260,
-          damping: 24,
-          onUpdate: (v) => {
-            spotlightX.current = v
-            navRef.current?.style.setProperty("--spotlight-x", `${v}px`)
-          },
-        })
-      }
-    }
-  }, [activeIndex, isHovered])
-
-  // Recalculate positions immediately on window resize without spring delay
-  const handleResize = useCallback(() => {
-    if (!navRef.current || activeIndex === -1) return
-    const activeEl = navRef.current.querySelector<HTMLElement>(
-      `[data-index="${activeIndex}"]`
-    )
-    if (!activeEl) return
-
-    const navRect = navRef.current.getBoundingClientRect()
-    const textEl = activeEl.querySelector<HTMLElement>("span")
-    const textRect = textEl
-      ? textEl.getBoundingClientRect()
-      : activeEl.getBoundingClientRect()
-    const targetCenter = textRect.left - navRect.left + textRect.width / 2
-    const targetWidth = Math.round(textRect.width + 6)
-
-    lineX.current = targetCenter
-    lineW.current = targetWidth
-    spotlightX.current = targetCenter
-    navRef.current.style.setProperty("--line-x", `${targetCenter}px`)
-    navRef.current.style.setProperty("--line-w", `${targetWidth}px`)
-    navRef.current.style.setProperty("--spotlight-x", `${targetCenter}px`)
-  }, [activeIndex])
-
-  useEffect(() => {
-    updateActivePosition()
-    window.addEventListener("resize", handleResize)
-    document.fonts?.ready?.then(() => {
-      handleResize()
-    })
-    return () => window.removeEventListener("resize", handleResize)
-  }, [updateActivePosition, handleResize])
+  const activeItem = items.find((item) => isRouteActive(item.link, currentPath))
+  // The tab illuminated by the flashlight: follows hover, falls back to active route item
+  const illuminatedId = hoveredId ?? (activeItem ? activeItem.id : null)
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
     if (!navRef.current) return
     const rect = navRef.current.getBoundingClientRect()
     const x = e.clientX - rect.left
-
-    setIsHovered(true)
-    spotlightX.current = x
-    navRef.current.style.setProperty("--spotlight-x", `${x}px`)
-  }
-
-  const handleMouseLeave = () => {
-    setIsHovered(false)
-    if (!navRef.current || activeIndex === -1) return
-
-    const activeEl = navRef.current.querySelector<HTMLElement>(
-      `[data-index="${activeIndex}"]`
-    )
-    if (activeEl) {
-      const navRect = navRef.current.getBoundingClientRect()
-      const textEl = activeEl.querySelector<HTMLElement>("span")
-      const textRect = textEl
-        ? textEl.getBoundingClientRect()
-        : activeEl.getBoundingClientRect()
-      const targetCenter = textRect.left - navRect.left + textRect.width / 2
-
-      animate(spotlightX.current, targetCenter, {
-        type: "spring",
-        stiffness: 240,
-        damping: 24,
-        onUpdate: (v) => {
-          spotlightX.current = v
-          navRef.current?.style.setProperty("--spotlight-x", `${v}px`)
-        },
-      })
-    }
+    const y = e.clientY - rect.top
+    navRef.current.style.setProperty("--cursor-x", `${x}px`)
+    navRef.current.style.setProperty("--cursor-y", `${y}px`)
   }
 
   return (
     <nav
       ref={navRef}
       onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className={cn("relative flex h-full items-center select-none", className)}
+      onMouseLeave={() => setHoveredId(null)}
+      className={cn(
+        "group/nav relative flex h-9 items-center rounded-full p-1 transition-all duration-300 select-none",
+        className
+      )}
     >
-      {/* 1. Subtle cursor & active spotlight illumination */}
+      {/* Ambient cursor spotlight tracking across the pill */}
       <div
-        className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-300"
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-full opacity-0 transition-opacity duration-300 group-hover/nav:opacity-100"
         style={{
-          opacity: isHovered || activeIndex >= 0 ? 1 : 0,
-          background: `
-            radial-gradient(
-              120px circle at var(--spotlight-x, 0px) 50%,
-              rgba(0, 0, 0, 0.04) 0%,
-              transparent 100%
-            )
-          `,
+          background:
+            "radial-gradient(100px circle at var(--cursor-x, 50%) var(--cursor-y, 50%), rgba(255, 255, 255, 0.06), transparent 70%)",
         }}
       />
 
-      {/* 2. Navigation items flush with header height */}
-      <ul className="relative z-10 flex h-full items-center">
-        {items.map((item, idx) => {
-          const isActive = activeIndex === idx
+      <ul className="relative z-10 flex h-full items-center gap-0.5">
+        {items.map((item) => {
+          const isIlluminated = item.id === illuminatedId
+          const isActive = activeItem?.id === item.id
+
           return (
             <li key={item.id} className="relative flex h-full items-center">
               <Link
                 to={item.link}
-                data-index={idx}
+                onMouseEnter={() => setHoveredId(item.id)}
                 className={cn(
-                  "relative flex h-full items-center px-3.5 text-xs font-medium tracking-wider whitespace-nowrap transition-colors duration-150",
+                  "relative z-10 flex h-full items-center rounded-lg px-3.5 text-xs font-medium tracking-wide whitespace-nowrap transition-colors duration-200",
                   "focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none",
-                  isActive
-                    ? "font-semibold text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
+                  isIlluminated || isActive
+                    ? "font-semibold text-foreground dark:text-white"
+                    : "text-muted-foreground hover:text-foreground dark:text-zinc-400 dark:hover:text-zinc-200"
                 )}
               >
-                <span>{item.label}</span>
+                <span className="relative z-20">{getDisplayTitle(item)}</span>
+
+                {isIlluminated && (
+                  <motion.div
+                    layoutId="flashlight-glow"
+                    transition={{
+                      type: "spring",
+                      stiffness: 400,
+                      damping: 32,
+                      mass: 0.75,
+                    }}
+                    className="absolute inset-0 rounded-lg"
+                  >
+                    {/* 1. Inner elevated capsule pill */}
+                    <div className="absolute inset-0 rounded-lg bg-black/[0.05] shadow-[inset_0_1px_0_rgba(0,0,0,0.05)] dark:bg-white/[0.09] dark:shadow-[inset_0_1px_1px_rgba(255,255,255,0.14)]" />
+
+                    {/* 2. Upward Flashlight Beam Diffusion */}
+                    <div
+                      aria-hidden
+                      className="pointer-events-none absolute inset-x-0 bottom-0 h-full rounded-lg"
+                      style={{
+                        background:
+                          "radial-gradient(ellipse 75% 85% at 50% 100%, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0.08) 50%, transparent 80%)",
+                      }}
+                    />
+                  </motion.div>
+                )}
               </Link>
             </li>
           )
         })}
       </ul>
-
-      {/* 3. Single active bottom line strictly centered under the item label */}
-      <div
-        className={cn(
-          "pointer-events-none absolute bottom-0 z-20 -translate-x-1/2 transition-opacity duration-200",
-          isReady && activeIndex >= 0 ? "opacity-100" : "opacity-0"
-        )}
-        style={{
-          left: "var(--line-x, 0px)",
-          width: "var(--line-w, 0px)",
-        }}
-      >
-        {/* Ambient upward glow bloom */}
-        <div className="absolute -top-2 right-0 left-0 h-2 bg-gradient-to-t from-primary/20 to-transparent blur-[2px]" />
-
-        {/* Crisp active accent line with smooth rounded caps */}
-        <div className="relative h-[2px] w-full rounded-full bg-primary shadow-[0_0_6px_var(--primary)]" />
-      </div>
     </nav>
   )
 }
+
+// Backward-compatible alias
+export const SpotlightNavbar = FlashlightNavbar
+export type SpotlightNavbarProps = FlashlightNavbarProps
 
 export function Header() {
   return (
@@ -280,7 +159,9 @@ export function Header() {
 
       {/* Desktop header — hidden below lg, visible at lg+ */}
       <div className="ml-auto hidden h-full items-center lg:flex">
-        <SpotlightNavbar className="h-full" />
+        <div className="flex h-full items-center px-3">
+          <FlashlightNavbar />
+        </div>
         <div className="flex h-full items-center border-l border-border px-3">
           <CommandMenuTrigger compact />
         </div>
