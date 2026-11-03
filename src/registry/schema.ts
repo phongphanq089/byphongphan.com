@@ -50,6 +50,7 @@ export type HookSchematicType =
   | "map"
   | "list-state"
   | "debounced-callback"
+  | "disclosure"
 
 export type SchematicType =
   ComponentSchematicType | BlockSchematicType | HookSchematicType

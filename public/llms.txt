@@ -62,6 +62,7 @@ Personal portfolio and engineering showcase of Phong Phan. Frontend Engineer spe
 - [useCopyToClipboard](https://byphongphan.com/r/use-copy-to-clipboard.json): Copies text to clipboard with feedback. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-copy-to-clipboard.json`)
 - [useIntersectionObserver](https://byphongphan.com/r/use-intersection-observer.json): Triggers when an element enters or leaves the viewport. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-intersection-observer.json`)
 - [useDebounce](https://byphongphan.com/r/use-debounce.json): Debounces a value or function for better performance. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-debounce.json`)
+- [useDebouncedCallback](https://byphongphan.com/r/use-debounced-callback.json): Creates a debounced version of a callback function with cancellation, flush, and max-wait controls. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-debounced-callback.json`)
 - [useLocalStorage](https://byphongphan.com/r/use-local-storage.json): Syncs state with localStorage across browser sessions. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-local-storage.json`)
 - [useToggle](https://byphongphan.com/r/use-toggle.json): Toggles a boolean state value with memoized handlers. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-toggle.json`)
 - [usePrevious](https://byphongphan.com/r/use-previous.json): Stores previous value of a state or prop across renders. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-previous.json`)
@@ -76,7 +77,7 @@ Personal portfolio and engineering showcase of Phong Phan. Frontend Engineer spe
 - [usePagination](https://byphongphan.com/r/use-pagination.json): Controls dataset pagination metrics, slice bounds, and UI navigation range with ellipsis handling. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-pagination.json`)
 - [useMap](https://byphongphan.com/r/use-map.json): A reactive Map instance synchronized with React state that triggers re-renders on mutation. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-map.json`)
 - [useListState](https://byphongphan.com/r/use-list-state.json): Manages array state with declarative helper methods for insertion, removal, reordering, and item transformations. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-list-state.json`)
-- [useDebouncedCallback](https://byphongphan.com/r/use-debounced-callback.json): Creates a debounced version of a callback function with cancellation, flush, and max-wait controls. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-debounced-callback.json`)
+- [useDisclosure](https://byphongphan.com/r/use-disclosure.json): Manages boolean open/close state for modals, dialogs, drawers, and collapsibles with memoized handlers. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-disclosure.json`)
 
 ## Optional & Upcoming Features (Roadmap v0.2)
 

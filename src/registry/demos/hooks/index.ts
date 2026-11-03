@@ -112,6 +112,12 @@ export const UseDebouncedCallbackDemo = lazyWithRetry(() =>
   }))
 )
 
+export const UseDisclosureDemo = lazyWithRetry(() =>
+  import("./use-disclosure-demo").then((m) => ({
+    default: m.UseDisclosureDemo,
+  }))
+)
+
 export const HOOK_DEMOS: Record<string, ComponentType> = {
   "use-click-outside": UseClickOutsideDemo,
   "use-click-outside-demo": UseClickOutsideDemo,
@@ -153,4 +159,6 @@ export const HOOK_DEMOS: Record<string, ComponentType> = {
   "use-list-state-demo": UseListStateDemo,
   "use-debounced-callback": UseDebouncedCallbackDemo,
   "use-debounced-callback-demo": UseDebouncedCallbackDemo,
+  "use-disclosure": UseDisclosureDemo,
+  "use-disclosure-demo": UseDisclosureDemo,
 }

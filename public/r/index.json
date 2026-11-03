@@ -286,6 +286,14 @@
     "registryDependencies": []
   },
   {
+    "name": "use-debounced-callback",
+    "type": "registry:hook",
+    "title": "useDebouncedCallback",
+    "description": "Creates a debounced version of a callback function with cancellation, flush, and max-wait controls.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
     "name": "use-local-storage",
     "type": "registry:hook",
     "title": "useLocalStorage",
@@ -398,10 +406,10 @@
     "registryDependencies": []
   },
   {
-    "name": "use-debounced-callback",
+    "name": "use-disclosure",
     "type": "registry:hook",
-    "title": "useDebouncedCallback",
-    "description": "Creates a debounced version of a callback function with cancellation, flush, and max-wait controls.",
+    "title": "useDisclosure",
+    "description": "Manages boolean open/close state for modals, dialogs, drawers, and collapsibles with memoized handlers.",
     "dependencies": [],
     "registryDependencies": []
   }

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-disclosure",
+  "type": "registry:hook",
+  "title": "useDisclosure",
+  "description": "Manages boolean open/close state for modals, dialogs, drawers, and collapsibles with memoized handlers.",
+  "dependencies": [],
+  "devDependencies": [],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "hooks/use-disclosure.ts",
+      "content": "import { useCallback, useEffect, useRef, useState } from \"react\"\n\nexport interface UseDisclosureCallbacks {\n  /** Callback fired immediately after opening */\n  onOpen?: () => void\n  /** Callback fired immediately after closing */\n  onClose?: () => void\n}\n\nexport interface UseDisclosureHandlers {\n  open: () => void\n  close: () => void\n  toggle: () => void\n  set: (value: boolean) => void\n}\n\n/**\n * Custom hook to manage boolean state for modals, drawers, and collapsibles.\n *\n * @param initialState - Initial open/closed status (default: false).\n * @param callbacks - Optional lifecycle callbacks for open and close events.\n * @returns A tuple of the current boolean state and memoized action handlers.\n */\nexport function useDisclosure(\n  initialState = false,\n  callbacks?: UseDisclosureCallbacks\n): [boolean, UseDisclosureHandlers] {\n  const [isOpen, setIsOpen] = useState(initialState)\n  const callbacksRef = useRef(callbacks)\n\n  useEffect(() => {\n    callbacksRef.current = callbacks\n  }, [callbacks])\n\n  const open = useCallback(() => {\n    setIsOpen((current) => {\n      if (!current) {\n        callbacksRef.current?.onOpen?.()\n        return true\n      }\n      return current\n    })\n  }, [])\n\n  const close = useCallback(() => {\n    setIsOpen((current) => {\n      if (current) {\n        callbacksRef.current?.onClose?.()\n        return false\n      }\n      return current\n    })\n  }, [])\n\n  const toggle = useCallback(() => {\n    setIsOpen((current) => {\n      const next = !current\n      if (next) {\n        callbacksRef.current?.onOpen?.()\n      } else {\n        callbacksRef.current?.onClose?.()\n      }\n      return next\n    })\n  }, [])\n\n  const set = useCallback(\n    (value: boolean) => {\n      if (value) {\n        open()\n      } else {\n        close()\n      }\n    },\n    [open, close]\n  )\n\n  return [isOpen, { open, close, toggle, set }]\n}\n",
+      "type": "registry:hook",
+      "target": "hooks/use-disclosure.ts"
+    }
+  ]
+}

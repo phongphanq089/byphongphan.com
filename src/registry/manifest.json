@@ -139,6 +139,10 @@
       "slug": "use-debounce"
     },
     {
+      "category": "utilities",
+      "slug": "use-debounced-callback"
+    },
+    {
       "category": "browser",
       "slug": "use-local-storage"
     },
@@ -195,8 +199,8 @@
       "slug": "use-list-state"
     },
     {
-      "category": "utilities",
-      "slug": "use-debounced-callback"
+      "category": "state",
+      "slug": "use-disclosure"
     }
   ]
 }

@@ -665,6 +665,24 @@
       ]
     },
     {
+      "name": "use-debounced-callback",
+      "type": "registry:hook",
+      "title": "useDebouncedCallback",
+      "description": "Creates a debounced version of a callback function with cancellation, flush, and max-wait controls.",
+      "category": "utilities",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-debounced-callback.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-debounced-callback.ts"
+        }
+      ]
+    },
+    {
       "name": "use-local-storage",
       "type": "registry:hook",
       "title": "useLocalStorage",
@@ -917,20 +935,20 @@
       ]
     },
     {
-      "name": "use-debounced-callback",
+      "name": "use-disclosure",
       "type": "registry:hook",
-      "title": "useDebouncedCallback",
-      "description": "Creates a debounced version of a callback function with cancellation, flush, and max-wait controls.",
-      "category": "utilities",
+      "title": "useDisclosure",
+      "description": "Manages boolean open/close state for modals, dialogs, drawers, and collapsibles with memoized handlers.",
+      "category": "state",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [],
       "devDependencies": [],
       "registryDependencies": [],
       "files": [
         {
-          "path": "src/registry/hooks/use-debounced-callback.ts",
+          "path": "src/registry/hooks/use-disclosure.ts",
           "type": "registry:hook",
-          "target": "hooks/use-debounced-callback.ts"
+          "target": "hooks/use-disclosure.ts"
         }
       ]
     }

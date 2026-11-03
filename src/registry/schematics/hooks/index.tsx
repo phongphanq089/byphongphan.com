@@ -21,6 +21,7 @@ import { StateHistorySchematic } from "./state-history-schematic"
 import { MapHookSchematic, UseMapSchematic } from "./map-hook-schematic"
 import { ListStateSchematic } from "./list-state-schematic"
 import { DebouncedCallbackSchematic } from "./debounced-callback-schematic"
+import { DisclosureSchematic } from "./disclosure-schematic"
 
 export * from "./click-outside-schematic"
 export * from "./media-query-schematic"
@@ -42,6 +43,7 @@ export * from "./pagination-schematic"
 export * from "./map-hook-schematic"
 export * from "./list-state-schematic"
 export * from "./debounced-callback-schematic"
+export * from "./disclosure-schematic"
 
 export function DefaultHookSchematic() {
   return (
@@ -76,6 +78,7 @@ export const HOOK_SCHEMATICS_MAP: Record<
   map: MapHookSchematic,
   "list-state": ListStateSchematic,
   "debounced-callback": DebouncedCallbackSchematic,
+  disclosure: DisclosureSchematic,
 }
 
 export function RenderHookSchematic({ type }: { type?: string }) {

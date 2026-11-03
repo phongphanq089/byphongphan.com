@@ -95,7 +95,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## Custom Hooks (20)
+## Custom Hooks (21)
 
 | Hook | Description | Direct Install |
 | :--- | :--- | :--- |
@@ -104,6 +104,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [useCopyToClipboard](https://byphongphan.com/r/use-copy-to-clipboard.json) | Copies text to clipboard with feedback. | `pnpm dlx shadcn add https://byphongphan.com/r/use-copy-to-clipboard.json` |
 | [useIntersectionObserver](https://byphongphan.com/r/use-intersection-observer.json) | Triggers when an element enters or leaves the viewport. | `pnpm dlx shadcn add https://byphongphan.com/r/use-intersection-observer.json` |
 | [useDebounce](https://byphongphan.com/r/use-debounce.json) | Debounces a value or function for better performance. | `pnpm dlx shadcn add https://byphongphan.com/r/use-debounce.json` |
+| [useDebouncedCallback](https://byphongphan.com/r/use-debounced-callback.json) | Creates a debounced version of a callback function with cancellation, flush, and max-wait controls. | `pnpm dlx shadcn add https://byphongphan.com/r/use-debounced-callback.json` |
 | [useLocalStorage](https://byphongphan.com/r/use-local-storage.json) | Syncs state with localStorage across browser sessions. | `pnpm dlx shadcn add https://byphongphan.com/r/use-local-storage.json` |
 | [useToggle](https://byphongphan.com/r/use-toggle.json) | Toggles a boolean state value with memoized handlers. | `pnpm dlx shadcn add https://byphongphan.com/r/use-toggle.json` |
 | [usePrevious](https://byphongphan.com/r/use-previous.json) | Stores previous value of a state or prop across renders. | `pnpm dlx shadcn add https://byphongphan.com/r/use-previous.json` |
@@ -118,7 +119,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [usePagination](https://byphongphan.com/r/use-pagination.json) | Controls dataset pagination metrics, slice bounds, and UI navigation range with ellipsis handling. | `pnpm dlx shadcn add https://byphongphan.com/r/use-pagination.json` |
 | [useMap](https://byphongphan.com/r/use-map.json) | A reactive Map instance synchronized with React state that triggers re-renders on mutation. | `pnpm dlx shadcn add https://byphongphan.com/r/use-map.json` |
 | [useListState](https://byphongphan.com/r/use-list-state.json) | Manages array state with declarative helper methods for insertion, removal, reordering, and item transformations. | `pnpm dlx shadcn add https://byphongphan.com/r/use-list-state.json` |
-| [useDebouncedCallback](https://byphongphan.com/r/use-debounced-callback.json) | Creates a debounced version of a callback function with cancellation, flush, and max-wait controls. | `pnpm dlx shadcn add https://byphongphan.com/r/use-debounced-callback.json` |
+| [useDisclosure](https://byphongphan.com/r/use-disclosure.json) | Manages boolean open/close state for modals, dialogs, drawers, and collapsibles with memoized handlers. | `pnpm dlx shadcn add https://byphongphan.com/r/use-disclosure.json` |
 
 ---
 
