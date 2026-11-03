@@ -843,6 +843,24 @@
           "target": "hooks/use-state-history.ts"
         }
       ]
+    },
+    {
+      "name": "use-selection",
+      "type": "registry:hook",
+      "title": "useSelection",
+      "description": "Manages single, multi, and batch selection states with Set-based O(1) lookups and range selection.",
+      "category": "ui-interaction",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-selection.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-selection.ts"
+        }
+      ]
     }
   ]
 }

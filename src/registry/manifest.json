@@ -177,6 +177,10 @@
     {
       "category": "state",
       "slug": "use-state-history"
+    },
+    {
+      "category": "ui-interaction",
+      "slug": "use-selection"
     }
   ]
 }

@@ -72,6 +72,7 @@ Personal portfolio and engineering showcase of Phong Phan. Frontend Engineer spe
 - [usePageLeave](https://byphongphan.com/r/use-page-leave.json): Detects when the cursor leaves the viewport and provides exit-intent detection with configurable boundary filtering and trigger frequency. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-page-leave.json`)
 - [useIsFirstRender](https://byphongphan.com/r/use-is-first-render.json): Determines whether the current render is the initial mount, returning true on the first render and false on subsequent re-renders. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-is-first-render.json`)
 - [useStateHistory](https://byphongphan.com/r/use-state-history.json): Provides state management with undo, redo, and time-travel capabilities through a chronological history of state snapshots. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-state-history.json`)
+- [useSelection](https://byphongphan.com/r/use-selection.json): Manages single, multi, and batch selection states with Set-based O(1) lookups and range selection. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-selection.json`)
 
 ## Optional & Upcoming Features (Roadmap v0.2)
 

@@ -364,5 +364,13 @@
     "description": "Provides state management with undo, redo, and time-travel capabilities through a chronological history of state snapshots.",
     "dependencies": [],
     "registryDependencies": []
+  },
+  {
+    "name": "use-selection",
+    "type": "registry:hook",
+    "title": "useSelection",
+    "description": "Manages single, multi, and batch selection states with Set-based O(1) lookups and range selection.",
+    "dependencies": [],
+    "registryDependencies": []
   }
 ]

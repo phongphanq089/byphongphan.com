@@ -14,6 +14,7 @@ import {
   NetworkSchematic,
   PageLeaveSchematic,
   IsFirstRenderSchematic,
+  SelectionSchematic,
   StateHistorySchematic,
 } from "./schematics"
 
@@ -306,6 +307,26 @@ export const REGISTRY_HOOKS: RegistryItem[] = [
         path: "hooks/use-state-history.ts",
         type: "registry:hook",
         target: "hooks/use-state-history.ts",
+      },
+    ],
+  },
+  {
+    name: "use-selection",
+    title: "useSelection",
+    description:
+      "Manages single, multi, and batch selection states with Set-based O(1) lookups and range selection.",
+    type: "registry:hook",
+    category: "ui-interaction",
+    schematic: SelectionSchematic,
+    schematicType: "selection",
+    dependencies: [],
+    registryDependencies: [],
+    isNew: true,
+    files: [
+      {
+        path: "hooks/use-selection.ts",
+        type: "registry:hook",
+        target: "hooks/use-selection.ts",
       },
     ],
   },
