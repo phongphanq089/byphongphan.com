@@ -1,6 +1,7 @@
 export * from "./use-click-outside"
 export * from "./use-copy-to-clipboard"
 export * from "./use-debounce"
+export * from "./use-debounced-callback"
 export * from "./use-dom-toc"
 export * from "./use-hover"
 export * from "./use-intersection-observer"

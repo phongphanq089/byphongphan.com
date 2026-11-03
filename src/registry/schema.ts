@@ -49,6 +49,7 @@ export type HookSchematicType =
   | "pagination"
   | "map"
   | "list-state"
+  | "debounced-callback"
 
 export type SchematicType =
   ComponentSchematicType | BlockSchematicType | HookSchematicType

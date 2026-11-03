@@ -193,6 +193,10 @@
     {
       "category": "state",
       "slug": "use-list-state"
+    },
+    {
+      "category": "utilities",
+      "slug": "use-debounced-callback"
     }
   ]
 }

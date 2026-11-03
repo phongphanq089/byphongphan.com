@@ -94,7 +94,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## Custom Hooks (19)
+## Custom Hooks (20)
 
 | Hook                                                                                | Description                                                                                                                                                    | Direct Install                                                                 |
 | :---------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------- |
@@ -117,6 +117,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [usePagination](https://byphongphan.com/r/use-pagination.json)                      | Controls dataset pagination metrics, slice bounds, and UI navigation range with ellipsis handling.                                                             | `pnpm dlx shadcn add https://byphongphan.com/r/use-pagination.json`            |
 | [useMap](https://byphongphan.com/r/use-map.json)                                    | A reactive Map instance synchronized with React state that triggers re-renders on mutation.                                                                    | `pnpm dlx shadcn add https://byphongphan.com/r/use-map.json`                   |
 | [useListState](https://byphongphan.com/r/use-list-state.json)                       | Manages array state with declarative helper methods for insertion, removal, reordering, and item transformations.                                              | `pnpm dlx shadcn add https://byphongphan.com/r/use-list-state.json`            |
+| [useDebouncedCallback](https://byphongphan.com/r/use-debounced-callback.json)       | Creates a debounced version of a callback function with cancellation, flush, and max-wait controls.                                                            | `pnpm dlx shadcn add https://byphongphan.com/r/use-debounced-callback.json`    |
 
 ---
 

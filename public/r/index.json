@@ -396,5 +396,13 @@
     "description": "Manages array state with declarative helper methods for insertion, removal, reordering, and item transformations.",
     "dependencies": [],
     "registryDependencies": []
+  },
+  {
+    "name": "use-debounced-callback",
+    "type": "registry:hook",
+    "title": "useDebouncedCallback",
+    "description": "Creates a debounced version of a callback function with cancellation, flush, and max-wait controls.",
+    "dependencies": [],
+    "registryDependencies": []
   }
 ]

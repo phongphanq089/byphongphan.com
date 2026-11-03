@@ -915,6 +915,24 @@
           "target": "hooks/use-list-state.ts"
         }
       ]
+    },
+    {
+      "name": "use-debounced-callback",
+      "type": "registry:hook",
+      "title": "useDebouncedCallback",
+      "description": "Creates a debounced version of a callback function with cancellation, flush, and max-wait controls.",
+      "category": "utilities",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-debounced-callback.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-debounced-callback.ts"
+        }
+      ]
     }
   ]
 }

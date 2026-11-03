@@ -76,6 +76,7 @@ Personal portfolio and engineering showcase of Phong Phan. Frontend Engineer spe
 - [usePagination](https://byphongphan.com/r/use-pagination.json): Controls dataset pagination metrics, slice bounds, and UI navigation range with ellipsis handling. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-pagination.json`)
 - [useMap](https://byphongphan.com/r/use-map.json): A reactive Map instance synchronized with React state that triggers re-renders on mutation. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-map.json`)
 - [useListState](https://byphongphan.com/r/use-list-state.json): Manages array state with declarative helper methods for insertion, removal, reordering, and item transformations. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-list-state.json`)
+- [useDebouncedCallback](https://byphongphan.com/r/use-debounced-callback.json): Creates a debounced version of a callback function with cancellation, flush, and max-wait controls. (CLI: `pnpm dlx shadcn add https://byphongphan.com/r/use-debounced-callback.json`)
 
 ## Optional & Upcoming Features (Roadmap v0.2)
 
