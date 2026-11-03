@@ -94,7 +94,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## Custom Hooks (16)
+## Custom Hooks (17)
 
 | Hook                                                                                | Description                                                                                                                                                    | Direct Install                                                                 |
 | :---------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------- |
@@ -114,6 +114,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [useIsFirstRender](https://byphongphan.com/r/use-is-first-render.json)              | Determines whether the current render is the initial mount, returning true on the first render and false on subsequent re-renders.                             | `pnpm dlx shadcn add https://byphongphan.com/r/use-is-first-render.json`       |
 | [useStateHistory](https://byphongphan.com/r/use-state-history.json)                 | Provides state management with undo, redo, and time-travel capabilities through a chronological history of state snapshots.                                    | `pnpm dlx shadcn add https://byphongphan.com/r/use-state-history.json`         |
 | [useSelection](https://byphongphan.com/r/use-selection.json)                        | Manages single, multi, and batch selection states with Set-based O(1) lookups and range selection.                                                             | `pnpm dlx shadcn add https://byphongphan.com/r/use-selection.json`             |
+| [usePagination](https://byphongphan.com/r/use-pagination.json)                      | Controls dataset pagination metrics, slice bounds, and UI navigation range with ellipsis handling.                                                             | `pnpm dlx shadcn add https://byphongphan.com/r/use-pagination.json`            |
 
 ---
 

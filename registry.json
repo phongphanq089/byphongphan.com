@@ -861,6 +861,24 @@
           "target": "hooks/use-selection.ts"
         }
       ]
+    },
+    {
+      "name": "use-pagination",
+      "type": "registry:hook",
+      "title": "usePagination",
+      "description": "Controls dataset pagination metrics, slice bounds, and UI navigation range with ellipsis handling.",
+      "category": "ui-interaction",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/hooks/use-pagination.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-pagination.ts"
+        }
+      ]
     }
   ]
 }

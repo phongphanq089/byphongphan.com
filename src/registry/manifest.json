@@ -181,6 +181,10 @@
     {
       "category": "ui-interaction",
       "slug": "use-selection"
+    },
+    {
+      "category": "ui-interaction",
+      "slug": "use-pagination"
     }
   ]
 }

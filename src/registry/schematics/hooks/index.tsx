@@ -16,6 +16,7 @@ import { NetworkSchematic } from "./network-schematic"
 import { PageLeaveSchematic } from "./page-leave-schematic"
 import { IsFirstRenderSchematic } from "./is-first-render-schematic"
 import { SelectionSchematic } from "./selection-schematic"
+import { PaginationSchematic } from "./pagination-schematic"
 import { StateHistorySchematic } from "./state-history-schematic"
 
 export * from "./click-outside-schematic"
@@ -34,6 +35,7 @@ export * from "./page-leave-schematic"
 export * from "./is-first-render-schematic"
 export * from "./state-history-schematic"
 export * from "./selection-schematic"
+export * from "./pagination-schematic"
 
 export function DefaultHookSchematic() {
   return (
@@ -64,6 +66,7 @@ export const HOOK_SCHEMATICS_MAP: Record<
   "is-first-render": IsFirstRenderSchematic,
   "state-history": StateHistorySchematic,
   selection: SelectionSchematic,
+  pagination: PaginationSchematic,
 }
 
 export function RenderHookSchematic({ type }: { type?: string }) {

@@ -372,5 +372,13 @@
     "description": "Manages single, multi, and batch selection states with Set-based O(1) lookups and range selection.",
     "dependencies": [],
     "registryDependencies": []
+  },
+  {
+    "name": "use-pagination",
+    "type": "registry:hook",
+    "title": "usePagination",
+    "description": "Controls dataset pagination metrics, slice bounds, and UI navigation range with ellipsis handling.",
+    "dependencies": [],
+    "registryDependencies": []
   }
 ]
