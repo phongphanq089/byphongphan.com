@@ -32,8 +32,11 @@ export function ProfileLayout({ children }: { children?: React.ReactNode }) {
     currentPath === "/block" ||
     currentPath.startsWith("/block/")
   const isDocsDetail = /^\/(component-ui|hooks)\/[^/]+\/[^/]+/.test(currentPath)
-  const layoutMaxWidth: GridContainerMaxWidth =
-    isBlocks || isDocsDetail ? "wide" : "default"
+  const layoutMaxWidth: GridContainerMaxWidth = isBlocks
+    ? "wide"
+    : isDocsDetail
+      ? "6xl"
+      : "default"
 
   const homeRailSections = useTocRailSections(HOME_TOC_ITEMS)
 

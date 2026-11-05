@@ -29,7 +29,7 @@ export function DocDetailLayout({
         </div>
       )}
 
-      <GridContainer maxWidth="wide" borderBottom={false} className="p-0">
+      <GridContainer maxWidth="6xl" borderBottom={false} className="p-0">
         <div
           className={cn(
             "flex min-h-[calc(100vh-3rem)] w-full flex-col lg:flex-row",
