@@ -14,6 +14,7 @@ import {
 } from "lucide-react"
 import { useEffect } from "react"
 
+import { useAdminConfirm } from "@/admin/components"
 import {
   Avatar,
   AvatarFallback,
@@ -91,6 +92,23 @@ const systemNavItems: NavItem[] = [
 export function SidebarAdmin() {
   const currentPath = useRouterState({ select: (s) => s.location.pathname })
   const { setOpenMobile, isMobile } = useSidebar()
+  const { confirm, ConfirmDialog } = useAdminConfirm()
+
+  const handleLogout = async () => {
+    const isConfirmed = await confirm({
+      title: "Log out of Admin Workspace?",
+      description:
+        "Are you sure you want to log out? You will need to sign in again to access the dashboard and content management.",
+      variant: "warning",
+      confirmText: "Log out",
+      cancelText: "Cancel",
+      icon: <LogOut className="size-5" />,
+    })
+
+    if (!isConfirmed) return
+
+    window.location.href = "/"
+  }
 
   useEffect(() => {
     if (isMobile) {
@@ -353,9 +371,7 @@ export function SidebarAdmin() {
                 <DropdownMenuItem
                   variant="destructive"
                   className="cursor-pointer"
-                  onClick={() => {
-                    window.location.href = "/"
-                  }}
+                  onClick={handleLogout}
                 >
                   <LogOut className="mr-2 size-3.5" />
                   <span>Log out</span>
@@ -366,6 +382,7 @@ export function SidebarAdmin() {
         </SidebarMenu>
       </SidebarFooter>
       <SidebarRail />
+      <ConfirmDialog />
     </Sidebar>
   )
 }

@@ -1,4 +1,11 @@
 export {
+  AdminConfirmDialog,
+  type AdminConfirmDialogProps,
+  type AdminConfirmOptions,
+  type AdminConfirmVariant,
+  useAdminConfirm,
+} from "./admin-confirm-dialog"
+export {
   AdminContentBox,
   AdminContentCard,
   type AdminContentCardPadding,
