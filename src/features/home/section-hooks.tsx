@@ -1,18 +1,27 @@
+import { Link } from "@tanstack/react-router"
 import React from "react"
 
 import { GridContainer } from "@/app/layouts"
-import { HookCard } from "@/features/hooks/components/hook-card"
 import { HOOKS_DATA } from "@/features/hooks/hooks-data"
 import type { HookItem } from "@/features/hooks/types"
 import { SectionHeading } from "@/shared/ui/system/section-heading"
 
 const FEATURED_HOOK_SLUGS = [
   "use-disclosure",
+  "use-click-outside",
+  "use-media-query",
+  "use-copy-to-clipboard",
+  "use-debounce",
   "use-debounced-callback",
-  "use-selection",
+  "use-local-storage",
+  "use-toggle",
+  "use-intersection-observer",
+  "use-previous",
+  "use-hover",
+  "use-prevent-body-scroll",
+  "use-scroll-position",
   "use-pagination",
-  "use-list-state",
-  "use-state-history",
+  "use-selection",
 ]
 
 export const SectionHooks = () => {
@@ -21,11 +30,10 @@ export const SectionHooks = () => {
       HOOKS_DATA.find((h) => h.slug === slug)
     ).filter((h): h is HookItem => Boolean(h))
 
-    return featured.length >= 6 ? featured.slice(0, 6) : HOOKS_DATA.slice(0, 6)
+    return featured.length >= 15
+      ? featured.slice(0, 15)
+      : HOOKS_DATA.slice(0, 15)
   }, [])
-
-  const row1 = featuredHooks.slice(0, 3)
-  const row2 = featuredHooks.slice(3, 6)
 
   return (
     <>
@@ -39,56 +47,28 @@ export const SectionHooks = () => {
         />
       </GridContainer>
 
-      {/* Row 1: 3-Column Grid */}
+      {/* Minimal Grid: 3 columns on desktop, 2 columns on mobile */}
       <GridContainer
         columns={3}
+        mobileColumns={2}
         borderTop={false}
-        borderBottom={true}
+        borderBottom={false}
         showCrosshairs={true}
         className="w-full"
       >
-        {row1.map((hook, idx) => (
-          <div
+        {featuredHooks.map((hook) => (
+          <Link
             key={hook.id}
-            className={`flex h-full w-full p-4 sm:p-5 md:p-5 lg:p-6 ${
-              idx < 2 ? "border-b border-border md:border-b-0" : ""
-            }`}
+            to="/hooks/$category/$slug"
+            params={{ category: hook.category, slug: hook.slug }}
+            className="group relative flex min-h-[62px] w-full items-center bg-background px-4 py-4 transition-colors duration-150 hover:bg-muted/30 sm:min-h-[72px] sm:px-6 sm:py-5 md:min-h-[80px] md:px-8 md:py-6 dark:hover:bg-zinc-900/40"
           >
-            <HookCard hook={hook} />
-          </div>
+            <span className="truncate text-xs font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary sm:text-sm md:text-base">
+              {hook.name}
+            </span>
+          </Link>
         ))}
       </GridContainer>
-
-      {/* Row 2: 3-Column Grid */}
-      {row2.length > 0 && (
-        <GridContainer
-          columns={3}
-          borderTop={false}
-          borderBottom={true}
-          showCrosshairs={true}
-          className="w-full"
-        >
-          {row2.map((hook, idx) => (
-            <div
-              key={hook.id}
-              className={`flex h-full w-full p-4 sm:p-5 md:p-5 lg:p-6 ${
-                idx < 2 ? "border-b border-border md:border-b-0" : ""
-              }`}
-            >
-              <HookCard hook={hook} />
-            </div>
-          ))}
-          {row2.length === 2 && (
-            <div className="hidden h-full w-full items-center justify-center p-4 sm:p-5 md:p-5 lg:flex lg:p-6">
-              <div className="flex h-full w-full items-center justify-center rounded-xl border border-dashed border-border/60 bg-muted/20 p-8 text-center">
-                <span className="text-[10px] tracking-widest text-muted-foreground/40 uppercase">
-                  More Hooks in Registry
-                </span>
-              </div>
-            </div>
-          )}
-        </GridContainer>
-      )}
     </>
   )
 }
