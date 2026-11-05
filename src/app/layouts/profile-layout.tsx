@@ -47,6 +47,7 @@ export function ProfileLayout({ children }: { children?: React.ReactNode }) {
           <RailScrollScrubber
             sections={homeRailSections}
             accentColor="var(--primary)"
+            sectionMenuVariant="card"
           />
         )}
 
