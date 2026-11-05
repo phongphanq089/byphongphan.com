@@ -1,9 +1,10 @@
 import { Link, useRouterState } from "@tanstack/react-router"
-import { cn } from "cn"
 import {
   BookmarkCheck,
+  ChevronsUpDown,
   ExternalLink,
   FileText,
+  Home,
   Images,
   LayoutDashboard,
   Library,
@@ -14,7 +15,15 @@ import {
 import { useEffect } from "react"
 
 import {
+  Avatar,
+  AvatarFallback,
   Badge,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
   PPPixelMark,
   Sidebar,
   SidebarContent,
@@ -81,7 +90,7 @@ const systemNavItems: NavItem[] = [
 
 export function SidebarAdmin() {
   const currentPath = useRouterState({ select: (s) => s.location.pathname })
-  const { state, setOpenMobile, isMobile } = useSidebar()
+  const { setOpenMobile, isMobile } = useSidebar()
 
   useEffect(() => {
     if (isMobile) {
@@ -104,12 +113,12 @@ export function SidebarAdmin() {
 
   return (
     <Sidebar
-      variant="sidebar"
+      variant="inset"
       collapsible="icon"
-      className="top-14! h-[calc(100svh-3.5rem)]! border-r border-border/80"
+      className="[&_[data-slot=sidebar-inner]]:bg-transparent"
     >
       {/* ─── WORKSPACE / BRAND HEADER ─── */}
-      <SidebarHeader className="border-b border-border/70 p-2">
+      <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
@@ -118,8 +127,8 @@ export function SidebarAdmin() {
               render={<Link to="/admin" />}
               onClick={handleNavClick}
             >
-              <div className="flex aspect-square size-10 items-center justify-center rounded-sm border bg-primary/10 text-primary">
-                <PPPixelMark className="text-primary" />
+              <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-xs">
+                <PPPixelMark className="size-4 text-primary-foreground" />
               </div>
               <div className="grid flex-1 text-left text-xs leading-tight">
                 <span className="truncate font-semibold text-foreground">
@@ -277,26 +286,84 @@ export function SidebarAdmin() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-sidebar-border p-2">
-        <button
-          type="button"
-
-          aria-label="Log out"
-          className={cn(
-            "flex h-9 w-full items-center gap-2 rounded-md px-2",
-            "text-sm font-medium text-sidebar-foreground/70",
-            "transition-colors duration-150",
-            "hover:bg-destructive/10 hover:text-destructive",
-            "dark:hover:bg-destructive/20",
-            "focus-visible:ring-2 focus-visible:outline-none",
-            "focus-visible:ring-sidebar-ring",
-            "active:bg-destructive/15",
-            state === "collapsed" && "justify-center px-0"
-          )}
-        >
-          <LogOut className="size-4 shrink-0" />
-          {state === "expanded" && <span>Log out</span>}
-        </button>
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                className="w-full"
+                render={
+                  <SidebarMenuButton
+                    size="lg"
+                    className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                    tooltip={{
+                      children: "Phong Phan (Admin)",
+                      side: "right",
+                    }}
+                  />
+                }
+              >
+                <Avatar className="size-8 rounded-lg">
+                  <AvatarFallback className="rounded-lg bg-primary/15 text-xs font-bold text-primary">
+                    PP
+                  </AvatarFallback>
+                </Avatar>
+                <div className="grid flex-1 text-left text-xs leading-tight">
+                  <span className="truncate font-semibold text-foreground">
+                    Phong Phan
+                  </span>
+                  <span className="truncate text-[10px] text-muted-foreground">
+                    phongphanq089@gmail.com
+                  </span>
+                </div>
+                <ChevronsUpDown className="ml-auto size-4 text-muted-foreground" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                className="w-56 rounded-lg text-xs"
+                side={isMobile ? "bottom" : "right"}
+                align="end"
+                sideOffset={4}
+              >
+                <div className="flex flex-col space-y-1 p-2">
+                  <p className="leading-none font-semibold text-foreground">
+                    Phong Phan
+                  </p>
+                  <p className="text-[11px] leading-none text-muted-foreground">
+                    phongphanq089@gmail.com
+                  </p>
+                </div>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    render={<Link to="/admin/settings" />}
+                  >
+                    <SlidersHorizontal className="mr-2 size-3.5 text-muted-foreground" />
+                    <span>Site Settings</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    render={<Link to="/" target="_blank" />}
+                  >
+                    <Home className="mr-2 size-3.5 text-muted-foreground" />
+                    <span>View Public Site</span>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  variant="destructive"
+                  className="cursor-pointer"
+                  onClick={() => {
+                    window.location.href = "/"
+                  }}
+                >
+                  <LogOut className="mr-2 size-3.5" />
+                  <span>Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

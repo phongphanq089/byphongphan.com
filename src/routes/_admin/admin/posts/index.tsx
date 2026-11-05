@@ -20,7 +20,7 @@ function AdminPostsPage() {
           { label: "Posts" },
         ]}
         actions={
-          <Button size="sm" className="gap-2">
+          <Button className="gap-2">
             <Plus className="size-4" />
             <span>New Article</span>
           </Button>
@@ -38,7 +38,7 @@ function AdminPostsPage() {
           Articles from your MDX files and Neon DB will be displayed and
           manageable here.
         </p>
-        <Button size="sm" className="mt-6 gap-2">
+        <Button className="mt-6 gap-2">
           <Plus className="size-4" />
           <span>Create your first article</span>
         </Button>

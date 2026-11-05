@@ -20,7 +20,7 @@ function AdminGroupsPage() {
           { label: "Series & Groups" },
         ]}
         actions={
-          <Button size="sm" className="gap-2">
+          <Button className="gap-2">
             <Plus className="size-4" />
             <span>New Series</span>
           </Button>
@@ -38,7 +38,7 @@ function AdminGroupsPage() {
           Create serialized collections to bundle multi-part engineering deep
           dives together.
         </p>
-        <Button size="sm" className="mt-6 gap-2">
+        <Button className="mt-6 gap-2">
           <Plus className="size-4" />
           <span>Create new series</span>
         </Button>

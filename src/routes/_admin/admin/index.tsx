@@ -114,7 +114,7 @@ function AdminDashboardPage() {
               asChild
               className="mt-4 w-full"
             >
-              <Link to="/admin/registry">Go to Registry</Link>
+              <Link to="/admin/resources">Go to Registry</Link>
             </Button>
           </div>
 

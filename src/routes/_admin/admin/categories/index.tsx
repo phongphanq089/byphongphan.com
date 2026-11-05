@@ -20,7 +20,7 @@ function AdminCategoriesPage() {
           { label: "Categories" },
         ]}
         actions={
-          <Button size="sm" className="gap-2">
+          <Button className="gap-2">
             <Plus className="size-4" />
             <span>New Category</span>
           </Button>
@@ -38,7 +38,7 @@ function AdminCategoriesPage() {
           Configure tags and taxonomies to help readers filter and explore your
           site.
         </p>
-        <Button size="sm" className="mt-6 gap-2">
+        <Button className="mt-6 gap-2">
           <Plus className="size-4" />
           <span>Add first category</span>
         </Button>

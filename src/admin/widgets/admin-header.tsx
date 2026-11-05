@@ -1,13 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router"
-import {
-  ExternalLink,
-  Home,
-  LogOut,
-  Moon,
-  Search,
-  SlidersHorizontal,
-  Sun,
-} from "lucide-react"
+import { ExternalLink, Moon, Search, Sun } from "lucide-react"
 
 import { useTheme } from "@/shared/providers/theme-provider"
 import {
@@ -18,12 +10,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
   Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
   Separator,
   SidebarTrigger,
 } from "@/shared/ui"
@@ -54,16 +40,16 @@ export function AdminHeader() {
     )?.[1] || { title: "Overview" }
 
   return (
-    <header className="sticky top-0 z-50 flex h-14 w-full shrink-0 items-center justify-between border-b border-border/70 bg-accent/95 px-4 backdrop-blur-md transition-all">
+    <header className="sticky top-0 z-20 flex h-14 shrink-0 items-center justify-between gap-2 border-b border-border/70 bg-background/95 px-4 backdrop-blur-md transition-all">
       <div className="flex items-center gap-2">
-        <SidebarTrigger className="-ml-1 size-8 rounded-lg hover:bg-muted" />
+        <SidebarTrigger className="-ml-1 size-8 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground" />
 
         <Separator
           orientation="vertical"
-          className="mr-1 hidden h-4 bg-border lg:block"
+          className="mr-1 hidden h-4 bg-border/80 sm:block"
         />
 
-        <Breadcrumb className="hidden text-xs lg:block">
+        <Breadcrumb className="hidden text-xs sm:block">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink render={<Link to="/admin" />}>
@@ -73,7 +59,7 @@ export function AdminHeader() {
             {matchedConfig.group && (
               <>
                 <BreadcrumbSeparator />
-                <BreadcrumbItem className="hidden xl:inline-flex">
+                <BreadcrumbItem className="hidden md:inline-flex">
                   <span className="text-muted-foreground/70">
                     {matchedConfig.group}
                   </span>
@@ -90,16 +76,16 @@ export function AdminHeader() {
         </Breadcrumb>
       </div>
 
-      {/* ─── CENTER/RIGHT: Quick Search Command Bar ─── */}
+      {/* ─── RIGHT: Quick Search, Theme Toggle, Live Site ─── */}
       <div className="flex items-center gap-2">
         <button
           type="button"
           onClick={openCommandMenu}
-          className="flex h-8 w-40 cursor-pointer items-center justify-between rounded-lg border border-border/70 bg-muted/40 px-3 text-xs text-muted-foreground transition-all hover:border-border hover:bg-muted/70 sm:w-56 lg:w-72"
+          className="flex h-8 w-36 cursor-pointer items-center justify-between rounded-lg border border-border/70 bg-muted/40 px-2.5 text-xs text-muted-foreground transition-all hover:border-border hover:bg-muted/70 sm:w-52 lg:w-64"
         >
           <div className="flex items-center gap-2">
             <Search className="size-3.5 text-muted-foreground/70" />
-            <span className="truncate">Type to search...</span>
+            <span className="truncate">Search...</span>
           </div>
           <kbd className="pointer-events-none hidden rounded-md border border-border/80 bg-background px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground sm:inline-block">
             Ctrl K
@@ -126,61 +112,13 @@ export function AdminHeader() {
           variant="outline"
           size="sm"
           asChild
-          className="hidden h-8 gap-1.5 rounded-lg border-border/80 bg-background/50 px-2.5 text-xs font-medium text-foreground hover:bg-muted sm:inline-flex"
+          className="hidden h-8 gap-1.5 rounded-lg border-border/80 bg-background/50 px-2.5 text-xs font-medium text-foreground hover:bg-muted md:inline-flex"
         >
           <Link to="/" target="_blank">
             <span>Live Site</span>
             <ExternalLink className="size-3 text-muted-foreground" />
           </Link>
         </Button>
-
-        {/* User Profile Avatar Dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-lg border border-border/80 bg-muted/60 text-xs font-bold text-foreground transition-colors hover:bg-muted focus-visible:outline-none"
-            aria-label="User menu"
-          >
-            PP
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56 text-xs">
-            <div className="flex flex-col space-y-1 p-2">
-              <p className="leading-none font-semibold text-foreground">
-                Phong Phan
-              </p>
-              <p className="text-[11px] leading-none text-muted-foreground">
-                phongphanq089@gmail.com
-              </p>
-            </div>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem
-                className="cursor-pointer"
-                render={<Link to="/admin/settings" />}
-              >
-                <SlidersHorizontal className="mr-2 size-3.5 text-muted-foreground" />
-                <span>Site Settings</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="cursor-pointer"
-                render={<Link to="/" />}
-              >
-                <Home className="mr-2 size-3.5 text-muted-foreground" />
-                <span>View Public Site</span>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem
-              variant="destructive"
-              className="cursor-pointer"
-              onClick={() => {
-                window.location.href = "/"
-              }}
-            >
-              <LogOut className="mr-2 size-3.5" />
-              <span>Log out</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
     </header>
   )

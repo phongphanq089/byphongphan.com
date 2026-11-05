@@ -25,7 +25,6 @@ import { Route as SiteResourcesIndexRouteImport } from './routes/_site/resources
 import { Route as AdminAdminCategoriesIndexRouteImport } from './routes/_admin/admin/categories/index'
 import { Route as AdminAdminGroupsIndexRouteImport } from './routes/_admin/admin/groups/index'
 import { Route as AdminAdminPostsIndexRouteImport } from './routes/_admin/admin/posts/index'
-import { Route as AdminAdminRegistryIndexRouteImport } from './routes/_admin/admin/registry/index'
 import { Route as AdminAdminResourcesIndexRouteImport } from './routes/_admin/admin/resources/index'
 import { Route as AdminAdminSettingsIndexRouteImport } from './routes/_admin/admin/settings/index'
 import { Route as SiteBlocksCategoryIndexRouteImport } from './routes/_site/blocks/$category/index'
@@ -114,11 +113,6 @@ const AdminAdminPostsIndexRoute = AdminAdminPostsIndexRouteImport.update({
   path: '/admin/posts/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const AdminAdminRegistryIndexRoute = AdminAdminRegistryIndexRouteImport.update({
-  id: '/admin/registry/',
-  path: '/admin/registry/',
-  getParentRoute: () => AdminRouteRoute,
-} as any)
 const AdminAdminResourcesIndexRoute =
   AdminAdminResourcesIndexRouteImport.update({
     id: '/admin/resources/',
@@ -181,7 +175,6 @@ export interface FileRoutesByFullPath {
   '/admin/categories/': typeof AdminAdminCategoriesIndexRoute
   '/admin/groups/': typeof AdminAdminGroupsIndexRoute
   '/admin/posts/': typeof AdminAdminPostsIndexRoute
-  '/admin/registry/': typeof AdminAdminRegistryIndexRoute
   '/admin/resources/': typeof AdminAdminResourcesIndexRoute
   '/admin/settings/': typeof AdminAdminSettingsIndexRoute
   '/blocks/$category/': typeof SiteBlocksCategoryIndexRoute
@@ -206,7 +199,6 @@ export interface FileRoutesByTo {
   '/admin/categories': typeof AdminAdminCategoriesIndexRoute
   '/admin/groups': typeof AdminAdminGroupsIndexRoute
   '/admin/posts': typeof AdminAdminPostsIndexRoute
-  '/admin/registry': typeof AdminAdminRegistryIndexRoute
   '/admin/resources': typeof AdminAdminResourcesIndexRoute
   '/admin/settings': typeof AdminAdminSettingsIndexRoute
   '/blocks/$category': typeof SiteBlocksCategoryIndexRoute
@@ -234,7 +226,6 @@ export interface FileRoutesById {
   '/_admin/admin/categories/': typeof AdminAdminCategoriesIndexRoute
   '/_admin/admin/groups/': typeof AdminAdminGroupsIndexRoute
   '/_admin/admin/posts/': typeof AdminAdminPostsIndexRoute
-  '/_admin/admin/registry/': typeof AdminAdminRegistryIndexRoute
   '/_admin/admin/resources/': typeof AdminAdminResourcesIndexRoute
   '/_admin/admin/settings/': typeof AdminAdminSettingsIndexRoute
   '/_site/blocks/$category/': typeof SiteBlocksCategoryIndexRoute
@@ -261,7 +252,6 @@ export interface FileRouteTypes {
     | '/admin/categories/'
     | '/admin/groups/'
     | '/admin/posts/'
-    | '/admin/registry/'
     | '/admin/resources/'
     | '/admin/settings/'
     | '/blocks/$category/'
@@ -286,7 +276,6 @@ export interface FileRouteTypes {
     | '/admin/categories'
     | '/admin/groups'
     | '/admin/posts'
-    | '/admin/registry'
     | '/admin/resources'
     | '/admin/settings'
     | '/blocks/$category'
@@ -313,7 +302,6 @@ export interface FileRouteTypes {
     | '/_admin/admin/categories/'
     | '/_admin/admin/groups/'
     | '/_admin/admin/posts/'
-    | '/_admin/admin/registry/'
     | '/_admin/admin/resources/'
     | '/_admin/admin/settings/'
     | '/_site/blocks/$category/'
@@ -444,13 +432,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminPostsIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/_admin/admin/registry/': {
-      id: '/_admin/admin/registry/'
-      path: '/admin/registry'
-      fullPath: '/admin/registry/'
-      preLoaderRoute: typeof AdminAdminRegistryIndexRouteImport
-      parentRoute: typeof AdminRouteRoute
-    }
     '/_admin/admin/resources/': {
       id: '/_admin/admin/resources/'
       path: '/admin/resources'
@@ -515,7 +496,6 @@ interface AdminRouteRouteChildren {
   AdminAdminCategoriesIndexRoute: typeof AdminAdminCategoriesIndexRoute
   AdminAdminGroupsIndexRoute: typeof AdminAdminGroupsIndexRoute
   AdminAdminPostsIndexRoute: typeof AdminAdminPostsIndexRoute
-  AdminAdminRegistryIndexRoute: typeof AdminAdminRegistryIndexRoute
   AdminAdminResourcesIndexRoute: typeof AdminAdminResourcesIndexRoute
   AdminAdminSettingsIndexRoute: typeof AdminAdminSettingsIndexRoute
 }
@@ -525,7 +505,6 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAdminCategoriesIndexRoute: AdminAdminCategoriesIndexRoute,
   AdminAdminGroupsIndexRoute: AdminAdminGroupsIndexRoute,
   AdminAdminPostsIndexRoute: AdminAdminPostsIndexRoute,
-  AdminAdminRegistryIndexRoute: AdminAdminRegistryIndexRoute,
   AdminAdminResourcesIndexRoute: AdminAdminResourcesIndexRoute,
   AdminAdminSettingsIndexRoute: AdminAdminSettingsIndexRoute,
 }

@@ -20,7 +20,7 @@ function AdminSettingsPage() {
           { label: "Settings" },
         ]}
         actions={
-          <Button size="sm" className="gap-2">
+          <Button className="gap-2">
             <Save className="size-4" />
             <span>Save Changes</span>
           </Button>

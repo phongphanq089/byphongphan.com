@@ -20,7 +20,7 @@ function AdminResourcesPage() {
           { label: "Resources" },
         ]}
         actions={
-          <Button size="sm" className="gap-2">
+          <Button className="gap-2">
             <Plus className="size-4" />
             <span>Add Resource</span>
           </Button>
@@ -37,7 +37,7 @@ function AdminResourcesPage() {
         <p className="mt-1.5 max-w-sm text-sm text-muted-foreground">
           Curated assets, external repositories, design systems, and utilities.
         </p>
-        <Button size="sm" className="mt-6 gap-2">
+        <Button className="mt-6 gap-2">
           <Plus className="size-4" />
           <span>Add first resource</span>
         </Button>
