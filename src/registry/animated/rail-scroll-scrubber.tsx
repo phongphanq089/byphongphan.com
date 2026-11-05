@@ -28,6 +28,8 @@ export interface RailSection {
   subtitle?: string
   description?: string
   accent?: string
+  meta?: string
+  timestamp?: string
 }
 
 export function formatSectionTitle(title: string): string {
@@ -49,8 +51,10 @@ export interface SpringConfig {
 export interface RailScrollScrubberProps {
   /** Custom list of sections. Defaults to 5 standard sections */
   sections?: RailSection[]
-  /** Custom MotionValue for scroll progress (0..1). If omitted, connects to window scroll */
+  /** Custom MotionValue for scroll progress (0..1). If omitted, connects to window scroll or scrollContainerRef */
   scrollProgressMV?: MotionValue<number>
+  /** Optional container ref for scrolling (useful for overflow-y scroll containers like in artcraft-scroll-01) */
+  scrollContainerRef?: React.RefObject<HTMLElement | null>
   /** Callback when user clicks or drags the ruler to scrub to a target progress (0..1) */
   onScrubToProgress?: (progress: number, options?: { smooth?: boolean }) => void
   /** Spring configuration for smooth scrolling interpolation */
@@ -69,6 +73,24 @@ export interface RailScrollScrubberProps {
   showDesktopSectionMenu?: boolean
   /** Alias for showDesktopSectionMenu */
   enableDesktopMenu?: boolean
+  /** Presentation variant for section menu: "list" (classic list) or "card" (rich card with dot rail & preview) */
+  sectionMenuVariant?: "list" | "card"
+  /** Alias for sectionMenuVariant */
+  menuVariant?: "list" | "card"
+  /** Shorthand to activate the card-style section menu */
+  cardMenu?: boolean
+  /** Initial scroll progress on mount (0..1, e.g. 0.47) */
+  initialProgress?: number
+  /** Enable automatic continuous scrolling cruise mode */
+  autoScroll?: boolean
+  /** Speed of auto-scroll cruise mode in pixels per frame (default: 2.2) */
+  autoScrollSpeed?: number
+  /** Callback when scroll progress changes */
+  onProgressChange?: (progress: number, percentage: number) => void
+  /** Callback when active section changes */
+  onSectionChange?: (section: RailSection, index: number) => void
+  /** Whether to show the floating percentage readout pill (default: true) */
+  showPercentageReadout?: boolean
   /** Additional CSS class names */
   className?: string
 }
@@ -92,7 +114,7 @@ export function RailScrollScrubberSpacer({
       aria-hidden="true"
       className={cn(
         "pointer-events-none shrink-0",
-        "w-[var(--rail-scrubber-width,22px)] sm:w-[var(--rail-scrubber-width,56px)] xl:w-0",
+        "w-0 sm:w-[var(--rail-scrubber-width,56px)] xl:w-0",
         className
       )}
       style={style}
@@ -114,7 +136,11 @@ export const DEFAULT_RAIL_SECTIONS: RailSection[] = [
     anchor: 0.04,
     flightRange: [-0.15, -0.02],
     subtitle: "NEXT-GEN CREATIVE ENGINE",
+    description:
+      "High-precision procedural graphics & node-based creative engine.",
     accent: "var(--primary)",
+    meta: "Stage 01",
+    timestamp: "10:00 AM",
   },
   {
     id: "features",
@@ -124,7 +150,11 @@ export const DEFAULT_RAIL_SECTIONS: RailSection[] = [
     anchor: 0.17,
     flightRange: [0.08, 0.28],
     subtitle: "NON-DESTRUCTIVE NODE GRAPH",
+    description:
+      "Real-time compositing, shader graphs, and non-destructive pipeline.",
     accent: "var(--primary)",
+    meta: "Stage 02",
+    timestamp: "10:15 AM",
   },
   {
     id: "ownership",
@@ -134,7 +164,11 @@ export const DEFAULT_RAIL_SECTIONS: RailSection[] = [
     anchor: 0.6,
     flightRange: [0.58, 0.7],
     subtitle: "LOCAL-FIRST & VERIFIABLE ASSETS",
+    description:
+      "Cryptographically verifiable ownership with zero vendor lock-in.",
     accent: "var(--primary)",
+    meta: "Stage 03",
+    timestamp: "10:22 AM",
   },
   {
     id: "community",
@@ -144,7 +178,11 @@ export const DEFAULT_RAIL_SECTIONS: RailSection[] = [
     anchor: 0.73,
     flightRange: [0.655, 0.79],
     subtitle: "OPEN ECOSYSTEM & SHADER REGISTRY",
+    description:
+      "Collaborative developer network, open marketplace, and plugin ecosystem.",
     accent: "var(--primary)",
+    meta: "Stage 04",
+    timestamp: "10:45 AM",
   },
   {
     id: "get-started",
@@ -154,7 +192,11 @@ export const DEFAULT_RAIL_SECTIONS: RailSection[] = [
     anchor: 0.81,
     flightRange: [0.78, 0.93],
     subtitle: "DEPLOY IN SECONDS",
+    description:
+      "Instant drop-in integration, accessible semantic primitives, and full TypeScript typings.",
     accent: "var(--primary)",
+    meta: "Stage 05",
+    timestamp: "11:00 AM",
   },
 ]
 
@@ -749,6 +791,7 @@ const HoverCursorLine = React.memo(function HoverCursorLine({
 export function RailScrollScrubber({
   sections = DEFAULT_RAIL_SECTIONS,
   scrollProgressMV,
+  scrollContainerRef,
   onScrubToProgress,
   springConfig = { stiffness: 140, damping: 26, mass: 0.45 },
   zoomScale = 3.6,
@@ -758,11 +801,24 @@ export function RailScrollScrubber({
   reserveLayoutSpace,
   showDesktopSectionMenu = false,
   enableDesktopMenu = false,
+  sectionMenuVariant = "list",
+  menuVariant,
+  cardMenu = false,
+  initialProgress,
+  autoScroll = false,
+  autoScrollSpeed = 2.2,
+  onProgressChange,
+  onSectionChange,
+  showPercentageReadout = true,
   className,
 }: RailScrollScrubberProps) {
-  const allowDesktopMenu = showDesktopSectionMenu || enableDesktopMenu
+  const isCardMenu =
+    sectionMenuVariant === "card" || menuVariant === "card" || Boolean(cardMenu)
+  const allowDesktopMenu =
+    showDesktopSectionMenu || enableDesktopMenu || isCardMenu
   const rulerRef = useRef<HTMLDivElement>(null)
   const menuCardRef = useRef<HTMLDivElement>(null)
+  const dotRailRef = useRef<HTMLDivElement>(null)
   const lastTapTimeRef = useRef(0)
   const [viewportHeight, setViewportHeight] = useState(() => {
     if (typeof window !== "undefined") return window.innerHeight
@@ -772,6 +828,41 @@ export function RailScrollScrubber({
   const [isDragging, setIsDragging] = useState(false)
   const [isSectionMenuOpen, setIsSectionMenuOpen] = useState(false)
   const [activeSectionIdx, setActiveSectionIdx] = useState(0)
+  const [previewIdx, setPreviewIdx] = useState(0)
+
+  // Graceful hover timers for card popover
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const cancelCloseTimer = useCallback(() => {
+    if (closeTimerRef.current) {
+      clearTimeout(closeTimerRef.current)
+      closeTimerRef.current = null
+    }
+  }, [])
+
+  const scheduleClose = useCallback(
+    (delay = 280) => {
+      cancelCloseTimer()
+      closeTimerRef.current = setTimeout(() => {
+        setIsSectionMenuOpen(false)
+      }, delay)
+    },
+    [cancelCloseTimer]
+  )
+
+  useEffect(() => {
+    return () => {
+      if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current)
+      }
+    }
+  }, [])
+
+  const safePreviewIdx = Math.min(
+    Math.max(previewIdx, 0),
+    Math.max(sections.length - 1, 0)
+  )
+  const previewSec = sections[safePreviewIdx] ?? sections[0]
 
   // Close menu when clicking outside (without any visible blurred backdrop layer)
   useEffect(() => {
@@ -780,18 +871,21 @@ export function RailScrollScrubber({
     const handlePointerDownOutside = (e: PointerEvent) => {
       const target = e.target as HTMLElement | null
       if (!target) return
-      // If clicking inside menu card or on the ruler rail, do not close
+      // If clicking inside menu card, on dot rail, or on ruler rail, do not close
       if (
         menuCardRef.current?.contains(target) ||
-        rulerRef.current?.contains(target)
+        rulerRef.current?.contains(target) ||
+        dotRailRef.current?.contains(target)
       ) {
         return
       }
+      cancelCloseTimer()
       setIsSectionMenuOpen(false)
     }
 
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        cancelCloseTimer()
         setIsSectionMenuOpen(false)
       }
     }
@@ -803,7 +897,7 @@ export function RailScrollScrubber({
       window.removeEventListener("pointerdown", handlePointerDownOutside)
       window.removeEventListener("keydown", handleKeyDown)
     }
-  }, [isSectionMenuOpen])
+  }, [isSectionMenuOpen, cancelCloseTimer])
 
   // Automatically reserve responsive layout space (padding-right) on small screens
   // and hide native browser scrollbars on html and body when scrubber is active
@@ -825,11 +919,11 @@ export function RailScrollScrubber({
           :root.has-rail-scrubber,
           html.has-rail-scrubber,
           body.has-rail-scrubber {
-            --rail-scrubber-width: 22px;
+            --rail-scrubber-width: 0px;
           }
           html.has-rail-scrubber body,
           body.has-rail-scrubber {
-            padding-right: var(--rail-scrubber-width) !important;
+            padding-right: 0px !important;
           }
         }
         @media (min-width: 640px) and (max-width: 1279px) {
@@ -925,8 +1019,10 @@ export function RailScrollScrubber({
     return springConfig
   }, [prefersReduced, springConfig])
 
-  // Fallback to window scroll if no external MotionValue passed
-  const { scrollYProgress: windowScrollMV } = useScroll()
+  // Fallback to window scroll (or container scroll if scrollContainerRef provided)
+  const { scrollYProgress: windowScrollMV } = useScroll(
+    scrollContainerRef ? { container: scrollContainerRef } : undefined
+  )
   const activeScrollMV = scrollProgressMV ?? windowScrollMV
 
   useEffect(() => {
@@ -969,8 +1065,10 @@ export function RailScrollScrubber({
     hoverTarget.set(isHovered || isDragging ? 1 : 0)
   }, [isHovered, isDragging, hoverTarget])
 
-  // Only update activeSectionIdx when crossing section boundaries
+  // Track progress and update activeSectionIdx when crossing section boundaries
   useMotionValueEvent(smoothScroll, "change", (v) => {
+    onProgressChange?.(v, Math.round(v * 100))
+
     let currentIdx = 0
     for (let i = sections.length - 1; i >= 0; i--) {
       const threshold = sections[i].start - 0.02
@@ -979,13 +1077,31 @@ export function RailScrollScrubber({
         break
       }
     }
-    setActiveSectionIdx((prev) => (prev !== currentIdx ? currentIdx : prev))
+    setActiveSectionIdx((prev) => {
+      if (prev !== currentIdx) {
+        onSectionChange?.(sections[currentIdx], currentIdx)
+        return currentIdx
+      }
+      return prev
+    })
   })
 
   const ticks = useMemo(() => Array.from({ length: 101 }, (_, i) => i), [])
 
   const defaultScrub = useCallback(
     (targetProgress: number, options?: { smooth?: boolean }) => {
+      const targetEl = scrollContainerRef?.current
+      if (targetEl) {
+        const maxScroll = targetEl.scrollHeight - targetEl.clientHeight
+        const targetTop = clamp(targetProgress, 0, 1) * maxScroll
+        if (options?.smooth) {
+          targetEl.scrollTo({ top: targetTop, behavior: "smooth" })
+        } else {
+          targetEl.scrollTop = targetTop
+        }
+        return
+      }
+
       if (typeof window === "undefined") return
       const maxScroll =
         document.documentElement.scrollHeight - window.innerHeight
@@ -994,10 +1110,56 @@ export function RailScrollScrubber({
         behavior: options?.smooth ? "smooth" : "auto",
       })
     },
-    []
+    [scrollContainerRef]
   )
 
   const handleScrub = onScrubToProgress ?? defaultScrub
+
+  // Automatic initial progress positioning on mount
+  const hasInitialScrubbed = useRef(false)
+  useEffect(() => {
+    if (hasInitialScrubbed.current || typeof initialProgress !== "number")
+      return
+    hasInitialScrubbed.current = true
+    const timer = setTimeout(() => {
+      handleScrub(initialProgress, { smooth: true })
+    }, 100)
+    return () => clearTimeout(timer)
+  }, [initialProgress, handleScrub])
+
+  // Continuous auto-cruise scrolling loop
+  useEffect(() => {
+    if (!autoScroll) return
+    let rafId: number
+    let direction = 1
+    const speed = autoScrollSpeed ?? 2.2
+
+    const step = () => {
+      const containerEl =
+        scrollContainerRef?.current ??
+        (typeof document !== "undefined" ? document.documentElement : null)
+      if (containerEl) {
+        const isWin = !scrollContainerRef?.current
+        const maxScroll = isWin
+          ? document.documentElement.scrollHeight - window.innerHeight
+          : containerEl.scrollHeight - containerEl.clientHeight
+        const currentScroll = isWin ? window.scrollY : containerEl.scrollTop
+
+        const nextScroll = currentScroll + direction * speed
+        if (isWin) {
+          window.scrollTo(0, nextScroll)
+        } else {
+          containerEl.scrollTop = nextScroll
+        }
+
+        if (nextScroll >= maxScroll - 2) direction = -1
+        if (nextScroll <= 2) direction = 1
+      }
+      rafId = requestAnimationFrame(step)
+    }
+    rafId = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(rafId)
+  }, [autoScroll, autoScrollSpeed, scrollContainerRef])
 
   const updateScrollFromClientY = useCallback(
     (clientY: number, options?: { smooth?: boolean }) => {
@@ -1014,7 +1176,25 @@ export function RailScrollScrubber({
 
   const handleJumpToSection = useCallback(
     (sec: RailSection) => {
-      setIsSectionMenuOpen(false)
+      const containerEl = scrollContainerRef?.current
+      if (containerEl) {
+        const el =
+          containerEl.querySelector(`#${sec.id}`) ||
+          document.getElementById(sec.id)
+        if (el) {
+          const containerRect = containerEl.getBoundingClientRect()
+          const elRect = el.getBoundingClientRect()
+          const targetY =
+            containerEl.scrollTop + (elRect.top - containerRect.top) - 20
+          containerEl.scrollTo({
+            top: Math.max(0, targetY),
+            behavior: "smooth",
+          })
+          return
+        }
+        handleScrub(sec.anchor, { smooth: true })
+        return
+      }
 
       if (typeof document !== "undefined") {
         const rawId = sec.id
@@ -1044,7 +1224,7 @@ export function RailScrollScrubber({
 
       handleScrub(sec.start + 0.005, { smooth: true })
     },
-    [handleScrub]
+    [handleScrub, scrollContainerRef]
   )
 
   // Track drag velocity for momentum fling on touch/mouse release
@@ -1164,13 +1344,15 @@ export function RailScrollScrubber({
 
       if (wasTap) {
         lastTapTimeRef.current = now
-        // Tapped without dragging -> Toggle section jump menu on mobile or desktop if enabled
-        const isMobile =
-          typeof window !== "undefined" && window.innerWidth < 768
-        if (allowDesktopMenu || isMobile) {
-          setIsSectionMenuOpen((prev) => !prev)
-          dragState.current = null
-          return
+        // In card menu mode, tapping ruler does not toggle menu (clicking the dot rail does)
+        if (!isCardMenu) {
+          const isMobile =
+            typeof window !== "undefined" && window.innerWidth < 768
+          if (allowDesktopMenu || isMobile) {
+            setIsSectionMenuOpen((prev) => !prev)
+            dragState.current = null
+            return
+          }
         }
       }
 
@@ -1239,8 +1421,10 @@ export function RailScrollScrubber({
         }
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault()
-            setIsSectionMenuOpen((prev) => !prev)
+            if (!isCardMenu) {
+              e.preventDefault()
+              setIsSectionMenuOpen((prev) => !prev)
+            }
           } else if (e.key === "Escape") {
             setIsSectionMenuOpen(false)
           }
@@ -1252,6 +1436,9 @@ export function RailScrollScrubber({
         }}
         onClick={(e) => {
           if ((e.target as HTMLElement).closest("button")) return
+          // In card menu mode, clicking ruler does not toggle menu (clicking the dot rail does)
+          if (isCardMenu) return
+
           const isMobile =
             typeof window !== "undefined" && window.innerWidth < 768
           if (allowDesktopMenu || isMobile) {
@@ -1267,7 +1454,7 @@ export function RailScrollScrubber({
         onPointerCancel={handlePointerCancel}
         className={cn(
           "fixed inset-y-0 right-0 z-40 touch-none select-none focus:outline-none",
-          "w-[22px] sm:w-[56px]",
+          "hidden sm:block sm:w-[56px]",
           allowDesktopMenu ? "xl:w-[56px]" : "xl:w-[260px]",
           isDragging
             ? "cursor-grabbing"
@@ -1283,7 +1470,7 @@ export function RailScrollScrubber({
         }}
       >
         {/* Subtle vertical guide border */}
-        <div className="pointer-events-none absolute top-0 right-0 bottom-0 w-[22px] border-l border-border/40 sm:w-[56px]" />
+        <div className="pointer-events-none absolute top-0 right-0 bottom-0 w-[56px] border-l border-border/40" />
 
         {/* 1. Flying Characters along 5-Stage Rail Path (Responsive: shown on desktop xl when wide arc mode is enabled) */}
         {!allowDesktopMenu && (
@@ -1361,7 +1548,7 @@ export function RailScrollScrubber({
         {/* 5. Glowing Progress Line & Percentage Readout */}
         <motion.div
           style={{ y: blueIndicatorY }}
-          className="pointer-events-none absolute top-0 right-0 z-30 w-[22px] sm:w-[56px]"
+          className="pointer-events-none absolute top-0 right-0 z-30 w-[56px]"
         >
           <div
             className="relative h-[2px] w-full"
@@ -1369,70 +1556,233 @@ export function RailScrollScrubber({
               backgroundColor: accentColor,
               boxShadow: "0 0 14px 2px var(--color-primary, var(--primary))",
             }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground to-primary" />
-          </div>
+          ></div>
 
           {/* Isolated Percentage Readout (Zero parent re-render on scroll) */}
-          <PercentReadout
-            smoothScroll={smoothScroll}
-            accentColor={accentColor}
-            isDragging={isDragging}
-            onToggleMenu={() => setIsSectionMenuOpen((prev) => !prev)}
-          />
+          {showPercentageReadout && (
+            <PercentReadout
+              smoothScroll={smoothScroll}
+              accentColor={accentColor}
+              isDragging={isDragging}
+              onToggleMenu={() => setIsSectionMenuOpen((prev) => !prev)}
+            />
+          )}
         </motion.div>
       </div>
 
-      {/* 6. Section Jump Menu (Rendered OUTSIDE rulerRef, without any blurred backdrop layer) */}
+      {/* 6. Vertical Dot Indicator Rail:
+          - Visible on all screens in "card" mode.
+          - On mobile (< sm), 101-tick ruler is hidden, so this compact dot rail serves as the sleek touch navigation anchor.
+      */}
+      <div
+        ref={dotRailRef}
+        className={cn(
+          "pointer-events-auto fixed top-1/2 z-40 -translate-y-1/2",
+          "right-2 sm:right-16 md:right-18",
+          "flex flex-col items-center gap-1.5 rounded-md border border-border/80 bg-muted/90 px-1 py-2 shadow-lg backdrop-blur-xl sm:gap-2 sm:px-1.5 sm:py-3 dark:bg-zinc-900/90",
+          !isCardMenu && "sm:hidden"
+        )}
+        onMouseEnter={cancelCloseTimer}
+        onMouseLeave={() => scheduleClose(280)}
+        onClick={(e) => {
+          if ((e.target as HTMLElement).tagName === "BUTTON") return
+          setIsSectionMenuOpen((prev) => !prev)
+        }}
+      >
+        {sections.map((sec, idx) => {
+          const isActive = idx === activeSectionIdx
+          const isSelected = isSectionMenuOpen && idx === safePreviewIdx
+          return (
+            <button
+              key={sec.id}
+              type="button"
+              title={sec.label ?? formatSectionTitle(sec.title)}
+              onPointerDown={(e) => e.stopPropagation()}
+              onMouseEnter={() => {
+                cancelCloseTimer()
+                setPreviewIdx(idx)
+                setIsSectionMenuOpen(true)
+              }}
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                cancelCloseTimer()
+                setPreviewIdx(idx)
+                setIsSectionMenuOpen(true)
+                handleJumpToSection(sec)
+              }}
+              className="group relative flex size-3.5 cursor-pointer touch-manipulation items-center justify-center sm:size-4"
+            >
+              <span
+                className={cn(
+                  "rounded-full transition-all duration-200",
+                  isActive
+                    ? "size-2 bg-primary shadow-[0_0_8px_var(--primary)] ring-2 ring-primary/30 sm:size-2.5"
+                    : isSelected
+                      ? "size-1.5 scale-110 bg-foreground sm:size-2"
+                      : "size-1 bg-muted-foreground/40 hover:scale-125 hover:bg-muted-foreground/80 sm:size-1.5"
+                )}
+                style={
+                  isActive
+                    ? { backgroundColor: sec.accent ?? accentColor }
+                    : undefined
+                }
+              />
+            </button>
+          )
+        })}
+      </div>
+
+      {/* 7. Section Jump Menu (Rendered OUTSIDE rulerRef, without any blurred backdrop layer) */}
       <AnimatePresence>
         {isSectionMenuOpen && (
           <motion.div
-            key="scrubber-section-menu-card"
+            key={isCardMenu ? "scrubber-card-menu" : "scrubber-list-menu"}
             ref={menuCardRef}
             initial={{ opacity: 0, scale: 0.94, x: 12 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             exit={{ opacity: 0, scale: 0.94, x: 12 }}
             transition={{ type: "spring", stiffness: 360, damping: 28 }}
+            onMouseEnter={cancelCloseTimer}
+            onMouseLeave={() => {
+              if (isCardMenu) {
+                scheduleClose(280)
+              }
+            }}
             onClick={(e) => e.stopPropagation()}
             className={cn(
-              "pointer-events-auto fixed top-1/2 z-50 max-h-[75vh] -translate-y-1/2 overflow-y-auto rounded-2xl border border-border/80 bg-card/95 p-4 shadow-2xl backdrop-blur-xl",
-              "right-6 w-56 max-w-[calc(100vw-3rem)]",
-              allowDesktopMenu ? "sm:right-16 md:right-16 md:w-60" : "md:hidden"
+              "pointer-events-auto fixed top-1/2 z-50 -translate-y-1/2",
+              isCardMenu
+                ? "right-9 max-w-[calc(100vw-3rem)] sm:right-24 md:right-27"
+                : cn(
+                    "right-6 max-h-[75vh] w-56 max-w-[calc(100vw-3rem)] overflow-y-auto rounded-xl border border-border/80 bg-card/95 p-4 shadow-2xl backdrop-blur-xl",
+                    allowDesktopMenu
+                      ? "sm:right-16 md:right-16 md:w-60"
+                      : "md:hidden"
+                  )
             )}
             style={{ scrollbarWidth: "none" }}
           >
-            <div className="flex flex-col gap-1.5">
-              {sections.map((sec, idx) => {
-                const isActive = idx === activeSectionIdx
-                const displayTitle = sec.label ?? formatSectionTitle(sec.title)
-                return (
-                  <button
-                    key={sec.id}
-                    type="button"
-                    onPointerDown={(e) => e.stopPropagation()}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      e.stopPropagation()
-                      handleJumpToSection(sec)
-                    }}
-                    className={cn(
-                      "group flex cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-sm transition-colors select-none",
-                      isActive
-                        ? "bg-primary/10 font-semibold text-foreground"
-                        : "font-normal text-muted-foreground/80 hover:bg-muted/50 hover:text-foreground"
-                    )}
-                  >
-                    <span className="truncate">{displayTitle}</span>
-                    {isActive && (
-                      <span
-                        className="ml-2 h-1.5 w-1.5 shrink-0 rounded-full"
-                        style={{ backgroundColor: accentColor }}
-                      />
-                    )}
-                  </button>
-                )
-              })}
-            </div>
+            {isCardMenu ? (
+              /* Rich Card Bubble containing Section List with Distinct Surface & Percentage coordinates */
+              <div
+                className={cn(
+                  "relative flex flex-col overflow-hidden rounded-xl border border-border/80",
+                  "bg-muted/95 text-foreground shadow-2xl backdrop-blur-xl dark:bg-zinc-900/95",
+                  "w-[220px] p-2 sm:w-[250px]"
+                )}
+              >
+                {/* Minimal Header */}
+                <div className="flex items-center justify-between border-b border-border/60 px-2 py-1.5 pb-2 text-xs">
+                  <span className="font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
+                    Sections
+                  </span>
+                  <span className="font-mono text-[10px] text-muted-foreground">
+                    <strong className="text-foreground">
+                      {activeSectionIdx + 1}
+                    </strong>{" "}
+                    of {sections.length}
+                  </span>
+                </div>
+
+                {/* Section List Items */}
+                <div className="mt-1 flex flex-col gap-1">
+                  {sections.map((sec, idx) => {
+                    const isActive = idx === activeSectionIdx
+                    const isPreview =
+                      isSectionMenuOpen && idx === safePreviewIdx
+                    const displayTitle =
+                      sec.label ?? formatSectionTitle(sec.title)
+                    return (
+                      <button
+                        key={sec.id}
+                        type="button"
+                        onPointerDown={(e) => e.stopPropagation()}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          cancelCloseTimer()
+                          handleJumpToSection(sec)
+                          setIsSectionMenuOpen(false)
+                        }}
+                        onMouseEnter={() => setPreviewIdx(idx)}
+                        className={cn(
+                          "group flex cursor-pointer items-center justify-between rounded-xl px-2.5 py-1.5 text-left text-xs transition-all select-none",
+                          isActive
+                            ? "border border-primary/25 bg-primary/15 font-semibold text-foreground shadow-xs"
+                            : isPreview
+                              ? "bg-background/80 text-foreground"
+                              : "text-muted-foreground hover:bg-background/60 hover:text-foreground"
+                        )}
+                      >
+                        <div className="flex min-w-0 items-center gap-2">
+                          <span
+                            className={cn(
+                              "size-1.5 shrink-0 rounded-full transition-all",
+                              isActive
+                                ? "size-2 bg-primary shadow-[0_0_6px_var(--primary)]"
+                                : "bg-muted-foreground/40 group-hover:bg-muted-foreground/80"
+                            )}
+                            style={
+                              isActive
+                                ? { backgroundColor: sec.accent ?? accentColor }
+                                : undefined
+                            }
+                          />
+                          <span className="truncate">{displayTitle}</span>
+                        </div>
+                        <span
+                          className={cn(
+                            "ml-2 shrink-0 font-mono text-[10px]",
+                            isActive
+                              ? "font-semibold text-primary"
+                              : "text-muted-foreground/75"
+                          )}
+                        >
+                          {Math.round(sec.start * 100)}%
+                        </span>
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            ) : (
+              /* Classic List Variant */
+              <div className="flex flex-col gap-1.5">
+                {sections.map((sec, idx) => {
+                  const isActive = idx === activeSectionIdx
+                  const displayTitle =
+                    sec.label ?? formatSectionTitle(sec.title)
+                  return (
+                    <button
+                      key={sec.id}
+                      type="button"
+                      onPointerDown={(e) => e.stopPropagation()}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        handleJumpToSection(sec)
+                        setIsSectionMenuOpen(false)
+                      }}
+                      className={cn(
+                        "group flex cursor-pointer items-center justify-between rounded-lg px-2.5 py-1.5 text-left text-sm transition-colors select-none",
+                        isActive
+                          ? "bg-primary/10 font-semibold text-foreground"
+                          : "font-normal text-muted-foreground/80 hover:bg-muted/50 hover:text-foreground"
+                      )}
+                    >
+                      <span className="truncate">{displayTitle}</span>
+                      {isActive && (
+                        <span
+                          className="ml-2 h-1.5 w-1.5 shrink-0 rounded-full"
+                          style={{ backgroundColor: accentColor }}
+                        />
+                      )}
+                    </button>
+                  )
+                })}
+              </div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

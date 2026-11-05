@@ -8,6 +8,7 @@ import {
 } from "@/registry/animated/rail-scroll-scrubber"
 import { Button } from "@/registry/ui/button"
 import { Skeleton } from "@/registry/ui/skeleton"
+import { cn } from "@/shared/lib/utils"
 
 export function RailScrollScrubberDemo() {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
@@ -18,6 +19,7 @@ export function RailScrollScrubberDemo() {
   const [zoomScale, setZoomScale] = useState(3.6)
   const [curveIntensity, setCurveIntensity] = useState(1.0)
   const [autoScroll, setAutoScroll] = useState(false)
+  const [menuVariant, setMenuVariant] = useState<"card" | "list">("card")
   const [livePct, setLivePct] = useState(47)
 
   const springConfig = useMemo(
@@ -144,6 +146,34 @@ export function RailScrollScrubberDemo() {
             )}
             <span>{autoScroll ? "Pause" : "Cruise"}</span>
           </Button>
+
+          {/* Section Menu Variant Toggle */}
+          <div className="flex items-center rounded-lg border border-border/70 bg-muted/40 p-0.5">
+            <button
+              type="button"
+              onClick={() => setMenuVariant("card")}
+              className={cn(
+                "cursor-pointer rounded px-2 py-0.5 text-[10px] font-medium transition-all",
+                menuVariant === "card"
+                  ? "bg-primary font-semibold text-primary-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              Card
+            </button>
+            <button
+              type="button"
+              onClick={() => setMenuVariant("list")}
+              className={cn(
+                "cursor-pointer rounded px-2 py-0.5 text-[10px] font-medium transition-all",
+                menuVariant === "list"
+                  ? "bg-primary font-semibold text-primary-foreground shadow-xs"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
+            >
+              List
+            </button>
+          </div>
         </div>
       </div>
 
@@ -152,7 +182,7 @@ export function RailScrollScrubberDemo() {
         {/* Scrollable Content Area with Skeleton Sections */}
         <div
           ref={scrollContainerRef}
-          className="relative no-scrollbar flex-1 overflow-x-hidden overflow-y-scroll pr-[22px] pl-3 sm:pr-[64px] sm:pl-6 md:pr-[280px]"
+          className="relative no-scrollbar flex-1 overflow-x-hidden overflow-y-scroll pr-0 pl-3 sm:pr-[64px] sm:pl-6 md:pr-[280px]"
           style={{ scrollbarWidth: "none" }}
         >
           <div className="mx-auto max-w-2xl py-8">
@@ -218,6 +248,7 @@ export function RailScrollScrubberDemo() {
           springConfig={springConfig}
           zoomScale={zoomScale}
           curveIntensity={curveIntensity}
+          sectionMenuVariant={menuVariant}
           className="absolute inset-y-0 right-0 z-40 h-full w-[18px] sm:w-[56px] md:w-[260px]"
         />
       </div>

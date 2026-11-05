@@ -27,6 +27,9 @@ export default function ArtcraftScrollBlockPage() {
   const [zoomScale, setZoomScale] = useState(3.6)
   const [curveIntensity, setCurveIntensity] = useState(1.0)
   const [autoScroll, setAutoScroll] = useState(false)
+  const [sectionMenuVariant, setSectionMenuVariant] = useState<"card" | "list">(
+    "card"
+  )
   const [livePct, setLivePct] = useState(47)
 
   const springConfig = useMemo(
@@ -235,6 +238,40 @@ export default function ArtcraftScrollBlockPage() {
               />
             </div>
           </div>
+
+          {/* Section Menu Variant (2 Options) */}
+          <div className="space-y-2 border-t border-border/70 pt-2">
+            <span className="flex items-center gap-1.5 font-mono text-[10px] tracking-wider text-muted-foreground uppercase">
+              <Sparkles className="size-3 text-primary" />
+              Section Menu Variant
+            </span>
+            <div className="grid grid-cols-2 gap-1.5 rounded-xl border border-border/60 bg-muted/40 p-1">
+              <button
+                type="button"
+                onClick={() => setSectionMenuVariant("card")}
+                className={cn(
+                  "cursor-pointer rounded-lg px-2 py-1.5 text-center text-xs font-semibold transition-all",
+                  sectionMenuVariant === "card"
+                    ? "bg-primary text-primary-foreground shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                Dot & Card
+              </button>
+              <button
+                type="button"
+                onClick={() => setSectionMenuVariant("list")}
+                className={cn(
+                  "cursor-pointer rounded-lg px-2 py-1.5 text-center text-xs font-semibold transition-all",
+                  sectionMenuVariant === "list"
+                    ? "bg-primary text-primary-foreground shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
+                )}
+              >
+                Classic List
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Bottom Actions */}
@@ -277,7 +314,7 @@ export default function ArtcraftScrollBlockPage() {
       {/* ── Main Scrollable Viewport with Skeleton Sections ── */}
       <main
         ref={scrollContainerRef}
-        className="relative no-scrollbar h-screen w-full overflow-x-hidden overflow-y-scroll pr-[22px] sm:pr-[64px] md:pr-[280px] xl:pl-[340px]"
+        className="relative no-scrollbar h-screen w-full overflow-x-hidden overflow-y-scroll pr-0 sm:pr-[64px] md:pr-[280px] xl:pl-[340px]"
         style={{ scrollbarWidth: "none" }}
       >
         {/* Mobile/Tablet Sticky Quick Switcher (xl:hidden) */}
@@ -414,6 +451,7 @@ export default function ArtcraftScrollBlockPage() {
         zoomScale={zoomScale}
         curveIntensity={curveIntensity}
         accentColor="var(--primary)"
+        sectionMenuVariant={sectionMenuVariant}
       />
     </div>
   )
