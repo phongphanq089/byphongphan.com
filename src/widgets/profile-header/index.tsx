@@ -1,3 +1,4 @@
+export * from "./desktop-navbar"
 export * from "./github-star-button"
 export * from "./menu-item"
 export * from "./menu-public-desktop"
