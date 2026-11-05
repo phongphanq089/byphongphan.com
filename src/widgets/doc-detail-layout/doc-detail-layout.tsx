@@ -1,35 +1,32 @@
 import React from "react"
 
 import { GridContainer } from "@/app/layouts"
-import {
-  RailScrollScrubber,
-  type RailSection,
-} from "@/registry/animated/rail-scroll-scrubber"
 import { cn } from "@/shared/lib/utils"
+import { type TOCItemType, TOCMinimap } from "@/shared/ui/system/toc-minimap"
 
 export interface DocDetailLayoutProps {
   sidebar: React.ReactNode
-  railSections?: RailSection[]
+  tocItems?: TOCItemType[]
+  /** @deprecated Kept for backward compatibility */
+  railSections?: unknown[]
   children: React.ReactNode
   className?: string
+  /** @deprecated Kept for backward compatibility */
   showDesktopSectionMenu?: boolean
 }
 
 export function DocDetailLayout({
   sidebar,
-  railSections,
+  tocItems,
   children,
   className,
-  showDesktopSectionMenu = true,
 }: DocDetailLayoutProps) {
   return (
     <div className="relative w-full">
-      {railSections && railSections.length > 0 && (
-        <RailScrollScrubber
-          sections={railSections}
-          accentColor="var(--primary)"
-          showDesktopSectionMenu={showDesktopSectionMenu}
-        />
+      {tocItems && tocItems.length > 0 && (
+        <div className="fixed top-1/2 right-0 z-40 hidden -translate-y-1/2 lg:block">
+          <TOCMinimap items={tocItems} />
+        </div>
       )}
 
       <GridContainer maxWidth="wide" borderBottom={false} className="p-0">

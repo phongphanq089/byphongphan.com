@@ -1369,9 +1369,7 @@ export function RailScrollScrubber({
               backgroundColor: accentColor,
               boxShadow: "0 0 14px 2px var(--color-primary, var(--primary))",
             }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary-foreground to-primary" />
-          </div>
+          ></div>
 
           {/* Isolated Percentage Readout (Zero parent re-render on scroll) */}
           <PercentReadout
