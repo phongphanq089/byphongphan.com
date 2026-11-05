@@ -37,7 +37,6 @@ export function ProfileLayout({ children }: { children?: React.ReactNode }) {
     : isDocsDetail
       ? "6xl"
       : "default"
-
   const homeRailSections = useTocRailSections(HOME_TOC_ITEMS)
 
   return (

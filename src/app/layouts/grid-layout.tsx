@@ -37,6 +37,7 @@ export type GridContainerProps = {
   className?: string
   showCrosshairs?: boolean
   columns?: 1 | 2 | 3
+  mobileColumns?: 1 | 2
   borderBottom?: boolean
   borderTop?: boolean
   borderLeft?: boolean
@@ -65,60 +66,135 @@ function flattenChildren(children: React.ReactNode): React.ReactNode[] {
 function getChildBorderClasses(
   index: number,
   total: number,
-  columns: 1 | 2 | 3
+  columns: 1 | 2 | 3,
+  mobileColumns: 1 | 2 = 1
 ): string {
   if (columns <= 1 || total <= 1) return ""
 
-  const hasRowBelowMobile = index < total - 1
+  const classes: string[] = []
 
+  // 1. Bottom Border (border-b)
   if (columns === 2) {
-    const totalRowsDesktop = Math.ceil(total / 2)
-    const currentRowDesktop = Math.floor(index / 2)
-    const hasRowBelowDesktop = currentRowDesktop < totalRowsDesktop - 1
+    if (mobileColumns === 2) {
+      const totalRows = Math.ceil(total / 2)
+      const currentRow = Math.floor(index / 2)
+      if (currentRow < totalRows - 1) {
+        classes.push("border-b border-border")
+      }
+    } else {
+      const hasRowBelowMobile = index < total - 1
+      const totalRowsDesktop = Math.ceil(total / 2)
+      const currentRowDesktop = Math.floor(index / 2)
+      const hasRowBelowDesktop = currentRowDesktop < totalRowsDesktop - 1
 
-    if (hasRowBelowMobile && hasRowBelowDesktop) {
-      return "border-b border-border"
+      if (hasRowBelowMobile && hasRowBelowDesktop) {
+        classes.push("border-b border-border")
+      } else if (hasRowBelowMobile && !hasRowBelowDesktop) {
+        classes.push("border-b border-border md:border-b-0")
+      } else if (!hasRowBelowMobile && hasRowBelowDesktop) {
+        classes.push("md:border-b md:border-border")
+      }
     }
-    if (hasRowBelowMobile && !hasRowBelowDesktop) {
-      return "border-b border-border md:border-b-0"
+  } else if (columns === 3) {
+    if (mobileColumns === 2) {
+      // 2 columns on mobile & tablet (< lg), 3 columns on desktop (>= lg)
+      const totalRows2Col = Math.ceil(total / 2)
+      const currentRow2Col = Math.floor(index / 2)
+      const hasRowBelow2Col = currentRow2Col < totalRows2Col - 1
+
+      const totalRows3Col = Math.ceil(total / 3)
+      const currentRow3Col = Math.floor(index / 3)
+      const hasRowBelow3Col = currentRow3Col < totalRows3Col - 1
+
+      if (hasRowBelow2Col && hasRowBelow3Col) {
+        classes.push("border-b border-border")
+      } else if (hasRowBelow2Col && !hasRowBelow3Col) {
+        classes.push("border-b border-border lg:border-b-0")
+      } else if (!hasRowBelow2Col && hasRowBelow3Col) {
+        classes.push("lg:border-b lg:border-border")
+      }
+    } else {
+      const hasRowBelowMobile = index < total - 1
+      const totalRowsTablet = Math.ceil(total / 2)
+      const currentRowTablet = Math.floor(index / 2)
+      const hasRowBelowTablet = currentRowTablet < totalRowsTablet - 1
+
+      const totalRowsDesktop = Math.ceil(total / 3)
+      const currentRowDesktop = Math.floor(index / 3)
+      const hasRowBelowDesktop = currentRowDesktop < totalRowsDesktop - 1
+
+      if (hasRowBelowMobile && hasRowBelowTablet && hasRowBelowDesktop) {
+        classes.push("border-b border-border")
+      } else if (
+        hasRowBelowMobile &&
+        hasRowBelowTablet &&
+        !hasRowBelowDesktop
+      ) {
+        classes.push("border-b border-border lg:border-b-0")
+      } else if (
+        !hasRowBelowMobile &&
+        !hasRowBelowTablet &&
+        !hasRowBelowDesktop
+      ) {
+        classes.push("border-b border-border md:border-b-0")
+      } else if (
+        !hasRowBelowMobile &&
+        hasRowBelowTablet &&
+        hasRowBelowDesktop
+      ) {
+        classes.push("md:border-b md:border-border")
+      } else if (
+        !hasRowBelowMobile &&
+        hasRowBelowTablet &&
+        !hasRowBelowDesktop
+      ) {
+        classes.push("md:border-b md:border-border lg:border-b-0")
+      } else if (
+        !hasRowBelowMobile &&
+        !hasRowBelowTablet &&
+        hasRowBelowDesktop
+      ) {
+        classes.push("lg:border-b lg:border-border")
+      }
     }
-    if (!hasRowBelowMobile && hasRowBelowDesktop) {
-      return "md:border-b md:border-border"
-    }
-    return ""
   }
 
-  if (columns === 3) {
-    const totalRowsTablet = Math.ceil(total / 2)
-    const currentRowTablet = Math.floor(index / 2)
-    const hasRowBelowTablet = currentRowTablet < totalRowsTablet - 1
+  // 2. Left Border (border-l) between items/cards
+  if (columns === 2) {
+    const isCol1 = index % 2 === 1
+    if (mobileColumns === 2) {
+      if (isCol1) {
+        classes.push("border-l border-border")
+      }
+    } else {
+      if (isCol1) {
+        classes.push("md:border-l md:border-border")
+      }
+    }
+  } else if (columns === 3) {
+    const isCol1In2Col = index % 2 === 1
+    const isCol1Or2In3Col = index % 3 !== 0
 
-    const totalRowsDesktop = Math.ceil(total / 3)
-    const currentRowDesktop = Math.floor(index / 3)
-    const hasRowBelowDesktop = currentRowDesktop < totalRowsDesktop - 1
-
-    if (hasRowBelowMobile && hasRowBelowTablet && hasRowBelowDesktop) {
-      return "border-b border-border"
+    if (mobileColumns === 2) {
+      if (isCol1In2Col && isCol1Or2In3Col) {
+        classes.push("border-l border-border")
+      } else if (isCol1In2Col && !isCol1Or2In3Col) {
+        classes.push("border-l border-border lg:border-l-0")
+      } else if (!isCol1In2Col && isCol1Or2In3Col) {
+        classes.push("border-l-0 lg:border-l lg:border-border")
+      }
+    } else {
+      if (isCol1In2Col && isCol1Or2In3Col) {
+        classes.push("md:border-l md:border-border")
+      } else if (isCol1In2Col && !isCol1Or2In3Col) {
+        classes.push("md:border-l md:border-border lg:border-l-0")
+      } else if (!isCol1In2Col && isCol1Or2In3Col) {
+        classes.push("md:border-l-0 lg:border-l lg:border-border")
+      }
     }
-    if (hasRowBelowMobile && hasRowBelowTablet && !hasRowBelowDesktop) {
-      return "border-b border-border lg:border-b-0"
-    }
-    if (hasRowBelowMobile && !hasRowBelowTablet && !hasRowBelowDesktop) {
-      return "border-b border-border md:border-b-0"
-    }
-    if (!hasRowBelowMobile && hasRowBelowTablet && hasRowBelowDesktop) {
-      return "md:border-b md:border-border"
-    }
-    if (!hasRowBelowMobile && hasRowBelowTablet && !hasRowBelowDesktop) {
-      return "md:border-b md:border-border lg:border-b-0"
-    }
-    if (!hasRowBelowMobile && !hasRowBelowTablet && hasRowBelowDesktop) {
-      return "lg:border-b lg:border-border"
-    }
-    return ""
   }
 
-  return ""
+  return classes.join(" ")
 }
 
 export function GridContainer({
@@ -127,6 +203,7 @@ export function GridContainer({
   className,
   showCrosshairs = true,
   columns = 1,
+  mobileColumns = 1,
   borderBottom = true,
   borderTop = false,
   borderLeft = true,
@@ -166,7 +243,12 @@ export function GridContainer({
         return child
       }
 
-      const borderClass = getChildBorderClasses(index, total, columns)
+      const borderClass = getChildBorderClasses(
+        index,
+        total,
+        columns,
+        mobileColumns
+      )
       const existingClassName = (child.props as { className?: string })
         .className
       const key = child.key != null ? child.key : `grid-item-${index}`
@@ -178,7 +260,7 @@ export function GridContainer({
           : existingClassName,
       } as React.HTMLAttributes<HTMLElement>)
     })
-  }, [children, columns, itemBorders])
+  }, [children, columns, mobileColumns, itemBorders])
 
   return (
     <Component
@@ -191,22 +273,40 @@ export function GridContainer({
     >
       <div
         className={cn(
-          "transition-[max-width relative mx-auto h-full",
+          "relative mx-auto h-full transition-[max-width]",
           borderLeft && "border-l border-border",
           borderRight && "border-r border-border",
           maxWidthClass,
-          columns === 2 && "grid grid-cols-1 md:grid-cols-2",
-          columns === 3 && "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
+          columns === 2 &&
+            (mobileColumns === 2
+              ? "grid grid-cols-2"
+              : "grid grid-cols-1 md:grid-cols-2"),
+          columns === 3 &&
+            (mobileColumns === 2
+              ? "grid grid-cols-2 lg:grid-cols-3"
+              : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3"),
           className
         )}
       >
         {columns === 2 && (
-          <div className="pointer-events-none absolute top-0 bottom-0 left-1/2 hidden w-px -translate-x-1/2 bg-border md:block" />
+          <div
+            className={cn(
+              "pointer-events-none absolute top-0 bottom-0 left-1/2 w-px -translate-x-1/2 bg-border",
+              mobileColumns === 2 ? "block" : "hidden md:block"
+            )}
+          />
         )}
 
         {columns === 3 && (
           <>
-            <div className="pointer-events-none absolute top-0 bottom-0 left-1/2 hidden w-px -translate-x-1/2 bg-border md:block lg:hidden" />
+            <div
+              className={cn(
+                "pointer-events-none absolute top-0 bottom-0 left-1/2 w-px -translate-x-1/2 bg-border",
+                mobileColumns === 2
+                  ? "block lg:hidden"
+                  : "hidden md:block lg:hidden"
+              )}
+            />
             <div className="pointer-events-none absolute top-0 bottom-0 left-1/3 hidden w-px -translate-x-1/2 bg-border lg:block" />
             <div className="pointer-events-none absolute top-0 bottom-0 left-2/3 hidden w-px -translate-x-1/2 bg-border lg:block" />
           </>
@@ -220,11 +320,23 @@ export function GridContainer({
               <Crosshair className="right-[-6px] bottom-[-6px]" />
             )}
             {columns === 2 && (
-              <Crosshair className="bottom-[-6px] left-1/2 hidden -translate-x-1/2 md:block" />
+              <Crosshair
+                className={cn(
+                  "bottom-[-6px] left-1/2 -translate-x-1/2",
+                  mobileColumns === 2 ? "block" : "hidden md:block"
+                )}
+              />
             )}
             {columns === 3 && (
               <>
-                <Crosshair className="bottom-[-6px] left-1/2 hidden -translate-x-1/2 md:block lg:hidden" />
+                <Crosshair
+                  className={cn(
+                    "bottom-[-6px] left-1/2 -translate-x-1/2",
+                    mobileColumns === 2
+                      ? "block lg:hidden"
+                      : "hidden md:block lg:hidden"
+                  )}
+                />
                 <Crosshair className="bottom-[-6px] left-1/3 hidden -translate-x-1/2 lg:block" />
                 <Crosshair className="bottom-[-6px] left-2/3 hidden -translate-x-1/2 lg:block" />
               </>
@@ -238,11 +350,23 @@ export function GridContainer({
             {borderLeft && <Crosshair className="top-[-6px] left-[-6px]" />}
             {borderRight && <Crosshair className="top-[-6px] right-[-6px]" />}
             {columns === 2 && (
-              <Crosshair className="top-[-6px] left-1/2 hidden -translate-x-1/2 md:block" />
+              <Crosshair
+                className={cn(
+                  "top-[-6px] left-1/2 -translate-x-1/2",
+                  mobileColumns === 2 ? "block" : "hidden md:block"
+                )}
+              />
             )}
             {columns === 3 && (
               <>
-                <Crosshair className="top-[-6px] left-1/2 hidden -translate-x-1/2 md:block lg:hidden" />
+                <Crosshair
+                  className={cn(
+                    "top-[-6px] left-1/2 -translate-x-1/2",
+                    mobileColumns === 2
+                      ? "block lg:hidden"
+                      : "hidden md:block lg:hidden"
+                  )}
+                />
                 <Crosshair className="top-[-6px] left-1/3 hidden -translate-x-1/2 lg:block" />
                 <Crosshair className="top-[-6px] left-2/3 hidden -translate-x-1/2 lg:block" />
               </>
