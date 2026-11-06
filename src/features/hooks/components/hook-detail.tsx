@@ -16,7 +16,6 @@ import { CopyButton } from "@/registry/animated/button/copy-button"
 import { HOOK_DEMOS } from "@/registry/demos"
 import { siteConfig } from "@/shared/config"
 import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
-import { useTocRailSections } from "@/shared/hooks/use-toc-rail-sections"
 import { extractTocFromMarkdown } from "@/shared/lib"
 import {
   Badge,
@@ -153,8 +152,6 @@ export function HookDetail({ hook }: HookDetailProps) {
     [rawMdxContent]
   )
 
-  const railSections = useTocRailSections(tocItems)
-
   const title = mdxData?.frontmatter?.title ?? hook.name
   const description = mdxData?.frontmatter?.description ?? hook.description
   const links = mdxData?.frontmatter?.links
@@ -168,12 +165,12 @@ export function HookDetail({ hook }: HookDetailProps) {
           currentTitle={title}
         />
       }
-      railSections={railSections}
+      tocItems={tocItems}
     >
       {/* ── Overview Section ── */}
       <div
         id="overview"
-        className="relative flex flex-col justify-between gap-6 border-b border-border"
+        className="relative flex scroll-m-20 flex-col justify-between gap-6 border-b border-border"
       >
         <div className="relative z-10 flex flex-col gap-4 px-4 py-6 md:px-8">
           <div className="flex flex-wrap items-center justify-between gap-4">

@@ -192,7 +192,17 @@ export function useActiveHeading(itemIds: string[]) {
 
 function scrollToHeading(url: string) {
   history.pushState(null, "", url)
-  document.getElementById(url.replace("#", ""))?.scrollIntoView({
-    behavior: "smooth",
-  })
+  const id = url.replace("#", "")
+  const element = document.getElementById(id)
+  if (!element) return
+
+  const style = window.getComputedStyle(element)
+  const scrollMarginTop = parseFloat(style.scrollMarginTop)
+
+  if (scrollMarginTop > 0) {
+    element.scrollIntoView({ behavior: "smooth" })
+  } else {
+    const y = element.getBoundingClientRect().top + window.scrollY - 68
+    window.scrollTo({ top: Math.max(0, y), behavior: "smooth" })
+  }
 }
