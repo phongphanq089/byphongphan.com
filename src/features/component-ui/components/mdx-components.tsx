@@ -6,7 +6,6 @@ import {
   markdownCodeProps,
 } from "@/registry/ui/code-block"
 import {
-  Table,
   TableBody,
   TableCell,
   TableHead,
@@ -270,13 +269,8 @@ export const mdxComponents = {
       {...props}
     />
   ),
-  table: ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
-    <div className="my-6 w-full overflow-hidden rounded-xl border border-border/60 bg-background/40 shadow-2xs dark:border-white/10 dark:bg-white/[0.01]">
-      <Table
-        className={cn("w-full border-collapse text-sm", className)}
-        {...props}
-      />
-    </div>
+  table: (props: React.HTMLAttributes<HTMLTableElement>) => (
+    <PropsTable {...props} />
   ),
   thead: ({
     className,
