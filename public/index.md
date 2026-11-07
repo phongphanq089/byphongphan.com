@@ -57,12 +57,13 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## UI Components & Primitives (16)
+## UI Components & Primitives (17)
 
 | Component | Category | Description | Direct Install |
 | :--- | :--- | :--- | :--- |
 | [Line Nav](https://byphongphan.com/component-ui/navigation/line-nav) | `navigation` | Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants. | `pnpm dlx shadcn add https://byphongphan.com/r/line-nav.json` |
 | [Rail Scroll Scrubber](https://byphongphan.com/component-ui/navigation/rail-scroll-scrubber) | `navigation` | Kinetic scrollbar and precision section scrubber featuring a 5-stage continuous rail path, split-character peeling, and zoom overview lens. | `pnpm dlx shadcn add https://byphongphan.com/r/rail-scroll-scrubber.json` |
+| [Scroll Indicator](https://byphongphan.com/component-ui/navigation/scroll-indicator) | `navigation` | Vertical scroll progress indicator with tick marks, click-to-reveal section titles, Web Audio micro-interactions, and spring physics. | `pnpm dlx shadcn add https://byphongphan.com/r/scroll-indicator.json` |
 | [Middle Truncation](https://byphongphan.com/component-ui/text/middle-truncation) | `text` | Canvas-measured binary search text truncation preserving the start and end of strings with responsive resize sync. | `pnpm dlx shadcn add https://byphongphan.com/r/middle-truncation.json` |
 | [Card](https://byphongphan.com/component-ui/card/card) | `card` | Displays a card with header, content, and footer. | `pnpm dlx shadcn add https://byphongphan.com/r/card.json` |
 | [Scroll Area](https://byphongphan.com/component-ui/data-display/scroll-area) | `data-display` | Augments native scroll functionality with auto, hover, and always visibility modes, custom variants, scrollbar gutter reserve, keyboard navigation, and high-contrast styling. | `pnpm dlx shadcn add https://byphongphan.com/r/scroll-area.json` |

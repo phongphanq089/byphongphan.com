@@ -44,6 +44,31 @@
       ]
     },
     {
+      "name": "scroll-indicator",
+      "type": "registry:component",
+      "title": "Scroll Indicator",
+      "description": "Vertical scroll progress indicator with tick marks, click-to-reveal section titles, Web Audio micro-interactions, and spring physics.",
+      "category": "navigation",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/scroll-indicator.tsx",
+          "type": "registry:component",
+          "target": "components/scroll-indicator.tsx"
+        },
+        {
+          "path": "src/registry/lib/sound.ts",
+          "type": "registry:lib",
+          "target": "lib/sound.ts"
+        }
+      ]
+    },
+    {
       "name": "middle-truncation",
       "type": "registry:ui",
       "title": "Middle Truncation",

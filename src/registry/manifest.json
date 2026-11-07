@@ -54,6 +54,10 @@
       "slug": "rail-scroll-scrubber"
     },
     {
+      "category": "navigation",
+      "slug": "scroll-indicator"
+    },
+    {
       "category": "text",
       "slug": "middle-truncation"
     },

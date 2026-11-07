@@ -20,6 +20,16 @@
     "registryDependencies": []
   },
   {
+    "name": "scroll-indicator",
+    "type": "registry:component",
+    "title": "Scroll Indicator",
+    "description": "Vertical scroll progress indicator with tick marks, click-to-reveal section titles, Web Audio micro-interactions, and spring physics.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
+  },
+  {
     "name": "middle-truncation",
     "type": "registry:ui",
     "title": "Middle Truncation",

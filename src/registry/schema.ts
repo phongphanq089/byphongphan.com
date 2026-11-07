@@ -19,6 +19,7 @@ export type ComponentSchematicType =
   | "scroll-area"
   | "drawer"
   | "rail-scroll-scrubber"
+  | "scroll-indicator"
 
 export type BlockSchematicType =
   | "not-found-01"
