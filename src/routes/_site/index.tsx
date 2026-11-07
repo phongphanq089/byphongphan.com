@@ -2,8 +2,12 @@ import { createFileRoute } from "@tanstack/react-router"
 import { lazy, Suspense, useEffect, useRef, useState } from "react"
 
 import { GridContainer } from "@/app/layouts"
-import { SectionBlog, SectionHooks, SectionResources } from "@/features/home"
-import BannerHero from "@/features/home/banner-hero"
+import {
+  BannerHero,
+  SectionBlog,
+  SectionHooks,
+  SectionResources,
+} from "@/features/home"
 import SectionAbout from "@/features/home/section-about"
 import { SectionBlocks } from "@/features/home/section-blocks"
 import SectionTechStack from "@/features/home/section-tech-stack"
@@ -81,7 +85,6 @@ export const Route = createFileRoute("/_site/")({
 function HomePage() {
   return (
     <div className="w-full">
-      {/* 1. Banner Hero (manages its own GridContainers) */}
       <div className="relative overflow-hidden">
         <BannerHero />
       </div>
