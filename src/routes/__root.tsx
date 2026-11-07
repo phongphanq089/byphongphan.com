@@ -64,10 +64,7 @@ export const Route = createRootRouteWithContext<{
       ],
       scripts: [
         {
-          tag: "script",
-          attrs: {
-            type: "application/ld+json",
-          },
+          type: "application/ld+json",
           children: JSON.stringify(createPersonJsonLd(siteSettings)),
         },
       ],

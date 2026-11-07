@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router"
+import { ClientOnly, Link } from "@tanstack/react-router"
 import { ArrowUp, ArrowUpRight, Globe, Mail } from "lucide-react"
 
 import { GridContainer } from "@/app/layouts"
@@ -69,20 +69,29 @@ export default function Footer() {
         className="flex w-full flex-col items-center justify-center p-4 lg:p-8"
       >
         <div className="flex w-full flex-col items-center gap-4">
-          <TimeScrubber
-            timeZone="Asia/Ho_Chi_Minh"
-            format="12h"
-            showSeconds={true}
-            fullWidth={true}
-            live={true}
-            tickMode="smooth"
-            step={5}
-            momentum={50}
-            sound={false}
-            showReset={true}
-            variant="default"
-            className="w-full"
-          />
+          <ClientOnly
+            fallback={
+              <div
+                className="h-[120px] w-full animate-pulse rounded-2xl border border-border/40 bg-muted/10"
+                aria-hidden="true"
+              />
+            }
+          >
+            <TimeScrubber
+              timeZone="Asia/Ho_Chi_Minh"
+              format="12h"
+              showSeconds={true}
+              fullWidth={true}
+              live={true}
+              tickMode="smooth"
+              step={5}
+              momentum={50}
+              sound={false}
+              showReset={true}
+              variant="default"
+              className="w-full"
+            />
+          </ClientOnly>
         </div>
       </GridContainer>
 
