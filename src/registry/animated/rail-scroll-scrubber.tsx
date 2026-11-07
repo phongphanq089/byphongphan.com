@@ -1792,3 +1792,4 @@ export function RailScrollScrubber({
 
 /* Alias for ergonomic and alternative naming */
 export { RailScrollScrubber as ArtcraftScrollScrubber }
+export { ScrollIndicator } from "./scroll-indicator"
