@@ -479,6 +479,33 @@
       ]
     },
     {
+      "name": "not-found-04",
+      "type": "registry:block",
+      "title": "Not Found ASCII Skyline",
+      "description": "Interactive 404 error page with procedural ASCII matrix cityscape, raycasted windows, and dynamic avoidance physics.",
+      "category": "404-page",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [
+        "button"
+      ],
+      "files": [
+        {
+          "path": "src/registry/block/not-found-04/app/not-found.tsx",
+          "type": "registry:block",
+          "target": "app/not-found.tsx"
+        },
+        {
+          "path": "src/registry/block/not-found-04/components/ascii-skyline.tsx",
+          "type": "registry:block",
+          "target": "components/ascii-skyline.tsx"
+        }
+      ]
+    },
+    {
       "name": "login-01",
       "type": "registry:block",
       "title": "Login 01",

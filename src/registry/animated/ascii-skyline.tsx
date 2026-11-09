@@ -632,11 +632,6 @@ class AsciiSkylineRenderer {
           }
         }
 
-        // Làm dịu vùng có nội dung chữ đè lên — dùng pre-computed bitmask
-        if (dimMask !== null && dimMask[idx] === 1) {
-          lum *= 0.35
-        }
-
         // Quantize luminance to atlas level
         let level = (lum * levelsM1) | 0
         if (level < 0) level = 0

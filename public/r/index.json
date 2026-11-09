@@ -210,6 +210,18 @@
     ]
   },
   {
+    "name": "not-found-04",
+    "type": "registry:block",
+    "title": "Not Found ASCII Skyline",
+    "description": "Interactive 404 error page with procedural ASCII matrix cityscape, raycasted windows, and dynamic avoidance physics.",
+    "dependencies": [
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "button"
+    ]
+  },
+  {
     "name": "login-01",
     "type": "registry:block",
     "title": "Login 01",

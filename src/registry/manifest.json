@@ -20,6 +20,10 @@
       "slug": "not-found-03"
     },
     {
+      "category": "404-page",
+      "slug": "not-found-04"
+    },
+    {
       "category": "auth",
       "slug": "login-01"
     },
