@@ -6,15 +6,11 @@ import { Frame } from "./banner-frame"
 
 export interface BannerV2Props {
   greeting?: string
-
   subheadline?: string
   className?: string
 }
 
-export function BannerHero({
-  subheadline = "An open-source UI registry and engineering showcase for crafted components and production-ready blocks. Resilient primitives and fluid micro-interactions crafted with intention.",
-  className,
-}: BannerV2Props) {
+export function BannerHero({ className }: BannerV2Props) {
   return (
     <section
       className={cn(
@@ -32,11 +28,9 @@ export function BannerHero({
         borderLeft={true}
         borderRight={true}
         showCrosshairs={false}
-        className="relative z-10 flex min-h-[calc(100svh-14rem)] flex-col items-center justify-center px-4 py-12 text-center sm:px-6 sm:py-16 md:py-20 lg:min-h-[calc(100svh-4rem)] lg:py-24"
+        className="relative z-10 flex min-h-[calc(100svh-14rem)] flex-col justify-between p-0 text-center lg:min-h-[calc(100svh-4rem)]"
       >
-        <div className="relative flex w-full flex-col items-center gap-6 text-center">
-          <Frame subheadline={subheadline} />
-        </div>
+        <Frame />
       </GridContainer>
 
       <style>{`

@@ -1,6 +1,7 @@
 import { PixelBlast } from "@/features/home/banner-hero/pixel-blast"
 import { getPixelBlastInlineScript } from "@/features/home/banner-hero/pixel-blast-inline"
-import { BlueprintCanvasBackground } from "@/shared/ui"
+
+import BlueprintCanvasBackground from "./blueprint-canvas-background"
 
 export function Background() {
   return (
@@ -16,7 +17,7 @@ export function Background() {
       </div>
 
       {/* ── 1. Interactive PixelBlast WebGL Background (Early 0ms Bootstrap) ── */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 dark:opacity-20">
         <PixelBlast
           id="hero-pixel-blast-canvas"
           variant="square"
@@ -59,7 +60,7 @@ export function Background() {
         className="pointer-events-none absolute inset-0 z-1 bg-[radial-gradient(ellipse_80%_60%_at_50%_50%,transparent_0%,var(--color-background)_95%)]"
       />
 
-      <BlueprintCanvasBackground showGrid={false} />
+      <BlueprintCanvasBackground className="z-2 opacity-80" />
     </>
   )
 }

@@ -1,7 +1,8 @@
 import { Code2 } from "lucide-react"
 
-import { CornerButton } from "@/features/home/banner-hero/corner-button"
 import { cn } from "@/shared/lib/utils"
+
+import CornerButton from "./corner-button"
 
 export interface ActionsProps {
   className?: string

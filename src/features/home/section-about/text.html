@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCHEMA® — Open-Source Blueprint UI Registry</title>
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            obsidian: '#050506',
+            blueprint: '#60a5fa',
+          },
+          keyframes: {
+            pulseBars: {
+              '0%, 100%': { opacity: '0.35' },
+              '50%': { opacity: '1' },
+            },
+            floatSlow: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-10px) rotate(1deg)' },
+            }
+          },
+          animation: {
+            'pulse-bars': 'pulseBars 1.8s ease-in-out infinite',
+            'float-slow': 'floatSlow 9s ease-in-out infinite',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- React 18 & ReactDOM CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <!-- Babel Standalone -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    /* Nền hạt film grain nghệ thuật kiểu MUGEN STUDIO */
+    .bg-film-grain {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+
+    /* Sọc chéo 45 độ bên trong nút Primary ở chế độ Blueprint (giống hệt ảnh mẫu 1) */
+    .schematic-btn-hatch {
+      background-image: repeating-linear-gradient(-45deg,
+          rgba(255, 255, 255, 0.11) 0px,
+          rgba(255, 255, 255, 0.11) 1.5px,
+          transparent 1.5px,
+          transparent 5.5px);
+    }
+
+    /* Họa tiết chấm kỹ thuật trong vùng Stage của Card */
+    .stage-grid-pattern {
+      background-image:
+        linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    /* Chữ khổng lồ chuẩn Swiss Editorial (MUGEN style) */
+    .mugen-display-title {
+      font-size: clamp(3.5rem, 13.2vw, 13.8rem);
+      line-height: 0.84;
+      letter-spacing: -0.055em;
+      font-weight: 800;
+    }
+
+    /* Thanh cuộn tối giản */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #050506;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #27272a;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+
+<body
+  class="bg-[#050506] text-zinc-100 font-sans antialiased selection:bg-blue-500/30 selection:text-blue-200 overflow-x-hidden">
+
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    /* ============================================================================
+     * DỮ LIỆU 5 BLOCKS TRONG CAROUSEL (Tất cả đều hỗ trợ Schematic -> Live UI)
+     * ============================================================================ */
+    const REGISTRY_BLOCKS = [
+      {
+        id: "cookie-banner",
+        indexLabel: "01",
+        title: "Cookie Consent Banner",
+        subtitle: "GDPR Compliant · @schema/cookie-banner",
+        widthLabel: "w-full - max 448",
+        defaultHeight: 152,
+        specsLabel: "p16 - r4 - btn h36 - gap 8",
+        paddingPx: 16,
+        cliCommand: "npx shadcn@latest add @schema/cookie-banner",
+        tokens: "Zero-runtime · Tailwind v4"
+      },
+      {
+        id: "passkey-auth",
+        indexLabel: "02",
+        title: "Passkey Biometric Prompt",
+        subtitle: "WebAuthn L3 · @schema/passkey-prompt",
+        widthLabel: "w-full - max 448",
+        defaultHeight: 152,
+        specsLabel: "p16 - r4 - btn h36 - gap 8",
+        paddingPx: 16,
+        cliCommand: "npx shadcn@latest add @schema/passkey-prompt",
+        tokens: "Base UI · Focus Trap"
+      },
+      {
+        id: "deploy-toast",
+        indexLabel: "03",
+        title: "Edge Deployment Status",
+        subtitle: "Webhook Toast · @schema/deploy-toast",
+        widthLabel: "w-full - max 448",
+        defaultHeight: 152,
+        specsLabel: "p16 - r4 - btn h36 - gap 8",
+        paddingPx: 16,
+        cliCommand: "npx shadcn@latest add @schema/deploy-toast",
+        tokens: "Aria-Live · Motion"
+      },
+      {
+        id: "api-quota",
+        indexLabel: "04",
+        title: "Metered API Token Quota",
+        subtitle: "Billing Usage · @schema/token-quota",
+        widthLabel: "w-full - max 448",
+        defaultHeight: 152,
+        specsLabel: "p16 - r4 - bar h8 - gap 8",
+        paddingPx: 16,
+        cliCommand: "npx shadcn@latest add @schema/token-quota",
+        tokens: "16-Segment · Responsive"
+      },
+      {
+        id: "command-bar",
+        indexLabel: "05",
+        title: "Command Palette Launcher",
+        subtitle: "Keyboard First · @schema/command-bar",
+        widthLabel: "w-full - max 448",
+        defaultHeight: 152,
+        specsLabel: "p16 - r4 - row h32 - gap 6",
+        paddingPx: 16,
+        cliCommand: "npx shadcn@latest add @schema/command-bar",
+        tokens: "Fuzzy Search · Hotkeys"
+      }
+    ];
+
+    /* ============================================================================
+     * BACKGROUND 3D MONOLITH PRISM & DARK CYLINDERS (Lấy cảm hứng từ nền MUGEN)
+     * ============================================================================ */
+    function MugenMonolithBackdrop() {
+      return (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none select-none z-0">
+          {/* Ánh sáng studio mờ phía sau chữ */}
+          <div
+            className="absolute top-[12%] left-[28%] w-[520px] h-[520px] rounded-full opacity-25 blur-[130px]"
+            style={{
+              background: "radial-gradient(circle, rgba(161,161,170,0.28) 0%, rgba(59,130,246,0.08) 55%, transparent 100%)"
+            }}
+          />
+
+          {/* Khối lăng trụ tam giác kim loại tối & các thanh trụ 3D (SVG nghệ thuật độ tương phản cao) */}
+          <svg
+            viewBox="0 0 1440 900"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-full object-cover opacity-85"
+            preserveAspectRatio="xMidYMid slice"
+          >
+            <defs>
+              {/* Gradient kim loại đen bóng cho khối tam giác trung tâm */}
+              <linearGradient id="prismFaceLeft" x1="520" y1="130" x2="760" y2="700" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#27272A" stopOpacity="0.65" />
+                <stop offset="45%" stopColor="#09090B" stopOpacity="0.92" />
+                <stop offset="100%" stopColor="#050506" stopOpacity="0.98" />
+              </linearGradient>
+
+              <linearGradient id="prismFaceRight" x1="760" y1="130" x2="1040" y2="700" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#3F3F46" stopOpacity="0.45" />
+                <stop offset="30%" stopColor="#18181B" stopOpacity="0.85" />
+                <stop offset="100%" stopColor="#070708" stopOpacity="0.95" />
+              </linearGradient>
+
+              <linearGradient id="prismEdgeGlow" x1="755" y1="120" x2="1035" y2="690" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#E4E4E7" stopOpacity="0.7" />
+                <stop offset="50%" stopColor="#71717A" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#27272A" stopOpacity="0.05" />
+              </linearGradient>
+
+              {/* Gradient cho các thanh trụ tối (Cylinders) giống ảnh MUGEN */}
+              <linearGradient id="cylinderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#3F3F46" stopOpacity="0.55" />
+                <stop offset="25%" stopColor="#18181B" stopOpacity="0.9" />
+                <stop offset="70%" stopColor="#050506" stopOpacity="0.98" />
+                <stop offset="100%" stopColor="#27272A" stopOpacity="0.4" />
+              </linearGradient>
+            </defs>
+
+            {/* Thanh trụ chéo góc trên trái */}
+            <g transform="rotate(-32 250 140)">
+              <rect x="60" y="70" width="380" height="86" rx="43" fill="url(#cylinderGrad)" stroke="rgba(255,255,255,0.08)" strokeWidth="1" />
+              <ellipse cx="440" cy="113" rx="18" ry="43" fill="#09090b" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+            </g>
+
+            {/* Thanh trụ chéo góc dưới trái */}
+            <g transform="rotate(-38 140 620)">
+              <rect x="-80" y="570" width="430" height="104" rx="52" fill="url(#cylinderGrad)" stroke="rgba(255,255,255,0.07)" strokeWidth="1" />
+            </g>
+
+            {/* Thanh trụ chéo góc trên phải */}
+            <g transform="rotate(-28 1050 90)">
+              <rect x="880" y="30" width="360" height="76" rx="38" fill="url(#cylinderGrad)" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+              <ellipse cx="880" cy="68" rx="16" ry="38" fill="#121215" stroke="rgba(255,255,255,0.22)" strokeWidth="1" />
+            </g>
+
+            {/* Khối Kim Tự Tháp / Lăng Trụ Tam Giác Đen Bóng Trung Tâm (MUGEN Centerpiece) */}
+            <g className="animate-float-slow">
+              {/* Mặt tối bên trái */}
+              <polygon
+                points="760,115 470,685 785,665"
+                fill="url(#prismFaceLeft)"
+                stroke="rgba(255,255,255,0.07)"
+                strokeWidth="1"
+              />
+              {/* Mặt phản sáng bên phải */}
+              <polygon
+                points="760,115 785,665 1045,695"
+                fill="url(#prismFaceRight)"
+                stroke="url(#prismEdgeGlow)"
+                strokeWidth="1.5"
+              />
+              {/* Viền vát nội tâm tạo độ dày 3D như kính đen */}
+              <polygon
+                points="762,165 518,650 995,665"
+                fill="none"
+                stroke="rgba(255,255,255,0.08)"
+                strokeWidth="1"
+              />
+              {/* Đường sống sáng chính giữa */}
+              <line
+                x1="760"
+                y1="115"
+                x2="785"
+                y2="665"
+                stroke="rgba(255,255,255,0.22)"
+                strokeWidth="1.2"
+              />
+            </g>
+
+            {/* Thanh trụ đứng góc dưới phải */}
+            <g transform="rotate(-14 1130 790)">
+              <rect x="1065" y="660" width="96" height="300" rx="48" fill="url(#cylinderGrad)" stroke="rgba(255,255,255,0.1)" strokeWidth="1" />
+              <ellipse cx="1113" cy="660" rx="48" ry="16" fill="#18181b" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
+            </g>
+
+            {/* Một vài hạt bụi phản sáng tinh tế trong không gian */}
+            <circle cx="318" cy="230" r="1.5" fill="rgba(255,255,255,0.35)" />
+            <circle cx="1160" cy="390" r="1.5" fill="rgba(255,255,255,0.25)" />
+            <circle cx="980" cy="240" r="2" fill="rgba(255,255,255,0.4)" />
+            <circle cx="240" cy="680" r="1.5" fill="rgba(255,255,255,0.2)" />
+            <circle cx="640" cy="220" r="1.2" fill="rgba(96,165,250,0.5)" />
+          </svg>
+        </div>
+      );
+    }
+
+    /* ============================================================================
+     * COMPONENT KHUNG ĐO BLUEPRINT / SCHEMATIC (CHUẨN XÁC 100% ẢNH MẪU 1 & 2)
+     * - Mặc định: Hiện thước đo ngang/dọc, 4 chấm vuông xanh ở góc, 4 đường nét đứt
+     *   chạy xuyên suốt 4 cạnh, thông số đáy và nút bấm sọc chéo.
+     * - Khi Hover vào Card: Toàn bộ thước đo biến mất, chuyển sang UI thật (ảnh 2).
+     * ============================================================================ */
+    function SchematicWrapper({
+      children,
+      widthLabel = "w-full - max 448",
+      defaultHeight = 152,
+      specsLabel = "p16 - r4 - btn h36 - gap 8",
+      paddingPx = 16,
+      isSchematicActive = true
+    }) {
+      const containerRef = useRef(null);
+      const [dimensions, setDimensions] = useState({ width: 448, height: defaultHeight });
+
+      useEffect(() => {
+        if (!containerRef.current) return;
+        const ro = new ResizeObserver((entries) => {
+          for (const entry of entries) {
+            const { offsetWidth, offsetHeight } = entry.target;
+            if (offsetWidth > 0 && offsetHeight > 0) {
+              setDimensions({
+                width: Math.round(offsetWidth),
+                height: Math.round(offsetHeight)
+              });
+            }
+          }
+        });
+        ro.observe(containerRef.current);
+        return () => ro.disconnect();
+      }, []);
+
+      return (
+        <div className="relative w-full max-w-[360px] sm:max-w-[388px] mx-auto select-none">
+
+          {/* 1. THƯỚC ĐO CHIỀU NGANG PHÍA TRÊN (w-full - max 448) */}
+          <div
+            className={`
+               -top-7 left-0 right-0 absolute flex flex-col items-center pointer-events-none
+              font-mono text-[11px] tracking-tight text-zinc-400
+              transition-all duration-200 ease-out
+              ${isSchematicActive ? "opacity-100 translate-y-0" : "opacity-0 translate-y-1"}
+            `}
+          >
+            <span className="mb-1 text-[10.5px] text-zinc-400 leading-none">
+              {widthLabel}
+            </span>
+            <div className="w-full flex items-center">
+              <span className="h-2.5 w-[1px] bg-zinc-600" />
+              <span className="h-[1px] flex-1 bg-zinc-700" />
+              <span className="h-2.5 w-[1px] bg-zinc-600" />
+            </div>
+          </div>
+
+          {/* 2. THƯỚC ĐO CHIỀU DỌC BÊN TRÁI (152) */}
+          <div
+            className={`
+              -left-10 top-0 bottom-0 absolute flex items-center pointer-events-none
+              font-mono text-[11px] text-zinc-400
+              transition-all duration-200 ease-out
+              ${isSchematicActive ? "opacity-100 translate-x-0" : "opacity-0 translate-x-1"}
+            `}
+          >
+            <span className="mr-2 text-[10.5px] text-zinc-400 leading-none">
+              {dimensions.height || defaultHeight}
+            </span>
+            <div className="h-full flex flex-col items-center">
+              <span className="w-2.5 h-[1px] bg-zinc-600" />
+              <span className="w-[1px] flex-1 bg-zinc-700" />
+              <span className="w-2.5 h-[1px] bg-zinc-600" />
+            </div>
+          </div>
+
+          {/* 3. VÙNG CHỨA COMPONENT THỰC TẾ + LỚP PHỦ BLUEPRINT */}
+          <div ref={containerRef} className="relative z-10">
+            {typeof children === "function" ? children(isSchematicActive) : children}
+
+            {/* LỚP BLUEPRINT OVERLAY (Viền xanh mảnh, 4 điểm neo góc & 4 đường nét đứt xuyên suốt) */}
+            <div
+              className={`
+                absolute inset-0 z-20 pointer-events-none
+                transition-opacity duration-200 ease-out
+                ${isSchematicActive ? "opacity-100" : "opacity-0"}
+              `}
+            >
+              {/* Viền khung blueprint */}
+              <div className="absolute inset-0 rounded-[4px] border border-[#688ce8]/60 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.18)]" />
+
+              {/* 4 Điểm neo hình vuông màu xanh ở 4 góc */}
+              <span className="absolute -top-[3.5px] -left-[3.5px] w-[7px] h-[7px] bg-[#141824] border border-[#5b8bf7]" />
+              <span className="absolute -top-[3.5px] -right-[3.5px] w-[7px] h-[7px] bg-[#141824] border border-[#5b8bf7]" />
+              <span className="absolute -bottom-[3.5px] -left-[3.5px] w-[7px] h-[7px] bg-[#141824] border border-[#5b8bf7]" />
+              <span className="absolute -bottom-[3.5px] -right-[3.5px] w-[7px] h-[7px] bg-[#141824] border border-[#5b8bf7]" />
+
+              {/* 4 Đường gióng nét đứt (9-slice padding guidelines) chạy xuyên suốt từ mép này sang mép kia */}
+              <div
+                className="absolute left-0 right-0 border-t border-dashed border-[#5b8bf7]/35"
+                style={{ top: `${paddingPx}px` }}
+              />
+              <div
+                className="absolute left-0 right-0 border-b border-dashed border-[#5b8bf7]/35"
+                style={{ bottom: `${paddingPx}px` }}
+              />
+              <div
+                className="absolute top-0 bottom-0 border-l border-dashed border-[#5b8bf7]/35"
+                style={{ left: `${paddingPx}px` }}
+              />
+              <div
+                className="absolute top-0 bottom-0 border-r border-dashed border-[#5b8bf7]/35"
+                style={{ right: `${paddingPx}px` }}
+              />
+            </div>
+          </div>
+
+          {/* 4. THÔNG SỐ SPECS PHÍA DƯỚI CẠNH TRÁI (p16 - r4 - btn h36 - gap 8) */}
+          <div
+            className={`
+              -bottom-6 left-0 right-0 absolute pointer-events-none
+              font-mono text-[10.5px] text-zinc-400 text-left tracking-tight
+              transition-all duration-200 ease-out
+              ${isSchematicActive ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-1"}
+            `}
+          >
+            {specsLabel}
+          </div>
+        </div>
+      );
+    }
+
+    /* ============================================================================
+     * CÁC UI BLOCK BÊN TRONG CAROUSEL (Chuyển mượt giữa Blueprint & Live UI)
+     * ============================================================================ */
+
+    // Slide 01: Cookie Consent Banner (Khớp 100% ảnh 1 & ảnh 2 của bạn)
+    function CookieConsentBlock({ isSchematic }) {
+      const [choice, setChoice] = useState(null);
+
+      return (
+        <div
+          className={`
+            w-full min-h-[152px] rounded-[4px] p-4 flex flex-col justify-between transition-all duration-200
+            ${isSchematic
+              ? "bg-[#121214] border border-zinc-700/50"
+              : "bg-[#111113] border border-zinc-800/90 shadow-[0_16px_40px_rgba(0,0,0,0.65)]"
+            }
+          `}
+        >
+          <div>
+            <h3
+              className={`
+                text-[15.5px] font-semibold leading-snug transition-colors duration-200
+                ${isSchematic ? "text-zinc-400" : "text-zinc-100"}
+              `}
+            >
+              We use cookies
+            </h3>
+            <p
+              className={`
+                text-[13px] mt-1.5 leading-[1.42] transition-colors duration-200
+                ${isSchematic ? "text-zinc-500" : "text-zinc-400"}
+              `}
+            >
+              Cookies keep the site working.<br />
+              Change your choice any time.
+            </p>
+          </div>
+
+          <div className="mt-4 flex items-center justify-end gap-2">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setChoice("Declined");
+              }}
+              className={`
+                h-[36px] px-4 rounded-[4px] text-[12.5px] font-medium transition-all duration-200
+                ${isSchematic
+                  ? "bg-transparent border border-zinc-300/90 text-zinc-400"
+                  : "bg-[#141416] border border-zinc-800 text-zinc-200 hover:bg-zinc-800"
+                }
+              `}
+            >
+              {choice === "Declined" ? "Declined ✓" : "Decline"}
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setChoice("Accepted");
+              }}
+              className={`
+                h-[36px] px-4 rounded-[4px] text-[12.5px] font-medium transition-all duration-200
+                ${isSchematic
+                  ? "schematic-btn-hatch border border-zinc-300/90 text-zinc-400"
+                  : "bg-white border border-transparent text-zinc-950 font-semibold hover:bg-zinc-200 shadow-sm"
+                }
+              `}
+            >
+              {choice === "Accepted" ? "Accepted ✓" : "Accept all"}
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    // Slide 02: Passkey Biometric Auth Block
+    function PasskeyAuthBlock({ isSchematic }) {
+      const [authed, setAuthed] = useState(false);
+
+      return (
+        <div
+          className={`
+            w-full min-h-[152px] rounded-[4px] p-4 flex flex-col justify-between transition-all duration-200
+            ${isSchematic
+              ? "bg-[#121214] border border-zinc-700/50"
+              : "bg-[#111113] border border-zinc-800/90 shadow-[0_16px_40px_rgba(0,0,0,0.65)]"
+            }
+          `}
+        >
+          <div>
+            <div className="flex items-center justify-between">
+              <h3 className={`text-[15.5px] font-semibold transition-colors duration-200 ${isSchematic ? "text-zinc-400" : "text-zinc-100"}`}>
+                Sign in with Passkey
+              </h3>
+              <span className={`font-mono text-[10px] px-1.5 py-0.5 rounded border ${isSchematic ? "border-zinc-700 text-zinc-500" : "border-blue-500/30 bg-blue-500/10 text-blue-400"}`}>
+                FIDO2
+              </span>
+            </div>
+            <p className={`text-[13px] mt-1.5 leading-[1.42] transition-colors duration-200 ${isSchematic ? "text-zinc-500" : "text-zinc-400"}`}>
+              Use Touch ID or hardware security key<br />
+              for passwordless session unlock.
+            </p>
+          </div>
+
+          <div className="mt-4 flex items-center justify-end gap-2">
+            <button
+              className={`
+                h-[36px] px-3.5 rounded-[4px] text-[12.5px] font-medium transition-all duration-200
+                ${isSchematic
+                  ? "bg-transparent border border-zinc-300/90 text-zinc-400"
+                  : "bg-[#141416] border border-zinc-800 text-zinc-200 hover:bg-zinc-800"
+                }
+              `}
+            >
+              Use OTP
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setAuthed(!authed);
+              }}
+              className={`
+                h-[36px] px-4 rounded-[4px] text-[12.5px] font-medium transition-all duration-200
+                ${isSchematic
+                  ? "schematic-btn-hatch border border-zinc-300/90 text-zinc-400"
+                  : "bg-white border border-transparent text-zinc-950 font-semibold hover:bg-zinc-200"
+                }
+              `}
+            >
+              {authed ? "Verified ✓" : "Verify Touch ID"}
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    // Slide 03: Edge Deployment Status Block
+    function DeployToastBlock({ isSchematic }) {
+      const [promoted, setPromoted] = useState(false);
+
+      return (
+        <div
+          className={`
+            w-full min-h-[152px] rounded-[4px] p-4 flex flex-col justify-between transition-all duration-200
+            ${isSchematic
+              ? "bg-[#121214] border border-zinc-700/50"
+              : "bg-[#111113] border border-zinc-800/90 shadow-[0_16px_40px_rgba(0,0,0,0.65)]"
+            }
+          `}
+        >
+          <div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className={`w-2 h-2 rounded-full ${isSchematic ? "bg-zinc-500" : "bg-emerald-400 animate-pulse"}`} />
+                <h3 className={`text-[15.5px] font-semibold transition-colors duration-200 ${isSchematic ? "text-zinc-400" : "text-zinc-100"}`}>
+                  Edge build ready
+                </h3>
+              </div>
+              <span className="font-mono text-[10.5px] text-zinc-500">
+                commit 94a8f1
+              </span>
+            </div>
+            <p className={`text-[13px] mt-1.5 leading-[1.42] transition-colors duration-200 ${isSchematic ? "text-zinc-500" : "text-zinc-400"}`}>
+              50 registry blocks compiled in 420ms.<br />
+              Zero layout shift verified.
+            </p>
+          </div>
+
+          <div className="mt-4 flex items-center justify-end gap-2">
+            <button
+              className={`
+                h-[36px] px-3.5 rounded-[4px] text-[12.5px] font-medium transition-all duration-200
+                ${isSchematic
+                  ? "bg-transparent border border-zinc-300/90 text-zinc-400"
+                  : "bg-[#141416] border border-zinc-800 text-zinc-200 hover:bg-zinc-800"
+                }
+              `}
+            >
+              Build logs
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setPromoted(!promoted);
+              }}
+              className={`
+                h-[36px] px-4 rounded-[4px] text-[12.5px] font-medium transition-all duration-200
+                ${isSchematic
+                  ? "schematic-btn-hatch border border-zinc-300/90 text-zinc-400"
+                  : "bg-white border border-transparent text-zinc-950 font-semibold hover:bg-zinc-200"
+                }
+              `}
+            >
+              {promoted ? "Shipped ✓" : "Promote Prod"}
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    // Slide 04: API Token Quota Block
+    function ApiQuotaBlock({ isSchematic }) {
+      return (
+        <div
+          className={`
+            w-full min-h-[152px] rounded-[4px] p-4 flex flex-col justify-between transition-all duration-200
+            ${isSchematic
+              ? "bg-[#121214] border border-zinc-700/50"
+              : "bg-[#111113] border border-zinc-800/90 shadow-[0_16px_40px_rgba(0,0,0,0.65)]"
+            }
+          `}
+        >
+          <div>
+            <div className="flex items-center justify-between">
+              <h3 className={`text-[15.5px] font-semibold transition-colors duration-200 ${isSchematic ? "text-zinc-400" : "text-zinc-100"}`}>
+                Registry CDN Bandwidth
+              </h3>
+              <span className={`font-mono text-[12px] font-semibold ${isSchematic ? "text-zinc-400" : "text-zinc-100"}`}>
+                82.4%
+              </span>
+            </div>
+            <div className="flex gap-1 my-3">
+              {Array.from({ length: 16 }).map((_, idx) => (
+                <span
+                  key={idx}
+                  className={`h-2.5 flex-1 rounded-[1px] transition-colors duration-200 ${idx < 13
+                      ? isSchematic
+                        ? "bg-zinc-500"
+                        : "bg-white"
+                      : "bg-zinc-800"
+                    }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between gap-2 pt-1">
+            <span className="font-mono text-[11px] text-zinc-500">
+              824k / 1M pulls
+            </span>
+            <button
+              className={`
+                h-[36px] px-4 rounded-[4px] text-[12.5px] font-medium transition-all duration-200
+                ${isSchematic
+                  ? "schematic-btn-hatch border border-zinc-300/90 text-zinc-400"
+                  : "bg-white border border-transparent text-zinc-950 font-semibold hover:bg-zinc-200"
+                }
+              `}
+            >
+              Scale limit
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    // Slide 05: Command Bar Block
+    function CommandBarBlock({ isSchematic }) {
+      return (
+        <div
+          className={`
+            w-full min-h-[152px] rounded-[4px] p-4 flex flex-col justify-between transition-all duration-200
+            ${isSchematic
+              ? "bg-[#121214] border border-zinc-700/50"
+              : "bg-[#111113] border border-zinc-800/90 shadow-[0_16px_40px_rgba(0,0,0,0.65)]"
+            }
+          `}
+        >
+          <div className="flex items-center justify-between pb-2 border-b border-zinc-800">
+            <span className={`font-mono text-[12px] ${isSchematic ? "text-zinc-500" : "text-zinc-300"}`}>
+              &gt; Add block to workspace...
+            </span>
+            <kbd className="font-mono text-[10px] px-1.5 py-0.5 rounded border border-zinc-700 text-zinc-400">
+              ⌘K
+            </kbd>
+          </div>
+
+          <div className="space-y-1.5 mt-2">
+            <div
+              className={`
+                h-[36px] px-3 rounded-[4px] flex items-center justify-between text-[12.5px] transition-all duration-200
+                ${isSchematic
+                  ? "schematic-btn-hatch border border-zinc-300/90 text-zinc-300"
+                  : "bg-white text-zinc-950 font-semibold"
+                }
+              `}
+            >
+              <span>Install @schema/cookie-banner</span>
+              <span className="font-mono text-[11px] opacity-75">↵ Enter</span>
+            </div>
+            <div className="h-[32px] px-3 rounded-[4px] flex items-center justify-between text-[12px] text-zinc-400">
+              <span>Copy raw Tailwind v4 JSX</span>
+              <span className="font-mono text-[11px] text-zinc-500">⌘C</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    function renderActiveBlock(id, isSchematic) {
+      switch (id) {
+        case "cookie-banner":
+          return <CookieConsentBlock isSchematic={isSchematic} />;
+        case "passkey-auth":
+          return <PasskeyAuthBlock isSchematic={isSchematic} />;
+        case "deploy-toast":
+          return <DeployToastBlock isSchematic={isSchematic} />;
+        case "api-quota":
+          return <ApiQuotaBlock isSchematic={isSchematic} />;
+        case "command-bar":
+          return <CommandBarBlock isSchematic={isSchematic} />;
+        default:
+          return <CookieConsentBlock isSchematic={isSchematic} />;
+      }
+    }
+
+    /* ============================================================================
+     * COMPONENT CHÍNH: HERO BANNER MUGEN STUDIO X SCHEMATIC REGISTRY
+     * ============================================================================ */
+    function App() {
+      const [activeIdx, setActiveIdx] = useState(0);
+      const [isStageHovered, setIsStageHovered] = useState(false);
+      const [blueprintMode, setBlueprintMode] = useState("auto"); // "auto" | "always" | "off"
+      const [copiedCli, setCopiedCli] = useState(false);
+      const [showAllGrid, setShowAllGrid] = useState(false);
+      const [timeString, setTimeString] = useState("10:52 AM");
+
+      const currentBlock = REGISTRY_BLOCKS[activeIdx];
+
+      // Đồng hồ thời gian thực trên thanh Top Bar (giống Toronto (CA) 10:51 PM của MUGEN)
+      useEffect(() => {
+        const updateClock = () => {
+          const now = new Date();
+          const formatted = now.toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true
+          });
+          setTimeString(formatted);
+        };
+        updateClock();
+        const interval = setInterval(updateClock, 15000);
+        return () => clearInterval(interval);
+      }, []);
+
+      // Tự động chạy Carousel mỗi 4 giây (Dừng lại khi người dùng rê chuột vào Card để xem UI)
+      useEffect(() => {
+        if (isStageHovered) return;
+        const timer = setInterval(() => {
+          setActiveIdx((prev) => (prev + 1) % REGISTRY_BLOCKS.length);
+        }, 4000);
+        return () => clearInterval(timer);
+      }, [isStageHovered]);
+
+      // Tính toán trạng thái hiển thị thước đo Blueprint:
+      // Mặc định hiện Blueprint (như ảnh 1), khi Hover vào sẽ ẩn thước đo để hiện UI thật (như ảnh 2)
+      const isSchematicVisible =
+        blueprintMode === "always"
+          ? true
+          : blueprintMode === "off"
+            ? false
+            : !isStageHovered;
+
+      // Copy CLI khi bấm thanh màu trắng ở đáy Card Dock
+      const handleCopyCommand = () => {
+        const el = document.createElement("textarea");
+        el.value = currentBlock.cliCommand;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand("copy");
+        document.body.removeChild(el);
+        setCopiedCli(true);
+        setTimeout(() => setCopiedCli(false), 1800);
+      };
+
+      const cycleBlueprintMode = () => {
+        setBlueprintMode((prev) =>
+          prev === "auto" ? "always" : prev === "always" ? "off" : "auto"
+        );
+      };
+
+      return (
+        <div className="min-h-screen bg-[#050506] text-zinc-100 relative overflow-x-hidden bg-film-grain">
+
+          {/* NỀN 3D KHỐI LĂNG TRỤ TAM GIÁC & CYLINDER TỐI (MUGEN BACKDROP) */}
+          <MugenMonolithBackdrop />
+
+          {/* ĐƯỜNG KẺ KIẾN TRÚC MẢNH DỌC 2 BÊN MÀN HÌNH */}
+          <div className="pointer-events-none fixed inset-y-0 left-4 sm:left-8 w-[1px] bg-white/[0.04] z-20" />
+          <div className="pointer-events-none fixed inset-y-0 right-4 sm:right-8 w-[1px] bg-white/[0.04] z-20" />
+
+          {/* ====================================================================
+           * HERO VIEWPORT CONTAINER (Bố cục chuẩn MUGEN STUDIO)
+           * ==================================================================== */}
+          <main className="relative z-10 min-h-screen max-w-[1600px] mx-auto px-5 sm:px-10 lg:px-14 pt-6 pb-10 flex flex-col justify-between">
+
+            {/* ------------------------------------------------------------------
+             * 1. TOP SWISS MICRO-NAVIGATION BAR (4 Cột đều nhau như MUGEN)
+             * ------------------------------------------------------------------ */}
+            <header className="grid grid-cols-2 md:grid-cols-4 items-center text-[13px] tracking-tight py-1">
+              {/* Cột 1: Brand Logo */}
+              <div className="flex items-center gap-2">
+                <a href="#top" className="font-extrabold text-[15px] tracking-tight text-white flex items-center">
+                  SCHEMA<span className="text-[10px] align-top ml-0.5 font-semibold text-zinc-400">®</span>
+                </a>
+                <span className="font-mono text-[10px] text-zinc-500 border border-zinc-800 px-1.5 py-0.5 rounded">
+                  v2.4
+                </span>
+              </div>
+
+              {/* Cột 2: Vị trí & Đồng hồ trực tiếp */}
+              <div className="hidden md:flex items-center gap-1.5 text-zinc-200 font-medium">
+                <span>Vietnam (VN)</span>
+                <span className="text-zinc-500 font-normal">{timeString}</span>
+              </div>
+
+              {/* Cột 3: Danh mục số lượng Registry Blocks */}
+              <div className="hidden md:flex items-center justify-center gap-6">
+                <button
+                  onClick={() => setShowAllGrid(!showAllGrid)}
+                  className="text-white font-medium hover:text-blue-400 transition-colors flex items-center gap-1"
+                >
+                  <span>Registry Blocks</span>
+                  <span className="text-zinc-500 font-mono text-[12px]">[50]</span>
+                </button>
+                <button
+                  onClick={() => setActiveIdx((prev) => (prev + 1) % REGISTRY_BLOCKS.length)}
+                  className="text-zinc-400 hover:text-white transition-colors flex items-center gap-1"
+                >
+                  <span>Primitives</span>
+                  <span className="text-zinc-600 font-mono text-[12px]">[18]</span>
+                </button>
+              </div>
+
+              {/* Cột 4: Nút chuyển chế độ Schematic & Icon Menu 2 vạch */}
+              <div className="flex items-center justify-end gap-4">
+                <button
+                  onClick={cycleBlueprintMode}
+                  className="px-2.5 py-1 rounded border border-white/10 bg-white/[0.03] hover:bg-white/[0.08] font-mono text-[11px] text-zinc-300 transition-colors flex items-center gap-1.5"
+                  title="Chuyển chế độ hiển thị thước đo"
+                >
+                  <span className={`w-1.5 h-1.5 rounded-full ${isSchematicVisible ? "bg-blue-400" : "bg-emerald-400"}`} />
+                  <span>
+                    {blueprintMode === "auto"
+                      ? "Rulers: Hover→Hide"
+                      : blueprintMode === "always"
+                        ? "Rulers: Locked"
+                        : "Rulers: Hidden"}
+                  </span>
+                </button>
+
+                {/* Minimalist 2-line hamburger icon (MUGEN style) */}
+                <button
+                  onClick={() => setShowAllGrid(!showAllGrid)}
+                  aria-label="Toggle All 50 Blocks Grid"
+                  className="w-8 h-8 flex flex-col items-end justify-center gap-[5px] group"
+                >
+                  <span className="w-6 h-[1.5px] bg-white group-hover:w-4 transition-all" />
+                  <span className="w-4 h-[1.5px] bg-zinc-400 group-hover:w-6 group-hover:bg-white transition-all" />
+                </button>
+              </div>
+            </header>
+
+            {/* ------------------------------------------------------------------
+             * 2. MONUMENTAL SPLIT TYPOGRAPHY + OVERLAPPING SCHEMATIC CARD DOCK
+             * ------------------------------------------------------------------ */}
+            <div className="relative my-auto pt-6 pb-8 lg:py-4">
+
+              {/* LỚP CHỮ KHỔNG LỒ PHÍA SAU (SCHEMATIC / REGISTRY) */}
+              <div className="relative select-none pointer-events-none z-0">
+
+                {/* Dòng 1: Căn trái, màu Trắng Tinh Khiết */}
+                <h1 className="mugen-display-title text-white uppercase">
+                  SCHEMATIC
+                </h1>
+
+                {/* Dòng chữ nhỏ nằm gọn ngay dưới mép trái chữ SCHEMATIC (Giống © Since — 2016) */}
+                <div className="mt-3 sm:mt-4 flex items-center gap-4 text-xs sm:text-[15px] font-semibold tracking-tight text-white">
+                  <span>© Open Source — 2026</span>
+                  <span className="hidden sm:inline-block font-mono text-[11px] font-normal text-zinc-400 border border-white/10 bg-white/[0.03] px-2 py-0.5 rounded">
+                    React 19 · Tailwind CSS v4
+                  </span>
+                </div>
+
+                {/* Dòng 2: Lệch sang phải, màu Xám Kim Loại (#8E8E96) giống chữ STUDIO */}
+                <div className="mt-2 sm:mt-0 lg:-mt-4 flex justify-end">
+                  <span className="mugen-display-title text-[#8e8e96] uppercase">
+                    REGISTRY
+                  </span>
+                </div>
+              </div>
+
+              {/* ----------------------------------------------------------------
+               * KHỐI CARD DOCK NỔI ĐÈ LÊN CHỮ "REGISTRY" (Vị trí trung tâm-trái như ảnh MUGEN)
+               * ---------------------------------------------------------------- */}
+              <div className="relative z-20 mt-8 lg:mt-[-135px] xl:mt-[-165px] lg:ml-[25%] xl:ml-[27%] w-full max-w-[440px] sm:max-w-[464px] mx-auto lg:mx-0">
+
+                <div
+                  onMouseEnter={() => setIsStageHovered(true)}
+                  onMouseLeave={() => setIsStageHovered(false)}
+                  className="border border-white/15 bg-[#0b0b0d]/95 backdrop-blur-2xl shadow-[0_32px_90px_rgba(0,0,0,0.92)] overflow-hidden transition-all duration-300"
+                >
+                  {/* PHẦN 1: TOP STAGE (Nơi chứa Component + Thước đo Blueprint) */}
+                  <div className="relative pt-12 pb-14 px-8 sm:px-12 bg-gradient-to-b from-[#17171b] via-[#101013] to-[#0a0a0c] stage-grid-pattern border-b border-white/10">
+
+                    {/* Nút điều hướng Slide nhỏ ở góc trên phải của Stage */}
+                    <div className="absolute top-3 right-3 z-30 flex items-center gap-1">
+                      {REGISTRY_BLOCKS.map((item, idx) => (
+                        <button
+                          key={item.id}
+                          onClick={() => setActiveIdx(idx)}
+                          className={`h-1.5 rounded-full transition-all ${idx === activeIdx
+                              ? "w-5 bg-blue-400"
+                              : "w-1.5 bg-zinc-700 hover:bg-zinc-500"
+                            }`}
+                          title={item.title}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Gắn Component SchematicWrapper (Hover vào Card sẽ tự động ẩn thước đo) */}
+                    <div className="pl-5 pt-2 pb-1">
+                      <SchematicWrapper
+                        key={currentBlock.id}
+                        widthLabel={currentBlock.widthLabel}
+                        defaultHeight={currentBlock.defaultHeight}
+                        specsLabel={currentBlock.specsLabel}
+                        paddingPx={currentBlock.paddingPx}
+                        isSchematicActive={isSchematicVisible}
+                      >
+                        {(schematicState) =>
+                          renderActiveBlock(currentBlock.id, schematicState)
+                        }
+                      </SchematicWrapper>
+                    </div>
+
+                    {/* BADGE TRẠNG THÁI GÓC DƯỚI TRÁI STAGE (Lấy cảm hứng từ "|| ||| 2 slots open March'26") */}
+                    <div className="absolute bottom-3 left-3.5 right-3.5 flex items-center justify-between gap-2 pointer-events-none">
+                      <div className="inline-flex items-center gap-2.5 bg-black/90 border border-white/10 px-3 py-1.5 text-[11px] font-medium text-white shadow-lg">
+                        {/* Các vạch dọc nhịp điệu || ||| */}
+                        <span className="font-mono text-[10px] tracking-[1px] text-blue-400 animate-pulse-bars">
+                          ||<span className="text-zinc-600">|||</span>|
+                        </span>
+                        <span>
+                          {isSchematicVisible ? (
+                            <>
+                              <strong>Blueprint active</strong>{" "}
+                              <span className="text-zinc-400 font-normal">
+                                · Hover to preview UI
+                              </span>
+                            </>
+                          ) : (
+                            <>
+                              <strong className="text-emerald-400">Live UI mode</strong>{" "}
+                              <span className="text-zinc-400 font-normal">
+                                · Rulers stripped
+                              </span>
+                            </>
+                          )}
+                        </span>
+                      </div>
+
+                      {/* Nút sang trái/phải nhanh */}
+                      <div className="pointer-events-auto flex items-center gap-1">
+                        <button
+                          onClick={() =>
+                            setActiveIdx(
+                              (prev) =>
+                                (prev - 1 + REGISTRY_BLOCKS.length) %
+                                REGISTRY_BLOCKS.length
+                            )
+                          }
+                          className="w-6 h-6 bg-black/80 hover:bg-zinc-800 border border-white/10 text-zinc-300 font-mono text-[11px] flex items-center justify-center transition-colors"
+                          title="Previous Component"
+                        >
+                          ←
+                        </button>
+                        <button
+                          onClick={() =>
+                            setActiveIdx(
+                              (prev) => (prev + 1) % REGISTRY_BLOCKS.length
+                            )
+                          }
+                          className="w-6 h-6 bg-black/80 hover:bg-zinc-800 border border-white/10 text-zinc-300 font-mono text-[11px] flex items-center justify-center transition-colors"
+                          title="Next Component"
+                        >
+                          →
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* PHẦN 2: THÔNG TIN COMPONENT (Tương ứng vùng "Sarah Park / Project manager") */}
+                  <div className="px-5 py-4 bg-[#070709] border-b border-white/10 flex items-center justify-between gap-3">
+                    <div>
+                      <h2 className="text-[16px] font-bold text-white tracking-tight leading-snug">
+                        {currentBlock.title}
+                      </h2>
+                      <p className="text-[12.5px] text-zinc-400 mt-0.5 font-mono">
+                        {currentBlock.subtitle}
+                      </p>
+                    </div>
+                    <span className="font-mono text-[11px] text-zinc-500 border border-zinc-800 px-2 py-0.5 rounded">
+                      {currentBlock.indexLabel} / 05
+                    </span>
+                  </div>
+
+                  {/* PHẦN 3: THÔNG SỐ REGISTRY (Tương ứng vùng "Plans start at $7,500 / m ↗") */}
+                  <div
+                    onClick={() => setShowAllGrid(!showAllGrid)}
+                    className="px-5 py-3.5 bg-[#070709] hover:bg-zinc-900/70 transition-colors cursor-pointer flex items-center justify-between text-[13px]"
+                  >
+                    <span className="text-zinc-400">
+                      Registry scale{" "}
+                      <strong className="text-white font-semibold ml-1">
+                        50+ Blocks · Free MIT
+                      </strong>
+                    </span>
+                    <span className="text-zinc-300 font-mono text-sm">↗</span>
+                  </div>
+
+                  {/* PHẦN 4: THANH CTA MÀU TRẮNG ĐẶC Ở ĐÁY (Tương ứng "Book a 15-Min Call") */}
+                  <button
+                    onClick={handleCopyCommand}
+                    className="w-full px-5 py-3.5 bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-[13px] flex items-center justify-between transition-colors group"
+                  >
+                    <span className="font-mono text-[12px] truncate pr-2">
+                      {copiedCli
+                        ? "✓ Copied CLI command to clipboard!"
+                        : currentBlock.cliCommand}
+                    </span>
+                    <span className="shrink-0 flex items-center gap-1.5 text-[11px] font-mono uppercase tracking-wider bg-zinc-950 text-white px-2 py-0.5 rounded-[2px]">
+                      {copiedCli ? "DONE" : "COPY"}
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* ------------------------------------------------------------------
+             * 3. BOTTOM BAR: SOCIAL PROOF BÊN TRÁI & MANIFESTO COPY BÊN PHẢI
+             * ------------------------------------------------------------------ */}
+            <footer className="mt-6 lg:mt-0 grid grid-cols-1 lg:grid-cols-12 items-end gap-8 pt-4">
+
+              {/* Góc dưới trái: Cụm Avatar + Nút "You?" + Đánh giá 5.0/5 (Giống hệt MUGEN) */}
+              <div className="lg:col-span-5 flex items-center gap-4">
+                <div className="flex items-center -space-x-2.5">
+                  <div className="w-9 h-9 rounded-full border-2 border-[#050506] bg-gradient-to-tr from-zinc-700 to-zinc-400 flex items-center justify-center text-[11px] font-bold text-zinc-950">
+                    CD
+                  </div>
+                  <div className="w-9 h-9 rounded-full border-2 border-[#050506] bg-gradient-to-tr from-blue-600 to-blue-300 flex items-center justify-center text-[11px] font-bold text-zinc-950">
+                    PP
+                  </div>
+                  <div className="w-9 h-9 rounded-full border-2 border-[#050506] bg-gradient-to-tr from-emerald-600 to-teal-300 flex items-center justify-center text-[11px] font-bold text-zinc-950">
+                    TK
+                  </div>
+                  <div className="w-9 h-9 rounded-full border-2 border-[#050506] bg-gradient-to-tr from-amber-500 to-orange-300 flex items-center justify-center text-[11px] font-bold text-zinc-950">
+                    Lee
+                  </div>
+                  {/* Vòng tròn "You?" đặc trưng của MUGEN */}
+                  <div className="w-9 h-9 rounded-full border border-zinc-700 bg-[#111113] flex items-center justify-center text-[10px] font-semibold text-zinc-200 shadow-inner">
+                    You?
+                  </div>
+                </div>
+
+                <div className="text-[12px] leading-tight">
+                  <div className="flex items-center gap-1.5 text-white font-semibold">
+                    <span className="tracking-widest text-[11px]">★★★★★</span>
+                    <span>5.0 <span className="text-zinc-500 font-normal">/ 5</span></span>
+                  </div>
+                  <div className="text-zinc-300 font-medium mt-0.5">
+                    3,200+ Developers shipping
+                  </div>
+                </div>
+              </div>
+
+              {/* Góc dưới phải: Đoạn tuyên ngôn chữ Trắng Đậm + Xám Mờ (Giống hệt MUGEN) */}
+              <div className="lg:col-span-7 lg:pl-16 xl:pl-28">
+                <p className="text-[17px] sm:text-[20px] leading-[1.38] tracking-[-0.02em] max-w-[540px] ml-auto">
+                  <strong className="text-white font-semibold">
+                    We've reimagined how UI primitives ship.
+                  </strong>{" "}
+                  <span className="text-[#8e8e96] font-normal">
+                    No bloated npm dependencies. No black-box CSS overrides. No design-to-code drift. Just raw, blueprint-verified React &amp; Tailwind blocks that become an extension of your codebase.
+                  </span>
+                </p>
+              </div>
+            </footer>
+
+          </main>
+
+          {/* ====================================================================
+           * KHU VỰC MỞ RỘNG (Bấm vào "Registry Blocks [50]" để xem lưới nhiều Card cùng lúc)
+           * ==================================================================== */}
+          {showAllGrid && (
+            <section className="relative z-20 border-t border-white/10 bg-[#070709]/95 backdrop-blur-xl py-16 px-5 sm:px-10 lg:px-14">
+              <div className="max-w-[1600px] mx-auto">
+                <div className="flex flex-wrap items-center justify-between gap-4 mb-12">
+                  <div>
+                    <span className="font-mono text-xs text-blue-400 uppercase">
+                      // REUSABLE WRAPPER SHOWCASE (50+ BLOCKS ARCHITECTURE)
+                    </span>
+                    <h2 className="text-2xl font-bold text-white mt-1">
+                      Hover any component below to strip its blueprint rulers
+                    </h2>
+                  </div>
+                  <button
+                    onClick={() => setShowAllGrid(false)}
+                    className="px-4 py-2 rounded border border-white/15 bg-zinc-900 hover:bg-zinc-800 text-xs font-mono text-zinc-200"
+                  >
+                    Close Grid ✕
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-14 gap-y-16 pt-4 pb-8">
+                  {REGISTRY_BLOCKS.map((block) => (
+                    <AllGridCardItem key={block.id} block={block} globalMode={blueprintMode} />
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+        </div>
+      );
+    }
+
+    // Component con cho chế độ xem lưới toàn bộ
+    function AllGridCardItem({ block, globalMode }) {
+      const [hovered, setHovered] = useState(false);
+      const isSchematic =
+        globalMode === "always" ? true : globalMode === "off" ? false : !hovered;
+
+      return (
+        <div
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+          className="p-10 rounded border border-white/10 bg-[#0b0b0e] stage-grid-pattern flex flex-col items-center justify-center"
+        >
+          <div className="pl-6 w-full">
+            <SchematicWrapper
+              widthLabel={block.widthLabel}
+              defaultHeight={block.defaultHeight}
+              specsLabel={block.specsLabel}
+              paddingPx={block.paddingPx}
+              isSchematicActive={isSchematic}
+            >
+              {(s) => renderActiveBlock(block.id, s)}
+            </SchematicWrapper>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
+</body>
+
+</html>
