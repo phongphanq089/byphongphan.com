@@ -1,4 +1,3 @@
-import { GridContainer } from "@/app/layouts"
 import { cn } from "@/shared/lib/utils"
 
 import { Background } from "./background"
@@ -21,17 +20,9 @@ export function BannerHero({ className }: BannerV2Props) {
     >
       <Background />
 
-      <GridContainer
-        as="div"
-        borderTop={false}
-        borderBottom={false}
-        borderLeft={true}
-        borderRight={true}
-        showCrosshairs={false}
-        className="relative z-10 flex min-h-[calc(100svh-14rem)] flex-col justify-between p-0 text-center lg:min-h-[calc(100svh-4rem)]"
-      >
+      <div className="relative z-10 flex min-h-[calc(100svh-14rem)] flex-col justify-between p-0 text-center lg:min-h-[calc(100svh-4rem)]">
         <Frame />
-      </GridContainer>
+      </div>
 
       <style>{`
         .collab-live-ping {

@@ -1,6 +1,6 @@
 import { cn } from "@/shared/lib/utils"
 
-import { BuildComposeShip3DHeadline } from "./build-compose-ship3d-headline"
+import { Build3DHeading } from "./build-compose-ship3d-headline"
 import { PhongPhan3DHeadline } from "./phong-phan-3d-headline"
 
 export interface BannerV2FrameProps {
@@ -15,13 +15,13 @@ export function Frame({ className }: BannerV2FrameProps) {
         className
       )}
     >
-      <div className="relative flex w-full flex-1 items-center justify-center px-6 pt-6 sm:pt-10 md:pt-12">
+      <div className="relative flex w-full max-w-5xl flex-1 items-center justify-center px-6 pt-6 sm:pt-10 md:pt-12">
         <div
           aria-hidden="true"
           className="absolute inset-x-0 inset-y-2 z-0 mx-auto max-w-2xl bg-gradient-to-r from-transparent via-background/80 to-transparent [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_80%)] backdrop-blur-md"
         />
         <div className="relative z-10 w-full">
-          <BuildComposeShip3DHeadline />
+          <Build3DHeading />
         </div>
       </div>
 

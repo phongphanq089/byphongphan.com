@@ -17,7 +17,7 @@ export function Background() {
       </div>
 
       {/* ── 1. Interactive PixelBlast WebGL Background (Early 0ms Bootstrap) ── */}
-      <div className="absolute inset-0 z-0 dark:opacity-20">
+      <div className="absolute inset-0 z-0 dark:opacity-60">
         <PixelBlast
           id="hero-pixel-blast-canvas"
           variant="square"

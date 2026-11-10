@@ -48,10 +48,9 @@ type Pt = [number, number]
 
 interface GlyphDef {
   width: number
-  loops: Pt[][] // First loop = outer boundary (CW), subsequent = inner cutouts (CW)
+  loops: Pt[][]
 }
 
-// Base height: y from 42 (top) to 178 (bottom) -> height = 136, stem = 22
 const GLYPHS: Record<string, GlyphDef> = {
   B: {
     width: 76,
@@ -322,38 +321,34 @@ function build3DHeadlineGeometry(
         const [x1, y1] = pts[i]
         const [x2, y2] = pts[(i + 1) % n]
 
-        // Front edge stroke (identical in normal & pressed)
-        const frontEdge = `M${x1.toFixed(1)} ${y1.toFixed(1)}L${x2.toFixed(1)} ${y2.toFixed(1)}`
-        strokeNormal += frontEdge
-        strokePressed += frontEdge
+        // Front edge stroke (shifts with front face on press)
+        strokeNormal += `M${x1.toFixed(1)} ${y1.toFixed(1)}L${x2.toFixed(1)} ${y2.toFixed(1)}`
+        strokePressed += `M${(x1 + dxPressed).toFixed(1)} ${(y1 + dyPressed).toFixed(1)}L${(x2 + dxPressed).toFixed(1)} ${(y2 + dyPressed).toFixed(1)}`
 
-        // Outward normal check along extrusion vector (1, -1)
         const ex = x2 - x1
         const ey = y2 - y1
-        // For outer loop (CW in SVG Y-down), outward normal is (ey, -ex).
-        // For inner cutout loop, solid wall faces inward so normal is (-ey, ex).
         const nx = loopIdx === 0 ? ey : -ey
         const ny = loopIdx === 0 ? -ex : ex
         const isExtrudedFaceVisible = nx * 1 + ny * -1 > 0
 
         if (isExtrudedFaceVisible) {
-          // Normal state extruded quad & edges
           const bx1N = x1 + dxNormal
           const by1N = y1 + dyNormal
           const bx2N = x2 + dxNormal
           const by2N = y2 + dyNormal
 
+          // Normal state extruded quad & edges
           wallsNormal += `M${x1.toFixed(1)} ${y1.toFixed(1)}L${x2.toFixed(1)} ${y2.toFixed(1)}L${bx2N.toFixed(1)} ${by2N.toFixed(1)}L${bx1N.toFixed(1)} ${by1N.toFixed(1)}Z`
           strokeNormal += `M${x1.toFixed(1)} ${y1.toFixed(1)}L${bx1N.toFixed(1)} ${by1N.toFixed(1)}M${x2.toFixed(1)} ${y2.toFixed(1)}L${bx2N.toFixed(1)} ${by2N.toFixed(1)}M${bx1N.toFixed(1)} ${by1N.toFixed(1)}L${bx2N.toFixed(1)} ${by2N.toFixed(1)}`
 
-          // Pressed state extruded quad & edges
-          const bx1P = x1 + dxPressed
-          const by1P = y1 + dyPressed
-          const bx2P = x2 + dxPressed
-          const by2P = y2 + dyPressed
+          // Pressed state: front face moves by (dxPressed, dyPressed) toward the back wall at (dxNormal, dyNormal)
+          const fx1P = x1 + dxPressed
+          const fy1P = y1 + dyPressed
+          const fx2P = x2 + dxPressed
+          const fy2P = y2 + dyPressed
 
-          wallsPressed += `M${x1.toFixed(1)} ${y1.toFixed(1)}L${x2.toFixed(1)} ${y2.toFixed(1)}L${bx2P.toFixed(1)} ${by2P.toFixed(1)}L${bx1P.toFixed(1)} ${by1P.toFixed(1)}Z`
-          strokePressed += `M${x1.toFixed(1)} ${y1.toFixed(1)}L${bx1P.toFixed(1)} ${by1P.toFixed(1)}M${x2.toFixed(1)} ${y2.toFixed(1)}L${bx2P.toFixed(1)} ${by2P.toFixed(1)}M${bx1P.toFixed(1)} ${by1P.toFixed(1)}L${bx2P.toFixed(1)} ${by2P.toFixed(1)}`
+          wallsPressed += `M${fx1P.toFixed(1)} ${fy1P.toFixed(1)}L${fx2P.toFixed(1)} ${fy2P.toFixed(1)}L${bx2N.toFixed(1)} ${by2N.toFixed(1)}L${bx1N.toFixed(1)} ${by1N.toFixed(1)}Z`
+          strokePressed += `M${fx1P.toFixed(1)} ${fy1P.toFixed(1)}L${bx1N.toFixed(1)} ${by1N.toFixed(1)}M${fx2P.toFixed(1)} ${fy2P.toFixed(1)}L${bx2N.toFixed(1)} ${by2N.toFixed(1)}M${bx1N.toFixed(1)} ${by1N.toFixed(1)}L${bx2N.toFixed(1)} ${by2N.toFixed(1)}`
         }
       }
     })
@@ -372,15 +367,15 @@ function build3DHeadlineGeometry(
     strokeNormal,
     strokePressed,
     totalCadWidth,
-    totalCadHeight: 178 - (42 + dyNormal), // 154
-    topY: 42 + dyNormal, // 24
+    totalCadHeight: 178 - (42 + dyNormal),
+    topY: 42 + dyNormal,
     bottomY: 178,
   }
 }
 
 const HEADLINE_GEOMETRY = build3DHeadlineGeometry("BUILD. COMPOSE. SHIP.")
 
-export interface BuildComposeShip3DHeadlineProps {
+export interface Build3DHeadingProps {
   className?: string
   subtitle?: string
   enableSound?: boolean
@@ -389,22 +384,21 @@ export interface BuildComposeShip3DHeadlineProps {
 }
 
 /**
- * "Build. Compose. Ship." 3D Isometric Headline with Technical CAD Dimension Lines
- * - Solid 3D extruded geometry & wireframes with cursor-following radial flashlight
+ * Build3DHeading ("Build. Compose. Ship.")
+ * - Clean, solid high-contrast front face for maximum readability (no hatching lines)
+ * - 3D extruded isometric side walls with cursor-following radial flashlight
  * - Interactive spring press displacement & tactile audio
- * - Blueprint / CAD dimension measuring lines with arrows and precise measurements
- * - Technical sub-headline specification bar below
+ * - Blueprint / CAD dimension measuring lines
  */
-export function BuildComposeShip3DHeadline({
+export function Build3DHeading({
   className,
   subtitle = "A collection of reusable UI primitives for modern React applications.",
   enableSound = true,
   showDimensions = true,
   onTap,
-}: BuildComposeShip3DHeadlineProps) {
+}: Build3DHeadingProps) {
   const id = useId()
   const ids = {
-    facePattern: `bcs-3d-pat-${id}`,
     frontFill: `bcs-3d-front-${id}`,
     stroke: `bcs-3d-stroke-${id}`,
     radialGradient: `bcs-3d-grad-${id}`,
@@ -422,7 +416,6 @@ export function BuildComposeShip3DHeadline({
     bottomY,
   } = HEADLINE_GEOMETRY
 
-  // Expanded viewBox to accommodate dimension lines and right-side vertical callout
   const viewBox = `-45 -40 ${totalCadWidth + 115} 255`
   const ref = useRef<SVGSVGElement>(null)
 
@@ -477,11 +470,11 @@ export function BuildComposeShip3DHeadline({
         ref={ref}
         width="100%"
         preserveAspectRatio="xMidYMid meet"
-        className="block h-auto w-full max-w-6xl cursor-pointer touch-manipulation overflow-visible select-none [--pattern:color-mix(in_oklab,var(--foreground)_28%,transparent)] [--stroke:color-mix(in_oklab,var(--foreground)_82%,transparent)]"
+        className="block h-auto w-full max-w-6xl cursor-pointer touch-manipulation overflow-visible select-none [--stroke:color-mix(in_oklab,var(--foreground)_82%,transparent)]"
         viewBox={viewBox}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        aria-label="Build. Compose. Ship. 3D Isometric Typography with CAD Dimension Lines"
+        aria-label="Build. Compose. Ship. 3D Isometric Typography"
         initial="normal"
         whileTap="pressed"
         onTap={() => {
@@ -490,23 +483,7 @@ export function BuildComposeShip3DHeadline({
         }}
       >
         <defs>
-          {/* Diagonal Hatching Pattern for Front Face */}
-          <pattern
-            id={ids.facePattern}
-            x="0"
-            y="0"
-            width="10"
-            height="10"
-            patternUnits="userSpaceOnUse"
-          >
-            <path
-              d="M-1 1l2 -2M0 10l10 -10M9 11l2 -2"
-              stroke="var(--pattern)"
-              strokeWidth="1.2"
-            />
-          </pattern>
-
-          {/* Front Faces (Letter Geometry) with interactive press displacement */}
+          {/* Solid Front Faces (Letter Geometry) with interactive press displacement */}
           <motion.g
             id={ids.frontFill}
             variants={{
@@ -556,8 +533,8 @@ export function BuildComposeShip3DHeadline({
           </motion.radialGradient>
         </defs>
 
-        {/* Solid 3D Side & Top Walls */}
-        <g className="fill-background">
+        {/* 1. Solid 3D Extruded Side & Top Walls (subtle muted depth background) */}
+        <g className="fill-muted dark:fill-zinc-900">
           <motion.path
             variants={{
               normal: { d: wallsNormal },
@@ -567,11 +544,13 @@ export function BuildComposeShip3DHeadline({
           />
         </g>
 
-        {/* Front Faces: Solid background + Diagonal hatched pattern overlay */}
-        <use href={`#${ids.frontFill}`} className="fill-background" />
-        <use href={`#${ids.frontFill}`} fill={`url(#${ids.facePattern})`} />
+        {/* 2. Solid, Clean Front Face (No striped pattern — crisp solid background) */}
+        <use
+          href={`#${ids.frontFill}`}
+          className="fill-background dark:fill-zinc-950"
+        />
 
-        {/* Wireframe Strokes: Base Subtle Stroke + Cursor Radial Flashlight */}
+        {/* 3. Wireframe Strokes: Base Subtle Stroke + Cursor Radial Flashlight */}
         <use href={`#${ids.stroke}`} stroke="var(--stroke)" />
         <use href={`#${ids.stroke}`} stroke={`url(#${ids.radialGradient})`} />
 
@@ -584,9 +563,7 @@ export function BuildComposeShip3DHeadline({
           >
             {/* 1. TOP HORIZONTAL DIMENSION LINE */}
             <g>
-              {/* Left Extension Line */}
               <line x1="0" y1="-30" x2="0" y2="35" strokeOpacity="0.85" />
-              {/* Right Extension Line */}
               <line
                 x1={totalCadWidth}
                 y1="-30"
@@ -595,7 +572,6 @@ export function BuildComposeShip3DHeadline({
                 strokeOpacity="0.85"
               />
 
-              {/* Horizontal Dimension Arrow Line Left Segment */}
               <line
                 x1="0"
                 y1="-18"
@@ -603,7 +579,6 @@ export function BuildComposeShip3DHeadline({
                 y2="-18"
                 strokeOpacity="0.9"
               />
-              {/* Left Arrow Head */}
               <path
                 d="M14 -23 L0 -18 L14 -13"
                 fill="none"
@@ -612,7 +587,6 @@ export function BuildComposeShip3DHeadline({
                 strokeLinejoin="round"
               />
 
-              {/* Horizontal Dimension Arrow Line Right Segment */}
               <line
                 x1={midX + 56}
                 y1="-18"
@@ -620,7 +594,6 @@ export function BuildComposeShip3DHeadline({
                 y2="-18"
                 strokeOpacity="0.9"
               />
-              {/* Right Arrow Head */}
               <path
                 d={`M${totalCadWidth - 14} -23 L${totalCadWidth} -18 L${totalCadWidth - 14} -13`}
                 fill="none"
@@ -629,7 +602,6 @@ export function BuildComposeShip3DHeadline({
                 strokeLinejoin="round"
               />
 
-              {/* Dimension Number Badge (Total CAD Width) */}
               <g>
                 <rect
                   x={midX - 50}
@@ -655,7 +627,6 @@ export function BuildComposeShip3DHeadline({
 
             {/* 2. RIGHT VERTICAL DIMENSION LINE */}
             <g>
-              {/* Top Extension Line */}
               <line
                 x1={totalCadWidth - 10}
                 y1={topY}
@@ -663,7 +634,6 @@ export function BuildComposeShip3DHeadline({
                 y2={topY}
                 strokeOpacity="0.85"
               />
-              {/* Bottom Extension Line */}
               <line
                 x1={totalCadWidth - 10}
                 y1={bottomY}
@@ -672,7 +642,6 @@ export function BuildComposeShip3DHeadline({
                 strokeOpacity="0.85"
               />
 
-              {/* Vertical Dimension Line Top Segment */}
               <line
                 x1={rightDimX}
                 y1={topY}
@@ -680,7 +649,6 @@ export function BuildComposeShip3DHeadline({
                 y2="82"
                 strokeOpacity="0.9"
               />
-              {/* Top Arrow Head */}
               <path
                 d={`M${rightDimX - 5} ${topY + 12} L${rightDimX} ${topY} L${rightDimX + 5} ${topY + 12}`}
                 fill="none"
@@ -689,7 +657,6 @@ export function BuildComposeShip3DHeadline({
                 strokeLinejoin="round"
               />
 
-              {/* Vertical Dimension Line Bottom Segment */}
               <line
                 x1={rightDimX}
                 y1="118"
@@ -697,7 +664,6 @@ export function BuildComposeShip3DHeadline({
                 y2={bottomY}
                 strokeOpacity="0.9"
               />
-              {/* Bottom Arrow Head */}
               <path
                 d={`M${rightDimX - 5} ${bottomY - 12} L${rightDimX} ${bottomY} L${rightDimX + 5} ${bottomY - 12}`}
                 fill="none"
@@ -706,7 +672,6 @@ export function BuildComposeShip3DHeadline({
                 strokeLinejoin="round"
               />
 
-              {/* Height Number Badge */}
               <g>
                 <rect
                   x={rightDimX - 24}
@@ -741,21 +706,11 @@ export function BuildComposeShip3DHeadline({
         )}
       </motion.svg>
 
-      {/* ── Sub-headline Technical Spec Caption ── */}
+      {/* ── Sub-headline Text ── */}
       {subtitle && (
-        <div className="mt-2 flex w-full max-w-6xl items-center justify-center gap-3 px-4">
-          <span
-            aria-hidden="true"
-            className="hidden h-px flex-1 bg-gradient-to-r from-transparent via-border to-foreground/25 sm:block"
-          />
-          <p className="text-center font-mono text-xs tracking-wide text-muted-foreground sm:text-sm dark:text-white/90">
-            {subtitle}
-          </p>
-          <span
-            aria-hidden="true"
-            className="hidden h-px flex-1 bg-gradient-to-l from-transparent via-border to-foreground/25 sm:block"
-          />
-        </div>
+        <p className="mt-3 max-w-2xl text-center text-base text-muted-foreground sm:text-lg dark:text-white/80">
+          {subtitle}
+        </p>
       )}
     </div>
   )
