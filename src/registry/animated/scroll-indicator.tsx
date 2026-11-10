@@ -324,6 +324,14 @@ export const ScrollIndicator = forwardRef<HTMLDivElement, ScrollIndicatorProps>(
     const handleTrackClick = (e: React.MouseEvent<HTMLDivElement>) => {
       if ((e.target as HTMLElement).closest("button")) return
 
+      if (!trackRef.current) return
+      const rect = trackRef.current.getBoundingClientRect()
+
+      // If clicked on the gradient backdrop surface to the left of the ruler track, don't jump or toggle
+      if (e.clientX < rect.left) {
+        return
+      }
+
       playClickSound()
       if (isDismissed) {
         setIsDismissed(false)
@@ -332,19 +340,16 @@ export const ScrollIndicator = forwardRef<HTMLDivElement, ScrollIndicatorProps>(
         setIsOpen((prev) => !prev)
       }
 
-      if (trackRef.current && sectionMetrics.length > 0) {
-        const rect = trackRef.current.getBoundingClientRect()
-        if (rect.height > 0) {
-          const clickY = e.clientY - rect.top
-          const progress = Math.max(0, Math.min(1, clickY / rect.height))
-          const closestIdx = Math.round(progress * (sectionMetrics.length - 1))
-          if (onIndexChange) {
-            onIndexChange(closestIdx)
-          } else {
-            setInternalIndex(closestIdx)
-          }
-          scrollToSection(closestIdx)
+      if (sectionMetrics.length > 0 && rect.height > 0) {
+        const clickY = e.clientY - rect.top
+        const progress = Math.max(0, Math.min(1, clickY / rect.height))
+        const closestIdx = Math.round(progress * (sectionMetrics.length - 1))
+        if (onIndexChange) {
+          onIndexChange(closestIdx)
+        } else {
+          setInternalIndex(closestIdx)
         }
+        scrollToSection(closestIdx)
       }
     }
 
@@ -358,6 +363,7 @@ export const ScrollIndicator = forwardRef<HTMLDivElement, ScrollIndicatorProps>(
           !containerRef.current.contains(e.target as Node)
         ) {
           setIsOpen(false)
+          setIsDismissed(true)
         }
       }
 
@@ -408,15 +414,25 @@ export const ScrollIndicator = forwardRef<HTMLDivElement, ScrollIndicatorProps>(
             isVisible ? "Click to jump to section" : "Click to view sections"
           }
         >
-          {/* 0. Subtle ambient gradient backdrop behind section labels for improved contrast */}
+          {/* 0. Subtle ambient gradient backdrop behind section labels for improved contrast & hover area */}
           <div
-            aria-hidden="true"
             className={cn(
-              "pointer-events-none absolute -inset-y-8 right-0 z-10 w-64 bg-gradient-to-l from-background/95 via-background/70 to-transparent backdrop-blur-[2px] transition-opacity duration-300 ease-out sm:w-72",
-              "[mask-image:radial-gradient(100%_55%_at_100%_50%,black_65%,transparent_100%)]",
-              isVisible ? "opacity-100" : "opacity-0"
+              "absolute -inset-y-8 right-0 z-10 w-64 cursor-default transition-opacity duration-300 ease-out sm:w-72",
+              isVisible
+                ? "pointer-events-auto opacity-100"
+                : "pointer-events-none opacity-0"
             )}
-          />
+            title=""
+          >
+            {/* Visual gradient backdrop with blur and radial feather mask */}
+            <div
+              aria-hidden="true"
+              className={cn(
+                "pointer-events-none absolute inset-0 bg-gradient-to-l from-background/95 via-background/70 to-transparent backdrop-blur-[2px]",
+                "[mask-image:radial-gradient(100%_55%_at_100%_50%,black_65%,transparent_100%)]"
+              )}
+            />
+          </div>
 
           {/* Subtle vertical spine line along the right edge of the ruler track */}
           <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-px bg-border/40 transition-colors duration-300 group-hover:bg-border/70" />
