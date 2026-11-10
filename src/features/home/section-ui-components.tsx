@@ -1,8 +1,8 @@
 import React from "react"
 
-import { GridContainer } from "@/app/layouts"
 import { ComponentCard } from "@/features/component-ui/components/component-card"
 import { COMPONENTS_DATA } from "@/features/component-ui/components-data"
+import { cn } from "@/shared/lib/utils"
 import { SectionHeading } from "@/shared/ui/system/section-heading"
 
 const UiComponentsSection = () => {
@@ -11,8 +11,11 @@ const UiComponentsSection = () => {
   const row2 = COMPONENTS_DATA.slice(3, 6)
 
   return (
-    <>
-      <GridContainer className="p-0" showCrosshairs={false}>
+    <section
+      id="components-ui"
+      className="relative flex w-full flex-col bg-background text-foreground"
+    >
+      <div className="-mt-px border-y border-border">
         <SectionHeading
           id="components-ui"
           heading="UI Primitives"
@@ -20,43 +23,35 @@ const UiComponentsSection = () => {
           actionHref="/component-ui"
           actionLabel="All components"
         />
-      </GridContainer>
+      </div>
 
       {/* Row 1: 3-Column Grid */}
-      <GridContainer
-        columns={3}
-        borderTop={false}
-        borderBottom={true}
-        showCrosshairs={true}
-        className="w-full"
-      >
+      <div className="grid w-full grid-cols-1 border-b border-border md:grid-cols-3">
         {row1.map((comp, idx) => (
           <div
             key={comp.id}
-            className={`flex h-full w-full p-4 sm:p-5 md:p-5 lg:p-6 ${
-              idx < 2 ? "border-b border-border md:border-b-0" : ""
-            }`}
+            className={cn(
+              "flex h-full w-full p-4 sm:p-5 md:p-5 lg:p-6",
+              idx < 2 && "border-b border-border md:border-r md:border-b-0",
+              idx === 2 && "border-b border-border md:border-b-0"
+            )}
           >
             <ComponentCard component={comp} />
           </div>
         ))}
-      </GridContainer>
+      </div>
 
       {/* Row 2: 3-Column Grid */}
       {row2.length > 0 && (
-        <GridContainer
-          columns={3}
-          borderTop={false}
-          borderBottom={true}
-          showCrosshairs={true}
-          className="w-full"
-        >
+        <div className="grid w-full grid-cols-1 border-b border-border md:grid-cols-3">
           {row2.map((comp, idx) => (
             <div
               key={comp.id}
-              className={`flex h-full w-full p-4 sm:p-5 md:p-5 lg:p-6 ${
-                idx < 2 ? "border-b border-border md:border-b-0" : ""
-              }`}
+              className={cn(
+                "flex h-full w-full p-4 sm:p-5 md:p-5 lg:p-6",
+                idx < 2 && "border-b border-border md:border-r md:border-b-0",
+                idx === 2 && "border-b border-border md:border-b-0"
+              )}
             >
               <ComponentCard component={comp} />
             </div>
@@ -70,9 +65,9 @@ const UiComponentsSection = () => {
               </div>
             </div>
           )}
-        </GridContainer>
+        </div>
       )}
-    </>
+    </section>
   )
 }
 

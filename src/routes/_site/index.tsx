@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { lazy, Suspense, useEffect, useRef, useState } from "react"
 
-import { ContainerLayout, GridContainer } from "@/app/layouts"
+import { ContainerLayout } from "@/app/layouts"
 import {
   BannerHero,
   SectionAbout,
@@ -88,6 +88,7 @@ function HomePage() {
       <div className="relative overflow-hidden">
         <BannerHero />
       </div>
+
       <ContainerLayout
         defaultWidth={1024}
         minWidth={420}
@@ -98,33 +99,34 @@ function HomePage() {
         className="min-h-fit"
         contentClassName="min-h-fit"
       >
-        <SectionAbout />
+        <div className="relative flex w-full flex-col">
+          {/* 2. About Section */}
+          <SectionAbout />
+
+          {/* 3. Tech Stack Section */}
+          <SectionTechStack />
+
+          {/* 4. Blocks Showcase Section */}
+          <SectionBlocks />
+
+          {/* 5. Components UI Showcase Section */}
+          <UiComponentsSection />
+
+          {/* 6. React Hooks Section */}
+          <SectionHooks />
+
+          {/* 7. Blog & Writing Section */}
+          <SectionBlog />
+
+          {/* 8. Curated Resources Section */}
+          <SectionResources />
+
+          {/* 9. Location & Vietnam Map Section */}
+          <section id="vietnam-map" className="w-full">
+            <VietnamMapViewportLoader />
+          </section>
+        </div>
       </ContainerLayout>
-
-      {/* 3. Tech Stack */}
-      <SectionTechStack />
-
-      {/* 4. Blocks Showcase Section */}
-      <SectionBlocks />
-
-      {/* 5. Components UI Showcase Section */}
-      <UiComponentsSection />
-
-      {/* 6. React Hooks Section */}
-      <SectionHooks />
-
-      {/* 7. Blog & Writing Section */}
-      <SectionBlog />
-
-      {/* 8. Curated Resources Section */}
-      <SectionResources />
-
-      {/* 9. Location & Vietnam Map Section */}
-      <section id="vietnam-map">
-        <GridContainer showCrosshairs={true} borderTop={false} as={"div"}>
-          <VietnamMapViewportLoader />
-        </GridContainer>
-      </section>
     </div>
   )
 }
