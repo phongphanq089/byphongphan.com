@@ -1,14 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { lazy, Suspense, useEffect, useRef, useState } from "react"
 
-import { GridContainer } from "@/app/layouts"
+import { ContainerLayout, GridContainer } from "@/app/layouts"
 import {
   BannerHero,
+  SectionAbout,
   SectionBlog,
   SectionHooks,
   SectionResources,
 } from "@/features/home"
-import SectionAbout from "@/features/home/section-about"
 import { SectionBlocks } from "@/features/home/section-blocks"
 import SectionTechStack from "@/features/home/section-tech-stack"
 import UiComponentsSection from "@/features/home/section-ui-components"
@@ -88,9 +88,18 @@ function HomePage() {
       <div className="relative overflow-hidden">
         <BannerHero />
       </div>
-
-      {/* 2. About Me */}
-      <SectionAbout />
+      <ContainerLayout
+        defaultWidth={1024}
+        minWidth={420}
+        maxWidth={1600}
+        symmetric={true}
+        showDimensions={true}
+        hintText="pull the cord!"
+        className="min-h-fit"
+        contentClassName="min-h-fit"
+      >
+        <SectionAbout />
+      </ContainerLayout>
 
       {/* 3. Tech Stack */}
       <SectionTechStack />

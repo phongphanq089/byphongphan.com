@@ -1,6 +1,7 @@
 export * from "./border-box"
 export * from "./edge-blur"
 export * from "./external-link"
+export * from "./interactive-hint"
 export * from "./intersection"
 export * from "./mode-toggle"
 export * from "./page-hero"

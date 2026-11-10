@@ -1,5 +1,4 @@
 import { useNavigate } from "@tanstack/react-router"
-import { Code2, Sparkles } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import React, {
   createContext,
@@ -11,12 +10,16 @@ import React, {
 } from "react"
 
 import { cn } from "@/shared/lib/utils"
+import {
+  AnimatedTooltipBubble,
+  type AnimatedTooltipVariant,
+} from "@/shared/ui/animation/animated-tooltip"
 
 // ============================================================================
 // CONTEXT FOR HIGHLIGHT STATE
 // ============================================================================
 
-interface FigmaHighlightContextType {
+export interface FigmaHighlightContextType {
   activeKey: string | null
   setActiveKey: (key: string | null) => void
   pinnedKey: string | null
@@ -43,7 +46,11 @@ export function useFigmaHighlight() {
 // HAND-DRAWN CURLY ARROW (Playful Figma Annotation)
 // ============================================================================
 
-export function HandDrawnCurlyArrow({ className }: { className?: string }) {
+export interface HandDrawnCurlyArrowProps {
+  className?: string
+}
+
+export function HandDrawnCurlyArrow({ className }: HandDrawnCurlyArrowProps) {
   return (
     <svg
       width="68"
@@ -73,111 +80,49 @@ export function HandDrawnCurlyArrow({ className }: { className?: string }) {
 }
 
 // ============================================================================
-// INLINE AVATAR & TECH BADGES
-// ============================================================================
-
-export function PhongAvatar({
-  src = "/avatar-about.jpg",
-  alt = "Phong Phan",
-  scrollToId = "about",
-  className,
-}: {
-  src?: string
-  alt?: string
-  scrollToId?: string
-  className?: string
-}) {
-  const [imageError, setImageError] = useState(false)
-
-  const handleClick = () => {
-    if (scrollToId) {
-      document
-        .getElementById(scrollToId)
-        ?.scrollIntoView({ behavior: "smooth", block: "start" })
-    }
-  }
-
-  return (
-    <span
-      role="button"
-      tabIndex={0}
-      onClick={handleClick}
-      onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault()
-          handleClick()
-        }
-      }}
-      title="Scroll to About"
-      className={cn(
-        "relative mx-1.5 inline-flex size-7 shrink-0 -translate-y-0.5 cursor-pointer items-center justify-center overflow-hidden rounded-full align-middle shadow-sm ring-2 ring-primary/40 transition-transform select-none hover:scale-110 sm:size-8 md:size-9",
-        className
-      )}
-    >
-      {!imageError ? (
-        <img
-          src={src}
-          alt={alt}
-          onError={() => setImageError(true)}
-          className="size-full object-cover"
-        />
-      ) : (
-        <span className="flex size-full items-center justify-center bg-primary font-mono text-xs font-bold text-primary-foreground">
-          PP
-        </span>
-      )}
-    </span>
-  )
-}
-
-export function CodeBadge({ className }: { className?: string }) {
-  return (
-    <span
-      className={cn(
-        "mx-1.5 inline-flex size-6 shrink-0 -translate-y-0.5 items-center justify-center rounded-lg border border-border/60 bg-muted/60 align-middle shadow-xs select-none sm:size-7 md:size-8",
-        className
-      )}
-    >
-      <Code2 className="size-3.5 text-primary sm:size-4" />
-    </span>
-  )
-}
-
-export function DesignBadge({ className }: { className?: string }) {
-  return (
-    <span
-      className={cn(
-        "mx-1.5 inline-flex size-6 shrink-0 -translate-y-0.5 items-center justify-center rounded-lg border border-border/60 bg-muted/60 align-middle shadow-xs select-none sm:size-7 md:size-8",
-        className
-      )}
-    >
-      <Sparkles className="size-3.5 text-amber-500 sm:size-4" />
-    </span>
-  )
-}
-
-// ============================================================================
-// INDIVIDUAL INTERACTIVE HIGHLIGHT WORD WITH ACTIONS
+// INDIVIDUAL INTERACTIVE HIGHLIGHT WORD
 // ============================================================================
 
 export interface HighlightWordProps {
   id: string
-  text: string
+  text?: string
+  children?: React.ReactNode
   suffix?: string
   className?: string
   href?: string
   scrollToId?: string
   onClick?: (e: React.MouseEvent) => void
+  popover?: React.ReactNode
+  /** Custom hint text displayed inside animated tooltip (e.g. "explore components ↗") */
+  hint?: string | boolean
+  /** Alias for custom hint text */
+  hintText?: string
+  /** Explicitly show/hide interactive hint (defaults to true when href or scrollToId or onClick is present and no popover) */
+  showHint?: boolean
+  /** Animated tooltip variant from VengeanceUI: "cora" | "smaug" | "dori" | "gram" | "indis" | "malva" | "sadoc" */
+  tooltipVariant?: AnimatedTooltipVariant
+  /** Bubble scale factor (defaults to 0.82) */
+  tooltipScale?: number
+  /** Explicit title attribute (defaults to omitted to avoid clunky browser tooltips) */
+  title?: string
 }
 
 export function HighlightWord({
   id,
   text,
+  children,
   suffix = "",
   className,
   href,
   scrollToId,
   onClick,
+  popover,
+  hint,
+  hintText,
+  showHint,
+  tooltipVariant = "smaug",
+  tooltipScale = 0.82,
+  title,
 }: HighlightWordProps) {
   const {
     activeKey,
@@ -210,14 +155,14 @@ export function HighlightWord({
     }
   }, [])
 
-  // Measure once on mount and on window resize
+  // Measure on mount and window resize
   useEffect(() => {
     measure()
     window.addEventListener("resize", measure)
     return () => window.removeEventListener("resize", measure)
   }, [measure])
 
-  // When this word becomes selected, measure again to ensure exact dimensions
+  // When selected, re-measure to guarantee exact dimensions
   useEffect(() => {
     if (isSelected) {
       measure()
@@ -256,41 +201,81 @@ export function HighlightWord({
     }
   }
 
+  const content = children ?? text
+  const isNavigable = Boolean(href || scrollToId || onClick)
+  const shouldShowHint =
+    (showHint ?? (isNavigable && hint !== false)) && !popover && isSelected
+
+  const resolvedHintText =
+    typeof hint === "string"
+      ? hint
+      : hintText ||
+        (href
+          ? href.startsWith("http")
+            ? "open link ↗"
+            : href.includes("component")
+              ? "explore components ↗"
+              : href.includes("block")
+                ? "explore blocks ↗"
+                : "click to explore ↗"
+          : scrollToId
+            ? "scroll down ↓"
+            : "click to view")
+
   return (
     <span
       ref={spanRef}
-      role={href ? "link" : "button"}
-      tabIndex={0}
+      role={href ? "link" : isNavigable ? "button" : undefined}
+      tabIndex={isNavigable ? 0 : undefined}
       onMouseEnter={handleActivate}
       onMouseLeave={() => {
         if (!pinnedKey) setActiveKey(null)
       }}
       onClick={handleClick}
       onKeyDown={(e) => {
-        if (e.key === "Enter" || e.key === " ") {
+        if (isNavigable && (e.key === "Enter" || e.key === " ")) {
           e.preventDefault()
           handleClick(e as unknown as React.MouseEvent)
         }
       }}
-      title={
-        scrollToId
-          ? `Scroll to #${scrollToId}`
-          : href
-            ? `Navigate to ${href}`
-            : undefined
-      }
+      title={title}
       className={cn(
         "group relative -mx-0.5 inline-block cursor-pointer px-1.5 py-0.5 font-medium transition-colors select-none focus:outline-hidden",
         className
       )}
     >
       <span className="relative z-10 text-foreground transition-colors group-hover:text-primary">
-        {text}
+        {content}
       </span>
       {suffix && (
         <span className="font-normal text-muted-foreground/80">{suffix}</span>
       )}
 
+      {/* Interactive Popover (e.g. Avatar Card) */}
+      <AnimatePresence>
+        {popover && isSelected && (
+          <motion.div
+            initial={{ opacity: 0, y: 10, scale: 0.94 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 6, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 450, damping: 30 }}
+            className="absolute bottom-full left-1/2 z-50 mb-3 -translate-x-1/2 cursor-default select-text"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {popover}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Animated Tooltip Bubble (Bouncy playful SVG bubble from VengeanceUI) */}
+      <AnimatedTooltipBubble
+        open={Boolean(shouldShowHint)}
+        content={resolvedHintText}
+        variant={tooltipVariant}
+        scale={tooltipScale}
+      />
+
+      {/* Figma Selection Box */}
       {isSelected && (
         <motion.span
           layoutId="figma-selection-box"
@@ -303,7 +288,7 @@ export function HighlightWord({
           style={{ borderColor: color }}
           className="pointer-events-none absolute inset-0 z-30 border-[1.5px]"
         >
-          {/* 4 Figma Corner Handles */}
+          {/* 4 Corner Resize Handles */}
           <span
             style={{ borderColor: color }}
             className="absolute -top-[4px] -left-[4px] size-2 border-[1.5px] bg-background shadow-xs"
@@ -360,17 +345,13 @@ export interface FigmaTextHighlightProps {
   className?: string
   color?: string
   showDimensions?: boolean
-  showHint?: boolean
-  hintText?: string
-  children?: React.ReactNode
+  children: React.ReactNode
 }
 
 export function FigmaTextHighlight({
   className,
   color = "#0D99FF",
   showDimensions = true,
-  showHint = true,
-  hintText = "hover here",
   children,
 }: FigmaTextHighlightProps) {
   const [hoveredKey, setHoveredKey] = useState<string | null>(null)
@@ -391,70 +372,11 @@ export function FigmaTextHighlight({
     >
       <div
         className={cn(
-          "relative flex w-full flex-col items-center justify-center bg-transparent text-center select-none",
+          "relative flex w-full flex-col bg-transparent select-none",
           className
         )}
       >
-        <style>{`
-          @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap');
-          .font-handwriting {
-            font-family: 'Caveat', cursive, sans-serif;
-          }
-        `}</style>
-
-        {children ? (
-          children
-        ) : (
-          <div className="relative mx-auto w-full max-w-4xl px-2">
-            <h2 className="font-sans text-base leading-relaxed font-medium tracking-tight text-balance text-muted-foreground/90 sm:text-lg md:text-xl lg:text-[23px] lg:leading-[1.6]">
-              <span>Hi, I&apos;m </span>
-              <PhongAvatar />
-              <span className="relative inline-block">
-                {/* Hand-drawn Annotation pointing to the name */}
-                <AnimatePresence>
-                  {!activeKey && showHint && (
-                    <motion.span
-                      initial={{ opacity: 0, y: 5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{
-                        opacity: 0,
-                        y: 3,
-                        transition: { duration: 0.15 },
-                      }}
-                      transition={{ duration: 0.25 }}
-                      className="pointer-events-none absolute -top-10 left-1/2 z-30 flex -translate-x-3/4 items-end select-none sm:-top-11 sm:-translate-x-2/3"
-                    >
-                      <HandDrawnCurlyArrow className="h-6 w-11 text-muted-foreground/75 sm:h-7 sm:w-12" />
-                      <span className="font-handwriting -mb-1 ml-1 -rotate-6 text-base font-medium tracking-wide whitespace-nowrap text-muted-foreground sm:text-lg">
-                        {hintText}
-                      </span>
-                    </motion.span>
-                  )}
-                </AnimatePresence>
-                <HighlightWord id="first" text="Phong" scrollToId="about" />
-              </span>
-              <span> </span>
-              <HighlightWord id="last" text="Phan" scrollToId="about" />
-              <span>. Reimagining how </span>
-              <CodeBadge />
-              <HighlightWord
-                id="primitives"
-                text="UI Primitives"
-                href="/component-ui"
-              />
-              <span> ship — clean components, smooth motion, and </span>
-              <DesignBadge />
-              <HighlightWord id="interfaces" text="Interfaces" href="/blocks" />
-              <span> that feel built, not assembled. 100% free &amp; </span>
-              <HighlightWord
-                id="opensource"
-                text="Open Source"
-                href="/component-ui"
-              />
-              <span>.</span>
-            </h2>
-          </div>
-        )}
+        {children}
       </div>
     </FigmaHighlightContext.Provider>
   )

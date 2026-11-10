@@ -13,7 +13,7 @@ export function BannerHero({ className }: BannerV2Props) {
   return (
     <section
       className={cn(
-        "group/banner relative flex min-h-[calc(100svh-14rem)] w-full flex-col justify-between overflow-hidden bg-background text-foreground select-none lg:min-h-[calc(100svh-4rem)]",
+        "group/banner lg:min-h-[calc(100svh-4rem)]border relative flex min-h-[calc(100svh-14rem)] w-full flex-col justify-between overflow-hidden border-b bg-background text-foreground select-none",
         "@container",
         className
       )}
