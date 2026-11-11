@@ -27,17 +27,17 @@ const UiComponentsSection = () => {
         />
       </div>
 
-      {/* 2-Column Grid (3 rows × 2 cols: 5 categories + View All slot) */}
-      <div className="grid w-full grid-cols-1 border-b border-border md:grid-cols-2">
+      {/* 2-Column Grid (3 rows × 2 cols: 5 categories + View All slot) — container queries: wrap to 1 column below 640px */}
+      <div className="grid w-full grid-cols-1 border-b border-border @[640px]:grid-cols-2">
         {categories.map((cat, idx) => (
           <div
             key={cat.id}
             className={cn(
-              "flex h-full w-full border-b border-border p-4 sm:p-5 md:p-6",
-              // Right vertical border on left column on md+
-              idx % 2 === 0 && "md:border-r md:border-border",
-              // Remove bottom border on last row on md+
-              idx >= 4 && "md:border-b-0"
+              "flex h-full w-full border-b border-border p-4 sm:p-5 @[640px]:p-6",
+              // Right vertical border on left column at container width >= 640px
+              idx % 2 === 0 && "@[640px]:border-r @[640px]:border-border",
+              // Remove bottom border on last row at container width >= 640px
+              idx >= 4 && "@[640px]:border-b-0"
             )}
           >
             <ComponentCategoryCard
@@ -54,7 +54,7 @@ const UiComponentsSection = () => {
         ))}
 
         {/* Slot 6: View All Components */}
-        <div className="flex h-full w-full p-4 sm:p-5 md:p-6">
+        <div className="flex h-full w-full p-4 sm:p-5 @[640px]:p-6">
           <ComponentCategoryViewAllCard totalCount={totalCount} />
         </div>
       </div>

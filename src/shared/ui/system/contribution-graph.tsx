@@ -461,7 +461,7 @@ export const ContributionGraphFooter = ({
 }: ContributionGraphFooterProps) => (
   <div
     className={cn(
-      "flex flex-col items-center justify-between gap-2 whitespace-nowrap sm:flex-row",
+      "custom-scrollbar-x no-scrollbar flex flex-col items-center justify-between gap-2 overflow-x-auto whitespace-nowrap sm:flex-row",
       className
     )}
     {...props}

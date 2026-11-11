@@ -94,8 +94,6 @@ function HomePage() {
         minWidth={420}
         maxWidth={1600}
         symmetric={true}
-        showDimensions={true}
-        hintText="pull the cord!"
         className="min-h-fit"
         contentClassName="min-h-fit"
       >

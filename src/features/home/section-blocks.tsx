@@ -38,10 +38,10 @@ export const SectionBlocks = () => {
         />
       </div>
 
-      {/* 2x2 Grid: 3 Category Cards + View All Slot */}
-      <div className="grid w-full grid-cols-1 border-b border-border md:grid-cols-2">
+      {/* 2x2 Grid: 3 Category Cards + View All Slot (container queries: wrap to 1 column below 640px) */}
+      <div className="grid w-full grid-cols-1 border-b border-border @[640px]:grid-cols-2">
         {/* Slot 1: Marketing */}
-        <div className="flex h-full w-full border-b border-border p-4 sm:p-5 md:border-r md:p-6">
+        <div className="flex h-full w-full border-b border-border p-4 sm:p-5 @[640px]:border-r @[640px]:p-6">
           <BlockCategoryCard
             id={marketing.id}
             index={marketing.index}
@@ -55,7 +55,7 @@ export const SectionBlocks = () => {
         </div>
 
         {/* Slot 2: 404 Page */}
-        <div className="flex h-full w-full border-b border-border p-4 sm:p-5 md:p-6">
+        <div className="flex h-full w-full border-b border-border p-4 sm:p-5 @[640px]:p-6">
           <BlockCategoryCard
             id={notFound.id}
             index={notFound.index}
@@ -69,7 +69,7 @@ export const SectionBlocks = () => {
         </div>
 
         {/* Slot 3: Auth */}
-        <div className="flex h-full w-full border-b border-border p-4 sm:p-5 md:border-r md:border-b-0 md:p-6">
+        <div className="flex h-full w-full border-b border-border p-4 sm:p-5 @[640px]:border-r @[640px]:border-b-0 @[640px]:p-6">
           <BlockCategoryCard
             id={auth.id}
             index={auth.index}
@@ -83,7 +83,7 @@ export const SectionBlocks = () => {
         </div>
 
         {/* Slot 4: View All Blocks */}
-        <div className="flex h-full w-full p-4 sm:p-5 md:p-6">
+        <div className="flex h-full w-full p-4 sm:p-5 @[640px]:p-6">
           <BlockCategoryViewAllCard totalCount={totalCount} />
         </div>
       </div>
