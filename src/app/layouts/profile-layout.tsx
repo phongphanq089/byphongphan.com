@@ -6,10 +6,15 @@ import { useScrollToTop } from "@/shared/hooks/use-scroll-to-top"
 import { useTocRailSections } from "@/shared/hooks/use-toc-rail-sections"
 import { EdgeBlur } from "@/shared/ui/system/edge-blur"
 import ProgressWhileScroll from "@/shared/ui/system/progress-while-scroll"
+import { Header } from "@/widgets"
 import { Footer } from "@/widgets/profile-footer"
 import BottomMenu from "@/widgets/profile-header/bottom-menu"
 
-import { type GridContainerMaxWidth, GridLayoutContext } from "./grid-layout"
+import {
+  GridContainer,
+  type GridContainerMaxWidth,
+  GridLayoutContext,
+} from "./grid-layout"
 
 export function ProfileLayout({ children }: { children?: React.ReactNode }) {
   // Reset scroll position immediately on route changes to prevent delayed scrolling
@@ -46,13 +51,13 @@ export function ProfileLayout({ children }: { children?: React.ReactNode }) {
 
         <div className="flex min-w-0 flex-1 flex-col">
           <div className="sticky top-0 z-50 w-full">
-            {/* <GridContainer
+            <GridContainer
               borderTop={false}
               borderBottom={true}
               className="flex justify-center p-0"
             >
               <Header />
-            </GridContainer> */}
+            </GridContainer>
           </div>
 
           {/* Bottom Floating Dynamic Dock & Scroll Progress */}

@@ -23,12 +23,12 @@ interface HookCardProps {
   hook: HookItem
 }
 
-interface CategoryTheme {
+export interface CategoryTheme {
   accent: string
   label: string
 }
 
-const CATEGORY_THEMES: Record<string, CategoryTheme> = {
+export const CATEGORY_THEMES: Record<string, CategoryTheme> = {
   state: {
     accent: "#a855f7",
     label: "State",
@@ -51,7 +51,7 @@ const CATEGORY_THEMES: Record<string, CategoryTheme> = {
   },
 }
 
-const DEFAULT_THEME: CategoryTheme = {
+export const DEFAULT_THEME: CategoryTheme = {
   accent: "#8b5cf6",
   label: "Hook",
 }
