@@ -103,7 +103,7 @@ export function SchematicWrapper({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "relative mx-auto flex w-full max-w-[360px] items-center justify-center pt-7 pr-4 pb-7 pl-10 select-none sm:max-w-[388px]",
+        "relative mx-auto inline-flex w-fit max-w-full flex-col items-center justify-center pt-7 pr-4 pb-7 pl-10 select-none",
         className
       )}
     >
