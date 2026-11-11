@@ -13,6 +13,7 @@ export function NameWithAvatarPopover() {
   return (
     <Popover>
       <PopoverTrigger
+        render={<span />}
         openOnHover
         delay={60}
         closeDelay={150}
