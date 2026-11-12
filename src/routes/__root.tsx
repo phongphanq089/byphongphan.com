@@ -4,6 +4,7 @@ import {
   type ErrorComponentProps,
   HeadContent,
   Outlet,
+  redirect,
   Scripts,
 } from "@tanstack/react-router"
 import { Suspense, useEffect } from "react"
@@ -30,6 +31,21 @@ import appCss from "../styles/app.css?url"
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient
 }>()({
+  beforeLoad: ({ location }) => {
+    const rawPath = location.pathname.replace(/\/+$/, "")
+    const normalized = rawPath === "" ? "/" : rawPath
+
+    // Temporary redirect: redirect root (/) and all other pages to /profile
+    if (
+      normalized !== "/profile" &&
+      !normalized.startsWith("/robots.txt") &&
+      !normalized.startsWith("/sitemap.xml")
+    ) {
+      throw redirect({
+        to: "/profile",
+      })
+    }
+  },
   loader: async () => {
     try {
       return {}
