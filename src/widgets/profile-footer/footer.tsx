@@ -75,7 +75,7 @@ export default function Footer() {
               text="PhongPhan"
               theme="dark"
               spotlightRadius={560}
-              ambientOpacity={0.03}
+              ambientOpacity={0.01}
               centerIntensity={1.0}
               bottomCropPercent={8}
               showColumnDividers={false}
