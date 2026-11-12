@@ -47,35 +47,6 @@ function padDimension(value: number) {
   return String(Math.max(0, Math.round(value))).padStart(4, "0")
 }
 
-/** Open triangular arrow (outline chevron, matching CAD drawing style) */
-function OpenArrow({
-  direction,
-  className,
-}: {
-  direction: "up" | "down" | "left" | "right"
-  className?: string
-}) {
-  const rotate = { up: 0, right: 90, down: 180, left: 270 }[direction]
-  return (
-    <svg
-      viewBox="0 0 16 10"
-      className={cn("size-3 shrink-0 text-sky-400", className)}
-      style={{ transform: `rotate(${rotate}deg)` }}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-    >
-      <path
-        d="M2 8L8 2L14 8"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
 function CadVerticalRuler({
   side,
   value,
@@ -90,7 +61,7 @@ function CadVerticalRuler({
     <div
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-y-0 z-20 hidden w-px lg:block",
+        "pointer-events-none absolute top-8 bottom-12 z-20 hidden w-px lg:block",
         side === "left" ? "-left-6" : "-right-6"
       )}
     >
@@ -104,51 +75,37 @@ function CadVerticalRuler({
         )}
       />
 
-      {/* Top cap: T-stop bar + open arrow */}
-      <div className="absolute top-0 left-0 flex -translate-x-1/2 flex-col items-center gap-1">
+      {/* Top cap: clean minimal T-stop tick */}
+      <div className="absolute top-0 left-0 flex -translate-x-1/2 flex-col items-center">
         <span
           className={cn(
-            "h-[2px] w-4 rounded-full transition-colors duration-200",
+            "h-[2px] w-3 rounded-full transition-colors duration-200",
             active ? "bg-sky-500/70" : "bg-border"
-          )}
-        />
-        <OpenArrow
-          direction="up"
-          className={cn(
-            "transition-colors duration-200",
-            active ? "text-sky-400" : "text-muted-foreground/50"
           )}
         />
       </div>
 
-      {/* Bottom cap: open arrow + T-stop bar */}
-      <div className="absolute bottom-0 left-0 flex -translate-x-1/2 flex-col items-center gap-1">
-        <OpenArrow
-          direction="down"
-          className={cn(
-            "transition-colors duration-200",
-            active ? "text-sky-400" : "text-muted-foreground/50"
-          )}
-        />
+      {/* Bottom cap: clean minimal T-stop tick */}
+      <div className="absolute bottom-0 left-0 flex -translate-x-1/2 flex-col items-center">
         <span
           className={cn(
-            "h-[2px] w-4 rounded-full transition-colors duration-200",
+            "h-[2px] w-3 rounded-full transition-colors duration-200",
             active ? "bg-sky-500/70" : "bg-border"
           )}
         />
       </div>
 
       {/* Sticky viewport-following track: keeps the readout pinned at viewport center as you scroll */}
-      <div className="pointer-events-none sticky top-1/2 flex -translate-y-1/2 flex-col items-center">
-        {/* Lower-corner readout: placed strictly on the OUTSIDE of the ruler line and offset below center */}
+      <div className="pointer-events-none sticky top-1/2 z-30 flex -translate-y-1/2 flex-col items-center">
+        {/* Readout badge: solid opaque background, crisp text, placed strictly outside the line without intersecting */}
         <div
           className={cn(
-            "absolute top-7 font-mono text-[9px] tracking-[0.2em] whitespace-nowrap transition-all duration-200",
-            // Strictly on the OUTSIDE of the vertical ruler line:
-            side === "left" ? "right-full mr-3" : "left-full ml-3",
+            "rounded-[3px] border bg-background px-2 py-0.5 font-mono text-[10px] font-medium tracking-[0.15em] whitespace-nowrap shadow-xs transition-all duration-200",
+            // Strictly on the OUTSIDE of the vertical ruler line with clean clearance:
+            side === "left" ? "right-full mr-3.5" : "left-full ml-3.5",
             active
-              ? "border border-sky-400 bg-background/95 px-1.5 py-0.5 text-sky-400 opacity-100 shadow-[0_0_8px_rgba(56,189,248,0.3)] backdrop-blur-xs"
-              : "border border-border/60 bg-background/95 px-1.5 py-0.5 text-muted-foreground/60 opacity-60 backdrop-blur-xs"
+              ? "border-sky-400 text-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.35)]"
+              : "border-border/80 text-foreground"
           )}
         >
           Ø {padDimension(value)}
@@ -169,19 +126,12 @@ function CadHorizontalRuler({
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none flex h-full w-full items-center gap-1"
+      className="pointer-events-none flex h-full w-full items-center gap-1.5"
     >
       <span
         className={cn(
-          "h-3.5 w-[2px] shrink-0 rounded-full transition-colors duration-200",
+          "h-3 w-[2px] shrink-0 rounded-full transition-colors duration-200",
           active ? "bg-sky-500/70" : "bg-border/70"
-        )}
-      />
-      <OpenArrow
-        direction="left"
-        className={cn(
-          "transition-colors duration-200",
-          active ? "text-sky-400" : "text-muted-foreground/50"
         )}
       />
       <span
@@ -194,10 +144,10 @@ function CadHorizontalRuler({
       />
       <span
         className={cn(
-          "shrink-0 border bg-background/90 px-1 py-0.5 font-mono text-[9px] tracking-[0.15em] whitespace-nowrap backdrop-blur-xs transition-all duration-200",
+          "shrink-0 rounded-[3px] border bg-background px-2 py-0.5 font-mono text-[10px] font-medium tracking-[0.15em] whitespace-nowrap shadow-xs transition-all duration-200",
           active
             ? "border-sky-400 text-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.35)]"
-            : "border-border/60 text-muted-foreground/60"
+            : "border-border/80 text-foreground"
         )}
       >
         Ø {padDimension(marginPx)}
@@ -210,16 +160,9 @@ function CadHorizontalRuler({
             : "bg-border/60"
         )}
       />
-      <OpenArrow
-        direction="right"
-        className={cn(
-          "transition-colors duration-200",
-          active ? "text-sky-400" : "text-muted-foreground/50"
-        )}
-      />
       <span
         className={cn(
-          "h-3.5 w-[2px] shrink-0 rounded-full transition-colors duration-200",
+          "h-3 w-[2px] shrink-0 rounded-full transition-colors duration-200",
           active ? "bg-sky-500/70" : "bg-border/70"
         )}
       />
