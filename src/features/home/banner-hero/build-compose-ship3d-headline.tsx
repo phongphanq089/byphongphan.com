@@ -1,3 +1,4 @@
+import { MoveRight } from "lucide-react"
 import type { Transition } from "motion/react"
 import {
   motion,
@@ -7,9 +8,10 @@ import {
   useSpring,
   useTransform,
 } from "motion/react"
-import React, { useEffect, useId, useRef } from "react"
+import { useEffect, useId, useRef } from "react"
 
 import { cn } from "@/shared/lib/utils"
+import CornerButton from "@/shared/ui/animation/corner-button"
 
 function playTapSound() {
   if (typeof window === "undefined") return
@@ -708,10 +710,13 @@ export function Build3DHeading({
 
       {/* ── Sub-headline Text ── */}
       {subtitle && (
-        <p className="mt-3 max-w-2xl text-center text-base text-muted-foreground sm:text-lg dark:text-white/80">
+        <p className="mt-3 mb-5 max-w-2xl text-center text-base text-muted-foreground sm:text-lg dark:text-white/80">
           {subtitle}
         </p>
       )}
+      <CornerButton icon={<MoveRight className="corner-btn-svg" />}>
+        Explore Component
+      </CornerButton>
     </div>
   )
 }
