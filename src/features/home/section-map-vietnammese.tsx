@@ -1,7 +1,6 @@
 import { Compass, Crosshair, Globe2, MapPin } from "lucide-react"
 import { useEffect, useState } from "react"
 
-import { GridContainer } from "@/app/layouts"
 import { cn } from "@/shared/lib/utils"
 import { Badge, Button } from "@/shared/ui/core"
 import {
@@ -72,13 +71,7 @@ export function SectionMapVietnamese() {
 
   return (
     <div className="w-full">
-      <GridContainer
-        showCrosshairs={false}
-        borderLeft={false}
-        borderRight={false}
-        borderBottom
-        className="flex items-center justify-between max-md:flex-wrap"
-      >
+      <div className="-mt-px flex items-center justify-between border-y border-border max-md:flex-wrap">
         <div className="flex items-center gap-2 px-4 py-3 whitespace-nowrap sm:px-6">
           <span className="text-xs font-semibold tracking-wide text-foreground">
             {NINH_HOA_COORDINATES.name}, {NINH_HOA_COORDINATES.province},{" "}
@@ -115,10 +108,10 @@ export function SectionMapVietnamese() {
             <span>Vietnam Overview</span>
           </Button>
         </div>
-      </GridContainer>
+      </div>
 
-      <div className="">
-        <div className="relative h-[440px] w-full overflow-hidden bg-background sm:h-[520px] md:h-[580px]">
+      <div>
+        <div className="relative h-[440px] w-full overflow-hidden border-b border-border bg-background sm:h-[520px] md:h-[580px]">
           <Map
             center={[
               NINH_HOA_COORDINATES.longitude,

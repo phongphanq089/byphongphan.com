@@ -1,9 +1,6 @@
-import { Link } from "@tanstack/react-router"
-import React from "react"
-
-import { GridContainer } from "@/app/layouts"
-import { HOOKS_DATA } from "@/features/hooks/hooks-data"
+import { HOOKS_DATA, HookTile, HookViewAllTile } from "@/features/hooks"
 import type { HookItem } from "@/features/hooks/types"
+import { cn } from "@/shared/lib/utils"
 import { SectionHeading } from "@/shared/ui/system/section-heading"
 
 const FEATURED_HOOK_SLUGS = [
@@ -21,23 +18,46 @@ const FEATURED_HOOK_SLUGS = [
   "use-prevent-body-scroll",
   "use-scroll-position",
   "use-pagination",
-  "use-selection",
 ]
 
-export const SectionHooks = () => {
-  const featuredHooks = React.useMemo(() => {
-    const featured = FEATURED_HOOK_SLUGS.map((slug) =>
-      HOOKS_DATA.find((h) => h.slug === slug)
-    ).filter((h): h is HookItem => Boolean(h))
+/**
+ * Blueprint grid borders for a responsive 1/2/3 column layout that changes
+ * shape at container breakpoints, so per-cell borders must switch with them.
+ */
+function getCellBorderClasses(index: number) {
+  const isViewAllSlot = index === FEATURED_HOOK_SLUGS.length
 
-    return featured.length >= 15
-      ? featured.slice(0, 15)
-      : HOOKS_DATA.slice(0, 15)
-  }, [])
+  // Slot 15 (View All) spans the full row in the 2-column layout
+  if (isViewAllSlot) {
+    return cn(
+      "col-span-1 border-b border-border @[540px]:col-span-2 @[540px]:border-b-0 @[860px]:col-span-1"
+    )
+  }
+
+  return cn(
+    "border-b border-border",
+    // Two-column (>=540px): right accent on the left column
+    index % 2 === 0 && "@[540px]:border-r @[540px]:border-border",
+    // Three-column (>=860px): right accent on non-trailing columns
+    index % 3 === 2
+      ? "@[860px]:border-r-0"
+      : "@[860px]:border-r @[860px]:border-border",
+    // Last row in the three-column layout: drop the bottom border
+    index >= FEATURED_HOOK_SLUGS.length - 2 && "@[860px]:border-b-0"
+  )
+}
+
+export const SectionHooks = () => {
+  const featuredHooks = FEATURED_HOOK_SLUGS.map((slug) =>
+    HOOKS_DATA.find((h) => h.slug === slug)
+  ).filter((h): h is HookItem => Boolean(h))
 
   return (
-    <>
-      <GridContainer className="p-0" showCrosshairs={false}>
+    <section
+      id="hooks"
+      className="relative flex w-full flex-col bg-background text-foreground"
+    >
+      <div className="-mt-px border-y border-border">
         <SectionHeading
           id="hooks"
           heading="React Hooks"
@@ -45,31 +65,26 @@ export const SectionHooks = () => {
           actionHref="/hooks"
           actionLabel="All hooks"
         />
-      </GridContainer>
+      </div>
 
-      {/* Minimal Grid: 3 columns on desktop, 2 columns on mobile */}
-      <GridContainer
-        columns={3}
-        mobileColumns={2}
-        borderTop={false}
-        borderBottom={false}
-        showCrosshairs={true}
-        className="w-full"
-      >
-        {featuredHooks.map((hook) => (
-          <Link
+      {/* Technical Spec Grid: 1/2/3 columns driven by container width (not viewport) */}
+      <div className="grid w-full auto-rows-fr grid-cols-1 border-b border-border @[540px]:grid-cols-2 @[860px]:grid-cols-3">
+        {featuredHooks.map((hook, idx) => (
+          <HookTile
             key={hook.id}
-            to="/hooks/$category/$slug"
-            params={{ category: hook.category, slug: hook.slug }}
-            className="group relative flex min-h-[62px] w-full items-center bg-background px-4 py-4 transition-colors duration-150 hover:bg-muted/30 sm:min-h-[72px] sm:px-6 sm:py-5 md:min-h-[80px] md:px-8 md:py-6 dark:hover:bg-zinc-900/40"
-          >
-            <span className="truncate text-xs font-semibold tracking-tight text-foreground transition-colors group-hover:text-primary sm:text-sm md:text-base">
-              {hook.name}
-            </span>
-          </Link>
+            hook={hook}
+            index={idx}
+            className={getCellBorderClasses(idx)}
+          />
         ))}
-      </GridContainer>
-    </>
+
+        {/* Slot 15: View All Hooks */}
+        <HookViewAllTile
+          totalCount={HOOKS_DATA.length}
+          className={getCellBorderClasses(FEATURED_HOOK_SLUGS.length)}
+        />
+      </div>
+    </section>
   )
 }
 

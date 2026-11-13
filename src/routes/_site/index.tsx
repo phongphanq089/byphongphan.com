@@ -1,10 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { lazy, Suspense, useEffect, useRef, useState } from "react"
 
-import { GridContainer } from "@/app/layouts"
-import { SectionBlog, SectionHooks, SectionResources } from "@/features/home"
-import BannerHero from "@/features/home/banner-hero"
-import SectionAbout from "@/features/home/section-about"
+import { ContainerLayout } from "@/app/layouts"
+import {
+  BannerHero,
+  SectionAbout,
+  SectionBlog,
+  SectionHooks,
+  SectionResources,
+} from "@/features/home"
 import { SectionBlocks } from "@/features/home/section-blocks"
 import SectionTechStack from "@/features/home/section-tech-stack"
 import UiComponentsSection from "@/features/home/section-ui-components"
@@ -81,38 +85,46 @@ export const Route = createFileRoute("/_site/")({
 function HomePage() {
   return (
     <div className="w-full">
-      {/* 1. Banner Hero (manages its own GridContainers) */}
       <div className="relative overflow-hidden">
         <BannerHero />
       </div>
 
-      {/* 2. About Me */}
-      <SectionAbout />
+      <ContainerLayout
+        defaultWidth={1024}
+        minWidth={420}
+        maxWidth={1600}
+        symmetric={true}
+        className="min-h-fit"
+        contentClassName="min-h-fit"
+      >
+        <div className="relative flex w-full flex-col">
+          {/* 2. About Section */}
+          <SectionAbout />
 
-      {/* 3. Tech Stack */}
-      <SectionTechStack />
+          {/* 3. Tech Stack Section */}
+          <SectionTechStack />
 
-      {/* 4. Blocks Showcase Section */}
-      <SectionBlocks />
+          {/* 4. Blocks Showcase Section */}
+          <SectionBlocks />
 
-      {/* 5. Components UI Showcase Section */}
-      <UiComponentsSection />
+          {/* 5. Components UI Showcase Section */}
+          <UiComponentsSection />
 
-      {/* 6. React Hooks Section */}
-      <SectionHooks />
+          {/* 6. React Hooks Section */}
+          <SectionHooks />
 
-      {/* 7. Blog & Writing Section */}
-      <SectionBlog />
+          {/* 7. Blog & Writing Section */}
+          <SectionBlog />
 
-      {/* 8. Curated Resources Section */}
-      <SectionResources />
+          {/* 8. Curated Resources Section */}
+          <SectionResources />
 
-      {/* 9. Location & Vietnam Map Section */}
-      <section id="vietnam-map">
-        <GridContainer showCrosshairs={true} borderTop={false} as={"div"}>
-          <VietnamMapViewportLoader />
-        </GridContainer>
-      </section>
+          {/* 9. Location & Vietnam Map Section */}
+          <section id="vietnam-map" className="w-full">
+            <VietnamMapViewportLoader />
+          </section>
+        </div>
+      </ContainerLayout>
     </div>
   )
 }

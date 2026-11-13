@@ -1,24 +1,35 @@
-import { ArrowUpRight } from "lucide-react"
+import React from "react"
 
-import { GridContainer } from "@/app/layouts"
 import { TECH_STACK } from "@/content"
+import { cn } from "@/shared/lib/utils"
 import { iconComponents } from "@/shared/ui/icons"
 import { ExternalLink, SectionHeading } from "@/shared/ui/system"
 
-const SectionTechStack = () => {
+export interface SectionTechStackProps {
+  className?: string
+}
+
+export function SectionTechStack({ className }: SectionTechStackProps) {
   return (
-    <section id="tech-stack">
-      <GridContainer borderTop className="relative p-0" showCrosshairs={false}>
+    <section
+      id="tech-stack"
+      className={cn(
+        "relative flex w-full flex-col bg-background text-foreground",
+        className
+      )}
+    >
+      {/* ── Section Header ── */}
+      <div className="border-y border-border">
         <SectionHeading
           id="tech-stack"
           heading="Tech Stack"
           count={TECH_STACK.length}
         />
-      </GridContainer>
+      </div>
 
-      {/* Tech Cards Responsive Grid: 4 columns on mobile, no scroll animation */}
-      <GridContainer showCrosshairs={false} className="p-3 sm:p-6 md:p-8">
-        <div className="grid w-full grid-cols-4 gap-2 sm:grid-cols-4 sm:gap-3.5 md:grid-cols-5 md:gap-4 lg:grid-cols-6 xl:grid-cols-7">
+      {/* ── Main Content Area: All Tech Badges ── */}
+      <div className="w-full p-4 sm:p-6 md:p-8">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
           {TECH_STACK.map((item) => {
             const IconComp = iconComponents[item.icon]
             return (
@@ -27,43 +38,32 @@ const SectionTechStack = () => {
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
+                utm={{ campaign: "tech_stack" }}
                 title={`Visit ${item.label} official website`}
-                utm={{
-                  campaign: "tech_stack",
-                }}
-                className="inline-block"
+                className={cn(
+                  "group inline-flex items-center gap-2 rounded-lg border border-dashed border-border/80 bg-background/50 px-3 py-1.5 transition-all duration-200",
+                  "hover:-translate-y-0.5 hover:border-foreground/50 hover:bg-accent/40 active:scale-95"
+                )}
               >
-                <div className="group relative flex flex-col items-center justify-between overflow-hidden rounded-xl border border-border/60 bg-card/60 p-2 transition-all duration-200 hover:-translate-y-1 hover:border-primary/50 hover:bg-accent/40 hover:shadow-[0_8px_24px_rgba(220,38,38,0.12)] active:scale-[0.98] sm:p-4 dark:hover:shadow-[0_8px_30px_rgba(255,255,255,0.06)]">
-                  {/* Radial ambient glow on hover */}
-                  <div className="pointer-events-none absolute -top-10 left-1/2 size-20 -translate-x-1/2 rounded-full bg-primary/10 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
+                {/* Icon Area */}
+                <span className="flex size-4.5 shrink-0 items-center justify-center">
+                  {IconComp ? (
+                    <IconComp
+                      size={18}
+                      className="size-4 shrink-0 transition-transform duration-200 group-hover:scale-110"
+                    />
+                  ) : null}
+                </span>
 
-                  {/* Top card action: external link arrow */}
-                  <div className="relative z-10 flex w-full items-center justify-end">
-                    <ArrowUpRight className="size-2.5 text-muted-foreground/30 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-primary sm:size-3.5" />
-                  </div>
-
-                  {/* Icon Area */}
-                  <div className="relative z-10 my-1 flex size-8 items-center justify-center sm:my-2 sm:size-12">
-                    {IconComp ? (
-                      <IconComp
-                        size={32}
-                        className="size-7 transition-transform duration-300 ease-out group-hover:scale-115 sm:size-10"
-                      />
-                    ) : null}
-                  </div>
-
-                  {/* Label */}
-                  <div className="relative z-10 w-full text-center">
-                    <span className="block truncate text-[10px] font-semibold tracking-tight text-foreground/90 transition-colors group-hover:text-foreground sm:text-xs">
-                      {item.label}
-                    </span>
-                  </div>
-                </div>
+                {/* Tech Label */}
+                <span className="text-xs font-medium tracking-tight text-foreground/90 transition-colors group-hover:text-foreground sm:text-[13px]">
+                  {item.label}
+                </span>
               </ExternalLink>
             )
           })}
         </div>
-      </GridContainer>
+      </div>
     </section>
   )
 }

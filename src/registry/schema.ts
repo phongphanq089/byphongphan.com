@@ -19,11 +19,13 @@ export type ComponentSchematicType =
   | "scroll-area"
   | "drawer"
   | "rail-scroll-scrubber"
+  | "scroll-indicator"
 
 export type BlockSchematicType =
   | "not-found-01"
   | "not-found-02"
   | "not-found-03"
+  | "not-found-04"
   | "login-01"
   | "stats-cards-01"
   | "koi-background"

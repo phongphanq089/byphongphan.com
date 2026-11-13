@@ -58,6 +58,11 @@ export const RailScrollScrubberDemo = lazyWithRetry(() =>
     default: m.RailScrollScrubberDemo,
   }))
 )
+export const ScrollIndicatorDemo = lazyWithRetry(() =>
+  import("./scroll-indicator-demo").then((m) => ({
+    default: m.ScrollIndicatorDemo,
+  }))
+)
 export const SpotlightCardDemo = lazyWithRetry(() =>
   import("./spotlight-card-demo").then((m) => ({
     default: m.SpotlightCardDemo,
@@ -84,6 +89,8 @@ export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   "time-scrubber-demo": TimeScrubberDemo,
   "rail-scroll-scrubber": RailScrollScrubberDemo,
   "rail-scroll-scrubber-demo": RailScrollScrubberDemo,
+  "scroll-indicator": ScrollIndicatorDemo,
+  "scroll-indicator-demo": ScrollIndicatorDemo,
   map: MapDemo,
   "text-hover-effect": TextHoverEffectDemo,
   "background-gradient-cursor": BackgroundGradientCursorDemo,

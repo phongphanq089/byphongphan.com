@@ -1,13 +1,12 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowUp, ArrowUpRight, Globe, Mail } from "lucide-react"
 
-import { GridContainer } from "@/app/layouts"
 import { siteConfig, TELEMETRY_CONFIG } from "@/shared/config"
 import { ExternalLink } from "@/shared/ui"
-import { PhongPhanIsometric } from "@/shared/ui/animation"
-import { TimeScrubber } from "@/shared/ui/core/time-scrubber"
 
 import { footerNavigation, footerSocials } from "./setting-footer"
+import { SpotlightText } from "./spotlight-text"
+import UnderlineToBackground from "./underline-to-background"
 
 const SYSTEM_SPECS = [
   { label: "Framework", value: "TanStack Start" },
@@ -59,266 +58,283 @@ function SocialIcon({ name }: { name: string }) {
 }
 
 export default function Footer() {
-  return (
-    <footer className="w-full bg-background text-foreground select-none">
-      {/* Time Scrubber (Full Width Precision Dial) */}
-      <GridContainer
-        borderBottom
-        borderTop
-        showCrosshairs
-        className="flex w-full flex-col items-center justify-center p-4 lg:p-8"
-      >
-        <div className="flex w-full flex-col items-center gap-4">
-          <TimeScrubber
-            timeZone="Asia/Ho_Chi_Minh"
-            format="12h"
-            showSeconds={true}
-            fullWidth={true}
-            live={true}
-            tickMode="smooth"
-            step={5}
-            momentum={50}
-            sound={false}
-            showReset={true}
-            variant="default"
-            className="w-full"
-          />
-        </div>
-      </GridContainer>
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
 
-      {/* 01 SITEMAP | 02 SYSTEM & AGENTS (2 Columns, 6 Aligned Rows) */}
-      <GridContainer
-        borderBottom
-        showCrosshairs
-        className="relative grid grid-cols-1 divide-y divide-border md:grid-cols-2 md:divide-x md:divide-y-0"
-      >
-        {/* 01 SITEMAP */}
-        <div className="flex min-w-0 flex-col">
-          <div className="flex h-11 items-center justify-between border-b border-border px-5 sm:px-6">
-            <span className="font-mono text-xs font-bold tracking-widest whitespace-nowrap text-muted-foreground uppercase">
-              01 SITEMAP
-            </span>
-            <span className="font-mono text-[10px] tracking-wider whitespace-nowrap text-muted-foreground/70 uppercase">
-              {String(footerNavigation.length).padStart(2, "0")} ROUTES
-            </span>
+  return (
+    <footer className="relative w-full overflow-hidden border-t border-border bg-background text-foreground select-none max-md:pb-[100px]">
+      {/* Full-width container with generous horizontal padding (No max-w constraint) */}
+      <div className="w-full px-4 sm:px-8 md:px-12 lg:px-16 xl:px-20">
+        {/* Outer border wrapper providing the continuous outer border lines */}
+        <div className="relative border-x border-b border-border">
+          {/* ─── GIANT SPOTLIGHT WATERMARK TYPOGRAPHY ─── */}
+          {/* Positioned at the bottom of the container. The 4 column dividers pass directly over it. */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0">
+            <SpotlightText
+              text="PhongPhan"
+              theme="dark"
+              spotlightRadius={560}
+              ambientOpacity={0.01}
+              centerIntensity={1.0}
+              bottomCropPercent={8}
+              showColumnDividers={false}
+            />
           </div>
 
-          <ul className="flex flex-col gap-3 px-5 py-5 sm:px-6">
-            {footerNavigation.map((item) => {
-              const isComingSoon = item.badge === "COMING_SOON"
-              return (
-                <li key={item.name} className="flex h-7 items-center">
-                  <Link
-                    to={item.href}
-                    className="group flex w-full items-center justify-between gap-3 text-sm transition-colors"
-                  >
-                    <span
-                      className={
-                        isComingSoon
-                          ? "font-medium whitespace-nowrap text-muted-foreground transition-colors group-hover:text-foreground"
-                          : "font-semibold whitespace-nowrap text-foreground transition-colors group-hover:text-foreground"
-                      }
-                    >
-                      {item.name}
-                    </span>
+          {/* ─── SINGLE UNIFIED 4-COLUMN GRID (Continuous from top to bottom) ─── */}
+          <div className="xm:divide-y-0 relative z-10 grid grid-cols-1 divide-y divide-border sm:divide-x md:grid-cols-2 xl:grid-cols-4">
+            {/* ─── COLUMN 1: 01 SITEMAP ─── */}
+            <div className="flex flex-col pb-10 lg:pb-60">
+              <div className="flex h-12 items-center justify-between px-6 pt-2">
+                <span className="font-mono text-xs font-bold tracking-[0.2em] whitespace-nowrap text-muted-foreground uppercase">
+                  01 SITEMAP
+                </span>
+                <span className="font-mono text-[10px] tracking-wider whitespace-nowrap text-muted-foreground/60 uppercase">
+                  {String(footerNavigation.length).padStart(2, "0")} ROUTES
+                </span>
+              </div>
 
-                    <div className="flex shrink-0 items-center gap-2.5">
-                      {item.badge && (
-                        <span
+              <ul className="flex flex-col gap-3.5 px-6 pt-6">
+                {footerNavigation.map((item) => {
+                  const isComingSoon = item.badge === "COMING_SOON"
+                  return (
+                    <li key={item.name} className="flex h-7 items-center">
+                      <Link
+                        to={item.href}
+                        className="group flex w-full items-center justify-between gap-3 text-sm transition-colors"
+                      >
+                        <UnderlineToBackground
+                          targetTextColor="var(--background)"
                           className={
                             isComingSoon
-                              ? "inline-flex h-5 items-center justify-center rounded border border-border/50 bg-muted/30 px-2 font-mono text-[9px] font-semibold tracking-wider whitespace-nowrap text-muted-foreground/70 uppercase"
-                              : "inline-flex h-5 items-center justify-center rounded border border-border/80 bg-muted/50 px-2 font-mono text-[9px] font-bold tracking-wider whitespace-nowrap text-foreground uppercase"
+                              ? "font-medium whitespace-nowrap text-muted-foreground transition-colors group-hover:text-foreground"
+                              : "font-semibold whitespace-nowrap text-foreground/90 transition-colors group-hover:text-foreground"
                           }
                         >
-                          {item.badge}
+                          {item.name}
+                        </UnderlineToBackground>
+
+                        <div className="flex shrink-0 items-center gap-2">
+                          {item.badge && (
+                            <span
+                              className={
+                                isComingSoon
+                                  ? "inline-flex h-5 items-center justify-center rounded border border-border/50 bg-muted/30 px-1.5 font-mono text-[9px] font-semibold tracking-wider whitespace-nowrap text-muted-foreground/70 uppercase"
+                                  : "inline-flex h-5 items-center justify-center rounded border border-border/80 bg-muted/50 px-1.5 font-mono text-[9px] font-bold tracking-wider whitespace-nowrap text-foreground uppercase"
+                              }
+                            >
+                              {item.badge}
+                            </span>
+                          )}
+                          <ArrowUpRight className="size-3 shrink-0 text-muted-foreground/40 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
+                        </div>
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+
+            {/* ─── COLUMN 2: 02 SYSTEM ─── */}
+            <div className="flex flex-col pb-10 lg:pb-60">
+              <div className="flex h-12 items-center justify-between px-6 pt-2">
+                <span className="font-mono text-xs font-bold tracking-[0.2em] whitespace-nowrap text-muted-foreground uppercase">
+                  02 SYSTEM
+                </span>
+                <span className="font-mono text-[10px] tracking-wider whitespace-nowrap text-muted-foreground/60 uppercase">
+                  SPECS
+                </span>
+              </div>
+
+              <ul className="flex flex-col gap-3.5 px-6 pt-6">
+                {SYSTEM_SPECS.map((spec) => (
+                  <li
+                    key={spec.label}
+                    className="flex h-7 items-center justify-between gap-3 text-sm"
+                  >
+                    <span className="whitespace-nowrap text-muted-foreground">
+                      {spec.label}
+                    </span>
+                    <div className="flex shrink-0 items-center gap-2">
+                      {"badge" in spec && spec.badge && (
+                        <span className="inline-flex h-5 items-center justify-center rounded border border-border/50 bg-muted/30 px-1.5 font-mono text-[9px] font-semibold tracking-wider whitespace-nowrap text-muted-foreground/70 uppercase">
+                          {spec.badge}
                         </span>
                       )}
-                      <ArrowUpRight className="size-3 shrink-0 text-muted-foreground/40 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
+                      <span
+                        className={
+                          "badge" in spec
+                            ? "font-mono text-xs whitespace-nowrap text-muted-foreground"
+                            : "text-xs font-semibold whitespace-nowrap text-foreground/90"
+                        }
+                      >
+                        {spec.value}
+                      </span>
                     </div>
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-        {/* 02 SYSTEM & AGENTS */}
-        <div className="flex min-w-0 flex-col">
-          <div className="flex h-11 items-center justify-between border-b border-border px-5 sm:px-6">
-            <span className="font-mono text-xs font-bold tracking-widest whitespace-nowrap text-muted-foreground uppercase">
-              02 SYSTEM
-            </span>
-            <span className="font-mono text-[10px] tracking-wider whitespace-nowrap text-muted-foreground/70 uppercase">
-              SPECS
-            </span>
-          </div>
-
-          <ul className="flex flex-col gap-3 px-5 py-5 sm:px-6">
-            {SYSTEM_SPECS.map((spec) => (
-              <li
-                key={spec.label}
-                className="flex h-7 items-center justify-between gap-3 text-sm"
-              >
-                <span className="whitespace-nowrap text-muted-foreground">
-                  {spec.label}
+            {/* ─── COLUMN 3: 03 INSPIRED BY ─── */}
+            <div className="flex flex-col pb-10 lg:pb-60">
+              <div className="flex h-12 items-center justify-between px-6 pt-2">
+                <span className="font-mono text-xs font-bold tracking-[0.2em] whitespace-nowrap text-muted-foreground uppercase">
+                  03 INSPIRED BY
                 </span>
-                <div className="flex shrink-0 items-center gap-2.5">
-                  {"badge" in spec && spec.badge && (
-                    <span className="inline-flex h-5 items-center justify-center rounded border border-border/50 bg-muted/30 px-2 font-mono text-[9px] font-semibold tracking-wider whitespace-nowrap text-muted-foreground/70 uppercase">
-                      {spec.badge}
-                    </span>
-                  )}
-                  <span
-                    className={
-                      "badge" in spec
-                        ? "font-mono text-xs whitespace-nowrap text-muted-foreground"
-                        : "text-xs font-semibold whitespace-nowrap text-foreground"
-                    }
-                  >
-                    {spec.value}
+                <span className="font-mono text-[10px] tracking-wider whitespace-nowrap text-muted-foreground/60 uppercase">
+                  {String(siteConfig.inspirations.length).padStart(2, "0")}{" "}
+                  LINKS
+                </span>
+              </div>
+
+              <ul className="flex flex-col gap-3.5 px-6 pt-6">
+                {siteConfig.inspirations.map((item, index) => (
+                  <li key={item.name} className="flex h-7 items-center">
+                    <ExternalLink
+                      href={item.href}
+                      className="group flex w-full items-center justify-between gap-2 text-sm whitespace-nowrap transition-colors"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-5 shrink-0 font-mono text-[11px] whitespace-nowrap text-muted-foreground/50">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        <UnderlineToBackground
+                          targetTextColor="var(--background)"
+                          className="font-medium whitespace-nowrap text-foreground/80 transition-colors group-hover:text-foreground"
+                        >
+                          {item.name}
+                        </UnderlineToBackground>
+                      </div>
+                      <ArrowUpRight className="size-3 shrink-0 text-muted-foreground/30 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
+                    </ExternalLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* ─── COLUMN 4: 04 STAY CONNECTED & TELEMETRY ─── */}
+            <div className="flex flex-col pb-36 lg:pb-60">
+              <div className="flex h-12 items-center justify-between px-6 pt-2">
+                <span className="font-mono text-xs font-bold tracking-[0.2em] whitespace-nowrap text-muted-foreground uppercase">
+                  04 STAY CONNECTED
+                </span>
+                <span className="font-mono text-[10px] tracking-wider whitespace-nowrap text-muted-foreground/60 uppercase">
+                  CHANNELS
+                </span>
+              </div>
+
+              {/* Top Action Items in Column 4 */}
+              <div className="flex flex-col gap-6 px-6 pt-6">
+                {/* 1. Social Channels Row: Rounded icon buttons */}
+                <div className="flex flex-col gap-2.5">
+                  <span className="font-mono text-[11px] tracking-widest text-muted-foreground/60 uppercase">
+                    Connect
+                  </span>
+                  <div className="flex items-center gap-2">
+                    {footerSocials.map((social) => (
+                      <a
+                        key={social.name}
+                        href={social.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        title={`${social.name} (${social.handle})`}
+                        aria-label={social.name}
+                        className="inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-border/80 bg-muted/20 text-muted-foreground transition-all hover:scale-105 hover:border-foreground/50 hover:bg-muted/60 hover:text-foreground"
+                      >
+                        <SocialIcon name={social.name} />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 2. Machine-Readable & Agents */}
+                <div className="flex flex-col gap-2">
+                  <span className="font-mono text-[11px] tracking-widest text-muted-foreground/60 uppercase">
+                    For Agents
+                  </span>
+                  <div className="flex items-center gap-2">
+                    <a
+                      href="/llms.txt"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group inline-flex h-7 items-center gap-1.5 rounded border border-border/80 bg-muted/20 px-2.5 font-mono text-[11px] whitespace-nowrap text-foreground/90 transition-colors hover:border-foreground/40 hover:bg-muted/60"
+                    >
+                      <span>llms.txt</span>
+                      <ArrowUpRight className="size-3 shrink-0 text-muted-foreground/60 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
+                    </a>
+                    <a
+                      href="/index.md"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="group inline-flex h-7 items-center gap-1.5 rounded border border-border/80 bg-muted/20 px-2.5 font-mono text-[11px] whitespace-nowrap text-foreground/90 transition-colors hover:border-foreground/40 hover:bg-muted/60"
+                    >
+                      <span>index.md</span>
+                      <ArrowUpRight className="size-3 shrink-0 text-muted-foreground/60 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
+                    </a>
+                  </div>
+                </div>
+
+                {/* 3. Source Repository */}
+                <div className="flex flex-col gap-2">
+                  <span className="font-mono text-[11px] tracking-widest text-muted-foreground/60 uppercase">
+                    Repository
+                  </span>
+                  <div>
+                    <ExternalLink
+                      href={siteConfig.repoUrl}
+                      className="group inline-flex h-7 items-center gap-1.5 rounded border border-border/80 bg-muted/20 px-2.5 font-mono text-[11px] whitespace-nowrap text-foreground/90 transition-colors hover:border-foreground/40 hover:bg-muted/60"
+                    >
+                      <span>Source Code</span>
+                      <ArrowUpRight className="size-3 shrink-0 text-muted-foreground/60 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
+                    </ExternalLink>
+                  </div>
+                </div>
+              </div>
+
+              {/* 4. Full-width Telemetry Section with border-t (No isolated card box, seamless with column) */}
+              <div className="mt-8 flex flex-col gap-2.5 border-t border-border px-6 pt-4 font-mono text-[11px] text-muted-foreground">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-semibold text-foreground/80 uppercase">
+                    BUILD {TELEMETRY_CONFIG.commitHash}
+                  </span>
+                  <span className="text-[10px] text-muted-foreground/70 uppercase">
+                    {TELEMETRY_CONFIG.buildDate}
                   </span>
                 </div>
-              </li>
-            ))}
 
-            {/* Row 5: For Agents */}
-            <li className="flex h-7 items-center justify-between gap-3 text-sm">
-              <span className="font-semibold whitespace-nowrap text-muted-foreground">
-                For Agents
-              </span>
-              <div className="flex shrink-0 items-center gap-2">
-                <a
-                  href="/llms.txt"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group inline-flex h-7 items-center gap-1.5 rounded border border-border/80 bg-muted/20 px-2.5 font-mono text-[11px] whitespace-nowrap text-foreground/90 transition-colors hover:border-foreground/40 hover:bg-muted/60"
-                >
-                  <span>llms.txt</span>
-                  <ArrowUpRight className="size-3 shrink-0 text-muted-foreground/60 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
-                </a>
-                <a
-                  href="/index.md"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group inline-flex h-7 items-center gap-1.5 rounded border border-border/80 bg-muted/20 px-2.5 font-mono text-[11px] whitespace-nowrap text-foreground/90 transition-colors hover:border-foreground/40 hover:bg-muted/60"
-                >
-                  <span>index.md</span>
-                  <ArrowUpRight className="size-3 shrink-0 text-muted-foreground/60 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
-                </a>
-              </div>
-            </li>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="uppercase">
+                    REGISTRY: {TELEMETRY_CONFIG.totalRegistryItems} ITEMS
+                  </span>
+                  <span className="text-foreground/70">@byphongphan</span>
+                </div>
 
-            {/* Row 6: Connect (Social Icons + Source Code) */}
-            <li className="flex h-7 items-center justify-between gap-3 text-sm">
-              <span className="font-semibold whitespace-nowrap text-muted-foreground">
-                Connect
-              </span>
-              <div className="flex shrink-0 items-center gap-1.5">
-                {footerSocials.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    title={`${social.name} (${social.handle})`}
-                    aria-label={social.name}
-                    className="inline-flex size-7 items-center justify-center rounded border border-border/80 bg-muted/20 text-muted-foreground transition-colors hover:border-foreground/40 hover:bg-muted/60 hover:text-foreground"
+                <div className="flex items-center justify-between gap-2 border-t border-border/40 pt-2">
+                  <ExternalLink
+                    href={siteConfig.githubLicense}
+                    className="transition-colors hover:text-foreground"
                   >
-                    <SocialIcon name={social.name} />
-                  </a>
-                ))}
-                <ExternalLink
-                  href={siteConfig.repoUrl}
-                  className="group ml-0.5 inline-flex h-7 items-center gap-1.5 rounded border border-border/80 bg-muted/20 px-2.5 font-mono text-[11px] whitespace-nowrap text-foreground/90 transition-colors hover:border-foreground/40 hover:bg-muted/60"
-                >
-                  <span>Source</span>
-                  <ArrowUpRight className="size-3 shrink-0 text-muted-foreground/60 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-foreground" />
-                </ExternalLink>
+                    <UnderlineToBackground targetTextColor="var(--background)">
+                      MIT LICENSE
+                    </UnderlineToBackground>
+                  </ExternalLink>
+
+                  <button
+                    type="button"
+                    onClick={scrollToTop}
+                    className="inline-flex cursor-pointer items-center gap-1 rounded border border-border/60 bg-muted/40 px-2 py-0.5 text-[10px] font-semibold text-muted-foreground transition-colors hover:bg-muted/80 hover:text-foreground"
+                    title="Scroll to top"
+                  >
+                    <span>TOP</span>
+                    <ArrowUp className="size-2.5" />
+                  </button>
+                </div>
               </div>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
-      </GridContainer>
-
-      <GridContainer
-        borderBottom
-        showCrosshairs={false}
-        className="flex flex-col"
-      >
-        <div className="flex h-11 items-center justify-between border-b border-border px-5 sm:px-6">
-          <span className="font-mono text-xs font-bold tracking-widest whitespace-nowrap text-muted-foreground uppercase">
-            03 INSPIRED BY
-          </span>
-          <span className="font-mono text-[10px] tracking-wider whitespace-nowrap text-muted-foreground/70 uppercase">
-            {String(siteConfig.inspirations.length).padStart(2, "0")} LINKS
-          </span>
-        </div>
-
-        <div className="grid grid-cols-3 gap-x-3 gap-y-3 px-5 py-4 sm:px-6 lg:flex lg:items-center lg:justify-between lg:gap-2">
-          {siteConfig.inspirations.map((item, index) => (
-            <ExternalLink
-              key={item.name}
-              href={item.href}
-              className="group inline-flex min-w-0 items-center gap-1.5 text-xs whitespace-nowrap transition-colors"
-            >
-              {index > 0 && (
-                <span className="mr-1.5 hidden text-muted-foreground/40 select-none lg:inline">
-                  ·
-                </span>
-              )}
-              <span className="w-4 shrink-0 font-mono text-[11px] whitespace-nowrap text-muted-foreground/60">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span className="font-semibold whitespace-nowrap text-foreground/90 transition-colors group-hover:text-pp-primary">
-                {item.name}
-              </span>
-            </ExternalLink>
-          ))}
-        </div>
-      </GridContainer>
-
-      <GridContainer
-        borderBottom
-        showCrosshairs
-        className="flex flex-col items-center justify-between gap-3 px-5 py-3.5 text-[11px] text-muted-foreground sm:flex-row sm:px-6"
-      >
-        <div className="flex flex-wrap items-center justify-center gap-2 whitespace-nowrap">
-          <span className="text-muted-foreground/40">·</span>
-          <span className="whitespace-nowrap uppercase">
-            BUILD {TELEMETRY_CONFIG.commitHash}
-          </span>
-          <span className="text-muted-foreground/40">·</span>
-          <span className="whitespace-nowrap">
-            {TELEMETRY_CONFIG.buildDate}
-          </span>
-          <span className="text-muted-foreground/40">·</span>
-          <span className="whitespace-nowrap uppercase">
-            REGISTRY: {TELEMETRY_CONFIG.totalRegistryItems} ITEMS
-          </span>
-        </div>
-
-        <div className="flex items-center gap-2 tracking-wider whitespace-nowrap text-muted-foreground/80 uppercase">
-          <span className="whitespace-nowrap">CRAFTED BY @byphongphan</span>
-          <span className="text-muted-foreground/40">·</span>
-          <ExternalLink href={siteConfig.githubLicense}>
-            <span className="whitespace-nowrap">MIT LICENSE</span>
-          </ExternalLink>
-
-          <button
-            type="button"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="ml-2 inline-flex items-center gap-1 rounded border border-border/40 bg-muted/30 px-1.5 py-0.5 text-[10px] whitespace-nowrap text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
-            title="Scroll to top"
-          >
-            <span>TOP</span>
-            <ArrowUp className="size-2.5" />
-          </button>
-        </div>
-      </GridContainer>
-
-      <div className="relative w-full overflow-hidden py-4 pb-20 sm:pt-8">
-        <PhongPhanIsometric padding />
       </div>
     </footer>
   )

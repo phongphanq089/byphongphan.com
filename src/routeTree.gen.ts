@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AdminRouteRouteImport } from './routes/_admin/route'
 import { Route as SiteRouteRouteImport } from './routes/_site/route'
 import { Route as BrandAppRouteImport } from './routes/brand-app'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SiteIndexRouteImport } from './routes/_site/index'
@@ -45,6 +46,11 @@ const SiteRouteRoute = SiteRouteRouteImport.update({
 const BrandAppRoute = BrandAppRouteImport.update({
   id: '/brand-app',
   path: '/brand-app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
@@ -160,6 +166,7 @@ const SiteHooksCategorySlugRoute = SiteHooksCategorySlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
   '/brand-app': typeof BrandAppRoute
+  '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
@@ -184,6 +191,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof SiteIndexRoute
   '/brand-app': typeof BrandAppRoute
+  '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
@@ -210,6 +218,7 @@ export interface FileRoutesById {
   '/_admin': typeof AdminRouteRouteWithChildren
   '/_site': typeof SiteRouteRouteWithChildren
   '/brand-app': typeof BrandAppRoute
+  '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
@@ -237,6 +246,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/brand-app'
+    | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/blocks-preview/$slug'
@@ -261,6 +271,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/brand-app'
+    | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/blocks-preview/$slug'
@@ -286,6 +297,7 @@ export interface FileRouteTypes {
     | '/_admin'
     | '/_site'
     | '/brand-app'
+    | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/blocks-preview/$slug'
@@ -313,6 +325,7 @@ export interface RootRouteChildren {
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   SiteRouteRoute: typeof SiteRouteRouteWithChildren
   BrandAppRoute: typeof BrandAppRoute
+  ProfileRoute: typeof ProfileRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlocksPreviewSlugRoute: typeof BlocksPreviewSlugRoute
@@ -339,6 +352,13 @@ declare module '@tanstack/react-router' {
       path: '/brand-app'
       fullPath: '/brand-app'
       preLoaderRoute: typeof BrandAppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/robots.txt': {
@@ -551,6 +571,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRouteRoute: AdminRouteRouteWithChildren,
   SiteRouteRoute: SiteRouteRouteWithChildren,
   BrandAppRoute: BrandAppRoute,
+  ProfileRoute: ProfileRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlocksPreviewSlugRoute: BlocksPreviewSlugRoute,

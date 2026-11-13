@@ -15,6 +15,7 @@ import { SpotlightCardSchematic } from "./spotlight-card-schematic"
 import { TextHoverEffectSchematic } from "./text-hover-effect-schematic"
 import { TimeScrubberSchematic } from "./time-scrubber-schematic"
 import { RailScrollScrubberSchematic } from "./rail-scroll-scrubber-schematic"
+import { ScrollIndicatorSchematic } from "./scroll-indicator-schematic"
 import { UnboxingBucketSchematic } from "./unboxing-bucket-schematic"
 
 export * from "./background-gradient-cursor-schematic"
@@ -35,6 +36,7 @@ export * from "./spotlight-card-schematic"
 export * from "./text-hover-effect-schematic"
 export * from "./time-scrubber-schematic"
 export * from "./rail-scroll-scrubber-schematic"
+export * from "./scroll-indicator-schematic"
 export * from "./unboxing-bucket-schematic"
 
 export function DefaultComponentSchematic() {
@@ -54,6 +56,7 @@ export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
   "flip-clock": TimeScrubberSchematic,
   "time-scrubber": TimeScrubberSchematic,
   "rail-scroll-scrubber": RailScrollScrubberSchematic,
+  "scroll-indicator": ScrollIndicatorSchematic,
   map: MapSchematic,
   "text-hover-effect": TextHoverEffectSchematic,
   "background-gradient-cursor": BackgroundGradientCursorSchematic,

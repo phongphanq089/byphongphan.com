@@ -44,6 +44,31 @@
       ]
     },
     {
+      "name": "scroll-indicator",
+      "type": "registry:component",
+      "title": "Scroll Indicator",
+      "description": "Vertical scroll progress indicator with tick marks, click-to-reveal section titles, Web Audio micro-interactions, and spring physics.",
+      "category": "navigation",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/scroll-indicator.tsx",
+          "type": "registry:component",
+          "target": "components/scroll-indicator.tsx"
+        },
+        {
+          "path": "src/registry/lib/sound.ts",
+          "type": "registry:lib",
+          "target": "lib/sound.ts"
+        }
+      ]
+    },
+    {
       "name": "middle-truncation",
       "type": "registry:ui",
       "title": "Middle Truncation",
@@ -450,6 +475,33 @@
           "path": "src/registry/block/not-found-03/components/pixel-trail.tsx",
           "type": "registry:block",
           "target": "components/pixel-trail.tsx"
+        }
+      ]
+    },
+    {
+      "name": "not-found-04",
+      "type": "registry:block",
+      "title": "Not Found ASCII Skyline",
+      "description": "Interactive 404 error page with procedural ASCII matrix cityscape, raycasted windows, and dynamic avoidance physics.",
+      "category": "404-page",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [
+        "button"
+      ],
+      "files": [
+        {
+          "path": "src/registry/block/not-found-04/app/not-found.tsx",
+          "type": "registry:block",
+          "target": "app/not-found.tsx"
+        },
+        {
+          "path": "src/registry/block/not-found-04/components/ascii-skyline.tsx",
+          "type": "registry:block",
+          "target": "components/ascii-skyline.tsx"
         }
       ]
     },

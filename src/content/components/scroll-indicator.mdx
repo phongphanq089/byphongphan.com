@@ -1,0 +1,134 @@
+---
+title: Scroll Indicator
+description: Vertical scroll progress indicator with tick marks, click-to-reveal section titles, Web Audio micro-interactions, and spring physics.
+component: true
+badge: "motion"
+---
+
+<ComponentPreview name="scroll-indicator-demo" />
+
+## Overview
+
+**Scroll Indicator** is an ultra-clean vertical progress indicator and table-of-contents navigation component inspired by Nexvyn UI and precision telemetry HUDs.
+
+As the user scrolls, a glowing laser indicator line glides smoothly across calibrated tick marks using Framer Motion spring physics. Section labels reveal on hover or click, accompanied by zero-latency synthesized Web Audio sound effects.
+
+### Features
+
+- **Static Percentage Layout**: Pure CSS percentage positioning for all 60 ruler ticks ensures instant, glitch-free initial render with zero layout shift during SSR or hydration.
+- **Click to Reveal Titles**: Click anywhere on the ruler line to toggle the section titles open with card backdrops, or hover to preview.
+- **Automatic Scroll Spy**: Detects the active section in view automatically on both `window` and custom scroll containers.
+- **Web Audio Micro-Interactions**: Real-time sine and triangle wave oscillator chirps on hover and click without external audio assets.
+- **Spring Physics**: Organic, natural movement with `motion/react` springs, automatically respecting `prefers-reduced-motion`.
+
+---
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+  <TabsContent value="cli">
+    <CodeBlockCommand name="scroll-indicator" />
+  </TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install dependencies:</Step>
+      <CodeBlockCommand command="npm install motion" />
+      <Step>Copy and paste the sound utility into your project:</Step>
+      <ComponentSource name="sound" title="lib/sound.ts" />
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="scroll-indicator" title="components/scroll-indicator.tsx" />
+      <Step>Update import paths to match your project structure.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Usage
+
+### 1. Window Scroll Integration
+
+Mount the component fixed on the right viewport edge for full-page documentation or landing pages:
+
+```tsx
+import { ScrollIndicator } from "@/components/scroll-indicator"
+
+const SECTIONS = [
+  { id: "intro", title: "Introduction" },
+  { id: "features", title: "Features" },
+  { id: "pricing", title: "Pricing" },
+  { id: "faq", title: "FAQ" },
+]
+
+export function Page() {
+  return (
+    <div>
+      <main>
+        <section id="intro">...</section>
+        <section id="features">...</section>
+        <section id="pricing">...</section>
+        <section id="faq">...</section>
+      </main>
+
+      <ScrollIndicator
+        sections={SECTIONS}
+        className="fixed top-1/2 right-4 z-40 h-[380px] -translate-y-1/2 sm:right-6 sm:h-[440px]"
+      />
+    </div>
+  )
+}
+```
+
+### 2. Custom Scrollable Container
+
+Attach to an `overflow-y-auto` scroll container using `scrollRef`:
+
+```tsx
+import { useRef } from "react"
+import { ScrollIndicator } from "@/components/scroll-indicator"
+
+export function ModalOrPanel() {
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  return (
+    <div className="relative flex h-[500px]">
+      <div ref={scrollRef} className="flex-1 overflow-y-auto pr-14">
+        <div id="step-1">...</div>
+        <div id="step-2">...</div>
+        <div id="step-3">...</div>
+      </div>
+
+      <div className="absolute top-0 right-3 bottom-0 my-auto h-[320px]">
+        <ScrollIndicator
+          sections={[
+            { id: "step-1", title: "Step 1" },
+            { id: "step-2", title: "Step 2" },
+            { id: "step-3", title: "Step 3" },
+          ]}
+          scrollRef={scrollRef}
+        />
+      </div>
+    </div>
+  )
+}
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `sections` | `ScrollIndicatorSection[]` | `[]` | Array of section objects `{ id, title, level? }`. |
+| `activeIndex` | `number` | `undefined` | Controlled active section index. If omitted, uses automatic scroll spy. |
+| `onIndexChange` | `(index: number) => void` | `undefined` | Callback fired when the active section changes via click or scroll. |
+| `scrollRef` | `RefObject<HTMLElement>` | `undefined` | Optional ref to a scrollable container. If omitted, tracks `window` scroll. |
+| `scrollOffset` | `number` | `64` | Offset in pixels when scrolling to an anchor (e.g. to accommodate a sticky header). |
+| `totalTicks` | `number` | `60` | Number of tick marks rendered along the vertical track. |
+| `className` | `string` | `undefined` | Additional CSS classes for positioning or sizing. |

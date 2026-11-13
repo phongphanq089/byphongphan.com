@@ -1,19 +1,18 @@
 import { Turntable } from "@lucasmarkes/hairline/react"
 
-import { GridContainer } from "@/app/layouts"
 import { SectionHeading } from "@/shared/ui/system/section-heading"
 
 export const SectionResources = () => {
   return (
-    <section>
-      <GridContainer borderTop className="relative p-0" showCrosshairs={false}>
+    <section
+      id="resources"
+      className="relative flex w-full flex-col bg-background text-foreground"
+    >
+      <div className="-mt-px border-y border-border">
         <SectionHeading id="resources" heading="Resources" />
-      </GridContainer>
+      </div>
 
-      <GridContainer
-        showCrosshairs={false}
-        className="flex flex-col items-center justify-center p-4 text-center sm:p-6 md:p-8"
-      >
+      <div className="flex flex-col items-center justify-center border-b border-border p-4 text-center sm:p-6 md:p-8">
         <Turntable
           style={{ width: 400 }}
           label="Coming soon"
@@ -27,7 +26,7 @@ export const SectionResources = () => {
         <p className="mt-1 max-w-sm text-xs leading-relaxed text-muted-foreground sm:text-sm">
           We’re currently building for this resources. Check back soon!
         </p>
-      </GridContainer>
+      </div>
     </section>
   )
 }

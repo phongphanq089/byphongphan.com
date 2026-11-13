@@ -20,6 +20,16 @@
     "registryDependencies": []
   },
   {
+    "name": "scroll-indicator",
+    "type": "registry:component",
+    "title": "Scroll Indicator",
+    "description": "Vertical scroll progress indicator with tick marks, click-to-reveal section titles, Web Audio micro-interactions, and spring physics.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
+  },
+  {
     "name": "middle-truncation",
     "type": "registry:ui",
     "title": "Middle Truncation",
@@ -193,6 +203,18 @@
     "description": "Interactive 404 digital void experience featuring dynamic cursor pixel trails and terminal status diagnostics.",
     "dependencies": [
       "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "button"
+    ]
+  },
+  {
+    "name": "not-found-04",
+    "type": "registry:block",
+    "title": "Not Found ASCII Skyline",
+    "description": "Interactive 404 error page with procedural ASCII matrix cityscape, raycasted windows, and dynamic avoidance physics.",
+    "dependencies": [
       "lucide-react"
     ],
     "registryDependencies": [
