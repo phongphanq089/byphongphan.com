@@ -18,7 +18,6 @@ export function ModeToggle({
   const { setTheme, isDark, resolvedTheme } = useTheme()
 
   const handleToggle = React.useCallback(() => {
-    // Play tactile acoustic feedback
     try {
       play("toggle", {
         direction: isDark ? "back" : "forward",
@@ -32,7 +31,6 @@ export function ModeToggle({
     setTheme(nextTheme)
   }, [isDark, resolvedTheme, setTheme])
 
-  // Hook up global keyboard shortcut 'D'
   useKeyboardShortcuts("d", handleToggle, {
     enabled: enableShortcut,
     enableOnFormTags: false,
@@ -51,49 +49,74 @@ export function ModeToggle({
               : "Switch to dark mode (Press D)"
           }
           className={cn(
-            "relative flex size-6 shrink-0 items-center justify-center rounded-full border border-border/80 bg-black text-white shadow-xs select-none",
-            "transition-transform duration-200 ease-out will-change-transform hover:scale-105 active:scale-90",
-            "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 focus-visible:outline-none",
+            "group relative flex size-9 shrink-0 items-center justify-center",
+            "rounded-lg",
+            "bg-muted text-foreground shadow-xs select-none hover:bg-muted/80",
+            "transition-all duration-200 ease-out",
+            "hover:scale-105 hover:border-foreground/20 active:scale-95",
+            "focus-visible:ring-2 focus-visible:ring-ring",
+            "focus-visible:ring-offset-1 focus-visible:outline-none",
             className
           )}
         >
-          {/*
-            GPU Hardware-accelerated CSS transforms.
-            Runs on the compositor thread so it never drops frames or freezes even during heavy React re-renders.
-          */}
-          <svg
-            viewBox="0 0 240 240"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            className="pointer-events-none size-full overflow-visible"
-            aria-hidden="true"
-          >
-            <g
-              className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform"
-              style={{
-                transform: isDark ? "rotate(-180deg)" : "rotate(0deg)",
-                transformOrigin: "120px 120px",
-              }}
+          <div className="relative size-4.5">
+            {/* SUN ICON (Light Mode) */}
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              className={cn(
+                "pointer-events-none absolute inset-0 size-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform",
+                isDark
+                  ? "scale-50 -rotate-90 opacity-0"
+                  : "scale-100 rotate-0 opacity-100"
+              )}
+            >
+              <circle cx="12" cy="12" r="4" className="fill-current/15" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+
+            {/* MOON & STARS ICON (Dark Mode) */}
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              className={cn(
+                "pointer-events-none absolute inset-0 size-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform",
+                isDark
+                  ? "scale-100 rotate-0 opacity-100"
+                  : "scale-50 rotate-90 opacity-0"
+              )}
             >
               <path
-                d="M120 67.5C149.25 67.5 172.5 90.75 172.5 120C172.5 149.25 149.25 172.5 120 172.5"
-                fill="white"
+                d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"
+                className="fill-current/15"
               />
               <path
-                d="M120 67.5C90.75 67.5 67.5 90.75 67.5 120C67.5 149.25 90.75 172.5 120 172.5"
-                fill="black"
+                d="M19 3v4M17 5h4"
+                strokeWidth="1.75"
+                className={cn(
+                  "origin-center transition-transform delay-100 duration-500",
+                  isDark ? "scale-100" : "scale-0"
+                )}
               />
-            </g>
-            <path
-              className="transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform"
-              style={{
-                transform: isDark ? "rotate(180deg)" : "rotate(0deg)",
-                transformOrigin: "120px 120px",
-              }}
-              d="M120 3.75C55.5 3.75 3.75 55.5 3.75 120C3.75 184.5 55.5 236.25 120 236.25C184.5 236.25 236.25 184.5 236.25 120C236.25 55.5 184.5 3.75 120 3.75ZM120 214.5V172.5C90.75 172.5 67.5 149.25 67.5 120C67.5 90.75 90.75 67.5 120 67.5V25.5C172.5 25.5 214.5 67.5 214.5 120C214.5 172.5 172.5 214.5 120 214.5Z"
-              fill="white"
-            />
-          </svg>
+            </svg>
+          </div>
         </button>
       </TooltipTrigger>
       <TooltipContent

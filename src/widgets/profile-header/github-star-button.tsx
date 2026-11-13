@@ -45,8 +45,7 @@ export function GitHubStarButton({
           rel="noopener noreferrer"
           aria-label={`GitHub repository (${tooltipLabel})`}
           className={cn(
-            "group relative inline-flex h-full w-full items-center gap-1.5 bg-muted px-4 py-1.5 text-sm font-medium text-foreground transition-all duration-200 hover:bg-muted active:scale-95 dark:border-white/10 dark:bg-neutral-800/80 dark:hover:bg-neutral-700/80",
-            "focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none",
+            "group relative inline-flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted text-foreground hover:bg-foreground/10 focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none dark:hover:bg-white/10",
             className
           )}
         >
