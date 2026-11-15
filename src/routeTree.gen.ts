@@ -14,8 +14,10 @@ import { Route as BrandAppRouteImport } from './routes/brand-app'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as UiRouteRouteImport } from './routes/ui/route'
 import { Route as SiteIndexRouteImport } from './routes/_site/index'
 import { Route as BlocksPreviewSlugRouteImport } from './routes/blocks-preview.$slug'
+import { Route as UiIndexRouteImport } from './routes/ui/index'
 import { Route as SiteBlocksIndexRouteImport } from './routes/_site/blocks/index'
 import { Route as SiteBlogIndexRouteImport } from './routes/_site/blog/index'
 import { Route as SiteComponentUiIndexRouteImport } from './routes/_site/component-ui/index'
@@ -52,6 +54,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UiRouteRoute = UiRouteRouteImport.update({
+  id: '/ui',
+  path: '/ui',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SiteIndexRoute = SiteIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -61,6 +68,11 @@ const BlocksPreviewSlugRoute = BlocksPreviewSlugRouteImport.update({
   id: '/blocks-preview/$slug',
   path: '/blocks-preview/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const UiIndexRoute = UiIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => UiRouteRoute,
 } as any)
 const SiteBlocksIndexRoute = SiteBlocksIndexRouteImport.update({
   id: '/blocks/',
@@ -122,11 +134,13 @@ const SiteHooksCategorySlugRoute = SiteHooksCategorySlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
+  '/ui': typeof UiRouteRouteWithChildren
   '/brand-app': typeof BrandAppRoute
   '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
+  '/ui/': typeof UiIndexRoute
   '/blocks/': typeof SiteBlocksIndexRoute
   '/blog/': typeof SiteBlogIndexRoute
   '/component-ui/': typeof SiteComponentUiIndexRoute
@@ -146,6 +160,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
   '/': typeof SiteIndexRoute
+  '/ui': typeof UiIndexRoute
   '/blocks': typeof SiteBlocksIndexRoute
   '/blog': typeof SiteBlogIndexRoute
   '/component-ui': typeof SiteComponentUiIndexRoute
@@ -161,12 +176,14 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_site': typeof SiteRouteRouteWithChildren
+  '/ui': typeof UiRouteRouteWithChildren
   '/brand-app': typeof BrandAppRoute
   '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
   '/_site/': typeof SiteIndexRoute
+  '/ui/': typeof UiIndexRoute
   '/_site/blocks/': typeof SiteBlocksIndexRoute
   '/_site/blog/': typeof SiteBlogIndexRoute
   '/_site/component-ui/': typeof SiteComponentUiIndexRoute
@@ -183,11 +200,13 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ui'
     | '/brand-app'
     | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/blocks-preview/$slug'
+    | '/ui/'
     | '/blocks/'
     | '/blog/'
     | '/component-ui/'
@@ -207,6 +226,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/blocks-preview/$slug'
     | '/'
+    | '/ui'
     | '/blocks'
     | '/blog'
     | '/component-ui'
@@ -221,12 +241,14 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_site'
+    | '/ui'
     | '/brand-app'
     | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/blocks-preview/$slug'
     | '/_site/'
+    | '/ui/'
     | '/_site/blocks/'
     | '/_site/blog/'
     | '/_site/component-ui/'
@@ -242,6 +264,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   SiteRouteRoute: typeof SiteRouteRouteWithChildren
+  UiRouteRoute: typeof UiRouteRouteWithChildren
   BrandAppRoute: typeof BrandAppRoute
   ProfileRoute: typeof ProfileRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
@@ -286,6 +309,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ui': {
+      id: '/ui'
+      path: '/ui'
+      fullPath: '/ui'
+      preLoaderRoute: typeof UiRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_site/': {
       id: '/_site/'
       path: '/'
@@ -299,6 +329,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/blocks-preview/$slug'
       preLoaderRoute: typeof BlocksPreviewSlugRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/ui/': {
+      id: '/ui/'
+      path: '/'
+      fullPath: '/ui/'
+      preLoaderRoute: typeof UiIndexRouteImport
+      parentRoute: typeof UiRouteRoute
     }
     '/_site/blocks/': {
       id: '/_site/blocks/'
@@ -414,8 +451,20 @@ const SiteRouteRouteWithChildren = SiteRouteRoute._addFileChildren(
   SiteRouteRouteChildren,
 )
 
+interface UiRouteRouteChildren {
+  UiIndexRoute: typeof UiIndexRoute
+}
+
+const UiRouteRouteChildren: UiRouteRouteChildren = {
+  UiIndexRoute: UiIndexRoute,
+}
+
+const UiRouteRouteWithChildren =
+  UiRouteRoute._addFileChildren(UiRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   SiteRouteRoute: SiteRouteRouteWithChildren,
+  UiRouteRoute: UiRouteRouteWithChildren,
   BrandAppRoute: BrandAppRoute,
   ProfileRoute: ProfileRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
