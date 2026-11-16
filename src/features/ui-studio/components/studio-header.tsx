@@ -1,17 +1,5 @@
 import { Link } from "@tanstack/react-router"
-import {
-  BookOpen,
-  Code2,
-  ExternalLink,
-  Maximize2,
-  Minimize2,
-  Moon,
-  PanelLeft,
-  Search,
-  Star,
-  Sun,
-} from "lucide-react"
-import { useEffect, useState } from "react"
+import { ExternalLink, Moon, PanelLeft, Search, Star, Sun } from "lucide-react"
 
 import { DrawerTrigger } from "@/registry/ui/drawer"
 import { siteConfig } from "@/shared/config"
@@ -23,36 +11,15 @@ import { openCommandMenu } from "@/widgets/command-menu"
 import { useStudioLayout } from "../hooks/studio-layout-context"
 import { studioSidebarHandle } from "../hooks/studio-sidebar-handle"
 
+/**
+ * Slim global header: sidebar toggle + brand on the left, search / GitHub /
+ * star / theme on the right. All stage-interaction actions (install, variant
+ * switch, code, docs, fullscreen) live in the floating StudioDock below.
+ */
 export function StudioHeader() {
-  const { isSidebarOpen, panel, toggleDocs, toggleCode, activeItem } =
-    useStudioLayout()
-  // Blocks ship without MDX docs — hide the Docs toggle there, keep Code only
-  const hasDocs = activeItem !== null && activeItem.collection !== "blocks"
+  const { isSidebarOpen } = useStudioLayout()
   const { resolvedTheme, setTheme } = useTheme()
   const isDark = resolvedTheme === "dark"
-
-  const [isFullscreen, setIsFullscreen] = useState(false)
-
-  useEffect(() => {
-    const handleFullscreenChange = () => {
-      setIsFullscreen(Boolean(document.fullscreenElement))
-    }
-    document.addEventListener("fullscreenchange", handleFullscreenChange)
-    return () =>
-      document.removeEventListener("fullscreenchange", handleFullscreenChange)
-  }, [])
-
-  const handleToggleFullscreen = async () => {
-    try {
-      if (document.fullscreenElement) {
-        await document.exitFullscreen()
-      } else {
-        await document.documentElement.requestFullscreen()
-      }
-    } catch {
-      // Fullscreen might be blocked by browser policy
-    }
-  }
 
   return (
     <header className="relative z-30 flex h-11 shrink-0 items-center justify-between border-b border-border/70 bg-background/80 px-2.5 backdrop-blur-sm sm:px-4">
@@ -110,56 +77,6 @@ export function StudioHeader() {
           <Search className="size-3.5" aria-hidden="true" />
           <Kbd className="h-4 min-w-4 px-1 text-[9px]">⌘K</Kbd>
         </button>
-
-        {/* Fullscreen toggle */}
-        <button
-          type="button"
-          onClick={handleToggleFullscreen}
-          aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-          title={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
-          className="inline-flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
-        >
-          {isFullscreen ? (
-            <Minimize2 className="size-3.5" aria-hidden="true" />
-          ) : (
-            <Maximize2 className="size-3.5" aria-hidden="true" />
-          )}
-        </button>
-
-        {/* Panel toggles — only relevant on a detail page */}
-        {activeItem ? (
-          <>
-            {hasDocs ? (
-              <button
-                type="button"
-                onClick={toggleDocs}
-                aria-label="View docs"
-                title="Toggle documentation panel (F)"
-                aria-pressed={panel === "docs"}
-                className={cn(
-                  "inline-flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none",
-                  panel === "docs" && "bg-accent text-foreground shadow-xs"
-                )}
-              >
-                <BookOpen className="size-3.5" aria-hidden="true" />
-              </button>
-            ) : null}
-
-            <button
-              type="button"
-              onClick={toggleCode}
-              aria-label="View code"
-              title="Toggle source code view (C)"
-              aria-pressed={panel === "code"}
-              className={cn(
-                "inline-flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none",
-                panel === "code" && "bg-accent text-foreground shadow-xs"
-              )}
-            >
-              <Code2 className="size-3.5" aria-hidden="true" />
-            </button>
-          </>
-        ) : null}
 
         {/* External project link */}
         <a

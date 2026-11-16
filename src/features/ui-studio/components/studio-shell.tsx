@@ -154,7 +154,7 @@ export function StudioShell() {
             >
               <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden">
                 <Outlet />
-                <StudioDock item={activeItem} />
+                {activeItem ? <StudioDock item={activeItem} /> : null}
               </div>
             </section>
           </div>
