@@ -62,7 +62,7 @@ export const SectionHooks = () => {
           id="hooks"
           heading="React Hooks"
           count={HOOKS_DATA.length}
-          actionHref="/hooks"
+          actionHref="/ui/hooks"
           actionLabel="All hooks"
         />
       </div>

@@ -104,9 +104,9 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
       if (!prevComponent) return
       play("attention", { direction: "back", emphasis: "subtle" })
       navigation({
-        to: "/component-ui/$category/$slug",
+        to: "/ui/$collection/$slug",
         params: {
-          category: prevComponent.category,
+          collection: prevComponent.category,
           slug: prevComponent.slug,
         },
       })
@@ -123,9 +123,9 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
       if (!nextComponent) return
       play("attention", { direction: "forward", emphasis: "subtle" })
       navigation({
-        to: "/component-ui/$category/$slug",
+        to: "/ui/$collection/$slug",
         params: {
-          category: nextComponent.category,
+          collection: nextComponent.category,
           slug: nextComponent.slug,
         },
       })
@@ -256,7 +256,7 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
         <div className="relative flex flex-col justify-between gap-4 border-t border-border px-4 py-3 md:px-6">
           <div className="flex items-center justify-between">
             <Button variant={"ghost"} asChild>
-              <Link to={`/component-ui/${component.category}` as never}>
+              <Link to={`/ui/${component.category}` as never}>
                 <ArrowLeft className="size-3.5" />
                 <span className="capitalize">{component.category}</span>
               </Link>
@@ -290,9 +290,9 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
                         }
                       >
                         <Link
-                          to="/component-ui/$category/$slug"
+                          to="/ui/$collection/$slug"
                           params={{
-                            category: prevComponent.category,
+                            collection: prevComponent.category,
                             slug: prevComponent.slug,
                           }}
                         >
@@ -324,9 +324,9 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
                         }
                       >
                         <Link
-                          to="/component-ui/$category/$slug"
+                          to="/ui/$collection/$slug"
                           params={{
-                            category: nextComponent.category,
+                            collection: nextComponent.category,
                             slug: nextComponent.slug,
                           }}
                         >

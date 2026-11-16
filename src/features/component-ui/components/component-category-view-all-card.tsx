@@ -30,7 +30,8 @@ export function ComponentCategoryViewAllCard({
       contentClassName="h-full flex-col justify-between"
     >
       <Link
-        to="/component-ui"
+        to="/ui/$collection"
+        params={{ collection: "base" }}
         className="flex h-full w-full flex-col justify-between gap-3 p-4 focus:outline-none sm:p-5"
       >
         {/* Top row: index + title · count + arrow */}

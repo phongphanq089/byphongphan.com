@@ -6,17 +6,18 @@ import { memo, useEffect, useRef, useState } from "react"
 import { motion } from "motion/react"
 import { cn } from "@/shared/lib/utils"
 
+/** Item line — standard rule of the caliper: default short, active longest. */
 const lineVariants = {
   normal: { width: 24 },
   active: { width: 40 },
   hover: { width: 40 },
 }
 
-const groupLineVariants = {
-  normal: { width: 16 },
-  active: { width: 24 },
-  hover: { width: 20 },
-}
+/** Group header line — fixed, shorter than item lines ("nhóm to line ngắn"). */
+const GROUP_LINE_WIDTH = 14
+
+/** Divider tick between items. */
+const TICK_CLASS = "h-px w-5 shrink-0 bg-foreground/15"
 
 export type LineNavItem = {
   title: React.ReactNode
@@ -25,7 +26,8 @@ export type LineNavItem = {
 }
 
 export type LineNavGroup = {
-  title: string
+  /** Title content — string or composed nodes (accent count badge…). */
+  title: React.ReactNode
   href?: string
   items: LineNavItem[]
 }
@@ -45,6 +47,8 @@ export type LineNavProps = {
     item: LineNavItem | LineNavGroup,
     event: React.MouseEvent<HTMLAnchorElement>
   ) => void
+  /** Called when an item or group header is hovered or focused (intent preload) */
+  onItemHover?: (item: LineNavItem | LineNavGroup) => void
 }
 
 export function LineNav({
@@ -54,6 +58,7 @@ export function LineNav({
   activeHref,
   scrollActiveIntoView = true,
   onItemClick,
+  onItemHover,
 }: LineNavProps) {
   const [internalActive, setInternalActive] = useState<string>(() => {
     if (activeHref) return activeHref
@@ -88,69 +93,73 @@ export function LineNav({
     onItemClick?.(item, event)
   }
 
+  const handleItemHover = (item: LineNavItem | LineNavGroup) => {
+    if (item.href) {
+      onItemHover?.(item)
+    }
+  }
+
   // 1. Grouped Navigation Mode
   if (groups && groups.length > 0) {
     return (
       <nav
-        className={cn("flex flex-col gap-2 py-5.25 select-none", className)}
-        style={
-          {
-            "--line-nav-width": `${lineVariants.normal.width}px`,
-          } as React.CSSProperties
-        }
+        aria-label="Component navigation"
+        className={cn("flex flex-col gap-1.5 py-4 select-none", className)}
       >
         {groups.map((group, groupIndex) => {
           const isGroupActive = Boolean(
             group.href && group.href === currentActive
           )
-          const isLastGroup = groupIndex === groups.length - 1
 
           return (
-            <div key={group.title} className="contents">
-              {/* Group Header */}
+            <div key={group.href ?? `group-${groupIndex}`} className="contents">
+              {/* Group header — fixed height row so it can never collapse */}
               {group.href ? (
                 <motion.a
                   ref={isGroupActive ? activeItemRef : undefined}
                   aria-current={isGroupActive ? "page" : undefined}
-                  className="group relative flex h-px items-center gap-3 after:absolute after:top-1/2 after:left-0 after:size-full after:-translate-y-1/2 after:p-3.5 focus-visible:outline-none"
+                  className="group flex h-7 items-center gap-3 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                   href={group.href}
                   initial={false}
-                  animate={isGroupActive ? "active" : "normal"}
-                  whileHover="hover"
                   onClick={(event) => handleItemClick(group, event)}
+                  onMouseEnter={() => handleItemHover(group)}
+                  onFocus={() => handleItemHover(group)}
                 >
-                  <motion.span
+                  <span
+                    aria-hidden="true"
+                    style={{ width: GROUP_LINE_WIDTH }}
                     className={cn(
-                      "block h-px shrink-0 transition-[background-color] ease-out",
+                      "h-[2px] shrink-0 rounded-full transition-[background-color,box-shadow] ease-out",
                       isGroupActive
-                        ? "bg-foreground"
-                        : "bg-foreground/30 group-hover:bg-foreground/60"
+                        ? "bg-pp-primary shadow-[0_0_8px_var(--pp-primary-glow)]"
+                        : "bg-pp-primary/75 group-hover:bg-pp-primary"
                     )}
-                    variants={groupLineVariants}
-                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
                   />
-                  <span className="font-mono text-[11px] font-medium tracking-wider text-foreground uppercase transition-[color] ease-out group-hover:text-foreground">
+                  <span className="flex min-w-0 items-center gap-2">
                     {group.title}
                   </span>
                 </motion.a>
               ) : (
-                <div className="group relative flex h-px items-center gap-3 select-none">
-                  <span className="block h-px w-4 shrink-0 bg-foreground/30" />
-                  <span className="font-mono text-[11px] font-medium tracking-wider text-foreground uppercase">
+                <div className="flex h-7 items-center gap-3 select-none">
+                  <span
+                    aria-hidden="true"
+                    style={{ width: GROUP_LINE_WIDTH }}
+                    className="h-[2px] shrink-0 rounded-full bg-pp-primary/75"
+                  />
+                  <span className="flex min-w-0 items-center gap-2">
                     {group.title}
                   </span>
                 </div>
               )}
 
-              {/* Ticks following group header */}
-              <span className="block h-px w-(--line-nav-width) bg-foreground/20" />
-              <span className="block h-px w-(--line-nav-width) bg-foreground/20" />
+              {/* Tick dividers following the group header */}
+              <span aria-hidden="true" className={TICK_CLASS} />
+              <span aria-hidden="true" className={TICK_CLASS} />
 
               {/* Group items */}
               {group.items.map((item, itemIndex) => {
                 const isActive = item.href === currentActive
                 const isLastItemInGroup = itemIndex === group.items.length - 1
-                const isVeryLast = isLastGroup && isLastItemInGroup
 
                 return (
                   <LineNavItem
@@ -160,8 +169,9 @@ export function LineNav({
                     href={item.href}
                     badge={item.badge}
                     active={isActive}
-                    isLast={isVeryLast}
+                    isLast={isLastItemInGroup}
                     onClick={(event) => handleItemClick(item, event)}
+                    onHover={() => handleItemHover(item)}
                   />
                 )
               })}
@@ -176,12 +186,8 @@ export function LineNav({
 
   return (
     <nav
-      className={cn("flex flex-col gap-2 py-5.25 select-none", className)}
-      style={
-        {
-          "--line-nav-width": `${lineVariants.normal.width}px`,
-        } as React.CSSProperties
-      }
+      aria-label="Component navigation"
+      className={cn("flex flex-col gap-1.5 py-4 select-none", className)}
     >
       {navItems.map((item, index) => {
         const isActive = item.href === currentActive
@@ -196,6 +202,7 @@ export function LineNav({
             active={isActive}
             isLast={index === navItems.length - 1}
             onClick={(event) => handleItemClick(item, event)}
+            onHover={() => handleItemHover(item)}
           />
         )
       })}
@@ -211,6 +218,7 @@ const LineNavItem = memo(function LineNavItem({
   active = false,
   isLast = false,
   onClick,
+  onHover,
 }: {
   ref?: React.Ref<HTMLAnchorElement>
   title: React.ReactNode
@@ -219,20 +227,24 @@ const LineNavItem = memo(function LineNavItem({
   active?: boolean
   isLast?: boolean
   onClick?: React.MouseEventHandler<HTMLAnchorElement>
+  onHover?: () => void
 }) {
   return (
     <>
       <motion.a
         ref={ref}
         aria-current={active ? "page" : undefined}
-        className="group relative flex h-px items-center gap-3 after:absolute after:top-1/2 after:left-0 after:size-full after:-translate-y-1/2 after:p-3.5 focus-visible:outline-none"
+        className="group flex h-6 items-center gap-3 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
         href={href}
         initial={false}
         animate={active ? "active" : "normal"}
         whileHover="hover"
         onClick={onClick}
+        onMouseEnter={onHover}
+        onFocus={onHover}
       >
         <motion.span
+          aria-hidden="true"
           className={cn(
             "block h-px shrink-0 transition-[background-color,box-shadow] ease-out",
             active
@@ -257,8 +269,8 @@ const LineNavItem = memo(function LineNavItem({
 
       {!isLast && (
         <>
-          <span className="block h-px w-(--line-nav-width) bg-foreground/20" />
-          <span className="block h-px w-(--line-nav-width) bg-foreground/20" />
+          <span aria-hidden="true" className={TICK_CLASS} />
+          <span aria-hidden="true" className={TICK_CLASS} />
         </>
       )}
     </>

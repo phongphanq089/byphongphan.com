@@ -31,7 +31,7 @@ export function HookQuickNav({
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((hook) => ({
           title: hook.name,
-          href: `/hooks/${hook.category}/${hook.slug}`,
+          href: `/ui/${hook.category}/${hook.slug}`,
           badge: hook.isNew ? (
             <span
               aria-label="New component"
@@ -42,7 +42,7 @@ export function HookQuickNav({
 
       return {
         title: cat.label,
-        href: `/hooks/${cat.id}`,
+        href: `/ui/${cat.id}`,
         items,
       }
     }).filter((group) => group.items.length > 0)
@@ -59,7 +59,7 @@ export function HookQuickNav({
       currentCategory={currentCategory}
       currentSlug={currentSlug}
       currentTitle={displayTitle}
-      activeHref={`/hooks/${currentCategory}/${currentSlug}`}
+      activeHref={`/ui/${currentCategory}/${currentSlug}`}
       navGroups={navGroups}
       totalCount={totalCount}
       className={className}

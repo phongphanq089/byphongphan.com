@@ -1,35 +1,17 @@
-import type { LucideIcon } from "lucide-react"
-import {
-  Blocks,
-  Box,
-  Image as ImageIcon,
-  Layers3,
-  LineChart,
-  Mail,
-  Webhook,
-} from "lucide-react"
-
 import type { StudioCollectionId } from "./types"
 
 /**
- * Static taxonomy: display order + labels. Counts are injected at runtime by
- * the adapter (never hardcoded here) — items with 0 entries stay hidden.
+ * Static taxonomy: the collection families the studio groups registry items
+ * into. Ids match what the URL segment resolver understands.
  */
 export const STUDIO_TAXONOMY: {
   id: Exclude<StudioCollectionId, "all">
   label: string
-  icon: LucideIcon
 }[] = [
-  { id: "base", label: "Base", icon: Box },
-  { id: "blocks", label: "Blocks", icon: Blocks },
-  { id: "hooks", label: "Hooks", icon: Webhook },
-  { id: "charts", label: "Charts", icon: LineChart },
-  { id: "og-images", label: "OG Images", icon: ImageIcon },
-  { id: "emails", label: "Emails", icon: Mail },
+  { id: "base", label: "Base" },
+  { id: "blocks", label: "Blocks" },
+  { id: "hooks", label: "Hooks" },
+  { id: "charts", label: "Charts" },
+  { id: "og-images", label: "OG Images" },
+  { id: "emails", label: "Emails" },
 ]
-
-export const STUDIO_ALL_COLLECTION = {
-  id: "all" as const,
-  label: "All Items",
-  icon: Layers3,
-}

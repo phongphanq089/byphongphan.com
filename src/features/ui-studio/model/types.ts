@@ -5,7 +5,6 @@ export type StudioCollectionId =
   "all" | "base" | "blocks" | "charts" | "og-images" | "emails" | "hooks"
 
 export type StudioRenderMode = "live" | "schematic" | "hook-code"
-export type RightPanelMode = "closed" | "docs" | "code"
 
 export type StudioControlValue = string | number | boolean
 
@@ -49,10 +48,4 @@ export interface StudioItem {
   variants?: StudioVariant[]
   controls?: StudioControlSchema[]
   dependencies?: string[]
-}
-
-export interface StudioCollectionMeta {
-  id: StudioCollectionId
-  label: string
-  count: number
 }

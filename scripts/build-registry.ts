@@ -244,14 +244,22 @@ async function buildRegistry() {
   const redirectLines: string[] = [
     "# Auto-generated 301 redirects by scripts/build-registry.ts - DO NOT EDIT MANUALLY",
     "# Maps legacy/renamed component and block slugs to their canonical URLs",
+    "",
+    "# 301 Wildcard Redirects from legacy registry routes to the unified /ui studio",
+    "/component-ui/:category/:slug  /ui/:category/:slug  301!",
+    "/blocks/:category/:slug        /ui/:category/:slug  301!",
+    "/hooks/:category/:slug         /ui/:category/:slug  301!",
+    "/component-ui/:category        /ui/:category        301!",
+    "/blocks/:category              /ui/:category        301!",
+    "/hooks/:category               /ui/:category        301!",
+    "/component-ui                  /ui/base             301!",
+    "/blocks                        /ui/blocks           301!",
+    "/hooks                         /ui/hooks            301!",
   ]
 
   for (const item of REGISTRY_ITEMS) {
     if (item.aliases && item.aliases.length > 0) {
-      const isBlock = item.type === "registry:block"
-      const basePath = isBlock
-        ? `/blocks/${item.category}`
-        : `/component-ui/${item.category}`
+      const basePath = `/ui/${item.category}`
 
       for (const alias of item.aliases) {
         redirectLines.push(

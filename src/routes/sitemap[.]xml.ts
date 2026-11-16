@@ -2,10 +2,12 @@ import { createFileRoute } from "@tanstack/react-router"
 
 import { BLOCKS_DATA } from "@/features/blocks"
 import { COMPONENTS_DATA } from "@/features/component-ui"
+import { HOOKS_DATA } from "@/features/hooks"
 import {
   siteConfig,
   VALID_BLOCK_CATEGORY_IDS,
   VALID_COMPONENT_CATEGORY_IDS,
+  VALID_HOOK_CATEGORY_IDS,
 } from "@/shared/config"
 
 interface SitemapRoute {
@@ -18,7 +20,7 @@ interface SitemapRoute {
 
 /**
  * Sitemap generation for TanStack Start.
- * This route lists both static and dynamic pages.
+ * Registry pages live under the unified `/ui` studio.
  */
 export const Route = createFileRoute("/sitemap.xml")({
   server: {
@@ -34,7 +36,7 @@ export const Route = createFileRoute("/sitemap.xml")({
             priority: "1.0",
           },
           {
-            path: "/blocks",
+            path: "/ui",
             lastmod: now,
             changefreq: "weekly",
             priority: "0.9",
@@ -52,7 +54,19 @@ export const Route = createFileRoute("/sitemap.xml")({
             priority: "0.8",
           },
           {
-            path: "/component-ui",
+            path: "/ui/base",
+            lastmod: now,
+            changefreq: "weekly",
+            priority: "0.9",
+          },
+          {
+            path: "/ui/blocks",
+            lastmod: now,
+            changefreq: "weekly",
+            priority: "0.8",
+          },
+          {
+            path: "/ui/hooks",
             lastmod: now,
             changefreq: "weekly",
             priority: "0.8",
@@ -67,10 +81,10 @@ export const Route = createFileRoute("/sitemap.xml")({
 
         const dynamicRoutes: SitemapRoute[] = []
 
-        // 1. Dynamic Category Pages (Component UI & Blocks)
+        // 1. Dynamic category listing pages (components, blocks, hooks)
         VALID_COMPONENT_CATEGORY_IDS.forEach((cat) => {
           dynamicRoutes.push({
-            path: `/component-ui/${cat}`,
+            path: `/ui/${cat}`,
             lastmod: now,
             changefreq: "weekly",
             priority: "0.8",
@@ -79,27 +93,46 @@ export const Route = createFileRoute("/sitemap.xml")({
 
         VALID_BLOCK_CATEGORY_IDS.forEach((cat) => {
           dynamicRoutes.push({
-            path: `/blocks/${cat}`,
+            path: `/ui/${cat}`,
             lastmod: now,
             changefreq: "weekly",
             priority: "0.8",
           })
         })
 
-        // 2. Dynamic Component UI Pages
+        VALID_HOOK_CATEGORY_IDS.forEach((cat) => {
+          dynamicRoutes.push({
+            path: `/ui/${cat}`,
+            lastmod: now,
+            changefreq: "weekly",
+            priority: "0.8",
+          })
+        })
+
+        // 2. Dynamic component detail pages
         COMPONENTS_DATA.forEach((component) => {
           dynamicRoutes.push({
-            path: `/component-ui/${component.category}/${component.slug}`,
+            path: `/ui/${component.category}/${component.slug}`,
             lastmod: now,
             changefreq: "weekly",
             priority: "0.8",
           })
         })
 
-        // 3. Dynamic Blocks Pages
+        // 3. Dynamic block detail pages
         BLOCKS_DATA.forEach((block) => {
           dynamicRoutes.push({
-            path: `/blocks/${block.category}/${block.slug}`,
+            path: `/ui/${block.category}/${block.slug}`,
+            lastmod: now,
+            changefreq: "weekly",
+            priority: "0.8",
+          })
+        })
+
+        // 4. Dynamic hook detail pages
+        HOOKS_DATA.forEach((hook) => {
+          dynamicRoutes.push({
+            path: `/ui/${hook.category}/${hook.slug}`,
             lastmod: now,
             changefreq: "weekly",
             priority: "0.8",

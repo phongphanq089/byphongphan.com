@@ -30,7 +30,8 @@ export function BlockCategoryViewAllCard({
       contentClassName="h-full flex-col justify-between"
     >
       <Link
-        to="/blocks"
+        to="/ui/$collection"
+        params={{ collection: "blocks" }}
         className="flex h-full w-full flex-col justify-between gap-3 p-4 focus:outline-none sm:p-5"
       >
         {/* Top row: index + title · count + arrow */}

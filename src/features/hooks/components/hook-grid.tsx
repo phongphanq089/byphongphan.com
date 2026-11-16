@@ -90,7 +90,8 @@ export function HookGrid({ category = "all" }: HookGridProps) {
             utilities for this category.
           </p>
           <Link
-            to="/hooks"
+            to="/ui/$collection"
+            params={{ collection: "hooks" }}
             className="mt-5 flex items-center gap-2 rounded-lg border border-primary/40 bg-primary/10 px-4 py-2 text-xs font-semibold text-primary transition-all duration-200 hover:bg-primary hover:text-white"
           >
             <LayoutGrid className="size-3.5" />

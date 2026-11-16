@@ -158,7 +158,6 @@ function buildRegistryMenuItems(): CommandMenuItem[] {
   return REGISTRY_ITEMS.filter((item) => item.type !== "registry:hook").map(
     (item: RegistryItem) => {
       const isBlock = item.type === "registry:block"
-      const basePath = isBlock ? "/blocks" : "/component-ui"
       const categorySlug = item.category
 
       return {
@@ -177,7 +176,7 @@ function buildRegistryMenuItems(): CommandMenuItem[] {
         ],
         group: isBlock ? "blocks" : "components-ui",
         badge: item.isNew ? "New" : undefined,
-        to: `${basePath}/${categorySlug}/${item.name}`,
+        to: `/ui/${categorySlug}/${item.name}`,
       }
     }
   )

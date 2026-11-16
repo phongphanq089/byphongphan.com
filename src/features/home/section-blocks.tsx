@@ -33,7 +33,7 @@ export const SectionBlocks = () => {
           id="blocks"
           heading="Production Blocks"
           count={totalCount}
-          actionHref="/blocks"
+          actionHref="/ui/blocks"
           actionLabel="All blocks"
         />
       </div>

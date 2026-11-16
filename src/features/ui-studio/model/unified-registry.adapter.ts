@@ -1,17 +1,21 @@
 import type { ComponentType } from "react"
 
-import { COMPONENT_DEMOS,HOOK_DEMOS } from "@/registry/demos"
+import { COMPONENT_DEMOS, HOOK_DEMOS } from "@/registry/demos"
 import { REGISTRY_BLOCKS } from "@/registry/registry-blocks"
 import { REGISTRY_COMPONENTS } from "@/registry/registry-components"
 import { REGISTRY_HOOKS } from "@/registry/registry-hooks"
 import type { RegistryItem } from "@/registry/schema"
 import { COMPONENT_VARIANTS } from "@/registry/variants"
-import { siteConfig } from "@/shared/config"
+import {
+  BLOCK_CATEGORIES,
+  COMPONENT_CATEGORIES,
+  HOOK_CATEGORIES,
+  siteConfig,
+} from "@/shared/config"
 
-import { STUDIO_ALL_COLLECTION, STUDIO_TAXONOMY } from "./taxonomy.config"
+import { STUDIO_TAXONOMY } from "./taxonomy.config"
 import type {
   StudioCollectionId,
-  StudioCollectionMeta,
   StudioItem,
   StudioRenderMode,
   StudioVariant,
@@ -114,17 +118,6 @@ const RECORDS_BY_SLUG = new Map(
 
 export const STUDIO_RECORDS = RECORDS
 
-export function getItemsByCollection(
-  collection: StudioCollectionId
-): StudioItem[] {
-  if (collection === "all") {
-    return RECORDS.map((record) => record.item)
-  }
-  return RECORDS.filter((record) => record.item.collection === collection).map(
-    (record) => record.item
-  )
-}
-
 export function getRecordByItem(itemId: string | undefined | null) {
   if (!itemId) return undefined
   return RECORDS_BY_ID.get(itemId) ?? RECORDS_BY_SLUG.get(itemId)
@@ -149,34 +142,110 @@ export function getStudioSourceFiles(item: StudioItem): StudioSourceFile[] {
   }))
 }
 
+/** Look up a raw source file from the workspace glob, keyed relative to `src/registry/`. */
+export function getRawRegistrySource(path: string): string | undefined {
+  return RAW_SOURCES_BY_PATH.get(path)
+}
+
 export function getStudioCliCommand(item: StudioItem): string {
-  return `npx shadcn@latest add ${siteConfig.registry.namespace}/${item.slug}`
+  return `npx shadcn@latest add ${siteConfig.url}/r/${item.slug}.json`
 }
 
-export function getCollectionCount(collection: StudioCollectionId): number {
-  if (collection === "all") return RECORDS.length
-  return RECORDS.filter((record) => record.item.collection === collection)
-    .length
+/** Canonical href for a studio item's detail page. */
+export function getStudioItemHref(item: StudioItem): string {
+  return `/ui/${item.categoryName ?? item.collection}/${item.slug}`
 }
 
-export function getStudioCollections(): StudioCollectionMeta[] {
-  const counts = new Map<StudioCollectionId, number>()
-  for (const record of RECORDS) {
-    counts.set(
-      record.item.collection,
-      (counts.get(record.item.collection) ?? 0) + 1
+/** Previous/next items in the canonical studio listing order. */
+export function getStudioAdjacentItems(item: StudioItem): {
+  prev?: StudioItem
+  next?: StudioItem
+} {
+  const index = RECORDS.findIndex((record) => record.item.id === item.id)
+  if (index === -1) return {}
+  return {
+    prev: index > 0 ? RECORDS[index - 1].item : undefined,
+    next: index < RECORDS.length - 1 ? RECORDS[index + 1].item : undefined,
+  }
+}
+
+export type StudioResolvedSegment =
+  | {
+      kind: "collection"
+      id: Exclude<StudioCollectionId, "all">
+      label: string
+    }
+  | { kind: "category"; id: string; label: string }
+
+const COLLECTION_IDS = new Set(
+  STUDIO_TAXONOMY.map((entry) => entry.id)
+) as Set<string>
+
+const CATEGORY_LABELS = new Map<string, string>()
+for (const category of [
+  ...COMPONENT_CATEGORIES,
+  ...BLOCK_CATEGORIES,
+  ...HOOK_CATEGORIES,
+]) {
+  CATEGORY_LABELS.set(category.id, category.label)
+}
+
+const RECORDS_BY_CATEGORY = new Map<string, StudioItemRecord[]>()
+for (const record of RECORDS) {
+  const key = record.item.categoryName
+  if (!key) continue
+  const list = RECORDS_BY_CATEGORY.get(key) ?? []
+  list.push(record)
+  RECORDS_BY_CATEGORY.set(key, list)
+}
+
+/**
+ * Pure-path segment resolution for /ui/$segment:
+ * collection ids (base, blocks, hooks, ...) win, then any category id from the
+ * three registries (interactive, marketing, browser, ...). Returns null for
+ * unknown segments so routes can throw notFound().
+ */
+export function resolveStudioSegment(
+  segment: string
+): StudioResolvedSegment | null {
+  const collection = STUDIO_TAXONOMY.find((entry) => entry.id === segment)
+  if (collection) {
+    return { kind: "collection", id: collection.id, label: collection.label }
+  }
+  const categoryLabel = CATEGORY_LABELS.get(segment)
+  if (categoryLabel) {
+    return { kind: "category", id: segment, label: categoryLabel }
+  }
+  return null
+}
+
+/**
+ * Detail resolution: collection match first, then category match.
+ * Returns undefined for unknown (segment, slug) pairs.
+ */
+export function resolveStudioItem(
+  segment: string,
+  slug: string
+): StudioItemRecord | undefined {
+  if (COLLECTION_IDS.has(segment)) {
+    const byCollection = RECORDS.find(
+      (record) =>
+        record.item.collection === segment && record.item.slug === slug
     )
+    if (byCollection) return byCollection
   }
-  const all: StudioCollectionMeta = {
-    ...STUDIO_ALL_COLLECTION,
-    count: RECORDS.length,
-  }
-  const rest = STUDIO_TAXONOMY.filter(
-    (entry) => (counts.get(entry.id) ?? 0) > 0
-  ).map((entry) => ({
-    id: entry.id,
-    label: entry.label,
-    count: counts.get(entry.id) ?? 0,
-  }))
-  return [all, ...rest]
+  return RECORDS_BY_CATEGORY.get(segment)?.find(
+    (record) => record.item.slug === slug
+  )
+}
+
+export function getStudioSegmentLabel(
+  segment: string,
+  fallback: string
+): string {
+  return (
+    STUDIO_TAXONOMY.find((entry) => entry.id === segment)?.label ??
+    CATEGORY_LABELS.get(segment) ??
+    fallback
+  )
 }

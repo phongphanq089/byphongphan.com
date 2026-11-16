@@ -100,9 +100,9 @@ export function HookDetail({ hook }: HookDetailProps) {
       if (!prevHook) return
       play("attention", { direction: "back", emphasis: "subtle" })
       navigation({
-        to: "/hooks/$category/$slug",
+        to: "/ui/$collection/$slug",
         params: {
-          category: prevHook.category,
+          collection: prevHook.category,
           slug: prevHook.slug,
         },
       })
@@ -119,9 +119,9 @@ export function HookDetail({ hook }: HookDetailProps) {
       if (!nextHook) return
       play("attention", { direction: "forward", emphasis: "subtle" })
       navigation({
-        to: "/hooks/$category/$slug",
+        to: "/ui/$collection/$slug",
         params: {
-          category: nextHook.category,
+          collection: nextHook.category,
           slug: nextHook.slug,
         },
       })
@@ -259,7 +259,7 @@ export function HookDetail({ hook }: HookDetailProps) {
         <div className="relative flex flex-col justify-between gap-4 border-t border-border px-4 py-3 md:px-6">
           <div className="flex items-center justify-between">
             <Button variant="ghost" asChild>
-              <Link to="/hooks">
+              <Link to="/ui/$collection" params={{ collection: hook.category }}>
                 <ArrowLeft className="size-3.5" />
                 <span className="capitalize">
                   {hook.category.replace("-", " & ")}
@@ -295,9 +295,9 @@ export function HookDetail({ hook }: HookDetailProps) {
                         }
                       >
                         <Link
-                          to="/hooks/$category/$slug"
+                          to="/ui/$collection/$slug"
                           params={{
-                            category: prevHook.category,
+                            collection: prevHook.category,
                             slug: prevHook.slug,
                           }}
                         >
@@ -326,9 +326,9 @@ export function HookDetail({ hook }: HookDetailProps) {
                         }
                       >
                         <Link
-                          to="/hooks/$category/$slug"
+                          to="/ui/$collection/$slug"
                           params={{
-                            category: nextHook.category,
+                            collection: nextHook.category,
                             slug: nextHook.slug,
                           }}
                         >

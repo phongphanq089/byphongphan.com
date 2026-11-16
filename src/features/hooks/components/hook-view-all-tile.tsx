@@ -20,7 +20,8 @@ export function HookViewAllTile({
 }: HookViewAllTileProps) {
   return (
     <Link
-      to="/hooks"
+      to="/ui/$collection"
+      params={{ collection: "hooks" }}
       className={cn(
         "group relative flex h-full min-h-[96px] w-full flex-col items-center justify-center gap-1.5 overflow-hidden bg-muted/20 p-4 text-center transition-colors duration-200 outline-none sm:min-h-[104px] sm:p-5",
         "hover:bg-muted/40 focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-inset dark:bg-muted/10 dark:hover:bg-zinc-900/50",

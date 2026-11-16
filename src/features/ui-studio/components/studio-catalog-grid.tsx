@@ -1,55 +1,105 @@
-import { useVirtualizer } from "@tanstack/react-virtual"
-import * as React from "react"
+import { useNavigate } from "@tanstack/react-router"
+import { type ReactNode, useMemo } from "react"
 
-import { useMediaQuery } from "@/shared/hooks/use-media-query"
-import { cn } from "@/shared/lib/utils"
+import { BLOCKS_DATA } from "@/features/blocks"
+import { BlockCard } from "@/features/blocks/components/block-card"
+import { COMPONENTS_DATA } from "@/features/component-ui"
+import { ComponentCard } from "@/features/component-ui/components/component-card"
+import { HOOKS_DATA } from "@/features/hooks"
+import { HookTile } from "@/features/hooks/components/hook-tile"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/registry/ui/select"
+import {
+  BLOCK_CATEGORIES,
+  COMPONENT_CATEGORIES,
+  HOOK_CATEGORIES,
+  VALID_BLOCK_CATEGORY_IDS,
+  VALID_COMPONENT_CATEGORY_IDS,
+  VALID_HOOK_CATEGORY_IDS,
+} from "@/shared/config"
 
-import type { StudioItem } from "../model/types"
-import { getRecordByItem } from "../model/unified-registry.adapter"
+import { getStudioSegmentLabel } from "../model/unified-registry.adapter"
+
+const ALL_CATEGORIES = "all"
 
 interface StudioCatalogGridProps {
-  items: StudioItem[]
-  onSelectItem: (itemId: string) => void
+  /** Route segment: null → all items; "base"/"blocks"/"hooks" → collection; otherwise category id. */
+  segment: string | null
 }
 
-const ROW_HEIGHT = 176
-const OVERSCAN = 3
-
-function chunk<T>(list: T[], size: number): T[][] {
-  const rows: T[][] = []
-  for (let i = 0; i < list.length; i += size) {
-    rows.push(list.slice(i, i + size))
+function filterBySegment<T extends { category: string }>(
+  items: T[],
+  segment: string | null
+): T[] {
+  if (!segment) return items
+  if (
+    (VALID_COMPONENT_CATEGORY_IDS as readonly string[]).includes(segment) ||
+    (VALID_BLOCK_CATEGORY_IDS as readonly string[]).includes(segment) ||
+    (VALID_HOOK_CATEGORY_IDS as readonly string[]).includes(segment)
+  ) {
+    return items.filter((item) => item.category === segment)
   }
-  return rows
+  return items
 }
+
+type CategoryOption = { id: string; label: string }
 
 /**
- * Master catalog: windowed row virtualization — at any moment only a couple
- * of rows (~8–16 cards) are mounted regardless of library size.
+ * Master catalog: `max-w-7xl` centered column. At most one section renders
+ * per family (Components / Blocks / Hooks) — the section select navigates via
+ * the router (URL is the source of truth), it does not filter in memory.
  */
-export function StudioCatalogGrid({
-  items,
-  onSelectItem,
-}: StudioCatalogGridProps) {
-  const isSm = useMediaQuery("(min-width: 640px)")
-  const isLg = useMediaQuery("(min-width: 1024px)")
-  const isXl = useMediaQuery("(min-width: 1280px)")
-  const columns = isXl ? 4 : isLg ? 3 : isSm ? 2 : 1
+export function StudioCatalogGrid({ segment }: StudioCatalogGridProps) {
+  const navigate = useNavigate()
 
-  const parentRef = React.useRef<HTMLDivElement>(null)
-  const rows = React.useMemo(() => chunk(items, columns), [items, columns])
+  const isComponentCategory =
+    segment !== null &&
+    (VALID_COMPONENT_CATEGORY_IDS as readonly string[]).includes(segment)
+  const isBlockCategory =
+    segment !== null &&
+    (VALID_BLOCK_CATEGORY_IDS as readonly string[]).includes(segment)
+  const isHookCategory =
+    segment !== null &&
+    (VALID_HOOK_CATEGORY_IDS as readonly string[]).includes(segment)
 
-  const virtualizer = useVirtualizer({
-    count: rows.length,
-    getScrollElement: () => parentRef.current,
-    estimateSize: () => ROW_HEIGHT,
-    overscan: OVERSCAN,
-  })
+  const showComponents = !segment || segment === "base" || isComponentCategory
+  const showBlocks = !segment || segment === "blocks" || isBlockCategory
+  const showHooks = !segment || segment === "hooks" || isHookCategory
 
-  if (items.length === 0) {
+  const componentItems = useMemo(
+    () => (showComponents ? filterBySegment(COMPONENTS_DATA, segment) : []),
+    [segment, showComponents]
+  )
+  const blockItems = useMemo(
+    () => (showBlocks ? filterBySegment(BLOCKS_DATA, segment) : []),
+    [segment, showBlocks]
+  )
+  const hookItems = useMemo(
+    () => (showHooks ? filterBySegment(HOOKS_DATA, segment) : []),
+    [segment, showHooks]
+  )
+
+  // Select value follows the URL: a category id, or "all" for the family root
+  const componentFilter = isComponentCategory ? segment : ALL_CATEGORIES
+  const blockFilter = isBlockCategory ? segment : ALL_CATEGORIES
+  const hookFilter = isHookCategory ? segment : ALL_CATEGORIES
+
+  const isCategorySegment =
+    isComponentCategory || isBlockCategory || isHookCategory
+  const sectionTitle = (fallback: string) =>
+    isCategorySegment ? getStudioSegmentLabel(segment, fallback) : fallback
+
+  const total = componentItems.length + blockItems.length + hookItems.length
+
+  if (total === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-2 p-8 text-center">
-        <p className="font-mono text-[10px] tracking-[0.25em] text-muted-foreground/60 uppercase">
+        <p className="font-sans text-[10px] font-medium tracking-[0.25em] text-muted-foreground/60 uppercase">
           Nothing here yet
         </p>
         <p className="max-w-56 text-sm text-muted-foreground">
@@ -59,94 +109,187 @@ export function StudioCatalogGrid({
     )
   }
 
+  /** Route to the family root (`all`) or the picked category page. */
+  const handleCategorySelect = (
+    family: "base" | "blocks" | "hooks",
+    value: string
+  ) => {
+    void navigate({
+      to: "/ui/$collection",
+      params: { collection: value === ALL_CATEGORIES ? family : value },
+    })
+  }
+
   return (
-    <div
-      ref={parentRef}
-      className="h-full w-full overflow-y-auto overscroll-contain p-3 sm:p-4"
-      role="list"
-      aria-label="Registry catalog"
-    >
-      <div
-        className="relative w-full"
-        style={{ height: `${virtualizer.getTotalSize()}px` }}
-      >
-        {virtualizer.getVirtualItems().map((virtualRow) => {
-          const row = rows[virtualRow.index]
-          return (
-            <div
-              key={virtualRow.key}
-              role="listitem"
-              className="absolute top-0 left-0 grid w-full gap-2 pb-2 sm:gap-3"
-              style={{
-                transform: `translateY(${virtualRow.start}px)`,
-                gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
-              }}
-            >
-              {row.map((item) => (
-                <CatalogCard
-                  key={item.id}
-                  item={item}
-                  onSelectItem={onSelectItem}
-                />
-              ))}
-            </div>
-          )
-        })}
+    <div className="h-full w-full overflow-y-auto overscroll-contain">
+      <div className="mx-auto flex max-w-7xl flex-col gap-12 px-4 py-8 sm:gap-16 sm:px-6 sm:py-10 lg:px-8">
+        {showComponents ? (
+          <CatalogSection
+            title={sectionTitle("Components")}
+            count={componentItems.length}
+            filter={
+              <CatalogFilterSelect
+                label="Filter components by category"
+                value={componentFilter}
+                onChange={(value) => handleCategorySelect("base", value)}
+                options={COMPONENT_CATEGORIES}
+              />
+            }
+          >
+            {componentItems.length === 0 ? (
+              <CatalogEmptyState label="No components in this category yet." />
+            ) : (
+              componentItems.map((component) => (
+                <ComponentCard key={component.id} component={component} />
+              ))
+            )}
+          </CatalogSection>
+        ) : null}
+
+        {showBlocks ? (
+          <CatalogSection
+            title={sectionTitle("Blocks")}
+            count={blockItems.length}
+            filter={
+              <CatalogFilterSelect
+                label="Filter blocks by category"
+                value={blockFilter}
+                onChange={(value) => handleCategorySelect("blocks", value)}
+                options={BLOCK_CATEGORIES}
+              />
+            }
+          >
+            {blockItems.length === 0 ? (
+              <CatalogEmptyState label="No blocks in this category yet." />
+            ) : (
+              blockItems.map((block) => (
+                <BlockCard key={block.id} block={block} />
+              ))
+            )}
+          </CatalogSection>
+        ) : null}
+
+        {showHooks ? (
+          <CatalogSection
+            title={sectionTitle("React Hooks")}
+            count={hookItems.length}
+            wide
+            filter={
+              <CatalogFilterSelect
+                label="Filter hooks by category"
+                value={hookFilter}
+                onChange={(value) => handleCategorySelect("hooks", value)}
+                options={HOOK_CATEGORIES}
+              />
+            }
+          >
+            {hookItems.length === 0 ? (
+              <CatalogEmptyState label="No hooks in this category yet." />
+            ) : (
+              hookItems.map((hook, index) => (
+                <HookTile key={hook.id} hook={hook} index={index} />
+              ))
+            )}
+          </CatalogSection>
+        ) : null}
       </div>
     </div>
   )
 }
 
-function CatalogCard({
-  item,
-  onSelectItem,
+function CatalogSection({
+  title,
+  count,
+  wide = false,
+  filter,
+  children,
 }: {
-  item: StudioItem
-  onSelectItem: (itemId: string) => void
+  title: string
+  count: number
+  wide?: boolean
+  filter?: ReactNode
+  children: ReactNode
 }) {
-  const record = getRecordByItem(item.id)
-  const Schematic = record?.schematic
-
   return (
-    <button
-      type="button"
-      onClick={() => onSelectItem(item.id)}
-      className={cn(
-        "group flex h-40 flex-col overflow-hidden rounded-xl border border-border/60 bg-card/40 text-left transition-all duration-200 outline-none hover:border-foreground/20 hover:bg-card focus-visible:ring-2 focus-visible:ring-primary"
-      )}
-    >
-      <div className="relative flex min-h-0 flex-1 items-center justify-center overflow-hidden bg-muted/20 [background-image:radial-gradient(circle_at_1px_1px,var(--color-border)_1px,transparent_0)] [background-size:14px_14px]">
-        {Schematic ? (
-          <div className="pointer-events-none flex scale-[0.68] items-center justify-center transition-transform duration-300 group-hover:scale-[0.74]">
-            <Schematic />
-          </div>
-        ) : (
-          <span className="font-mono text-[9px] tracking-[0.3em] text-muted-foreground/40 uppercase">
-            {item.collection}
+    <section aria-label={title} className="flex flex-col gap-4 sm:gap-5">
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-border/60 pb-3">
+        <h2 className="font-sans text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+          {title}
+        </h2>
+        <div className="flex shrink-0 items-center gap-2.5">
+          {filter ?? null}
+          <span className="font-mono text-xs text-muted-foreground tabular-nums">
+            {String(count).padStart(2, "0")}
           </span>
-        )}
-        <div className="absolute top-2 right-2 flex gap-1">
-          {item.isNew ? (
-            <span className="rounded-full border border-pp-primary/40 bg-pp-primary/15 px-1.5 py-0.5 font-mono text-[8px] tracking-[0.18em] text-pp-primary uppercase backdrop-blur-sm">
-              New
-            </span>
-          ) : null}
-          {item.isUpdated ? (
-            <span className="rounded-full border border-amber-500/40 bg-amber-500/15 px-1.5 py-0.5 font-mono text-[8px] tracking-[0.18em] text-amber-600 uppercase backdrop-blur-sm dark:text-amber-400">
-              Updated
-            </span>
-          ) : null}
         </div>
       </div>
-
-      <div className="flex shrink-0 items-center justify-between gap-2 border-t border-border/60 px-3 py-2">
-        <span className="truncate text-[12px] font-semibold text-foreground">
-          {item.title}
-        </span>
-        <span className="shrink-0 font-mono text-[8px] tracking-[0.2em] text-muted-foreground/50 uppercase">
-          {item.collection}
-        </span>
+      <div
+        className={
+          wide
+            ? "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
+            : "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        }
+      >
+        {children}
       </div>
-    </button>
+    </section>
+  )
+}
+
+function CatalogFilterSelect({
+  label,
+  value,
+  onChange,
+  options,
+}: {
+  label: string
+  value: string
+  onChange: (value: string) => void
+  options: readonly CategoryOption[]
+}) {
+  // Declared so the trigger can resolve value → label without mounting items
+  const items = useMemo(
+    () => ({
+      [ALL_CATEGORIES]: "All Categories",
+      ...Object.fromEntries(options.map((option) => [option.id, option.label])),
+    }),
+    [options]
+  )
+
+  return (
+    <Select
+      value={value}
+      items={items}
+      onValueChange={(nextValue) => {
+        if (typeof nextValue === "string") onChange(nextValue)
+      }}
+    >
+      <SelectTrigger
+        size="sm"
+        aria-label={label}
+        className="h-8 w-auto gap-1.5 border-border/60 bg-transparent px-2.5 font-sans text-[11px] font-medium text-muted-foreground shadow-none transition-colors hover:border-border hover:text-foreground"
+      >
+        <SelectValue />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value={ALL_CATEGORIES}>All Categories</SelectItem>
+        {options.map((option) => (
+          <SelectItem key={option.id} value={option.id}>
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
+  )
+}
+
+function CatalogEmptyState({ label }: { label: string }) {
+  return (
+    <div className="col-span-full flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border/70 px-6 py-12 text-center">
+      <p className="font-sans text-[10px] font-medium tracking-[0.25em] text-muted-foreground/50 uppercase">
+        Nothing here yet
+      </p>
+      <p className="max-w-56 text-xs text-muted-foreground">{label}</p>
+    </div>
   )
 }

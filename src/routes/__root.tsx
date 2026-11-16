@@ -134,7 +134,7 @@ const themeScript = `
     }
 
     var path = window.location.pathname;
-    if (path === '/' || path === '' || path.startsWith('/component-ui/')) {
+    if (path === '/' || path === '' || path.startsWith('/ui')) {
       root.classList.add('no-scrollbar');
     }
   } catch (error) {}

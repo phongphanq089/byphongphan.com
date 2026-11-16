@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-import { StudioShell } from "@/features/ui-studio"
+import { StudioCatalogGrid } from "@/features/ui-studio"
 
 export const Route = createFileRoute("/ui/")({
-  component: UiStudioPage,
+  component: UiStudioMasterPage,
 })
 
-function UiStudioPage() {
-  return <StudioShell />
+function UiStudioMasterPage() {
+  return <StudioCatalogGrid segment={null} />
 }

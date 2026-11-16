@@ -90,9 +90,6 @@ function isRouteActive(itemLink: string, currentPath: string): boolean {
   if (itemLink === "/") {
     return currentPath === "/" || currentPath === ""
   }
-  if (itemLink === "/blocks") {
-    return currentPath.startsWith("/blocks") || currentPath.startsWith("/block")
-  }
   return currentPath.startsWith(itemLink)
 }
 
@@ -141,7 +138,8 @@ export function GooeyNavbar({
   const matchedIndex = items.findIndex((item) =>
     isRouteActive(item.link, currentPath)
   )
-  const activeIndex = matchedIndex >= 0 ? matchedIndex : 0
+  // No active tab for routes outside the primary nav (e.g. /ui studio)
+  const activeIndex = matchedIndex >= 0 ? matchedIndex : -1
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)

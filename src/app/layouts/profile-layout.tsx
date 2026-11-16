@@ -23,11 +23,8 @@ export function ProfileLayout({ children }: { children?: React.ReactNode }) {
     currentPath === "" ||
     currentPath.replace(/\/+$/, "") === ""
   const isBlocks =
-    currentPath === "/blocks" ||
-    currentPath.startsWith("/blocks/") ||
-    currentPath === "/block" ||
-    currentPath.startsWith("/block/")
-  const isDocsDetail = /^\/(component-ui|hooks)\/[^/]+\/[^/]+/.test(currentPath)
+    currentPath === "/ui/blocks" || currentPath.startsWith("/ui/blocks/")
+  const isDocsDetail = /^\/ui\/[^/]+\/[^/]+/.test(currentPath)
   const layoutMaxWidth: GridContainerMaxWidth = isBlocks
     ? "wide"
     : isDocsDetail

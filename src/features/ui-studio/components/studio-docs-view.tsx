@@ -1,0 +1,386 @@
+import { Link, useNavigate } from "@tanstack/react-router"
+import { play } from "cuelume"
+import {
+  ArrowLeft,
+  ArrowRight,
+  BookOpen,
+  ChevronRight,
+  Code2,
+  ExternalLink,
+  X,
+} from "lucide-react"
+import { useMemo } from "react"
+
+import { CopyButton } from "@/registry/animated/button/copy-button"
+import { cn } from "@/shared/lib/utils"
+import { ScrollArea } from "@/shared/ui"
+import {
+  Badge,
+  Button,
+  Kbd,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/shared/ui/core"
+import { CodeBlockCommand } from "@/shared/ui/core/code-block"
+
+import { useStudioLayout } from "../hooks/studio-layout-context"
+import {
+  getStudioMdxData,
+  studioMdxComponents,
+} from "../model/studio-mdx.adapter"
+import type { StudioItem } from "../model/types"
+import {
+  getStudioAdjacentItems,
+  getStudioItemHref,
+  getStudioSegmentLabel,
+} from "../model/unified-registry.adapter"
+
+interface StudioDocsViewProps {
+  item: StudioItem
+  /** Close the whole docked panel. */
+  onClose: () => void
+  activeVariantId?: string
+  onSelectVariant: (variantId: string | null) => void
+}
+
+const CHIP_BASE =
+  "h-5 gap-1.5 rounded border px-2 text-[8px] font-semibold tracking-wider uppercase shadow-[0_0_10px_var(--pp-primary-glow)]"
+
+/**
+ * Docked documentation view for a studio detail item: breadcrumb, badges,
+ * external links, install/copy actions, prev/next navigation and the full
+ * MDX doc (ComponentPreview is suppressed — the preview lives on the stage).
+ */
+export function StudioDocsView({
+  item,
+  onClose,
+  activeVariantId,
+  onSelectVariant,
+}: StudioDocsViewProps) {
+  const { segment } = useStudioLayout()
+  const navigate = useNavigate()
+
+  const mdxData = useMemo(() => getStudioMdxData(item.slug), [item.slug])
+  const { prev, next } = useMemo(() => getStudioAdjacentItems(item), [item])
+
+  const frontmatter = mdxData?.frontmatter
+  const title = frontmatter?.title ?? item.title
+  const description = frontmatter?.description ?? item.description
+  const links = frontmatter?.links
+  const customBadge = frontmatter?.badge
+
+  const goTo = (target: StudioItem) => {
+    void navigate({ href: getStudioItemHref(target) })
+  }
+
+  const goPrev = () => {
+    if (!prev) return
+    play("attention", { direction: "back", emphasis: "subtle" })
+    goTo(prev)
+  }
+
+  const goNext = () => {
+    if (!next) return
+    play("attention", { direction: "forward", emphasis: "subtle" })
+    goTo(next)
+  }
+
+  return (
+    <div className="flex h-full w-full flex-col">
+      {/* Breadcrumb + close */}
+      <div className="flex h-11 shrink-0 items-center justify-between gap-2 border-b border-border/70 px-4">
+        <nav
+          aria-label="Breadcrumb"
+          className="flex min-w-0 items-center gap-1.5 font-sans text-[11px] text-muted-foreground"
+        >
+          <Link
+            to="/ui"
+            className="shrink-0 transition-colors hover:text-foreground"
+          >
+            Home
+          </Link>
+          <ChevronRight
+            className="size-3 shrink-0 text-muted-foreground/60"
+            aria-hidden="true"
+          />
+          {segment ? (
+            <>
+              <Link
+                to="/ui/$collection"
+                params={{ collection: segment }}
+                className="max-w-32 shrink-0 truncate transition-colors hover:text-foreground"
+              >
+                {getStudioSegmentLabel(segment, segment)}
+              </Link>
+              <ChevronRight
+                className="size-3 shrink-0 text-muted-foreground/60"
+                aria-hidden="true"
+              />
+            </>
+          ) : null}
+          <span
+            aria-current="page"
+            className="min-w-0 truncate font-medium text-foreground"
+          >
+            {title}
+          </span>
+        </nav>
+
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close panel (Esc)"
+          title="Close panel (Esc)"
+          className="inline-flex size-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+        >
+          <X className="size-4" aria-hidden="true" />
+        </button>
+      </div>
+
+      <ScrollArea className="min-h-0 flex-1" scrollFade>
+        <article className="flex flex-col gap-5 p-5">
+          {/* Title + badges + description */}
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-wrap items-center gap-1.5">
+              {item.isNew ? (
+                <Badge
+                  variant="outline"
+                  className={cn(
+                    CHIP_BASE,
+                    "border-primary/30 bg-primary/10 text-primary"
+                  )}
+                >
+                  New
+                </Badge>
+              ) : item.isUpdated ? (
+                <Badge
+                  variant="outline"
+                  className={cn(
+                    CHIP_BASE,
+                    "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 shadow-[0_0_10px_rgba(16,185,129,0.25)] dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-400"
+                  )}
+                >
+                  Updated
+                </Badge>
+              ) : null}
+
+              {customBadge ? (
+                <Badge
+                  variant="outline"
+                  className={cn(
+                    CHIP_BASE,
+                    "border-primary/30 bg-primary text-white dark:text-background"
+                  )}
+                >
+                  {customBadge}
+                </Badge>
+              ) : null}
+
+              {item.categoryName ? (
+                <span className="rounded-full border border-border/60 bg-muted/40 px-2 py-0.5 font-mono text-[8px] tracking-[0.2em] text-muted-foreground uppercase">
+                  {item.categoryName}
+                </span>
+              ) : null}
+            </div>
+
+            <h3 className="font-sans text-2xl leading-tight font-semibold tracking-tight text-foreground">
+              {title}
+            </h3>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              {description}
+            </p>
+
+            {links && (links.doc || links.api) ? (
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                {links.doc ? (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    asChild
+                    className="h-7 gap-1.5 rounded-lg border-border/80 text-xs text-muted-foreground hover:text-foreground"
+                  >
+                    <a href={links.doc} target="_blank" rel="noreferrer">
+                      <BookOpen
+                        className="size-3 text-pp-primary"
+                        aria-hidden="true"
+                      />
+                      <span>Docs</span>
+                      <ExternalLink
+                        className="size-2.5 opacity-60"
+                        aria-hidden="true"
+                      />
+                    </a>
+                  </Button>
+                ) : null}
+                {links.api ? (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    asChild
+                    className="h-7 gap-1.5 rounded-lg border-border/80 text-xs text-muted-foreground hover:text-foreground"
+                  >
+                    <a href={links.api} target="_blank" rel="noreferrer">
+                      <Code2
+                        className="size-3 text-pp-primary"
+                        aria-hidden="true"
+                      />
+                      <span>API Reference</span>
+                      <ExternalLink
+                        className="size-2.5 opacity-60"
+                        aria-hidden="true"
+                      />
+                    </a>
+                  </Button>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
+
+          {/* Sub-bar: Copy Page + prev/next */}
+          <div className="flex items-center justify-between gap-2 border-y border-border/60 py-2">
+            {mdxData?.rawMdxContent ? (
+              <CopyButton
+                text={mdxData.rawMdxContent}
+                variant="secondary"
+                size="lg"
+                className="gap-1.5 bg-accent pr-2.5 pl-2 text-[11px]"
+              >
+                Copy Page
+              </CopyButton>
+            ) : (
+              <span aria-hidden="true" />
+            )}
+
+            <div className="flex items-center gap-1.5">
+              {prev ? (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="secondary"
+                      size="icon"
+                      aria-label="Previous component"
+                      onClick={goPrev}
+                      className="size-7"
+                    >
+                      <ArrowLeft
+                        className="size-4 opacity-60"
+                        aria-hidden="true"
+                      />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-[10px]">
+                    Previous Component{" "}
+                    <Kbd>
+                      <ArrowLeft />
+                    </Kbd>
+                  </TooltipContent>
+                </Tooltip>
+              ) : null}
+
+              {next ? (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      variant="secondary"
+                      size="icon"
+                      aria-label="Next component"
+                      onClick={goNext}
+                      className="size-7"
+                    >
+                      <ArrowRight
+                        className="size-4 opacity-60"
+                        aria-hidden="true"
+                      />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-[10px]">
+                    Next Component{" "}
+                    <Kbd>
+                      <ArrowRight />
+                    </Kbd>
+                  </TooltipContent>
+                </Tooltip>
+              ) : null}
+            </div>
+          </div>
+
+          {/* MDX doc (or fallback for blocks without .mdx) */}
+          {mdxData ? (
+            <mdxData.Component components={studioMdxComponents} />
+          ) : (
+            <>
+              <div className="flex flex-col gap-1.5">
+                <p className="font-sans text-[11px] font-medium text-muted-foreground">
+                  Install
+                </p>
+                <CodeBlockCommand name={item.slug} className="mt-1" />
+              </div>
+
+              {item.dependencies && item.dependencies.length > 0 ? (
+                <div className="flex flex-col gap-1.5">
+                  <p className="font-sans text-[11px] font-medium text-muted-foreground">
+                    Dependencies
+                  </p>
+                  <ul className="flex flex-wrap gap-1.5">
+                    {item.dependencies.map((dependency) => (
+                      <li
+                        key={dependency}
+                        className="rounded-md border border-border/60 bg-muted/40 px-2 py-0.5 font-mono text-[10px] text-muted-foreground"
+                      >
+                        {dependency}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+            </>
+          )}
+
+          {/* Interactive variant selector */}
+          {item.variants && item.variants.length > 0 ? (
+            <div className="flex flex-col gap-1.5">
+              <p className="font-sans text-[11px] font-medium text-muted-foreground">
+                Variants ·{" "}
+                <span className="font-mono tabular-nums">
+                  {item.variants.length}
+                </span>
+              </p>
+              <ul className="flex flex-col gap-1">
+                {item.variants.map((variant) => {
+                  const isActive = variant.id === activeVariantId
+                  return (
+                    <li key={variant.id}>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          onSelectVariant(isActive ? null : variant.id)
+                        }
+                        aria-pressed={isActive}
+                        className={cn(
+                          "flex w-full flex-col gap-0.5 rounded-lg border px-3 py-2 text-left transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                          isActive
+                            ? "border-pp-primary/50 bg-pp-primary/5"
+                            : "border-border/60 hover:border-border hover:bg-accent/40"
+                        )}
+                      >
+                        <span className="text-[12px] font-semibold text-foreground">
+                          {variant.title}
+                        </span>
+                        {variant.description ? (
+                          <span className="line-clamp-2 text-[11px] leading-snug text-muted-foreground">
+                            {variant.description}
+                          </span>
+                        ) : null}
+                      </button>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          ) : null}
+        </article>
+      </ScrollArea>
+    </div>
+  )
+}

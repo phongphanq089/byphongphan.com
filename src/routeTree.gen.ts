@@ -18,17 +18,10 @@ import { Route as UiRouteRouteImport } from './routes/ui/route'
 import { Route as SiteIndexRouteImport } from './routes/_site/index'
 import { Route as BlocksPreviewSlugRouteImport } from './routes/blocks-preview.$slug'
 import { Route as UiIndexRouteImport } from './routes/ui/index'
-import { Route as SiteBlocksIndexRouteImport } from './routes/_site/blocks/index'
 import { Route as SiteBlogIndexRouteImport } from './routes/_site/blog/index'
-import { Route as SiteComponentUiIndexRouteImport } from './routes/_site/component-ui/index'
-import { Route as SiteHooksIndexRouteImport } from './routes/_site/hooks/index'
 import { Route as SiteResourcesIndexRouteImport } from './routes/_site/resources/index'
-import { Route as SiteBlocksCategoryIndexRouteImport } from './routes/_site/blocks/$category/index'
-import { Route as SiteBlocksCategorySlugRouteImport } from './routes/_site/blocks/$category/$slug'
-import { Route as SiteComponentUiCategoryIndexRouteImport } from './routes/_site/component-ui/$category/index'
-import { Route as SiteComponentUiCategorySlugRouteImport } from './routes/_site/component-ui/$category/$slug'
-import { Route as SiteHooksCategoryIndexRouteImport } from './routes/_site/hooks/$category/index'
-import { Route as SiteHooksCategorySlugRouteImport } from './routes/_site/hooks/$category/$slug'
+import { Route as UiCollectionIndexRouteImport } from './routes/ui/$collection/index'
+import { Route as UiCollectionSlugRouteImport } from './routes/ui/$collection/$slug'
 
 const SiteRouteRoute = SiteRouteRouteImport.update({
   id: '/_site',
@@ -74,24 +67,9 @@ const UiIndexRoute = UiIndexRouteImport.update({
   path: '/',
   getParentRoute: () => UiRouteRoute,
 } as any)
-const SiteBlocksIndexRoute = SiteBlocksIndexRouteImport.update({
-  id: '/blocks/',
-  path: '/blocks/',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
 const SiteBlogIndexRoute = SiteBlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
-const SiteComponentUiIndexRoute = SiteComponentUiIndexRouteImport.update({
-  id: '/component-ui/',
-  path: '/component-ui/',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
-const SiteHooksIndexRoute = SiteHooksIndexRouteImport.update({
-  id: '/hooks/',
-  path: '/hooks/',
   getParentRoute: () => SiteRouteRoute,
 } as any)
 const SiteResourcesIndexRoute = SiteResourcesIndexRouteImport.update({
@@ -99,37 +77,15 @@ const SiteResourcesIndexRoute = SiteResourcesIndexRouteImport.update({
   path: '/resources/',
   getParentRoute: () => SiteRouteRoute,
 } as any)
-const SiteBlocksCategoryIndexRoute = SiteBlocksCategoryIndexRouteImport.update({
-  id: '/blocks/$category/',
-  path: '/blocks/$category/',
-  getParentRoute: () => SiteRouteRoute,
+const UiCollectionIndexRoute = UiCollectionIndexRouteImport.update({
+  id: '/$collection/',
+  path: '/$collection/',
+  getParentRoute: () => UiRouteRoute,
 } as any)
-const SiteBlocksCategorySlugRoute = SiteBlocksCategorySlugRouteImport.update({
-  id: '/blocks/$category/$slug',
-  path: '/blocks/$category/$slug',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
-const SiteComponentUiCategoryIndexRoute =
-  SiteComponentUiCategoryIndexRouteImport.update({
-    id: '/component-ui/$category/',
-    path: '/component-ui/$category/',
-    getParentRoute: () => SiteRouteRoute,
-  } as any)
-const SiteComponentUiCategorySlugRoute =
-  SiteComponentUiCategorySlugRouteImport.update({
-    id: '/component-ui/$category/$slug',
-    path: '/component-ui/$category/$slug',
-    getParentRoute: () => SiteRouteRoute,
-  } as any)
-const SiteHooksCategoryIndexRoute = SiteHooksCategoryIndexRouteImport.update({
-  id: '/hooks/$category/',
-  path: '/hooks/$category/',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
-const SiteHooksCategorySlugRoute = SiteHooksCategorySlugRouteImport.update({
-  id: '/hooks/$category/$slug',
-  path: '/hooks/$category/$slug',
-  getParentRoute: () => SiteRouteRoute,
+const UiCollectionSlugRoute = UiCollectionSlugRouteImport.update({
+  id: '/$collection/$slug',
+  path: '/$collection/$slug',
+  getParentRoute: () => UiRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -141,17 +97,10 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
   '/ui/': typeof UiIndexRoute
-  '/blocks/': typeof SiteBlocksIndexRoute
+  '/ui/$collection/$slug': typeof UiCollectionSlugRoute
   '/blog/': typeof SiteBlogIndexRoute
-  '/component-ui/': typeof SiteComponentUiIndexRoute
-  '/hooks/': typeof SiteHooksIndexRoute
   '/resources/': typeof SiteResourcesIndexRoute
-  '/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
-  '/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
-  '/hooks/$category/$slug': typeof SiteHooksCategorySlugRoute
-  '/blocks/$category/': typeof SiteBlocksCategoryIndexRoute
-  '/component-ui/$category/': typeof SiteComponentUiCategoryIndexRoute
-  '/hooks/$category/': typeof SiteHooksCategoryIndexRoute
+  '/ui/$collection/': typeof UiCollectionIndexRoute
 }
 export interface FileRoutesByTo {
   '/brand-app': typeof BrandAppRoute
@@ -161,17 +110,10 @@ export interface FileRoutesByTo {
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
   '/': typeof SiteIndexRoute
   '/ui': typeof UiIndexRoute
-  '/blocks': typeof SiteBlocksIndexRoute
+  '/ui/$collection/$slug': typeof UiCollectionSlugRoute
   '/blog': typeof SiteBlogIndexRoute
-  '/component-ui': typeof SiteComponentUiIndexRoute
-  '/hooks': typeof SiteHooksIndexRoute
   '/resources': typeof SiteResourcesIndexRoute
-  '/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
-  '/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
-  '/hooks/$category/$slug': typeof SiteHooksCategorySlugRoute
-  '/blocks/$category': typeof SiteBlocksCategoryIndexRoute
-  '/component-ui/$category': typeof SiteComponentUiCategoryIndexRoute
-  '/hooks/$category': typeof SiteHooksCategoryIndexRoute
+  '/ui/$collection': typeof UiCollectionIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -184,17 +126,10 @@ export interface FileRoutesById {
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
   '/_site/': typeof SiteIndexRoute
   '/ui/': typeof UiIndexRoute
-  '/_site/blocks/': typeof SiteBlocksIndexRoute
+  '/ui/$collection/$slug': typeof UiCollectionSlugRoute
   '/_site/blog/': typeof SiteBlogIndexRoute
-  '/_site/component-ui/': typeof SiteComponentUiIndexRoute
-  '/_site/hooks/': typeof SiteHooksIndexRoute
   '/_site/resources/': typeof SiteResourcesIndexRoute
-  '/_site/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
-  '/_site/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
-  '/_site/hooks/$category/$slug': typeof SiteHooksCategorySlugRoute
-  '/_site/blocks/$category/': typeof SiteBlocksCategoryIndexRoute
-  '/_site/component-ui/$category/': typeof SiteComponentUiCategoryIndexRoute
-  '/_site/hooks/$category/': typeof SiteHooksCategoryIndexRoute
+  '/ui/$collection/': typeof UiCollectionIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -207,17 +142,10 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/blocks-preview/$slug'
     | '/ui/'
-    | '/blocks/'
+    | '/ui/$collection/$slug'
     | '/blog/'
-    | '/component-ui/'
-    | '/hooks/'
     | '/resources/'
-    | '/blocks/$category/$slug'
-    | '/component-ui/$category/$slug'
-    | '/hooks/$category/$slug'
-    | '/blocks/$category/'
-    | '/component-ui/$category/'
-    | '/hooks/$category/'
+    | '/ui/$collection/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/brand-app'
@@ -227,17 +155,10 @@ export interface FileRouteTypes {
     | '/blocks-preview/$slug'
     | '/'
     | '/ui'
-    | '/blocks'
+    | '/ui/$collection/$slug'
     | '/blog'
-    | '/component-ui'
-    | '/hooks'
     | '/resources'
-    | '/blocks/$category/$slug'
-    | '/component-ui/$category/$slug'
-    | '/hooks/$category/$slug'
-    | '/blocks/$category'
-    | '/component-ui/$category'
-    | '/hooks/$category'
+    | '/ui/$collection'
   id:
     | '__root__'
     | '/_site'
@@ -249,17 +170,10 @@ export interface FileRouteTypes {
     | '/blocks-preview/$slug'
     | '/_site/'
     | '/ui/'
-    | '/_site/blocks/'
+    | '/ui/$collection/$slug'
     | '/_site/blog/'
-    | '/_site/component-ui/'
-    | '/_site/hooks/'
     | '/_site/resources/'
-    | '/_site/blocks/$category/$slug'
-    | '/_site/component-ui/$category/$slug'
-    | '/_site/hooks/$category/$slug'
-    | '/_site/blocks/$category/'
-    | '/_site/component-ui/$category/'
-    | '/_site/hooks/$category/'
+    | '/ui/$collection/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -337,32 +251,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UiIndexRouteImport
       parentRoute: typeof UiRouteRoute
     }
-    '/_site/blocks/': {
-      id: '/_site/blocks/'
-      path: '/blocks'
-      fullPath: '/blocks/'
-      preLoaderRoute: typeof SiteBlocksIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
     '/_site/blog/': {
       id: '/_site/blog/'
       path: '/blog'
       fullPath: '/blog/'
       preLoaderRoute: typeof SiteBlogIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_site/component-ui/': {
-      id: '/_site/component-ui/'
-      path: '/component-ui'
-      fullPath: '/component-ui/'
-      preLoaderRoute: typeof SiteComponentUiIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_site/hooks/': {
-      id: '/_site/hooks/'
-      path: '/hooks'
-      fullPath: '/hooks/'
-      preLoaderRoute: typeof SiteHooksIndexRouteImport
       parentRoute: typeof SiteRouteRoute
     }
     '/_site/resources/': {
@@ -372,79 +265,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteResourcesIndexRouteImport
       parentRoute: typeof SiteRouteRoute
     }
-    '/_site/blocks/$category/': {
-      id: '/_site/blocks/$category/'
-      path: '/blocks/$category'
-      fullPath: '/blocks/$category/'
-      preLoaderRoute: typeof SiteBlocksCategoryIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
+    '/ui/$collection/': {
+      id: '/ui/$collection/'
+      path: '/$collection'
+      fullPath: '/ui/$collection/'
+      preLoaderRoute: typeof UiCollectionIndexRouteImport
+      parentRoute: typeof UiRouteRoute
     }
-    '/_site/blocks/$category/$slug': {
-      id: '/_site/blocks/$category/$slug'
-      path: '/blocks/$category/$slug'
-      fullPath: '/blocks/$category/$slug'
-      preLoaderRoute: typeof SiteBlocksCategorySlugRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_site/component-ui/$category/': {
-      id: '/_site/component-ui/$category/'
-      path: '/component-ui/$category'
-      fullPath: '/component-ui/$category/'
-      preLoaderRoute: typeof SiteComponentUiCategoryIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_site/component-ui/$category/$slug': {
-      id: '/_site/component-ui/$category/$slug'
-      path: '/component-ui/$category/$slug'
-      fullPath: '/component-ui/$category/$slug'
-      preLoaderRoute: typeof SiteComponentUiCategorySlugRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_site/hooks/$category/': {
-      id: '/_site/hooks/$category/'
-      path: '/hooks/$category'
-      fullPath: '/hooks/$category/'
-      preLoaderRoute: typeof SiteHooksCategoryIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_site/hooks/$category/$slug': {
-      id: '/_site/hooks/$category/$slug'
-      path: '/hooks/$category/$slug'
-      fullPath: '/hooks/$category/$slug'
-      preLoaderRoute: typeof SiteHooksCategorySlugRouteImport
-      parentRoute: typeof SiteRouteRoute
+    '/ui/$collection/$slug': {
+      id: '/ui/$collection/$slug'
+      path: '/$collection/$slug'
+      fullPath: '/ui/$collection/$slug'
+      preLoaderRoute: typeof UiCollectionSlugRouteImport
+      parentRoute: typeof UiRouteRoute
     }
   }
 }
 
 interface SiteRouteRouteChildren {
   SiteIndexRoute: typeof SiteIndexRoute
-  SiteBlocksIndexRoute: typeof SiteBlocksIndexRoute
   SiteBlogIndexRoute: typeof SiteBlogIndexRoute
-  SiteComponentUiIndexRoute: typeof SiteComponentUiIndexRoute
-  SiteHooksIndexRoute: typeof SiteHooksIndexRoute
   SiteResourcesIndexRoute: typeof SiteResourcesIndexRoute
-  SiteBlocksCategorySlugRoute: typeof SiteBlocksCategorySlugRoute
-  SiteComponentUiCategorySlugRoute: typeof SiteComponentUiCategorySlugRoute
-  SiteHooksCategorySlugRoute: typeof SiteHooksCategorySlugRoute
-  SiteBlocksCategoryIndexRoute: typeof SiteBlocksCategoryIndexRoute
-  SiteComponentUiCategoryIndexRoute: typeof SiteComponentUiCategoryIndexRoute
-  SiteHooksCategoryIndexRoute: typeof SiteHooksCategoryIndexRoute
 }
 
 const SiteRouteRouteChildren: SiteRouteRouteChildren = {
   SiteIndexRoute: SiteIndexRoute,
-  SiteBlocksIndexRoute: SiteBlocksIndexRoute,
   SiteBlogIndexRoute: SiteBlogIndexRoute,
-  SiteComponentUiIndexRoute: SiteComponentUiIndexRoute,
-  SiteHooksIndexRoute: SiteHooksIndexRoute,
   SiteResourcesIndexRoute: SiteResourcesIndexRoute,
-  SiteBlocksCategorySlugRoute: SiteBlocksCategorySlugRoute,
-  SiteComponentUiCategorySlugRoute: SiteComponentUiCategorySlugRoute,
-  SiteHooksCategorySlugRoute: SiteHooksCategorySlugRoute,
-  SiteBlocksCategoryIndexRoute: SiteBlocksCategoryIndexRoute,
-  SiteComponentUiCategoryIndexRoute: SiteComponentUiCategoryIndexRoute,
-  SiteHooksCategoryIndexRoute: SiteHooksCategoryIndexRoute,
 }
 
 const SiteRouteRouteWithChildren = SiteRouteRoute._addFileChildren(
@@ -453,10 +300,14 @@ const SiteRouteRouteWithChildren = SiteRouteRoute._addFileChildren(
 
 interface UiRouteRouteChildren {
   UiIndexRoute: typeof UiIndexRoute
+  UiCollectionSlugRoute: typeof UiCollectionSlugRoute
+  UiCollectionIndexRoute: typeof UiCollectionIndexRoute
 }
 
 const UiRouteRouteChildren: UiRouteRouteChildren = {
   UiIndexRoute: UiIndexRoute,
+  UiCollectionSlugRoute: UiCollectionSlugRoute,
+  UiCollectionIndexRoute: UiCollectionIndexRoute,
 }
 
 const UiRouteRouteWithChildren =

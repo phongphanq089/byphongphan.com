@@ -1,8 +1,9 @@
+export { StudioCatalogGrid } from "./components/studio-catalog-grid"
 export { StudioShell } from "./components/studio-shell"
-export { parseStudioSearch, type StudioSearch } from "./model/studio-search"
+export { useStudioLayout } from "./hooks/studio-layout-context"
 export type {
-  RightPanelMode,
   StudioCollectionId,
   StudioItem,
   StudioRenderMode,
 } from "./model/types"
+export { resolveStudioSegment } from "./model/unified-registry.adapter"

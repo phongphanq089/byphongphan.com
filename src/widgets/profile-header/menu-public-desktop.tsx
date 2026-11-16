@@ -81,7 +81,8 @@ export function Header() {
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 lg:hidden">
           <GitHubStarButton />
           <Link
-            to="/component-ui"
+            to="/ui/$collection"
+            params={{ collection: "base" }}
             className={cn(CAPSULE, "group/btn gap-1 pr-3 pl-3.5")}
           >
             <span className="font-mono text-[11px] font-medium sm:text-xs">

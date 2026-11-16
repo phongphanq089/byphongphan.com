@@ -1,10 +1,9 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router"
+import { createFileRoute } from "@tanstack/react-router"
 
-import { parseStudioSearch } from "@/features/ui-studio"
+import { StudioShell } from "@/features/ui-studio"
 import { createSeoMeta, siteConfig } from "@/shared/config"
 
 export const Route = createFileRoute("/ui")({
-  validateSearch: (raw) => parseStudioSearch(raw),
   head: () => {
     const url = `${siteConfig.url}/ui`
     return {
@@ -17,9 +16,10 @@ export const Route = createFileRoute("/ui")({
       links: [{ rel: "canonical", href: url }],
     }
   },
-  component: UiLayoutRoute,
+  component: UiStudioLayout,
 })
 
-function UiLayoutRoute() {
-  return <Outlet />
+function UiStudioLayout() {
+  // StudioShell owns the 3-column chrome and renders <Outlet /> internally.
+  return <StudioShell />
 }

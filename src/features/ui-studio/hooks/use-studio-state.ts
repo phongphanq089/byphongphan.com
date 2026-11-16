@@ -1,112 +1,136 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import * as React from "react"
 
-import type {
-  StudioCollectionId,
-  StudioControlValue,
-  StudioItem,
-} from "../model/types"
-import {
-  getItemsByCollection,
-  getRecordByItem,
-  type StudioItemRecord,
-} from "../model/unified-registry.adapter"
-import { useStudioUrlSync } from "./use-studio-url-sync"
+const SIDEBAR_STORAGE_KEY = "ui-studio-sidebar-open"
+const DESKTOP_SIDEBAR_QUERY = "(min-width: 1024px)"
+
+function readStoredSidebarOpen(): boolean | null {
+  try {
+    const stored = window.localStorage.getItem(SIDEBAR_STORAGE_KEY)
+    if (stored === "true") return true
+    if (stored === "false") return false
+    return null
+  } catch {
+    // localStorage may be unavailable (private mode, disabled storage)
+    return null
+  }
+}
+
+function persistSidebarOpen(open: boolean): void {
+  try {
+    window.localStorage.setItem(SIDEBAR_STORAGE_KEY, String(open))
+  } catch {
+    // Ignore write failures — in-memory state still works for the session
+  }
+}
+
+export type StudioPanel = "docs" | "code"
+export type StudioPanelState = "closed" | StudioPanel
+
+export interface UseStudioStateOptions {
+  /** Id of the currently selected item — state resets when it changes. */
+  activeItemId: string | null
+}
 
 export interface UseStudioStateReturn {
-  // URL-derived (shareable)
-  collection: StudioCollectionId
-  items: StudioItem[]
-  record?: StudioItemRecord
-  activeItem: StudioItem | null
-  activeVariantId?: string
-  panel: "closed" | "docs" | "code"
-  isDetail: boolean
-  // Local UI state (ephemeral)
   isSidebarOpen: boolean
-  customizerValues: Record<string, StudioControlValue>
-  // Actions
-  selectCollection: (collection: StudioCollectionId) => void
-  selectItem: (itemId: string | null) => void
-  selectVariant: (variantId: string | null) => void
-  setPanel: (panel: "closed" | "docs" | "code") => void
+  setSidebarOpen: (open: boolean) => void
   toggleSidebar: () => void
-  setCustomizerValue: (key: string, value: StudioControlValue) => void
+  panel: StudioPanelState
+  setPanel: (panel: StudioPanelState) => void
+  toggleDocs: () => void
+  toggleCode: () => void
+  variantId?: string
+  setVariantId: (variantId: string | null) => void
+  customizerValues: Record<string, string | number | boolean>
+  setCustomizerValue: (key: string, value: string | number | boolean) => void
   resetCustomizer: () => void
 }
 
-function resolveCustomizerDefaults(
-  record: StudioItemRecord | undefined
-): Record<string, StudioControlValue> {
-  const values: Record<string, StudioControlValue> = {}
-  for (const control of record?.item.controls ?? []) {
-    values[control.key] = control.default
-  }
-  return values
-}
-
 /**
- * Studio state orchestrator: URL-derived selection (collection / item /
- * variant / panel) plus ephemeral UI state (sidebar, customizer).
- * Customizer values reset whenever the selected item changes.
+ * Pure local studio state: sidebar, right panel, variant and customizer.
+ * URL purity rule — nothing here is mirrored into the address bar; the route
+ * path itself is the shared state (/ui, /ui/$collection, /ui/$collection/$slug).
  */
-export function useStudioState(): UseStudioStateReturn {
-  const url = useStudioUrlSync()
-  const [isSidebarOpen, setSidebarOpen] = React.useState(true)
-
-  const record = React.useMemo(() => getRecordByItem(url.itemId), [url.itemId])
-  const activeItem = record?.item ?? null
-  const items = React.useMemo(
-    () => getItemsByCollection(url.collection),
-    [url.collection]
-  )
-
+export function useStudioState({
+  activeItemId,
+}: UseStudioStateOptions): UseStudioStateReturn {
+  // Initial value must match the server render; the stored/preferred value
+  // is resolved after mount to avoid hydration mismatch.
+  const [isSidebarOpen, setSidebarOpenState] = React.useState(true)
+  const [panel, setPanel] = React.useState<StudioPanelState>("closed")
+  const [variantId, setVariantIdState] = React.useState<string | undefined>()
   const [customizerValues, setCustomizerValues] = React.useState<
-    Record<string, StudioControlValue>
-  >(() => resolveCustomizerDefaults(record))
+    Record<string, string | number | boolean>
+  >({})
 
-  // Reset customizer values whenever the selected item changes
+  // Resolve the real sidebar state after mount: the stored preference wins;
+  // otherwise default open on desktop (>= 1024px), closed on smaller screens.
   React.useEffect(() => {
-    setCustomizerValues(resolveCustomizerDefaults(record))
-  }, [record])
+    const stored = readStoredSidebarOpen()
+    if (stored !== null) {
+      setSidebarOpenState(stored)
+      return
+    }
+    if (typeof window !== "undefined") {
+      setSidebarOpenState(window.matchMedia(DESKTOP_SIDEBAR_QUERY).matches)
+    }
+  }, [])
 
-  const toggleSidebar = React.useCallback(() => setSidebarOpen((v) => !v), [])
+  // Reset variant + customizer whenever the selected item changes
+  React.useEffect(() => {
+    setPanel("closed")
+    setVariantIdState(undefined)
+    setCustomizerValues({})
+  }, [activeItemId])
+
+  const setSidebarOpen = React.useCallback((open: boolean) => {
+    setSidebarOpenState(open)
+    persistSidebarOpen(open)
+  }, [])
+
+  const toggleSidebar = React.useCallback(() => {
+    setSidebarOpenState((open) => {
+      const next = !open
+      persistSidebarOpen(next)
+      return next
+    })
+  }, [])
+
+  const toggleDocs = React.useCallback(() => {
+    setPanel((current) => (current === "docs" ? "closed" : "docs"))
+  }, [])
+
+  const toggleCode = React.useCallback(() => {
+    setPanel((current) => (current === "code" ? "closed" : "code"))
+  }, [])
+
+  const setVariantId = React.useCallback((variant: string | null) => {
+    setVariantIdState(variant ?? undefined)
+  }, [])
 
   const setCustomizerValue = React.useCallback(
-    (key: string, value: StudioControlValue) => {
+    (key: string, value: string | number | boolean) => {
       setCustomizerValues((prev) => ({ ...prev, [key]: value }))
     },
     []
   )
 
   const resetCustomizer = React.useCallback(() => {
-    setCustomizerValues(resolveCustomizerDefaults(record))
-  }, [record])
-
-  const panel: "closed" | "docs" | "code" = url.panel ?? "closed"
-
-  const setPanel = React.useCallback(
-    (nextPanel: "closed" | "docs" | "code") => {
-      url.setPanel(nextPanel === "closed" ? null : nextPanel)
-    },
-    [url]
-  )
+    setCustomizerValues({})
+  }, [])
 
   return {
-    collection: url.collection,
-    items,
-    record,
-    activeItem,
-    activeVariantId: url.variantId ?? activeItem?.variants?.[0]?.id,
-    panel,
-    isDetail: Boolean(activeItem),
     isSidebarOpen,
-    customizerValues,
-    selectCollection: url.selectCollection,
-    selectItem: url.selectItem,
-    selectVariant: url.selectVariant,
-    setPanel,
+    setSidebarOpen,
     toggleSidebar,
+    panel,
+    setPanel,
+    toggleDocs,
+    toggleCode,
+    variantId,
+    setVariantId,
+    customizerValues,
     setCustomizerValue,
     resetCustomizer,
   }

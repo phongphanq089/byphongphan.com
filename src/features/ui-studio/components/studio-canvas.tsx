@@ -6,7 +6,8 @@ import { CodeBlock } from "@/registry/ui/code-block"
 import { siteConfig } from "@/shared/config"
 import { cn } from "@/shared/lib/utils"
 
-import type { StudioControlValue, StudioItem } from "../model/types"
+import { useStudioLayout } from "../hooks/studio-layout-context"
+import type { StudioItem } from "../model/types"
 import {
   getLiveDemo,
   getRecordByItem,
@@ -16,11 +17,6 @@ import { StudioPropsCustomizer } from "./studio-props-customizer"
 
 interface StudioCanvasProps {
   item: StudioItem
-  variantId?: string
-  onSelectVariant: (variantId: string | null) => void
-  customizerValues: Record<string, StudioControlValue>
-  onCustomizerChange: (key: string, value: StudioControlValue) => void
-  onResetCustomizer: () => void
 }
 
 function kebabToPascal(slug: string): string {
@@ -75,7 +71,7 @@ function LiveStage({
 
   return (
     <div className="flex h-full flex-col items-center justify-center gap-2 p-8 text-center">
-      <p className="font-mono text-[10px] tracking-[0.25em] text-muted-foreground/60 uppercase">
+      <p className="font-sans text-[11px] font-semibold text-muted-foreground">
         No live preview
       </p>
       <p className="max-w-xs text-sm text-muted-foreground">
@@ -124,14 +120,15 @@ function HookCodeStage({ item }: { item: StudioItem }) {
 /**
  * Stage frame: browser chrome with a live URL pill over a dot-grid CAD board.
  */
-export function StudioCanvas({
-  item,
-  variantId,
-  onSelectVariant,
-  customizerValues,
-  onCustomizerChange,
-  onResetCustomizer,
-}: StudioCanvasProps) {
+export function StudioCanvas({ item }: StudioCanvasProps) {
+  const {
+    activeVariantId,
+    setVariantId,
+    customizerValues,
+    setCustomizerValue,
+    resetCustomizer,
+  } = useStudioLayout()
+
   const registryJsonUrl = `${siteConfig.url}/r/${item.slug}.json`
 
   return (
@@ -166,15 +163,15 @@ export function StudioCanvas({
           aria-label="Variants"
         >
           {item.variants.map((variant) => {
-            const isActive = variant.id === variantId
+            const isActive = variant.id === activeVariantId
             return (
               <button
                 key={variant.id}
                 type="button"
-                onClick={() => onSelectVariant(isActive ? null : variant.id)}
+                onClick={() => setVariantId(isActive ? null : variant.id)}
                 aria-pressed={isActive}
                 className={cn(
-                  "shrink-0 rounded-full border px-2.5 py-1 font-mono text-[10px] whitespace-nowrap transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                  "shrink-0 rounded-full border px-2.5 py-1 font-sans text-[10px] font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary",
                   isActive
                     ? "border-transparent bg-foreground text-background"
                     : "border-border/70 bg-transparent text-muted-foreground hover:border-foreground/30 hover:text-foreground"
@@ -202,7 +199,7 @@ export function StudioCanvas({
           </div>
         ) : (
           <div className="flex h-full items-center justify-center overflow-auto p-4 sm:p-8">
-            <LiveStage item={item} variantId={variantId} />
+            <LiveStage item={item} variantId={activeVariantId} />
           </div>
         )}
 
@@ -210,8 +207,8 @@ export function StudioCanvas({
           <StudioPropsCustomizer
             controls={item.controls}
             values={customizerValues}
-            onChange={onCustomizerChange}
-            onReset={onResetCustomizer}
+            onChange={setCustomizerValue}
+            onReset={resetCustomizer}
           />
         ) : null}
       </div>

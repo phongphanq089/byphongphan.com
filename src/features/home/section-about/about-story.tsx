@@ -21,7 +21,7 @@ export function AboutStory({ githubProfileUrl }: AboutStoryProps) {
           <HighlightWord
             id="clean-components"
             text="Clean Components"
-            href="/component-ui"
+            href="/ui/base"
             hint="view components ↗"
             tooltipVariant="smaug"
             className="font-bold text-foreground"
@@ -36,7 +36,7 @@ export function AboutStory({ githubProfileUrl }: AboutStoryProps) {
           <HighlightWord
             id="interfaces"
             text="Interfaces"
-            href="/blocks"
+            href="/ui/blocks"
             hint="explore blocks ↗"
             tooltipVariant="dori"
             className="font-bold text-foreground"
@@ -84,7 +84,7 @@ export function AboutStory({ githubProfileUrl }: AboutStoryProps) {
           <HighlightWord
             id="components"
             text="Components"
-            href="/component-ui"
+            href="/ui/base"
             hint="browse library ↗"
             tooltipVariant="smaug"
             className="font-semibold text-foreground underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
@@ -93,7 +93,7 @@ export function AboutStory({ githubProfileUrl }: AboutStoryProps) {
           <HighlightWord
             id="blocks"
             text="Blocks"
-            href="/blocks"
+            href="/ui/blocks"
             hint="browse blocks ↗"
             tooltipVariant="sadoc"
             className="font-semibold text-foreground underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
