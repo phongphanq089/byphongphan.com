@@ -1,8 +1,10 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-import { ArrowLeft, FileCode2 } from "lucide-react"
+import { ArrowLeft, FileCode2, X } from "lucide-react"
+import { motion, useDragControls } from "motion/react"
 import * as React from "react"
 
 import { CopyButton } from "@/registry/animated/button/copy-button"
+import { useMediaQuery } from "@/registry/hooks/use-media-query"
 import {
   CodeBlock,
   CodeBlockContent,
@@ -17,8 +19,10 @@ import type { StudioItem } from "../model/types"
 
 interface StudioCodeOverlayProps {
   item: StudioItem
-  /** Switch back to the docs view. Only offered when the item ships docs. */
+  /** Switch back to the docs view (docs remain mounted behind this drawer). */
   onBack?: () => void
+  /** Close the entire docs panel. */
+  onClose?: () => void
   activeVariantId?: string
   onSelectVariant: (variantId: string | null) => void
 }
@@ -32,19 +36,22 @@ function fileLanguage(name: string): string {
 }
 
 /**
- * Full-height code viewer for a studio item: file tabs (main source,
- * helpers, one tab per variant), line-numbered Shiki output, and — when the
- * item ships docs — a back button returning to the docs view. Selecting a
- * variant tab activates that variant on the stage (and vice versa).
+ * Source-Code drawer rendered on top of the docs view.
+ * On desktop it floats as an absolutely-anchored drawer card that you can
+ * drag downward to dismiss (drag-to-dismiss) or close with the X button.
  */
 export function StudioCodeOverlay({
   item,
   onBack,
+  onClose,
   activeVariantId,
   onSelectVariant,
 }: StudioCodeOverlayProps) {
   // Blocks ship without MDX docs — no "back" affordance there
   const hasDocs = item.collection !== "blocks" && Boolean(onBack)
+  const isDrawerMode = useMediaQuery("max-xl")
+  const dragControls = useDragControls()
+  const dismiss = onBack ?? onClose
 
   const resolvedFiles = React.useMemo(
     () => getStudioResolvedFiles(item),
@@ -78,10 +85,38 @@ export function StudioCodeOverlay({
     if (variantId) onSelectVariant(variantId)
   }
 
-  return (
-    <div className="flex h-full w-full flex-col">
-      {/* Tool header: back + active file + copy */}
-      <div className="flex h-11 shrink-0 items-center gap-2 border-b border-border/70 px-3">
+  const content = (
+    <>
+      {/* Grab handle — desktop right-panel only (>= xl); drawer mode (< xl) uses Base UI swipe bar */}
+      {!isDrawerMode ? (
+        <div
+          onPointerDown={(event) => {
+            if (event.button === 0) dragControls.start(event)
+          }}
+          role="separator"
+          aria-orientation="horizontal"
+          aria-label="Drag down to close"
+          className="flex h-6 w-full shrink-0 cursor-grab touch-none items-center justify-center border-b border-border/40 transition-colors select-none hover:bg-accent/40 active:cursor-grabbing"
+        >
+          <span className="h-1 w-10 rounded-full bg-muted-foreground/40 transition-colors hover:bg-muted-foreground/80" />
+        </div>
+      ) : null}
+
+      {/* Tool header: back + active file + copy + close */}
+      <div
+        onPointerDown={(event) => {
+          if (!isDrawerMode && event.button === 0) {
+            const target = event.target as HTMLElement
+            if (!target.closest("button, a, input, select")) {
+              dragControls.start(event)
+            }
+          }
+        }}
+        className={cn(
+          "flex h-11 shrink-0 items-center gap-2 border-b border-border/70 px-3",
+          !isDrawerMode && "cursor-grab select-none active:cursor-grabbing"
+        )}
+      >
         {hasDocs ? (
           <button
             type="button"
@@ -102,16 +137,30 @@ export function StudioCodeOverlay({
           {currentFile?.name ?? "—"}
         </span>
 
-        {currentFile ? (
-          <CopyButton
-            text={currentFile.code}
-            size="icon"
-            variant="ghost"
-            aria-label="Copy code"
-            title="Copy code"
-            className="size-7 shrink-0 text-muted-foreground hover:text-foreground"
-          />
-        ) : null}
+        <div className="flex shrink-0 items-center gap-1">
+          {currentFile ? (
+            <CopyButton
+              text={currentFile.code}
+              size="icon"
+              variant="ghost"
+              aria-label="Copy code"
+              title="Copy code"
+              className="size-7 shrink-0 text-muted-foreground hover:text-foreground"
+            />
+          ) : null}
+
+          {onClose ? (
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close panel"
+              title="Close panel (Esc)"
+              className="inline-flex size-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+            >
+              <X className="size-4" aria-hidden="true" />
+            </button>
+          ) : null}
+        </div>
       </div>
 
       {/* File tabs: main + helpers + variants */}
@@ -168,6 +217,35 @@ export function StudioCodeOverlay({
           No source files matched for this entry.
         </div>
       )}
-    </div>
+    </>
+  )
+
+  // Drawer mode (< xl): native flex container inside Base UI DrawerPopup (no redundant motion.div wrapper)
+  if (isDrawerMode) {
+    return <div className="flex h-full min-h-0 w-full flex-col">{content}</div>
+  }
+
+  // Desktop (>= xl): bottom-anchored draggable drawer card inside the docked panel column
+  return (
+    <motion.div
+      initial={{ y: "100%" }}
+      animate={{ y: 0 }}
+      exit={{ y: "100%" }}
+      transition={{ type: "spring", stiffness: 400, damping: 32 }}
+      drag="y"
+      dragControls={dragControls}
+      dragListener={false}
+      dragConstraints={{ top: 0, bottom: 600 }}
+      dragElastic={{ top: 0, bottom: 0.15 }}
+      dragSnapToOrigin
+      onDragEnd={(_, info) => {
+        if (info.offset.y > 100 || info.velocity.y > 300) {
+          dismiss?.()
+        }
+      }}
+      className="absolute inset-0 z-20 flex h-full w-full flex-col border-l border-border/60 bg-background/98 backdrop-blur-xl"
+    >
+      {content}
+    </motion.div>
   )
 }

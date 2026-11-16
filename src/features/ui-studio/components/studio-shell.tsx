@@ -2,6 +2,7 @@ import { Outlet, useNavigate, useParams } from "@tanstack/react-router"
 import { play } from "cuelume"
 import { useMemo } from "react"
 
+import { useMediaQuery } from "@/registry/hooks/use-media-query"
 import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
 import { cn } from "@/shared/lib/utils"
 
@@ -17,6 +18,7 @@ import {
 } from "../model/unified-registry.adapter"
 import { StudioDock } from "./studio-dock"
 import { StudioHeader } from "./studio-header"
+import { StudioMobileDrawer } from "./studio-mobile-drawer"
 import { StudioResizeHandle } from "./studio-resize-handle"
 import { StudioRightPanel } from "./studio-right-panel"
 import { StudioSidebar } from "./studio-sidebar"
@@ -134,7 +136,9 @@ export function StudioShell() {
     resetCustomizer: state.resetCustomizer,
   }
 
-  const panelOpen = viewPanel !== "closed" && Boolean(activeItem)
+  const isDrawerMode = useMediaQuery("max-xl")
+  const panelOpen =
+    !isDrawerMode && viewPanel !== "closed" && Boolean(activeItem)
   const { panelWidth, isDragging, handlePointerDown, resetWidth } =
     useStudioPanelResize()
 
@@ -159,9 +163,8 @@ export function StudioShell() {
             </section>
           </div>
 
-          {/* Docked right panel — width is the persisted user preference;
-              drag the divider handle to resize. Always mounted for smooth
-              transitions; full-screen overlay on mobile; inert when closed. */}
+          {/* Docked right panel (>= xl) — width is the persisted user preference;
+              drag the divider handle to resize. Screens below xl use bottom drawer. */}
           {panelOpen ? (
             <StudioResizeHandle
               panelWidth={panelWidth}
@@ -180,19 +183,18 @@ export function StudioShell() {
               } as React.CSSProperties
             }
             className={cn(
-              "h-full shrink-0 overflow-hidden transition-[width,opacity] duration-300 ease-out",
+              "hidden h-full shrink-0 overflow-hidden transition-[width,opacity] duration-300 ease-out xl:block",
               isDragging && "transition-none",
-              "max-sm:absolute max-sm:inset-2 max-sm:z-30",
               panelOpen
-                ? "opacity-100 max-sm:w-auto sm:w-[var(--studio-panel-width)]"
-                : "pointer-events-none w-0 opacity-0 max-sm:w-0"
+                ? "opacity-100 xl:w-[var(--studio-panel-width)]"
+                : "pointer-events-none w-0 opacity-0"
             )}
           >
-            <div className="flex h-full w-full flex-col overflow-hidden rounded-2xl border border-border/70 bg-background shadow-2xl max-sm:w-full sm:w-[var(--studio-panel-width)] sm:rounded-3xl">
+            <div className="flex h-full w-[var(--studio-panel-width)] flex-col overflow-hidden rounded-2xl border border-border/70 bg-background shadow-2xl xl:rounded-3xl">
               {activeItem ? (
                 <StudioRightPanel
                   item={activeItem}
-                  panel={viewPanel === "code" ? "code" : "docs"}
+                  panel={viewPanel}
                   onPanelChange={(panel) => state.setPanel(panel ?? "closed")}
                   activeVariantId={activeVariantId}
                   onSelectVariant={state.setVariantId}
@@ -201,6 +203,17 @@ export function StudioShell() {
             </div>
           </aside>
         </div>
+
+        {/* Drawer mode: bottom nested drawer for screens below xl (< 1280px) */}
+        {isDrawerMode && activeItem ? (
+          <StudioMobileDrawer
+            item={activeItem}
+            panel={viewPanel}
+            onPanelChange={(panel) => state.setPanel(panel ?? "closed")}
+            activeVariantId={activeVariantId}
+            onSelectVariant={state.setVariantId}
+          />
+        ) : null}
 
         {/* Full-screen modal drawer portaled to body (z-50, above the header) */}
         <StudioSidebar

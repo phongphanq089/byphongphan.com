@@ -1,5 +1,9 @@
 /* eslint-disable react-hooks/set-state-in-effect */
+import { useNavigate } from "@tanstack/react-router"
+import { play } from "cuelume"
 import {
+  ArrowLeft,
+  ArrowRight,
   BookOpen,
   Check,
   Code2,
@@ -10,7 +14,7 @@ import {
   X,
 } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import useMeasure from "react-use-measure"
 
 import { useMediaQuery } from "@/registry/hooks/use-media-query"
@@ -29,6 +33,10 @@ import { CodeBlockCommand } from "@/shared/ui/core/code-block"
 
 import { useStudioLayout } from "../hooks/studio-layout-context"
 import type { StudioItem } from "../model/types"
+import {
+  getStudioAdjacentItems,
+  getStudioItemHref,
+} from "../model/unified-registry.adapter"
 
 interface StudioDockProps {
   item: StudioItem | null
@@ -65,6 +73,12 @@ export function StudioDock({ item }: StudioDockProps) {
   const [mobileDrawerTarget, setMobileDrawerTarget] =
     useState<MobileDrawerTarget>(null)
   const isMobile = useMediaQuery("max-sm")
+  const navigate = useNavigate()
+
+  const { prev, next } = useMemo(
+    () => (item ? getStudioAdjacentItems(item) : {}),
+    [item]
+  )
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -231,6 +245,34 @@ export function StudioDock({ item }: StudioDockProps) {
 
             {/* Bottom action row — icon + label on desktop, icon-only on mobile */}
             <div className="flex h-11 items-center gap-1 px-1.5 sm:h-12 sm:gap-1.5 sm:px-2">
+              {/* Previous item */}
+              {prev ? (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        play("attention", {
+                          direction: "back",
+                          emphasis: "subtle",
+                        })
+                        void navigate({ href: getStudioItemHref(prev) })
+                      }}
+                      aria-label="Previous component"
+                      className={cn(DOCK_BUTTON, DOCK_BUTTON_IDLE)}
+                    >
+                      <ArrowLeft className="size-4" aria-hidden="true" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-[10px]">
+                    Previous Component{" "}
+                    <Kbd>
+                      <ArrowLeft />
+                    </Kbd>
+                  </TooltipContent>
+                </Tooltip>
+              ) : null}
+
               {/* Install */}
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -359,6 +401,34 @@ export function StudioDock({ item }: StudioDockProps) {
                   {isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
                 </TooltipContent>
               </Tooltip>
+
+              {/* Next item */}
+              {next ? (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        play("attention", {
+                          direction: "forward",
+                          emphasis: "subtle",
+                        })
+                        void navigate({ href: getStudioItemHref(next) })
+                      }}
+                      aria-label="Next component"
+                      className={cn(DOCK_BUTTON, DOCK_BUTTON_IDLE)}
+                    >
+                      <ArrowRight className="size-4" aria-hidden="true" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-[10px]">
+                    Next Component{" "}
+                    <Kbd>
+                      <ArrowRight />
+                    </Kbd>
+                  </TooltipContent>
+                </Tooltip>
+              ) : null}
             </div>
           </div>
         </motion.div>
@@ -373,7 +443,7 @@ export function StudioDock({ item }: StudioDockProps) {
           }}
           position="bottom"
         >
-          <DrawerPopup variant="straight" showBar className="max-h-[85dvh]">
+          <DrawerPopup showBar className="max-h-[85dvh]">
             <DrawerHeader className="flex shrink-0 flex-row items-center justify-between gap-2 border-b border-border/60 px-4 py-3">
               <DrawerTitle className="font-sans text-sm font-semibold text-foreground">
                 {mobileDrawerTarget === "install" ? "Install" : "Variants"}
@@ -392,7 +462,7 @@ export function StudioDock({ item }: StudioDockProps) {
               </DrawerClose>
             </DrawerHeader>
 
-            <DrawerPanel scrollable scrollFade className="p-4">
+            <DrawerPanel scrollable scrollFade className="p-4 pb-10">
               {mobileDrawerTarget === "install" ? (
                 <CodeBlockCommand name={item.slug} />
               ) : (

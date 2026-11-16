@@ -58,7 +58,7 @@ export function StudioDocsView({
   activeVariantId,
   onSelectVariant,
 }: StudioDocsViewProps) {
-  const { segment } = useStudioLayout()
+  const { segment, toggleCode } = useStudioLayout()
   const navigate = useNavigate()
 
   const mdxData = useMemo(() => getStudioMdxData(item.slug), [item.slug])
@@ -237,20 +237,34 @@ export function StudioDocsView({
             ) : null}
           </div>
 
-          {/* Sub-bar: Copy Page + prev/next */}
+          {/* Sub-bar: Copy Page + Source Code + prev/next */}
           <div className="flex items-center justify-between gap-2 border-y border-border/60 py-2">
-            {mdxData?.rawMdxContent ? (
-              <CopyButton
-                text={mdxData.rawMdxContent}
+            <div className="flex items-center gap-1.5">
+              {mdxData?.rawMdxContent ? (
+                <CopyButton
+                  text={mdxData.rawMdxContent}
+                  variant="secondary"
+                  size="lg"
+                  className="gap-1.5 bg-accent pr-2.5 pl-2 text-[11px]"
+                >
+                  Copy Page
+                </CopyButton>
+              ) : null}
+
+              <Button
+                type="button"
                 variant="secondary"
-                size="lg"
-                className="gap-1.5 bg-accent pr-2.5 pl-2 text-[11px]"
+                size="sm"
+                onClick={toggleCode}
+                className="h-7 gap-1.5 rounded-lg bg-accent px-2 text-[11px] font-medium text-foreground hover:bg-accent/80"
               >
-                Copy Page
-              </CopyButton>
-            ) : (
-              <span aria-hidden="true" />
-            )}
+                <Code2
+                  className="size-3.5 text-pp-primary"
+                  aria-hidden="true"
+                />
+                <span>Source Code</span>
+              </Button>
+            </div>
 
             <div className="flex items-center gap-1.5">
               {prev ? (

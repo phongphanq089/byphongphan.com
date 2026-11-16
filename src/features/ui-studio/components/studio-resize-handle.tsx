@@ -37,7 +37,7 @@ export function StudioResizeHandle({
           aria-valuenow={panelWidth}
           onPointerDown={onPointerDown}
           onDoubleClick={onReset}
-          className="group relative z-20 -mx-1.5 hidden h-full w-3 shrink-0 cursor-col-resize touch-none items-center justify-center select-none sm:flex"
+          className="group relative z-20 -mx-1.5 hidden h-full w-3 shrink-0 cursor-col-resize touch-none items-center justify-center select-none xl:flex"
         >
           <div
             className={cn(
@@ -60,7 +60,7 @@ export function StudioResizeHandle({
         </div>
       </TooltipTrigger>
       <TooltipContent side="left" className="text-[10px]">
-        Kéo để chỉnh kích thước · Nhấp đúp để đặt lại
+        Drag to resize · Double-click to reset
       </TooltipContent>
     </Tooltip>
   )
