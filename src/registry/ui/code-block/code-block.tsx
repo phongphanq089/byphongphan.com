@@ -613,7 +613,7 @@ const CodeBlockLineRow = memo(function CodeBlockLineRow({
             /* Inside the <pre>, so the code surface's mono face, pre
                whitespace and token color would cascade into real buttons
                placed here. Reset to app typography at the boundary. */
-            "z-20 items-center gap-1 font-sans whitespace-normal text-foreground select-none",
+            "z-20 items-center gap-1 whitespace-normal text-foreground select-none",
             !inGutter &&
               "absolute end-2 top-0 flex h-(--code-block-line-height)",
             /* ABSOLUTE and centred on the row's START EDGE: `left-0` is where

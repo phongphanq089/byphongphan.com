@@ -46,7 +46,7 @@ type Expanded = "install" | "variants" | null
 type MobileDrawerTarget = "install" | "variants" | null
 
 const DOCK_BUTTON =
-  "inline-flex h-8 items-center justify-center gap-1.5 rounded-xl px-2 font-sans text-[11px] font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary sm:h-9 sm:gap-2 sm:rounded-xl sm:px-3 sm:text-xs"
+  "inline-flex h-8 items-center justify-center gap-1.5 rounded-xl px-2  text-[11px] font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary sm:h-9 sm:gap-2 sm:rounded-xl sm:px-3 sm:text-xs"
 const DOCK_BUTTON_IDLE =
   "text-muted-foreground hover:bg-accent hover:text-foreground"
 const DOCK_BUTTON_ACTIVE = "bg-accent text-foreground shadow-xs"
@@ -162,7 +162,7 @@ export function StudioDock({ item }: StudioDockProps) {
                 >
                   <div className="border-b border-border/60 p-3 sm:p-3.5">
                     <div className="mb-2 flex items-center justify-between gap-4">
-                      <span className="font-sans text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">
+                      <span className="text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">
                         Install
                       </span>
                       <button
@@ -188,7 +188,7 @@ export function StudioDock({ item }: StudioDockProps) {
                 >
                   <div className="w-full border-b border-border/60 p-2.5">
                     <div className="mb-1.5 flex items-center justify-between gap-2 px-1">
-                      <span className="font-sans text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
+                      <span className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
                         Variants
                       </span>
                       <button
@@ -445,7 +445,7 @@ export function StudioDock({ item }: StudioDockProps) {
         >
           <DrawerPopup showBar className="max-h-[85dvh]">
             <DrawerHeader className="flex shrink-0 flex-row items-center justify-between gap-2 border-b border-border/60 px-4 py-3">
-              <DrawerTitle className="font-sans text-sm font-semibold text-foreground">
+              <DrawerTitle className="text-sm font-semibold text-foreground">
                 {mobileDrawerTarget === "install" ? "Install" : "Variants"}
               </DrawerTitle>
               <DrawerClose

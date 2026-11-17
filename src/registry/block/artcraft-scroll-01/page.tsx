@@ -94,7 +94,7 @@ export default function ArtcraftScrollBlockPage() {
   }, [scrubToProgress])
 
   return (
-    <div className="relative h-screen w-full overflow-hidden bg-background font-sans text-foreground selection:bg-primary/20">
+    <div className="relative h-screen w-full overflow-hidden bg-background text-foreground selection:bg-primary/20">
       {/* Subtle blueprint background grid using semantic primary tokens */}
       <div
         className="pointer-events-none fixed inset-0 opacity-25"

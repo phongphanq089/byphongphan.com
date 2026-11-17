@@ -14,9 +14,13 @@ interface StudioRightPanelProps {
 }
 
 /**
- * Desktop right-hand docked column. Docs renders as the base layer; when
- * `panel === "code"` the Source Code drawer slides in on top of it with a
- * grab handle you can drag downward to dismiss (native-feeling interaction).
+ * Desktop right-hand docked column.
+ *
+ * Components/Hooks (MDX available): `StudioDocsView` fills the column as the
+ * base layer; when `panel === "code"` `StudioCodeOverlay` slides in on top.
+ *
+ * Blocks (no MDX): the docs layer is never mounted — the code overlay is the
+ * only content, and closing it collapses the panel completely.
  */
 export function StudioRightPanel({
   item,
@@ -25,8 +29,25 @@ export function StudioRightPanel({
   activeVariantId,
   onSelectVariant,
 }: StudioRightPanelProps) {
+  const hasDocs = item.collection !== "blocks"
+
+  if (!hasDocs) {
+    if (panel !== "code") return null
+    return (
+      <div className="relative h-full w-full overflow-hidden">
+        <StudioCodeOverlay
+          item={item}
+          onClose={() => onPanelChange(null)}
+          activeVariantId={activeVariantId}
+          onSelectVariant={onSelectVariant}
+        />
+      </div>
+    )
+  }
+
   return (
     <div className="relative h-full w-full overflow-hidden">
+      {/* Base layer — docs for components & hooks */}
       <StudioDocsView
         item={item}
         onClose={() => onPanelChange(null)}

@@ -123,7 +123,7 @@ export function StudioCodeOverlay({
             onClick={onBack}
             aria-label="Back to docs"
             title="Back to docs"
-            className="inline-flex h-7 shrink-0 items-center gap-1.5 rounded-md px-2 font-sans text-[11px] font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+            className="inline-flex h-7 shrink-0 items-center gap-1.5 rounded-md px-2 text-[12px] font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
           >
             <ArrowLeft className="size-3.5" aria-hidden="true" />
             Source Code
@@ -132,7 +132,7 @@ export function StudioCodeOverlay({
 
         <span
           title={currentFile?.path}
-          className="min-w-0 flex-1 truncate text-center font-mono text-[10px] text-muted-foreground"
+          className="min-w-0 flex-1 truncate text-center text-[12px] text-muted-foreground"
         >
           {currentFile?.name ?? "—"}
         </span>
@@ -181,7 +181,7 @@ export function StudioCodeOverlay({
                 onClick={() => handleTabClick(file.path, file.variantId)}
                 title={file.path}
                 className={cn(
-                  "flex shrink-0 items-center gap-1.5 rounded-md px-2 py-1 font-mono text-[10px] transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                  "flex shrink-0 items-center gap-1.5 rounded-md px-2 py-1 text-xs transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary",
                   isActive
                     ? "bg-accent text-foreground"
                     : "text-muted-foreground hover:text-foreground"

@@ -99,7 +99,7 @@ export function StudioCatalogGrid({ segment }: StudioCatalogGridProps) {
   if (total === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-2 p-8 text-center">
-        <p className="font-sans text-[10px] font-medium tracking-[0.25em] text-muted-foreground/60 uppercase">
+        <p className="text-[10px] font-medium tracking-[0.25em] text-muted-foreground/60 uppercase">
           Nothing here yet
         </p>
         <p className="max-w-56 text-sm text-muted-foreground">
@@ -213,7 +213,7 @@ function CatalogSection({
   return (
     <section aria-label={title} className="flex flex-col gap-4 sm:gap-5">
       <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-border/60 pb-3">
-        <h2 className="font-sans text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+        <h2 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
           {title}
         </h2>
         <div className="flex shrink-0 items-center gap-2.5">
@@ -267,7 +267,7 @@ function CatalogFilterSelect({
       <SelectTrigger
         size="sm"
         aria-label={label}
-        className="h-8 w-auto gap-1.5 border-border/60 bg-transparent px-2.5 font-sans text-[11px] font-medium text-muted-foreground shadow-none transition-colors hover:border-border hover:text-foreground"
+        className="h-8 w-auto gap-1.5 border-border/60 bg-transparent px-2.5 text-[11px] font-medium text-muted-foreground shadow-none transition-colors hover:border-border hover:text-foreground"
       >
         <SelectValue />
       </SelectTrigger>
@@ -286,7 +286,7 @@ function CatalogFilterSelect({
 function CatalogEmptyState({ label }: { label: string }) {
   return (
     <div className="col-span-full flex flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-border/70 px-6 py-12 text-center">
-      <p className="font-sans text-[10px] font-medium tracking-[0.25em] text-muted-foreground/50 uppercase">
+      <p className="text-[10px] font-medium tracking-[0.25em] text-muted-foreground/50 uppercase">
         Nothing here yet
       </p>
       <p className="max-w-56 text-xs text-muted-foreground">{label}</p>

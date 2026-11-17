@@ -9,12 +9,12 @@ export function TextHoverEffectSchematic() {
       {/* Typography Preview Stage */}
       <div className="relative flex items-center justify-center">
         {/* Faded background outline letters */}
-        <span className="stroke-white/20 [stroke-width:1.5px] font-sans text-3xl font-black tracking-widest text-transparent">
+        <span className="stroke-white/20 [stroke-width:1.5px] text-3xl font-black tracking-widest text-transparent">
           HOVER
         </span>
 
         {/* Highlighted text under spotlight */}
-        <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-amber-400 via-rose-500 to-cyan-400 [mask-image:radial-gradient(circle_at_65%_45%,black_40%,transparent_75%)] bg-clip-text font-sans text-3xl font-black tracking-widest text-transparent">
+        <span className="absolute inset-0 flex items-center justify-center bg-gradient-to-r from-amber-400 via-rose-500 to-cyan-400 [mask-image:radial-gradient(circle_at_65%_45%,black_40%,transparent_75%)] bg-clip-text text-3xl font-black tracking-widest text-transparent">
           HOVER
         </span>
 

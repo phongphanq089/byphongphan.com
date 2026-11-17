@@ -45,7 +45,6 @@ export function StudioMobileDrawer({
         position="bottom"
       >
         <DrawerPopup
-          variant="straight"
           showBar
           viewportClassName="xl:hidden"
           className="flex h-[88dvh] max-h-[88dvh] min-h-0 flex-col overflow-hidden bg-background text-foreground"
@@ -72,7 +71,6 @@ export function StudioMobileDrawer({
       position="bottom"
     >
       <DrawerPopup
-        variant="straight"
         showBar
         viewportClassName="xl:hidden"
         className="flex h-[90dvh] max-h-[90dvh] min-h-0 flex-col overflow-hidden bg-background text-foreground"
@@ -99,7 +97,6 @@ export function StudioMobileDrawer({
           position="bottom"
         >
           <DrawerPopup
-            variant="straight"
             showBar
             hasBackdrop={false}
             viewportClassName="xl:hidden"

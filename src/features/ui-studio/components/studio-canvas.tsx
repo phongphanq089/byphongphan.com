@@ -71,7 +71,7 @@ function LiveStage({
 
   return (
     <div className="flex h-full flex-col items-center justify-center gap-2 p-8 text-center">
-      <p className="font-sans text-[11px] font-semibold text-muted-foreground">
+      <p className="text-[11px] font-semibold text-muted-foreground">
         No live preview
       </p>
       <p className="max-w-xs text-sm text-muted-foreground">

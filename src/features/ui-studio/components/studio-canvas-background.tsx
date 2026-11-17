@@ -41,22 +41,22 @@ const StudioCanvasBackground = forwardRef<
 
         {showArcBands && (
           <>
-            {/* Outer arc band */}
+            {/* Outer arc band - rounded-t ensures the top arches naturally while bottom stays flush without cutting corners */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -bottom-[28%] left-1/2 -z-10 h-[92%] w-[150%] -translate-x-1/2 rounded-[100%] [background:radial-gradient(ellipse_120%_88%_at_50%_100%,rgba(56,189,248,0.52)_0%,rgba(45,212,191,0.44)_18%,rgba(245,158,11,0.38)_40%,rgba(244,63,94,0.30)_62%,rgba(255,252,247,0)_82%)] dark:[background:radial-gradient(ellipse_120%_88%_at_50%_100%,rgba(56,189,248,0.24)_0%,rgba(45,212,191,0.20)_18%,rgba(245,158,11,0.16)_40%,rgba(244,63,94,0.14)_62%,transparent_82%)]"
+              className="pointer-events-none absolute -bottom-[10%] left-1/2 -z-10 h-[96%] w-[180%] -translate-x-1/2 rounded-t-[100%] blur-xl [background:radial-gradient(ellipse_120%_88%_at_50%_100%,rgba(56,189,248,0.52)_0%,rgba(45,212,191,0.44)_18%,rgba(245,158,11,0.38)_40%,rgba(244,63,94,0.30)_62%,rgba(255,252,247,0)_82%)] dark:[background:radial-gradient(ellipse_120%_88%_at_50%_100%,rgba(56,189,248,0.24)_0%,rgba(45,212,191,0.20)_18%,rgba(245,158,11,0.16)_40%,rgba(244,63,94,0.14)_62%,transparent_82%)]"
             />
 
             {/* Middle blurred arc band */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -bottom-[22%] left-1/2 -z-10 h-[78%] w-[128%] -translate-x-1/2 rounded-[100%] blur-2xl [background:radial-gradient(ellipse_110%_80%_at_50%_100%,rgba(56,189,248,0.28)_0%,rgba(45,212,191,0.24)_22%,rgba(251,191,36,0.20)_46%,rgba(251,113,133,0.16)_68%,transparent_86%)] dark:[background:radial-gradient(ellipse_110%_80%_at_50%_100%,rgba(56,189,248,0.16)_0%,rgba(45,212,191,0.14)_22%,rgba(251,191,36,0.12)_46%,rgba(251,113,133,0.10)_68%,transparent_86%)]"
+              className="pointer-events-none absolute -bottom-[8%] left-1/2 -z-10 h-[82%] w-[150%] -translate-x-1/2 rounded-t-[100%] blur-2xl [background:radial-gradient(ellipse_110%_80%_at_50%_100%,rgba(56,189,248,0.28)_0%,rgba(45,212,191,0.24)_22%,rgba(251,191,36,0.20)_46%,rgba(251,113,133,0.16)_68%,transparent_86%)] dark:[background:radial-gradient(ellipse_110%_80%_at_50%_100%,rgba(56,189,248,0.16)_0%,rgba(45,212,191,0.14)_22%,rgba(251,191,36,0.12)_46%,rgba(251,113,133,0.10)_68%,transparent_86%)]"
             />
 
             {/* Inner intense glow arc band */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -bottom-[18%] left-1/2 -z-10 h-[64%] w-[108%] -translate-x-1/2 rounded-[100%] blur-3xl [background:radial-gradient(ellipse_100%_72%_at_50%_100%,rgba(255,255,255,0.55)_0%,rgba(255,252,247,0.18)_38%,transparent_72%)] dark:[background:radial-gradient(ellipse_100%_72%_at_50%_100%,rgba(255,255,255,0.10)_0%,rgba(255,255,255,0.02)_38%,transparent_72%)]"
+              className="pointer-events-none absolute -bottom-[6%] left-1/2 -z-10 h-[68%] w-[120%] -translate-x-1/2 rounded-t-[100%] blur-3xl [background:radial-gradient(ellipse_100%_72%_at_50%_100%,rgba(255,255,255,0.55)_0%,rgba(255,252,247,0.18)_38%,transparent_72%)] dark:[background:radial-gradient(ellipse_100%_72%_at_50%_100%,rgba(255,255,255,0.10)_0%,rgba(255,255,255,0.02)_38%,transparent_72%)]"
             />
           </>
         )}

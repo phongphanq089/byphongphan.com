@@ -87,7 +87,7 @@ export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
       <div className="flex h-11 shrink-0 items-center justify-between gap-2 border-b border-border/70 px-4">
         <nav
           aria-label="Breadcrumb"
-          className="flex min-w-0 items-center gap-1.5 font-sans text-[11px] text-muted-foreground"
+          className="flex min-w-0 items-center gap-1.5 text-[12px] text-muted-foreground"
         >
           <Link
             to="/ui"
@@ -179,7 +179,7 @@ export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
               ) : null}
             </div>
 
-            <h3 className="font-sans text-2xl leading-tight font-semibold tracking-tight text-foreground">
+            <h3 className="text-2xl leading-tight font-semibold tracking-tight text-foreground">
               {title}
             </h3>
             <p className="text-sm leading-relaxed text-muted-foreground">
@@ -239,8 +239,7 @@ export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
                 <CopyButton
                   text={mdxData.rawMdxContent}
                   variant="secondary"
-                  size="lg"
-                  className="gap-1.5 bg-accent pr-2.5 pl-2 text-[11px]"
+                  size="sm"
                 >
                   Copy Page
                 </CopyButton>
@@ -251,7 +250,6 @@ export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
                 variant="secondary"
                 size="sm"
                 onClick={toggleCode}
-                className="h-7 gap-1.5 rounded-lg bg-accent px-2 text-[11px] font-medium text-foreground hover:bg-accent/80"
               >
                 <Code2
                   className="size-3.5 text-pp-primary"
@@ -320,7 +318,7 @@ export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
           ) : (
             <>
               <div className="flex flex-col gap-1.5">
-                <p className="font-sans text-[11px] font-medium text-muted-foreground">
+                <p className="text-[11px] font-medium text-muted-foreground">
                   Install
                 </p>
                 <CodeBlockCommand name={item.slug} className="mt-1" />
@@ -328,7 +326,7 @@ export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
 
               {item.dependencies && item.dependencies.length > 0 ? (
                 <div className="flex flex-col gap-1.5">
-                  <p className="font-sans text-[11px] font-medium text-muted-foreground">
+                  <p className="text-[11px] font-medium text-muted-foreground">
                     Dependencies
                   </p>
                   <ul className="flex flex-wrap gap-1.5">

@@ -39,9 +39,9 @@ interface StudioSidebarProps {
 
 const toNavItem = (item: StudioItem, index?: number): LineNavItem => ({
   title: (
-    <span className="inline-flex items-center gap-1.5 font-sans">
+    <span className="inline-flex items-center gap-1.5">
       {typeof index === "number" ? (
-        <span className="font-sans text-[10px] font-medium text-muted-foreground/70 tabular-nums">
+        <span className="text-[10px] font-medium text-muted-foreground/70 tabular-nums">
           {String(index).padStart(2, "0")}
         </span>
       ) : null}
@@ -59,7 +59,7 @@ const toNavItem = (item: StudioItem, index?: number): LineNavItem => ({
 
 function CountBadge({ count }: { count: number }) {
   return (
-    <span className="rounded-[4px] border border-pp-primary/30 bg-pp-primary/10 px-1.5 py-0.5 font-sans text-[10px] leading-none font-semibold text-pp-primary tabular-nums">
+    <span className="rounded-[4px] border border-pp-primary/30 bg-pp-primary/10 px-1.5 py-0.5 text-[10px] leading-none font-semibold text-pp-primary tabular-nums">
       {String(count).padStart(2, "0")}
     </span>
   )
@@ -77,7 +77,7 @@ function MajorGroupTitle({
   return (
     <span className="inline-flex min-w-0 items-center gap-2">
       {icon ?? null}
-      <span className="font-sans text-[11px] font-bold tracking-tight text-foreground">
+      <span className="text-[11px] font-bold tracking-tight text-foreground">
         {label}
       </span>
       <CountBadge count={count} />
@@ -92,9 +92,9 @@ function MajorGroupTitle({
  * - Detached trigger via `studioSidebarHandle` — the header `[|]` button is the DrawerTrigger
  * - Self-contained inset card: own `DrawerHeader` (logo + close), never covered by the page header
  * - Flat, stable hierarchy: `All Items` on top, then Blocks / Unique / Basic / Hooks
- *   — each with a count badge; items carry 2-digit indices, everything in `font-sans`
+ *   — each with a count badge; items carry 2-digit indices, everything in ``
  * - Base UI `ScrollArea` scroll container with `scrollFade` for the 77+ items
- * - Strict typography: 100% `font-sans` (Mulish) — no `font-mono` anywhere
+ * - Strict typography: 100% `` (Mulish) — no `font-mono` anywhere
  * - Smooth native swipe dismiss + hardware-accelerated animations
  */
 export function StudioSidebar({
@@ -228,7 +228,7 @@ export function StudioSidebar({
       >
         {/* Self-contained header: logo + close (never covered by the page header) */}
         <DrawerHeader className="flex shrink-0 flex-row items-center justify-between gap-2 border-b border-border/60 px-4 py-3">
-          <DrawerTitle className="flex items-center gap-2 font-sans text-sm font-semibold tracking-tight text-foreground">
+          <DrawerTitle className="flex items-center gap-2 text-sm font-semibold tracking-tight text-foreground">
             <Link
               to="/"
               aria-label="Phong Phan — home"
