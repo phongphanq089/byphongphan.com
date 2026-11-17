@@ -363,7 +363,7 @@ button {
   }
 }
 
-html.no-scrollbar,
+/* html.no-scrollbar,
 body.no-scrollbar,
 :root.no-scrollbar {
   -ms-overflow-style: none !important;
@@ -386,7 +386,7 @@ html.no-scrollbar *::-webkit-scrollbar-thumb,
 body.no-scrollbar *::-webkit-scrollbar-thumb {
   display: none !important;
   background: transparent !important;
-}
+} */
 
 /* ─── Rail Scroll Scrubber Responsive Layout Space ─────────────────── */
 :root {

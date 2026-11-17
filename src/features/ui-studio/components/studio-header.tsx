@@ -19,6 +19,7 @@ import { useStudioStore } from "../store/studio-store"
  */
 export function StudioHeader() {
   const sidebarOpen = useStudioStore((state) => state.sidebarOpen)
+  const toggleSidebar = useStudioStore((state) => state.toggleSidebar)
   const displayUrl = useStudioDisplayUrl()
 
   return (
@@ -32,20 +33,17 @@ export function StudioHeader() {
         >
           <PPPixelMark className="size-full text-pp-primary" variant="glow" />
         </Link>
-        {/* Sidebar toggle — Base UI DrawerTrigger manages aria-expanded/aria-controls */}
+        {/* Sidebar toggle */}
         <DrawerTrigger
           handle={studioSidebarHandle}
-          render={
-            <button
-              type="button"
-              aria-label="Toggle sidebar (Ctrl+B)"
-              title="Toggle sidebar (Ctrl+B)"
-              className={cn(
-                "inline-flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none",
-                sidebarOpen && "bg-accent/60 text-foreground"
-              )}
-            />
-          }
+          type="button"
+          aria-label="Toggle sidebar (Ctrl+B)"
+          title="Toggle sidebar (Ctrl+B)"
+          onClick={toggleSidebar}
+          className={cn(
+            "inline-flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none",
+            sidebarOpen && "bg-accent/60 text-foreground"
+          )}
         >
           <PanelLeft
             className={cn(
