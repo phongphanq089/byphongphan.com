@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/static-components */
-import { ExternalLink, Globe, Loader2 } from "lucide-react"
+import { Globe, Loader2 } from "lucide-react"
 import { Suspense } from "react"
 
 import { CodeBlock } from "@/registry/ui/code-block"
-import { siteConfig } from "@/shared/config"
-import { cn } from "@/shared/lib/utils"
 
 import { useStudioLayout } from "../hooks/studio-layout-context"
+import { useStudioDisplayUrl } from "../hooks/use-studio-display-url"
 import type { StudioItem } from "../model/types"
 import {
   getLiveDemo,
   getRecordByItem,
   getStudioSourceFiles,
 } from "../model/unified-registry.adapter"
+import { StudioCanvasBackground } from "./studio-canvas-background"
 import { StudioPropsCustomizer } from "./studio-props-customizer"
 
 interface StudioCanvasProps {
@@ -118,100 +118,65 @@ function HookCodeStage({ item }: { item: StudioItem }) {
 }
 
 /**
- * Stage frame: browser chrome with a live URL pill over a dot-grid CAD board.
+ * Stage frame: renders live demo, hook source, or block iframe over CAD dot-grid.
  */
 export function StudioCanvas({ item }: StudioCanvasProps) {
   const {
     activeVariantId,
-    setVariantId,
     customizerValues,
     setCustomizerValue,
     resetCustomizer,
   } = useStudioLayout()
+  const displayUrl = useStudioDisplayUrl()
 
-  const registryJsonUrl = `${siteConfig.url}/r/${item.slug}.json`
+  const isBlock = item.collection === "blocks"
 
   return (
-    <div className="flex h-full min-h-0 flex-col">
-      {/* Browser chrome */}
-      <div className="flex h-11 shrink-0 items-center gap-3 border-b border-border/70 bg-muted/20 px-3">
+    <StudioCanvasBackground
+      showArcBands={!isBlock}
+      showGrid={!isBlock}
+      className="flex h-full min-h-0 w-full flex-1 flex-col"
+    >
+      <div className="hidden h-11 shrink-0 items-center justify-between gap-3 border-b border-border/70 bg-background/80 px-3 backdrop-blur-xs max-md:flex">
         <div className="flex shrink-0 items-center gap-1.5" aria-hidden="true">
           <span className="size-2.5 rounded-full bg-rose-400/80" />
           <span className="size-2.5 rounded-full bg-amber-400/80" />
           <span className="size-2.5 rounded-full bg-emerald-400/80" />
         </div>
-        <div className="mx-auto flex h-7 w-full max-w-md min-w-0 items-center gap-1.5 rounded-md border border-border/60 bg-background/70 px-2.5 font-mono text-[10px] text-muted-foreground">
+        <div className="flex h-7 w-full max-w-md min-w-0 items-center justify-center gap-1.5 rounded-md border border-border/60 bg-muted/80 px-2.5 font-mono text-[10px] text-muted-foreground backdrop-blur-xs">
           <Globe className="size-3 shrink-0" aria-hidden="true" />
-          <span className="truncate">acme.app/preview/{item.slug}</span>
+          <span className="truncate" title={displayUrl}>
+            {displayUrl}
+          </span>
         </div>
-        <a
-          href={registryJsonUrl}
-          target="_blank"
-          rel="noreferrer"
-          aria-label="Open registry item JSON"
-          title="Open registry item JSON"
-          className="inline-flex size-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
-        >
-          <ExternalLink className="size-3.5" aria-hidden="true" />
-        </a>
       </div>
-
-      {/* Variant pills (when the item ships variants) */}
-      {item.variants && item.variants.length > 0 ? (
-        <div
-          className="flex shrink-0 items-center gap-1.5 overflow-x-auto border-b border-border/60 px-3 py-2"
-          aria-label="Variants"
-        >
-          {item.variants.map((variant) => {
-            const isActive = variant.id === activeVariantId
-            return (
-              <button
-                key={variant.id}
-                type="button"
-                onClick={() => setVariantId(isActive ? null : variant.id)}
-                aria-pressed={isActive}
-                className={cn(
-                  "shrink-0 rounded-full border px-2.5 py-1 font-sans text-[10px] font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                  isActive
-                    ? "border-transparent bg-foreground text-background"
-                    : "border-border/70 bg-transparent text-muted-foreground hover:border-foreground/30 hover:text-foreground"
-                )}
-              >
-                {variant.title}
-              </button>
-            )
-          })}
-        </div>
-      ) : null}
-
-      {/* CAD board */}
-      <div className="relative min-h-0 flex-1 overflow-hidden [background-image:radial-gradient(circle_at_1px_1px,var(--color-border)_1px,transparent_0)] [background-size:18px_18px]">
-        {item.collection === "blocks" ? (
+      {isBlock ? (
+        <div className="relative h-full min-h-0 w-full flex-1">
           <iframe
             key={item.slug}
             src={`/blocks-preview/${item.slug}`}
             title={`${item.title} preview`}
-            className="h-full w-full border-0 bg-background"
+            className="absolute inset-0 h-full w-full border-0 bg-background"
           />
-        ) : item.renderMode === "hook-code" ? (
-          <div className="flex h-full items-start justify-center overflow-y-auto">
-            <HookCodeStage item={item} />
-          </div>
-        ) : (
-          <div className="flex h-full items-center justify-center overflow-auto p-4 sm:p-8">
-            <LiveStage item={item} variantId={activeVariantId} />
-          </div>
-        )}
+        </div>
+      ) : item.renderMode === "hook-code" ? (
+        <div className="flex h-full min-h-0 flex-1 items-start justify-center overflow-y-auto">
+          <HookCodeStage item={item} />
+        </div>
+      ) : (
+        <div className="flex h-full min-h-0 flex-1 items-center justify-center overflow-auto p-4 sm:p-8">
+          <LiveStage item={item} variantId={activeVariantId} />
+        </div>
+      )}
 
-        {item.controls && item.controls.length > 0 ? (
-          <StudioPropsCustomizer
-            controls={item.controls}
-            values={customizerValues}
-            onChange={setCustomizerValue}
-            onReset={resetCustomizer}
-          />
-        ) : null}
-      </div>
-    </div>
+      {item.controls && item.controls.length > 0 ? (
+        <StudioPropsCustomizer
+          controls={item.controls}
+          values={customizerValues}
+          onChange={setCustomizerValue}
+          onReset={resetCustomizer}
+        />
+      ) : null}
+    </StudioCanvasBackground>
   )
 }

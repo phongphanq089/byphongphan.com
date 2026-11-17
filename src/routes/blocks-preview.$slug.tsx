@@ -124,10 +124,16 @@ function BlockPreviewFrame() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-background text-foreground antialiased">
+    <div className="h-full min-h-screen w-full bg-background text-foreground antialiased">
+      <style>{`
+        html, body, #root {
+          height: 100%;
+          min-height: 100%;
+        }
+      `}</style>
       <Suspense
         fallback={
-          <div className="flex min-h-screen items-center justify-center">
+          <div className="flex h-full min-h-screen items-center justify-center">
             <div className="size-6 animate-spin rounded-full border-2 border-primary/20 border-t-primary" />
           </div>
         }

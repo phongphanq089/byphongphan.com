@@ -154,9 +154,9 @@ export function StudioShell() {
             {/* Column 2 — Outlet (catalog or detail stage) */}
             <section
               aria-label="Studio stage"
-              className="relative flex min-h-0 flex-1 flex-col"
+              className="relative flex h-full min-h-0 flex-1 flex-col"
             >
-              <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden">
+              <div className="relative flex h-full min-h-0 flex-1 flex-col overflow-hidden">
                 <Outlet />
                 {activeItem ? <StudioDock item={activeItem} /> : null}
               </div>

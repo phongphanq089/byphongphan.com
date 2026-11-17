@@ -1,4 +1,4 @@
-import { useNavigate, useRouter } from "@tanstack/react-router"
+import { Link, useNavigate, useRouter } from "@tanstack/react-router"
 import { Layers3, X } from "lucide-react"
 import { useMemo } from "react"
 
@@ -16,6 +16,7 @@ import {
   DrawerTitle,
 } from "@/registry/ui/drawer"
 import { ScrollArea } from "@/registry/ui/scroll-area"
+import { PPPixelMark } from "@/shared/ui"
 
 import { useStudioLayout } from "../hooks/studio-layout-context"
 import { studioSidebarHandle } from "../hooks/studio-sidebar-handle"
@@ -221,20 +222,23 @@ export function StudioSidebar({
         variant="inset"
         hasBackdrop={true}
         backdropProps={{ className: "bg-black/40" }}
-        showBar={false}
+        showBar={true}
         portalProps={{ keepMounted: true }}
-        className="h-full w-80 max-w-[85vw] flex-col overflow-hidden rounded-2xl border border-border/80 bg-background/95 shadow-2xl backdrop-blur-md dark:border-white/10 dark:bg-zinc-950/95"
+        className="h-full w-80 max-w-[85vw] flex-col overflow-hidden border border-border/80 bg-background/95 shadow-2xl backdrop-blur-md dark:border-white/10 dark:bg-zinc-950/95"
       >
         {/* Self-contained header: logo + close (never covered by the page header) */}
         <DrawerHeader className="flex shrink-0 flex-row items-center justify-between gap-2 border-b border-border/60 px-4 py-3">
           <DrawerTitle className="flex items-center gap-2 font-sans text-sm font-semibold tracking-tight text-foreground">
-            <span className="italic">
-              byphongphan
-              <span className="font-normal text-foreground/40">/</span>ui
-            </span>
-            <span className="font-sans text-[10px] text-muted-foreground/60">
-              (...)
-            </span>
+            <Link
+              to="/"
+              aria-label="Phong Phan — home"
+              className="flex size-9 shrink-0 items-center justify-center"
+            >
+              <PPPixelMark
+                className="size-full text-pp-primary"
+                variant="glow"
+              />
+            </Link>
           </DrawerTitle>
 
           <DrawerClose
@@ -253,11 +257,6 @@ export function StudioSidebar({
 
         {/* Caliper ruler line along the inner left edge */}
         <div className="relative min-h-0 flex-1 overflow-hidden">
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-y-0 left-0 z-10 w-2 border-r border-border/40 text-border [background:repeating-linear-gradient(to_bottom,transparent_0_14px,currentColor_14px_15px,transparent_15px_28px)]"
-          />
-
           <ScrollArea
             className="h-full w-full"
             scrollFade
