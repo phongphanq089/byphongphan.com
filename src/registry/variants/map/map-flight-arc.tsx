@@ -34,7 +34,7 @@ const CITIES = [
 
 export function MapFlightArc() {
   return (
-    <div className="relative h-[420px] w-full overflow-hidden rounded-xl border border-border/80 bg-muted/10">
+    <div className="relative size-full min-h-[400px] w-full overflow-hidden rounded-xl border border-border/80 bg-muted/10">
       <Map center={[-30, 25]} zoom={1.5} className="size-full">
         <MapControls position="top-right" showZoom />
 

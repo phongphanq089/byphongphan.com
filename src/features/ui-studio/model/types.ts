@@ -33,6 +33,8 @@ export interface StudioVariant {
   sourceFiles?: StudioVariantSourceFile[]
 }
 
+export type StudioCanvasLayout = "card" | "full"
+
 export interface StudioItem {
   /** e.g. "comp-drawer", "block-login-01", "hook-use-debounce" */
   id: string
@@ -48,4 +50,6 @@ export interface StudioItem {
   variants?: StudioVariant[]
   controls?: StudioControlSchema[]
   dependencies?: string[]
+  /** Force a specific canvas presentation for this item. */
+  canvasLayout?: StudioCanvasLayout
 }

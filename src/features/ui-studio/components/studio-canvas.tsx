@@ -10,6 +10,7 @@ import {
   getLiveDemo,
   getRecordByItem,
   getStudioSourceFiles,
+  resolveCanvasLayout,
 } from "../model/unified-registry.adapter"
 import { useStudioStore } from "../store/studio-store"
 import { StudioCanvasBackground } from "./studio-canvas-background"
@@ -131,11 +132,12 @@ export function StudioCanvas({ item }: StudioCanvasProps) {
   const displayUrl = useStudioDisplayUrl()
 
   const isBlock = item.collection === "blocks"
+  const isFullBleed = resolveCanvasLayout(item) === "full"
 
   return (
     <StudioCanvasBackground
-      showArcBands={!isBlock && showArcBands}
-      showGrid={!isBlock && showGrid}
+      showArcBands={!isFullBleed && showArcBands}
+      showGrid={!isFullBleed && showGrid}
       className="flex h-full min-h-0 w-full flex-1 flex-col"
     >
       <div className="hidden h-11 shrink-0 items-center justify-between gap-3 border-b border-border/70 bg-background/80 px-3 backdrop-blur-xs max-md:flex">
@@ -163,6 +165,10 @@ export function StudioCanvas({ item }: StudioCanvasProps) {
       ) : item.renderMode === "hook-code" ? (
         <div className="flex h-full min-h-0 flex-1 items-start justify-center overflow-y-auto">
           <HookCodeStage item={item} />
+        </div>
+      ) : isFullBleed ? (
+        <div className="relative h-full min-h-0 w-full flex-1 overflow-hidden [&>*]:size-full [&>*]:rounded-none [&>*]:border-0 [&>*]:shadow-none">
+          <LiveStage item={item} variantId={activeVariantId} />
         </div>
       ) : (
         <div className="flex h-full min-h-0 flex-1 items-center justify-center overflow-auto p-4 sm:p-8">

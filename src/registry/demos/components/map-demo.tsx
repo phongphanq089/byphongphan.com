@@ -30,7 +30,7 @@ const LOCATIONS = [
 
 export function MapDemo() {
   return (
-    <div className="relative h-[440px] w-full overflow-hidden rounded-xl border border-border/80 bg-muted/20 shadow-xs">
+    <div className="relative size-full min-h-[400px] w-full overflow-hidden rounded-xl border border-border/80 bg-muted/20 shadow-xs">
       <Map center={[-122.41, 37.78]} zoom={12} className="size-full">
         <MapControls
           position="top-right"

@@ -15,11 +15,15 @@ import {
 
 import { STUDIO_TAXONOMY } from "./taxonomy.config"
 import type {
+  StudioCanvasLayout,
   StudioCollectionId,
   StudioItem,
   StudioRenderMode,
   StudioVariant,
 } from "./types"
+
+/** Components that deserve the entire stage (maps, full-bleed scenes). */
+const FULL_BLEED_COMPONENTS: ReadonlySet<string> = new Set(["map"])
 
 export interface StudioSourceFile {
   path: string
@@ -121,6 +125,18 @@ export const STUDIO_RECORDS = RECORDS
 export function getRecordByItem(itemId: string | undefined | null) {
   if (!itemId) return undefined
   return RECORDS_BY_ID.get(itemId) ?? RECORDS_BY_SLUG.get(itemId)
+}
+
+/**
+ * Resolve the canvas presentation for a studio item: explicit layout wins,
+ * otherwise blocks and full-bleed components (maps) fill the stage, everything
+ * else renders centered in a card.
+ */
+export function resolveCanvasLayout(item: StudioItem): StudioCanvasLayout {
+  if (item.canvasLayout) return item.canvasLayout
+  if (item.collection === "blocks") return "full"
+  if (FULL_BLEED_COMPONENTS.has(item.slug)) return "full"
+  return "card"
 }
 
 /** Live demo component for a base item, if one exists. */
