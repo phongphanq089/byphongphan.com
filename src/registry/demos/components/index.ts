@@ -35,27 +35,12 @@ export const MiddleTruncationDemo = lazyWithRetry(() =>
     default: m.MiddleTruncationDemo,
   }))
 )
-export const PhongPhanIsometricDemo = lazyWithRetry(() =>
-  import("./phong-phan-isometric-demo").then((m) => ({
-    default: m.PhongPhanIsometricDemo,
-  }))
-)
-export const PPMarkIsometricDemo = lazyWithRetry(() =>
-  import("./pp-mark-isometric-demo").then((m) => ({
-    default: m.PPMarkIsometricDemo,
-  }))
-)
 export const SelectDemo = lazyWithRetry(() =>
   import("./select-demo").then((m) => ({ default: m.SelectDemo }))
 )
 export const ScrollAreaDemo = lazyWithRetry(() =>
   import("./scroll-area-demo").then((m) => ({
     default: m.ScrollAreaDemo,
-  }))
-)
-export const RailScrollScrubberDemo = lazyWithRetry(() =>
-  import("./rail-scroll-scrubber-demo").then((m) => ({
-    default: m.RailScrollScrubberDemo,
   }))
 )
 export const ScrollIndicatorDemo = lazyWithRetry(() =>
@@ -87,15 +72,11 @@ export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   "flip-clock": TimeScrubberDemo,
   "time-scrubber": TimeScrubberDemo,
   "time-scrubber-demo": TimeScrubberDemo,
-  "rail-scroll-scrubber": RailScrollScrubberDemo,
-  "rail-scroll-scrubber-demo": RailScrollScrubberDemo,
   "scroll-indicator": ScrollIndicatorDemo,
   "scroll-indicator-demo": ScrollIndicatorDemo,
   map: MapDemo,
   "text-hover-effect": TextHoverEffectDemo,
   "background-gradient-cursor": BackgroundGradientCursorDemo,
-  "pp-mark-isometric": PPMarkIsometricDemo,
-  "phong-phan-isometric": PhongPhanIsometricDemo,
   "middle-truncation": MiddleTruncationDemo,
   "middle-truncation-demo": MiddleTruncationDemo,
   "line-nav": LineNavDemo,

@@ -13,7 +13,7 @@ import {
 import {
   DEFAULT_RAIL_SECTIONS,
   RailScrollScrubber,
-} from "@/registry/animated/rail-scroll-scrubber"
+} from "./components/rail-scroll-scrubber"
 import { Button } from "@/registry/ui/button"
 import { Skeleton } from "@/registry/ui/skeleton"
 import { cn } from "@/shared/lib/utils"

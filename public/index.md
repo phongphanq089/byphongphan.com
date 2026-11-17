@@ -57,12 +57,11 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## UI Components & Primitives (17)
+## UI Components & Primitives (14)
 
 | Component | Category | Description | Direct Install |
 | :--- | :--- | :--- | :--- |
 | [Line Nav](https://byphongphan.com/component-ui/navigation/line-nav) | `navigation` | Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants. | `pnpm dlx shadcn add https://byphongphan.com/r/line-nav.json` |
-| [Rail Scroll Scrubber](https://byphongphan.com/component-ui/navigation/rail-scroll-scrubber) | `navigation` | Kinetic scrollbar and precision section scrubber featuring a 5-stage continuous rail path, split-character peeling, and zoom overview lens. | `pnpm dlx shadcn add https://byphongphan.com/r/rail-scroll-scrubber.json` |
 | [Scroll Indicator](https://byphongphan.com/component-ui/navigation/scroll-indicator) | `navigation` | Vertical scroll progress indicator with tick marks, click-to-reveal section titles, Web Audio micro-interactions, and spring physics. | `pnpm dlx shadcn add https://byphongphan.com/r/scroll-indicator.json` |
 | [Middle Truncation](https://byphongphan.com/component-ui/text/middle-truncation) | `text` | Canvas-measured binary search text truncation preserving the start and end of strings with responsive resize sync. | `pnpm dlx shadcn add https://byphongphan.com/r/middle-truncation.json` |
 | [Card](https://byphongphan.com/component-ui/card/card) | `card` | Displays a card with header, content, and footer. | `pnpm dlx shadcn add https://byphongphan.com/r/card.json` |
@@ -74,8 +73,6 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [Map](https://byphongphan.com/component-ui/data-display/map) | `data-display` | High-performance interactive vector map powered by MapLibre GL with dark/light themes, custom markers, popups, controls, routes, arcs, GeoJSON, and clustering. | `pnpm dlx shadcn add https://byphongphan.com/r/map.json` |
 | [Text Hover Effect](https://byphongphan.com/component-ui/text/text-hover-effect) | `text` | Interactive typographic SVG reveal effect that traces strokes on mount and reveals a vibrant radial gradient mask following cursor movement. | `pnpm dlx shadcn add https://byphongphan.com/r/text-hover-effect.json` |
 | [Background Gradient Cursor](https://byphongphan.com/component-ui/background/background-gradient-cursor) | `background` | Interactive ambient canvas surface featuring cursor-tracking radial mask, procedural dots, dynamic grid lines, and directional linear gradients. | `pnpm dlx shadcn add https://byphongphan.com/r/background-gradient-cursor.json` |
-| [Isometric Monogram Mark](https://byphongphan.com/component-ui/interactive/pp-mark-isometric) | `interactive` | Interactive 3D voxel isometric monogram mark featuring procedural diagonal hatching, wireframe edges, cursor-tracking radial flashlight, and spring press physics with audio feedback. | `pnpm dlx shadcn add https://byphongphan.com/r/pp-mark-isometric.json` |
-| [Isometric Block Typography](https://byphongphan.com/component-ui/text/phong-phan-isometric) | `text` | Horizontal 3D block typography extruded along an isometric blueprint grid, equipped with interactive dynamic lighting, sound feedback, and edge-to-edge/padded layout variants. | `pnpm dlx shadcn add https://byphongphan.com/r/phong-phan-isometric.json` |
 | [Spotlight Card](https://byphongphan.com/component-ui/card/spotlight-card) | `card` | Interactive surface with radial cursor spotlight illumination, dynamic 1px masked border glow, and smooth 3D tilt perspective. | `pnpm dlx shadcn add https://byphongphan.com/r/spotlight-card.json` |
 | [Border Glow](https://byphongphan.com/component-ui/card/border-glow) | `card` | Interactive surface with cursor-tracking mesh gradient edge illumination, outer atmospheric aura, and entry sweep animation. | `pnpm dlx shadcn add https://byphongphan.com/r/border-glow.json` |
 

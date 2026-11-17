@@ -10,15 +10,12 @@ export type ComponentSchematicType =
   | "map"
   | "text-hover-effect"
   | "background-gradient-cursor"
-  | "pp-mark-isometric"
-  | "phong-phan-isometric"
   | "middle-truncation"
   | "line-nav"
   | "spotlight-card"
   | "border-glow"
   | "scroll-area"
   | "drawer"
-  | "rail-scroll-scrubber"
   | "scroll-indicator"
 
 export type BlockSchematicType =

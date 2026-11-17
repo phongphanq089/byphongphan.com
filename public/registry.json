@@ -24,26 +24,6 @@
       ]
     },
     {
-      "name": "rail-scroll-scrubber",
-      "type": "registry:component",
-      "title": "Rail Scroll Scrubber",
-      "description": "Kinetic scrollbar and precision section scrubber featuring a 5-stage continuous rail path, split-character peeling, and zoom overview lens.",
-      "category": "navigation",
-      "author": "Phong Phan <phongphanq089@gmail.com>",
-      "dependencies": [
-        "motion"
-      ],
-      "devDependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "src/registry/animated/rail-scroll-scrubber.tsx",
-          "type": "registry:component",
-          "target": "components/rail-scroll-scrubber.tsx"
-        }
-      ]
-    },
-    {
       "name": "scroll-indicator",
       "type": "registry:component",
       "title": "Scroll Indicator",
@@ -279,46 +259,6 @@
           "path": "src/registry/animated/background-gradient-cursor.tsx",
           "type": "registry:component",
           "target": "components/background-gradient-cursor.tsx"
-        }
-      ]
-    },
-    {
-      "name": "pp-mark-isometric",
-      "type": "registry:component",
-      "title": "Isometric Monogram Mark",
-      "description": "Interactive 3D voxel isometric monogram mark featuring procedural diagonal hatching, wireframe edges, cursor-tracking radial flashlight, and spring press physics with audio feedback.",
-      "category": "interactive",
-      "author": "Phong Phan <phongphanq089@gmail.com>",
-      "dependencies": [
-        "motion"
-      ],
-      "devDependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "src/registry/animated/pp-mark-isometric.tsx",
-          "type": "registry:component",
-          "target": "components/pp-mark-isometric.tsx"
-        }
-      ]
-    },
-    {
-      "name": "phong-phan-isometric",
-      "type": "registry:component",
-      "title": "Isometric Block Typography",
-      "description": "Horizontal 3D block typography extruded along an isometric blueprint grid, equipped with interactive dynamic lighting, sound feedback, and edge-to-edge/padded layout variants.",
-      "category": "text",
-      "author": "Phong Phan <phongphanq089@gmail.com>",
-      "dependencies": [
-        "motion"
-      ],
-      "devDependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "src/registry/animated/phong-phan-isometric.tsx",
-          "type": "registry:component",
-          "target": "components/phong-phan-isometric.tsx"
         }
       ]
     },
@@ -620,8 +560,8 @@
           "target": "app/marketing/artcraft-scroll/page.tsx"
         },
         {
-          "path": "src/registry/animated/rail-scroll-scrubber.tsx",
-          "type": "registry:component",
+          "path": "src/registry/block/artcraft-scroll-01/components/rail-scroll-scrubber.tsx",
+          "type": "registry:block",
           "target": "components/rail-scroll-scrubber.tsx"
         }
       ]

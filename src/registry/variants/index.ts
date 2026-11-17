@@ -7,8 +7,6 @@ import { DRAWER_VARIANTS } from "./drawer-variants"
 import { LINE_NAV_VARIANTS } from "./line-nav-variants"
 import { MAP_VARIANTS } from "./map-variants"
 import { MIDDLE_TRUNCATION_VARIANTS } from "./middle-truncation-variants"
-import { PHONG_PHAN_ISOMETRIC_VARIANTS } from "./phong-phan-isometric-variants"
-import { PP_MARK_ISOMETRIC_VARIANTS } from "./pp-mark-isometric-variants"
 import { SCROLL_AREA_VARIANTS } from "./scroll-area-variants"
 import { SELECT_VARIANTS } from "./select-variants"
 import { TEXT_HOVER_EFFECT_VARIANTS } from "./text-hover-effect-variants"
@@ -20,8 +18,6 @@ export * from "./drawer-variants"
 export * from "./line-nav-variants"
 export * from "./map-variants"
 export * from "./middle-truncation-variants"
-export * from "./phong-phan-isometric-variants"
-export * from "./pp-mark-isometric-variants"
 export * from "./scroll-area-variants"
 export * from "./select-variants"
 export * from "./text-hover-effect-variants"
@@ -33,8 +29,6 @@ export const ALL_VARIANTS: ComponentVariant[] = [
   ...MAP_VARIANTS,
   ...TEXT_HOVER_EFFECT_VARIANTS,
   ...BACKGROUND_GRADIENT_CURSOR_VARIANTS,
-  ...PP_MARK_ISOMETRIC_VARIANTS,
-  ...PHONG_PHAN_ISOMETRIC_VARIANTS,
   ...MIDDLE_TRUNCATION_VARIANTS,
   ...LINE_NAV_VARIANTS,
   ...SCROLL_AREA_VARIANTS,
@@ -55,8 +49,6 @@ export const COMPONENT_VARIANTS: Record<string, ComponentVariant[]> = {
   map: MAP_VARIANTS,
   "text-hover-effect": TEXT_HOVER_EFFECT_VARIANTS,
   "background-gradient-cursor": BACKGROUND_GRADIENT_CURSOR_VARIANTS,
-  "pp-mark-isometric": PP_MARK_ISOMETRIC_VARIANTS,
-  "phong-phan-isometric": PHONG_PHAN_ISOMETRIC_VARIANTS,
   "middle-truncation": MIDDLE_TRUNCATION_VARIANTS,
   "line-nav": LINE_NAV_VARIANTS,
   "scroll-area": SCROLL_AREA_VARIANTS,
