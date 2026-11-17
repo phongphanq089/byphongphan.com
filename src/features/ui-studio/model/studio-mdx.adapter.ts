@@ -1,7 +1,7 @@
 import type { MDXComponents } from "mdx/types"
 import type React from "react"
 
-import { mdxComponents } from "@/features/component-ui/components/mdx-components"
+import { mdxComponents } from "@/shared/ui/system/mdx-components"
 
 import type { StudioItem } from "./types"
 import {

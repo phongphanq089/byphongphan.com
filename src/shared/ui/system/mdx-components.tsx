@@ -17,8 +17,8 @@ import { extractTextFromNode, slugify } from "@/shared/lib"
 import { cn } from "@/shared/lib/utils"
 import { CodeBlockCommand } from "@/shared/ui/core/code-block"
 
-import { ApiReference } from "./api-reference"
-import { InstallationGuide } from "./installation-guide"
+import { ApiReference } from "../../../features/component-ui/components/api-reference"
+import { InstallationGuide } from "../../../features/component-ui/components/installation-guide"
 import {
   CodeTabs,
   ComponentPreview,
@@ -28,10 +28,10 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "./mdx-custom-components"
-import { PropsTable } from "./props-table"
-import { UsageGuide } from "./usage-guide"
-import { VariantsGrid } from "./variants-grid"
+} from "../../../features/component-ui/components/mdx-custom-components"
+import { PropsTable } from "../../../features/component-ui/components/props-table"
+import { UsageGuide } from "../../../features/component-ui/components/usage-guide"
+import { VariantsGrid } from "../../../features/component-ui/components/variants-grid"
 
 export function SiteUrl({
   path = "",
@@ -168,7 +168,7 @@ export const mdxComponents = {
       <h1
         id={headingId}
         className={cn(
-          "mt-2 mb-4 scroll-m-20 text-3xl font-bold tracking-tight text-foreground",
+          "scroll-m-20 text-3xl font-bold tracking-tight text-foreground",
           className
         )}
         {...props}
@@ -188,7 +188,7 @@ export const mdxComponents = {
       <h2
         id={headingId}
         className={cn(
-          "mt-8 mb-3 scroll-m-20 text-xl font-semibold tracking-tight text-foreground",
+          "scroll-m-20 text-xl font-semibold tracking-tight text-foreground",
           className
         )}
         {...props}
@@ -208,7 +208,7 @@ export const mdxComponents = {
       <h3
         id={headingId}
         className={cn(
-          "mt-6 mb-2 scroll-m-20 text-base font-semibold tracking-tight text-foreground",
+          "scroll-m-20 text-base font-semibold tracking-tight text-foreground",
           className
         )}
         {...props}
@@ -229,7 +229,7 @@ export const mdxComponents = {
   ul: ({ className, ...props }: React.HTMLAttributes<HTMLUListElement>) => (
     <ul
       className={cn(
-        "my-4 ml-6 list-disc text-sm text-muted-foreground [&>li]:mt-1.5",
+        "ml-6 list-disc text-sm text-muted-foreground [&>li]:mt-1.5",
         className
       )}
       {...props}
@@ -238,7 +238,7 @@ export const mdxComponents = {
   ol: ({ className, ...props }: React.HTMLAttributes<HTMLOListElement>) => (
     <ol
       className={cn(
-        "my-4 ml-6 list-decimal text-sm text-muted-foreground [&>li]:mt-1.5",
+        "ml-6 list-decimal text-sm text-muted-foreground [&>li]:mt-1.5",
         className
       )}
       {...props}
@@ -250,14 +250,14 @@ export const mdxComponents = {
   blockquote: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <blockquote
       className={cn(
-        "mt-4 border-l-2 border-primary/60 pl-4 text-xs text-muted-foreground italic",
+        "border-l-2 border-primary/60 pl-4 text-xs text-muted-foreground italic",
         className
       )}
       {...props}
     />
   ),
   hr: ({ ...props }: React.HTMLAttributes<HTMLHRElement>) => (
-    <hr className="my-8 border-border/60" {...props} />
+    <hr className="my-3 border-border/60" {...props} />
   ),
   pre: MdxCodeBlock,
   code: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (

@@ -26,11 +26,11 @@ import {
 import { CodeBlockCommand } from "@/shared/ui/core/code-block"
 import { DocDetailLayout } from "@/widgets/doc-detail-layout"
 
+import { mdxComponents } from "../../../shared/ui/system/mdx-components"
 import { COMPONENTS_DATA } from "../components-data"
 import type { ComponentItem } from "../types"
 import { ComponentQuickNav } from "./component-quick-nav"
 import { ComponentStagePreview } from "./component-stage-preview"
-import { mdxComponents } from "./mdx-components"
 
 export interface ComponentFrontmatter {
   title?: string

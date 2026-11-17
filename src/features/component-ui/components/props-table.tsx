@@ -301,18 +301,18 @@ function ApiItemRow({
 
               <div className="flex flex-col gap-2 border-t border-border/30 pt-1 dark:border-white/[0.05]">
                 {item.typeNode && (
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="min-w-[50px] font-mono text-[11px] text-muted-foreground/70 select-none">
                       Type
                     </span>
-                    <code className="rounded border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 font-mono text-[12px] font-medium break-all text-amber-600 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-300">
+                    <code className="rounded border border-border/60 bg-muted/50 px-2 py-0.5 font-mono text-[12px] font-medium text-foreground dark:border-white/10 dark:bg-white/[0.04]">
                       {item.typeNode}
                     </code>
                   </div>
                 )}
 
                 {hasDefault && (
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="min-w-[50px] font-mono text-[11px] text-muted-foreground/70 select-none">
                       Default
                     </span>
@@ -492,7 +492,7 @@ export function PropsTable({
   }
 
   return (
-    <div className={cn("my-6 flex w-full flex-col gap-2.5", className)}>
+    <div className={cn("mb-5 flex w-full flex-col gap-2.5", className)}>
       {title && (
         <h4 className="text-sm font-semibold tracking-tight text-foreground">
           {title}

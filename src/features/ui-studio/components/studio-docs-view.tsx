@@ -52,12 +52,7 @@ const CHIP_BASE =
  * external links, install/copy actions, prev/next navigation and the full
  * MDX doc (ComponentPreview is suppressed — the preview lives on the stage).
  */
-export function StudioDocsView({
-  item,
-  onClose,
-  activeVariantId,
-  onSelectVariant,
-}: StudioDocsViewProps) {
+export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
   const { segment, toggleCode } = useStudioLayout()
   const navigate = useNavigate()
 
@@ -350,49 +345,6 @@ export function StudioDocsView({
               ) : null}
             </>
           )}
-
-          {/* Interactive variant selector */}
-          {item.variants && item.variants.length > 0 ? (
-            <div className="flex flex-col gap-1.5">
-              <p className="font-sans text-[11px] font-medium text-muted-foreground">
-                Variants ·{" "}
-                <span className="font-mono tabular-nums">
-                  {item.variants.length}
-                </span>
-              </p>
-              <ul className="flex flex-col gap-1">
-                {item.variants.map((variant) => {
-                  const isActive = variant.id === activeVariantId
-                  return (
-                    <li key={variant.id}>
-                      <button
-                        type="button"
-                        onClick={() =>
-                          onSelectVariant(isActive ? null : variant.id)
-                        }
-                        aria-pressed={isActive}
-                        className={cn(
-                          "flex w-full flex-col gap-0.5 rounded-lg border px-3 py-2 text-left transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                          isActive
-                            ? "border-pp-primary/50 bg-pp-primary/5"
-                            : "border-border/60 hover:border-border hover:bg-accent/40"
-                        )}
-                      >
-                        <span className="text-[12px] font-semibold text-foreground">
-                          {variant.title}
-                        </span>
-                        {variant.description ? (
-                          <span className="line-clamp-2 text-[11px] leading-snug text-muted-foreground">
-                            {variant.description}
-                          </span>
-                        ) : null}
-                      </button>
-                    </li>
-                  )
-                })}
-              </ul>
-            </div>
-          ) : null}
         </article>
       </ScrollArea>
     </div>

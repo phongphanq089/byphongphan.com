@@ -77,9 +77,12 @@ export function useStudioState({
     }
   }, [])
 
-  // Reset variant + customizer whenever the selected item changes
+  // Reset variant + customizer whenever the selected item changes.
+  // Panel state is preserved across item navigation so docs/code remain seamless.
   React.useEffect(() => {
-    setPanel("closed")
+    if (!activeItemId) {
+      setPanel("closed")
+    }
     setVariantIdState(undefined)
     setCustomizerValues({})
   }, [activeItemId])

@@ -11,7 +11,6 @@ import type { MDXComponents } from "mdx/types"
 import { useMemo } from "react"
 
 import { ComponentStagePreview } from "@/features/component-ui/components/component-stage-preview"
-import { mdxComponents } from "@/features/component-ui/components/mdx-components"
 import { CopyButton } from "@/registry/animated/button/copy-button"
 import { HOOK_DEMOS } from "@/registry/demos"
 import { siteConfig } from "@/shared/config"
@@ -26,6 +25,7 @@ import {
   TooltipTrigger,
 } from "@/shared/ui/core"
 import { CodeBlockCommand } from "@/shared/ui/core/code-block"
+import { mdxComponents } from "@/shared/ui/system/mdx-components"
 import { DocDetailLayout } from "@/widgets/doc-detail-layout"
 
 import { HOOKS_DATA } from "../hooks-data"

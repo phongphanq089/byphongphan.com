@@ -112,9 +112,9 @@ export function StudioShell() {
   const setCustomizerValue = (key: string, value: StudioControlValue) =>
     state.setCustomizerValue(key, value)
 
-  // A docs panel cannot exist for blocks — degrade gracefully to closed
+  // A docs panel cannot exist for blocks — fallback to code so inspection stays seamless
   const viewPanel =
-    state.panel === "docs" && !docsAvailable ? "closed" : state.panel
+    state.panel === "docs" && !docsAvailable ? "code" : state.panel
 
   const layoutValue = {
     segment,
