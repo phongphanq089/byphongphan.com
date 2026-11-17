@@ -1,58 +1,31 @@
-/* eslint-disable react-hooks/set-state-in-effect */
 import * as React from "react"
 
-const STORAGE_KEY = "byphongphan:studio-panel-width"
+import { useStudioStore } from "../store/studio-store"
+
 export const PANEL_DEFAULT_WIDTH = 460
 export const PANEL_MIN_WIDTH = 360
 export const PANEL_MAX_WIDTH = 840
 
 function clampPanelWidth(width: number): number {
-  const max =
-    typeof window === "undefined"
-      ? PANEL_MAX_WIDTH
-      : Math.min(window.innerWidth * 0.65, PANEL_MAX_WIDTH)
+  if (typeof window === "undefined") return width
+  const max = Math.min(window.innerWidth * 0.65, PANEL_MAX_WIDTH)
   return Math.round(Math.min(Math.max(width, PANEL_MIN_WIDTH), max))
 }
 
-function readStoredWidth(): number | null {
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY)
-    if (!raw) return null
-    const parsed = Number(raw)
-    if (!Number.isFinite(parsed)) return null
-    return clampPanelWidth(parsed)
-  } catch {
-    return null
-  }
-}
-
-function persistWidth(width: number): void {
-  try {
-    window.localStorage.setItem(STORAGE_KEY, String(width))
-  } catch {
-    // Storage unavailable (private mode); width still works for the session
-  }
-}
-
 /**
- * Drag-to-resize state for the docked studio panel. Width is clamped to
- * [360, min(65vw, 840)] and persisted to localStorage under
- * `byphongphan:studio-panel-width`. SSR-safe: renders the 460px default
- * until mounted, then the stored preference is applied.
+ * Drag-to-resize state lives in the studio store; this hook only owns the
+ * pointer plumbing. Width is clamped to [360, min(65vw, 840)] and persisted
+ * through the store's `persist` middleware (`ui-studio-prefs`).
  */
 export function useStudioPanelResize() {
-  const [panelWidth, setPanelWidth] = React.useState(PANEL_DEFAULT_WIDTH)
-  const [isDragging, setIsDragging] = React.useState(false)
-  const dragStateRef = React.useRef<{
-    startX: number
-    startWidth: number
-  } | null>(null)
+  const panelWidth = useStudioStore((state) => state.panelWidth)
+  const isDragging = useStudioStore((state) => state.isDragging)
+  const setPanelWidth = useStudioStore((state) => state.setPanelWidth)
+  const setIsDragging = useStudioStore((state) => state.setIsDragging)
+  const resetWidth = useStudioStore((state) => state.resetPanelWidth)
 
-  // Resolve the persisted width after mount to avoid hydration mismatch
-  React.useEffect(() => {
-    const stored = readStoredWidth()
-    if (stored !== null) setPanelWidth(stored)
-  }, [])
+  const [startX, setStartX] = React.useState<number | null>(null)
+  const [startWidth, setStartWidth] = React.useState(0)
 
   // Disable text selection on the whole page while dragging
   React.useEffect(() => {
@@ -68,17 +41,12 @@ export function useStudioPanelResize() {
     if (!isDragging) return
 
     const handlePointerMove = (event: PointerEvent) => {
-      const state = dragStateRef.current
-      if (!state) return
-      const next = clampPanelWidth(
-        state.startWidth + (state.startX - event.clientX)
-      )
+      if (startX === null) return
+      const next = clampPanelWidth(startWidth + (startX - event.clientX))
       setPanelWidth(next)
-      persistWidth(next)
     }
 
     const handlePointerUp = () => {
-      dragStateRef.current = null
       setIsDragging(false)
     }
 
@@ -90,24 +58,17 @@ export function useStudioPanelResize() {
       window.removeEventListener("pointerup", handlePointerUp)
       window.removeEventListener("pointercancel", handlePointerUp)
     }
-  }, [isDragging])
+  }, [isDragging, startX, startWidth, setIsDragging, setPanelWidth])
 
   const handlePointerDown = React.useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
       event.preventDefault()
-      dragStateRef.current = {
-        startX: event.clientX,
-        startWidth: panelWidth,
-      }
+      setStartX(event.clientX)
+      setStartWidth(useStudioStore.getState().panelWidth)
       setIsDragging(true)
     },
-    [panelWidth]
+    [setIsDragging]
   )
-
-  const resetWidth = React.useCallback(() => {
-    setPanelWidth(PANEL_DEFAULT_WIDTH)
-    persistWidth(PANEL_DEFAULT_WIDTH)
-  }, [])
 
   return { panelWidth, isDragging, handlePointerDown, resetWidth }
 }

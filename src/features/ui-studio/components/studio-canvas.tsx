@@ -4,7 +4,6 @@ import { Suspense } from "react"
 
 import { CodeBlock } from "@/registry/ui/code-block"
 
-import { useStudioLayout } from "../hooks/studio-layout-context"
 import { useStudioDisplayUrl } from "../hooks/use-studio-display-url"
 import type { StudioItem } from "../model/types"
 import {
@@ -12,6 +11,7 @@ import {
   getRecordByItem,
   getStudioSourceFiles,
 } from "../model/unified-registry.adapter"
+import { useStudioStore } from "../store/studio-store"
 import { StudioCanvasBackground } from "./studio-canvas-background"
 import { StudioPropsCustomizer } from "./studio-props-customizer"
 
@@ -121,20 +121,21 @@ function HookCodeStage({ item }: { item: StudioItem }) {
  * Stage frame: renders live demo, hook source, or block iframe over CAD dot-grid.
  */
 export function StudioCanvas({ item }: StudioCanvasProps) {
-  const {
-    activeVariantId,
-    customizerValues,
-    setCustomizerValue,
-    resetCustomizer,
-  } = useStudioLayout()
+  const storedVariantId = useStudioStore((state) => state.activeVariantId)
+  const activeVariantId = storedVariantId ?? item.variants?.[0]?.id
+  const customizerValues = useStudioStore((state) => state.customizerValues)
+  const setCustomizerValue = useStudioStore((state) => state.setCustomizerValue)
+  const resetCustomizer = useStudioStore((state) => state.resetCustomizer)
+  const showGrid = useStudioStore((state) => state.showGrid)
+  const showArcBands = useStudioStore((state) => state.showArcBands)
   const displayUrl = useStudioDisplayUrl()
 
   const isBlock = item.collection === "blocks"
 
   return (
     <StudioCanvasBackground
-      showArcBands={!isBlock}
-      showGrid={!isBlock}
+      showArcBands={!isBlock && showArcBands}
+      showGrid={!isBlock && showGrid}
       className="flex h-full min-h-0 w-full flex-1 flex-col"
     >
       <div className="hidden h-11 shrink-0 items-center justify-between gap-3 border-b border-border/70 bg-background/80 px-3 backdrop-blur-xs max-md:flex">

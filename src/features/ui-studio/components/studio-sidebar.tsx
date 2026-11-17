@@ -18,23 +18,19 @@ import {
 import { ScrollArea } from "@/registry/ui/scroll-area"
 import { PPPixelMark } from "@/shared/ui"
 
-import { useStudioLayout } from "../hooks/studio-layout-context"
 import { studioSidebarHandle } from "../hooks/studio-sidebar-handle"
 import type { StudioItem } from "../model/types"
 import {
   getStudioItemHref,
   STUDIO_RECORDS,
 } from "../model/unified-registry.adapter"
+import { useStudioStore } from "../store/studio-store"
 
 interface StudioSidebarProps {
   /** Current route segment — null on `/ui` (all items). */
   activeSegment: string | null
   /** Current detail slug — undefined unless a detail route is active. */
   activeSlug?: string | null
-  /** Whether the floating drawer is open. */
-  isOpen: boolean
-  /** Controlled open state callback from drawer gestures / backdrop / trigger. */
-  onOpenChange?: (open: boolean) => void
 }
 
 const toNavItem = (item: StudioItem, index?: number): LineNavItem => ({
@@ -100,10 +96,9 @@ function MajorGroupTitle({
 export function StudioSidebar({
   activeSegment,
   activeSlug,
-  isOpen,
-  onOpenChange,
 }: StudioSidebarProps) {
-  const { setSidebarOpen } = useStudioLayout()
+  const sidebarOpen = useStudioStore((state) => state.sidebarOpen)
+  const setSidebarOpen = useStudioStore((state) => state.setSidebarOpen)
   const navigate = useNavigate()
   const router = useRouter()
 
@@ -174,9 +169,6 @@ export function StudioSidebar({
       : `/ui/${activeSegment}`
     : "/ui"
 
-  // Modal drawer semantics: pressing the backdrop or Escape closes the drawer.
-  const handleOpenChange = onOpenChange ?? setSidebarOpen
-
   const handleNavigate = (
     item: LineNavItem | LineNavGroup,
     event?: React.MouseEvent<HTMLAnchorElement>
@@ -214,8 +206,8 @@ export function StudioSidebar({
   return (
     <Drawer
       handle={studioSidebarHandle}
-      open={isOpen}
-      onOpenChange={handleOpenChange}
+      open={sidebarOpen}
+      onOpenChange={setSidebarOpen}
       position="left"
     >
       <DrawerPopup

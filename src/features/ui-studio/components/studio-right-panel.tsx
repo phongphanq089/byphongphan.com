@@ -1,16 +1,12 @@
 import { AnimatePresence } from "motion/react"
 
 import type { StudioItem } from "../model/types"
+import { useStudioStore } from "../store/studio-store"
 import { StudioCodeOverlay } from "./studio-code-overlay"
 import { StudioDocsView } from "./studio-docs-view"
 
 interface StudioRightPanelProps {
   item: StudioItem
-  panel: "docs" | "code" | "closed"
-  /** `null` closes the panel entirely. */
-  onPanelChange: (panel: "docs" | "code" | null) => void
-  activeVariantId?: string
-  onSelectVariant: (variantId: string | null) => void
 }
 
 /**
@@ -22,14 +18,15 @@ interface StudioRightPanelProps {
  * Blocks (no MDX): the docs layer is never mounted — the code overlay is the
  * only content, and closing it collapses the panel completely.
  */
-export function StudioRightPanel({
-  item,
-  panel,
-  onPanelChange,
-  activeVariantId,
-  onSelectVariant,
-}: StudioRightPanelProps) {
+export function StudioRightPanel({ item }: StudioRightPanelProps) {
+  const panel = useStudioStore((state) => state.panel)
+  const setPanel = useStudioStore((state) => state.setPanel)
+  const setActiveVariantId = useStudioStore((state) => state.setActiveVariantId)
+  const storedVariantId = useStudioStore((state) => state.activeVariantId)
+  const activeVariantId = storedVariantId ?? item.variants?.[0]?.id
+
   const hasDocs = item.collection !== "blocks"
+  const closePanel = () => setPanel("closed")
 
   if (!hasDocs) {
     if (panel !== "code") return null
@@ -37,9 +34,9 @@ export function StudioRightPanel({
       <div className="relative h-full w-full overflow-hidden">
         <StudioCodeOverlay
           item={item}
-          onClose={() => onPanelChange(null)}
+          onClose={closePanel}
           activeVariantId={activeVariantId}
-          onSelectVariant={onSelectVariant}
+          onSelectVariant={setActiveVariantId}
         />
       </div>
     )
@@ -47,12 +44,11 @@ export function StudioRightPanel({
 
   return (
     <div className="relative h-full w-full overflow-hidden">
-      {/* Base layer — docs for components & hooks */}
       <StudioDocsView
         item={item}
-        onClose={() => onPanelChange(null)}
+        onClose={closePanel}
         activeVariantId={activeVariantId}
-        onSelectVariant={onSelectVariant}
+        onSelectVariant={setActiveVariantId}
       />
 
       <AnimatePresence>
@@ -60,10 +56,10 @@ export function StudioRightPanel({
           <StudioCodeOverlay
             key="code-overlay"
             item={item}
-            onBack={() => onPanelChange("docs")}
-            onClose={() => onPanelChange(null)}
+            onBack={() => setPanel("docs")}
+            onClose={closePanel}
             activeVariantId={activeVariantId}
-            onSelectVariant={onSelectVariant}
+            onSelectVariant={setActiveVariantId}
           />
         ) : null}
       </AnimatePresence>

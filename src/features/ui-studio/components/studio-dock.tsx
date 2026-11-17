@@ -31,12 +31,12 @@ import { cn } from "@/shared/lib/utils"
 import { Kbd, Tooltip, TooltipContent, TooltipTrigger } from "@/shared/ui/core"
 import { CodeBlockCommand } from "@/shared/ui/core/code-block"
 
-import { useStudioLayout } from "../hooks/studio-layout-context"
 import type { StudioItem } from "../model/types"
 import {
   getStudioAdjacentItems,
   getStudioItemHref,
 } from "../model/unified-registry.adapter"
+import { useStudioStore } from "../store/studio-store"
 
 interface StudioDockProps {
   item: StudioItem | null
@@ -65,8 +65,11 @@ const SPRING = { type: "spring", stiffness: 400, damping: 32 } as const
  * spring-animated container morphs to it without layout thrash.
  */
 export function StudioDock({ item }: StudioDockProps) {
-  const { panel, toggleCode, toggleDocs, activeVariantId, setVariantId } =
-    useStudioLayout()
+  const panel = useStudioStore((state) => state.panel)
+  const toggleCode = useStudioStore((state) => state.toggleCode)
+  const toggleDocs = useStudioStore((state) => state.toggleDocs)
+  const storedVariantId = useStudioStore((state) => state.activeVariantId)
+  const setActiveVariantId = useStudioStore((state) => state.setActiveVariantId)
   const [measureRef, bounds] = useMeasure()
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [expanded, setExpanded] = useState<Expanded>(null)
@@ -137,7 +140,7 @@ export function StudioDock({ item }: StudioDockProps) {
   const hasDocs = item.collection !== "blocks"
   const variants = item.variants ?? []
   const activeVariant =
-    variants.find((variant) => variant.id === activeVariantId) ??
+    variants.find((variant) => variant.id === storedVariantId) ??
     variants[0] ??
     null
 
@@ -215,7 +218,7 @@ export function StudioDock({ item }: StudioDockProps) {
                             role="option"
                             aria-selected={isActive}
                             onClick={() => {
-                              setVariantId(variant.id)
+                              setActiveVariantId(variant.id)
                               setExpanded(null)
                             }}
                             className={cn(
@@ -480,7 +483,7 @@ export function StudioDock({ item }: StudioDockProps) {
                         role="option"
                         aria-selected={isActive}
                         onClick={() => {
-                          setVariantId(variant.id)
+                          setActiveVariantId(variant.id)
                           setMobileDrawerTarget(null)
                         }}
                         className={cn(

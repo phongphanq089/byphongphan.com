@@ -1,21 +1,20 @@
 import { Outlet, useNavigate, useParams } from "@tanstack/react-router"
 import { play } from "cuelume"
-import { useMemo } from "react"
+import { useEffect, useMemo } from "react"
 
 import { useMediaQuery } from "@/registry/hooks/use-media-query"
 import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
 import { cn } from "@/shared/lib/utils"
 
-import { StudioLayoutProvider } from "../hooks/studio-layout-context"
 import { useStudioKeyboard } from "../hooks/use-studio-keyboard"
 import { useStudioPanelResize } from "../hooks/use-studio-panel-resize"
-import { useStudioState } from "../hooks/use-studio-state"
-import type { StudioControlValue, StudioItem } from "../model/types"
+import type { StudioItem } from "../model/types"
 import {
   getStudioAdjacentItems,
   getStudioItemHref,
   resolveStudioItem,
 } from "../model/unified-registry.adapter"
+import { rehydrateStudioPrefs, useStudioStore } from "../store/studio-store"
 import { StudioDock } from "./studio-dock"
 import { StudioHeader } from "./studio-header"
 import { StudioMobileDrawer } from "./studio-mobile-drawer"
@@ -23,14 +22,11 @@ import { StudioResizeHandle } from "./studio-resize-handle"
 import { StudioRightPanel } from "./studio-right-panel"
 import { StudioSidebar } from "./studio-sidebar"
 
-const noopToggleDocs = () => {}
-
 /**
  * Modern inset floating studio shell (`/ui`).
- * The stage is a rounded "island" frame inset from the viewport edges; the
- * docs/code panel docks as a second column inside the desk (never floating)
- * while the sidebar remains a full-screen modal drawer portaled to body
- * (z-50, above the header).
+ * Route-derived identity (segment/slug/item) comes from TanStack Router;
+ * interactive client state (sidebar, panel, width, playground) lives in the
+ * studio store — this component only owns layout composition and URL sync.
  */
 export function StudioShell() {
   const rawParams = useParams({ strict: false }) as {
@@ -44,16 +40,29 @@ export function StudioShell() {
   const record = segment && slug ? resolveStudioItem(segment, slug) : undefined
   const activeItem = record?.item ?? null
   const activeItemId = activeItem?.id ?? null
-  // Blocks ship without MDX docs — Docs panel and F shortcut stay inert
   const docsAvailable =
     activeItem !== null && activeItem.collection !== "blocks"
 
-  const state = useStudioState({ activeItemId })
+  const isDrawerMode = useMediaQuery("max-xl")
+  const panel = useStudioStore((state) => state.panel)
+
+  // Sync/reset playground state whenever the staged item changes
+  const syncActiveItem = useStudioStore((state) => state.syncActiveItem)
+  useEffect(() => {
+    syncActiveItem(activeItemId, docsAvailable)
+  }, [activeItemId, docsAvailable, syncActiveItem])
+
+  // Hydrate persisted prefs once after mount (never read during SSR)
+  useEffect(() => {
+    void rehydrateStudioPrefs()
+  }, [])
+
   const navigate = useNavigate()
 
   const onEscape = () => {
     // The modal drawer consumes Escape natively — don't also navigate away
-    if (state.isSidebarOpen) {
+    const state = useStudioStore.getState()
+    if (state.sidebarOpen) {
       state.setSidebarOpen(false)
       return
     }
@@ -73,12 +82,7 @@ export function StudioShell() {
     }
   }
 
-  useStudioKeyboard({
-    toggleSidebar: state.toggleSidebar,
-    toggleDocs: docsAvailable ? state.toggleDocs : noopToggleDocs,
-    toggleCode: state.toggleCode,
-    onEscape,
-  })
+  useStudioKeyboard({ onEscape })
 
   // Left/right arrows jump between studio items (detail pages only).
   const { prev, next } = useMemo(
@@ -105,124 +109,68 @@ export function StudioShell() {
     preventDefault: true,
   })
 
-  const activeVariantId =
-    state.variantId ?? activeItem?.variants?.[0]?.id ?? undefined
-
-  const closePanel = () => state.setPanel("closed")
-  const setCustomizerValue = (key: string, value: StudioControlValue) =>
-    state.setCustomizerValue(key, value)
-
-  // A docs panel cannot exist for blocks — fallback to code so inspection stays seamless
-  const viewPanel =
-    state.panel === "docs" && !docsAvailable ? "code" : state.panel
-
-  const layoutValue = {
-    segment,
-    record: record ?? null,
-    activeItem,
-    activeVariantId,
-    isSidebarOpen: state.isSidebarOpen,
-    setSidebarOpen: state.setSidebarOpen,
-    toggleSidebar: state.toggleSidebar,
-    panel: viewPanel,
-    setPanel: state.setPanel,
-    toggleDocs: docsAvailable ? state.toggleDocs : noopToggleDocs,
-    toggleCode: state.toggleCode,
-    closePanel,
-    variantId: state.variantId,
-    setVariantId: state.setVariantId,
-    customizerValues: state.customizerValues,
-    setCustomizerValue,
-    resetCustomizer: state.resetCustomizer,
-  }
-
-  const isDrawerMode = useMediaQuery("max-xl")
-  const panelOpen =
-    !isDrawerMode && viewPanel !== "closed" && Boolean(activeItem)
+  const panelOpen = !isDrawerMode && panel !== "closed" && Boolean(activeItem)
   const { panelWidth, isDragging, handlePointerDown, resetWidth } =
     useStudioPanelResize()
 
   return (
-    <StudioLayoutProvider value={layoutValue}>
-      {/* Viewport: padded desk around the island + docked panel */}
-      <div className="relative h-dvh w-screen overflow-hidden bg-muted/40 p-2 sm:p-3.5 dark:bg-black">
-        <div className="flex h-full w-full gap-2 sm:gap-3.5">
-          {/* Inset island frame */}
-          <div className="relative flex h-full min-w-0 flex-1 flex-col overflow-hidden rounded-2xl border border-black/10 bg-background shadow-xs sm:rounded-3xl dark:border-white/10">
-            <StudioHeader />
+    <div className="relative h-dvh w-screen overflow-hidden bg-muted p-2 sm:p-3.5 dark:bg-accent/70">
+      <div className="flex h-full w-full gap-2 bg-transparent sm:gap-3.5">
+        {/* Inset island frame */}
+        <div className="relative flex h-full min-w-0 flex-1 flex-col overflow-hidden rounded-2xl border border-black/10 bg-background shadow-xs sm:rounded-3xl dark:border-white/10">
+          <StudioHeader />
 
-            {/* Column 2 — Outlet (catalog or detail stage) */}
-            <section
-              aria-label="Studio stage"
-              className="relative flex h-full min-h-0 flex-1 flex-col"
-            >
-              <div className="relative flex h-full min-h-0 flex-1 flex-col overflow-hidden">
-                <Outlet />
-                {activeItem ? <StudioDock item={activeItem} /> : null}
-              </div>
-            </section>
-          </div>
-
-          {/* Docked right panel (>= xl) — width is the persisted user preference;
-              drag the divider handle to resize. Screens below xl use bottom drawer. */}
-          {panelOpen ? (
-            <StudioResizeHandle
-              panelWidth={panelWidth}
-              isDragging={isDragging}
-              onPointerDown={handlePointerDown}
-              onReset={resetWidth}
-            />
-          ) : null}
-
-          <aside
-            aria-label="Item details"
-            inert={!panelOpen}
-            style={
-              {
-                "--studio-panel-width": `${panelWidth}px`,
-              } as React.CSSProperties
-            }
-            className={cn(
-              "hidden h-full shrink-0 overflow-hidden transition-[width,opacity] duration-300 ease-out xl:block",
-              isDragging && "transition-none",
-              panelOpen
-                ? "opacity-100 xl:w-[var(--studio-panel-width)]"
-                : "pointer-events-none w-0 opacity-0"
-            )}
+          {/* Column 2 — Outlet (catalog or detail stage) */}
+          <section
+            aria-label="Studio stage"
+            className="relative flex h-full min-h-0 flex-1 flex-col"
           >
-            <div className="flex h-full w-[var(--studio-panel-width)] flex-col overflow-hidden rounded-2xl border border-border/70 bg-background shadow-2xl xl:rounded-3xl">
-              {activeItem ? (
-                <StudioRightPanel
-                  item={activeItem}
-                  panel={viewPanel}
-                  onPanelChange={(panel) => state.setPanel(panel ?? "closed")}
-                  activeVariantId={activeVariantId}
-                  onSelectVariant={state.setVariantId}
-                />
-              ) : null}
+            <div className="relative flex h-full min-h-0 flex-1 flex-col overflow-hidden">
+              <Outlet />
+              {activeItem ? <StudioDock item={activeItem} /> : null}
             </div>
-          </aside>
+          </section>
         </div>
 
-        {/* Drawer mode: bottom nested drawer for screens below xl (< 1280px) */}
-        {isDrawerMode && activeItem ? (
-          <StudioMobileDrawer
-            item={activeItem}
-            panel={viewPanel}
-            onPanelChange={(panel) => state.setPanel(panel ?? "closed")}
-            activeVariantId={activeVariantId}
-            onSelectVariant={state.setVariantId}
+        {/* Docked right panel (>= xl) — width from the studio store */}
+        {panelOpen ? (
+          <StudioResizeHandle
+            panelWidth={panelWidth}
+            isDragging={isDragging}
+            onPointerDown={handlePointerDown}
+            onReset={resetWidth}
           />
         ) : null}
 
-        {/* Full-screen modal drawer portaled to body (z-50, above the header) */}
-        <StudioSidebar
-          activeSegment={segment}
-          isOpen={state.isSidebarOpen}
-          onOpenChange={state.setSidebarOpen}
-          activeSlug={slug}
-        />
+        <aside
+          aria-label="Item details"
+          inert={!panelOpen}
+          style={
+            {
+              "--studio-panel-width": `${panelWidth}px`,
+            } as React.CSSProperties
+          }
+          className={cn(
+            "hidden h-full shrink-0 overflow-hidden transition-[width,opacity] duration-300 ease-out xl:block",
+            isDragging && "transition-none",
+            panelOpen
+              ? "opacity-100 xl:w-[var(--studio-panel-width)]"
+              : "pointer-events-none w-0 opacity-0"
+          )}
+        >
+          <div className="flex h-full w-[var(--studio-panel-width)] flex-col overflow-hidden rounded-2xl border border-border/70 bg-background shadow-2xl xl:rounded-3xl">
+            {activeItem ? <StudioRightPanel item={activeItem} /> : null}
+          </div>
+        </aside>
       </div>
-    </StudioLayoutProvider>
+
+      {/* Drawer mode: bottom nested drawer for screens below xl (< 1280px) */}
+      {isDrawerMode && activeItem ? (
+        <StudioMobileDrawer item={activeItem} />
+      ) : null}
+
+      {/* Full-screen modal drawer portaled to body (z-50, above the header) */}
+      <StudioSidebar activeSegment={segment} activeSlug={slug} />
+    </div>
   )
 }

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "@tanstack/react-router"
+import { Link, useNavigate, useParams } from "@tanstack/react-router"
 import { play } from "cuelume"
 import {
   ArrowLeft,
@@ -24,7 +24,6 @@ import {
 } from "@/shared/ui/core"
 import { CodeBlockCommand } from "@/shared/ui/core/code-block"
 
-import { useStudioLayout } from "../hooks/studio-layout-context"
 import {
   getStudioMdxData,
   studioMdxComponents,
@@ -35,6 +34,7 @@ import {
   getStudioItemHref,
   getStudioSegmentLabel,
 } from "../model/unified-registry.adapter"
+import { useStudioStore } from "../store/studio-store"
 
 interface StudioDocsViewProps {
   item: StudioItem
@@ -53,7 +53,12 @@ const CHIP_BASE =
  * MDX doc (ComponentPreview is suppressed — the preview lives on the stage).
  */
 export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
-  const { segment, toggleCode } = useStudioLayout()
+  const rawParams = useParams({ strict: false }) as {
+    collection?: string
+  }
+  const segment =
+    typeof rawParams.collection === "string" ? rawParams.collection : null
+  const toggleCode = useStudioStore((state) => state.toggleCode)
   const navigate = useNavigate()
 
   const mdxData = useMemo(() => getStudioMdxData(item.slug), [item.slug])
