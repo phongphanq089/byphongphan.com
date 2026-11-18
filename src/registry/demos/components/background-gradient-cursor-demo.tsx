@@ -2,7 +2,7 @@ import { BackgroundGradientCursor } from "@/registry/animated/background-gradien
 
 export function BackgroundGradientCursorDemo() {
   return (
-    <div className="relative flex min-h-[360px] w-full items-center justify-center overflow-hidden rounded-xl border border-border/80 bg-accent p-6 shadow-xs select-none">
+    <div className="relative flex size-full min-h-[400px] w-full items-center justify-center overflow-hidden rounded-xl border border-border/80 bg-background p-6 shadow-xs select-none">
       <BackgroundGradientCursor
         position="absolute"
         gradient={{
@@ -37,12 +37,12 @@ export function BackgroundGradientCursorDemo() {
         }}
       />
 
-      <div className="relative z-10 flex max-w-md flex-col items-center gap-3 text-center">
-        <h3 className="text-xl font-bold tracking-tight sm:text-2xl dark:text-white">
+      <div className="relative z-10 flex max-w-md flex-col items-center gap-3 rounded-2xl border border-border/60 bg-background/60 p-6 text-center shadow-2xl backdrop-blur-md">
+        <h3 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">
           Move your cursor across this surface
         </h3>
 
-        <p className="text-xs leading-relaxed text-neutral-400">
+        <p className="text-xs leading-relaxed text-muted-foreground">
           The radial mask tracks your cursor in real time with
           hardware-accelerated requestAnimationFrame easing, unveiling
           procedural grid layers and multi-stop directional gradients.

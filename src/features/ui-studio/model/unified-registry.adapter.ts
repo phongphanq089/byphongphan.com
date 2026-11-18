@@ -23,7 +23,10 @@ import type {
 } from "./types"
 
 /** Components that deserve the entire stage (maps, full-bleed scenes). */
-const FULL_BLEED_COMPONENTS: ReadonlySet<string> = new Set(["map"])
+const FULL_BLEED_COMPONENTS: ReadonlySet<string> = new Set([
+  "map",
+  "background-gradient-cursor",
+])
 
 export interface StudioSourceFile {
   path: string
