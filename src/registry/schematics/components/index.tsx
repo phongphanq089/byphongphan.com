@@ -3,6 +3,7 @@ import { BackgroundGradientCursorSchematic } from "./background-gradient-cursor-
 import { BorderGlowSchematic } from "./border-glow-schematic"
 import { CardSchematic } from "./card-schematic"
 import { CodeBlockSchematic } from "./code-block-schematic"
+import { Letter3DSwapSchematic } from "./letter-3d-swap-schematic"
 import { LineNavSchematic } from "./line-nav-schematic"
 import { MapSchematic } from "./map-schematic"
 import { MiddleTruncationSchematic } from "./middle-truncation-schematic"
@@ -28,6 +29,7 @@ export * from "./map-schematic"
 export * from "./middle-truncation-schematic"
 export * from "./scroll-area-schematic"
 export * from "./drawer-schematic"
+export * from "./letter-3d-swap-schematic"
 export * from "./select-schematic"
 export * from "./spotlight-card-schematic"
 export * from "./text-hover-effect-schematic"
@@ -65,6 +67,7 @@ export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
   drawer: DrawerSchematic,
   "underline-to-background": UnderlineToBackgroundSchematic,
   "underline-animation": UnderlineAnimationSchematic,
+  "letter-3d-swap": Letter3DSwapSchematic,
 }
 
 export function RenderComponentSchematic({ type }: { type?: string }) {

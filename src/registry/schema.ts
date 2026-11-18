@@ -19,6 +19,7 @@ export type ComponentSchematicType =
   | "scroll-indicator"
   | "underline-to-background"
   | "underline-animation"
+  | "letter-3d-swap"
 
 export type BlockSchematicType =
   | "not-found-01"

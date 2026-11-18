@@ -160,6 +160,16 @@
     "registryDependencies": []
   },
   {
+    "name": "letter-3d-swap",
+    "type": "registry:component",
+    "title": "Letter 3D Swap",
+    "description": "Isometric 3D typography swap micro-interaction where characters rotate on multi-directional axes on hover with configurable stagger delays.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
+  },
+  {
     "name": "not-found-01",
     "type": "registry:block",
     "title": "Not Found 01",

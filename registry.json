@@ -339,6 +339,26 @@
       ]
     },
     {
+      "name": "letter-3d-swap",
+      "type": "registry:component",
+      "title": "Letter 3D Swap",
+      "description": "Isometric 3D typography swap micro-interaction where characters rotate on multi-directional axes on hover with configurable stagger delays.",
+      "category": "text",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/letter-3d-swap.tsx",
+          "type": "registry:component",
+          "target": "components/letter-3d-swap.tsx"
+        }
+      ]
+    },
+    {
       "name": "not-found-01",
       "type": "registry:block",
       "title": "Not Found 01",

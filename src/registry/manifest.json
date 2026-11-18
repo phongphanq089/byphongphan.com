@@ -112,6 +112,10 @@
     {
       "category": "text",
       "slug": "underline-animation"
+    },
+    {
+      "category": "text",
+      "slug": "letter-3d-swap"
     }
   ],
   "hookCategories": [

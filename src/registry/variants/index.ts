@@ -4,6 +4,7 @@ import { BACKGROUND_GRADIENT_CURSOR_VARIANTS } from "./background-gradient-curso
 import { CARD_VARIANTS } from "./card-variants"
 import { CODE_BLOCK_VARIANTS } from "./code-block-variants"
 import { DRAWER_VARIANTS } from "./drawer-variants"
+import { LETTER_3D_SWAP_VARIANTS } from "./letter-3d-swap-variants"
 import { LINE_NAV_VARIANTS } from "./line-nav-variants"
 import { MAP_VARIANTS } from "./map-variants"
 import { MIDDLE_TRUNCATION_VARIANTS } from "./middle-truncation-variants"
@@ -17,6 +18,7 @@ export * from "./background-gradient-cursor-variants"
 export * from "./card-variants"
 export * from "./code-block-variants"
 export * from "./drawer-variants"
+export * from "./letter-3d-swap-variants"
 export * from "./line-nav-variants"
 export * from "./map-variants"
 export * from "./middle-truncation-variants"
@@ -32,6 +34,7 @@ export const ALL_VARIANTS: ComponentVariant[] = [
   ...CODE_BLOCK_VARIANTS,
   ...MAP_VARIANTS,
   ...TEXT_HOVER_EFFECT_VARIANTS,
+  ...LETTER_3D_SWAP_VARIANTS,
   ...UNDERLINE_ANIMATION_VARIANTS,
   ...UNDERLINE_TO_BACKGROUND_VARIANTS,
   ...BACKGROUND_GRADIENT_CURSOR_VARIANTS,
@@ -54,6 +57,7 @@ export const COMPONENT_VARIANTS: Record<string, ComponentVariant[]> = {
   "code-block": CODE_BLOCK_VARIANTS,
   map: MAP_VARIANTS,
   "text-hover-effect": TEXT_HOVER_EFFECT_VARIANTS,
+  "letter-3d-swap": LETTER_3D_SWAP_VARIANTS,
   "underline-animation": UNDERLINE_ANIMATION_VARIANTS,
   "underline-to-background": UNDERLINE_TO_BACKGROUND_VARIANTS,
   "background-gradient-cursor": BACKGROUND_GRADIENT_CURSOR_VARIANTS,

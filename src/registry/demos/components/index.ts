@@ -27,6 +27,11 @@ export const TimeScrubberDemo = lazyWithRetry(() =>
 export const LineNavDemo = lazyWithRetry(() =>
   import("./line-nav-demo").then((m) => ({ default: m.LineNavDemo }))
 )
+export const Letter3DSwapDemo = lazyWithRetry(() =>
+  import("./letter-3d-swap-demo").then((m) => ({
+    default: m.Letter3DSwapDemo,
+  }))
+)
 export const MapDemo = lazyWithRetry(() =>
   import("./map-demo").then((m) => ({ default: m.MapDemo }))
 )
@@ -95,6 +100,8 @@ export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   "middle-truncation-demo": MiddleTruncationDemo,
   "line-nav": LineNavDemo,
   "line-nav-demo": LineNavDemo,
+  "letter-3d-swap": Letter3DSwapDemo,
+  "letter-3d-swap-demo": Letter3DSwapDemo,
   "spotlight-card": SpotlightCardDemo,
   "spotlight-card-demo": SpotlightCardDemo,
   "border-glow": BorderGlowDemo,
