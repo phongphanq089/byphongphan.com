@@ -17,8 +17,7 @@ export function ComponentFilterBar({
     <div className="no-scrollbar flex w-full items-stretch overflow-x-auto">
       {COMPONENT_CATEGORIES.map((cat) => {
         const isSelected = activeCategory === cat.id
-        const to =
-          cat.id === "all" ? "/component-ui" : `/component-ui/${cat.id}`
+        const to = cat.id === "all" ? "/ui/base" : `/ui/${cat.id}`
 
         return (
           <Link

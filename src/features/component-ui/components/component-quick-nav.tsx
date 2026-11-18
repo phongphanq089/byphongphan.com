@@ -31,7 +31,7 @@ export function ComponentQuickNav({
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((comp) => ({
           title: comp.name,
-          href: `/component-ui/${comp.category}/${comp.slug}`,
+          href: `/ui/${comp.category}/${comp.slug}`,
           badge: comp.isNew ? (
             <span
               aria-label="New component"
@@ -47,7 +47,7 @@ export function ComponentQuickNav({
 
       return {
         title: cat.label,
-        href: `/component-ui/${cat.id}`,
+        href: `/ui/${cat.id}`,
         items,
       }
     }).filter((group) => group.items.length > 0)
@@ -64,7 +64,7 @@ export function ComponentQuickNav({
       currentCategory={currentCategory}
       currentSlug={currentSlug}
       currentTitle={displayTitle}
-      activeHref={`/component-ui/${currentCategory}/${currentSlug}`}
+      activeHref={`/ui/${currentCategory}/${currentSlug}`}
       navGroups={navGroups}
       totalCount={totalCount}
       className={className}

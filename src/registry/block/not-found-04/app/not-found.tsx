@@ -70,24 +70,6 @@ export default function NotFound04() {
           </Button>
         </div>
       </section>
-
-      {/* ── 3. Subtle Bottom Status Strip ── */}
-      <footer className="relative z-30 flex shrink-0 items-center justify-between border-t border-border/80 bg-background/80 px-4 py-2.5 font-mono text-[10px] text-muted-foreground backdrop-blur-md sm:px-8">
-        <div className="flex items-center gap-3">
-          <span className="flex items-center gap-1.5">
-            <span className="size-1.5 animate-pulse rounded-full bg-emerald-500" />
-            ASCII ENGINE: ONLINE
-          </span>
-          {stats && (
-            <span className="hidden text-muted-foreground/60 sm:inline">
-              • GRID: {stats.cols}×{stats.rows} • WINDOWS: {stats.activeWindows}
-            </span>
-          )}
-        </div>
-        <span className="text-[10px] text-muted-foreground/80">
-          INTERACTIVE CITYSCAPE RAYCASTER • 60 FPS
-        </span>
-      </footer>
     </main>
   )
 }

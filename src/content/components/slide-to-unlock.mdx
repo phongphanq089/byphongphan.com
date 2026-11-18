@@ -1,0 +1,124 @@
+---
+title: Slide to Unlock
+description: The iconic iOS tactile slider featuring authentic text shimmer, squircle thumb, spring recoil physics, and velocity flick commitment.
+component: true
+badge: Button
+---
+
+<ComponentPreview name="slide-to-unlock-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="slide-to-unlock" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the animation dependency:</Step>
+      <CodeBlockCommand command="npm install motion" />
+
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="slide-to-unlock" title="components/slide-to-unlock.tsx" />
+
+      <Step>Update import paths to match your project directory structure.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+SlideToUnlock (Relative container with accessibility live regions & scoped CSS shimmer keyframes)
+└── <motion.div> (Frosted glass capsule track with 1px border & backdrop blur)
+    ├── <motion.div> (Specular shimmering gradient text: "slide to unlock" / "slide to power off")
+    ├── <motion.div> (Dynamic progressive ink fill wiping behind the thumb)
+    └── <motion.button role="slider"> (White squircle thumb with tactile spring recoil)
+        ├── <BlockArrow /> | <Power /> (Classic filled block arrow or power icon)
+        ├── <Check /> (Animated success checkmark)
+        └── <svg spinner> (Circular loading indicator during async operations)
+```
+
+---
+
+## Usage
+
+### Classic iOS Lockscreen
+
+```tsx
+import { SlideToUnlock } from "@/components/slide-to-unlock"
+
+export function Example() {
+  return (
+    <SlideToUnlock
+      variant="unlock"
+      onConfirm={() => console.log("Device unlocked")}
+    />
+  )
+}
+```
+
+### iOS Slide to Power Off
+
+```tsx
+import { SlideToUnlock } from "@/components/slide-to-unlock"
+
+export function PowerOffExample() {
+  return (
+    <SlideToUnlock
+      variant="power"
+      label="slide to power off"
+      confirmingLabel="Powering down…"
+      doneLabel="Off"
+      onConfirm={async () => {
+        await fetch("/api/shutdown", { method: "POST" })
+      }}
+    />
+  )
+}
+```
+
+### Slide to Pay / Confirm Action
+
+```tsx
+import { SlideToUnlock } from "@/components/slide-to-unlock"
+
+export function PaymentExample() {
+  return (
+    <SlideToUnlock
+      variant="confirm"
+      label="slide to pay $48.00"
+      confirmingLabel="Processing…"
+      doneLabel="Paid"
+      onConfirm={async () => {
+        await processCheckout()
+      }}
+    />
+  )
+}
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `variant` | `"unlock" \| "power" \| "confirm"` | `"unlock"` | Preset styling and default labels. `"unlock"` for lockscreen, `"power"` for shutdown, `"confirm"` for actions/payments. |
+| `label` | `string` | `undefined` | Custom track label. Automatically defaults to `"slide to unlock"`, `"slide to power off"`, or `"slide to confirm"`. |
+| `confirmingLabel` | `string` | `undefined` | Text shown while `onConfirm` async promise is pending. |
+| `doneLabel` | `string` | `undefined` | Text displayed once the operation succeeds. |
+| `icon` | `React.ReactNode` | `undefined` | Custom icon rendered inside the thumb. |
+| `onConfirm` | `() => Promise<unknown> \| unknown` | `undefined` | Action callback triggered when slider passes commitment threshold. |
+| `resetAfter` | `number \| null` | `2400` | Time in ms before rewinding back to the start. Pass `null` to remain in the done state. |
+| `height` | `number` | `56` | Track height in pixels. |
+| `thumbWidth` | `number` | `64` | Width of the squircle thumb button. |
+| `disabled` | `boolean` | `false` | Disables drag interaction and dims the control. |

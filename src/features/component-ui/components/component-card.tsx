@@ -59,8 +59,8 @@ export function ComponentCard({ component }: ComponentCardProps) {
       contentClassName="h-full flex-col justify-between"
     >
       <Link
-        to="/component-ui/$category/$slug"
-        params={{ category: component.category, slug: component.slug }}
+        to="/ui/$collection/$slug"
+        params={{ collection: component.category, slug: component.slug }}
         className="flex h-full w-full flex-col justify-between p-4 focus:outline-none sm:p-5"
       >
         <div className="flex items-center justify-between gap-2 pb-3">

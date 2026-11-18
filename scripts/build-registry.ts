@@ -16,6 +16,9 @@ const OUTPUT_DIR = path.join(process.cwd(), "public", "r")
 async function buildRegistry() {
   console.log("🚀 Building Shadcn Registry...")
 
+  const rootDir = process.cwd()
+  const publicDir = path.join(rootDir, "public")
+
   if (!fs.existsSync(OUTPUT_DIR)) {
     fs.mkdirSync(OUTPUT_DIR, { recursive: true })
   }
@@ -92,6 +95,36 @@ async function buildRegistry() {
       "utf-8"
     )
     console.log(`  ✓ Generated: public/r/${item.name}.json`)
+
+    // Generate markdown documentation for AI agents and human readers (.md endpoints)
+    const markdownContent = generateComponentMarkdown(
+      item,
+      filesWithContent,
+      siteConfig.url
+    )
+
+    fs.writeFileSync(
+      path.join(OUTPUT_DIR, `${item.name}.md`),
+      markdownContent,
+      "utf-8"
+    )
+
+    const segment =
+      item.type === "registry:hook"
+        ? "hooks"
+        : item.type === "registry:block"
+          ? "blocks"
+          : "components"
+
+    const uiSegmentDir = path.join(publicDir, "ui", segment)
+    if (!fs.existsSync(uiSegmentDir)) {
+      fs.mkdirSync(uiSegmentDir, { recursive: true })
+    }
+    fs.writeFileSync(
+      path.join(uiSegmentDir, `${item.name}.md`),
+      markdownContent,
+      "utf-8"
+    )
 
     indexItems.push({
       name: item.name,
@@ -192,9 +225,6 @@ async function buildRegistry() {
   }
 
   // Write to root and public directories for GitHub browsing & direct URL access
-  const rootDir = process.cwd()
-  const publicDir = path.join(rootDir, "public")
-
   fs.writeFileSync(
     path.join(rootDir, "registry.json"),
     JSON.stringify(registryPayload, null, 2) + "\n",
@@ -244,14 +274,22 @@ async function buildRegistry() {
   const redirectLines: string[] = [
     "# Auto-generated 301 redirects by scripts/build-registry.ts - DO NOT EDIT MANUALLY",
     "# Maps legacy/renamed component and block slugs to their canonical URLs",
+    "",
+    "# 301 Wildcard Redirects from legacy registry routes to the unified /ui studio",
+    "/component-ui/:category/:slug  /ui/:category/:slug  301!",
+    "/blocks/:category/:slug        /ui/:category/:slug  301!",
+    "/hooks/:category/:slug         /ui/:category/:slug  301!",
+    "/component-ui/:category        /ui/:category        301!",
+    "/blocks/:category              /ui/:category        301!",
+    "/hooks/:category               /ui/:category        301!",
+    "/component-ui                  /ui/base             301!",
+    "/blocks                        /ui/blocks           301!",
+    "/hooks                         /ui/hooks            301!",
   ]
 
   for (const item of REGISTRY_ITEMS) {
     if (item.aliases && item.aliases.length > 0) {
-      const isBlock = item.type === "registry:block"
-      const basePath = isBlock
-        ? `/blocks/${item.category}`
-        : `/component-ui/${item.category}`
+      const basePath = `/ui/${item.category}`
 
       for (const alias of item.aliases) {
         redirectLines.push(
@@ -309,6 +347,77 @@ export const TELEMETRY_CONFIG = {
   )
   fs.writeFileSync(telemetryPath, telemetryContent, "utf-8")
   console.log(`  ✓ Generated: src/shared/config/telemetry.config.ts`)
+}
+
+function generateComponentMarkdown(
+  item: (typeof REGISTRY_ITEMS)[number],
+  filesWithContent: { path: string; content: string }[],
+  siteUrl: string
+): string {
+  const mdxDir = path.join(process.cwd(), "src", "content")
+  const candidatePaths = [
+    path.join(mdxDir, "components", `${item.name}.mdx`),
+    path.join(mdxDir, "hooks", `${item.name}.mdx`),
+  ]
+
+  let rawMdx = ""
+  for (const p of candidatePaths) {
+    if (fs.existsSync(p)) {
+      rawMdx = fs.readFileSync(p, "utf-8")
+      break
+    }
+  }
+
+  const cliCommand = `npx shadcn@latest add ${siteUrl}/r/${item.name}.json`
+
+  if (rawMdx) {
+    const cleaned = rawMdx
+      .replace(/^---[\s\S]*?---\s*/, "")
+      .replace(/<ComponentPreview\b[^>]*\/>/g, "")
+      .replace(
+        /<CodeBlockCommand\s+name=["'][^"']+["']\s*\/>/g,
+        `\`\`\`bash\n${cliCommand}\n\`\`\``
+      )
+      .replace(
+        /<CodeBlockCommand\s+command=["']([^"']+)["']\s*\/>/g,
+        (_, cmd) => `\`\`\`bash\n${cmd}\n\`\`\``
+      )
+      .replace(
+        /<ComponentSource\b[^>]*\/>/g,
+        filesWithContent[0]
+          ? `\`\`\`tsx\n// ${filesWithContent[0].path}\n${filesWithContent[0].content}\n\`\`\``
+          : ""
+      )
+      .replace(/<TabsList\b[^>]*>[\s\S]*?<\/TabsList>/g, "")
+      .replace(/<Step\b[^>]*>([\s\S]*?)<\/Step>/g, "- $1")
+      .replace(/<\/?(CodeTabs|TabsContent|Steps)\b[^>]*>/g, "")
+      .replace(/@site/g, siteUrl)
+      .replace(/{{siteUrl}}/g, siteUrl)
+      .replace(/{siteUrl}/g, siteUrl)
+      .replace(/\n{3,}/g, "\n\n")
+      .trim()
+
+    return `# ${item.title}\n\n> ${item.description}\n\n${cleaned}\n`
+  }
+
+  const filesSection = filesWithContent
+    .map((f) => `### \`${f.path}\`\n\n\`\`\`tsx\n${f.content}\n\`\`\``)
+    .join("\n\n")
+
+  return `# ${item.title}
+
+> ${item.description}
+
+## Installation
+
+\`\`\`bash
+${cliCommand}
+\`\`\`
+
+## Source Code
+
+${filesSection}
+`
 }
 
 function generateIndexMdContent(

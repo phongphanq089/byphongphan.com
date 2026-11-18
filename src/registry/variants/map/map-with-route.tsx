@@ -20,7 +20,7 @@ const ROUTE_COORDINATES: [number, number][] = [
 
 export function MapWithRoute() {
   return (
-    <div className="relative h-[400px] w-full overflow-hidden rounded-xl border border-border/80 bg-muted/10">
+    <div className="relative size-full min-h-[400px] w-full overflow-hidden rounded-xl border border-border/80 bg-muted/10">
       <Map center={[-122.407, 37.786]} zoom={13} className="size-full">
         <MapControls position="top-right" showZoom showCompass />
 

@@ -41,6 +41,7 @@
     }
   ],
   "componentCategories": [
+    "button",
     "card",
     "background",
     "navigation",
@@ -55,15 +56,15 @@
     },
     {
       "category": "navigation",
-      "slug": "rail-scroll-scrubber"
-    },
-    {
-      "category": "navigation",
       "slug": "scroll-indicator"
     },
     {
       "category": "text",
       "slug": "middle-truncation"
+    },
+    {
+      "category": "data-display",
+      "slug": "badge"
     },
     {
       "category": "card",
@@ -102,20 +103,52 @@
       "slug": "background-gradient-cursor"
     },
     {
-      "category": "interactive",
-      "slug": "pp-mark-isometric"
-    },
-    {
-      "category": "text",
-      "slug": "phong-phan-isometric"
-    },
-    {
       "category": "card",
       "slug": "spotlight-card"
     },
     {
       "category": "card",
       "slug": "border-glow"
+    },
+    {
+      "category": "text",
+      "slug": "underline-to-background"
+    },
+    {
+      "category": "text",
+      "slug": "underline-animation"
+    },
+    {
+      "category": "text",
+      "slug": "letter-3d-swap"
+    },
+    {
+      "category": "text",
+      "slug": "typing-text"
+    },
+    {
+      "category": "text",
+      "slug": "swoosh-text"
+    },
+    {
+      "category": "text",
+      "slug": "plucked-text"
+    },
+    {
+      "category": "text",
+      "slug": "cradle-text"
+    },
+    {
+      "category": "interactive",
+      "slug": "elastic-slider"
+    },
+    {
+      "category": "button",
+      "slug": "corner-button"
+    },
+    {
+      "category": "button",
+      "slug": "slide-to-unlock"
     }
   ],
   "hookCategories": [

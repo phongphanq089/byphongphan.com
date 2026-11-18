@@ -81,7 +81,7 @@ export function BlockDetailSkeleton({
             </div>
 
             <Button variant="outline" asChild>
-              <Link to="/blocks">
+              <Link to="/ui/$collection" params={{ collection: "blocks" }}>
                 <ArrowLeft className="size-3.5" />
                 <span>All Blocks</span>
               </Link>
@@ -112,7 +112,7 @@ export function BlockDetailSkeleton({
       >
         <Button
           variant="link"
-          onClick={() => navigation({ to: `/blocks/${category}` })}
+          onClick={() => navigation({ to: `/ui/${category}` })}
           className="capitalize"
         >
           <ArrowLeft className="size-3.5" />

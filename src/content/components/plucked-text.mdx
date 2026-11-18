@@ -1,0 +1,94 @@
+---
+title: Plucked Text
+description: A headline sitting on an acoustic string you can pluck, strum and let ring, simulated with real harmonic standing wave physics.
+component: true
+badge: Physics
+---
+
+<ComponentPreview name="plucked-text-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="plucked-text" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the component into your project (zero external animation dependencies required):</Step>
+      <ComponentSource name="plucked-text" title="components/plucked-text.tsx" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+PluckedText (Acoustic string container with harmonic wave physics loop)
+├── <span className="sr-only"> (Full plain text string for screen readers)
+├── <svg> (Vector string line & anchor pin markers)
+│   ├── <path> (Harmonic curve computed from standing modes)
+│   ├── <path> (Underlying ghost guideline)
+│   ├── <circle> (Left anchor pin)
+│   └── <circle> (Right anchor pin)
+└── <span aria-hidden="true"> (Per-letter spans tilted and aligned to local string normal)
+```
+
+---
+
+## Usage
+
+```tsx
+import { PluckedText } from "@/components/plucked-text"
+```
+
+```tsx
+export function HeroHeading() {
+  return (
+    <PluckedText
+      text="ACOUSTIC STRING"
+      tension={1.0}
+      strum={true}
+      className="text-5xl sm:text-7xl font-black"
+    />
+  )
+}
+```
+
+---
+
+## Features
+
+- **Harmonic Standing Wave Physics**: The string is simulated as a summation of up to 24 damped standing wave modes, each solved with exact analytical harmonic equations without frame-rate explosion.
+- **Pluck & Drag Interaction**: Dragging the string or headline creates a triangular displacement that releases into authentic overtone vibrations.
+- **Strum on Sweep**: Passing the mouse cursor briskly across the string transfers kinetic impulse, letting you strum headlines like guitar strings.
+- **Letter Tilt & Normal Alignment**: Each individual glyph tracks the local displacement and tangents of the string, dynamically tilting with string curvature.
+- **Zero Heavy Dependencies**: Pure TypeScript and SVG path calculation running at 60/120fps with automatic sleep when energy decays below threshold.
+- **Accessibility & Reduced Motion**: Automatically renders static text when the user prefers reduced motion, and provides accessible screen-reader markup.
+
+---
+
+## API Reference
+
+### PluckedText
+
+Acoustic string simulation headline component.
+
+| Prop        | Type              | Default     | Description                                                                     |
+| :---------- | :---------------- | :---------- | :------------------------------------------------------------------------------ |
+| `text`      | `string`          | `undefined` | The line of text sitting on the string. Keep to a single line.                  |
+| `children`  | `React.ReactNode` | `undefined` | Text content passed as children.                                                |
+| `tension`   | `number`          | `1`         | How taut the string is. Higher tension rings faster and settles sooner.         |
+| `strum`     | `boolean`         | `true`      | Whether sweeping the cursor across the string strums and excites vibrations.   |
+| `className` | `string`          | `undefined` | Additional CSS classes for typographic styling (font size, weight, tracking).   |

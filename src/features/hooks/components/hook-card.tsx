@@ -181,8 +181,8 @@ export function HookCard({ hook }: HookCardProps) {
       />
 
       <Link
-        to="/hooks/$category/$slug"
-        params={{ category: hook.category, slug: hook.slug }}
+        to="/ui/$collection/$slug"
+        params={{ collection: hook.category, slug: hook.slug }}
         className="flex h-full w-full flex-col justify-between focus:outline-none"
       >
         {/* Top Header Bar: Gel Tile, Category, Badges, Quick Copy */}

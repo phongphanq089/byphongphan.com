@@ -1,4 +1,5 @@
 export * from "./use-click-outside"
+export * from "./use-controllable-state"
 export * from "./use-copy-to-clipboard"
 export * from "./use-debounce"
 export * from "./use-debounced-callback"

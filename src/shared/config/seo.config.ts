@@ -74,6 +74,16 @@ export const pagesSeoConfig: Record<string, SeoConfig> = {
     description:
       "Personal portfolio of Phong Phan — Frontend Engineer focused on building highly polished user interfaces, fluid interactions, and modern web applications.",
   },
+  ui: {
+    title: "UI Studio • Phong Phan",
+    description:
+      "Interactive component studio, crafted UI primitives, responsive application blocks, and custom React hooks.",
+  },
+  mcp: {
+    title: "Build with your AI editor • MCP Server • Phong Phan",
+    description:
+      "Connect the shadcn MCP server and ask for any phongphan component by name. Your AI editor searches the registry and installs it for you.",
+  },
   block: {
     title: "Blocks • Phong Phan",
     description:

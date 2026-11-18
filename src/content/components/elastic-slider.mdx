@@ -1,0 +1,116 @@
+---
+title: Elastic Slider
+description: A tactile spring-physics slider with boundary rubber-banding, magnetic decile damping, text-dodging handle, and full WAI-ARIA accessibility.
+component: true
+badge: Motion
+---
+
+<ComponentPreview name="elastic-slider-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="elastic-slider" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the following animation dependencies:</Step>
+      <CodeBlockCommand command="npm install motion" />
+
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="elastic-slider" title="components/elastic-slider.tsx" />
+
+      <Step>Copy the controllable state hook helper:</Step>
+      <ComponentSource name="use-controllable-state" title="hooks/use-controllable-state.ts" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+ElasticSlider (Outer bounded wrapper with overflow rubber stretch)
+└── <motion.div role="slider"> (Interactive track with pointer capture & keyboard listeners)
+    ├── <div data-slot="hash-marks"> (Subtle vertical increment ticks)
+    ├── <motion.div data-slot="fill"> (Dynamic progress fill with spring animation)
+    ├── <motion.div data-slot="handle"> (Thumb indicator dodging overlapping text)
+    ├── <span data-slot="label"> (Left track label & optional icon)
+    └── <span data-slot="value"> (Right monospace value readout)
+```
+
+---
+
+## Usage
+
+```tsx
+import { ElasticSlider } from "@/components/elastic-slider"
+import { Volume2 } from "lucide-react"
+import { useState } from "react"
+```
+
+```tsx
+export function VolumeControl() {
+  const [volume, setVolume] = useState(60)
+
+  return (
+    <ElasticSlider
+      label="Volume"
+      icon={<Volume2 />}
+      value={volume}
+      onValueChange={setVolume}
+      min={0}
+      max={100}
+      step={1}
+      formatValue={(v) => `${v}%`}
+      variant="primary"
+    />
+  )
+}
+```
+
+---
+
+## Features
+
+- **Boundary Rubber-Banding**: Dragging past minimum or maximum bounds stretches the track like an elastic band (`MAX_STRETCH`) with smooth square-root spring decay, snapping back upon release.
+- **Smart Text Dodging**: The slider handle dynamically measures internal label and value text boxes, fading and scaling down (`handleOpacity`, `scaleY`) when approaching text so they never clash awkwardly.
+- **Magnetic Decile Snapping**: Snaps to clean 10% milestone deciles when dragged within a 3.125% threshold, while discrete sliders snap cleanly to exact steps.
+- **Figma-Style Fast Nudging**: Pressing `Shift + ArrowRight / ArrowLeft` multiplies keyboard steps by 10x for ultra-fast, precise adjustments.
+- **Dual State Control**: Supports both controlled (`value`, `onValueChange`) and uncontrolled (`defaultValue`) workflows via `useControllableState`.
+- **WAI-ARIA Accessibility**: Standard slider semantics (`role="slider"`, `aria-valuemin`, `aria-valuemax`, `aria-valuenow`, `aria-valuetext`) with keyboard focus ring and mouse suppression.
+- **Reduced Motion**: Automatically skips elastic stretch and spring loops when `prefers-reduced-motion` is active.
+
+---
+
+## API Reference
+
+### ElasticSlider
+
+| Prop               | Type                                                    | Default     | Description                                                                     |
+| :----------------- | :------------------------------------------------------ | :---------- | :------------------------------------------------------------------------------ |
+| `label`            | `string`                                                | *Required*  | Text label displayed on the left inside the slider track.                      |
+| `value`            | `number`                                                | `undefined` | Controlled numeric value. Use with `onValueChange`.                             |
+| `defaultValue`     | `number`                                                | `min`       | Initial value for uncontrolled usage.                                           |
+| `onValueChange`    | `(value: number) => void`                               | `undefined` | Callback fired when value changes during drag, click, or keyboard navigation.   |
+| `min`              | `number`                                                | `0`         | Minimum permissible value.                                                      |
+| `max`              | `number`                                                | `100`       | Maximum permissible value.                                                      |
+| `step`             | `number`                                                | `1`         | Granularity increment step.                                                     |
+| `formatValue`      | `(value: number) => string`                             | `undefined` | Function to format the displayed value text on the right.                      |
+| `variant`          | `"default" \| "primary" \| "success" \| "destructive"`  | `"default"` | Visual color palette of the progress fill.                                      |
+| `size`             | `"sm" \| "default" \| "lg"`                             | `"default"` | Height and density scale (`h-8`, `h-10`, `h-12`).                               |
+| `icon`             | `React.ReactNode`                                       | `undefined` | Optional icon rendered next to the left label.                                  |
+| `disabled`         | `boolean`                                               | `false`     | Whether the slider is disabled.                                                 |
+| `className`        | `string`                                                | `undefined` | Custom classes applied to the slider track.                                     |
+| `wrapperClassName` | `string`                                                | `undefined` | Custom classes applied to the outer container.                                  |

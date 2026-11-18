@@ -8,7 +8,7 @@ import { SpotlightCard } from "@/shared/ui/core"
 import { SchematicWrapper } from "@/shared/ui/system"
 
 export interface ComponentCategoryCardProps {
-  /** Component category id — resolves the route param for `/component-ui/$category`. */
+  /** Component category id — resolves the route param for `/ui/$collection`. */
   id: ComponentCategoryId
   /** Technical index label e.g. "01" */
   index: string
@@ -46,8 +46,8 @@ export function ComponentCategoryCard({
       contentClassName="h-full flex-col justify-between"
     >
       <Link
-        to="/component-ui/$category"
-        params={{ category: id }}
+        to="/ui/$collection"
+        params={{ collection: id }}
         className="flex h-full w-full flex-col justify-between gap-3 p-4 focus:outline-none sm:p-5"
       >
         {/* Top row: index + title · count + arrow */}

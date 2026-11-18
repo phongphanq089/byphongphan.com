@@ -4,7 +4,7 @@ import { BackgroundGradientCursor } from "@/registry/animated/background-gradien
 import { Badge } from "@/registry/ui/badge"
 export function BackgroundGradientCursorCardSpotlight() {
   return (
-    <div className="relative flex min-h-[300px] w-full items-center justify-center overflow-hidden rounded-xl border border-border/80 bg-accent p-6 shadow-xs select-none">
+    <div className="relative flex size-full min-h-[400px] w-full items-center justify-center overflow-hidden rounded-xl border border-border/80 bg-background p-6 shadow-xs select-none">
       <BackgroundGradientCursor
         position="absolute"
         gradient={{
@@ -27,7 +27,7 @@ export function BackgroundGradientCursorCardSpotlight() {
         }}
       />
 
-      <div className="relative z-10 flex max-w-sm flex-col items-center gap-2.5 rounded-lg border border-amber-500/20 bg-neutral-900/80 p-5 text-center backdrop-blur-md">
+      <div className="relative z-10 flex max-w-sm flex-col items-center gap-2.5 rounded-2xl border border-amber-500/30 bg-neutral-950/70 p-6 text-center shadow-2xl backdrop-blur-md">
         <Badge
           variant="outline"
           className="border-amber-500/30 bg-amber-950/40 font-mono text-[10px] text-amber-300"
@@ -35,10 +35,10 @@ export function BackgroundGradientCursorCardSpotlight() {
           <Layers className="mr-1.5 size-3" />
           AMBER SPOTLIGHT
         </Badge>
-        <h4 className="text-sm font-semibold tracking-wide text-amber-100">
+        <h4 className="text-base font-semibold tracking-wide text-amber-100">
           Warm Surface Reveal
         </h4>
-        <p className="text-xs text-neutral-400">
+        <p className="text-xs leading-relaxed text-neutral-400">
           Soft golden radial glow with fine amber dot accents that smoothly
           tracks the viewer without visual noise.
         </p>

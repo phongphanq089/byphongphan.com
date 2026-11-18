@@ -10,7 +10,7 @@ import {
 import type { MDXComponents } from "mdx/types"
 import { useMemo } from "react"
 
-import { CopyButton } from "@/registry/animated/button/copy-button"
+import { DocActionsDropdown } from "@/features/ui-studio/components/doc-actions-dropdown"
 import { COMPONENT_DEMOS } from "@/registry/demos"
 import { siteConfig } from "@/shared/config"
 import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
@@ -26,11 +26,11 @@ import {
 import { CodeBlockCommand } from "@/shared/ui/core/code-block"
 import { DocDetailLayout } from "@/widgets/doc-detail-layout"
 
+import { mdxComponents } from "../../../shared/ui/system/mdx-components"
 import { COMPONENTS_DATA } from "../components-data"
 import type { ComponentItem } from "../types"
 import { ComponentQuickNav } from "./component-quick-nav"
 import { ComponentStagePreview } from "./component-stage-preview"
-import { mdxComponents } from "./mdx-components"
 
 export interface ComponentFrontmatter {
   title?: string
@@ -104,9 +104,9 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
       if (!prevComponent) return
       play("attention", { direction: "back", emphasis: "subtle" })
       navigation({
-        to: "/component-ui/$category/$slug",
+        to: "/ui/$collection/$slug",
         params: {
-          category: prevComponent.category,
+          collection: prevComponent.category,
           slug: prevComponent.slug,
         },
       })
@@ -123,9 +123,9 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
       if (!nextComponent) return
       play("attention", { direction: "forward", emphasis: "subtle" })
       navigation({
-        to: "/component-ui/$category/$slug",
+        to: "/ui/$collection/$slug",
         params: {
-          category: nextComponent.category,
+          collection: nextComponent.category,
           slug: nextComponent.slug,
         },
       })
@@ -256,23 +256,19 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
         <div className="relative flex flex-col justify-between gap-4 border-t border-border px-4 py-3 md:px-6">
           <div className="flex items-center justify-between">
             <Button variant={"ghost"} asChild>
-              <Link to={`/component-ui/${component.category}` as never}>
+              <Link to={`/ui/${component.category}` as never}>
                 <ArrowLeft className="size-3.5" />
                 <span className="capitalize">{component.category}</span>
               </Link>
             </Button>
 
             <div className="flex items-center gap-2">
-              {rawMdxContent && (
-                <CopyButton
-                  className="relative gap-1.5 bg-accent pr-2.5 pl-2"
-                  variant="secondary"
-                  size="lg"
-                  text={rawMdxContent}
-                >
-                  Copy Page
-                </CopyButton>
-              )}
+              <DocActionsDropdown
+                item={component}
+                segment={component.category}
+                rawMdxContent={rawMdxContent}
+                size="lg"
+              />
 
               <div className="flex items-center gap-2">
                 {prevComponent ? (
@@ -290,9 +286,9 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
                         }
                       >
                         <Link
-                          to="/component-ui/$category/$slug"
+                          to="/ui/$collection/$slug"
                           params={{
-                            category: prevComponent.category,
+                            collection: prevComponent.category,
                             slug: prevComponent.slug,
                           }}
                         >
@@ -324,9 +320,9 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
                         }
                       >
                         <Link
-                          to="/component-ui/$category/$slug"
+                          to="/ui/$collection/$slug"
                           params={{
-                            category: nextComponent.category,
+                            collection: nextComponent.category,
                             slug: nextComponent.slug,
                           }}
                         >

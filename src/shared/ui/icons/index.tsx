@@ -5,6 +5,14 @@ export interface IconProps extends React.SVGProps<SVGSVGElement> {
 }
 
 import { ElevenTy } from "./11ty"
+import {
+  ChatGptIcon,
+  ClaudeIcon,
+  CursorIcon,
+  GrokIcon,
+  MarkdownIcon,
+  V0Icon,
+} from "./ai-icons"
 import { Code } from "./code"
 import { DrizzleORM } from "./dizzle"
 import { External } from "./external"
@@ -31,13 +39,18 @@ import { Vite } from "./vite"
 import { Zustand } from "./zustand"
 
 export {
+  ChatGptIcon,
+  ClaudeIcon,
   Code,
+  CursorIcon,
   DrizzleORM,
   ElevenTy,
   External,
   Fastify,
   GitHub,
+  GrokIcon,
   JavaScript,
+  MarkdownIcon,
   MaterialUI,
   MongoDB,
   Motion,
@@ -54,6 +67,7 @@ export {
   Tailwind,
   Tanstack,
   TypeScript,
+  V0Icon,
   Vite,
   Zustand,
 }

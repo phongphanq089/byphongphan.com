@@ -51,7 +51,7 @@ export interface SchematicWrapperProps {
 export function SchematicWrapper({
   children,
   widthLabel,
-  defaultHeight = 152,
+  defaultHeight = 136,
   heightLabel,
   specsLabel = "p16 - r4 - btn h36 - gap 8",
   paddingPx = 16,
@@ -63,7 +63,7 @@ export function SchematicWrapper({
 }: SchematicWrapperProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const [dimensions, setDimensions] = useState({
-    width: 388,
+    width: 216,
     height: defaultHeight,
   })
   const [isHovered, setIsHovered] = useState(false)

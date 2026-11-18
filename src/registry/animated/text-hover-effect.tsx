@@ -238,15 +238,15 @@ export function TextHoverEffect({
 
       <text
         {...visibleTextProps}
-        className="fill-transparent stroke-neutral-400 dark:stroke-neutral-700/60"
-        style={{ opacity: isRevealed ? 0.7 : 0.35 }}
+        className="fill-transparent stroke-foreground/30 dark:stroke-white/20"
+        style={{ opacity: isRevealed ? 0.8 : 0.45 }}
       >
         {text}
       </text>
 
       <motion.text
         {...visibleTextProps}
-        className="fill-transparent stroke-neutral-500/50 dark:stroke-neutral-600/50"
+        className="fill-transparent stroke-foreground/40 dark:stroke-white/30"
         initial={{ strokeDashoffset: 1000, strokeDasharray: 1000 }}
         animate={{ strokeDashoffset: 0, strokeDasharray: 1000 }}
         transition={{ duration: strokeDuration, ease: "easeInOut" }}

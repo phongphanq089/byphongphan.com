@@ -22,7 +22,7 @@ const UiComponentsSection = () => {
           id="components-ui"
           heading="UI Primitives"
           count={totalCount}
-          actionHref="/component-ui"
+          actionHref="/ui/base"
           actionLabel="All components"
         />
       </div>

@@ -15,7 +15,7 @@ export function HookFilterBar({ activeCategory = "all" }: HookFilterBarProps) {
     <div className="no-scrollbar flex w-full items-stretch overflow-x-auto select-none">
       {HOOK_CATEGORIES.map((cat) => {
         const isSelected = activeCategory === cat.id
-        const to = cat.id === "all" ? "/hooks" : `/hooks/${cat.id}`
+        const to = cat.id === "all" ? "/ui/hooks" : `/ui/${cat.id}`
 
         return (
           <Link

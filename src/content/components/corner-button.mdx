@@ -1,0 +1,89 @@
+---
+title: Corner Button
+description: An animated tactile button featuring orbiting corner dots, expanding dashed CAD lines, and smooth ambient backdrop glow transitions.
+component: true
+badge: Button
+---
+
+<ComponentPreview name="corner-button-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="corner-button" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="corner-button" title="components/corner-button.tsx" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+CornerButton (Outer relative container with CSS variables & hover-triggered ambient glow)
+├── <div className="corner-line ..."> (4 expanding dashed CAD crosshair borders)
+├── <div className="corner-dot ..."> (4 orbiting dots animating from centers to outer vertices)
+└── <button> | <a> (Tactile center pill button with custom accent, text, and SVG icon)
+    ├── <span className="corner-btn-text"> (Button label content)
+    └── <svg className="corner-btn-svg"> (Pencil design icon or custom action icon)
+```
+
+---
+
+## Usage
+
+```tsx
+import { CornerButton } from "@/components/corner-button"
+import { Rocket } from "lucide-react"
+
+export function Example() {
+  return (
+    <div className="flex flex-wrap gap-6">
+      {/* Default pencil icon & primary theme */}
+      <CornerButton>Start designing</CornerButton>
+
+      {/* Custom accent color and Lucide icon */}
+      <CornerButton
+        accentColor="#8b5cf6"
+        icon={<Rocket className="corner-btn-svg" />}
+      >
+        Deploy Stack
+      </CornerButton>
+
+      {/* Navigation link */}
+      <CornerButton href="/docs" accentColor="#10b981">
+        Explore Documentation
+      </CornerButton>
+    </div>
+  )
+}
+```
+
+---
+
+## Props
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `children` | `React.ReactNode` | `"Start designing"` | Content label rendered inside the button. |
+| `accentColor` | `string` | `"var(--primary)"` | Accent color for button fill, outer corner dots, and backdrop glow. Accepts hex, oklch, or CSS variables. |
+| `textColor` | `string` | `undefined` | Custom text color. Automatically defaults to `var(--primary-foreground)` when using the primary theme. |
+| `icon` | `React.ReactNode` | `undefined` | Custom icon rendered to the right of the label. Overrides default pencil icon. |
+| `showIcon` | `boolean` | `true` | Whether to display an icon next to the text. Set to `false` for text-only buttons. |
+| `href` | `string` | `undefined` | Optional URL target. When passed, renders a semantic `<a>` link element instead of `<button>`. |
+| `wrapperClassName` | `string` | `undefined` | Additional CSS class names applied to the outer wrapper containing the CAD lines and corner dots. |
+| `className` | `string` | `undefined` | Additional CSS class names applied directly to the button element. |

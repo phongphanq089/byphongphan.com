@@ -1,6 +1,6 @@
 export function TimeScrubberSchematic() {
   return (
-    <div className="flex w-[210px] flex-col items-center justify-center gap-2 rounded-xl border border-white/10 bg-accent/70 px-4 py-3 font-mono shadow-md select-none dark:bg-neutral-950/70">
+    <div className="flex h-34 w-54 flex-col items-center justify-between rounded-xl border border-white/10 bg-accent/70 p-3 font-mono shadow-md select-none dark:bg-neutral-950/70">
       {/* Time Readout */}
       <div className="flex items-baseline gap-1 font-mono">
         <span className="text-base font-semibold tracking-tight text-foreground">
@@ -28,6 +28,12 @@ export function TimeScrubberSchematic() {
           <span className="h-3 w-0.5 rounded-full bg-foreground/35" />
           <span className="h-2 w-0.5 rounded-full bg-foreground/20" />
         </div>
+      </div>
+
+      {/* Footer Specs */}
+      <div className="flex w-full items-center justify-between border-t border-white/10 pt-1 text-[9px] text-muted-foreground/60">
+        <span>RAF 120Hz</span>
+        <span className="font-medium text-primary">Calibrated</span>
       </div>
     </div>
   )

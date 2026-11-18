@@ -25,8 +25,8 @@ export function HookTile({ hook, index, className }: HookTileProps) {
 
   return (
     <Link
-      to="/hooks/$category/$slug"
-      params={{ category: hook.category, slug: hook.slug }}
+      to="/ui/$collection/$slug"
+      params={{ collection: hook.category, slug: hook.slug }}
       style={{ "--accent": theme.accent } as CSSProperties}
       className={cn(
         "group relative flex h-full min-h-[96px] w-full flex-col justify-between gap-2 overflow-hidden p-4 transition-colors duration-200 outline-none sm:min-h-[104px] sm:p-5",
