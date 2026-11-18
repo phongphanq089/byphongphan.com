@@ -26,6 +26,11 @@ export const COMPONENTS_DATA: ComponentItem[] = REGISTRY_COMPONENTS.filter(
 
 const FEATURED_COMPONENT_CATEGORY_SPECS = [
   {
+    id: "button",
+    specsLabel: "p14 - r6 - corner glow & dashed lines",
+    paddingPx: 14,
+  },
+  {
     id: "navigation",
     specsLabel: "p12 - r4 - spring indicator",
     paddingPx: 12,

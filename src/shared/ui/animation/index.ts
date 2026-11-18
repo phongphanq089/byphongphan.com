@@ -1,6 +1,7 @@
 export * from "./animated-hero"
 export * from "./animated-tooltip"
 export * from "./blueprint-lint-mark"
+export * from "./corner-button"
 export * from "./dotted-glow-background"
 export * from "./figma-text-highlight"
 export * from "./skeleton-hover"

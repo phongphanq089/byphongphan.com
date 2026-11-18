@@ -41,6 +41,7 @@
     }
   ],
   "componentCategories": [
+    "button",
     "card",
     "background",
     "navigation",
@@ -140,6 +141,10 @@
     {
       "category": "interactive",
       "slug": "elastic-slider"
+    },
+    {
+      "category": "button",
+      "slug": "corner-button"
     }
   ],
   "hookCategories": [

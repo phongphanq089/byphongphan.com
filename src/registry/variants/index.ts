@@ -4,6 +4,7 @@ import { BACKGROUND_GRADIENT_CURSOR_VARIANTS } from "./background-gradient-curso
 import { BADGE_VARIANTS } from "./badge-variants"
 import { CARD_VARIANTS } from "./card-variants"
 import { CODE_BLOCK_VARIANTS } from "./code-block-variants"
+import { CORNER_BUTTON_VARIANTS } from "./corner-button-variants"
 import { CRADLE_TEXT_VARIANTS } from "./cradle-text-variants"
 import { DRAWER_VARIANTS } from "./drawer-variants"
 import { ELASTIC_SLIDER_VARIANTS } from "./elastic-slider-variants"
@@ -24,6 +25,7 @@ export * from "./background-gradient-cursor-variants"
 export * from "./badge-variants"
 export * from "./card-variants"
 export * from "./code-block-variants"
+export * from "./corner-button-variants"
 export * from "./cradle-text-variants"
 export * from "./drawer-variants"
 export * from "./elastic-slider-variants"
@@ -42,6 +44,7 @@ export * from "./underline-to-background-variants"
 
 export const ALL_VARIANTS: ComponentVariant[] = [
   ...SELECT_VARIANTS,
+  ...CORNER_BUTTON_VARIANTS,
   ...SWOOSH_TEXT_VARIANTS,
   ...PLUCKED_TEXT_VARIANTS,
   ...CRADLE_TEXT_VARIANTS,
@@ -71,6 +74,7 @@ export const VARIANTS_MAP = new Map<string, ComponentVariant>(
  */
 export const COMPONENT_VARIANTS: Record<string, ComponentVariant[]> = {
   select: SELECT_VARIANTS,
+  "corner-button": CORNER_BUTTON_VARIANTS,
   badge: BADGE_VARIANTS,
   "elastic-slider": ELASTIC_SLIDER_VARIANTS,
   "swoosh-text": SWOOSH_TEXT_VARIANTS,

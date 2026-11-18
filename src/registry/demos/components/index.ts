@@ -21,6 +21,9 @@ export const CardDemo = lazyWithRetry(() =>
 export const CodeBlockDemo = lazyWithRetry(() =>
   import("./code-block-demo").then((m) => ({ default: m.CodeBlockDemo }))
 )
+export const CornerButtonDemo = lazyWithRetry(() =>
+  import("./corner-button-demo").then((m) => ({ default: m.CornerButtonDemo }))
+)
 export const CradleTextDemo = lazyWithRetry(() =>
   import("./cradle-text-demo").then((m) => ({ default: m.CradleTextDemo }))
 )
@@ -140,6 +143,8 @@ export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   "cradle-text-demo": CradleTextDemo,
   "elastic-slider": ElasticSliderDemo,
   "elastic-slider-demo": ElasticSliderDemo,
+  "corner-button": CornerButtonDemo,
+  "corner-button-demo": CornerButtonDemo,
   "spotlight-card": SpotlightCardDemo,
   "spotlight-card-demo": SpotlightCardDemo,
   "border-glow": BorderGlowDemo,

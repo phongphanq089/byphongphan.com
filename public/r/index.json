@@ -225,6 +225,14 @@
     "registryDependencies": []
   },
   {
+    "name": "corner-button",
+    "type": "registry:component",
+    "title": "Corner Button",
+    "description": "An animated tactile button featuring orbiting corner dots, expanding dashed CAD lines, and smooth ambient backdrop glow transitions.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
     "name": "not-found-01",
     "type": "registry:block",
     "title": "Not Found 01",

@@ -80,10 +80,7 @@ function snapToDecile(rawValue: number, min: number, max: number): number {
 }
 
 export type ElasticSliderVariant =
-  | "default"
-  | "primary"
-  | "success"
-  | "destructive"
+  "default" | "primary" | "success" | "destructive"
 
 export type ElasticSliderSize = "sm" | "default" | "lg"
 
@@ -470,10 +467,13 @@ export function ElasticSlider({
 
   // Variant fill styles
   const fillClasses = {
-    default: "bg-muted-foreground/15 group-data-[active=true]/slider:bg-muted-foreground/25",
+    default:
+      "bg-muted-foreground/15 group-data-[active=true]/slider:bg-muted-foreground/25",
     primary: "bg-primary/20 group-data-[active=true]/slider:bg-primary/30",
-    success: "bg-emerald-500/20 group-data-[active=true]/slider:bg-emerald-500/30",
-    destructive: "bg-destructive/20 group-data-[active=true]/slider:bg-destructive/30",
+    success:
+      "bg-emerald-500/20 group-data-[active=true]/slider:bg-emerald-500/30",
+    destructive:
+      "bg-destructive/20 group-data-[active=true]/slider:bg-destructive/30",
   }
 
   // Size configurations
@@ -490,7 +490,7 @@ export function ElasticSlider({
       className={cn(
         "relative w-full max-w-full select-none",
         sizeClasses[size],
-        disabled && "opacity-50 pointer-events-none",
+        disabled && "pointer-events-none opacity-50",
         wrapperClassName
       )}
     >
@@ -508,7 +508,7 @@ export function ElasticSlider({
         aria-valuenow={value}
         aria-valuetext={displayValue}
         className={cn(
-          "group/slider absolute inset-0 cursor-pointer touch-none overflow-hidden rounded-xl border border-border/60 bg-muted/70 backdrop-blur-xs outline-none select-none transition-colors",
+          "group/slider absolute inset-0 cursor-pointer touch-none overflow-hidden rounded-xl border border-border/60 bg-muted/70 backdrop-blur-xs transition-colors outline-none select-none",
           "data-[focus-visible=true]:ring-2 data-[focus-visible=true]:ring-ring data-[focus-visible=true]:ring-offset-1 data-[focus-visible=true]:ring-offset-background",
           className
         )}
@@ -582,9 +582,11 @@ export function ElasticSlider({
           ref={labelRef}
           data-slot="elastic-slider-label"
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 left-3 inline-flex -translate-y-1/2 items-center gap-2 font-medium text-muted-foreground leading-none transition-colors group-data-[active=true]/slider:text-foreground"
+          className="pointer-events-none absolute top-1/2 left-3 inline-flex -translate-y-1/2 items-center gap-2 leading-none font-medium text-muted-foreground transition-colors group-data-[active=true]/slider:text-foreground"
         >
-          {icon && <span className="size-4 shrink-0 [&>svg]:size-4">{icon}</span>}
+          {icon && (
+            <span className="size-4 shrink-0 [&>svg]:size-4">{icon}</span>
+          )}
           <span>{label}</span>
         </span>
 
@@ -593,7 +595,7 @@ export function ElasticSlider({
           ref={valueRef}
           data-slot="elastic-slider-value"
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 font-mono font-medium text-muted-foreground leading-none transition-colors group-data-[active=true]/slider:text-foreground"
+          className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 font-mono leading-none font-medium text-muted-foreground transition-colors group-data-[active=true]/slider:text-foreground"
         >
           {displayValue}
         </span>
@@ -673,10 +675,7 @@ function snapToDecile(rawValue: number, min: number, max: number): number {
 }
 
 export type ElasticSliderVariant =
-  | "default"
-  | "primary"
-  | "success"
-  | "destructive"
+  "default" | "primary" | "success" | "destructive"
 
 export type ElasticSliderSize = "sm" | "default" | "lg"
 
@@ -1063,10 +1062,13 @@ export function ElasticSlider({
 
   // Variant fill styles
   const fillClasses = {
-    default: "bg-muted-foreground/15 group-data-[active=true]/slider:bg-muted-foreground/25",
+    default:
+      "bg-muted-foreground/15 group-data-[active=true]/slider:bg-muted-foreground/25",
     primary: "bg-primary/20 group-data-[active=true]/slider:bg-primary/30",
-    success: "bg-emerald-500/20 group-data-[active=true]/slider:bg-emerald-500/30",
-    destructive: "bg-destructive/20 group-data-[active=true]/slider:bg-destructive/30",
+    success:
+      "bg-emerald-500/20 group-data-[active=true]/slider:bg-emerald-500/30",
+    destructive:
+      "bg-destructive/20 group-data-[active=true]/slider:bg-destructive/30",
   }
 
   // Size configurations
@@ -1083,7 +1085,7 @@ export function ElasticSlider({
       className={cn(
         "relative w-full max-w-full select-none",
         sizeClasses[size],
-        disabled && "opacity-50 pointer-events-none",
+        disabled && "pointer-events-none opacity-50",
         wrapperClassName
       )}
     >
@@ -1101,7 +1103,7 @@ export function ElasticSlider({
         aria-valuenow={value}
         aria-valuetext={displayValue}
         className={cn(
-          "group/slider absolute inset-0 cursor-pointer touch-none overflow-hidden rounded-xl border border-border/60 bg-muted/70 backdrop-blur-xs outline-none select-none transition-colors",
+          "group/slider absolute inset-0 cursor-pointer touch-none overflow-hidden rounded-xl border border-border/60 bg-muted/70 backdrop-blur-xs transition-colors outline-none select-none",
           "data-[focus-visible=true]:ring-2 data-[focus-visible=true]:ring-ring data-[focus-visible=true]:ring-offset-1 data-[focus-visible=true]:ring-offset-background",
           className
         )}
@@ -1175,9 +1177,11 @@ export function ElasticSlider({
           ref={labelRef}
           data-slot="elastic-slider-label"
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 left-3 inline-flex -translate-y-1/2 items-center gap-2 font-medium text-muted-foreground leading-none transition-colors group-data-[active=true]/slider:text-foreground"
+          className="pointer-events-none absolute top-1/2 left-3 inline-flex -translate-y-1/2 items-center gap-2 leading-none font-medium text-muted-foreground transition-colors group-data-[active=true]/slider:text-foreground"
         >
-          {icon && <span className="size-4 shrink-0 [&>svg]:size-4">{icon}</span>}
+          {icon && (
+            <span className="size-4 shrink-0 [&>svg]:size-4">{icon}</span>
+          )}
           <span>{label}</span>
         </span>
 
@@ -1186,7 +1190,7 @@ export function ElasticSlider({
           ref={valueRef}
           data-slot="elastic-slider-value"
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 font-mono font-medium text-muted-foreground leading-none transition-colors group-data-[active=true]/slider:text-foreground"
+          className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 font-mono leading-none font-medium text-muted-foreground transition-colors group-data-[active=true]/slider:text-foreground"
         >
           {displayValue}
         </span>

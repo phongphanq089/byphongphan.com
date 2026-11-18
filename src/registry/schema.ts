@@ -26,6 +26,7 @@ export type ComponentSchematicType =
   | "plucked-text"
   | "cradle-text"
   | "elastic-slider"
+  | "corner-button"
 
 export type BlockSchematicType =
   | "not-found-01"

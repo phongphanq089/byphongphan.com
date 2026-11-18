@@ -479,6 +479,24 @@
       ]
     },
     {
+      "name": "corner-button",
+      "type": "registry:component",
+      "title": "Corner Button",
+      "description": "An animated tactile button featuring orbiting corner dots, expanding dashed CAD lines, and smooth ambient backdrop glow transitions.",
+      "category": "button",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/corner-button.tsx",
+          "type": "registry:component",
+          "target": "components/corner-button.tsx"
+        }
+      ]
+    },
+    {
       "name": "not-found-01",
       "type": "registry:block",
       "title": "Not Found 01",
