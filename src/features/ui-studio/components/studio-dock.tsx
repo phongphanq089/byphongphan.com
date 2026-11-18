@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-import { useNavigate } from "@tanstack/react-router"
+import { Link, useNavigate } from "@tanstack/react-router"
 import { play } from "cuelume"
 import {
   ArrowLeft,
@@ -9,7 +9,6 @@ import {
   Code2,
   Layers,
   Maximize2,
-  Minimize2,
   Terminal,
   X,
 } from "lucide-react"
@@ -46,23 +45,33 @@ type Expanded = "install" | "variants" | null
 type MobileDrawerTarget = "install" | "variants" | null
 
 const DOCK_BUTTON =
-  "inline-flex h-8 items-center justify-center gap-1.5 rounded-xl px-2  text-[11px] font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary sm:h-9 sm:gap-2 sm:rounded-xl sm:px-3 sm:text-xs"
+  "relative inline-flex h-8 items-center justify-center gap-1.5 rounded-lg px-2 text-[11px] font-medium transition-all duration-150 outline-none select-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1 sm:h-9 sm:gap-2 sm:rounded-xl sm:px-3 sm:text-xs"
+
 const DOCK_BUTTON_IDLE =
-  "text-muted-foreground hover:bg-accent hover:text-foreground"
-const DOCK_BUTTON_ACTIVE = "bg-accent text-foreground shadow-xs"
+  "text-muted-foreground hover:bg-muted/80 hover:text-foreground active:scale-[0.97]"
+
+const DOCK_BUTTON_ACTIVE =
+  "border border-primary/25 bg-primary/10 font-semibold text-primary shadow-xs active:scale-[0.97]"
+
 const COMPARTMENT_MOTION = {
   initial: { height: 0, opacity: 0 },
   animate: { height: "auto", opacity: 1 },
   exit: { height: 0, opacity: 0 },
-  transition: { type: "spring", stiffness: 400, damping: 32 } as const,
+  transition: { type: "spring", stiffness: 420, damping: 34 } as const,
 } as const
-const SPRING = { type: "spring", stiffness: 400, damping: 32 } as const
+
+const SPRING = { type: "spring", stiffness: 420, damping: 34 } as const
 
 /**
- * Floating dock docked to the bottom edge of the stage — a single unified
- * surface (unlike a popover, the Install/Variants compartments expand inside
- * the same card). `useMeasure` reports the card's natural width/height and a
- * spring-animated container morphs to it without layout thrash.
+ * Floating studio dock at the bottom of the preview stage.
+ *
+ * Responsiveness & Craft:
+ * - Mobile (< 640px): Compact icon-only pill with 44px touch-accessible hit areas,
+ *   touch-optimized bottom drawer for Install/Variants, and safe-area padding.
+ * - Tablet (640px–1024px): Essential labels (Install, Code, Docs) and bounded variant title.
+ * - Desktop (>= 1024px): Full labels, spring-morphed upper drawer compartment,
+ *   rich tooltips with actual hotkeys (C, F, Left, Right).
+ * - Primary color palette for active states and highlights.
  */
 export function StudioDock({ item }: StudioDockProps) {
   const panel = useStudioStore((state) => state.panel)
@@ -71,7 +80,6 @@ export function StudioDock({ item }: StudioDockProps) {
   const storedVariantId = useStudioStore((state) => state.activeVariantId)
   const setActiveVariantId = useStudioStore((state) => state.setActiveVariantId)
   const [measureRef, bounds] = useMeasure()
-  const [isFullscreen, setIsFullscreen] = useState(false)
   const [expanded, setExpanded] = useState<Expanded>(null)
   const [mobileDrawerTarget, setMobileDrawerTarget] =
     useState<MobileDrawerTarget>(null)
@@ -83,16 +91,7 @@ export function StudioDock({ item }: StudioDockProps) {
     [item]
   )
 
-  useEffect(() => {
-    const handleFullscreenChange = () => {
-      setIsFullscreen(Boolean(document.fullscreenElement))
-    }
-    document.addEventListener("fullscreenchange", handleFullscreenChange)
-    return () =>
-      document.removeEventListener("fullscreenchange", handleFullscreenChange)
-  }, [])
-
-  // Switching breakpoints resets both modes
+  // Switching breakpoints resets both expanded modes to prevent UI ghosting
   useEffect(() => {
     if (isMobile) {
       setExpanded(null)
@@ -101,33 +100,32 @@ export function StudioDock({ item }: StudioDockProps) {
     }
   }, [isMobile])
 
-  // Only detail pages render the dock
   if (!item) return null
 
-  const toggleFullscreen = async () => {
-    try {
-      if (document.fullscreenElement) {
-        await document.exitFullscreen()
-      } else {
-        await document.documentElement.requestFullscreen()
-      }
-    } catch {
-      // Fullscreen may be blocked by browser policy
-    }
-  }
-
   const toggleCompartment = (target: Exclude<Expanded, null>) => {
+    play("tap")
     setExpanded((current) => (current === target ? null : target))
   }
 
   const handleCompartmentPress = (target: Exclude<Expanded, null>) => {
     if (isMobile) {
+      play("tap")
       setExpanded(null)
       setMobileDrawerTarget((current) => (current === target ? null : target))
       return
     }
     setMobileDrawerTarget(null)
     toggleCompartment(target)
+  }
+
+  const handleToggleCode = () => {
+    play("tap")
+    toggleCode()
+  }
+
+  const handleToggleDocs = () => {
+    play("tap")
+    toggleDocs()
   }
 
   const isInstallActive = isMobile
@@ -146,36 +144,44 @@ export function StudioDock({ item }: StudioDockProps) {
 
   return (
     <>
-      <div className="pointer-events-none absolute bottom-4 left-1/2 z-20 -translate-x-1/2">
-        {/* Measured container — width spring only; compartment drives height */}
+      <div className="pointer-events-none absolute bottom-3 left-1/2 z-20 w-full max-w-[calc(100vw-1.5rem)] -translate-x-1/2 px-1 sm:bottom-4 sm:max-w-fit sm:px-0">
+        {/* Measured container — width spring animated; compartment drives height */}
         <motion.div
           initial={false}
           animate={{ width: bounds.width || "auto" }}
           transition={SPRING}
-          className="pointer-events-auto origin-bottom overflow-hidden rounded-2xl border border-border/80 bg-background/95 shadow-2xl backdrop-blur-xl sm:rounded-3xl dark:border-white/10 dark:bg-zinc-950/95"
+          className="pointer-events-auto mx-auto origin-bottom overflow-hidden rounded-2xl border border-border/80 bg-background/95 shadow-xl backdrop-blur-xl sm:rounded-3xl dark:border-white/10 dark:bg-zinc-950/95 dark:shadow-2xl"
         >
-          <div ref={measureRef} className="flex w-max flex-col">
-            {/* Upper compartment — desktop only; mobile uses a straight bottom drawer */}
+          <div
+            ref={measureRef}
+            className="flex w-max max-w-[calc(100vw-2rem)] flex-col"
+          >
+            {/* Upper compartment — desktop/tablet popup inside dock surface */}
             <AnimatePresence initial={false} mode="wait">
               {!isMobile && expanded === "install" ? (
                 <motion.div
                   key="install"
                   {...COMPARTMENT_MOTION}
-                  className="overflow-hidden"
+                  className="w-full overflow-hidden"
                 >
-                  <div className="border-b border-border/60 p-3 sm:p-3.5">
+                  <div className="w-full min-w-[380px] border-b border-border/60 p-3 sm:p-4">
                     <div className="mb-2 flex items-center justify-between gap-4">
-                      <span className="text-[11px] font-semibold tracking-wider text-muted-foreground uppercase">
-                        Install
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <Terminal
+                          className="size-3.5 text-primary"
+                          aria-hidden="true"
+                        />
+                        <span className="text-[11px] font-semibold tracking-wider text-foreground uppercase">
+                          Install Command
+                        </span>
+                      </div>
                       <button
                         type="button"
                         onClick={() => setExpanded(null)}
                         aria-label="Close install"
-                        title="Close"
-                        className="inline-flex size-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+                        className="inline-flex size-6 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                       >
-                        <X className="size-4" aria-hidden="true" />
+                        <X className="size-3.5" aria-hidden="true" />
                       </button>
                     </div>
                     <CodeBlockCommand name={item.slug} />
@@ -187,19 +193,24 @@ export function StudioDock({ item }: StudioDockProps) {
                 <motion.div
                   key="variants"
                   {...COMPARTMENT_MOTION}
-                  className="overflow-hidden"
+                  className="w-full overflow-hidden"
                 >
-                  <div className="w-full border-b border-border/60 p-2.5">
+                  <div className="w-full min-w-[300px] border-b border-border/60 p-2.5 sm:p-3">
                     <div className="mb-1.5 flex items-center justify-between gap-2 px-1">
-                      <span className="text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
-                        Variants
-                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <Layers
+                          className="size-3.5 text-primary"
+                          aria-hidden="true"
+                        />
+                        <span className="text-[10px] font-semibold tracking-wider text-foreground uppercase">
+                          Available Variants ({variants.length})
+                        </span>
+                      </div>
                       <button
                         type="button"
                         onClick={() => setExpanded(null)}
                         aria-label="Close variants"
-                        title="Close"
-                        className="inline-flex size-6 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+                        className="inline-flex size-6 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
                       >
                         <X className="size-3.5" aria-hidden="true" />
                       </button>
@@ -207,7 +218,7 @@ export function StudioDock({ item }: StudioDockProps) {
                     <div
                       role="listbox"
                       aria-label="Variants"
-                      className="flex max-h-64 flex-col gap-1 overflow-y-auto"
+                      className="flex max-h-60 flex-col gap-1 overflow-y-auto pr-0.5"
                     >
                       {variants.map((variant) => {
                         const isActive = variant.id === activeVariant?.id
@@ -218,14 +229,15 @@ export function StudioDock({ item }: StudioDockProps) {
                             role="option"
                             aria-selected={isActive}
                             onClick={() => {
+                              play("tap")
                               setActiveVariantId(variant.id)
                               setExpanded(null)
                             }}
                             className={cn(
-                              "flex items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left text-[12px] font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                              "flex w-full items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 text-left text-xs font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary",
                               isActive
-                                ? "bg-accent text-foreground"
-                                : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
+                                ? "bg-primary/10 font-semibold text-primary"
+                                : "text-muted-foreground hover:bg-muted/80 hover:text-foreground"
                             )}
                           >
                             <span className="min-w-0 truncate">
@@ -233,7 +245,7 @@ export function StudioDock({ item }: StudioDockProps) {
                             </span>
                             {isActive ? (
                               <Check
-                                className="size-3.5 shrink-0 text-pp-primary"
+                                className="size-3.5 shrink-0 text-primary"
                                 aria-hidden="true"
                               />
                             ) : null}
@@ -246,8 +258,8 @@ export function StudioDock({ item }: StudioDockProps) {
               ) : null}
             </AnimatePresence>
 
-            {/* Bottom action row — icon + label on desktop, icon-only on mobile */}
-            <div className="flex h-11 items-center gap-1 px-1.5 sm:h-12 sm:gap-1.5 sm:px-2">
+            {/* Bottom action row */}
+            <div className="flex h-10 items-center justify-center gap-0.5 px-1.5 sm:h-12 sm:gap-1.5 sm:px-2">
               {/* Previous item */}
               {prev ? (
                 <Tooltip>
@@ -261,22 +273,27 @@ export function StudioDock({ item }: StudioDockProps) {
                         })
                         void navigate({ href: getStudioItemHref(prev) })
                       }}
-                      aria-label="Previous component"
-                      className={cn(DOCK_BUTTON, DOCK_BUTTON_IDLE)}
+                      aria-label={`Previous: ${prev.title}`}
+                      className={cn(
+                        DOCK_BUTTON,
+                        DOCK_BUTTON_IDLE,
+                        "size-8 p-0 sm:size-9"
+                      )}
                     >
                       <ArrowLeft className="size-4" aria-hidden="true" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="text-[10px]">
-                    Previous Component{" "}
-                    <Kbd>
-                      <ArrowLeft />
-                    </Kbd>
+                  <TooltipContent
+                    side="top"
+                    className="flex items-center gap-1.5 text-[11px]"
+                  >
+                    <span>Previous: {prev.title}</span>
+                    <Kbd className="font-mono text-[10px]">←</Kbd>
                   </TooltipContent>
                 </Tooltip>
               ) : null}
 
-              {/* Install */}
+              {/* Install Command */}
               <Tooltip>
                 <TooltipTrigger asChild>
                   <button
@@ -289,11 +306,13 @@ export function StudioDock({ item }: StudioDockProps) {
                       isInstallActive ? DOCK_BUTTON_ACTIVE : DOCK_BUTTON_IDLE
                     )}
                   >
-                    <Terminal className="size-4" aria-hidden="true" />
+                    <Terminal className="size-4 shrink-0" aria-hidden="true" />
                     <span className="hidden sm:inline">Install</span>
                   </button>
                 </TooltipTrigger>
-                <TooltipContent side="top">Install command</TooltipContent>
+                <TooltipContent side="top" className="text-[11px]">
+                  Install command
+                </TooltipContent>
               </Tooltip>
 
               {/* Variant picker — only when the item ships variants */}
@@ -307,7 +326,7 @@ export function StudioDock({ item }: StudioDockProps) {
                       aria-pressed={isVariantsActive}
                       className={cn(
                         DOCK_BUTTON,
-                        "max-w-32 sm:max-w-40",
+                        "max-w-28 sm:max-w-36 md:max-w-44",
                         isVariantsActive ? DOCK_BUTTON_ACTIVE : DOCK_BUTTON_IDLE
                       )}
                     >
@@ -317,7 +336,9 @@ export function StudioDock({ item }: StudioDockProps) {
                       </span>
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top">Switch variant</TooltipContent>
+                  <TooltipContent side="top" className="text-[11px]">
+                    Switch variant ({variants.length})
+                  </TooltipContent>
                 </Tooltip>
               ) : null}
 
@@ -331,23 +352,24 @@ export function StudioDock({ item }: StudioDockProps) {
                 <TooltipTrigger asChild>
                   <button
                     type="button"
-                    onClick={toggleCode}
-                    aria-label="View code"
+                    onClick={handleToggleCode}
+                    aria-label="View source code"
                     aria-pressed={panel === "code"}
                     className={cn(
                       DOCK_BUTTON,
                       panel === "code" ? DOCK_BUTTON_ACTIVE : DOCK_BUTTON_IDLE
                     )}
                   >
-                    <Code2 className="size-4" aria-hidden="true" />
+                    <Code2 className="size-4 shrink-0" aria-hidden="true" />
                     <span className="hidden sm:inline">Code</span>
                   </button>
                 </TooltipTrigger>
-                <TooltipContent side="top" className="text-[10px]">
-                  Source Code{" "}
-                  <Kbd>
-                    <Code2 />
-                  </Kbd>
+                <TooltipContent
+                  side="top"
+                  className="flex items-center gap-1.5 text-[11px]"
+                >
+                  <span>Source Code</span>
+                  <Kbd className="font-mono text-[10px]">C</Kbd>
                 </TooltipContent>
               </Tooltip>
 
@@ -357,51 +379,52 @@ export function StudioDock({ item }: StudioDockProps) {
                   <TooltipTrigger asChild>
                     <button
                       type="button"
-                      onClick={toggleDocs}
-                      aria-label="View docs"
+                      onClick={handleToggleDocs}
+                      aria-label="View documentation"
                       aria-pressed={panel === "docs"}
                       className={cn(
                         DOCK_BUTTON,
                         panel === "docs" ? DOCK_BUTTON_ACTIVE : DOCK_BUTTON_IDLE
                       )}
                     >
-                      <BookOpen className="size-4" aria-hidden="true" />
+                      <BookOpen
+                        className="size-4 shrink-0"
+                        aria-hidden="true"
+                      />
                       <span className="hidden sm:inline">Docs</span>
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="text-[10px]">
-                    Documentation{" "}
-                    <Kbd>
-                      <BookOpen />
-                    </Kbd>
+                  <TooltipContent
+                    side="top"
+                    className="flex items-center gap-1.5 text-[11px]"
+                  >
+                    <span>Documentation</span>
+                    <Kbd className="font-mono text-[10px]">F</Kbd>
                   </TooltipContent>
                 </Tooltip>
               ) : null}
 
-              {/* Fullscreen */}
+              {/* Fullscreen Preview */}
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <button
-                    type="button"
-                    onClick={() => void toggleFullscreen()}
-                    aria-label={
-                      isFullscreen ? "Exit fullscreen" : "Enter fullscreen"
+                  <Link
+                    to="/blocks-preview/$slug"
+                    params={{ slug: item.slug }}
+                    search={
+                      activeVariant ? { variant: activeVariant.id } : undefined
                     }
-                    aria-pressed={isFullscreen}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => play("tap")}
+                    aria-label="Fullscreen preview"
                     className={cn(DOCK_BUTTON, DOCK_BUTTON_IDLE)}
                   >
-                    {isFullscreen ? (
-                      <Minimize2 className="size-4" aria-hidden="true" />
-                    ) : (
-                      <Maximize2 className="size-4" aria-hidden="true" />
-                    )}
-                    <span className="hidden sm:inline">
-                      {isFullscreen ? "Exit" : "Fullscreen"}
-                    </span>
-                  </button>
+                    <Maximize2 className="size-4 shrink-0" aria-hidden="true" />
+                    <span className="hidden md:inline">Fullscreen</span>
+                  </Link>
                 </TooltipTrigger>
-                <TooltipContent side="top" className="text-[10px]">
-                  {isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+                <TooltipContent side="top" className="text-[11px]">
+                  Fullscreen Preview
                 </TooltipContent>
               </Tooltip>
 
@@ -418,17 +441,22 @@ export function StudioDock({ item }: StudioDockProps) {
                         })
                         void navigate({ href: getStudioItemHref(next) })
                       }}
-                      aria-label="Next component"
-                      className={cn(DOCK_BUTTON, DOCK_BUTTON_IDLE)}
+                      aria-label={`Next: ${next.title}`}
+                      className={cn(
+                        DOCK_BUTTON,
+                        DOCK_BUTTON_IDLE,
+                        "size-8 p-0 sm:size-9"
+                      )}
                     >
                       <ArrowRight className="size-4" aria-hidden="true" />
                     </button>
                   </TooltipTrigger>
-                  <TooltipContent side="top" className="text-[10px]">
-                    Next Component{" "}
-                    <Kbd>
-                      <ArrowRight />
-                    </Kbd>
+                  <TooltipContent
+                    side="top"
+                    className="flex items-center gap-1.5 text-[11px]"
+                  >
+                    <span>Next: {next.title}</span>
+                    <Kbd className="font-mono text-[10px]">→</Kbd>
                   </TooltipContent>
                 </Tooltip>
               ) : null}
@@ -437,7 +465,7 @@ export function StudioDock({ item }: StudioDockProps) {
         </motion.div>
       </div>
 
-      {/* Mobile: bottom straight drawer for Install / Variants */}
+      {/* Mobile: bottom bottom-sheet drawer for Install / Variants */}
       {isMobile ? (
         <Drawer
           open={mobileDrawerTarget !== null}
@@ -446,10 +474,26 @@ export function StudioDock({ item }: StudioDockProps) {
           }}
           position="bottom"
         >
-          <DrawerPopup showBar className="max-h-[85dvh]">
+          <DrawerPopup showBar className="max-h-[85dvh] rounded-t-3xl">
             <DrawerHeader className="flex shrink-0 flex-row items-center justify-between gap-2 border-b border-border/60 px-4 py-3">
-              <DrawerTitle className="text-sm font-semibold text-foreground">
-                {mobileDrawerTarget === "install" ? "Install" : "Variants"}
+              <DrawerTitle className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                {mobileDrawerTarget === "install" ? (
+                  <>
+                    <Terminal
+                      className="size-4 text-primary"
+                      aria-hidden="true"
+                    />
+                    <span>Install Command</span>
+                  </>
+                ) : (
+                  <>
+                    <Layers
+                      className="size-4 text-primary"
+                      aria-hidden="true"
+                    />
+                    <span>Available Variants ({variants.length})</span>
+                  </>
+                )}
               </DrawerTitle>
               <DrawerClose
                 render={
@@ -457,7 +501,7 @@ export function StudioDock({ item }: StudioDockProps) {
                     variant="ghost"
                     size="icon"
                     aria-label="Close"
-                    className="size-8"
+                    className="size-8 rounded-full"
                   />
                 }
               >
@@ -465,14 +509,20 @@ export function StudioDock({ item }: StudioDockProps) {
               </DrawerClose>
             </DrawerHeader>
 
-            <DrawerPanel scrollable scrollFade className="p-4 pb-10">
+            <DrawerPanel scrollable scrollFade className="p-4 pb-12">
               {mobileDrawerTarget === "install" ? (
-                <CodeBlockCommand name={item.slug} />
+                <div className="space-y-3">
+                  <p className="text-xs text-muted-foreground">
+                    Run the command in your terminal to install this component
+                    directly into your project.
+                  </p>
+                  <CodeBlockCommand name={item.slug} />
+                </div>
               ) : (
                 <div
                   role="listbox"
                   aria-label="Variants"
-                  className="flex flex-col gap-1.5"
+                  className="flex flex-col gap-2"
                 >
                   {variants.map((variant) => {
                     const isActive = variant.id === activeVariant?.id
@@ -483,14 +533,15 @@ export function StudioDock({ item }: StudioDockProps) {
                         role="option"
                         aria-selected={isActive}
                         onClick={() => {
+                          play("tap")
                           setActiveVariantId(variant.id)
                           setMobileDrawerTarget(null)
                         }}
                         className={cn(
-                          "flex w-full items-center justify-between gap-3 rounded-lg border px-3 py-2.5 text-left text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                          "flex min-h-[44px] w-full items-center justify-between gap-3 rounded-xl border px-3.5 py-2.5 text-left text-sm font-medium transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary active:scale-[0.99]",
                           isActive
-                            ? "border-pp-primary/40 bg-pp-primary/5 text-foreground"
-                            : "border-border/60 text-muted-foreground"
+                            ? "border-primary/40 bg-primary/10 font-semibold text-primary"
+                            : "border-border/60 text-muted-foreground hover:bg-muted/50 hover:text-foreground"
                         )}
                       >
                         <span className="min-w-0 truncate">
@@ -498,7 +549,7 @@ export function StudioDock({ item }: StudioDockProps) {
                         </span>
                         {isActive ? (
                           <Check
-                            className="size-4 shrink-0 text-pp-primary"
+                            className="size-4 shrink-0 text-primary"
                             aria-hidden="true"
                           />
                         ) : null}
