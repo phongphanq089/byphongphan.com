@@ -1,6 +1,7 @@
 import {
   Atom,
   Bookmark,
+  Bot,
   Code,
   Code2,
   Component,
@@ -72,9 +73,11 @@ export const COMMAND_GROUPS: CommandMenuGroup[] = [
 
 const NAVIGATION_ICON_MAP: Record<string, ReactNode> = {
   home: <Home className="size-4 text-pp-primary" />,
-  block: <Layers className="size-4 text-pp-primary" />,
+  ui: <Atom className="size-4 text-pp-primary" />,
+  mcp: <Bot className="size-4 text-pp-primary" />,
   blog: <Newspaper className="size-4 text-pp-primary" />,
   resources: <Bookmark className="size-4 text-pp-primary" />,
+  block: <Layers className="size-4 text-pp-primary" />,
   "component-ui": <Atom className="size-4 text-pp-primary" />,
   hooks: <Workflow className="size-4 text-pp-primary" />,
 }

@@ -16,6 +16,7 @@ import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as UiRouteRouteImport } from './routes/ui/route'
 import { Route as SiteIndexRouteImport } from './routes/_site/index'
+import { Route as SiteMcpRouteImport } from './routes/_site/mcp'
 import { Route as BlocksPreviewSlugRouteImport } from './routes/blocks-preview.$slug'
 import { Route as UiIndexRouteImport } from './routes/ui/index'
 import { Route as SiteBlogIndexRouteImport } from './routes/_site/blog/index'
@@ -57,6 +58,11 @@ const SiteIndexRoute = SiteIndexRouteImport.update({
   path: '/',
   getParentRoute: () => SiteRouteRoute,
 } as any)
+const SiteMcpRoute = SiteMcpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
+  getParentRoute: () => SiteRouteRoute,
+} as any)
 const BlocksPreviewSlugRoute = BlocksPreviewSlugRouteImport.update({
   id: '/blocks-preview/$slug',
   path: '/blocks-preview/$slug',
@@ -95,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/mcp': typeof SiteMcpRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
   '/ui/': typeof UiIndexRoute
   '/ui/$collection/$slug': typeof UiCollectionSlugRoute
@@ -107,6 +114,7 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/mcp': typeof SiteMcpRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
   '/': typeof SiteIndexRoute
   '/ui': typeof UiIndexRoute
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_site/mcp': typeof SiteMcpRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
   '/_site/': typeof SiteIndexRoute
   '/ui/': typeof UiIndexRoute
@@ -140,6 +149,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/mcp'
     | '/blocks-preview/$slug'
     | '/ui/'
     | '/ui/$collection/$slug'
@@ -152,6 +162,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/mcp'
     | '/blocks-preview/$slug'
     | '/'
     | '/ui'
@@ -167,6 +178,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/_site/mcp'
     | '/blocks-preview/$slug'
     | '/_site/'
     | '/ui/'
@@ -237,6 +249,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteIndexRouteImport
       parentRoute: typeof SiteRouteRoute
     }
+    '/_site/mcp': {
+      id: '/_site/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof SiteMcpRouteImport
+      parentRoute: typeof SiteRouteRoute
+    }
     '/blocks-preview/$slug': {
       id: '/blocks-preview/$slug'
       path: '/blocks-preview/$slug'
@@ -283,12 +302,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface SiteRouteRouteChildren {
+  SiteMcpRoute: typeof SiteMcpRoute
   SiteIndexRoute: typeof SiteIndexRoute
   SiteBlogIndexRoute: typeof SiteBlogIndexRoute
   SiteResourcesIndexRoute: typeof SiteResourcesIndexRoute
 }
 
 const SiteRouteRouteChildren: SiteRouteRouteChildren = {
+  SiteMcpRoute: SiteMcpRoute,
   SiteIndexRoute: SiteIndexRoute,
   SiteBlogIndexRoute: SiteBlogIndexRoute,
   SiteResourcesIndexRoute: SiteResourcesIndexRoute,
