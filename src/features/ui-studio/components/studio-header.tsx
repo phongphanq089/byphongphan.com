@@ -24,8 +24,8 @@ export function StudioHeader() {
 
   return (
     <header className="relative z-30 flex h-13 shrink-0 items-center justify-between gap-2 border-b border-border/70 bg-background/80 px-2.5 backdrop-blur-sm sm:px-4">
-      {/* Left: Window traffic lights + Sidebar toggle + Brand identity */}
-      <div className="flex shrink-0 items-center gap-2 sm:gap-2.5">
+      {/* Left: Window traffic lights + Back button + Sidebar toggle + Brand identity */}
+      <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
         <Link
           to="/"
           aria-label="Phong Phan — home"
@@ -33,6 +33,7 @@ export function StudioHeader() {
         >
           <PPPixelMark className="size-full text-pp-primary" variant="glow" />
         </Link>
+
         {/* Sidebar toggle */}
         <DrawerTrigger
           handle={studioSidebarHandle}

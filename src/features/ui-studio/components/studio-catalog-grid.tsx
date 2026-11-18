@@ -1,4 +1,5 @@
-import { useNavigate } from "@tanstack/react-router"
+import { Link, useNavigate } from "@tanstack/react-router"
+import { ArrowLeft } from "lucide-react"
 import { type ReactNode, useMemo } from "react"
 
 import { BLOCKS_DATA } from "@/features/blocks"
@@ -8,13 +9,6 @@ import { ComponentCard } from "@/features/component-ui/components/component-card
 import { HOOKS_DATA } from "@/features/hooks"
 import { HookTile } from "@/features/hooks/components/hook-tile"
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/registry/ui/select"
-import {
   BLOCK_CATEGORIES,
   COMPONENT_CATEGORIES,
   HOOK_CATEGORIES,
@@ -22,6 +16,8 @@ import {
   VALID_COMPONENT_CATEGORY_IDS,
   VALID_HOOK_CATEGORY_IDS,
 } from "@/shared/config"
+import { playClickSound, playHoverSound } from "@/shared/lib/sound"
+import { cn } from "@/shared/lib/utils"
 
 import { getStudioSegmentLabel } from "../model/unified-registry.adapter"
 
@@ -50,9 +46,8 @@ function filterBySegment<T extends { category: string }>(
 type CategoryOption = { id: string; label: string }
 
 /**
- * Master catalog: `max-w-7xl` centered column. At most one section renders
- * per family (Components / Blocks / Hooks) — the section select navigates via
- * the router (URL is the source of truth), it does not filter in memory.
+ * Master catalog: `max-w-7xl` centered column.
+ * Uses horizontal pill filter chips for tactile, modern category switching.
  */
 export function StudioCatalogGrid({ segment }: StudioCatalogGridProps) {
   const navigate = useNavigate()
@@ -84,7 +79,7 @@ export function StudioCatalogGrid({ segment }: StudioCatalogGridProps) {
     [segment, showHooks]
   )
 
-  // Select value follows the URL: a category id, or "all" for the family root
+  // Filter value follows the URL: a category id, or "all" for the family root
   const componentFilter = isComponentCategory ? segment : ALL_CATEGORIES
   const blockFilter = isBlockCategory ? segment : ALL_CATEGORIES
   const hookFilter = isHookCategory ? segment : ALL_CATEGORIES
@@ -122,14 +117,30 @@ export function StudioCatalogGrid({ segment }: StudioCatalogGridProps) {
 
   return (
     <div className="h-full w-full overflow-y-auto overscroll-contain">
-      <div className="mx-auto flex max-w-7xl flex-col gap-12 px-4 py-8 sm:gap-16 sm:px-6 sm:py-10 lg:px-8">
+      <div className="mx-auto flex max-w-7xl flex-col gap-10 px-4 py-8 sm:gap-14 sm:px-6 sm:py-10 lg:px-8">
+        {segment ? (
+          <div className="-mb-4 flex items-center justify-between border-b border-border/40 pb-3.5">
+            <Link
+              to="/ui"
+              onClick={() => playClickSound()}
+              onMouseEnter={() => playHoverSound()}
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-border/60 bg-muted/60 px-3 py-1 text-xs font-medium text-muted-foreground transition-all duration-150 hover:bg-accent hover:text-foreground active:scale-95"
+            >
+              <ArrowLeft className="size-3.5" aria-hidden="true" />
+              <span>Back to all items</span>
+            </Link>
+            <span className="font-mono text-xs text-muted-foreground">
+              {total} item{total !== 1 ? "s" : ""}
+            </span>
+          </div>
+        ) : null}
+
         {showComponents ? (
           <CatalogSection
             title={sectionTitle("Components")}
             count={componentItems.length}
             filter={
-              <CatalogFilterSelect
-                label="Filter components by category"
+              <CatalogFilterPills
                 value={componentFilter}
                 onChange={(value) => handleCategorySelect("base", value)}
                 options={COMPONENT_CATEGORIES}
@@ -151,8 +162,7 @@ export function StudioCatalogGrid({ segment }: StudioCatalogGridProps) {
             title={sectionTitle("Blocks")}
             count={blockItems.length}
             filter={
-              <CatalogFilterSelect
-                label="Filter blocks by category"
+              <CatalogFilterPills
                 value={blockFilter}
                 onChange={(value) => handleCategorySelect("blocks", value)}
                 options={BLOCK_CATEGORIES}
@@ -175,8 +185,7 @@ export function StudioCatalogGrid({ segment }: StudioCatalogGridProps) {
             count={hookItems.length}
             wide
             filter={
-              <CatalogFilterSelect
-                label="Filter hooks by category"
+              <CatalogFilterPills
                 value={hookFilter}
                 onChange={(value) => handleCategorySelect("hooks", value)}
                 options={HOOK_CATEGORIES}
@@ -211,18 +220,23 @@ function CatalogSection({
   children: ReactNode
 }) {
   return (
-    <section aria-label={title} className="flex flex-col gap-4 sm:gap-5">
-      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-border/60 pb-3">
-        <h2 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-          {title}
-        </h2>
-        <div className="flex shrink-0 items-center gap-2.5">
-          {filter ?? null}
+    <section aria-label={title} className="flex flex-col gap-5 sm:gap-6">
+      <div className="flex flex-col gap-3.5 border-b border-border/60 pb-3.5 sm:gap-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+            {title}
+          </h2>
           <span className="font-mono text-xs text-muted-foreground tabular-nums">
             {String(count).padStart(2, "0")}
           </span>
         </div>
+        {filter ? (
+          <div className="no-scrollbar w-full overflow-x-auto py-0.5">
+            {filter}
+          </div>
+        ) : null}
       </div>
+
       <div
         className={
           wide
@@ -236,50 +250,55 @@ function CatalogSection({
   )
 }
 
-function CatalogFilterSelect({
-  label,
+/**
+ * Tactile, horizontal pill chips for category navigation (matching modern UI spec).
+ */
+function CatalogFilterPills({
   value,
   onChange,
   options,
 }: {
-  label: string
   value: string
   onChange: (value: string) => void
   options: readonly CategoryOption[]
 }) {
-  // Declared so the trigger can resolve value → label without mounting items
-  const items = useMemo(
-    () => ({
-      [ALL_CATEGORIES]: "All Categories",
-      ...Object.fromEntries(options.map((option) => [option.id, option.label])),
-    }),
+  const allOptions = useMemo(
+    () => [{ id: ALL_CATEGORIES, label: "All" }, ...options],
     [options]
   )
 
   return (
-    <Select
-      value={value}
-      items={items}
-      onValueChange={(nextValue) => {
-        if (typeof nextValue === "string") onChange(nextValue)
-      }}
+    <div
+      role="tablist"
+      aria-label="Category filters"
+      className="-my-1 no-scrollbar flex items-center gap-1.5 overflow-x-auto scroll-smooth py-1 sm:gap-2"
     >
-      <SelectTrigger
-        size="sm"
-        aria-label={label}
-        className="h-8 w-auto gap-1.5 border-border/60 bg-transparent px-2.5 text-[11px] font-medium text-muted-foreground shadow-none transition-colors hover:border-border hover:text-foreground"
-      >
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value={ALL_CATEGORIES}>All Categories</SelectItem>
-        {options.map((option) => (
-          <SelectItem key={option.id} value={option.id}>
+      {allOptions.map((option) => {
+        const isActive = value === option.id
+        return (
+          <button
+            key={option.id}
+            role="tab"
+            aria-selected={isActive}
+            type="button"
+            onMouseEnter={() => playHoverSound()}
+            onClick={() => {
+              playClickSound()
+              onChange(option.id)
+            }}
+            className={cn(
+              "inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full px-3.5 py-1.5 text-xs font-medium tracking-normal transition-all duration-150 active:scale-95",
+              "focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none",
+              isActive
+                ? "bg-foreground font-semibold text-background shadow-xs"
+                : "border border-border/50 bg-muted/70 text-muted-foreground hover:bg-accent hover:text-foreground"
+            )}
+          >
             {option.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+          </button>
+        )
+      })}
+    </div>
   )
 }
 

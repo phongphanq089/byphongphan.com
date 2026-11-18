@@ -2,6 +2,7 @@ import { Link, useNavigate, useRouter } from "@tanstack/react-router"
 import {
   ChevronDown,
   Component as ComponentIcon,
+  LayoutGrid,
   LayoutTemplate,
   type LucideIcon,
   Search,
@@ -29,6 +30,7 @@ import {
   COMPONENT_CATEGORIES,
   HOOK_CATEGORIES,
 } from "@/shared/config"
+import { playClickSound, playHoverSound } from "@/shared/lib/sound"
 import { cn } from "@/shared/lib/utils"
 import { PPPixelMark } from "@/shared/ui"
 
@@ -441,6 +443,50 @@ export function StudioSidebar({
             orientation="vertical"
           >
             <div className="relative space-y-1 p-2 pl-3">
+              {/* All Items direct navigation link */}
+              {!filterActive ? (
+                <div className="mb-1.5 border-b border-border/40 pb-1.5">
+                  <Link
+                    to="/ui"
+                    onClick={() => {
+                      playClickSound()
+                      setSidebarOpen(false)
+                      setFilterQuery("")
+                    }}
+                    onMouseEnter={() => playHoverSound()}
+                    className={cn(
+                      "group flex items-center justify-between rounded-lg px-2.5 py-2 text-xs font-medium transition-colors",
+                      activeHref === "/ui"
+                        ? "bg-accent font-semibold text-foreground shadow-xs"
+                        : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
+                    )}
+                  >
+                    <div className="flex items-center gap-2">
+                      <LayoutGrid
+                        className={cn(
+                          "size-3.5 transition-colors",
+                          activeHref === "/ui"
+                            ? "text-primary"
+                            : "text-muted-foreground group-hover:text-foreground"
+                        )}
+                        aria-hidden="true"
+                      />
+                      <span>All Items</span>
+                    </div>
+                    <span
+                      className={cn(
+                        "font-mono text-[10px] tabular-nums",
+                        activeHref === "/ui"
+                          ? "font-bold text-primary"
+                          : "text-muted-foreground/60"
+                      )}
+                    >
+                      {STUDIO_RECORDS.length}
+                    </span>
+                  </Link>
+                </div>
+              ) : null}
+
               {filteredSections.length === 0 ? (
                 <div className="py-8 text-center text-xs text-muted-foreground">
                   No components match &ldquo;{filterQuery}&rdquo;
