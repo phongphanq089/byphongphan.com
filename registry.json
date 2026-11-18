@@ -415,6 +415,24 @@
       ]
     },
     {
+      "name": "cradle-text",
+      "type": "registry:component",
+      "title": "Cradle Text",
+      "description": "A headline hung like a Newton's cradle, so a knock on one letter clacks through the word, simulated with pendulum collision physics.",
+      "category": "text",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/cradle-text.tsx",
+          "type": "registry:component",
+          "target": "components/cradle-text.tsx"
+        }
+      ]
+    },
+    {
       "name": "not-found-01",
       "type": "registry:block",
       "title": "Not Found 01",

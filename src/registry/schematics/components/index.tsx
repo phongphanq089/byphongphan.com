@@ -3,6 +3,7 @@ import { BackgroundGradientCursorSchematic } from "./background-gradient-cursor-
 import { BorderGlowSchematic } from "./border-glow-schematic"
 import { CardSchematic } from "./card-schematic"
 import { CodeBlockSchematic } from "./code-block-schematic"
+import { CradleTextSchematic } from "./cradle-text-schematic"
 import { Letter3DSwapSchematic } from "./letter-3d-swap-schematic"
 import { LineNavSchematic } from "./line-nav-schematic"
 import { MapSchematic } from "./map-schematic"
@@ -25,6 +26,7 @@ export * from "./background-gradient-cursor-schematic"
 export * from "./border-glow-schematic"
 export * from "./card-schematic"
 export * from "./code-block-schematic"
+export * from "./cradle-text-schematic"
 export * from "./time-scrubber-schematic"
 export { TimeScrubberSchematic as FlipClockSchematic } from "./time-scrubber-schematic"
 export * from "./line-nav-schematic"
@@ -77,6 +79,7 @@ export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
   "typing-text": TypingTextSchematic,
   "swoosh-text": SwooshTextSchematic,
   "plucked-text": PluckedTextSchematic,
+  "cradle-text": CradleTextSchematic,
 }
 
 export function RenderComponentSchematic({ type }: { type?: string }) {

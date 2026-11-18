@@ -196,6 +196,14 @@
     "registryDependencies": []
   },
   {
+    "name": "cradle-text",
+    "type": "registry:component",
+    "title": "Cradle Text",
+    "description": "A headline hung like a Newton's cradle, so a knock on one letter clacks through the word, simulated with pendulum collision physics.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
     "name": "not-found-01",
     "type": "registry:block",
     "title": "Not Found 01",

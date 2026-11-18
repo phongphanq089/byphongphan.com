@@ -30,8 +30,10 @@ import { cn } from "@/lib/utils"
 
 export type UnderlineDirection = "center" | "left" | "right"
 
-export interface UnderlineAnimationProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, "children"> {
+export interface UnderlineAnimationProps extends Omit<
+  React.HTMLAttributes<HTMLElement>,
+  "children"
+> {
   /**
    * Optional URL if rendered as a link (`as="a"`)
    */

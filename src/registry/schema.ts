@@ -23,6 +23,7 @@ export type ComponentSchematicType =
   | "typing-text"
   | "swoosh-text"
   | "plucked-text"
+  | "cradle-text"
 
 export type BlockSchematicType =
   | "not-found-01"

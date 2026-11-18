@@ -135,10 +135,7 @@ export function PluckedText({
     const reduceMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches
-    const letters = Array.from(lettersEl.children).slice(
-      0,
-      -1
-    ) as HTMLElement[]
+    const letters = Array.from(lettersEl.children).slice(0, -1) as HTMLElement[]
 
     let length = 0
     let swing = 0
@@ -407,8 +404,7 @@ export function PluckedText({
     let greeted = reduceMotion
     const intersection = new IntersectionObserver(
       ([entry]) => {
-        visible =
-          entry.isIntersecting && document.visibilityState === "visible"
+        visible = entry.isIntersecting && document.visibilityState === "visible"
         if (!visible) {
           return
         }
@@ -457,8 +453,8 @@ export function PluckedText({
     >
       <div
         className={cn(
-          "group/pluck relative max-w-full cursor-grab touch-none select-none px-[0.5em] py-[0.7em] leading-none tracking-tight data-[grabbing]:cursor-grabbing",
-          "font-black text-xl sm:text-3xl md:text-5xl text-foreground",
+          "group/pluck relative max-w-full cursor-grab touch-none px-[0.5em] py-[0.7em] leading-none tracking-tight select-none data-[grabbing]:cursor-grabbing",
+          "text-xl font-black text-foreground sm:text-3xl md:text-5xl",
           className
         )}
         ref={stageRef}
