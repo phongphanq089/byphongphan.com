@@ -10,7 +10,7 @@ import {
 import type { MDXComponents } from "mdx/types"
 import { useMemo } from "react"
 
-import { CopyButton } from "@/registry/animated/button/copy-button"
+import { DocActionsDropdown } from "@/features/ui-studio/components/doc-actions-dropdown"
 import { COMPONENT_DEMOS } from "@/registry/demos"
 import { siteConfig } from "@/shared/config"
 import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
@@ -263,16 +263,12 @@ export function ComponentDetail({ component }: ComponentDetailProps) {
             </Button>
 
             <div className="flex items-center gap-2">
-              {rawMdxContent && (
-                <CopyButton
-                  className="relative gap-1.5 bg-accent pr-2.5 pl-2"
-                  variant="secondary"
-                  size="lg"
-                  text={rawMdxContent}
-                >
-                  Copy Page
-                </CopyButton>
-              )}
+              <DocActionsDropdown
+                item={component}
+                segment={component.category}
+                rawMdxContent={rawMdxContent}
+                size="lg"
+              />
 
               <div className="flex items-center gap-2">
                 {prevComponent ? (

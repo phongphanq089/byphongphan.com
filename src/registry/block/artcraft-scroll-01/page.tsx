@@ -106,12 +106,11 @@ export default function ArtcraftScrollBlockPage() {
       />
 
       {/* ── Left Fixed Inspector Controls (Desktop ≥ xl) ── */}
-      <aside className="fixed top-6 bottom-6 left-6 z-40 hidden w-[310px] flex-col justify-between rounded-2xl border border-border bg-card/90 p-5 shadow-2xl backdrop-blur-xl xl:flex">
+      <aside className="fixed top-6 bottom-6 left-6 z-40 hidden w-[310px] flex-col justify-between rounded-2xl border border-border bg-card/90 p-5 backdrop-blur-xl xl:flex">
         <div className="space-y-4">
           {/* Header */}
           <div className="flex items-center justify-between border-b border-border/70 pb-3">
             <div className="flex items-center gap-2">
-              <div className="size-2.5 rounded-full bg-primary shadow-[0_0_10px_var(--primary)]" />
               <span className="font-mono text-xs font-bold tracking-widest text-foreground uppercase">
                 Rail Scrubber Block
               </span>

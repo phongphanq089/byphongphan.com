@@ -11,7 +11,7 @@ import type { MDXComponents } from "mdx/types"
 import { useMemo } from "react"
 
 import { ComponentStagePreview } from "@/features/component-ui/components/component-stage-preview"
-import { CopyButton } from "@/registry/animated/button/copy-button"
+import { DocActionsDropdown } from "@/features/ui-studio/components/doc-actions-dropdown"
 import { HOOK_DEMOS } from "@/registry/demos"
 import { siteConfig } from "@/shared/config"
 import { useKeyboardShortcuts } from "@/shared/hooks/use-keyboard-shortcuts"
@@ -268,16 +268,12 @@ export function HookDetail({ hook }: HookDetailProps) {
             </Button>
 
             <div className="flex items-center gap-2">
-              {rawMdxContent && (
-                <CopyButton
-                  className="relative gap-1.5 bg-accent pr-2.5 pl-2"
-                  variant="secondary"
-                  size="lg"
-                  text={rawMdxContent}
-                >
-                  Copy Page
-                </CopyButton>
-              )}
+              <DocActionsDropdown
+                item={hook}
+                segment="hooks"
+                rawMdxContent={rawMdxContent}
+                size="lg"
+              />
 
               <div className="flex items-center gap-2">
                 {prevHook && (

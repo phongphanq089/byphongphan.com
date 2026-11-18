@@ -11,7 +11,6 @@ import {
 } from "lucide-react"
 import { useMemo } from "react"
 
-import { CopyButton } from "@/registry/animated/button/copy-button"
 import { cn } from "@/shared/lib/utils"
 import { ScrollArea } from "@/shared/ui"
 import {
@@ -35,6 +34,7 @@ import {
   getStudioSegmentLabel,
 } from "../model/unified-registry.adapter"
 import { useStudioStore } from "../store/studio-store"
+import { DocActionsDropdown } from "./doc-actions-dropdown"
 
 interface StudioDocsViewProps {
   item: StudioItem
@@ -240,15 +240,11 @@ export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
           {/* Sub-bar: Copy Page + Source Code + prev/next */}
           <div className="flex items-center justify-between gap-2 border-y border-border/60 py-2">
             <div className="flex items-center gap-1.5">
-              {mdxData?.rawMdxContent ? (
-                <CopyButton
-                  text={mdxData.rawMdxContent}
-                  variant="secondary"
-                  size="sm"
-                >
-                  Copy Page
-                </CopyButton>
-              ) : null}
+              <DocActionsDropdown
+                item={item}
+                segment={segment}
+                rawMdxContent={mdxData?.rawMdxContent}
+              />
 
               <Button
                 type="button"
