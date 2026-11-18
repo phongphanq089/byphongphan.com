@@ -10,6 +10,7 @@ import { MIDDLE_TRUNCATION_VARIANTS } from "./middle-truncation-variants"
 import { SCROLL_AREA_VARIANTS } from "./scroll-area-variants"
 import { SELECT_VARIANTS } from "./select-variants"
 import { TEXT_HOVER_EFFECT_VARIANTS } from "./text-hover-effect-variants"
+import { UNDERLINE_TO_BACKGROUND_VARIANTS } from "./underline-to-background-variants"
 
 export * from "./background-gradient-cursor-variants"
 export * from "./card-variants"
@@ -21,6 +22,7 @@ export * from "./middle-truncation-variants"
 export * from "./scroll-area-variants"
 export * from "./select-variants"
 export * from "./text-hover-effect-variants"
+export * from "./underline-to-background-variants"
 
 export const ALL_VARIANTS: ComponentVariant[] = [
   ...SELECT_VARIANTS,
@@ -28,6 +30,7 @@ export const ALL_VARIANTS: ComponentVariant[] = [
   ...CODE_BLOCK_VARIANTS,
   ...MAP_VARIANTS,
   ...TEXT_HOVER_EFFECT_VARIANTS,
+  ...UNDERLINE_TO_BACKGROUND_VARIANTS,
   ...BACKGROUND_GRADIENT_CURSOR_VARIANTS,
   ...MIDDLE_TRUNCATION_VARIANTS,
   ...LINE_NAV_VARIANTS,
@@ -48,6 +51,7 @@ export const COMPONENT_VARIANTS: Record<string, ComponentVariant[]> = {
   "code-block": CODE_BLOCK_VARIANTS,
   map: MAP_VARIANTS,
   "text-hover-effect": TEXT_HOVER_EFFECT_VARIANTS,
+  "underline-to-background": UNDERLINE_TO_BACKGROUND_VARIANTS,
   "background-gradient-cursor": BACKGROUND_GRADIENT_CURSOR_VARIANTS,
   "middle-truncation": MIDDLE_TRUNCATION_VARIANTS,
   "line-nav": LINE_NAV_VARIANTS,

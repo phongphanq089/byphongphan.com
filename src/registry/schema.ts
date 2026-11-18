@@ -17,6 +17,7 @@ export type ComponentSchematicType =
   | "scroll-area"
   | "drawer"
   | "scroll-indicator"
+  | "underline-to-background"
 
 export type BlockSchematicType =
   | "not-found-01"

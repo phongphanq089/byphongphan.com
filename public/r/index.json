@@ -140,6 +140,16 @@
     "registryDependencies": []
   },
   {
+    "name": "underline-to-background",
+    "type": "registry:component",
+    "title": "Underline to Background",
+    "description": "Fluid typographic micro-interaction where an underline smoothly expands into a full background fill on hover with inverted text contrast.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
+  },
+  {
     "name": "not-found-01",
     "type": "registry:block",
     "title": "Not Found 01",

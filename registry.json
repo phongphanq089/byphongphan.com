@@ -299,6 +299,26 @@
       ]
     },
     {
+      "name": "underline-to-background",
+      "type": "registry:component",
+      "title": "Underline to Background",
+      "description": "Fluid typographic micro-interaction where an underline smoothly expands into a full background fill on hover with inverted text contrast.",
+      "category": "text",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/underline-to-background.tsx",
+          "type": "registry:component",
+          "target": "components/underline-to-background.tsx"
+        }
+      ]
+    },
+    {
       "name": "not-found-01",
       "type": "registry:block",
       "title": "Not Found 01",

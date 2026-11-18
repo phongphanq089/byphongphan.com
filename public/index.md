@@ -57,7 +57,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## UI Components & Primitives (14)
+## UI Components & Primitives (15)
 
 | Component | Category | Description | Direct Install |
 | :--- | :--- | :--- | :--- |
@@ -75,6 +75,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [Background Gradient Cursor](https://byphongphan.com/component-ui/background/background-gradient-cursor) | `background` | Interactive ambient canvas surface featuring cursor-tracking radial mask, procedural dots, dynamic grid lines, and directional linear gradients. | `pnpm dlx shadcn add https://byphongphan.com/r/background-gradient-cursor.json` |
 | [Spotlight Card](https://byphongphan.com/component-ui/card/spotlight-card) | `card` | Interactive surface with radial cursor spotlight illumination, dynamic 1px masked border glow, and smooth 3D tilt perspective. | `pnpm dlx shadcn add https://byphongphan.com/r/spotlight-card.json` |
 | [Border Glow](https://byphongphan.com/component-ui/card/border-glow) | `card` | Interactive surface with cursor-tracking mesh gradient edge illumination, outer atmospheric aura, and entry sweep animation. | `pnpm dlx shadcn add https://byphongphan.com/r/border-glow.json` |
+| [Underline to Background](https://byphongphan.com/component-ui/text/underline-to-background) | `text` | Fluid typographic micro-interaction where an underline smoothly expands into a full background fill on hover with inverted text contrast. | `pnpm dlx shadcn add https://byphongphan.com/r/underline-to-background.json` |
 
 ---
 

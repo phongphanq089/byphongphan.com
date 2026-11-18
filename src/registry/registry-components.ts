@@ -14,6 +14,7 @@ import {
   SpotlightCardSchematic,
   TextHoverEffectSchematic,
   TimeScrubberSchematic,
+  UnderlineToBackgroundSchematic,
   UnboxingBucketSchematic,
 } from "./schematics"
 
@@ -309,6 +310,26 @@ export const REGISTRY_COMPONENTS: RegistryItem[] = [
         path: "animated/border-glow.tsx",
         type: "registry:component",
         target: "components/border-glow.tsx",
+      },
+    ],
+  },
+  {
+    name: "underline-to-background",
+    title: "Underline to Background",
+    description:
+      "Fluid typographic micro-interaction where an underline smoothly expands into a full background fill on hover with inverted text contrast.",
+    type: "registry:component",
+    category: "text",
+    schematic: UnderlineToBackgroundSchematic,
+    schematicType: "underline-to-background",
+    isNew: true,
+    dependencies: ["motion"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/underline-to-background.tsx",
+        type: "registry:component",
+        target: "components/underline-to-background.tsx",
       },
     ],
   },

@@ -104,6 +104,10 @@
     {
       "category": "card",
       "slug": "border-glow"
+    },
+    {
+      "category": "text",
+      "slug": "underline-to-background"
     }
   ],
   "hookCategories": [

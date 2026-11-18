@@ -1,12 +1,15 @@
 /* eslint-disable react-hooks/static-components */
 import type { ValueAnimationTransition } from "motion/react"
 import { motion } from "motion/react"
-import type { ElementType } from "react"
+import type React from "react"
 import { useEffect, useMemo, useRef } from "react"
 
 import { cn } from "@/shared/lib/utils"
 
-interface UnderlineProps {
+export interface UnderlineToBackgroundProps extends Omit<
+  React.HTMLAttributes<HTMLElement>,
+  "children"
+> {
   /**
    * The content to be displayed and animated
    */
@@ -14,9 +17,9 @@ interface UnderlineProps {
 
   /**
    * HTML Tag to render the component as
-   * @default span
+   * @default "span"
    */
-  as?: ElementType
+  as?: React.ElementType
 
   /**
    * Optional class name for styling
@@ -48,20 +51,20 @@ interface UnderlineProps {
   underlinePaddingRatio?: number
 }
 
-const UnderlineToBackground = ({
+export function UnderlineToBackground({
   children,
-  as,
+  as = "span",
   className,
   transition = { type: "spring", damping: 30, stiffness: 300 },
   underlineHeightRatio = 0.1, // Default to 10% of font size
   underlinePaddingRatio = 0.01, // Default to 1% of font size
   targetTextColor = "var(--background, #000)",
   ...props
-}: UnderlineProps) => {
+}: UnderlineToBackgroundProps) {
   const textRef = useRef<HTMLSpanElement>(null)
 
   // Create custom motion component based on the 'as' prop
-  const MotionComponent = useMemo(() => motion.create(as ?? "span"), [as])
+  const MotionComponent = useMemo(() => motion.create(as), [as])
 
   // Update CSS custom properties based on font size
   useEffect(() => {
@@ -94,7 +97,7 @@ const UnderlineToBackground = ({
     },
     target: {
       height: "100%",
-      transition: transition,
+      transition,
     },
   }
 
@@ -105,7 +108,7 @@ const UnderlineToBackground = ({
     },
     target: {
       color: targetTextColor,
-      transition: transition,
+      transition,
     },
   }
 
