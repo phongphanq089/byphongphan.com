@@ -108,6 +108,10 @@
     {
       "category": "text",
       "slug": "underline-to-background"
+    },
+    {
+      "category": "text",
+      "slug": "underline-animation"
     }
   ],
   "hookCategories": [

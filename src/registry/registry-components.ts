@@ -14,6 +14,7 @@ import {
   SpotlightCardSchematic,
   TextHoverEffectSchematic,
   TimeScrubberSchematic,
+  UnderlineAnimationSchematic,
   UnderlineToBackgroundSchematic,
   UnboxingBucketSchematic,
 } from "./schematics"
@@ -330,6 +331,26 @@ export const REGISTRY_COMPONENTS: RegistryItem[] = [
         path: "animated/underline-to-background.tsx",
         type: "registry:component",
         target: "components/underline-to-background.tsx",
+      },
+    ],
+  },
+  {
+    name: "underline-animation",
+    title: "Underline Animation",
+    description:
+      "Minimalist typographic hover underline animation that smoothly expands symmetrically from center (or directionally) with font-proportional line metrics.",
+    type: "registry:component",
+    category: "text",
+    schematic: UnderlineAnimationSchematic,
+    schematicType: "underline-animation",
+    isNew: true,
+    dependencies: ["motion"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/underline-animation.tsx",
+        type: "registry:component",
+        target: "components/underline-animation.tsx",
       },
     ],
   },

@@ -63,6 +63,11 @@ export const UnboxingBucketDemo = lazyWithRetry(() =>
     default: m.UnboxingBucketDemo,
   }))
 )
+export const UnderlineAnimationDemo = lazyWithRetry(() =>
+  import("./underline-animation-demo").then((m) => ({
+    default: m.UnderlineAnimationDemo,
+  }))
+)
 export const UnderlineToBackgroundDemo = lazyWithRetry(() =>
   import("./underline-to-background-demo").then((m) => ({
     default: m.UnderlineToBackgroundDemo,
@@ -74,6 +79,8 @@ export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   card: CardDemo,
   "code-block": CodeBlockDemo,
   "unboxing-bucket": UnboxingBucketDemo,
+  "underline-animation": UnderlineAnimationDemo,
+  "underline-animation-demo": UnderlineAnimationDemo,
   "underline-to-background": UnderlineToBackgroundDemo,
   "underline-to-background-demo": UnderlineToBackgroundDemo,
   "flip-clock": TimeScrubberDemo,

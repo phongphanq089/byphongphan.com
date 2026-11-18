@@ -18,6 +18,7 @@ export type ComponentSchematicType =
   | "drawer"
   | "scroll-indicator"
   | "underline-to-background"
+  | "underline-animation"
 
 export type BlockSchematicType =
   | "not-found-01"

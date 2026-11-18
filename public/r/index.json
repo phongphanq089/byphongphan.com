@@ -150,6 +150,16 @@
     "registryDependencies": []
   },
   {
+    "name": "underline-animation",
+    "type": "registry:component",
+    "title": "Underline Animation",
+    "description": "Minimalist typographic hover underline animation that smoothly expands symmetrically from center (or directionally) with font-proportional line metrics.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
+  },
+  {
     "name": "not-found-01",
     "type": "registry:block",
     "title": "Not Found 01",

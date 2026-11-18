@@ -13,6 +13,7 @@ import { SpotlightCardSchematic } from "./spotlight-card-schematic"
 import { TextHoverEffectSchematic } from "./text-hover-effect-schematic"
 import { TimeScrubberSchematic } from "./time-scrubber-schematic"
 import { ScrollIndicatorSchematic } from "./scroll-indicator-schematic"
+import { UnderlineAnimationSchematic } from "./underline-animation-schematic"
 import { UnderlineToBackgroundSchematic } from "./underline-to-background-schematic"
 import { UnboxingBucketSchematic } from "./unboxing-bucket-schematic"
 
@@ -32,6 +33,7 @@ export * from "./spotlight-card-schematic"
 export * from "./text-hover-effect-schematic"
 export * from "./time-scrubber-schematic"
 export * from "./scroll-indicator-schematic"
+export * from "./underline-animation-schematic"
 export * from "./underline-to-background-schematic"
 export * from "./unboxing-bucket-schematic"
 
@@ -62,6 +64,7 @@ export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
   "scroll-area": ScrollAreaSchematic,
   drawer: DrawerSchematic,
   "underline-to-background": UnderlineToBackgroundSchematic,
+  "underline-animation": UnderlineAnimationSchematic,
 }
 
 export function RenderComponentSchematic({ type }: { type?: string }) {
