@@ -6,7 +6,7 @@ import * as React from "react"
 import { cn } from "cn"
 
 const badgeVariants = cva(
-  "group/badge inline-flex w-fit shrink-0 items-center justify-center border font-medium whitespace-nowrap transition-colors duration-150 outline-none select-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 [&>svg]:pointer-events-none [&>svg]:shrink-0",
+  "group/badge inline-flex w-fit shrink-0 items-center justify-center border leading-none font-medium whitespace-nowrap transition-colors duration-150 outline-none select-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 [&>svg]:pointer-events-none [&>svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -30,15 +30,15 @@ const badgeVariants = cva(
         link: "border-transparent text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-6 gap-1.5 px-2.5 text-xs [&>svg]:size-3",
-        xs: "h-4.5 gap-1 px-1.5 text-[10px] tracking-tight [&>svg]:size-2.5",
-        sm: "h-5 gap-1 px-2 text-[11px] tracking-tight [&>svg]:size-3",
-        lg: "h-7 gap-2 px-3 text-xs tracking-normal [&>svg]:size-3.5",
+        default: "h-5.5 gap-1.5 px-2.5 text-[11px] [&>svg]:size-3",
+        xs: "h-4.5 gap-1 px-1.5 text-[10px] [&>svg]:size-2.5",
+        sm: "h-5 gap-1 px-2 text-[11px] [&>svg]:size-3",
+        lg: "h-6.5 gap-2 px-3 text-xs [&>svg]:size-3.5",
       },
       shape: {
         pill: "rounded-full",
-        rounded: "rounded-md",
-        square: "rounded-xs",
+        rounded: "rounded-[5px]",
+        square: "rounded-[3px]",
       },
     },
     defaultVariants: {
@@ -88,7 +88,7 @@ function BadgeDot({ className, pulse = false, ...props }: BadgeDotProps) {
   return (
     <span
       className={cn(
-        "relative flex size-1.5 shrink-0 items-center justify-center",
+        "relative inline-flex size-1.5 shrink-0 items-center justify-center",
         className
       )}
       {...props}
@@ -96,7 +96,7 @@ function BadgeDot({ className, pulse = false, ...props }: BadgeDotProps) {
       {pulse && (
         <span className="absolute inline-flex size-full animate-ping rounded-full bg-current opacity-75 motion-reduce:hidden" />
       )}
-      <span className="relative inline-flex size-1.5 rounded-full bg-current" />
+      <span className="relative inline-flex size-full rounded-full bg-current" />
     </span>
   )
 }

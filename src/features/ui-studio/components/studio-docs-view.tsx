@@ -11,10 +11,10 @@ import {
 } from "lucide-react"
 import { useMemo } from "react"
 
-import { cn } from "@/shared/lib/utils"
 import { ScrollArea } from "@/shared/ui"
 import {
   Badge,
+  BadgeDot,
   Button,
   Kbd,
   Tooltip,
@@ -43,9 +43,6 @@ interface StudioDocsViewProps {
   activeVariantId?: string
   onSelectVariant: (variantId: string | null) => void
 }
-
-const CHIP_BASE =
-  "h-5 gap-1.5 rounded border px-2 text-[8px] font-semibold tracking-wider uppercase shadow-[0_0_10px_var(--pp-primary-glow)]"
 
 /**
  * Docked documentation view for a studio detail item: breadcrumb, badges,
@@ -142,45 +139,49 @@ export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
         <article className="flex flex-col gap-5 p-5">
           {/* Title + badges + description */}
           <div className="flex flex-col gap-2">
-            <div className="flex flex-wrap items-center gap-1.5">
+            <div className="flex flex-wrap items-center gap-2">
               {item.isNew ? (
                 <Badge
                   variant="outline"
-                  className={cn(
-                    CHIP_BASE,
-                    "border-primary/30 bg-primary/10 text-primary"
-                  )}
+                  size="sm"
+                  shape="rounded"
+                  className="gap-1.5 border-primary/30 bg-primary/10 text-[11px] font-medium text-primary"
                 >
-                  New
+                  <BadgeDot pulse />
+                  <span>New</span>
                 </Badge>
               ) : item.isUpdated ? (
                 <Badge
-                  variant="outline"
-                  className={cn(
-                    CHIP_BASE,
-                    "border-emerald-500/30 bg-emerald-500/10 text-emerald-600 shadow-[0_0_10px_rgba(16,185,129,0.25)] dark:border-emerald-400/30 dark:bg-emerald-400/10 dark:text-emerald-400"
-                  )}
+                  variant="success"
+                  size="sm"
+                  shape="rounded"
+                  className="gap-1.5 text-[11px] font-medium"
                 >
-                  Updated
+                  <BadgeDot pulse />
+                  <span>Updated</span>
                 </Badge>
               ) : null}
 
               {customBadge ? (
                 <Badge
-                  variant="outline"
-                  className={cn(
-                    CHIP_BASE,
-                    "border-primary/30 bg-primary text-white dark:text-background"
-                  )}
+                  variant="secondary"
+                  size="sm"
+                  shape="rounded"
+                  className="border-border/50 bg-secondary/80 text-[11px] font-medium text-secondary-foreground"
                 >
-                  {customBadge}
+                  <span>{customBadge}</span>
                 </Badge>
               ) : null}
 
               {item.categoryName ? (
-                <span className="rounded-full border border-border/60 bg-muted/40 px-2 py-0.5 font-mono text-[8px] tracking-[0.2em] text-muted-foreground uppercase">
-                  {item.categoryName}
-                </span>
+                <Badge
+                  variant="subtle"
+                  size="sm"
+                  shape="rounded"
+                  className="border-border/40 text-[11px] font-medium text-muted-foreground capitalize"
+                >
+                  <span>{item.categoryName.replace(/-/g, " ")}</span>
+                </Badge>
               ) : null}
             </div>
 

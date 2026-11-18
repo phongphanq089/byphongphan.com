@@ -28,7 +28,7 @@ import * as React from "react"
 import { cn } from "cn"
 
 const badgeVariants = cva(
-  "group/badge inline-flex w-fit shrink-0 items-center justify-center border font-medium whitespace-nowrap transition-colors duration-150 select-none outline-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 [&>svg]:pointer-events-none [&>svg]:shrink-0",
+  "group/badge inline-flex w-fit shrink-0 items-center justify-center border font-medium leading-none whitespace-nowrap transition-colors duration-150 outline-none select-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 [&>svg]:pointer-events-none [&>svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -41,28 +41,26 @@ const badgeVariants = cva(
         subtle:
           "border-border/30 bg-muted/40 text-muted-foreground hover:bg-muted/70 hover:text-foreground",
         success:
-          "border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/15",
+          "border-emerald-500/20 bg-emerald-500/10 text-emerald-600 hover:bg-emerald-500/15 dark:text-emerald-400",
         warning:
-          "border-amber-500/20 bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/15",
+          "border-amber-500/20 bg-amber-500/10 text-amber-600 hover:bg-amber-500/15 dark:text-amber-400",
         destructive:
           "border-destructive/20 bg-destructive/10 text-destructive hover:bg-destructive/15",
-        info:
-          "border-sky-500/20 bg-sky-500/10 text-sky-600 dark:text-sky-400 hover:bg-sky-500/15",
+        info: "border-sky-500/20 bg-sky-500/10 text-sky-600 hover:bg-sky-500/15 dark:text-sky-400",
         ghost:
           "border-transparent text-muted-foreground hover:bg-muted/50 hover:text-foreground",
-        link:
-          "border-transparent text-primary underline-offset-4 hover:underline",
+        link: "border-transparent text-primary underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-6 px-2.5 text-xs gap-1.5 [&>svg]:size-3",
-        xs: "h-4.5 px-1.5 text-[10px] gap-1 tracking-tight [&>svg]:size-2.5",
-        sm: "h-5 px-2 text-[11px] gap-1 tracking-tight [&>svg]:size-3",
-        lg: "h-7 px-3 text-xs gap-2 tracking-normal [&>svg]:size-3.5",
+        default: "h-5.5 gap-1.5 px-2.5 text-[11px] [&>svg]:size-3",
+        xs: "h-4.5 gap-1 px-1.5 text-[10px] [&>svg]:size-2.5",
+        sm: "h-5 gap-1 px-2 text-[11px] [&>svg]:size-3",
+        lg: "h-6.5 gap-2 px-3 text-xs [&>svg]:size-3.5",
       },
       shape: {
         pill: "rounded-full",
-        rounded: "rounded-md",
-        square: "rounded-xs",
+        rounded: "rounded-[5px]",
+        square: "rounded-[3px]",
       },
     },
     defaultVariants: {
@@ -74,7 +72,8 @@ const badgeVariants = cva(
 )
 
 export interface BadgeProps
-  extends useRender.ComponentProps<"span">,
+  extends
+    useRender.ComponentProps<"span">,
     VariantProps<typeof badgeVariants> {}
 
 function Badge({
@@ -111,7 +110,7 @@ function BadgeDot({ className, pulse = false, ...props }: BadgeDotProps) {
   return (
     <span
       className={cn(
-        "relative flex size-1.5 shrink-0 items-center justify-center",
+        "relative inline-flex size-1.5 shrink-0 items-center justify-center",
         className
       )}
       {...props}
@@ -119,7 +118,7 @@ function BadgeDot({ className, pulse = false, ...props }: BadgeDotProps) {
       {pulse && (
         <span className="absolute inline-flex size-full animate-ping rounded-full bg-current opacity-75 motion-reduce:hidden" />
       )}
-      <span className="relative inline-flex size-1.5 rounded-full bg-current" />
+      <span className="relative inline-flex size-full rounded-full bg-current" />
     </span>
   )
 }
