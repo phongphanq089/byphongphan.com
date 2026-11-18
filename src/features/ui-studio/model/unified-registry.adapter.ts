@@ -26,6 +26,7 @@ import type {
 const FULL_BLEED_COMPONENTS: ReadonlySet<string> = new Set([
   "map",
   "background-gradient-cursor",
+  "scroll-indicator",
 ])
 
 export interface StudioSourceFile {
