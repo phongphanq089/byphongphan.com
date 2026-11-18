@@ -71,7 +71,7 @@ export const useStudioStore = create<StudioStore>()(
   persist(
     (set) => ({
       // ─── Layout slice ───────────────────────────────────────────────────
-      sidebarOpen: true,
+      sidebarOpen: false,
       setSidebarOpen: (open) => set({ sidebarOpen: open }),
       toggleSidebar: () =>
         set((state) => ({ sidebarOpen: !state.sidebarOpen })),
@@ -153,7 +153,6 @@ export const useStudioStore = create<StudioStore>()(
         return window.localStorage
       }),
       partialize: (state) => ({
-        sidebarOpen: state.sidebarOpen,
         panelWidth: state.panelWidth,
         showGrid: state.showGrid,
         showArcBands: state.showArcBands,
@@ -162,18 +161,9 @@ export const useStudioStore = create<StudioStore>()(
       // Merge persisted prefs + migrate legacy keys once
       merge: (persistedState, currentState) => {
         const prefs = (persistedState ?? {}) as Partial<
-          Pick<
-            StudioStore,
-            "sidebarOpen" | "panelWidth" | "showGrid" | "showArcBands"
-          >
+          Pick<StudioStore, "panelWidth" | "showGrid" | "showArcBands">
         >
         try {
-          if (prefs.sidebarOpen === undefined) {
-            const legacy = window.localStorage.getItem("ui-studio-sidebar-open")
-            if (legacy === "true" || legacy === "false") {
-              prefs.sidebarOpen = legacy === "true"
-            }
-          }
           if (prefs.panelWidth === undefined) {
             const legacy = window.localStorage.getItem(
               "byphongphan:studio-panel-width"
@@ -183,10 +173,15 @@ export const useStudioStore = create<StudioStore>()(
               prefs.panelWidth = clampPanelWidth(parsed)
             }
           }
+          window.localStorage.removeItem("ui-studio-sidebar-open")
         } catch {
           // localStorage unavailable (private mode) — keep defaults
         }
-        return { ...currentState, ...prefs }
+        return {
+          ...currentState,
+          ...prefs,
+          sidebarOpen: false,
+        }
       },
     }
   )
@@ -198,7 +193,7 @@ export const rehydrateStudioPrefs = () => useStudioStore.persist.rehydrate()
 /** Reset the whole store — exposed for tests / storybook-like harnesses. */
 export const resetStudioStore = () =>
   useStudioStore.setState({
-    sidebarOpen: true,
+    sidebarOpen: false,
     panel: "closed",
     docsAvailable: false,
     panelWidth: DEFAULT_PANEL_WIDTH,
