@@ -62,6 +62,11 @@ export const PluckedTextDemo = lazyWithRetry(() =>
 export const SelectDemo = lazyWithRetry(() =>
   import("./select-demo").then((m) => ({ default: m.SelectDemo }))
 )
+export const SlideToUnlockDemo = lazyWithRetry(() =>
+  import("./slide-to-unlock-demo").then((m) => ({
+    default: m.SlideToUnlockDemo,
+  }))
+)
 export const ScrollAreaDemo = lazyWithRetry(() =>
   import("./scroll-area-demo").then((m) => ({
     default: m.ScrollAreaDemo,
@@ -145,6 +150,10 @@ export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   "elastic-slider-demo": ElasticSliderDemo,
   "corner-button": CornerButtonDemo,
   "corner-button-demo": CornerButtonDemo,
+  "slide-to-unlock": SlideToUnlockDemo,
+  "slide-to-unlock-demo": SlideToUnlockDemo,
+  "slide-to-confirm": SlideToUnlockDemo,
+  "slide-to-confirm-demo": SlideToUnlockDemo,
   "spotlight-card": SpotlightCardDemo,
   "spotlight-card-demo": SpotlightCardDemo,
   "border-glow": BorderGlowDemo,

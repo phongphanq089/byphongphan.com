@@ -1,6 +1,7 @@
 import type { ComponentCategoryId } from "@/shared/config"
 
 import { CategoryBackgroundSchematic } from "./category-background-schematic"
+import { CategoryButtonSchematic } from "./category-button-schematic"
 import { CategoryCardSchematic } from "./category-card-schematic"
 import { CategoryDataDisplaySchematic } from "./category-data-display-schematic"
 import { CategoryInteractiveSchematic } from "./category-interactive-schematic"
@@ -19,6 +20,8 @@ export function RenderComponentCategorySchematic({
   className,
 }: RenderComponentCategorySchematicProps) {
   switch (category) {
+    case "button":
+      return <CategoryButtonSchematic active={active} className={className} />
     case "navigation":
       return (
         <CategoryNavigationSchematic active={active} className={className} />

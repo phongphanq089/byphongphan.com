@@ -19,8 +19,7 @@ import React from "react"
 
 import { cn } from "@/lib/utils"
 
-export interface CornerButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface CornerButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /** Icon rendered to the right of the label. Defaults to the pencil/design SVG. */
   icon?: React.ReactNode
   /** Show the default pencil icon. Set to false to hide it entirely. @default true */

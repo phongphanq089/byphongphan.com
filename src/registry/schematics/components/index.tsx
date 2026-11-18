@@ -15,6 +15,7 @@ import { ScrollAreaSchematic } from "./scroll-area-schematic"
 import { DrawerSchematic } from "./drawer-schematic"
 import { ElasticSliderSchematic } from "./elastic-slider-schematic"
 import { SelectSchematic } from "./select-schematic"
+import { SlideToUnlockSchematic } from "./slide-to-unlock-schematic"
 import { SpotlightCardSchematic } from "./spotlight-card-schematic"
 import { SwooshTextSchematic } from "./swoosh-text-schematic"
 import { TextHoverEffectSchematic } from "./text-hover-effect-schematic"
@@ -43,6 +44,7 @@ export * from "./drawer-schematic"
 export * from "./elastic-slider-schematic"
 export * from "./letter-3d-swap-schematic"
 export * from "./select-schematic"
+export * from "./slide-to-unlock-schematic"
 export * from "./spotlight-card-schematic"
 export * from "./swoosh-text-schematic"
 export * from "./text-hover-effect-schematic"
@@ -89,6 +91,7 @@ export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
   "cradle-text": CradleTextSchematic,
   "elastic-slider": ElasticSliderSchematic,
   "corner-button": CornerButtonSchematic,
+  "slide-to-unlock": SlideToUnlockSchematic,
 }
 
 export function RenderComponentSchematic({ type }: { type?: string }) {

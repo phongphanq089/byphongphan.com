@@ -4,6 +4,8 @@
  */
 export type { CategoryBackgroundSchematicProps } from "./category-background-schematic"
 export { CategoryBackgroundSchematic } from "./category-background-schematic"
+export type { CategoryButtonSchematicProps } from "./category-button-schematic"
+export { CategoryButtonSchematic } from "./category-button-schematic"
 export type { CategoryCardSchematicProps } from "./category-card-schematic"
 export { CategoryCardSchematic } from "./category-card-schematic"
 export type { CategoryDataDisplaySchematicProps } from "./category-data-display-schematic"

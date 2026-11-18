@@ -497,6 +497,26 @@
       ]
     },
     {
+      "name": "slide-to-unlock",
+      "type": "registry:component",
+      "title": "Slide to Unlock",
+      "description": "The iconic iOS tactile slider featuring authentic text shimmer, squircle thumb, spring recoil physics, and velocity flick commitment.",
+      "category": "button",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/slide-to-unlock.tsx",
+          "type": "registry:component",
+          "target": "components/slide-to-unlock.tsx"
+        }
+      ]
+    },
+    {
       "name": "not-found-01",
       "type": "registry:block",
       "title": "Not Found 01",

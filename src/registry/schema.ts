@@ -27,6 +27,7 @@ export type ComponentSchematicType =
   | "cradle-text"
   | "elastic-slider"
   | "corner-button"
+  | "slide-to-unlock"
 
 export type BlockSchematicType =
   | "not-found-01"

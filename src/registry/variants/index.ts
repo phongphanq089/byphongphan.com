@@ -15,6 +15,7 @@ import { MIDDLE_TRUNCATION_VARIANTS } from "./middle-truncation-variants"
 import { PLUCKED_TEXT_VARIANTS } from "./plucked-text-variants"
 import { SCROLL_AREA_VARIANTS } from "./scroll-area-variants"
 import { SELECT_VARIANTS } from "./select-variants"
+import { SLIDE_TO_UNLOCK_VARIANTS } from "./slide-to-unlock-variants"
 import { SWOOSH_TEXT_VARIANTS } from "./swoosh-text-variants"
 import { TEXT_HOVER_EFFECT_VARIANTS } from "./text-hover-effect-variants"
 import { TYPING_TEXT_VARIANTS } from "./typing-text-variants"
@@ -36,6 +37,7 @@ export * from "./middle-truncation-variants"
 export * from "./plucked-text-variants"
 export * from "./scroll-area-variants"
 export * from "./select-variants"
+export * from "./slide-to-unlock-variants"
 export * from "./swoosh-text-variants"
 export * from "./text-hover-effect-variants"
 export * from "./typing-text-variants"
@@ -45,6 +47,7 @@ export * from "./underline-to-background-variants"
 export const ALL_VARIANTS: ComponentVariant[] = [
   ...SELECT_VARIANTS,
   ...CORNER_BUTTON_VARIANTS,
+  ...SLIDE_TO_UNLOCK_VARIANTS,
   ...SWOOSH_TEXT_VARIANTS,
   ...PLUCKED_TEXT_VARIANTS,
   ...CRADLE_TEXT_VARIANTS,
@@ -75,6 +78,7 @@ export const VARIANTS_MAP = new Map<string, ComponentVariant>(
 export const COMPONENT_VARIANTS: Record<string, ComponentVariant[]> = {
   select: SELECT_VARIANTS,
   "corner-button": CORNER_BUTTON_VARIANTS,
+  "slide-to-unlock": SLIDE_TO_UNLOCK_VARIANTS,
   badge: BADGE_VARIANTS,
   "elastic-slider": ELASTIC_SLIDER_VARIANTS,
   "swoosh-text": SWOOSH_TEXT_VARIANTS,
