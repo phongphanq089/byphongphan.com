@@ -136,6 +136,10 @@
     {
       "category": "text",
       "slug": "cradle-text"
+    },
+    {
+      "category": "interactive",
+      "slug": "elastic-slider"
     }
   ],
   "hookCategories": [

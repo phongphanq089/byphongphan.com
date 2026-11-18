@@ -6,6 +6,7 @@ import { CARD_VARIANTS } from "./card-variants"
 import { CODE_BLOCK_VARIANTS } from "./code-block-variants"
 import { CRADLE_TEXT_VARIANTS } from "./cradle-text-variants"
 import { DRAWER_VARIANTS } from "./drawer-variants"
+import { ELASTIC_SLIDER_VARIANTS } from "./elastic-slider-variants"
 import { LETTER_3D_SWAP_VARIANTS } from "./letter-3d-swap-variants"
 import { LINE_NAV_VARIANTS } from "./line-nav-variants"
 import { MAP_VARIANTS } from "./map-variants"
@@ -25,6 +26,7 @@ export * from "./card-variants"
 export * from "./code-block-variants"
 export * from "./cradle-text-variants"
 export * from "./drawer-variants"
+export * from "./elastic-slider-variants"
 export * from "./letter-3d-swap-variants"
 export * from "./line-nav-variants"
 export * from "./map-variants"
@@ -43,6 +45,7 @@ export const ALL_VARIANTS: ComponentVariant[] = [
   ...SWOOSH_TEXT_VARIANTS,
   ...PLUCKED_TEXT_VARIANTS,
   ...CRADLE_TEXT_VARIANTS,
+  ...ELASTIC_SLIDER_VARIANTS,
   ...BADGE_VARIANTS,
   ...CARD_VARIANTS,
   ...CODE_BLOCK_VARIANTS,
@@ -69,6 +72,7 @@ export const VARIANTS_MAP = new Map<string, ComponentVariant>(
 export const COMPONENT_VARIANTS: Record<string, ComponentVariant[]> = {
   select: SELECT_VARIANTS,
   badge: BADGE_VARIANTS,
+  "elastic-slider": ELASTIC_SLIDER_VARIANTS,
   "swoosh-text": SWOOSH_TEXT_VARIANTS,
   "plucked-text": PLUCKED_TEXT_VARIANTS,
   "cradle-text": CRADLE_TEXT_VARIANTS,

@@ -28,7 +28,7 @@ import * as React from "react"
 import { cn } from "cn"
 
 const badgeVariants = cva(
-  "group/badge inline-flex w-fit shrink-0 items-center justify-center border font-medium leading-none whitespace-nowrap transition-colors duration-150 outline-none select-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 [&>svg]:pointer-events-none [&>svg]:shrink-0",
+  "group/badge inline-flex w-fit shrink-0 items-center justify-center border leading-none font-medium whitespace-nowrap transition-colors duration-150 outline-none select-none focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/40 [&>svg]:pointer-events-none [&>svg]:shrink-0",
   {
     variants: {
       variant: {

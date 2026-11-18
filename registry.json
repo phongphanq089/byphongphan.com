@@ -454,6 +454,31 @@
       ]
     },
     {
+      "name": "elastic-slider",
+      "type": "registry:component",
+      "title": "Elastic Slider",
+      "description": "A tactile spring-physics slider with boundary rubber-banding, magnetic decile damping, text-dodging handle, and full WAI-ARIA accessibility.",
+      "category": "interactive",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/elastic-slider.tsx",
+          "type": "registry:component",
+          "target": "components/elastic-slider.tsx"
+        },
+        {
+          "path": "src/registry/hooks/use-controllable-state.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-controllable-state.ts"
+        }
+      ]
+    },
+    {
       "name": "not-found-01",
       "type": "registry:block",
       "title": "Not Found 01",

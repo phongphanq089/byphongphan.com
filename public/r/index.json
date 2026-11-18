@@ -215,6 +215,16 @@
     "registryDependencies": []
   },
   {
+    "name": "elastic-slider",
+    "type": "registry:component",
+    "title": "Elastic Slider",
+    "description": "A tactile spring-physics slider with boundary rubber-banding, magnetic decile damping, text-dodging handle, and full WAI-ARIA accessibility.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
+  },
+  {
     "name": "not-found-01",
     "type": "registry:block",
     "title": "Not Found 01",

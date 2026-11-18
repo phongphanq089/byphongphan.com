@@ -12,6 +12,7 @@ import { MiddleTruncationSchematic } from "./middle-truncation-schematic"
 import { PluckedTextSchematic } from "./plucked-text-schematic"
 import { ScrollAreaSchematic } from "./scroll-area-schematic"
 import { DrawerSchematic } from "./drawer-schematic"
+import { ElasticSliderSchematic } from "./elastic-slider-schematic"
 import { SelectSchematic } from "./select-schematic"
 import { SpotlightCardSchematic } from "./spotlight-card-schematic"
 import { SwooshTextSchematic } from "./swoosh-text-schematic"
@@ -37,6 +38,7 @@ export * from "./middle-truncation-schematic"
 export * from "./plucked-text-schematic"
 export * from "./scroll-area-schematic"
 export * from "./drawer-schematic"
+export * from "./elastic-slider-schematic"
 export * from "./letter-3d-swap-schematic"
 export * from "./select-schematic"
 export * from "./spotlight-card-schematic"
@@ -83,6 +85,7 @@ export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
   "swoosh-text": SwooshTextSchematic,
   "plucked-text": PluckedTextSchematic,
   "cradle-text": CradleTextSchematic,
+  "elastic-slider": ElasticSliderSchematic,
 }
 
 export function RenderComponentSchematic({ type }: { type?: string }) {

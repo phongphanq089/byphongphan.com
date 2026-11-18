@@ -24,6 +24,11 @@ export const CodeBlockDemo = lazyWithRetry(() =>
 export const CradleTextDemo = lazyWithRetry(() =>
   import("./cradle-text-demo").then((m) => ({ default: m.CradleTextDemo }))
 )
+export const ElasticSliderDemo = lazyWithRetry(() =>
+  import("./elastic-slider-demo").then((m) => ({
+    default: m.ElasticSliderDemo,
+  }))
+)
 export const FlipClockDemo = lazyWithRetry(() =>
   import("./time-scrubber-demo").then((m) => ({ default: m.TimeScrubberDemo }))
 )
@@ -133,6 +138,8 @@ export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   "plucked-text-demo": PluckedTextDemo,
   "cradle-text": CradleTextDemo,
   "cradle-text-demo": CradleTextDemo,
+  "elastic-slider": ElasticSliderDemo,
+  "elastic-slider-demo": ElasticSliderDemo,
   "spotlight-card": SpotlightCardDemo,
   "spotlight-card-demo": SpotlightCardDemo,
   "border-glow": BorderGlowDemo,

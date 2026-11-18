@@ -57,7 +57,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## UI Components & Primitives (22)
+## UI Components & Primitives (23)
 
 | Component | Category | Description | Direct Install |
 | :--- | :--- | :--- | :--- |
@@ -83,6 +83,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [Swoosh Text](https://byphongphan.com/component-ui/text/swoosh-text) | `text` | Physical 3D extruded typography simulation with pointer-reactive dynamic lighting, spring velocity kick, and interactive mechanical keycap sink physics. | `pnpm dlx shadcn add https://byphongphan.com/r/swoosh-text.json` |
 | [Plucked Text](https://byphongphan.com/component-ui/text/plucked-text) | `text` | A headline sitting on an acoustic string you can pluck, strum and let ring, simulated with real harmonic standing wave physics. | `pnpm dlx shadcn add https://byphongphan.com/r/plucked-text.json` |
 | [Cradle Text](https://byphongphan.com/component-ui/text/cradle-text) | `text` | A headline hung like a Newton's cradle, so a knock on one letter clacks through the word, simulated with pendulum collision physics. | `pnpm dlx shadcn add https://byphongphan.com/r/cradle-text.json` |
+| [Elastic Slider](https://byphongphan.com/component-ui/interactive/elastic-slider) | `interactive` | A tactile spring-physics slider with boundary rubber-banding, magnetic decile damping, text-dodging handle, and full WAI-ARIA accessibility. | `pnpm dlx shadcn add https://byphongphan.com/r/elastic-slider.json` |
 
 ---
 
