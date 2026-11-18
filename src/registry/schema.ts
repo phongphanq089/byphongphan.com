@@ -20,6 +20,7 @@ export type ComponentSchematicType =
   | "underline-to-background"
   | "underline-animation"
   | "letter-3d-swap"
+  | "typing-text"
 
 export type BlockSchematicType =
   | "not-found-01"

@@ -57,7 +57,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## UI Components & Primitives (17)
+## UI Components & Primitives (18)
 
 | Component | Category | Description | Direct Install |
 | :--- | :--- | :--- | :--- |
@@ -78,6 +78,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [Underline to Background](https://byphongphan.com/component-ui/text/underline-to-background) | `text` | Fluid typographic micro-interaction where an underline smoothly expands into a full background fill on hover with inverted text contrast. | `pnpm dlx shadcn add https://byphongphan.com/r/underline-to-background.json` |
 | [Underline Animation](https://byphongphan.com/component-ui/text/underline-animation) | `text` | Minimalist typographic hover underline animation that smoothly expands symmetrically from center (or directionally) with font-proportional line metrics. | `pnpm dlx shadcn add https://byphongphan.com/r/underline-animation.json` |
 | [Letter 3D Swap](https://byphongphan.com/component-ui/text/letter-3d-swap) | `text` | Isometric 3D typography swap micro-interaction where characters rotate on multi-directional axes on hover with configurable stagger delays. | `pnpm dlx shadcn add https://byphongphan.com/r/letter-3d-swap.json` |
+| [Typing Text](https://byphongphan.com/component-ui/text/typing-text) | `text` | Realistic human typewriter effect with organic timing variance, simulated QWERTY typos with self-correction, and select-sweep erasure. | `pnpm dlx shadcn add https://byphongphan.com/r/typing-text.json` |
 
 ---
 

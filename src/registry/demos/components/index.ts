@@ -63,6 +63,11 @@ export const TextHoverEffectDemo = lazyWithRetry(() =>
     default: m.TextHoverEffectDemo,
   }))
 )
+export const TypingTextDemo = lazyWithRetry(() =>
+  import("./typing-text-demo").then((m) => ({
+    default: m.TypingTextDemo,
+  }))
+)
 export const UnboxingBucketDemo = lazyWithRetry(() =>
   import("./unboxing-bucket-demo").then((m) => ({
     default: m.UnboxingBucketDemo,
@@ -102,6 +107,8 @@ export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   "line-nav-demo": LineNavDemo,
   "letter-3d-swap": Letter3DSwapDemo,
   "letter-3d-swap-demo": Letter3DSwapDemo,
+  "typing-text": TypingTextDemo,
+  "typing-text-demo": TypingTextDemo,
   "spotlight-card": SpotlightCardDemo,
   "spotlight-card-demo": SpotlightCardDemo,
   "border-glow": BorderGlowDemo,

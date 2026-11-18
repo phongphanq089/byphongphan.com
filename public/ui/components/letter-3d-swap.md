@@ -75,14 +75,12 @@ interface WordObject {
 
 export type Letter3DRotateDirection = "top" | "right" | "bottom" | "left"
 export type Letter3DStaggerFrom =
-  | "first"
-  | "last"
-  | "center"
-  | number
-  | "random"
+  "first" | "last" | "center" | number | "random"
 
-export interface Letter3DSwapProps
-  extends Omit<React.HTMLAttributes<HTMLElement>, "children"> {
+export interface Letter3DSwapProps extends Omit<
+  React.HTMLAttributes<HTMLElement>,
+  "children"
+> {
   /**
    * The content to be displayed and animated
    */
@@ -262,7 +260,7 @@ export function Letter3DSwap({
   return (
     <ElementTag
       className={cn(
-        "relative flex flex-wrap cursor-pointer select-none",
+        "relative flex cursor-pointer flex-wrap select-none",
         mainClassName,
         className
       )}
@@ -350,7 +348,7 @@ function CharBox({
       {/* Front face */}
       <span
         className={cn(
-          "relative backface-hidden [backface-visibility:hidden] h-[1lh]",
+          "relative h-[1lh] [backface-visibility:hidden] backface-hidden",
           frontFaceClassName
         )}
         style={{
@@ -369,7 +367,7 @@ function CharBox({
       {/* Second face - positioned based on rotation direction */}
       <span
         className={cn(
-          "absolute backface-hidden [backface-visibility:hidden] h-[1lh] top-0 left-0",
+          "absolute top-0 left-0 h-[1lh] [backface-visibility:hidden] backface-hidden",
           secondFaceClassName
         )}
         style={{

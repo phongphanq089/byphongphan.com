@@ -11,6 +11,7 @@ import { MIDDLE_TRUNCATION_VARIANTS } from "./middle-truncation-variants"
 import { SCROLL_AREA_VARIANTS } from "./scroll-area-variants"
 import { SELECT_VARIANTS } from "./select-variants"
 import { TEXT_HOVER_EFFECT_VARIANTS } from "./text-hover-effect-variants"
+import { TYPING_TEXT_VARIANTS } from "./typing-text-variants"
 import { UNDERLINE_ANIMATION_VARIANTS } from "./underline-animation-variants"
 import { UNDERLINE_TO_BACKGROUND_VARIANTS } from "./underline-to-background-variants"
 
@@ -25,6 +26,7 @@ export * from "./middle-truncation-variants"
 export * from "./scroll-area-variants"
 export * from "./select-variants"
 export * from "./text-hover-effect-variants"
+export * from "./typing-text-variants"
 export * from "./underline-animation-variants"
 export * from "./underline-to-background-variants"
 
@@ -35,6 +37,7 @@ export const ALL_VARIANTS: ComponentVariant[] = [
   ...MAP_VARIANTS,
   ...TEXT_HOVER_EFFECT_VARIANTS,
   ...LETTER_3D_SWAP_VARIANTS,
+  ...TYPING_TEXT_VARIANTS,
   ...UNDERLINE_ANIMATION_VARIANTS,
   ...UNDERLINE_TO_BACKGROUND_VARIANTS,
   ...BACKGROUND_GRADIENT_CURSOR_VARIANTS,
@@ -58,6 +61,7 @@ export const COMPONENT_VARIANTS: Record<string, ComponentVariant[]> = {
   map: MAP_VARIANTS,
   "text-hover-effect": TEXT_HOVER_EFFECT_VARIANTS,
   "letter-3d-swap": LETTER_3D_SWAP_VARIANTS,
+  "typing-text": TYPING_TEXT_VARIANTS,
   "underline-animation": UNDERLINE_ANIMATION_VARIANTS,
   "underline-to-background": UNDERLINE_TO_BACKGROUND_VARIANTS,
   "background-gradient-cursor": BACKGROUND_GRADIENT_CURSOR_VARIANTS,

@@ -13,6 +13,7 @@ import { SelectSchematic } from "./select-schematic"
 import { SpotlightCardSchematic } from "./spotlight-card-schematic"
 import { TextHoverEffectSchematic } from "./text-hover-effect-schematic"
 import { TimeScrubberSchematic } from "./time-scrubber-schematic"
+import { TypingTextSchematic } from "./typing-text-schematic"
 import { ScrollIndicatorSchematic } from "./scroll-indicator-schematic"
 import { UnderlineAnimationSchematic } from "./underline-animation-schematic"
 import { UnderlineToBackgroundSchematic } from "./underline-to-background-schematic"
@@ -34,6 +35,7 @@ export * from "./select-schematic"
 export * from "./spotlight-card-schematic"
 export * from "./text-hover-effect-schematic"
 export * from "./time-scrubber-schematic"
+export * from "./typing-text-schematic"
 export * from "./scroll-indicator-schematic"
 export * from "./underline-animation-schematic"
 export * from "./underline-to-background-schematic"
@@ -68,6 +70,7 @@ export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
   "underline-to-background": UnderlineToBackgroundSchematic,
   "underline-animation": UnderlineAnimationSchematic,
   "letter-3d-swap": Letter3DSwapSchematic,
+  "typing-text": TypingTextSchematic,
 }
 
 export function RenderComponentSchematic({ type }: { type?: string }) {

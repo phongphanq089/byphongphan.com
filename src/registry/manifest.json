@@ -116,6 +116,10 @@
     {
       "category": "text",
       "slug": "letter-3d-swap"
+    },
+    {
+      "category": "text",
+      "slug": "typing-text"
     }
   ],
   "hookCategories": [
