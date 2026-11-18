@@ -115,7 +115,12 @@ export function StudioShell() {
 
   return (
     <div className="relative h-dvh w-screen overflow-hidden bg-muted p-2 sm:p-3.5 dark:bg-accent/70">
-      <div className="flex h-full w-full gap-2 bg-transparent sm:gap-3.5">
+      <div
+        className={cn(
+          "flex h-full w-full bg-transparent transition-all duration-300",
+          panelOpen ? "gap-1.5 sm:gap-2" : "gap-0"
+        )}
+      >
         {/* Inset island frame */}
         <div className="relative flex h-full min-w-0 flex-1 flex-col overflow-hidden rounded-2xl border border-black/10 bg-background shadow-xs sm:rounded-3xl dark:border-white/10">
           <StudioHeader />
@@ -151,7 +156,7 @@ export function StudioShell() {
             } as React.CSSProperties
           }
           className={cn(
-            "hidden h-full shrink-0 overflow-hidden transition-[width,opacity] duration-300 ease-out xl:block",
+            "hidden h-full shrink-0 overflow-hidden rounded-2xl transition-[width,opacity] duration-300 ease-out xl:block",
             isDragging && "transition-none",
             panelOpen
               ? "opacity-100 xl:w-[var(--studio-panel-width)]"

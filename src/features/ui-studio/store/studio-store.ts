@@ -6,8 +6,8 @@ export type StudioPanel = "docs" | "code"
 export type StudioPanelState = "closed" | StudioPanel
 
 const PANEL_MIN_WIDTH = 360
-const PANEL_MAX_WIDTH = 840
-export const PANEL_DEFAULT_WIDTH = 460
+const PANEL_MAX_WIDTH = 960
+export const PANEL_DEFAULT_WIDTH = 580
 export { PANEL_MAX_WIDTH, PANEL_MIN_WIDTH }
 
 const clampPanelWidth = (width: number): number =>
@@ -164,13 +164,17 @@ export const useStudioStore = create<StudioStore>()(
           Pick<StudioStore, "panelWidth" | "showGrid" | "showArcBands">
         >
         try {
-          if (prefs.panelWidth === undefined) {
+          if (prefs.panelWidth === undefined || prefs.panelWidth === 460) {
+            prefs.panelWidth = DEFAULT_PANEL_WIDTH
+          } else {
             const legacy = window.localStorage.getItem(
               "byphongphan:studio-panel-width"
             )
             const parsed = legacy ? Number(legacy) : NaN
-            if (Number.isFinite(parsed)) {
+            if (Number.isFinite(parsed) && parsed !== 460) {
               prefs.panelWidth = clampPanelWidth(parsed)
+            } else if (parsed === 460) {
+              prefs.panelWidth = DEFAULT_PANEL_WIDTH
             }
           }
           window.localStorage.removeItem("ui-studio-sidebar-open")

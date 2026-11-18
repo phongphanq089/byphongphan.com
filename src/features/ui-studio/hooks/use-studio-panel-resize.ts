@@ -1,14 +1,17 @@
 import * as React from "react"
 
-import { useStudioStore } from "../store/studio-store"
+import {
+  PANEL_DEFAULT_WIDTH,
+  PANEL_MAX_WIDTH,
+  PANEL_MIN_WIDTH,
+  useStudioStore,
+} from "../store/studio-store"
 
-export const PANEL_DEFAULT_WIDTH = 460
-export const PANEL_MIN_WIDTH = 360
-export const PANEL_MAX_WIDTH = 840
+export { PANEL_DEFAULT_WIDTH, PANEL_MAX_WIDTH, PANEL_MIN_WIDTH }
 
 function clampPanelWidth(width: number): number {
   if (typeof window === "undefined") return width
-  const max = Math.min(window.innerWidth * 0.65, PANEL_MAX_WIDTH)
+  const max = Math.min(window.innerWidth * 0.7, PANEL_MAX_WIDTH)
   return Math.round(Math.min(Math.max(width, PANEL_MIN_WIDTH), max))
 }
 
