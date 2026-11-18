@@ -124,12 +124,12 @@ export function StudioCatalogGrid({ segment }: StudioCatalogGridProps) {
               to="/ui"
               onClick={() => playClickSound()}
               onMouseEnter={() => playHoverSound()}
-              className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-border/60 bg-muted/60 px-3 py-1 text-xs font-medium text-muted-foreground transition-all duration-150 hover:bg-accent hover:text-foreground active:scale-95"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-border/60 bg-muted/60 px-3 py-1 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground active:scale-95"
             >
               <ArrowLeft className="size-3.5" aria-hidden="true" />
               <span>Back to all items</span>
             </Link>
-            <span className="font-mono text-xs text-muted-foreground">
+            <span className="text-xs text-muted-foreground">
               {total} item{total !== 1 ? "s" : ""}
             </span>
           </div>
@@ -183,7 +183,7 @@ export function StudioCatalogGrid({ segment }: StudioCatalogGridProps) {
           <CatalogSection
             title={sectionTitle("React Hooks")}
             count={hookItems.length}
-            wide
+            variant="block"
             filter={
               <CatalogFilterPills
                 value={hookFilter}
@@ -195,9 +195,21 @@ export function StudioCatalogGrid({ segment }: StudioCatalogGridProps) {
             {hookItems.length === 0 ? (
               <CatalogEmptyState label="No hooks in this category yet." />
             ) : (
-              hookItems.map((hook, index) => (
-                <HookTile key={hook.id} hook={hook} index={index} />
-              ))
+              <div className="overflow-hidden rounded-2xl border border-border/70 bg-card/30 shadow-xs backdrop-blur-xs">
+                <div className="grid w-full auto-rows-fr grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                  {hookItems.map((hook, index) => (
+                    <HookTile
+                      key={hook.id}
+                      hook={hook}
+                      index={index}
+                      className={getHookCellBorderClasses(
+                        index,
+                        hookItems.length
+                      )}
+                    />
+                  ))}
+                </div>
+              </div>
             )}
           </CatalogSection>
         ) : null}
@@ -206,16 +218,46 @@ export function StudioCatalogGrid({ segment }: StudioCatalogGridProps) {
   )
 }
 
+/**
+ * Hairline blueprint borders for the unified hook block grid.
+ * Dynamically switches border-r and border-b for 1-col (mobile), 2-col (sm), and 3-col (lg) layouts.
+ */
+function getHookCellBorderClasses(index: number, total: number) {
+  const isLastColLg = index % 3 === 2
+  const isLastColSm = index % 2 === 1
+  const remainderLg = total % 3
+  const lastRowStartIndexLg = total - (remainderLg === 0 ? 3 : remainderLg)
+  const isLastRowLg = index >= lastRowStartIndexLg
+
+  const remainderSm = total % 2
+  const lastRowStartIndexSm = total - (remainderSm === 0 ? 2 : remainderSm)
+  const isLastRowSm = index >= lastRowStartIndexSm
+  const isLastRowSingle = index === total - 1
+
+  return cn(
+    "border-b border-border/40",
+    isLastRowSingle && "border-b-0",
+    // 2-column layout (sm)
+    isLastColSm ? "sm:border-r-0" : "sm:border-r sm:border-border/40",
+    isLastRowSm ? "sm:border-b-0" : "sm:border-b sm:border-border/40",
+    // 3-column layout (lg)
+    isLastColLg ? "lg:border-r-0" : "lg:border-r lg:border-border/40",
+    isLastRowLg ? "lg:border-b-0" : "sm:border-border/40 lg:border-b"
+  )
+}
+
 function CatalogSection({
   title,
   count,
   wide = false,
+  variant = "grid",
   filter,
   children,
 }: {
   title: string
   count: number
   wide?: boolean
+  variant?: "grid" | "block"
   filter?: ReactNode
   children: ReactNode
 }) {
@@ -226,7 +268,7 @@ function CatalogSection({
           <h2 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
             {title}
           </h2>
-          <span className="font-mono text-xs text-muted-foreground tabular-nums">
+          <span className="text-xs text-muted-foreground tabular-nums">
             {String(count).padStart(2, "0")}
           </span>
         </div>
@@ -237,15 +279,19 @@ function CatalogSection({
         ) : null}
       </div>
 
-      <div
-        className={
-          wide
-            ? "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
-            : "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
-        }
-      >
-        {children}
-      </div>
+      {variant === "block" ? (
+        children
+      ) : (
+        <div
+          className={
+            wide
+              ? "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
+              : "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          }
+        >
+          {children}
+        </div>
+      )}
     </section>
   )
 }
@@ -287,7 +333,7 @@ function CatalogFilterPills({
               onChange(option.id)
             }}
             className={cn(
-              "inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full px-3.5 py-1.5 text-xs font-medium tracking-normal transition-all duration-150 active:scale-95",
+              "inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full px-3.5 py-1.5 text-xs font-medium tracking-normal active:scale-95",
               "focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none",
               isActive
                 ? "bg-foreground font-semibold text-background shadow-xs"
