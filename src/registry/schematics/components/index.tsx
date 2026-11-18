@@ -7,6 +7,7 @@ import { Letter3DSwapSchematic } from "./letter-3d-swap-schematic"
 import { LineNavSchematic } from "./line-nav-schematic"
 import { MapSchematic } from "./map-schematic"
 import { MiddleTruncationSchematic } from "./middle-truncation-schematic"
+import { PluckedTextSchematic } from "./plucked-text-schematic"
 import { ScrollAreaSchematic } from "./scroll-area-schematic"
 import { DrawerSchematic } from "./drawer-schematic"
 import { SelectSchematic } from "./select-schematic"
@@ -29,6 +30,7 @@ export { TimeScrubberSchematic as FlipClockSchematic } from "./time-scrubber-sch
 export * from "./line-nav-schematic"
 export * from "./map-schematic"
 export * from "./middle-truncation-schematic"
+export * from "./plucked-text-schematic"
 export * from "./scroll-area-schematic"
 export * from "./drawer-schematic"
 export * from "./letter-3d-swap-schematic"
@@ -74,6 +76,7 @@ export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
   "letter-3d-swap": Letter3DSwapSchematic,
   "typing-text": TypingTextSchematic,
   "swoosh-text": SwooshTextSchematic,
+  "plucked-text": PluckedTextSchematic,
 }
 
 export function RenderComponentSchematic({ type }: { type?: string }) {

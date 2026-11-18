@@ -28,10 +28,23 @@ import { useEffect, useMemo, useRef } from "react"
 
 import { cn } from "@/lib/utils"
 
-export interface UnderlineToBackgroundProps extends Omit<
-  React.HTMLAttributes<HTMLElement>,
-  "children"
-> {
+export interface UnderlineToBackgroundProps
+  extends Omit<React.HTMLAttributes<HTMLElement>, "children"> {
+  /**
+   * Optional URL if rendered as a link (`as="a"`)
+   */
+  href?: string
+
+  /**
+   * Target window/tab if rendered as a link
+   */
+  target?: string
+
+  /**
+   * Rel attribute if rendered as a link
+   */
+  rel?: string
+
   /**
    * The content to be displayed and animated
    */

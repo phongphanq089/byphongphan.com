@@ -40,6 +40,11 @@ export const MiddleTruncationDemo = lazyWithRetry(() =>
     default: m.MiddleTruncationDemo,
   }))
 )
+export const PluckedTextDemo = lazyWithRetry(() =>
+  import("./plucked-text-demo").then((m) => ({
+    default: m.PluckedTextDemo,
+  }))
+)
 export const SelectDemo = lazyWithRetry(() =>
   import("./select-demo").then((m) => ({ default: m.SelectDemo }))
 )
@@ -116,6 +121,8 @@ export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   "typing-text-demo": TypingTextDemo,
   "swoosh-text": SwooshTextDemo,
   "swoosh-text-demo": SwooshTextDemo,
+  "plucked-text": PluckedTextDemo,
+  "plucked-text-demo": PluckedTextDemo,
   "spotlight-card": SpotlightCardDemo,
   "spotlight-card-demo": SpotlightCardDemo,
   "border-glow": BorderGlowDemo,

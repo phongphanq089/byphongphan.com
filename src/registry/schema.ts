@@ -22,6 +22,7 @@ export type ComponentSchematicType =
   | "letter-3d-swap"
   | "typing-text"
   | "swoosh-text"
+  | "plucked-text"
 
 export type BlockSchematicType =
   | "not-found-01"

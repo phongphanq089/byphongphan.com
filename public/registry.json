@@ -397,6 +397,24 @@
       ]
     },
     {
+      "name": "plucked-text",
+      "type": "registry:component",
+      "title": "Plucked Text",
+      "description": "A headline sitting on an acoustic string you can pluck, strum and let ring, simulated with real harmonic standing wave physics.",
+      "category": "text",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/plucked-text.tsx",
+          "type": "registry:component",
+          "target": "components/plucked-text.tsx"
+        }
+      ]
+    },
+    {
       "name": "not-found-01",
       "type": "registry:block",
       "title": "Not Found 01",

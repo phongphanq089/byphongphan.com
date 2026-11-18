@@ -11,6 +11,21 @@ export interface UnderlineToBackgroundProps extends Omit<
   "children"
 > {
   /**
+   * Optional URL if rendered as a link (`as="a"`)
+   */
+  href?: string
+
+  /**
+   * Target window/tab if rendered as a link
+   */
+  target?: string
+
+  /**
+   * Rel attribute if rendered as a link
+   */
+  rel?: string
+
+  /**
    * The content to be displayed and animated
    */
   children: React.ReactNode

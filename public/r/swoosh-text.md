@@ -20,8 +20,10 @@ import { type HTMLAttributes, type RefObject, useEffect, useRef } from "react"
 
 import { cn } from "@/lib/utils"
 
-export interface SwooshTextProps
-  extends Omit<HTMLAttributes<HTMLElement>, "children"> {
+export interface SwooshTextProps extends Omit<
+  HTMLAttributes<HTMLElement>,
+  "children"
+> {
   /** The text string to render and animate */
   text?: string
   /** Optional text content passed as children */
@@ -451,7 +453,7 @@ export function SwooshText({
   return (
     <Tag
       className={cn(
-        "relative touch-manipulation select-none font-black text-4xl sm:text-6xl tracking-tight",
+        "relative touch-manipulation text-4xl font-black tracking-tight select-none sm:text-6xl",
         "[--ex-face:var(--color-zinc-900,#18181b)] [--ex-far:var(--color-zinc-600,#52525b)] [--ex-near:var(--color-zinc-300,#d4d4d8)]",
         "dark:[--ex-face:var(--color-zinc-50,#fafafa)] dark:[--ex-far:var(--color-zinc-700,#3f3f46)] dark:[--ex-near:var(--color-zinc-400,#a1a1aa)]",
         className

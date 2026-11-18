@@ -8,6 +8,7 @@ import { LETTER_3D_SWAP_VARIANTS } from "./letter-3d-swap-variants"
 import { LINE_NAV_VARIANTS } from "./line-nav-variants"
 import { MAP_VARIANTS } from "./map-variants"
 import { MIDDLE_TRUNCATION_VARIANTS } from "./middle-truncation-variants"
+import { PLUCKED_TEXT_VARIANTS } from "./plucked-text-variants"
 import { SCROLL_AREA_VARIANTS } from "./scroll-area-variants"
 import { SELECT_VARIANTS } from "./select-variants"
 import { SWOOSH_TEXT_VARIANTS } from "./swoosh-text-variants"
@@ -24,6 +25,7 @@ export * from "./letter-3d-swap-variants"
 export * from "./line-nav-variants"
 export * from "./map-variants"
 export * from "./middle-truncation-variants"
+export * from "./plucked-text-variants"
 export * from "./scroll-area-variants"
 export * from "./select-variants"
 export * from "./swoosh-text-variants"
@@ -35,6 +37,7 @@ export * from "./underline-to-background-variants"
 export const ALL_VARIANTS: ComponentVariant[] = [
   ...SELECT_VARIANTS,
   ...SWOOSH_TEXT_VARIANTS,
+  ...PLUCKED_TEXT_VARIANTS,
   ...CARD_VARIANTS,
   ...CODE_BLOCK_VARIANTS,
   ...MAP_VARIANTS,
@@ -60,6 +63,7 @@ export const VARIANTS_MAP = new Map<string, ComponentVariant>(
 export const COMPONENT_VARIANTS: Record<string, ComponentVariant[]> = {
   select: SELECT_VARIANTS,
   "swoosh-text": SWOOSH_TEXT_VARIANTS,
+  "plucked-text": PLUCKED_TEXT_VARIANTS,
   card: CARD_VARIANTS,
   "code-block": CODE_BLOCK_VARIANTS,
   map: MAP_VARIANTS,

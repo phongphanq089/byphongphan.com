@@ -124,6 +124,10 @@
     {
       "category": "text",
       "slug": "swoosh-text"
+    },
+    {
+      "category": "text",
+      "slug": "plucked-text"
     }
   ],
   "hookCategories": [
