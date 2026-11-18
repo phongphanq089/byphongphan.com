@@ -7,6 +7,9 @@ export const BackgroundGradientCursorDemo = lazyWithRetry(() =>
     default: m.BackgroundGradientCursorDemo,
   }))
 )
+export const BadgeDemo = lazyWithRetry(() =>
+  import("./badge-demo").then((m) => ({ default: m.BadgeDemo }))
+)
 export const BorderGlowDemo = lazyWithRetry(() =>
   import("./border-glow-demo").then((m) => ({
     default: m.BorderGlowDemo,
@@ -99,6 +102,8 @@ export const UnderlineToBackgroundDemo = lazyWithRetry(() =>
 
 export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   select: SelectDemo,
+  badge: BadgeDemo,
+  "badge-demo": BadgeDemo,
   card: CardDemo,
   "code-block": CodeBlockDemo,
   "unboxing-bucket": UnboxingBucketDemo,

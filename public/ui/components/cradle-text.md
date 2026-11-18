@@ -439,8 +439,7 @@ export function CradleText({
     let greetTimer = 0
     const intersection = new IntersectionObserver(
       ([entry]) => {
-        visible =
-          entry.isIntersecting && document.visibilityState === "visible"
+        visible = entry.isIntersecting && document.visibilityState === "visible"
         if (!visible) {
           return
         }
@@ -498,9 +497,9 @@ export function CradleText({
     >
       <div
         className={cn(
-          "relative max-w-full cursor-grab touch-pan-y select-none px-[0.9em] pt-[1.5em] pb-[0.45em] leading-none tracking-tight data-[grabbing]:cursor-grabbing motion-reduce:cursor-default",
+          "relative max-w-full cursor-grab touch-pan-y px-[0.9em] pt-[1.5em] pb-[0.45em] leading-none tracking-tight select-none data-[grabbing]:cursor-grabbing motion-reduce:cursor-default",
           // Responsive fluid typography with fallback
-          "font-semibold text-2xl xs:text-3xl sm:text-5xl md:text-6xl text-foreground",
+          "text-2xl font-semibold text-foreground xs:text-3xl sm:text-5xl md:text-6xl",
           className
         )}
         ref={stageRef}

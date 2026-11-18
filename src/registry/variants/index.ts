@@ -1,6 +1,7 @@
 import type { ComponentVariant } from "@/features/component-ui/types"
 
 import { BACKGROUND_GRADIENT_CURSOR_VARIANTS } from "./background-gradient-cursor-variants"
+import { BADGE_VARIANTS } from "./badge-variants"
 import { CARD_VARIANTS } from "./card-variants"
 import { CODE_BLOCK_VARIANTS } from "./code-block-variants"
 import { CRADLE_TEXT_VARIANTS } from "./cradle-text-variants"
@@ -19,6 +20,7 @@ import { UNDERLINE_ANIMATION_VARIANTS } from "./underline-animation-variants"
 import { UNDERLINE_TO_BACKGROUND_VARIANTS } from "./underline-to-background-variants"
 
 export * from "./background-gradient-cursor-variants"
+export * from "./badge-variants"
 export * from "./card-variants"
 export * from "./code-block-variants"
 export * from "./cradle-text-variants"
@@ -41,6 +43,7 @@ export const ALL_VARIANTS: ComponentVariant[] = [
   ...SWOOSH_TEXT_VARIANTS,
   ...PLUCKED_TEXT_VARIANTS,
   ...CRADLE_TEXT_VARIANTS,
+  ...BADGE_VARIANTS,
   ...CARD_VARIANTS,
   ...CODE_BLOCK_VARIANTS,
   ...MAP_VARIANTS,
@@ -65,6 +68,7 @@ export const VARIANTS_MAP = new Map<string, ComponentVariant>(
  */
 export const COMPONENT_VARIANTS: Record<string, ComponentVariant[]> = {
   select: SELECT_VARIANTS,
+  badge: BADGE_VARIANTS,
   "swoosh-text": SWOOSH_TEXT_VARIANTS,
   "plucked-text": PLUCKED_TEXT_VARIANTS,
   "cradle-text": CRADLE_TEXT_VARIANTS,

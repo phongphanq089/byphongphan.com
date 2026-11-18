@@ -62,6 +62,10 @@
       "slug": "middle-truncation"
     },
     {
+      "category": "data-display",
+      "slug": "badge"
+    },
+    {
       "category": "card",
       "slug": "card"
     },

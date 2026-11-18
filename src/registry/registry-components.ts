@@ -1,6 +1,7 @@
 import type { RegistryItem } from "./schema"
 import {
   BackgroundGradientCursorSchematic,
+  BadgeSchematic,
   BorderGlowSchematic,
   CardSchematic,
   CodeBlockSchematic,
@@ -87,6 +88,26 @@ export const REGISTRY_COMPONENTS: RegistryItem[] = [
         path: "ui/middle-truncation.tsx",
         type: "registry:ui",
         target: "components/ui/middle-truncation.tsx",
+      },
+    ],
+  },
+  {
+    name: "badge",
+    title: "Badge",
+    description:
+      "A versatile, subtle badge component with calibrated proportions, translucent status tints, micro dots, and geometric contour variants.",
+    type: "registry:ui",
+    category: "data-display",
+    schematic: BadgeSchematic,
+    schematicType: "badge",
+    isNew: true,
+    dependencies: ["@base-ui/react", "class-variance-authority"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "ui/badge.tsx",
+        type: "registry:ui",
+        target: "components/ui/badge.tsx",
       },
     ],
   },

@@ -1,5 +1,6 @@
 import type React from "react"
 import { BackgroundGradientCursorSchematic } from "./background-gradient-cursor-schematic"
+import { BadgeSchematic } from "./badge-schematic"
 import { BorderGlowSchematic } from "./border-glow-schematic"
 import { CardSchematic } from "./card-schematic"
 import { CodeBlockSchematic } from "./code-block-schematic"
@@ -23,6 +24,7 @@ import { UnderlineToBackgroundSchematic } from "./underline-to-background-schema
 import { UnboxingBucketSchematic } from "./unboxing-bucket-schematic"
 
 export * from "./background-gradient-cursor-schematic"
+export * from "./badge-schematic"
 export * from "./border-glow-schematic"
 export * from "./card-schematic"
 export * from "./code-block-schematic"
@@ -58,6 +60,7 @@ export function DefaultComponentSchematic() {
 
 export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
   select: SelectSchematic,
+  badge: BadgeSchematic,
   card: CardSchematic,
   "unboxing-bucket": UnboxingBucketSchematic,
   "code-block": CodeBlockSchematic,

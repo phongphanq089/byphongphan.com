@@ -28,6 +28,17 @@
     "registryDependencies": []
   },
   {
+    "name": "badge",
+    "type": "registry:ui",
+    "title": "Badge",
+    "description": "A versatile, subtle badge component with calibrated proportions, translucent status tints, micro dots, and geometric contour variants.",
+    "dependencies": [
+      "@base-ui/react",
+      "class-variance-authority"
+    ],
+    "registryDependencies": []
+  },
+  {
     "name": "card",
     "type": "registry:ui",
     "title": "Card",

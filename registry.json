@@ -67,6 +67,27 @@
       ]
     },
     {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "A versatile, subtle badge component with calibrated proportions, translucent status tints, micro dots, and geometric contour variants.",
+      "category": "data-display",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/ui/badge.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/badge.tsx"
+        }
+      ]
+    },
+    {
       "name": "card",
       "type": "registry:ui",
       "title": "Card",

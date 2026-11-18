@@ -57,13 +57,14 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## UI Components & Primitives (21)
+## UI Components & Primitives (22)
 
 | Component | Category | Description | Direct Install |
 | :--- | :--- | :--- | :--- |
 | [Line Nav](https://byphongphan.com/component-ui/navigation/line-nav) | `navigation` | Minimalist animated line navigation with spring-physics indicators, scroll-spy integration, and orientation variants. | `pnpm dlx shadcn add https://byphongphan.com/r/line-nav.json` |
 | [Scroll Indicator](https://byphongphan.com/component-ui/navigation/scroll-indicator) | `navigation` | Vertical scroll progress indicator with tick marks, click-to-reveal section titles, Web Audio micro-interactions, and spring physics. | `pnpm dlx shadcn add https://byphongphan.com/r/scroll-indicator.json` |
 | [Middle Truncation](https://byphongphan.com/component-ui/text/middle-truncation) | `text` | Canvas-measured binary search text truncation preserving the start and end of strings with responsive resize sync. | `pnpm dlx shadcn add https://byphongphan.com/r/middle-truncation.json` |
+| [Badge](https://byphongphan.com/component-ui/data-display/badge) | `data-display` | A versatile, subtle badge component with calibrated proportions, translucent status tints, micro dots, and geometric contour variants. | `pnpm dlx shadcn add https://byphongphan.com/r/badge.json` |
 | [Card](https://byphongphan.com/component-ui/card/card) | `card` | Displays a card with header, content, and footer. | `pnpm dlx shadcn add https://byphongphan.com/r/card.json` |
 | [Scroll Area](https://byphongphan.com/component-ui/data-display/scroll-area) | `data-display` | Augments native scroll functionality with auto, hover, and always visibility modes, custom variants, scrollbar gutter reserve, keyboard navigation, and high-contrast styling. | `pnpm dlx shadcn add https://byphongphan.com/r/scroll-area.json` |
 | [Drawer](https://byphongphan.com/component-ui/interactive/drawer) | `interactive` | An interactive overlay and bottom sheet component powered by Base UI with swipe-to-dismiss, snap points, nested stacks, customizable positions, and inset or straight variants. | `pnpm dlx shadcn add https://byphongphan.com/r/drawer.json` |
