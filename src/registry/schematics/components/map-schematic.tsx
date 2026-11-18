@@ -2,28 +2,28 @@ import { MapPin, Minus, Navigation, Plus } from "lucide-react"
 
 export function MapSchematic() {
   return (
-    <div className="relative flex h-[150px] w-full max-w-[410px] flex-col justify-between overflow-hidden rounded-md border bg-muted p-2.5 select-none dark:bg-neutral-950">
+    <div className="relative flex h-34 w-54 flex-col justify-between overflow-hidden rounded-xl border border-white/10 bg-muted/60 p-3 select-none dark:bg-neutral-950/80">
       {/* Background Grid & Contour lines */}
       <svg
-        className="absolute inset-0 size-full stroke-white/[0.07]"
+        className="absolute inset-0 size-full stroke-white/[0.08]"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
           <pattern
             id="map-schematic-grid"
-            width="20"
-            height="20"
+            width="18"
+            height="18"
             patternUnits="userSpaceOnUse"
           >
-            <path d="M 20 0 L 0 0 0 20" fill="none" strokeWidth="0.75" />
+            <path d="M 18 0 L 0 0 0 18" fill="none" strokeWidth="0.75" />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#map-schematic-grid)" />
         {/* Curved route vector */}
         <path
-          d="M 20 100 Q 80 40 120 70 T 190 30"
+          d="M 15 90 Q 75 35 110 65 T 200 25"
           fill="none"
-          className="stroke-primary/50"
+          className="stroke-primary/60"
           strokeWidth="1.5"
           strokeDasharray="3 3"
         />
@@ -31,41 +31,36 @@ export function MapSchematic() {
 
       {/* Top Bar: Controls & Compass */}
       <div className="relative z-10 flex items-center justify-between">
-        <div className="flex items-center gap-1 rounded border border-white/10 bg-black px-1.5 py-0.5 backdrop-blur-xs dark:bg-white/[0.04]">
-          <Navigation className="size-2.5 rotate-45 text-white/70" />
-          <span className="font-mono text-[9px] tracking-wider text-white/60">
+        <div className="flex items-center gap-1 rounded border border-white/10 bg-black/60 px-1.5 py-0.5 backdrop-blur-xs">
+          <Navigation className="size-2.5 rotate-45 text-white/80" />
+          <span className="font-mono text-[9px] tracking-wider text-white/70">
             37°N
           </span>
         </div>
 
-        <div className="drak:bg-white/[0.04] flex flex-col gap-0.5 rounded-[3px] border border-white/10 bg-black p-0.5 backdrop-blur-xs">
-          <div className="flex size-3.5 items-center justify-center rounded text-white/70">
-            <Plus className="size-2.5" />
-          </div>
+        <div className="flex flex-col gap-0.5 rounded-[3px] border border-white/10 bg-black/60 p-0.5 backdrop-blur-xs">
+          <Plus className="size-2.5 text-white/70" />
           <div className="h-px w-full bg-white/10" />
-          <div className="flex size-3.5 items-center justify-center rounded text-white/70">
-            <Minus className="size-2.5" />
-          </div>
+          <Minus className="size-2.5 text-white/70" />
         </div>
       </div>
 
-      {/* Center Marker with Pulse Effect */}
+      {/* Center Pin Marker */}
       <div className="relative z-10 flex items-center justify-center">
-        <div className="relative flex items-center justify-center">
-          <span className="absolute size-5 rounded-full bg-primary/10" />
-          <div className="flex size-5 items-center justify-center rounded-full border border-primary/40 bg-primary/20 shadow-xs">
-            <MapPin className="size-3 text-primary" />
-          </div>
+        <div className="flex size-6 items-center justify-center rounded-full border border-primary/40 bg-primary/20 shadow-[0_0_12px_var(--primary)] backdrop-blur-xs">
+          <MapPin className="size-3 text-primary" />
         </div>
       </div>
 
-      {/* Bottom status chip */}
-      <div className="relative z-10 flex items-center justify-between">
-        <div className="flex items-center gap-1 rounded-full border border-white/10 bg-black/60 px-2 py-0.5 backdrop-blur-md">
-          <div className="size-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+      {/* Bottom Bar: Vector Map label */}
+      <div className="relative z-10 flex items-center justify-between border-t border-white/10 pt-1">
+        <div className="flex items-center gap-1.5">
+          <span className="size-1.5 rounded-full bg-emerald-400" />
           <span className="font-mono text-[9px] text-white/70">Vector Map</span>
         </div>
-        <div className="h-1.5 w-10 rounded-full bg-white/20" />
+        <span className="font-mono text-[9px] text-muted-foreground/60">
+          CARTO Dark
+        </span>
       </div>
     </div>
   )

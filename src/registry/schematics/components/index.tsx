@@ -35,9 +35,9 @@ export * from "./unboxing-bucket-schematic"
 
 export function DefaultComponentSchematic() {
   return (
-    <div className="flex h-20 w-32 flex-col items-center justify-center gap-1.5 rounded-lg border border-dashed border-white/15 bg-white/[0.02] p-2 text-center select-none">
-      <div className="size-4 rounded-full border border-white/20 bg-white/5" />
-      <div className="h-1.5 w-12 rounded-full bg-white/20" />
+    <div className="flex h-34 w-54 flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-white/15 bg-white/[0.02] p-3 text-center select-none">
+      <div className="size-5 rounded-full border border-white/20 bg-white/5" />
+      <div className="h-1.5 w-16 rounded-full bg-white/20" />
     </div>
   )
 }
