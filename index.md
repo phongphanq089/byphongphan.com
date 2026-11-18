@@ -57,7 +57,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## UI Components & Primitives (18)
+## UI Components & Primitives (19)
 
 | Component                                                                                                | Category       | Description                                                                                                                                                                     | Direct Install                                                                  |
 | :------------------------------------------------------------------------------------------------------- | :------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------ |
@@ -79,6 +79,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [Underline Animation](https://byphongphan.com/component-ui/text/underline-animation)                     | `text`         | Minimalist typographic hover underline animation that smoothly expands symmetrically from center (or directionally) with font-proportional line metrics.                        | `pnpm dlx shadcn add https://byphongphan.com/r/underline-animation.json`        |
 | [Letter 3D Swap](https://byphongphan.com/component-ui/text/letter-3d-swap)                               | `text`         | Isometric 3D typography swap micro-interaction where characters rotate on multi-directional axes on hover with configurable stagger delays.                                     | `pnpm dlx shadcn add https://byphongphan.com/r/letter-3d-swap.json`             |
 | [Typing Text](https://byphongphan.com/component-ui/text/typing-text)                                     | `text`         | Realistic human typewriter effect with organic timing variance, simulated QWERTY typos with self-correction, and select-sweep erasure.                                          | `pnpm dlx shadcn add https://byphongphan.com/r/typing-text.json`                |
+| [Swoosh Text](https://byphongphan.com/component-ui/text/swoosh-text)                                     | `text`         | Physical 3D extruded typography simulation with pointer-reactive dynamic lighting, spring velocity kick, and interactive mechanical keycap sink physics.                        | `pnpm dlx shadcn add https://byphongphan.com/r/swoosh-text.json`                |
 
 ---
 

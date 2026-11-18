@@ -254,8 +254,7 @@ export function TypingText({
     const typeChar = async (text: string) => {
       const wrongKeys = neighbours(text[pos.char])
       if (wrongKeys && random.current() < typoRate) {
-        const wrong =
-          wrongKeys[Math.floor(random.current() * wrongKeys.length)]
+        const wrong = wrongKeys[Math.floor(random.current() * wrongKeys.length)]
         show(text.slice(0, pos.char) + wrong)
         keystroke()
         await wait(TYPO_NOTICE_MS + typingSpeed)
@@ -382,7 +381,7 @@ export function TypingText({
   return (
     <Component
       className={cn(
-        "flex w-full items-center justify-center font-mono text-foreground tracking-tight",
+        "flex w-full items-center justify-center font-mono tracking-tight text-foreground",
         className
       )}
     >
@@ -394,7 +393,7 @@ export function TypingText({
         animate={{ opacity: 1 }}
         aria-hidden="true"
         className={cn(
-          "inline-grid justify-items-start whitespace-pre pr-[0.25em] text-3xl sm:text-5xl md:text-6xl font-bold leading-[1.2]",
+          "inline-grid justify-items-start pr-[0.25em] text-3xl leading-[1.2] font-bold whitespace-pre sm:text-5xl md:text-6xl",
           textClassName
         )}
         initial={{ opacity: 0 }}
@@ -402,10 +401,7 @@ export function TypingText({
         transition={{ duration: 0.5 }}
       >
         {sequences.map((sequence, index) => (
-          <span
-            className="invisible col-start-1 row-start-1"
-            key={index}
-          >
+          <span className="invisible col-start-1 row-start-1" key={index}>
             {sequence.text}
           </span>
         ))}

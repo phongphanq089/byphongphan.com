@@ -58,6 +58,11 @@ export const SpotlightCardDemo = lazyWithRetry(() =>
     default: m.SpotlightCardDemo,
   }))
 )
+export const SwooshTextDemo = lazyWithRetry(() =>
+  import("./swoosh-text-demo").then((m) => ({
+    default: m.SwooshTextDemo,
+  }))
+)
 export const TextHoverEffectDemo = lazyWithRetry(() =>
   import("./text-hover-effect-demo").then((m) => ({
     default: m.TextHoverEffectDemo,
@@ -109,6 +114,8 @@ export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   "letter-3d-swap-demo": Letter3DSwapDemo,
   "typing-text": TypingTextDemo,
   "typing-text-demo": TypingTextDemo,
+  "swoosh-text": SwooshTextDemo,
+  "swoosh-text-demo": SwooshTextDemo,
   "spotlight-card": SpotlightCardDemo,
   "spotlight-card-demo": SpotlightCardDemo,
   "border-glow": BorderGlowDemo,

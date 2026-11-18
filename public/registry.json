@@ -379,6 +379,24 @@
       ]
     },
     {
+      "name": "swoosh-text",
+      "type": "registry:component",
+      "title": "Swoosh Text",
+      "description": "Physical 3D extruded typography simulation with pointer-reactive dynamic lighting, spring velocity kick, and interactive mechanical keycap sink physics.",
+      "category": "text",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/swoosh-text.tsx",
+          "type": "registry:component",
+          "target": "components/swoosh-text.tsx"
+        }
+      ]
+    },
+    {
       "name": "not-found-01",
       "type": "registry:block",
       "title": "Not Found 01",

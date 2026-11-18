@@ -10,6 +10,7 @@ import { MAP_VARIANTS } from "./map-variants"
 import { MIDDLE_TRUNCATION_VARIANTS } from "./middle-truncation-variants"
 import { SCROLL_AREA_VARIANTS } from "./scroll-area-variants"
 import { SELECT_VARIANTS } from "./select-variants"
+import { SWOOSH_TEXT_VARIANTS } from "./swoosh-text-variants"
 import { TEXT_HOVER_EFFECT_VARIANTS } from "./text-hover-effect-variants"
 import { TYPING_TEXT_VARIANTS } from "./typing-text-variants"
 import { UNDERLINE_ANIMATION_VARIANTS } from "./underline-animation-variants"
@@ -25,6 +26,7 @@ export * from "./map-variants"
 export * from "./middle-truncation-variants"
 export * from "./scroll-area-variants"
 export * from "./select-variants"
+export * from "./swoosh-text-variants"
 export * from "./text-hover-effect-variants"
 export * from "./typing-text-variants"
 export * from "./underline-animation-variants"
@@ -32,6 +34,7 @@ export * from "./underline-to-background-variants"
 
 export const ALL_VARIANTS: ComponentVariant[] = [
   ...SELECT_VARIANTS,
+  ...SWOOSH_TEXT_VARIANTS,
   ...CARD_VARIANTS,
   ...CODE_BLOCK_VARIANTS,
   ...MAP_VARIANTS,
@@ -56,6 +59,7 @@ export const VARIANTS_MAP = new Map<string, ComponentVariant>(
  */
 export const COMPONENT_VARIANTS: Record<string, ComponentVariant[]> = {
   select: SELECT_VARIANTS,
+  "swoosh-text": SWOOSH_TEXT_VARIANTS,
   card: CARD_VARIANTS,
   "code-block": CODE_BLOCK_VARIANTS,
   map: MAP_VARIANTS,

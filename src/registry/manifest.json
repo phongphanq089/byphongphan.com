@@ -120,6 +120,10 @@
     {
       "category": "text",
       "slug": "typing-text"
+    },
+    {
+      "category": "text",
+      "slug": "swoosh-text"
     }
   ],
   "hookCategories": [

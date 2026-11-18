@@ -21,6 +21,7 @@ export type ComponentSchematicType =
   | "underline-animation"
   | "letter-3d-swap"
   | "typing-text"
+  | "swoosh-text"
 
 export type BlockSchematicType =
   | "not-found-01"

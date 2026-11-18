@@ -180,6 +180,14 @@
     "registryDependencies": []
   },
   {
+    "name": "swoosh-text",
+    "type": "registry:component",
+    "title": "Swoosh Text",
+    "description": "Physical 3D extruded typography simulation with pointer-reactive dynamic lighting, spring velocity kick, and interactive mechanical keycap sink physics.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
     "name": "not-found-01",
     "type": "registry:block",
     "title": "Not Found 01",
