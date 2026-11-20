@@ -141,7 +141,9 @@ export function SlideToUnlock({
   const resolvedConfirming = confirmingLabel ?? defaultConfirming
   const resolvedDone = doneLabel ?? defaultDone
 
-  const [phase, setPhase] = useState<"idle" | "dragging" | "confirming" | "done">("idle")
+  const [phase, setPhase] = useState<
+    "idle" | "dragging" | "confirming" | "done"
+  >("idle")
   const [armed, setArmed] = useState(false)
   const reduceMotion = useReducedMotion()
 
@@ -187,8 +189,7 @@ export function SlideToUnlock({
     ([currentX, totalWidth, covered]: number[]) => {
       const innerW = Math.max(0, totalWidth - border * 2)
       const endOffset =
-        (1 - covered) *
-        Math.max(0, innerW - currentX - inset - thumbWidth / 2)
+        (1 - covered) * Math.max(0, innerW - currentX - inset - thumbWidth / 2)
       return `inset(0px ${endOffset}px 0px 0px round ${outerRadius}px)`
     }
   )
@@ -351,7 +352,7 @@ export function SlideToUnlock({
           variant === "power"
             ? "border-red-950/50 bg-zinc-950/90 dark:border-red-900/40 dark:bg-zinc-950/90"
             : "border-zinc-800/80 bg-zinc-900/90 backdrop-blur-md dark:border-white/10 dark:bg-zinc-900/90",
-          disabled && "opacity-50 pointer-events-none"
+          disabled && "pointer-events-none opacity-50"
         )}
         style={{ height, borderRadius: outerRadius }}
       >
@@ -368,9 +369,7 @@ export function SlideToUnlock({
           <span
             className={cn(
               "font-sans text-[15px] font-normal tracking-wide lowercase select-none",
-              variant === "power"
-                ? "ios-shimmer-power"
-                : "ios-shimmer-text"
+              variant === "power" ? "ios-shimmer-power" : "ios-shimmer-text"
             )}
           >
             {resolvedLabel}
@@ -407,7 +406,7 @@ export function SlideToUnlock({
                   ? { duration: 0 }
                   : { duration: 0.2, ease: EASE_OUT }
               }
-              className="absolute inset-y-0 flex items-center justify-center font-medium text-[15px] text-white tracking-normal select-none"
+              className="absolute inset-y-0 flex items-center justify-center text-[15px] font-medium tracking-normal text-white select-none"
               style={
                 done || busy
                   ? {
@@ -421,7 +420,11 @@ export function SlideToUnlock({
               }
             >
               <span>
-                {busy ? resolvedConfirming : done ? resolvedDone : resolvedLabel}
+                {busy
+                  ? resolvedConfirming
+                  : done
+                    ? resolvedDone
+                    : resolvedLabel}
               </span>
             </motion.div>
           </AnimatePresence>
@@ -440,7 +443,9 @@ export function SlideToUnlock({
             "absolute flex touch-none items-center justify-center outline-none select-none",
             "bg-white shadow-[0_2px_8px_rgba(0,0,0,0.25),0_1px_2px_rgba(0,0,0,0.12)]",
             "focus-visible:ring-2 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-900",
-            phase === "idle" && !disabled && "cursor-grab active:cursor-grabbing",
+            phase === "idle" &&
+              !disabled &&
+              "cursor-grab active:cursor-grabbing",
             phase === "dragging" && "cursor-grabbing"
           )}
           onClick={onClick}
@@ -498,7 +503,7 @@ export function SlideToUnlock({
               aria-hidden="true"
               className={cn(
                 "absolute size-5 animate-spin transition-opacity duration-200",
-                busy ? "opacity-100" : "opacity-0 pointer-events-none"
+                busy ? "opacity-100" : "pointer-events-none opacity-0"
               )}
               viewBox="0 0 24 24"
             >

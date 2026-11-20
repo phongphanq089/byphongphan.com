@@ -47,7 +47,6 @@ export interface DocActionsDropdownProps {
 
 export function DocActionsDropdown({
   item,
-  segment,
   rawMdxContent,
   className,
   size = "sm",
@@ -57,16 +56,9 @@ export function DocActionsDropdown({
   const itemTitle = item.title || item.name || item.slug
   const itemDesc = item.description || ""
 
-  const resolvedSegment = useMemo(() => {
-    if (segment) return segment
-    if (item.collection === "hooks") return "hooks"
-    if (item.collection === "blocks") return "blocks"
-    return "components"
-  }, [segment, item.collection])
-
   const docUrl = useMemo(
-    () => `${siteConfig.url}/ui/${resolvedSegment}/${item.slug}.md`,
-    [resolvedSegment, item.slug]
+    () => `${siteConfig.url}/r/${item.slug}.md`,
+    [item.slug]
   )
 
   const primarySourcePath = useMemo(() => {
