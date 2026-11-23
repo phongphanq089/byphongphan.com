@@ -57,6 +57,46 @@ export const siteConfig = {
   ],
 } as const
 
+export interface FooterSocial {
+  name: string
+  handle: string
+  href: string
+  iconName: "github" | "linkedin" | "twitter" | "email"
+}
+
+export const footerSocials: FooterSocial[] = [
+  {
+    name: siteConfig.social.github.name,
+    handle: `@${siteConfig.social.github.username || siteConfig.author.githubUsername}`,
+    href: siteConfig.social.github.href,
+    iconName: "github",
+  },
+  {
+    name: siteConfig.social.linkedin.name,
+    handle: siteConfig.social.linkedin.href
+      .replace(/^https?:\/\//, "")
+      .replace(/^www\./, "")
+      .replace(/^linkedin\.com\//, ""),
+    href: `https://${siteConfig.social.linkedin.href.replace(/^https?:\/\//, "")}`,
+    iconName: "linkedin",
+  },
+  {
+    name: siteConfig.social.twitter.name,
+    handle: siteConfig.social.twitter.href
+      .replace(/^https?:\/\//, "")
+      .replace(/^x\.com\//, "@")
+      .replace(/^twitter\.com\//, "@"),
+    href: siteConfig.social.twitter.href,
+    iconName: "twitter",
+  },
+  {
+    name: siteConfig.social.email.name,
+    handle: siteConfig.author.email,
+    href: siteConfig.social.email.href,
+    iconName: "email",
+  },
+]
+
 // Legacy compatibility exports
 export const DEFAULT_NAME_PORTFOLIO = siteConfig.title
 export const IMAGE_SHARE = siteConfig.ogImage

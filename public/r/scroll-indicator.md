@@ -183,7 +183,9 @@ export const ScrollIndicator = forwardRef<HTMLDivElement, ScrollIndicatorProps>(
     const [isOpen, setIsOpen] = useState(false)
     // Allows force-closing the labels even while pointer remains over the track
     const [isDismissed, setIsDismissed] = useState(false)
-    const [hoveredTrackTick, setHoveredTrackTick] = useState<number | null>(null)
+    const [hoveredTrackTick, setHoveredTrackTick] = useState<number | null>(
+      null
+    )
     const [hoveredSectionIndex, setHoveredSectionIndex] = useState<
       number | null
     >(null)
@@ -666,17 +668,17 @@ export const ScrollIndicator = forwardRef<HTMLDivElement, ScrollIndicatorProps>(
                       }}
                       className={cn(
                         "group/btn relative flex cursor-pointer items-center gap-2 py-1 font-mono text-xs tracking-wider whitespace-nowrap uppercase transition-all duration-150 outline-none select-none",
-                        "focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded-xs",
+                        "focus-visible:rounded-xs focus-visible:ring-1 focus-visible:ring-primary",
                         isActive
                           ? "font-semibold text-primary drop-shadow-[0_0_8px_var(--primary)]"
                           : isSectionHovered
-                            ? "font-medium text-foreground -translate-x-0.5"
-                            : "text-muted-foreground/60 hover:text-foreground hover:-translate-x-0.5"
+                            ? "-translate-x-0.5 font-medium text-foreground"
+                            : "text-muted-foreground/60 hover:-translate-x-0.5 hover:text-foreground"
                       )}
                     >
                       <span
                         className={cn(
-                          "text-[10px] tabular-nums font-mono transition-colors",
+                          "font-mono text-[10px] tabular-nums transition-colors",
                           isActive
                             ? "font-semibold text-primary"
                             : isSectionHovered
@@ -849,7 +851,9 @@ export const ScrollIndicator = forwardRef<HTMLDivElement, ScrollIndicatorProps>(
     const [isOpen, setIsOpen] = useState(false)
     // Allows force-closing the labels even while pointer remains over the track
     const [isDismissed, setIsDismissed] = useState(false)
-    const [hoveredTrackTick, setHoveredTrackTick] = useState<number | null>(null)
+    const [hoveredTrackTick, setHoveredTrackTick] = useState<number | null>(
+      null
+    )
     const [hoveredSectionIndex, setHoveredSectionIndex] = useState<
       number | null
     >(null)
@@ -1332,17 +1336,17 @@ export const ScrollIndicator = forwardRef<HTMLDivElement, ScrollIndicatorProps>(
                       }}
                       className={cn(
                         "group/btn relative flex cursor-pointer items-center gap-2 py-1 font-mono text-xs tracking-wider whitespace-nowrap uppercase transition-all duration-150 outline-none select-none",
-                        "focus-visible:ring-1 focus-visible:ring-primary focus-visible:rounded-xs",
+                        "focus-visible:rounded-xs focus-visible:ring-1 focus-visible:ring-primary",
                         isActive
                           ? "font-semibold text-primary drop-shadow-[0_0_8px_var(--primary)]"
                           : isSectionHovered
-                            ? "font-medium text-foreground -translate-x-0.5"
-                            : "text-muted-foreground/60 hover:text-foreground hover:-translate-x-0.5"
+                            ? "-translate-x-0.5 font-medium text-foreground"
+                            : "text-muted-foreground/60 hover:-translate-x-0.5 hover:text-foreground"
                       )}
                     >
                       <span
                         className={cn(
-                          "text-[10px] tabular-nums font-mono transition-colors",
+                          "font-mono text-[10px] tabular-nums transition-colors",
                           isActive
                             ? "font-semibold text-primary"
                             : isSectionHovered

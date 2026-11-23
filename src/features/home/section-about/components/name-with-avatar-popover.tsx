@@ -1,5 +1,3 @@
-import React from "react"
-
 import { Popover, PopoverContent, PopoverTrigger } from "@/registry/ui/popover"
 import { cn } from "@/shared/lib/utils"
 import {
@@ -23,10 +21,16 @@ export function NameWithAvatarPopover() {
         {/* Hand-drawn Curly Arrow pointing to Name - hidden when popover is open */}
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute -top-10 left-1/2 z-30 flex -translate-x-1/2 items-end transition-opacity duration-200 select-none group-data-popup-open/trigger:opacity-0 sm:-top-12"
+          className="pointer-events-none absolute -top-10 left-[60%] z-30 flex -translate-x-1/2 items-end transition-opacity duration-200 select-none group-data-popup-open/trigger:opacity-0 sm:-top-12"
         >
+          <style>{`
+            @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap');
+            .font-handwriting {
+              font-family: 'Caveat', cursive, sans-serif;
+            }
+          `}</style>
           <HandDrawnCurlyArrow className="h-6 w-11 text-muted-foreground/75 sm:h-7 sm:w-12" />
-          <span className="font-handwriting -mb-1 ml-1 -rotate-6 text-xl font-medium tracking-wide whitespace-nowrap text-muted-foreground">
+          <span className="font-handwriting -mb-1 ml-1 -rotate-6 text-2xl font-medium tracking-wide whitespace-nowrap text-muted-foreground">
             hover here
           </span>
         </span>
