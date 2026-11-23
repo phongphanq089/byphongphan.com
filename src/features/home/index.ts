@@ -1,4 +1,5 @@
 export * from "./banner-hero"
+export * from "./components/full-width-caliper-ruler"
 export * from "./section-about"
 export * from "./section-blocks"
 export * from "./section-blog"

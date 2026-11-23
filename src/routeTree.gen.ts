@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SiteRouteRouteImport } from './routes/_site/route'
 import { Route as BrandAppRouteImport } from './routes/brand-app'
+import { Route as HomePreviewRouteImport } from './routes/home-preview'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -31,6 +32,11 @@ const SiteRouteRoute = SiteRouteRouteImport.update({
 const BrandAppRoute = BrandAppRouteImport.update({
   id: '/brand-app',
   path: '/brand-app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HomePreviewRoute = HomePreviewRouteImport.update({
+  id: '/home-preview',
+  path: '/home-preview',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileRoute = ProfileRouteImport.update({
@@ -98,6 +104,7 @@ export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
   '/ui': typeof UiRouteRouteWithChildren
   '/brand-app': typeof BrandAppRoute
+  '/home-preview': typeof HomePreviewRoute
   '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -111,6 +118,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/brand-app': typeof BrandAppRoute
+  '/home-preview': typeof HomePreviewRoute
   '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -128,6 +136,7 @@ export interface FileRoutesById {
   '/_site': typeof SiteRouteRouteWithChildren
   '/ui': typeof UiRouteRouteWithChildren
   '/brand-app': typeof BrandAppRoute
+  '/home-preview': typeof HomePreviewRoute
   '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -146,6 +155,7 @@ export interface FileRouteTypes {
     | '/'
     | '/ui'
     | '/brand-app'
+    | '/home-preview'
     | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
@@ -159,6 +169,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/brand-app'
+    | '/home-preview'
     | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
@@ -175,6 +186,7 @@ export interface FileRouteTypes {
     | '/_site'
     | '/ui'
     | '/brand-app'
+    | '/home-preview'
     | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
@@ -192,6 +204,7 @@ export interface RootRouteChildren {
   SiteRouteRoute: typeof SiteRouteRouteWithChildren
   UiRouteRoute: typeof UiRouteRouteWithChildren
   BrandAppRoute: typeof BrandAppRoute
+  HomePreviewRoute: typeof HomePreviewRoute
   ProfileRoute: typeof ProfileRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -212,6 +225,13 @@ declare module '@tanstack/react-router' {
       path: '/brand-app'
       fullPath: '/brand-app'
       preLoaderRoute: typeof BrandAppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/home-preview': {
+      id: '/home-preview'
+      path: '/home-preview'
+      fullPath: '/home-preview'
+      preLoaderRoute: typeof HomePreviewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile': {
@@ -338,6 +358,7 @@ const rootRouteChildren: RootRouteChildren = {
   SiteRouteRoute: SiteRouteRouteWithChildren,
   UiRouteRoute: UiRouteRouteWithChildren,
   BrandAppRoute: BrandAppRoute,
+  HomePreviewRoute: HomePreviewRoute,
   ProfileRoute: ProfileRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,

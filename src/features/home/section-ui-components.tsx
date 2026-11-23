@@ -8,7 +8,7 @@ import {
 import { cn } from "@/shared/lib/utils"
 import { SectionHeading } from "@/shared/ui/system/section-heading"
 
-const UiComponentsSection = () => {
+export function UiComponentsSection() {
   const categories = getFeaturedComponentCategories()
   const totalCount = COMPONENTS_DATA.length
 
