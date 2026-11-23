@@ -146,12 +146,12 @@ export function HomePreviewPage() {
         className="pointer-events-none absolute inset-0 z-10 mx-auto w-full max-w-[1024px] px-4 select-none sm:px-6"
       >
         <div className="relative size-full">
-          <div className="absolute top-0 bottom-0 left-0 w-px bg-border/40" />
-          <div className="absolute top-0 bottom-0 left-[224px] hidden w-px bg-border/40 lg:block" />
-          <div className="absolute top-0 bottom-0 left-[272px] hidden w-px bg-border/40 lg:block" />
-          <div className="absolute top-0 bottom-0 left-[800px] hidden w-px bg-border/40 lg:block" />
-          <div className="absolute top-0 bottom-0 left-[848px] hidden w-px bg-border/40 lg:block" />
-          <div className="absolute top-0 right-0 bottom-0 w-px bg-border/40" />
+          <div className="absolute top-0 bottom-0 left-0 w-px bg-border/60" />
+          <div className="absolute top-0 bottom-0 left-[224px] hidden w-px bg-border/60 lg:block" />
+          <div className="absolute top-0 bottom-0 left-[272px] hidden w-px bg-border/60 lg:block" />
+          <div className="absolute top-0 bottom-0 left-[800px] hidden w-px bg-border/60 lg:block" />
+          <div className="absolute top-0 bottom-0 left-[848px] hidden w-px bg-border/60 lg:block" />
+          <div className="absolute top-0 right-0 bottom-0 w-px bg-border/60" />
         </div>
       </div>
 

@@ -1,7 +1,6 @@
 import { Outlet, useRouterState } from "@tanstack/react-router"
-import { useEffect, useState } from "react"
 
-import { FullWidthCaliperRuler } from "@/features/home/components/full-width-caliper-ruler"
+import { DraftingTimeReadout, FullWidthCaliperRuler } from "@/features/home"
 import { ScrollIndicator } from "@/registry/animated/scroll-indicator"
 import { HOME_TOC_ITEMS } from "@/shared/config"
 import { useScrollPosition } from "@/shared/hooks/use-scroll-position"
@@ -41,9 +40,6 @@ export interface SiteDraftingLayoutProps {
 export function SiteDraftingLayout({ children }: SiteDraftingLayoutProps) {
   useScrollToTop()
 
-  const [time, setTime] = useState<string>("")
-  const [date, setDate] = useState<string>("")
-
   const currentPath = useRouterState({ select: (s) => s.location.pathname })
   const isHome =
     currentPath === "/" ||
@@ -63,35 +59,9 @@ export function SiteDraftingLayout({ children }: SiteDraftingLayoutProps) {
   const { y } = useScrollPosition()
   const isHomeHeaderVisible = y > 300
 
-  // Live Asia/Ho_Chi_Minh clock for the architectural origin readout
-  useEffect(() => {
-    if (!isHome) return
-
-    const updateTime = () => {
-      const now = new Date()
-      const timeStr = now.toLocaleTimeString("en-GB", {
-        timeZone: "Asia/Ho_Chi_Minh",
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-      const dateStr = now.toLocaleDateString("en-GB", {
-        timeZone: "Asia/Ho_Chi_Minh",
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      })
-      setTime(timeStr)
-      setDate(dateStr)
-    }
-
-    updateTime()
-    const timer = setInterval(updateTime, 1000)
-    return () => clearInterval(timer)
-  }, [isHome])
-
   return (
     <GridLayoutContext.Provider value={{ maxWidth: layoutMaxWidth }}>
-      <div className="relative min-h-screen w-full overflow-x-clip bg-background font-sans text-foreground antialiased selection:bg-pp-secondary/25">
+      <div className="relative min-h-screen w-full overflow-x-clip bg-background text-foreground antialiased selection:bg-pp-secondary/25">
         {/* ─── FLOATING PROFILE HEADER ─── */}
         {/* On Home: hidden by default at top, slides down when y > 300px */}
         {/* On Subpages: sticky at top for immediate navigation & search */}
@@ -126,12 +96,12 @@ export function SiteDraftingLayout({ children }: SiteDraftingLayoutProps) {
             className="pointer-events-none absolute inset-0 z-10 mx-auto w-full max-w-[1024px] px-4 select-none sm:px-6"
           >
             <div className="relative size-full">
-              <div className="absolute top-0 bottom-0 left-0 w-px bg-border/40" />
-              <div className="absolute top-0 bottom-0 left-[224px] hidden w-px bg-border/40 lg:block" />
-              <div className="absolute top-0 bottom-0 left-[272px] hidden w-px bg-border/40 lg:block" />
-              <div className="absolute top-0 bottom-0 left-[800px] hidden w-px bg-border/40 lg:block" />
-              <div className="absolute top-0 bottom-0 left-[848px] hidden w-px bg-border/40 lg:block" />
-              <div className="absolute top-0 right-0 bottom-0 w-px bg-border/40" />
+              <div className="absolute top-0 bottom-0 left-0 w-px bg-border/60" />
+              <div className="absolute top-0 bottom-0 left-[224px] hidden w-px bg-border/60 lg:block" />
+              <div className="absolute top-0 bottom-0 left-[272px] hidden w-px bg-border/60 lg:block" />
+              <div className="absolute top-0 bottom-0 left-[800px] hidden w-px bg-border/60 lg:block" />
+              <div className="absolute top-0 bottom-0 left-[848px] hidden w-px bg-border/60 lg:block" />
+              <div className="absolute top-0 right-0 bottom-0 w-px bg-border/60" />
             </div>
           </div>
         )}
@@ -143,23 +113,11 @@ export function SiteDraftingLayout({ children }: SiteDraftingLayoutProps) {
           </div>
         )}
 
-        {/* ─── ARCHITECTURAL ORIGIN & TIME BAR (HOME ONLY) ─── */}
+        {/* ─── ARCHITECTURAL ORIGIN & TIME READOUT (HOME ONLY) ─── */}
         {isHome && (
-          <div className="relative z-10 mx-auto w-full max-w-[1024px] px-4 pt-8 pb-4 select-none sm:px-6">
-            <div className="relative flex items-start justify-end pb-8">
-              <div className="pr-4 text-right font-mono text-[10px] leading-tight text-muted-foreground sm:pr-6">
-                <div className="text-xs text-foreground sm:text-sm">
-                  From Ninh Hoà,
-                </div>
-                <div className="mt-0.5 text-[11px] text-muted-foreground">
-                  {date || "23 November 2026"}
-                </div>
-                <div className="mt-1 flex items-center justify-end gap-1.5 text-[10px] text-muted-foreground/80">
-                  <span>{time || "16:00"}</span>
-                  <span className="text-muted-foreground/40">•</span>
-                  <span className="text-muted-foreground">blue hour</span>
-                </div>
-              </div>
+          <div className="relative z-10 mx-auto w-full max-w-[1024px] px-4 pt-6 pb-2 select-none sm:px-6">
+            <div className="relative flex items-center justify-end pb-6">
+              <DraftingTimeReadout />
             </div>
           </div>
         )}
