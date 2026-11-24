@@ -128,7 +128,7 @@ export const SHOWCASE_ITEMS: ShowcaseComponentItem[] = [
   {
     slug: "card",
     index: "08",
-    title: "Scroll Indicator",
+    title: "Card",
     description: "Vertical section progress caliper with audible tick snaps.",
     category: "card",
     gridPlacementClass:

@@ -48,7 +48,7 @@ export function ShowcaseHeader({
           className="font-medium whitespace-nowrap text-foreground/80 transition-colors group-hover:text-foreground"
         >
           <span className="flex items-center gap-2">
-            EXPLORE UI
+            Explore ui
             <ArrowRightIcon size={18} />
           </span>
         </UnderlineToBackground>

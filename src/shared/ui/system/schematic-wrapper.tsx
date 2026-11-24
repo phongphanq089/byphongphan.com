@@ -103,7 +103,7 @@ export function SchematicWrapper({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       className={cn(
-        "relative mx-auto inline-flex w-fit max-w-full flex-col items-center justify-center pt-7 pr-4 pb-7 pl-10 select-none",
+        "relative mx-auto inline-flex w-fit max-w-full flex-col items-center justify-center pt-6 pr-2 pb-6 pl-8 select-none sm:pt-7 sm:pr-4 sm:pb-7 sm:pl-10",
         className
       )}
     >
@@ -114,8 +114,8 @@ export function SchematicWrapper({
         {/* 1. THƯỚC ĐO CHIỀU NGANG PHÍA TRÊN */}
         <div
           className={cn(
-            "pointer-events-none absolute -top-7 right-0 left-0 flex flex-col items-center",
-            "font-mono text-[11px] tracking-tight text-zinc-400 dark:text-zinc-400",
+            "pointer-events-none absolute -top-6 right-0 left-0 flex flex-col items-center sm:-top-7",
+            "font-mono text-[9.5px] tracking-tight text-zinc-400 sm:text-[11px] dark:text-zinc-400",
             "transition-all duration-200 ease-out",
             effectiveActive
               ? "translate-y-0 opacity-100"
@@ -123,21 +123,21 @@ export function SchematicWrapper({
             groupHover && "group-hover:translate-y-1 group-hover:opacity-0"
           )}
         >
-          <span className="mb-1 text-[10.5px] leading-none text-zinc-400">
+          <span className="mb-1 text-[9px] leading-none text-zinc-400 sm:text-[10.5px]">
             {widthLabel || `w-full - max ${dimensions.width}`}
           </span>
           <div className="flex w-full items-center">
-            <span className="h-2.5 w-[1px] bg-zinc-600" />
+            <span className="h-2 w-[1px] bg-zinc-600 sm:h-2.5" />
             <span className="h-[1px] flex-1 bg-zinc-700" />
-            <span className="h-2.5 w-[1px] bg-zinc-600" />
+            <span className="h-2 w-[1px] bg-zinc-600 sm:h-2.5" />
           </div>
         </div>
 
         {/* 2. THƯỚC ĐO CHIỀU DỌC BÊN TRÁI */}
         <div
           className={cn(
-            "pointer-events-none absolute top-0 bottom-0 -left-10 flex items-center",
-            "font-mono text-[11px] text-zinc-400 dark:text-zinc-400",
+            "pointer-events-none absolute top-0 bottom-0 -left-8 flex items-center sm:-left-10",
+            "font-mono text-[9.5px] text-zinc-400 sm:text-[11px] dark:text-zinc-400",
             "transition-all duration-200 ease-out",
             effectiveActive
               ? "translate-x-0 opacity-100"
@@ -145,13 +145,13 @@ export function SchematicWrapper({
             groupHover && "group-hover:translate-x-1 group-hover:opacity-0"
           )}
         >
-          <span className="mr-2 text-[10.5px] leading-none text-zinc-400">
+          <span className="mr-1.5 text-[9px] leading-none text-zinc-400 sm:mr-2 sm:text-[10.5px]">
             {heightLabel || dimensions.height || defaultHeight}
           </span>
           <div className="flex h-full flex-col items-center">
-            <span className="h-[1px] w-2.5 bg-zinc-600" />
+            <span className="h-[1px] w-2 bg-zinc-600 sm:w-2.5" />
             <span className="w-[1px] flex-1 bg-zinc-700" />
-            <span className="h-[1px] w-2.5 bg-zinc-600" />
+            <span className="h-[1px] w-2 bg-zinc-600 sm:w-2.5" />
           </div>
         </div>
 

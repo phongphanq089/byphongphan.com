@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router"
 
 import {
   SectionAbout,
+  SectionBlocks,
   SectionComponents,
   SectionTechStack,
 } from "@/features/home"
@@ -29,6 +30,10 @@ function HomePage() {
       {/* ─── PART 2: FULL-WIDTH BREAKOUT — SECTION III: UI COMPONENTS SHOWCASE ─── */}
       {/* Expands to 100% full viewport width with flush bottom baseline */}
       <SectionComponents />
+
+      {/* ─── PART 3: SECTION IV: PRODUCTION BLOCKS (HORIZONTAL SLIDE TO RIGHT) ─── */}
+      {/* Aligns with 1024px content column on the left and bleeds to the right edge */}
+      <SectionBlocks />
     </div>
   )
 }
