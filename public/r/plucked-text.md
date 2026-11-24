@@ -462,7 +462,8 @@ export function PluckedText({
       <div
         className={cn(
           "group/pluck relative max-w-full cursor-grab touch-none px-[0.5em] py-[0.7em] leading-none tracking-tight select-none data-[grabbing]:cursor-grabbing",
-          !hasCustomFontSize && "text-xl font-black text-foreground sm:text-3xl md:text-5xl",
+          !hasCustomFontSize &&
+            "text-xl font-black text-foreground sm:text-3xl md:text-5xl",
           className
         )}
         ref={stageRef}

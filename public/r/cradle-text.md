@@ -506,7 +506,8 @@ export function CradleText({
       <div
         className={cn(
           "relative max-w-full cursor-grab touch-pan-y px-[0.9em] pt-[1.5em] pb-[0.45em] leading-none tracking-tight select-none data-[grabbing]:cursor-grabbing motion-reduce:cursor-default",
-          !hasCustomFontSize && "text-2xl font-semibold text-foreground xs:text-3xl sm:text-5xl md:text-6xl",
+          !hasCustomFontSize &&
+            "text-2xl font-semibold text-foreground xs:text-3xl sm:text-5xl md:text-6xl",
           className
         )}
         ref={stageRef}

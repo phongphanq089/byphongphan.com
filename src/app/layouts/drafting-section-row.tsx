@@ -66,7 +66,7 @@ export function DraftingSectionRow({
       id={id}
       data-section={id}
       className={cn(
-        "relative flex w-full flex-col items-start pb-16 lg:flex-row lg:pb-20",
+        "relative flex w-full flex-col items-center pb-16 lg:flex-row lg:items-start lg:pb-20",
         className
       )}
     >

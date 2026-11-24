@@ -1,6 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-import { SectionAbout, SectionComponents } from "@/features/home"
+import {
+  SectionAbout,
+  SectionComponents,
+  SectionTechStack,
+} from "@/features/home"
 import { createSeoMeta } from "@/shared/config"
 
 export const Route = createFileRoute("/_site/")({
@@ -17,6 +21,9 @@ function HomePage() {
       <div className="mx-auto w-full max-w-[1024px] px-4 pt-4 sm:px-6">
         {/* SECTION I: ABOUT / HERO */}
         <SectionAbout />
+
+        {/* SECTION II: TECH STACK */}
+        <SectionTechStack />
       </div>
 
       {/* ─── PART 2: FULL-WIDTH BREAKOUT — SECTION III: UI COMPONENTS SHOWCASE ─── */}
