@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-import { SectionAbout } from "@/features/home"
+import { SectionAbout, SectionComponents } from "@/features/home"
 import { createSeoMeta } from "@/shared/config"
 
 export const Route = createFileRoute("/_site/")({
@@ -12,12 +12,16 @@ export const Route = createFileRoute("/_site/")({
 
 function HomePage() {
   return (
-    <div
-      id="canvas"
-      className="relative z-10 mx-auto w-full max-w-[1024px] px-4 pt-4 pb-28 select-none sm:px-6"
-    >
-      {/* SECTION I: ABOUT / HERO */}
-      <SectionAbout />
+    <div id="canvas" className="relative z-10 w-full pb-28 select-none">
+      {/* ─── PART 1: 1024px ARCHITECTURAL BLUEPRINT SHEET (UPPER CONTAINER) ─── */}
+      <div className="mx-auto w-full max-w-[1024px] px-4 pt-4 sm:px-6">
+        {/* SECTION I: ABOUT / HERO */}
+        <SectionAbout />
+      </div>
+
+      {/* ─── PART 2: FULL-WIDTH BREAKOUT — SECTION III: UI COMPONENTS SHOWCASE ─── */}
+      {/* Expands to 100% full viewport width with flush bottom baseline */}
+      <SectionComponents />
     </div>
   )
 }

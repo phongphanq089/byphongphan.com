@@ -61,6 +61,9 @@ const INTRO_PULL = 520
 // Below this energy (radians, roughly) the cradle is at rest.
 const REST = 0.0004
 
+const FONT_SIZE_REGEX =
+  /\b(?:[a-z0-9_-]+:)*text-(?:xs|sm|base|lg|[1-9]xl|\[[0-9]+(?:\.[0-9]+)?(?:px|rem|em|pt|%)\])\b/i
+
 interface Bob {
   el: HTMLElement
   /** Ink edges and centre, in stage px, with the letter hanging still. */
@@ -443,7 +446,7 @@ export function CradleText({
         if (!visible) {
           return
         }
-        if (!greeted && entry.intersectionRatio > 0.6) {
+        if (!greeted && entry.isIntersecting) {
           greeted = true
           greetTimer = window.setTimeout(() => {
             const first = bobs[0]
@@ -455,7 +458,7 @@ export function CradleText({
         }
         start()
       },
-      { threshold: [0, 0.6] }
+      { threshold: 0 }
     )
     intersection.observe(stage)
     const onVisibility = () => {
@@ -488,6 +491,11 @@ export function CradleText({
     }
   }, [resolvedText, intro, bounce])
 
+  const hasCustomFontSize = Boolean(
+    (className && FONT_SIZE_REGEX.test(className)) ||
+    (wrapperClassName && FONT_SIZE_REGEX.test(wrapperClassName))
+  )
+
   return (
     <div
       className={cn(
@@ -498,8 +506,7 @@ export function CradleText({
       <div
         className={cn(
           "relative max-w-full cursor-grab touch-pan-y px-[0.9em] pt-[1.5em] pb-[0.45em] leading-none tracking-tight select-none data-[grabbing]:cursor-grabbing motion-reduce:cursor-default",
-          // Responsive fluid typography with fallback
-          "text-2xl font-semibold text-foreground xs:text-3xl sm:text-5xl md:text-6xl",
+          !hasCustomFontSize && "text-2xl font-semibold text-foreground xs:text-3xl sm:text-5xl md:text-6xl",
           className
         )}
         ref={stageRef}

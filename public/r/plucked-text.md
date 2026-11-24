@@ -61,6 +61,9 @@ const REST_ENERGY = 0.02
 // Letters tilt with the string, a little less than its full slope.
 const TILT = 0.85
 
+const FONT_SIZE_REGEX =
+  /\b(?:[a-z0-9_-]+:)*text-(?:xs|sm|base|lg|[1-9]xl|\[[0-9]+(?:\.[0-9]+)?(?:px|rem|em|pt|%)\])\b/i
+
 interface Mode {
   q: number
   v: number
@@ -408,13 +411,13 @@ export function PluckedText({
         if (!visible) {
           return
         }
-        if (!greeted && entry.intersectionRatio > 0.6) {
+        if (!greeted && entry.isIntersecting) {
           greeted = true
           triangleModes(modes, length, length * 0.3, -swing * 0.5)
         }
         start()
       },
-      { threshold: [0, 0.6] }
+      { threshold: 0 }
     )
     intersection.observe(stage)
     const onVisibility = () => {
@@ -444,6 +447,11 @@ export function PluckedText({
     }
   }, [resolvedText, tension, strum])
 
+  const hasCustomFontSize = Boolean(
+    (className && FONT_SIZE_REGEX.test(className)) ||
+    (wrapperClassName && FONT_SIZE_REGEX.test(wrapperClassName))
+  )
+
   return (
     <div
       className={cn(
@@ -454,7 +462,7 @@ export function PluckedText({
       <div
         className={cn(
           "group/pluck relative max-w-full cursor-grab touch-none px-[0.5em] py-[0.7em] leading-none tracking-tight select-none data-[grabbing]:cursor-grabbing",
-          "text-xl font-black text-foreground sm:text-3xl md:text-5xl",
+          !hasCustomFontSize && "text-xl font-black text-foreground sm:text-3xl md:text-5xl",
           className
         )}
         ref={stageRef}

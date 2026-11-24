@@ -41,6 +41,9 @@ const REST = Math.SQRT1_2
 const EPSILON = 0.0008
 const WHITESPACE = /\s+/
 
+const FONT_SIZE_REGEX =
+  /\b(?:[a-z0-9_-]+:)*text-(?:xs|sm|base|lg|[1-9]xl|\[[0-9]+(?:\.[0-9]+)?(?:px|rem|em|pt|%)\])\b/i
+
 const segmenter =
   typeof Intl !== "undefined" && "Segmenter" in Intl
     ? new Intl.Segmenter(undefined, { granularity: "grapheme" })
@@ -433,10 +436,15 @@ export function SwooshText({
 
   const words = resolvedText.split(WHITESPACE).filter(Boolean)
 
+  const hasCustomFontSize = Boolean(
+    className && FONT_SIZE_REGEX.test(className)
+  )
+
   return (
     <Tag
       className={cn(
-        "relative touch-manipulation text-4xl font-black tracking-tight select-none sm:text-6xl",
+        "relative touch-manipulation font-black tracking-tight select-none",
+        !hasCustomFontSize && "text-4xl sm:text-6xl",
         "[--ex-face:var(--color-zinc-900,#18181b)] [--ex-far:var(--color-zinc-600,#52525b)] [--ex-near:var(--color-zinc-300,#d4d4d8)]",
         "dark:[--ex-face:var(--color-zinc-50,#fafafa)] dark:[--ex-far:var(--color-zinc-700,#3f3f46)] dark:[--ex-near:var(--color-zinc-400,#a1a1aa)]",
         className

@@ -29,11 +29,11 @@ export function AboutHeroBanner({
       )}
     >
       {/* Viewport Frame with CAD Corner Crosshairs */}
-      <div className="relative overflow-hidden rounded-xs border border-border/60 bg-black/60">
+      <div className="relative aspect-video overflow-hidden rounded-xs border border-border/60 bg-black/60">
         <img
           src={src}
           alt={alt}
-          className="h-auto max-h-[300px] w-full object-cover object-center transition-transform duration-700 ease-out select-none group-hover/banner:scale-[1.01]"
+          className="size-full object-cover object-center transition-transform duration-700 ease-out select-none group-hover/banner:scale-[1.01]"
           loading="eager"
         />
       </div>

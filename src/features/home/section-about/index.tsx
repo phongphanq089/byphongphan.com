@@ -1,6 +1,7 @@
 import { DraftingSectionRow } from "@/app/layouts/drafting-section-row"
 
 import AboutGithubcontributions from "./components/about-github-contributions"
+import { AboutHeroBanner } from "./components/about-hero-banner"
 import { AboutHeroSocials } from "./components/about-hero-socials"
 import { AboutHeroStory } from "./components/about-hero-story"
 import { AboutStickerStack } from "./components/about-sticker-stack"
@@ -32,7 +33,7 @@ export function SectionAbout({ className }: SectionAboutV2Props) {
       leftSlot={<PPPixelBadge />}
       className={className}
     >
-      {/* <AboutHeroBanner /> */}
+      <AboutHeroBanner />
 
       {/* 3. Editorial Story & Craft Philosophy */}
       <AboutHeroStory />
