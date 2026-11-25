@@ -9,6 +9,7 @@ import { useTocRailSections } from "@/shared/hooks/use-toc-rail-sections"
 import { cn } from "@/shared/lib/utils"
 import { EdgeBlur } from "@/shared/ui/system/edge-blur"
 import ProgressWhileScroll from "@/shared/ui/system/progress-while-scroll"
+import { StripedPattern } from "@/shared/ui/system/striped-pattern"
 import { Header } from "@/widgets"
 import { Footer } from "@/widgets/profile-footer"
 import BottomMenu from "@/widgets/profile-header/bottom-menu"
@@ -96,6 +97,16 @@ export function SiteDraftingLayout({ children }: SiteDraftingLayoutProps) {
             className="pointer-events-none absolute inset-0 z-10 mx-auto w-full max-w-[1024px] px-4 select-none sm:px-6"
           >
             <div className="relative size-full">
+              {/* Left 48px Gutter Channel Striped Hatching */}
+              <div className="absolute top-0 bottom-0 left-[224px] hidden w-[48px] lg:block">
+                <StripedPattern variant="full" className="opacity-70" />
+              </div>
+
+              {/* Right 48px Gutter Channel Striped Hatching */}
+              <div className="absolute top-0 bottom-0 left-[800px] hidden w-[48px] lg:block">
+                <StripedPattern variant="full" className="opacity-70" />
+              </div>
+
               <div className="absolute top-0 bottom-0 left-0 w-px bg-border/60" />
               <div className="absolute top-0 bottom-0 left-[224px] hidden w-px bg-border/60 lg:block" />
               <div className="absolute top-0 bottom-0 left-[272px] hidden w-px bg-border/60 lg:block" />

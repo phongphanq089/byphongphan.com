@@ -80,13 +80,9 @@ export function Header() {
         {/* Mobile / tablet cluster — visible below lg */}
         <div className="flex shrink-0 items-center gap-1.5 sm:gap-2 lg:hidden">
           <GitHubStarButton />
-          <Link
-            to="/ui/$collection"
-            params={{ collection: "base" }}
-            className={cn(CAPSULE, "group/btn gap-1 pr-3 pl-3.5")}
-          >
+          <Link to="/ui" className={cn(CAPSULE, "group/btn gap-1 pr-3 pl-3.5")}>
             <span className="font-mono text-[11px] font-medium sm:text-xs">
-              Component UI
+              UI studio
             </span>
             <ArrowRight className="size-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5" />
           </Link>

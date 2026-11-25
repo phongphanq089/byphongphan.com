@@ -75,7 +75,7 @@ export function UnderConstructionBlock({
       <GridContainer
         borderTop
         borderBottom
-        showCrosshairs
+        showCrosshairs={false}
         className="relative overflow-hidden px-4 py-12 sm:px-8 sm:py-16 md:py-20"
       >
         <div className="relative z-10 mx-auto flex w-full max-w-2xl flex-col items-center">
