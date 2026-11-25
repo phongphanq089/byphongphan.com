@@ -114,7 +114,7 @@ export function SectionHooks({ className }: SectionHooksProps) {
           >
             <UnderlineToBackground
               targetTextColor="var(--background)"
-              className="font-medium whitespace-nowrap text-foreground/80 transition-colors group-hover:text-foreground"
+              className="font-medium whitespace-nowrap text-foreground/80"
             >
               <span className="flex items-center gap-2">
                 All hooks

@@ -333,6 +333,8 @@ export function ShowcaseLiveComponent({
                 alt="16:9"
                 width={1000}
                 height={800}
+                loading="lazy"
+                decoding="async"
                 className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover/card:scale-110"
               />
 

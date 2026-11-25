@@ -1,9 +1,9 @@
 import { Outlet, useRouterState } from "@tanstack/react-router"
+import { useEffect, useMemo, useState } from "react"
 
 import { DraftingTimeReadout, FullWidthCaliperRuler } from "@/features/home"
 import { ScrollIndicator } from "@/registry/animated/scroll-indicator"
 import { HOME_TOC_ITEMS } from "@/shared/config"
-import { useScrollPosition } from "@/shared/hooks/use-scroll-position"
 import { useScrollToTop } from "@/shared/hooks/use-scroll-to-top"
 import { useTocRailSections } from "@/shared/hooks/use-toc-rail-sections"
 import { cn } from "@/shared/lib/utils"
@@ -38,6 +38,66 @@ export interface SiteDraftingLayoutProps {
  *   - EdgeBlur
  *   - Production Footer with PhongPhan spotlight watermark
  */
+const HOME_HEADER_SCROLL_THRESHOLD = 300
+
+/**
+ * Isolates scroll threshold tracking from SiteDraftingLayout so scrolling
+ * never re-renders the entire page tree or invalidates layout contexts.
+ */
+function FloatingSiteHeader({ isHome }: { isHome: boolean }) {
+  const [isPastThreshold, setIsPastThreshold] = useState(false)
+
+  useEffect(() => {
+    if (!isHome || typeof window === "undefined") return
+
+    const updateVisibility = () => {
+      const next = window.scrollY > HOME_HEADER_SCROLL_THRESHOLD
+      setIsPastThreshold((prev) => (prev === next ? prev : next))
+    }
+
+    const rafId = window.requestAnimationFrame(updateVisibility)
+    window.addEventListener("scroll", updateVisibility, { passive: true })
+    return () => {
+      window.cancelAnimationFrame(rafId)
+      window.removeEventListener("scroll", updateVisibility)
+    }
+  }, [isHome])
+
+  const isHomeHeaderVisible = isHome && isPastThreshold
+
+  return (
+    <div
+      className={cn(
+        "z-50 w-full transition-all duration-300 ease-out select-none",
+        isHome
+          ? cn(
+              "fixed top-0 right-0 left-0",
+              isHomeHeaderVisible
+                ? "pointer-events-auto translate-y-0 opacity-100"
+                : "pointer-events-none -translate-y-full opacity-0"
+            )
+          : "sticky top-0 overflow-visible"
+      )}
+    >
+      <Header />
+    </div>
+  )
+}
+
+/**
+ * Mounts home TOC section measurement listeners only when viewing `/`.
+ */
+function HomeScrollRail() {
+  const homeRailSections = useTocRailSections(HOME_TOC_ITEMS)
+
+  return (
+    <ScrollIndicator
+      sections={homeRailSections}
+      className="fixed top-1/2 right-2 z-40 flex h-[340px] -translate-y-1/2 sm:right-6 sm:h-[440px]"
+    />
+  )
+}
+
 export function SiteDraftingLayout({ children }: SiteDraftingLayoutProps) {
   useScrollToTop()
 
@@ -56,39 +116,21 @@ export function SiteDraftingLayout({ children }: SiteDraftingLayoutProps) {
       ? "6xl"
       : "default"
 
-  const homeRailSections = useTocRailSections(HOME_TOC_ITEMS)
-  const { y } = useScrollPosition()
-  const isHomeHeaderVisible = y > 300
+  const gridContextValue = useMemo(
+    () => ({ maxWidth: layoutMaxWidth }),
+    [layoutMaxWidth]
+  )
 
   return (
-    <GridLayoutContext.Provider value={{ maxWidth: layoutMaxWidth }}>
+    <GridLayoutContext.Provider value={gridContextValue}>
       <div className="relative min-h-screen w-full overflow-x-clip bg-background text-foreground antialiased selection:bg-pp-secondary/25">
         {/* ─── FLOATING PROFILE HEADER ─── */}
         {/* On Home: hidden by default at top, slides down when y > 300px */}
         {/* On Subpages: sticky at top for immediate navigation & search */}
-        <div
-          className={cn(
-            "z-50 w-full transition-all duration-300 ease-out select-none",
-            isHome
-              ? cn(
-                  "fixed top-0 right-0 left-0",
-                  isHomeHeaderVisible
-                    ? "pointer-events-auto translate-y-0 opacity-100"
-                    : "pointer-events-none -translate-y-full opacity-0"
-                )
-              : "sticky top-0 overflow-visible"
-          )}
-        >
-          <Header />
-        </div>
+        <FloatingSiteHeader isHome={isHome} />
 
         {/* ─── SCROLL INDICATOR RAIL (LINENAV PROXIMITY WAVE) ─── */}
-        {isHome && (
-          <ScrollIndicator
-            sections={homeRailSections}
-            className="fixed top-1/2 right-2 z-40 flex h-[340px] -translate-y-1/2 sm:right-6 sm:h-[440px]"
-          />
-        )}
+        {isHome && <HomeScrollRail />}
 
         {/* ─── CONTINUOUS ARCHITECTURAL SPINE (6 VERTICAL HAIRLINES TOP TO BOTTOM) ─── */}
         {isHome && (

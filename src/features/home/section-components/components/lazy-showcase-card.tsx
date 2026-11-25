@@ -29,7 +29,7 @@ export function LazyShowcaseCard({ item, className }: LazyShowcaseCardProps) {
       onMouseEnter={() => playHoverSound()}
       onClick={handleCardClick}
       className={cn(
-        "group relative flex w-full cursor-pointer flex-col justify-between overflow-hidden rounded-xl bg-muted p-3 backdrop-blur-md select-none hover:border",
+        "group relative flex w-full cursor-pointer flex-col justify-between overflow-hidden rounded-xl bg-muted p-3 select-none hover:border",
         item.gridPlacementClass,
         "2xl:h-full 2xl:min-h-0",
         className
@@ -37,7 +37,7 @@ export function LazyShowcaseCard({ item, className }: LazyShowcaseCardProps) {
     >
       {/* ─── CAD Blueprint Micro-Dot Matrix Background ─── */}
 
-      <div className="relative z-20 flex shrink-0 items-center justify-between bg-muted px-3 py-2 backdrop-blur-xs sm:px-3.5 sm:py-2.5">
+      <div className="relative z-20 flex shrink-0 items-center justify-between bg-muted px-3 py-2 sm:px-3.5 sm:py-2.5">
         <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
           {item.index && (
             <span className="shrink-0 font-mono text-[10px] font-semibold text-muted-foreground/50">
@@ -86,7 +86,7 @@ export function LazyShowcaseCard({ item, className }: LazyShowcaseCardProps) {
               key="loading"
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="flex h-full w-full flex-col items-center justify-center gap-2 p-3 select-none"
+              className="flex h-full min-h-[300px] w-full flex-col items-center justify-center gap-2 p-3 select-none"
             >
               {/* Precision CAD Radar Dial */}
               <div className="relative flex size-7 items-center justify-center">

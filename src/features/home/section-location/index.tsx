@@ -1,7 +1,30 @@
+import { useInView } from "motion/react"
+import { lazy, Suspense, useRef } from "react"
+
 import { DraftingSectionRow } from "@/app/layouts/drafting-section-row"
 import { cn } from "@/shared/lib/utils"
 
-import MapVietnamese from "./map"
+const LazyMapVietnamese = lazy(() => import("./map"))
+
+function MapPlaceholder() {
+  return (
+    <div
+      aria-label="Loading Vietnam map"
+      className="w-full border-y border-border/70 bg-transparent"
+    >
+      <div className="flex items-center justify-between border-b border-border/60 py-2.5 pl-2">
+        <span className="font-mono text-[10px] text-muted-foreground">
+          Ninh Hoà, Vietnam • 12.49°N, 109.13°E
+        </span>
+      </div>
+      <div className="relative flex h-[280px] w-full flex-col items-center justify-center gap-2 sm:h-[320px]">
+        <span className="font-mono text-[10px] tracking-wider text-muted-foreground/60 uppercase">
+          Initializing spatial canvas...
+        </span>
+      </div>
+    </div>
+  )
+}
 
 export interface SectionLocationProps {
   className?: string
@@ -13,11 +36,17 @@ export interface SectionLocationProps {
  * Fully integrated into the 1024px Swiss Drafting Architecture:
  * - Roman Numeral: VIII
  * - Title: LOCATION
- * - Interactive MapLibre GL map centered on Ninh Hoà, Khánh Hoà, Vietnam
+ * - Viewport-deferred MapLibre GL map centered on Ninh Hoà, Khánh Hoà, Vietnam
  * - Craft philosophy quote card
  * - SIGNED flourish with tactile glowing blue signature
  */
 export function SectionLocation({ className }: SectionLocationProps) {
+  const mapStageRef = useRef<HTMLDivElement>(null)
+  const isMapInView = useInView(mapStageRef, {
+    once: true,
+    margin: "300px 0px",
+  })
+
   return (
     <DraftingSectionRow
       id="vietnam-map"
@@ -26,8 +55,16 @@ export function SectionLocation({ className }: SectionLocationProps) {
       className={cn("pb-8 lg:pb-12", className)}
     >
       <div className="w-full space-y-4">
-        {/* 1. Interactive Vietnam Map (Ninh Hoà / Vietnam Overview) */}
-        <MapVietnamese />
+        {/* 1. Interactive Vietnam Map (lazy-loaded near viewport) */}
+        <div ref={mapStageRef}>
+          {isMapInView ? (
+            <Suspense fallback={<MapPlaceholder />}>
+              <LazyMapVietnamese />
+            </Suspense>
+          ) : (
+            <MapPlaceholder />
+          )}
+        </div>
 
         <div className="relative px-3">
           <div className="flex items-start gap-3">

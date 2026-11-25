@@ -66,11 +66,11 @@ function MapCameraHandler({ viewMode }: { viewMode: MapViewMode }) {
   return null
 }
 
-export interface SectionMapVietnameseProps {
+export interface MapVietnameseProps {
   className?: string
 }
 
-export function MapVietnamese({ className }: SectionMapVietnameseProps) {
+export function MapVietnamese({ className }: MapVietnameseProps) {
   const [viewMode, setViewMode] = useState<MapViewMode>("ninh-hoa")
 
   return (
@@ -208,7 +208,7 @@ export function MapVietnamese({ className }: SectionMapVietnameseProps) {
             </MapMarker>
           </Map>
 
-          {/* Bottom-left telemetry HUD badge */}
+          {/* Top-left telemetry HUD badge */}
           <div className="pointer-events-none absolute top-3 left-3 z-10 hidden items-center gap-2 rounded-sm border border-border/80 bg-background/85 px-3 py-1.5 shadow-sm backdrop-blur-md sm:flex">
             <Compass className="size-3.5 animate-spin text-muted-foreground [animation-duration:12s]" />
             <span className="font-mono text-[11px] text-muted-foreground">
