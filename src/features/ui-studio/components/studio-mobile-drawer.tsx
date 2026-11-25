@@ -76,6 +76,7 @@ export function StudioMobileDrawer({ item }: StudioMobileDrawerProps) {
         <div className="flex min-h-0 flex-1 flex-col overflow-hidden">
           <StudioDocsView
             item={item}
+            showHeaderBar
             onClose={() => setPanel("closed")}
             activeVariantId={activeVariantId}
             onSelectVariant={setActiveVariantId}

@@ -1,4 +1,4 @@
-import { RotateCcw } from "lucide-react"
+import { ArrowCounterClockwiseIcon } from "@phosphor-icons/react"
 
 import { cn } from "@/shared/lib/utils"
 import { Switch } from "@/shared/ui/core"
@@ -10,6 +10,7 @@ interface StudioPropsCustomizerProps {
   values: Record<string, StudioControlValue>
   onChange: (key: string, value: StudioControlValue) => void
   onReset: () => void
+  className?: string
 }
 
 /**
@@ -22,11 +23,17 @@ export function StudioPropsCustomizer({
   values,
   onChange,
   onReset,
+  className,
 }: StudioPropsCustomizerProps) {
   if (controls.length === 0) return null
 
   return (
-    <div className="pointer-events-auto absolute bottom-3 left-3 z-10 w-56 rounded-xl border border-border/70 bg-background/90 p-3 shadow-lg backdrop-blur-md">
+    <div
+      className={cn(
+        "pointer-events-auto absolute bottom-3 left-3 z-10 w-56 rounded-xl border border-border/70 bg-background/90 p-3 shadow-lg backdrop-blur-md",
+        className
+      )}
+    >
       <div className="mb-2 flex items-center justify-between">
         <p className="font-mono text-[9px] tracking-[0.25em] text-muted-foreground/70 uppercase">
           Props
@@ -37,7 +44,7 @@ export function StudioPropsCustomizer({
           aria-label="Reset props"
           className="inline-flex size-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
         >
-          <RotateCcw className="size-3" aria-hidden="true" />
+          <ArrowCounterClockwiseIcon size={13} aria-hidden="true" />
         </button>
       </div>
 

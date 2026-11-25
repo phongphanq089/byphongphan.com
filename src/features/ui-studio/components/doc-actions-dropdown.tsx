@@ -1,5 +1,10 @@
+import {
+  ArrowUpRightIcon,
+  CaretDownIcon,
+  CheckIcon,
+  CopyIcon,
+} from "@phosphor-icons/react"
 import { play } from "cuelume"
-import { ArrowUpRight, Check, ChevronDown, Copy } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import React, { useMemo, useState } from "react"
 
@@ -136,7 +141,7 @@ Be ready to answer follow-up questions and help debug issues based on the docume
               transition={{ duration: 0.12 }}
               className="inline-flex items-center gap-1.5 text-emerald-500"
             >
-              <Check className="size-3.5" aria-hidden="true" />
+              <CheckIcon size={14} aria-hidden="true" />
               <span>Copied</span>
             </motion.span>
           ) : (
@@ -148,7 +153,11 @@ Be ready to answer follow-up questions and help debug issues based on the docume
               transition={{ duration: 0.12 }}
               className="inline-flex items-center gap-1.5"
             >
-              <Copy className="size-3.5 text-pp-primary" aria-hidden="true" />
+              <CopyIcon
+                size={14}
+                className="text-pp-primary"
+                aria-hidden="true"
+              />
               <span>Copy page</span>
             </motion.span>
           )}
@@ -164,7 +173,7 @@ Be ready to answer follow-up questions and help debug issues based on the docume
             size === "lg" ? "size-9 px-2" : "size-7 px-1"
           )}
         >
-          <ChevronDown className="size-3.5" aria-hidden="true" />
+          <CaretDownIcon size={14} aria-hidden="true" />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent
@@ -181,8 +190,9 @@ Be ready to answer follow-up questions and help debug issues based on the docume
             >
               <MarkdownIcon size={14} />
               <span>View as Markdown</span>
-              <ArrowUpRight
-                className="ml-auto size-3 opacity-50"
+              <ArrowUpRightIcon
+                size={12}
+                className="ml-auto opacity-50"
                 aria-hidden="true"
               />
             </DropdownMenuItem>
@@ -191,8 +201,9 @@ Be ready to answer follow-up questions and help debug issues based on the docume
               onClick={handleCopy}
               className="cursor-pointer gap-2 py-1.5 text-xs font-medium"
             >
-              <Copy
-                className="size-3.5 text-muted-foreground"
+              <CopyIcon
+                size={14}
+                className="text-muted-foreground"
                 aria-hidden="true"
               />
               <span>Copy page as Markdown</span>
@@ -205,8 +216,9 @@ Be ready to answer follow-up questions and help debug issues based on the docume
               >
                 <GitHub size={14} />
                 <span>Open in GitHub</span>
-                <ArrowUpRight
-                  className="ml-auto size-3 opacity-50"
+                <ArrowUpRightIcon
+                  size={12}
+                  className="ml-auto opacity-50"
                   aria-hidden="true"
                 />
               </DropdownMenuItem>
@@ -231,8 +243,9 @@ Be ready to answer follow-up questions and help debug issues based on the docume
             >
               <ChatGptIcon size={14} />
               <span>Open in ChatGPT</span>
-              <ArrowUpRight
-                className="ml-auto size-3 opacity-50"
+              <ArrowUpRightIcon
+                size={12}
+                className="ml-auto opacity-50"
                 aria-hidden="true"
               />
             </DropdownMenuItem>
@@ -247,8 +260,9 @@ Be ready to answer follow-up questions and help debug issues based on the docume
             >
               <ClaudeIcon size={14} />
               <span>Open in Claude</span>
-              <ArrowUpRight
-                className="ml-auto size-3 opacity-50"
+              <ArrowUpRightIcon
+                size={12}
+                className="ml-auto opacity-50"
                 aria-hidden="true"
               />
             </DropdownMenuItem>
@@ -263,8 +277,9 @@ Be ready to answer follow-up questions and help debug issues based on the docume
             >
               <CursorIcon size={14} />
               <span>Open in Cursor</span>
-              <ArrowUpRight
-                className="ml-auto size-3 opacity-50"
+              <ArrowUpRightIcon
+                size={12}
+                className="ml-auto opacity-50"
                 aria-hidden="true"
               />
             </DropdownMenuItem>
@@ -279,8 +294,9 @@ Be ready to answer follow-up questions and help debug issues based on the docume
             >
               <V0Icon size={14} />
               <span>Open in v0</span>
-              <ArrowUpRight
-                className="ml-auto size-3 opacity-50"
+              <ArrowUpRightIcon
+                size={12}
+                className="ml-auto opacity-50"
                 aria-hidden="true"
               />
             </DropdownMenuItem>
@@ -295,8 +311,9 @@ Be ready to answer follow-up questions and help debug issues based on the docume
             >
               <GrokIcon size={14} />
               <span>Open in Grok</span>
-              <ArrowUpRight
-                className="ml-auto size-3 opacity-50"
+              <ArrowUpRightIcon
+                size={12}
+                className="ml-auto opacity-50"
                 aria-hidden="true"
               />
             </DropdownMenuItem>

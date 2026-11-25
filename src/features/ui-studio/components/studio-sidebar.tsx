@@ -1,14 +1,11 @@
-import { Link, useNavigate, useRouter } from "@tanstack/react-router"
 import {
-  ChevronDown,
-  Component as ComponentIcon,
-  LayoutGrid,
-  LayoutTemplate,
-  type LucideIcon,
-  Search,
-  Webhook,
-  X,
-} from "lucide-react"
+  CaretDownIcon,
+  CubeIcon,
+  type Icon as PhosphorIcon,
+  LayoutIcon,
+  WebhooksLogoIcon,
+} from "@phosphor-icons/react"
+import { useNavigate, useRouter } from "@tanstack/react-router"
 import { motion } from "motion/react"
 import { useMemo, useState } from "react"
 
@@ -17,24 +14,15 @@ import {
   type LineNavGroup,
   type LineNavItem,
 } from "@/registry/animated/line-nav"
-import { Button } from "@/registry/ui/button"
-import {
-  Drawer,
-  DrawerClose,
-  DrawerPopup,
-  DrawerTitle,
-} from "@/registry/ui/drawer"
+import { useMediaQuery } from "@/registry/hooks/use-media-query"
 import { ScrollArea } from "@/registry/ui/scroll-area"
 import {
   BLOCK_CATEGORIES,
   COMPONENT_CATEGORIES,
   HOOK_CATEGORIES,
 } from "@/shared/config"
-import { playClickSound, playHoverSound } from "@/shared/lib/sound"
 import { cn } from "@/shared/lib/utils"
-import { PPPixelMark } from "@/shared/ui"
 
-import { studioSidebarHandle } from "../hooks/studio-sidebar-handle"
 import type { StudioItem } from "../model/types"
 import {
   getStudioItemHref,
@@ -56,13 +44,11 @@ type CategoryEntry = { id: string; label: string }
 interface StudioSection {
   id: StudioSectionId
   title: string
-  icon: LucideIcon
-  /** Total (unfiltered) item count for the section badge. */
+  icon: PhosphorIcon
   count: number
   groups: LineNavGroup[]
 }
 
-/** Typographic nav item — numbering handled by the section builder. */
 const toNavItem = (item: StudioItem, index: number): LineNavItem => ({
   title: item.title,
   href: getStudioItemHref(item),
@@ -70,16 +56,15 @@ const toNavItem = (item: StudioItem, index: number): LineNavItem => ({
   badge: item.isNew ? (
     <span
       aria-label="New"
-      className="size-1.5 shrink-0 rounded-full bg-blue-600 shadow-[0_0_6px_rgba(37,99,235,0.6)] dark:bg-sky-400 dark:shadow-[0_0_6px_rgba(56,189,248,0.8)]"
+      className="size-1.5 shrink-0 rounded-full bg-blue-600 shadow-[0_0_6px_rgba(37,99,235,0.45)] dark:bg-sky-400"
     />
   ) : undefined,
 })
 
-/** Category sub-header inside a section — uppercased label + count */
 const toCategoryTitle = (label: string, count: number): React.ReactNode => (
-  <span className="inline-flex min-w-0 items-center gap-2">
+  <span className="inline-flex min-w-0 items-center gap-1.5">
     <span className="truncate">{label}</span>
-    <span className="font-mono text-[9px] text-muted-foreground/60 tabular-nums">
+    <span className="font-mono text-[10px] text-muted-foreground/65 tabular-nums">
       {String(count).padStart(2, "0")}
     </span>
   </span>
@@ -91,7 +76,6 @@ const CATEGORY_CONFIG: Record<StudioSectionId, readonly CategoryEntry[]> = {
   hooks: HOOK_CATEGORIES,
 }
 
-/** Group a flat list by category config order (skipping empty categories). */
 function buildCategoryGroups(
   items: StudioItem[],
   sectionId: StudioSectionId
@@ -121,18 +105,10 @@ function buildCategoryGroups(
     })
 }
 
-function itemMatches(item: LineNavItem, query: string): boolean {
-  if (typeof item.title === "string") {
-    return item.title.toLowerCase().includes(query)
-  }
-  return item.href.toLowerCase().includes(query)
-}
-
 interface CollapsibleSectionProps {
   sectionId: StudioSectionId
   icon: StudioSection["icon"]
   title: string
-  /** Filtered count shown in the section badge. */
   count: number
   open: boolean
   onToggle: () => void
@@ -158,23 +134,25 @@ function CollapsibleSection({
         aria-expanded={open}
         aria-controls={`${headerId}-body`}
         onClick={onToggle}
-        className="group flex h-9 w-full items-center gap-2 rounded-md px-2 text-left transition-colors outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-primary"
+        className="group flex h-8.5 w-full cursor-pointer items-center gap-2 rounded-lg px-2.5 text-left transition-colors outline-none hover:bg-muted/50 focus-visible:ring-2 focus-visible:ring-primary"
       >
         <Icon
-          className="size-4 shrink-0 text-muted-foreground/60 transition-colors group-hover:text-foreground"
+          size={16}
+          className="shrink-0 text-muted-foreground/70 transition-colors group-hover:text-foreground"
           aria-hidden="true"
         />
-        <span className="flex min-w-0 flex-1 items-center gap-2">
-          <span className="truncate font-sans text-[12px] font-semibold tracking-tight text-foreground">
+        <span className="flex min-w-0 flex-1 items-center gap-1.5">
+          <span className="truncate font-sans text-sm font-semibold tracking-tight text-foreground/90 group-hover:text-foreground">
             {title}
           </span>
-          <span className="shrink-0 font-mono text-[10px] text-muted-foreground/60 tabular-nums">
+          <span className="shrink-0 font-mono text-[10.5px] text-muted-foreground/60 tabular-nums">
             {String(count).padStart(2, "0")}
           </span>
         </span>
-        <ChevronDown
+        <CaretDownIcon
+          size={14}
           className={cn(
-            "size-4 shrink-0 text-muted-foreground/60 transition-transform duration-300 ease-out",
+            "shrink-0 text-muted-foreground/60 transition-transform duration-250 ease-out",
             !open && "-rotate-90"
           )}
           aria-hidden="true"
@@ -190,23 +168,22 @@ function CollapsibleSection({
           height: open ? "auto" : 0,
           opacity: open ? 1 : 0,
         }}
-        transition={{ duration: 0.28, ease: [0.4, 0, 0.2, 1] }}
+        transition={{ duration: 0.24, ease: [0.4, 0, 0.2, 1] }}
         className="overflow-hidden"
       >
-        <div className="pb-1">{children}</div>
+        <div className="pb-2">{children}</div>
       </motion.div>
     </section>
   )
 }
 
 /**
- * Modern Inset Floating Sidebar using the signature LineNav caliper animation:
- * - Three collapsible top-level sections (Components / Sections and Blocks / Hooks)
- *   grouped by their real taxonomy categories (no synthetic Unique/Basic split)
- * - Caliper-style ruler items with electric-blue active state
- * - Instant search filter with auto-expand of matching sections
- * - Clean typographic section titles with monospace counts
- * - Smooth native swipe dismiss & hardware-accelerated animations
+ * Spacious push-layout Studio Sidebar using refined `LineNav variant="studio"`.
+ *
+ * Sits seamlessly on the outer shell background with no separating border lines:
+ * - Desktop (`>= md`): expands smoothly to 296–312px, pushing the stage card aside.
+ * - Mobile (`< md`): expands to ~82vw, pushing the stage card right while keeping
+ *   an interactive edge peek visible (X-style slide/tap to dismiss).
  */
 export function StudioSidebar({
   activeSegment,
@@ -214,7 +191,7 @@ export function StudioSidebar({
 }: StudioSidebarProps) {
   const sidebarOpen = useStudioStore((state) => state.sidebarOpen)
   const setSidebarOpen = useStudioStore((state) => state.setSidebarOpen)
-  const [filterQuery, setFilterQuery] = useState("")
+  const isCompactViewport = useMediaQuery("max-md")
   const [expandedSections, setExpandedSections] = useState<
     Record<StudioSectionId, boolean>
   >({
@@ -231,7 +208,6 @@ export function StudioSidebar({
       : `/ui/${activeSegment}`
     : "/ui"
 
-  // Route-derived: force the section hosting the active item open
   const activeItem = useMemo(
     () =>
       activeSegment && activeSlug
@@ -247,10 +223,6 @@ export function StudioSidebar({
     return set
   }, [activeItem])
 
-  const filterActive = filterQuery.trim().length > 0
-  const query = filterQuery.trim().toLowerCase()
-
-  // Build the three sections from STUDIO_RECORDS (static registry — never mutates)
   const sections = useMemo<StudioSection[]>(() => {
     const blocks = STUDIO_RECORDS.filter(
       (r) => r.item.collection === "blocks"
@@ -266,67 +238,32 @@ export function StudioSidebar({
       {
         id: "components",
         title: "Components",
-        icon: ComponentIcon,
+        icon: CubeIcon,
         count: components.length,
         groups: buildCategoryGroups(components, "components"),
       },
       {
         id: "blocks",
-        title: "Sections and Blocks",
-        icon: LayoutTemplate,
+        title: "Blocks",
+        icon: LayoutIcon,
         count: blocks.length,
         groups: buildCategoryGroups(blocks, "blocks"),
       },
       {
         id: "hooks",
         title: "Hooks",
-        icon: Webhook,
+        icon: WebhooksLogoIcon,
         count: hooks.length,
         groups: buildCategoryGroups(hooks, "hooks"),
       },
     ]
   }, [])
 
-  // Filter items in real time when searching — also yields per-section match counts
-  const filteredSections = useMemo<StudioSection[]>(() => {
-    if (!filterActive) return sections
-
-    return sections
-      .map((section) => ({
-        ...section,
-        groups: section.groups
-          .map((group) => ({
-            ...group,
-            items: group.items.filter((item) => itemMatches(item, query)),
-          }))
-          .filter((group) => group.items.length > 0),
-      }))
-      .filter(
-        (section) =>
-          section.groups.reduce(
-            (total, group) => total + group.items.length,
-            0
-          ) > 0
-      )
-  }, [sections, filterActive, query])
-
   const isSectionOpen = (id: StudioSectionId): boolean =>
-    filterActive
-      ? filteredSections.some((section) => section.id === id)
-      : (expandedSections[id] ?? false) || forcedOpen.has(id)
-
-  const filteredCount = (section: StudioSection) =>
-    section.groups.reduce((total, group) => total + group.items.length, 0)
+    (expandedSections[id] ?? false) || forcedOpen.has(id)
 
   const toggleSection = (id: StudioSectionId) => {
     setExpandedSections((prev) => ({ ...prev, [id]: !prev[id] }))
-  }
-
-  const handleOpenChange = (open: boolean) => {
-    setSidebarOpen(open)
-    if (!open) {
-      setFilterQuery("")
-    }
   }
 
   const handleNavigate = (
@@ -347,8 +284,9 @@ export function StudioSidebar({
       event.preventDefault()
     }
 
-    setSidebarOpen(false)
-    setFilterQuery("")
+    if (isCompactViewport) {
+      setSidebarOpen(false)
+    }
     void navigate({ href })
   }
 
@@ -358,83 +296,20 @@ export function StudioSidebar({
   }
 
   return (
-    <Drawer
-      handle={studioSidebarHandle}
-      open={sidebarOpen}
-      onOpenChange={handleOpenChange}
-      position="left"
+    <aside
+      aria-label="UI Studio navigation"
+      aria-hidden={!sidebarOpen}
+      inert={!sidebarOpen}
+      className={cn(
+        "relative flex h-full shrink-0 flex-col overflow-hidden bg-background transition-[width,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] select-none",
+        sidebarOpen
+          ? "w-[82vw] max-w-[324px] opacity-100 md:w-[300px] md:max-w-[300px] lg:w-[320px] lg:max-w-[320px]"
+          : "pointer-events-none w-0 opacity-0"
+      )}
     >
-      <DrawerPopup
-        variant="inset"
-        hasBackdrop={true}
-        backdropProps={{ className: "bg-black/50 backdrop-blur-xs" }}
-        showBar={true}
-        className="h-full w-80 max-w-[85vw] flex-col overflow-hidden border border-border/80 bg-background/95 shadow-2xl backdrop-blur-md dark:border-white/10 dark:bg-zinc-950/95"
-      >
-        {/* Drawer Header: Logo + Title + Close */}
-        <div className="flex shrink-0 items-center justify-between border-b border-border/60 px-4 py-3">
-          <DrawerTitle className="flex items-center gap-2.5 text-sm font-semibold tracking-tight text-foreground">
-            <Link
-              to="/"
-              aria-label="Phong Phan — home"
-              className="flex size-7 shrink-0 items-center justify-center transition-opacity hover:opacity-80"
-            >
-              <PPPixelMark
-                className="size-full text-pp-primary"
-                variant="glow"
-              />
-            </Link>
-            <div className="flex items-center gap-1.5 text-xs">
-              <span className="font-semibold text-foreground">UI Studio</span>
-              <span className="text-muted-foreground/40">/</span>
-              <span className="font-mono text-[10px] text-muted-foreground/60 tabular-nums">
-                {STUDIO_RECORDS.length}
-              </span>
-            </div>
-          </DrawerTitle>
-
-          <DrawerClose
-            render={
-              <Button
-                size="icon"
-                variant="ghost"
-                aria-label="Close sidebar"
-                className="size-7 text-muted-foreground hover:text-foreground"
-              />
-            }
-          >
-            <X className="size-3.5" aria-hidden="true" />
-          </DrawerClose>
-        </div>
-
-        {/* Quick filter input */}
-        <div className="shrink-0 border-b border-border/40 px-3 py-2.5">
-          <div className="relative flex items-center">
-            <Search
-              className="pointer-events-none absolute left-2.5 size-3.5 text-muted-foreground/50"
-              aria-hidden="true"
-            />
-            <input
-              type="text"
-              value={filterQuery}
-              onChange={(e) => setFilterQuery(e.target.value)}
-              placeholder="Filter items..."
-              className="h-8 w-full rounded-md border border-border/60 bg-muted/40 pr-7 pl-8 text-xs text-foreground transition-colors placeholder:text-muted-foreground/50 focus:border-border focus:bg-background focus:ring-1 focus:ring-ring/40 focus:outline-none"
-            />
-            {filterQuery ? (
-              <button
-                type="button"
-                onClick={() => setFilterQuery("")}
-                aria-label="Clear filter"
-                className="absolute right-2 inline-flex size-4 items-center justify-center rounded-sm text-muted-foreground/60 hover:text-foreground"
-              >
-                <X className="size-3" aria-hidden="true" />
-              </button>
-            ) : null}
-          </div>
-        </div>
-
-        {/* Collapsible sections */}
+      {/* Inner fixed-width wrapper prevents text reflow while width animates */}
+      <div className="flex h-full w-[82vw] max-w-[324px] flex-col pt-18 md:w-[300px] md:max-w-[300px] lg:w-[320px] lg:max-w-[320px]">
+        {/* Navigation sections */}
         <div className="relative min-h-0 flex-1 overflow-hidden">
           <ScrollArea
             className="h-full w-full"
@@ -442,81 +317,32 @@ export function StudioSidebar({
             overscrollContain
             orientation="vertical"
           >
-            <div className="relative space-y-1 p-2 pl-3">
-              {/* All Items direct navigation link */}
-              {!filterActive ? (
-                <div className="mb-1.5 border-b border-border/40 pb-1.5">
-                  <Link
-                    to="/ui"
-                    onClick={() => {
-                      playClickSound()
-                      setSidebarOpen(false)
-                      setFilterQuery("")
-                    }}
-                    onMouseEnter={() => playHoverSound()}
-                    className={cn(
-                      "group flex items-center justify-between rounded-lg px-2.5 py-2 text-xs font-medium transition-colors",
-                      activeHref === "/ui"
-                        ? "bg-accent font-semibold text-foreground shadow-xs"
-                        : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
-                    )}
-                  >
-                    <div className="flex items-center gap-2">
-                      <LayoutGrid
-                        className={cn(
-                          "size-3.5 transition-colors",
-                          activeHref === "/ui"
-                            ? "text-primary"
-                            : "text-muted-foreground group-hover:text-foreground"
-                        )}
-                        aria-hidden="true"
-                      />
-                      <span>All Items</span>
-                    </div>
-                    <span
-                      className={cn(
-                        "font-mono text-[10px] tabular-nums",
-                        activeHref === "/ui"
-                          ? "font-bold text-primary"
-                          : "text-muted-foreground/60"
-                      )}
-                    >
-                      {STUDIO_RECORDS.length}
-                    </span>
-                  </Link>
-                </div>
-              ) : null}
-
-              {filteredSections.length === 0 ? (
-                <div className="py-8 text-center text-xs text-muted-foreground">
-                  No components match &ldquo;{filterQuery}&rdquo;
-                </div>
-              ) : (
-                filteredSections.map((section) => (
-                  <CollapsibleSection
-                    key={section.id}
-                    sectionId={section.id}
-                    icon={section.icon}
-                    title={section.title}
-                    count={filteredCount(section)}
-                    open={isSectionOpen(section.id)}
-                    onToggle={() => toggleSection(section.id)}
-                  >
-                    <LineNav
-                      groups={section.groups}
-                      activeHref={activeHref}
-                      scrollActiveIntoView
-                      onItemClick={(item, event) => handleNavigate(item, event)}
-                      onItemHover={handleItemHover}
-                      className="w-full"
-                    />
-                  </CollapsibleSection>
-                ))
-              )}
+            <div className="relative space-y-2 px-3.5 pb-8">
+              {sections.map((section) => (
+                <CollapsibleSection
+                  key={section.id}
+                  sectionId={section.id}
+                  icon={section.icon}
+                  title={section.title}
+                  count={section.count}
+                  open={isSectionOpen(section.id)}
+                  onToggle={() => toggleSection(section.id)}
+                >
+                  <LineNav
+                    variant="studio"
+                    groups={section.groups}
+                    activeHref={activeHref}
+                    scrollActiveIntoView
+                    onItemClick={(item, event) => handleNavigate(item, event)}
+                    onItemHover={handleItemHover}
+                    className="w-full"
+                  />
+                </CollapsibleSection>
+              ))}
             </div>
           </ScrollArea>
         </div>
-      </DrawerPopup>
-    </Drawer>
+      </div>
+    </aside>
   )
 }

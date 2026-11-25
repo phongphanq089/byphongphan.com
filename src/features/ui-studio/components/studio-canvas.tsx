@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/static-components */
-import { Globe, Loader2 } from "lucide-react"
+import { SpinnerGapIcon } from "@phosphor-icons/react"
 import { Suspense } from "react"
 
 import { CodeBlock } from "@/registry/ui/code-block"
+import { cn } from "@/shared/lib/utils"
 
-import { useStudioDisplayUrl } from "../hooks/use-studio-display-url"
 import type { StudioItem } from "../model/types"
 import {
   getLiveDemo,
@@ -48,8 +48,9 @@ function LiveStage({
       <Suspense
         fallback={
           <div className="flex h-full items-center justify-center">
-            <Loader2
-              className="size-6 animate-spin text-muted-foreground"
+            <SpinnerGapIcon
+              size={24}
+              className="animate-spin text-muted-foreground"
               aria-label="Loading preview"
             />
           </div>
@@ -84,7 +85,13 @@ function LiveStage({
 }
 
 /** hook-code render mode: read the real registry source instead of a fake demo. */
-function HookCodeStage({ item }: { item: StudioItem }) {
+function HookCodeStage({
+  item,
+  hasVariants,
+}: {
+  item: StudioItem
+  hasVariants: boolean
+}) {
   const files = getStudioSourceFiles(item)
   const primary = files[0]
   if (!primary) {
@@ -97,7 +104,12 @@ function HookCodeStage({ item }: { item: StudioItem }) {
   const importPath = `@/hooks/${item.slug}`
   const exportName = hookExportName(item.slug)
   return (
-    <div className="flex h-full w-full max-w-2xl flex-col gap-3 overflow-y-auto p-4 sm:p-6">
+    <div
+      className={cn(
+        "flex h-full w-full max-w-2xl flex-col gap-3 overflow-y-auto px-4 pt-14 sm:px-6",
+        hasVariants ? "pb-20" : "pb-8"
+      )}
+    >
       <p className="font-mono text-[10px] tracking-[0.25em] text-muted-foreground/60 uppercase">
         {exportName}
       </p>
@@ -119,7 +131,9 @@ function HookCodeStage({ item }: { item: StudioItem }) {
 }
 
 /**
- * Stage frame: renders live demo, hook source, or block iframe over CAD dot-grid.
+ * Stage frame: renders live demo, hook source, or block iframe over a calm
+ * studio surface, with safe clearances for the top-right action pill and
+ * optional bottom variant pill.
  */
 export function StudioCanvas({ item }: StudioCanvasProps) {
   const storedVariantId = useStudioStore((state) => state.activeVariantId)
@@ -127,32 +141,13 @@ export function StudioCanvas({ item }: StudioCanvasProps) {
   const customizerValues = useStudioStore((state) => state.customizerValues)
   const setCustomizerValue = useStudioStore((state) => state.setCustomizerValue)
   const resetCustomizer = useStudioStore((state) => state.resetCustomizer)
-  const showGrid = useStudioStore((state) => state.showGrid)
-  const showArcBands = useStudioStore((state) => state.showArcBands)
-  const displayUrl = useStudioDisplayUrl()
 
   const isBlock = item.collection === "blocks"
   const isFullBleed = resolveCanvasLayout(item) === "full"
+  const hasVariants = (item.variants?.length ?? 0) > 0
 
   return (
-    <StudioCanvasBackground
-      showArcBands={!isFullBleed && showArcBands}
-      showGrid={!isFullBleed && showGrid}
-      className="flex h-full min-h-0 w-full flex-1 flex-col"
-    >
-      <div className="hidden h-11 shrink-0 items-center justify-between gap-3 border-b border-border/70 bg-background/80 px-3 backdrop-blur-xs max-md:flex">
-        <div className="flex shrink-0 items-center gap-1.5" aria-hidden="true">
-          <span className="size-2.5 rounded-full bg-rose-400/80" />
-          <span className="size-2.5 rounded-full bg-amber-400/80" />
-          <span className="size-2.5 rounded-full bg-emerald-400/80" />
-        </div>
-        <div className="flex h-7 w-full max-w-md min-w-0 items-center justify-center gap-1.5 rounded-md border border-border/60 bg-muted/80 px-2.5 font-mono text-[10px] text-muted-foreground backdrop-blur-xs">
-          <Globe className="size-3 shrink-0" aria-hidden="true" />
-          <span className="truncate" title={displayUrl}>
-            {displayUrl}
-          </span>
-        </div>
-      </div>
+    <StudioCanvasBackground className="flex h-full min-h-0 w-full flex-1 flex-col">
       {isBlock ? (
         <div className="relative h-full min-h-0 w-full flex-1">
           <iframe
@@ -164,14 +159,19 @@ export function StudioCanvas({ item }: StudioCanvasProps) {
         </div>
       ) : item.renderMode === "hook-code" ? (
         <div className="flex h-full min-h-0 flex-1 items-start justify-center overflow-y-auto">
-          <HookCodeStage item={item} />
+          <HookCodeStage item={item} hasVariants={hasVariants} />
         </div>
       ) : isFullBleed ? (
         <div className="relative h-full min-h-0 w-full flex-1 overflow-hidden [&>*]:size-full [&>*]:rounded-none [&>*]:border-0 [&>*]:shadow-none">
           <LiveStage item={item} variantId={activeVariantId} />
         </div>
       ) : (
-        <div className="flex h-full min-h-0 flex-1 items-center justify-center overflow-auto p-4 sm:p-8">
+        <div
+          className={cn(
+            "flex h-full min-h-0 flex-1 items-center justify-center overflow-auto px-4 pt-14 sm:px-8",
+            hasVariants ? "pb-18" : "pb-8"
+          )}
+        >
           <LiveStage item={item} variantId={activeVariantId} />
         </div>
       )}
@@ -182,6 +182,7 @@ export function StudioCanvas({ item }: StudioCanvasProps) {
           values={customizerValues}
           onChange={setCustomizerValue}
           onReset={resetCustomizer}
+          className={hasVariants ? "bottom-16" : "bottom-3.5"}
         />
       ) : null}
     </StudioCanvasBackground>
