@@ -66,52 +66,60 @@ function MapCameraHandler({ viewMode }: { viewMode: MapViewMode }) {
   return null
 }
 
-export function SectionMapVietnamese() {
+export interface SectionMapVietnameseProps {
+  className?: string
+}
+
+export function MapVietnamese({ className }: SectionMapVietnameseProps) {
   const [viewMode, setViewMode] = useState<MapViewMode>("ninh-hoa")
 
   return (
-    <div className="w-full">
-      <div className="-mt-px flex items-center justify-between border-y border-border max-md:flex-wrap">
-        <div className="flex items-center gap-2 px-4 py-3 whitespace-nowrap sm:px-6">
-          <span className="text-xs font-semibold tracking-wide text-foreground">
-            {NINH_HOA_COORDINATES.name}, {NINH_HOA_COORDINATES.province},{" "}
-            {NINH_HOA_COORDINATES.country}
+    <div
+      className={cn(
+        "w-full border-y border-border/70 bg-transparent",
+        className
+      )}
+    >
+      <div className="flex flex-wrap items-center justify-between border-b border-border/60 bg-transparent">
+        <div className="flex items-center gap-2 py-2 pl-2 whitespace-nowrap">
+          <span className="text-[11px] font-semibold tracking-wide text-foreground">
+            {NINH_HOA_COORDINATES.name}, {NINH_HOA_COORDINATES.country}
           </span>
           <span className="text-xs text-muted-foreground">•</span>
-          <span className="font-mono text-xs text-muted-foreground">
-            {NINH_HOA_COORDINATES.latitude.toFixed(4)}°N,{" "}
-            {NINH_HOA_COORDINATES.longitude.toFixed(4)}°E
+          <span className="font-mono text-[10px] text-muted-foreground">
+            {NINH_HOA_COORDINATES.latitude.toFixed(2)}°N,{" "}
+            {NINH_HOA_COORDINATES.longitude.toFixed(2)}°E
           </span>
         </div>
 
-        <div className="relative z-10 flex items-stretch border-border bg-background/50 backdrop-blur-xs max-md:w-full max-md:border-t md:ml-auto md:w-auto md:border-l">
+        <div className="relative z-10 flex items-stretch border-border/60 bg-transparent max-sm:w-full max-sm:border-t sm:ml-auto sm:w-auto sm:border-l">
           <Button
             variant="ghost"
             onClick={() => setViewMode("ninh-hoa")}
             className={cn(
-              "group/btn h-full rounded-none border-0 px-3.5 py-3 font-mono text-[11px] font-medium text-foreground transition-all duration-200 hover:bg-accent/60 hover:text-foreground active:bg-accent max-md:flex-1 sm:text-xs md:px-5 md:py-3.5",
+              "group/btn h-full rounded-none border-0 px-3 py-2 font-mono text-[10px] font-medium text-foreground transition-all duration-200 hover:bg-accent/60 hover:text-foreground active:bg-accent max-sm:flex-1",
               viewMode === "ninh-hoa" && "bg-accent!"
             )}
           >
-            <Crosshair className="size-3.5" />
-            <span>Focus Ninh Hoà</span>
+            <Crosshair className="size-3" />
+            <span>Ninh Hoà</span>
           </Button>
           <Button
             variant="ghost"
             onClick={() => setViewMode("vietnam")}
             className={cn(
-              "group/btn h-full rounded-none border-0 border-l border-border px-3.5 py-3 font-mono text-[11px] font-medium text-foreground transition-all duration-200 hover:bg-accent/60 hover:text-foreground active:bg-accent max-md:flex-1 sm:text-xs md:px-5 md:py-3.5",
+              "group/btn h-full rounded-none border-0 border-l border-border/60 px-3 py-2 font-mono text-[10px] font-medium text-foreground transition-all duration-200 hover:bg-accent/60 hover:text-foreground active:bg-accent max-sm:flex-1",
               viewMode === "vietnam" && "bg-accent!"
             )}
           >
-            <Globe2 className="size-3.5" />
-            <span>Vietnam Overview</span>
+            <Globe2 className="size-3" />
+            <span>Vietnam</span>
           </Button>
         </div>
       </div>
 
       <div>
-        <div className="relative h-[440px] w-full overflow-hidden border-b border-border bg-background sm:h-[520px] md:h-[580px]">
+        <div className="relative h-[280px] w-full overflow-hidden bg-transparent sm:h-[320px]">
           <Map
             center={[
               NINH_HOA_COORDINATES.longitude,
@@ -201,7 +209,7 @@ export function SectionMapVietnamese() {
           </Map>
 
           {/* Bottom-left telemetry HUD badge */}
-          <div className="pointer-events-none absolute bottom-3 left-3 z-10 hidden items-center gap-2 rounded-sm border border-border/80 bg-background/85 px-3 py-1.5 shadow-sm backdrop-blur-md sm:flex">
+          <div className="pointer-events-none absolute top-3 left-3 z-10 hidden items-center gap-2 rounded-sm border border-border/80 bg-background/85 px-3 py-1.5 shadow-sm backdrop-blur-md sm:flex">
             <Compass className="size-3.5 animate-spin text-muted-foreground [animation-duration:12s]" />
             <span className="font-mono text-[11px] text-muted-foreground">
               Ctrl + Scroll to zoom • CARTO Basemap
@@ -219,4 +227,4 @@ export function SectionMapVietnamese() {
   )
 }
 
-export default SectionMapVietnamese
+export default MapVietnamese

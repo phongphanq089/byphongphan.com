@@ -2,7 +2,7 @@
 import { ArrowRightIcon } from "@phosphor-icons/react"
 import { Link } from "@tanstack/react-router"
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react"
-import React, { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 import { BLOCKS_DATA } from "@/features/blocks/blocks-data"
 import { RenderBlockCategorySchematic } from "@/features/blocks/components/schematics"
