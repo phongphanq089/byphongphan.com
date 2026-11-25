@@ -11,59 +11,56 @@ export function MiddleTruncationResizable() {
       <div className="w-full max-w-2xl">
         <ResizablePanelGroup
           direction="horizontal"
-          className="relative min-h-[360px] w-full items-center justify-start overflow-visible"
+          className="relative min-h-[360px] w-full items-center justify-start"
         >
           <ResizablePanel
             defaultSize="85%"
             minSize="30%"
             maxSize="100%"
-            className="relative flex flex-col justify-center rounded-2xl border border-border bg-card p-6 text-card-foreground shadow-2xl transition-[flex] select-none"
+            className="relative flex flex-col justify-center rounded-2xl border border-border bg-card p-6 text-card-foreground transition-[flex] select-none"
           >
             <div className="flex flex-col gap-6">
               {/* Item 1: Default */}
               <div className="flex flex-col gap-1.5 overflow-hidden">
-                <span className="font-mono text-xs tracking-tight whitespace-nowrap text-muted-foreground">
+                <span className="text-xs tracking-tight whitespace-nowrap text-muted-foreground">
                   &lt;MiddleTruncation&gt;
                 </span>
-                <MiddleTruncation className="font-mono text-sm text-foreground">
-                  /Users/ncdai/Code/chanhdai/src/components/ui/button.tsx
+                <MiddleTruncation className="text-sm text-foreground">
+                  /Users/src/components/ui/button.tsx
                 </MiddleTruncation>
               </div>
 
               {/* Item 2: end={4} */}
               <div className="flex flex-col gap-1.5 overflow-hidden">
-                <span className="font-mono text-xs tracking-tight whitespace-nowrap text-muted-foreground">
+                <span className="text-xs tracking-tight whitespace-nowrap text-muted-foreground">
                   &lt;MiddleTruncation end={4}&gt;
                 </span>
-                <MiddleTruncation
-                  end={4}
-                  className="font-mono text-sm text-foreground"
-                >
+                <MiddleTruncation end={4} className="text-sm text-foreground">
                   FY26_Q1_Consolidated_Financial_Statements.pdf
                 </MiddleTruncation>
               </div>
 
               {/* Item 3: minEnd={12} */}
               <div className="flex flex-col gap-1.5 overflow-hidden">
-                <span className="font-mono text-xs tracking-tight whitespace-nowrap text-muted-foreground">
+                <span className="text-xs tracking-tight whitespace-nowrap text-muted-foreground">
                   &lt;MiddleTruncation minEnd={12}&gt;
                 </span>
                 <MiddleTruncation
                   minEnd={12}
-                  className="font-mono text-sm text-foreground"
+                  className="text-sm text-foreground"
                 >
-                  /Users/ncdai/Code/chanhdai/node_modules/shadcn/package.json
+                  /Users/Code/node_modules/shadcn/package.json
                 </MiddleTruncation>
               </div>
 
               {/* Item 4: ellipsis=" ... " */}
               <div className="flex flex-col gap-1.5 overflow-hidden">
-                <span className="font-mono text-xs tracking-tight whitespace-nowrap text-muted-foreground">
+                <span className="text-xs tracking-tight whitespace-nowrap text-muted-foreground">
                   &lt;MiddleTruncation ellipsis=" ... "&gt;
                 </span>
                 <MiddleTruncation
                   ellipsis=" ... "
-                  className="font-mono text-sm text-foreground"
+                  className="text-sm text-foreground"
                 >
                   https://www.apple.com/newsroom/2026/01/FY26_Q1_Consolidated_Financial_Statements.pdf
                 </MiddleTruncation>

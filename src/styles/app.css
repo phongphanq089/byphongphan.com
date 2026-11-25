@@ -48,6 +48,9 @@
   --pp-primary: oklch(0.985 0 0);
   --pp-primary-foreground: oklch(0.15 0 0);
   --pp-primary-glow: rgba(255, 255, 255, 0.25);
+  --pp-secondary: oklch(0.62 0.21 260);
+  --pp-secondary-foreground: oklch(0.985 0 0);
+  --pp-secondary-glow: rgba(59, 130, 246, 0.35);
 
   /* ─── Semantic Surface & Content Tokens ─── */
   --background: oklch(0.12 0 0);
@@ -113,6 +116,9 @@
   ); /*oklch(0.141 0.005 285.823)     === oklch(0.985 0 0) === #dc2626*/
   --pp-primary-foreground: oklch(0.985 0 0);
   --pp-primary-glow: rgba(220, 38, 38, 0.15);
+  --pp-secondary: oklch(0.55 0.24 263);
+  --pp-secondary-foreground: oklch(0.985 0 0);
+  --pp-secondary-glow: rgba(37, 99, 235, 0.2);
 
   /* ─── Semantic Surface & Content Tokens ─── */
   --background: oklch(1 0 0);
@@ -160,6 +166,9 @@
   --color-pp-primary: var(--pp-primary);
   --color-pp-primary-foreground: var(--pp-primary-foreground);
   --color-pp-glow: var(--pp-primary-glow);
+  --color-pp-secondary: var(--pp-secondary);
+  --color-pp-secondary-foreground: var(--pp-secondary-foreground);
+  --color-pp-secondary-glow: var(--pp-secondary-glow);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -363,7 +372,7 @@ button {
   }
 }
 
-html.no-scrollbar,
+/* html.no-scrollbar,
 body.no-scrollbar,
 :root.no-scrollbar {
   -ms-overflow-style: none !important;
@@ -386,7 +395,7 @@ html.no-scrollbar *::-webkit-scrollbar-thumb,
 body.no-scrollbar *::-webkit-scrollbar-thumb {
   display: none !important;
   background: transparent !important;
-}
+} */
 
 /* ─── Rail Scroll Scrubber Responsive Layout Space ─────────────────── */
 :root {

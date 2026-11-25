@@ -10,10 +10,10 @@
     "registryDependencies": []
   },
   {
-    "name": "rail-scroll-scrubber",
+    "name": "scroll-indicator",
     "type": "registry:component",
-    "title": "Rail Scroll Scrubber",
-    "description": "Kinetic scrollbar and precision section scrubber featuring a 5-stage continuous rail path, split-character peeling, and zoom overview lens.",
+    "title": "Scroll Indicator",
+    "description": "Vertical scroll progress indicator with tick marks, click-to-reveal section titles, Web Audio micro-interactions, and spring physics.",
     "dependencies": [
       "motion"
     ],
@@ -25,6 +25,17 @@
     "title": "Middle Truncation",
     "description": "Canvas-measured binary search text truncation preserving the start and end of strings with responsive resize sync.",
     "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "badge",
+    "type": "registry:ui",
+    "title": "Badge",
+    "description": "A versatile, subtle badge component with calibrated proportions, translucent status tints, micro dots, and geometric contour variants.",
+    "dependencies": [
+      "@base-ui/react",
+      "class-variance-authority"
+    ],
     "registryDependencies": []
   },
   {
@@ -124,26 +135,6 @@
     "registryDependencies": []
   },
   {
-    "name": "pp-mark-isometric",
-    "type": "registry:component",
-    "title": "Isometric Monogram Mark",
-    "description": "Interactive 3D voxel isometric monogram mark featuring procedural diagonal hatching, wireframe edges, cursor-tracking radial flashlight, and spring press physics with audio feedback.",
-    "dependencies": [
-      "motion"
-    ],
-    "registryDependencies": []
-  },
-  {
-    "name": "phong-phan-isometric",
-    "type": "registry:component",
-    "title": "Isometric Block Typography",
-    "description": "Horizontal 3D block typography extruded along an isometric blueprint grid, equipped with interactive dynamic lighting, sound feedback, and edge-to-edge/padded layout variants.",
-    "dependencies": [
-      "motion"
-    ],
-    "registryDependencies": []
-  },
-  {
     "name": "spotlight-card",
     "type": "registry:component",
     "title": "Spotlight Card",
@@ -157,6 +148,98 @@
     "title": "Border Glow",
     "description": "Interactive surface with cursor-tracking mesh gradient edge illumination, outer atmospheric aura, and entry sweep animation.",
     "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "underline-to-background",
+    "type": "registry:component",
+    "title": "Underline to Background",
+    "description": "Fluid typographic micro-interaction where an underline smoothly expands into a full background fill on hover with inverted text contrast.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
+  },
+  {
+    "name": "underline-animation",
+    "type": "registry:component",
+    "title": "Underline Animation",
+    "description": "Minimalist typographic hover underline animation that smoothly expands symmetrically from center (or directionally) with font-proportional line metrics.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
+  },
+  {
+    "name": "letter-3d-swap",
+    "type": "registry:component",
+    "title": "Letter 3D Swap",
+    "description": "Isometric 3D typography swap micro-interaction where characters rotate on multi-directional axes on hover with configurable stagger delays.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
+  },
+  {
+    "name": "typing-text",
+    "type": "registry:component",
+    "title": "Typing Text",
+    "description": "Realistic human typewriter effect with organic timing variance, simulated QWERTY typos with self-correction, and select-sweep erasure.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
+  },
+  {
+    "name": "swoosh-text",
+    "type": "registry:component",
+    "title": "Swoosh Text",
+    "description": "Physical 3D extruded typography simulation with pointer-reactive dynamic lighting, spring velocity kick, and interactive mechanical keycap sink physics.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "plucked-text",
+    "type": "registry:component",
+    "title": "Plucked Text",
+    "description": "A headline sitting on an acoustic string you can pluck, strum and let ring, simulated with real harmonic standing wave physics.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "cradle-text",
+    "type": "registry:component",
+    "title": "Cradle Text",
+    "description": "A headline hung like a Newton's cradle, so a knock on one letter clacks through the word, simulated with pendulum collision physics.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "elastic-slider",
+    "type": "registry:component",
+    "title": "Elastic Slider",
+    "description": "A tactile spring-physics slider with boundary rubber-banding, magnetic decile damping, text-dodging handle, and full WAI-ARIA accessibility.",
+    "dependencies": [
+      "motion"
+    ],
+    "registryDependencies": []
+  },
+  {
+    "name": "corner-button",
+    "type": "registry:component",
+    "title": "Corner Button",
+    "description": "An animated tactile button featuring orbiting corner dots, expanding dashed CAD lines, and smooth ambient backdrop glow transitions.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "slide-to-unlock",
+    "type": "registry:component",
+    "title": "Slide to Unlock",
+    "description": "The iconic iOS tactile slider featuring authentic text shimmer, squircle thumb, spring recoil physics, and velocity flick commitment.",
+    "dependencies": [
+      "motion"
+    ],
     "registryDependencies": []
   },
   {
@@ -193,6 +276,18 @@
     "description": "Interactive 404 digital void experience featuring dynamic cursor pixel trails and terminal status diagnostics.",
     "dependencies": [
       "motion",
+      "lucide-react"
+    ],
+    "registryDependencies": [
+      "button"
+    ]
+  },
+  {
+    "name": "not-found-04",
+    "type": "registry:block",
+    "title": "Not Found ASCII Skyline",
+    "description": "Interactive 404 error page with procedural ASCII matrix cityscape, raycasted windows, and dynamic avoidance physics.",
+    "dependencies": [
       "lucide-react"
     ],
     "registryDependencies": [

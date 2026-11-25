@@ -4,6 +4,7 @@ import { ArrowUpRight } from "lucide-react"
 import { RenderBlockSchematic } from "@/registry/schematics"
 import { cn } from "@/shared/lib/utils"
 import { SpotlightCard } from "@/shared/ui/core"
+import { SchematicWrapper } from "@/shared/ui/system"
 
 import type { BlockItem } from "../types"
 
@@ -25,8 +26,8 @@ export function BlockCard({ block }: BlockCardProps) {
       contentClassName="h-full flex-col justify-between"
     >
       <Link
-        to="/blocks/$category/$slug"
-        params={{ category: block.category, slug: block.slug }}
+        to="/ui/$collection/$slug"
+        params={{ collection: block.category, slug: block.slug }}
         className="flex h-full w-full flex-col justify-between p-4 focus:outline-none sm:p-5"
       >
         <div className="relative flex aspect-[16/10] w-full flex-col justify-between overflow-hidden rounded-lg border border-black/5 bg-background p-3.5 transition-colors group-hover:border sm:aspect-[16/9] sm:p-4 dark:border-white/5 dark:bg-background dark:group-hover:border-primary/20">
@@ -67,11 +68,17 @@ export function BlockCard({ block }: BlockCardProps) {
           </div>
 
           {/* Center: Block Visual Preview Mockup */}
-          <div className="relative z-10 my-auto flex h-full w-full flex-col items-center justify-center py-2 transition-transform duration-300 will-change-transform group-hover:scale-[1.02]">
-            <RenderBlockSchematic
-              type={block.schematicType || block.slug}
-              title={block.title}
-            />
+          <div className="relative z-10 my-auto flex h-full w-full flex-col items-center justify-center py-1 transition-transform duration-300 will-change-transform group-hover:scale-[1.02]">
+            <SchematicWrapper
+              specsLabel={`p16 - r8 - ${block.category}`}
+              paddingPx={14}
+              className="max-w-full"
+            >
+              <RenderBlockSchematic
+                type={block.schematicType || block.slug}
+                title={block.title}
+              />
+            </SchematicWrapper>
           </div>
           <div className="relative z-10 flex items-center justify-between border-t border-white/5 pt-1.5 text-[8px] text-white/30">
             <span className="font-mono">{block.slug}</span>

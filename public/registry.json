@@ -24,10 +24,10 @@
       ]
     },
     {
-      "name": "rail-scroll-scrubber",
+      "name": "scroll-indicator",
       "type": "registry:component",
-      "title": "Rail Scroll Scrubber",
-      "description": "Kinetic scrollbar and precision section scrubber featuring a 5-stage continuous rail path, split-character peeling, and zoom overview lens.",
+      "title": "Scroll Indicator",
+      "description": "Vertical scroll progress indicator with tick marks, click-to-reveal section titles, Web Audio micro-interactions, and spring physics.",
       "category": "navigation",
       "author": "Phong Phan <phongphanq089@gmail.com>",
       "dependencies": [
@@ -37,9 +37,14 @@
       "registryDependencies": [],
       "files": [
         {
-          "path": "src/registry/animated/rail-scroll-scrubber.tsx",
+          "path": "src/registry/animated/scroll-indicator.tsx",
           "type": "registry:component",
-          "target": "components/rail-scroll-scrubber.tsx"
+          "target": "components/scroll-indicator.tsx"
+        },
+        {
+          "path": "src/registry/lib/sound.ts",
+          "type": "registry:lib",
+          "target": "lib/sound.ts"
         }
       ]
     },
@@ -58,6 +63,27 @@
           "path": "src/registry/ui/middle-truncation.tsx",
           "type": "registry:ui",
           "target": "components/ui/middle-truncation.tsx"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "A versatile, subtle badge component with calibrated proportions, translucent status tints, micro dots, and geometric contour variants.",
+      "category": "data-display",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "@base-ui/react",
+        "class-variance-authority"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/ui/badge.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/badge.tsx"
         }
       ]
     },
@@ -258,46 +284,6 @@
       ]
     },
     {
-      "name": "pp-mark-isometric",
-      "type": "registry:component",
-      "title": "Isometric Monogram Mark",
-      "description": "Interactive 3D voxel isometric monogram mark featuring procedural diagonal hatching, wireframe edges, cursor-tracking radial flashlight, and spring press physics with audio feedback.",
-      "category": "interactive",
-      "author": "Phong Phan <phongphanq089@gmail.com>",
-      "dependencies": [
-        "motion"
-      ],
-      "devDependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "src/registry/animated/pp-mark-isometric.tsx",
-          "type": "registry:component",
-          "target": "components/pp-mark-isometric.tsx"
-        }
-      ]
-    },
-    {
-      "name": "phong-phan-isometric",
-      "type": "registry:component",
-      "title": "Isometric Block Typography",
-      "description": "Horizontal 3D block typography extruded along an isometric blueprint grid, equipped with interactive dynamic lighting, sound feedback, and edge-to-edge/padded layout variants.",
-      "category": "text",
-      "author": "Phong Phan <phongphanq089@gmail.com>",
-      "dependencies": [
-        "motion"
-      ],
-      "devDependencies": [],
-      "registryDependencies": [],
-      "files": [
-        {
-          "path": "src/registry/animated/phong-phan-isometric.tsx",
-          "type": "registry:component",
-          "target": "components/phong-phan-isometric.tsx"
-        }
-      ]
-    },
-    {
       "name": "spotlight-card",
       "type": "registry:component",
       "title": "Spotlight Card",
@@ -330,6 +316,203 @@
           "path": "src/registry/animated/border-glow.tsx",
           "type": "registry:component",
           "target": "components/border-glow.tsx"
+        }
+      ]
+    },
+    {
+      "name": "underline-to-background",
+      "type": "registry:component",
+      "title": "Underline to Background",
+      "description": "Fluid typographic micro-interaction where an underline smoothly expands into a full background fill on hover with inverted text contrast.",
+      "category": "text",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/underline-to-background.tsx",
+          "type": "registry:component",
+          "target": "components/underline-to-background.tsx"
+        }
+      ]
+    },
+    {
+      "name": "underline-animation",
+      "type": "registry:component",
+      "title": "Underline Animation",
+      "description": "Minimalist typographic hover underline animation that smoothly expands symmetrically from center (or directionally) with font-proportional line metrics.",
+      "category": "text",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/underline-animation.tsx",
+          "type": "registry:component",
+          "target": "components/underline-animation.tsx"
+        }
+      ]
+    },
+    {
+      "name": "letter-3d-swap",
+      "type": "registry:component",
+      "title": "Letter 3D Swap",
+      "description": "Isometric 3D typography swap micro-interaction where characters rotate on multi-directional axes on hover with configurable stagger delays.",
+      "category": "text",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/letter-3d-swap.tsx",
+          "type": "registry:component",
+          "target": "components/letter-3d-swap.tsx"
+        }
+      ]
+    },
+    {
+      "name": "typing-text",
+      "type": "registry:component",
+      "title": "Typing Text",
+      "description": "Realistic human typewriter effect with organic timing variance, simulated QWERTY typos with self-correction, and select-sweep erasure.",
+      "category": "text",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/typing-text.tsx",
+          "type": "registry:component",
+          "target": "components/typing-text.tsx"
+        }
+      ]
+    },
+    {
+      "name": "swoosh-text",
+      "type": "registry:component",
+      "title": "Swoosh Text",
+      "description": "Physical 3D extruded typography simulation with pointer-reactive dynamic lighting, spring velocity kick, and interactive mechanical keycap sink physics.",
+      "category": "text",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/swoosh-text.tsx",
+          "type": "registry:component",
+          "target": "components/swoosh-text.tsx"
+        }
+      ]
+    },
+    {
+      "name": "plucked-text",
+      "type": "registry:component",
+      "title": "Plucked Text",
+      "description": "A headline sitting on an acoustic string you can pluck, strum and let ring, simulated with real harmonic standing wave physics.",
+      "category": "text",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/plucked-text.tsx",
+          "type": "registry:component",
+          "target": "components/plucked-text.tsx"
+        }
+      ]
+    },
+    {
+      "name": "cradle-text",
+      "type": "registry:component",
+      "title": "Cradle Text",
+      "description": "A headline hung like a Newton's cradle, so a knock on one letter clacks through the word, simulated with pendulum collision physics.",
+      "category": "text",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/cradle-text.tsx",
+          "type": "registry:component",
+          "target": "components/cradle-text.tsx"
+        }
+      ]
+    },
+    {
+      "name": "elastic-slider",
+      "type": "registry:component",
+      "title": "Elastic Slider",
+      "description": "A tactile spring-physics slider with boundary rubber-banding, magnetic decile damping, text-dodging handle, and full WAI-ARIA accessibility.",
+      "category": "interactive",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/elastic-slider.tsx",
+          "type": "registry:component",
+          "target": "components/elastic-slider.tsx"
+        },
+        {
+          "path": "src/registry/hooks/use-controllable-state.ts",
+          "type": "registry:hook",
+          "target": "hooks/use-controllable-state.ts"
+        }
+      ]
+    },
+    {
+      "name": "corner-button",
+      "type": "registry:component",
+      "title": "Corner Button",
+      "description": "An animated tactile button featuring orbiting corner dots, expanding dashed CAD lines, and smooth ambient backdrop glow transitions.",
+      "category": "button",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/corner-button.tsx",
+          "type": "registry:component",
+          "target": "components/corner-button.tsx"
+        }
+      ]
+    },
+    {
+      "name": "slide-to-unlock",
+      "type": "registry:component",
+      "title": "Slide to Unlock",
+      "description": "The iconic iOS tactile slider featuring authentic text shimmer, squircle thumb, spring recoil physics, and velocity flick commitment.",
+      "category": "button",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "motion"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/slide-to-unlock.tsx",
+          "type": "registry:component",
+          "target": "components/slide-to-unlock.tsx"
         }
       ]
     },
@@ -454,6 +637,33 @@
       ]
     },
     {
+      "name": "not-found-04",
+      "type": "registry:block",
+      "title": "Not Found ASCII Skyline",
+      "description": "Interactive 404 error page with procedural ASCII matrix cityscape, raycasted windows, and dynamic avoidance physics.",
+      "category": "404-page",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "lucide-react"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [
+        "button"
+      ],
+      "files": [
+        {
+          "path": "src/registry/block/not-found-04/app/not-found.tsx",
+          "type": "registry:block",
+          "target": "app/not-found.tsx"
+        },
+        {
+          "path": "src/registry/block/not-found-04/components/ascii-skyline.tsx",
+          "type": "registry:block",
+          "target": "components/ascii-skyline.tsx"
+        }
+      ]
+    },
+    {
       "name": "login-01",
       "type": "registry:block",
       "title": "Login 01",
@@ -568,8 +778,8 @@
           "target": "app/marketing/artcraft-scroll/page.tsx"
         },
         {
-          "path": "src/registry/animated/rail-scroll-scrubber.tsx",
-          "type": "registry:component",
+          "path": "src/registry/block/artcraft-scroll-01/components/rail-scroll-scrubber.tsx",
+          "type": "registry:block",
           "target": "components/rail-scroll-scrubber.tsx"
         }
       ]

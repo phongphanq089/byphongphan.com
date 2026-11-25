@@ -83,7 +83,7 @@ export function ComponentDetailSkeleton({
           <div className="flex items-center justify-between">
             {category ? (
               <Button variant="ghost" asChild>
-                <Link to="/component-ui/$category" params={{ category }}>
+                <Link to="/ui/$collection" params={{ collection: category }}>
                   <ArrowLeft className="size-3.5" />
                   <span className="capitalize">{category}</span>
                 </Link>

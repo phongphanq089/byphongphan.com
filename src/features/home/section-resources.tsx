@@ -1,33 +1,47 @@
 import { Turntable } from "@lucasmarkes/hairline/react"
 
-import { GridContainer } from "@/app/layouts"
-import { SectionHeading } from "@/shared/ui/system/section-heading"
+import { DraftingSectionRow } from "@/app/layouts/drafting-section-row"
 
-export const SectionResources = () => {
+export interface SectionResourcesProps {
+  className?: string
+}
+
+export function SectionResources({ className }: SectionResourcesProps) {
   return (
-    <section>
-      <GridContainer borderTop className="relative p-0" showCrosshairs={false}>
-        <SectionHeading id="resources" heading="Resources" />
-      </GridContainer>
+    <DraftingSectionRow
+      id="resources"
+      romanIndex="VII"
+      title="RESOURCES"
+      className={className}
+    >
+      <div className="relative flex w-full flex-col border-t border-border/70 bg-transparent py-5 select-none">
+        {/* Center Lucas Markes Interactive Turntable Graphic */}
+        <div className="flex w-full items-center justify-center py-4">
+          <Turntable
+            className="w-full max-w-[240px] sm:max-w-[280px]"
+            intensity={0.6}
+            label="Coming soon - Curated Library"
+          />
+        </div>
 
-      <GridContainer
-        showCrosshairs={false}
-        className="flex flex-col items-center justify-center p-4 text-center sm:p-6 md:p-8"
-      >
-        <Turntable
-          style={{ width: 400 }}
-          label="Coming soon"
-          className="-mt-10"
-        />
+        {/* Description & Headline */}
+        <div className="space-y-1.5 text-center">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-transparent px-2.5 py-0.5 font-mono text-[9px] text-muted-foreground uppercase">
+            <span>Coming soon</span>
+          </div>
 
-        <h3 className="text-lg font-bold text-foreground sm:text-xl">
-          Coming soon
-        </h3>
+          <h3 className="font-mono text-sm font-semibold tracking-wide text-foreground uppercase sm:text-base">
+            Curated Developer Library
+          </h3>
 
-        <p className="mt-1 max-w-sm text-xs leading-relaxed text-muted-foreground sm:text-sm">
-          We’re currently building for this resources. Check back soon!
-        </p>
-      </GridContainer>
-    </section>
+          <p className="mx-auto max-w-sm text-xs leading-relaxed text-muted-foreground">
+            A hand-picked index of design systems, micro-libraries, typography
+            pairings, and developer bookmarks is being curated.
+          </p>
+        </div>
+      </div>
+    </DraftingSectionRow>
   )
 }
+
+export default SectionResources

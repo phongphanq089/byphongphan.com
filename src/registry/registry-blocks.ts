@@ -6,6 +6,7 @@ import {
   NotFound01Schematic,
   NotFound02Schematic,
   NotFound03Schematic,
+  NotFound04Schematic,
   StatsCards01Schematic,
 } from "./schematics"
 
@@ -125,6 +126,31 @@ export const REGISTRY_BLOCKS: RegistryItem[] = [
     ],
   },
   {
+    name: "not-found-04",
+    title: "Not Found ASCII Skyline",
+    description:
+      "Interactive 404 error page with procedural ASCII matrix cityscape, raycasted windows, and dynamic avoidance physics.",
+    type: "registry:block",
+    category: "404-page",
+    schematic: NotFound04Schematic,
+    schematicType: "not-found-04",
+    isNew: true,
+    dependencies: ["lucide-react"],
+    registryDependencies: ["button"],
+    files: [
+      {
+        path: "block/not-found-04/app/not-found.tsx",
+        type: "registry:block",
+        target: "app/not-found.tsx",
+      },
+      {
+        path: "block/not-found-04/components/ascii-skyline.tsx",
+        type: "registry:block",
+        target: "components/ascii-skyline.tsx",
+      },
+    ],
+  },
+  {
     name: "login-01",
     title: "Login 01",
     description:
@@ -233,8 +259,8 @@ export const REGISTRY_BLOCKS: RegistryItem[] = [
         target: "app/marketing/artcraft-scroll/page.tsx",
       },
       {
-        path: "animated/rail-scroll-scrubber.tsx",
-        type: "registry:component",
+        path: "block/artcraft-scroll-01/components/rail-scroll-scrubber.tsx",
+        type: "registry:block",
         target: "components/rail-scroll-scrubber.tsx",
       },
     ],

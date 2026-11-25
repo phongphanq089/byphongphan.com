@@ -260,16 +260,22 @@ function ApiItemRow({
         )}
       >
         {/* Left: Prop / Param / Method Name */}
-        <div className="flex min-w-0 items-center gap-2">
-          <span className="font-mono text-[13px] font-semibold tracking-tight break-all text-foreground">
+        <div className="flex max-w-[65%] min-w-0 shrink-0 items-center gap-2 sm:max-w-[70%]">
+          <span
+            title={item.nameText}
+            className="truncate font-mono text-[13px] font-semibold tracking-tight whitespace-nowrap text-foreground"
+          >
             {item.nameNode}
           </span>
         </div>
 
         {/* Right: Type Summary & Chevron */}
-        <div className="ml-auto flex shrink-0 items-center gap-3">
+        <div className="ml-auto flex min-w-0 items-center justify-end gap-2.5 pl-2 sm:gap-3">
           {item.typeText && (
-            <span className="max-w-[130px] truncate text-right font-mono text-xs text-muted-foreground/80 transition-colors group-hover:text-foreground sm:max-w-[260px] md:max-w-[360px]">
+            <span
+              title={item.typeText}
+              className="truncate font-mono text-xs text-muted-foreground/80 transition-colors group-hover:text-foreground"
+            >
               {item.typeText}
             </span>
           )}
@@ -301,24 +307,24 @@ function ApiItemRow({
 
               <div className="flex flex-col gap-2 border-t border-border/30 pt-1 dark:border-white/[0.05]">
                 {item.typeNode && (
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="min-w-[50px] font-mono text-[11px] text-muted-foreground/70 select-none">
                       Type
                     </span>
-                    <code className="rounded border border-amber-500/20 bg-amber-500/10 px-2 py-0.5 font-mono text-[12px] font-medium break-all text-amber-600 dark:border-amber-400/20 dark:bg-amber-400/10 dark:text-amber-300">
+                    <div className="max-w-full overflow-x-auto rounded border border-border/60 bg-muted/50 px-2 py-0.5 font-mono text-[12px] font-medium text-foreground dark:border-white/10 dark:bg-white/[0.04] [&_code]:border-0 [&_code]:bg-transparent [&_code]:p-0">
                       {item.typeNode}
-                    </code>
+                    </div>
                   </div>
                 )}
 
                 {hasDefault && (
-                  <div className="flex flex-wrap items-center gap-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="min-w-[50px] font-mono text-[11px] text-muted-foreground/70 select-none">
                       Default
                     </span>
-                    <code className="rounded border border-border/60 bg-muted/50 px-2 py-0.5 font-mono text-[12px] font-medium text-foreground dark:border-white/10 dark:bg-white/[0.04]">
+                    <div className="max-w-full overflow-x-auto rounded border border-border/60 bg-muted/50 px-2 py-0.5 font-mono text-[12px] font-medium text-foreground dark:border-white/10 dark:bg-white/[0.04] [&_code]:border-0 [&_code]:bg-transparent [&_code]:p-0">
                       {item.defaultNode ?? cleanDefault}
-                    </code>
+                    </div>
                   </div>
                 )}
               </div>
@@ -492,7 +498,7 @@ export function PropsTable({
   }
 
   return (
-    <div className={cn("my-6 flex w-full flex-col gap-2.5", className)}>
+    <div className={cn("mb-5 flex w-full flex-col gap-2.5", className)}>
       {title && (
         <h4 className="text-sm font-semibold tracking-tight text-foreground">
           {title}

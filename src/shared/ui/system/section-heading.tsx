@@ -36,7 +36,7 @@ type SectionHeadingProps = {
   subtitle?: string
   /** Custom action slot rendered inside the right grid cell */
   action?: React.ReactNode
-  /** Convenience prop: URL for the action link (e.g. "/blocks") */
+  /** Convenience prop: URL for the action link (e.g. "/ui/blocks") */
   actionHref?: string
   /** Convenience prop: Label for the action link (e.g. "View all blocks") */
   actionLabel?: string

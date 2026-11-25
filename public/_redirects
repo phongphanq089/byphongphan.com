@@ -1,2 +1,20 @@
 # Auto-generated 301 redirects by scripts/build-registry.ts - DO NOT EDIT MANUALLY
 # Maps legacy/renamed component and block slugs to their canonical URLs
+
+# 301 Wildcard Redirects from legacy registry routes to the unified /ui studio
+/component-ui/:category/:slug  /ui/:category/:slug  301!
+/blocks/:category/:slug        /ui/:category/:slug  301!
+/hooks/:category/:slug         /ui/:category/:slug  301!
+/component-ui/:category        /ui/:category        301!
+/blocks/:category              /ui/:category        301!
+/hooks/:category               /ui/:category        301!
+/component-ui                  /ui/base             301!
+/blocks                        /ui/blocks           301!
+/hooks                         /ui/hooks            301!
+
+# 301 Wildcard Redirects from legacy/hierarchical markdown endpoints to unified /r/ flat path
+/ui/components/:slug.md        /r/:slug.md          301!
+/ui/blocks/:slug.md            /r/:slug.md          301!
+/ui/hooks/:slug.md             /r/:slug.md          301!
+/ui/button/slide-to-confirm  /ui/button/slide-to-unlock  301!
+/r/slide-to-confirm.json  /r/slide-to-unlock.json  301!

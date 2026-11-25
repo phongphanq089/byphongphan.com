@@ -2,8 +2,8 @@ import { Link } from "@tanstack/react-router"
 import { ArrowDownRight, Terminal } from "lucide-react"
 import { useEffect, useState } from "react"
 
-import { PPMarkIsometric } from "@/shared/ui/animation/pp-mark-isometric"
 import TextBurnNeon from "@/shared/ui/animation/text-burn-neon"
+import { PPPixelMark } from "@/shared/ui/icons/pp-pixel-mark"
 
 export interface UnderConstructionProps {
   pageName: string
@@ -83,7 +83,10 @@ export const UnderConstruction = ({
 
           {/* Central 3D Isometric Artwork */}
           <div className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-2xl">
-            <PPMarkIsometric />
+            <PPPixelMark
+              className="h-48 w-48 text-pp-primary"
+              aria-label="Phong Phan mark"
+            />
           </div>
         </div>
       </div>

@@ -11,13 +11,13 @@ export interface StatsCardsProps {
 
 const DEFAULT_IMAGES = [
   "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80",
-  "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=800&q=80",
+  "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=800&q=80",
 ]
 
 export function StatsCards({
   className,
-  width = "w-[210px] sm:w-[240px] md:w-[260px] lg:w-[280px]",
-  height = "h-[300px] sm:h-[330px] md:h-[350px] lg:h-[360px]",
+  width = "w-[240px] sm:w-[270px] md:w-[290px] lg:w-[310px]",
+  height = "h-[350px] sm:h-[390px] md:h-[420px] lg:h-[440px]",
   images = DEFAULT_IMAGES,
 }: StatsCardsProps) {
   const img1 = images[0] || DEFAULT_IMAGES[0]
@@ -25,42 +25,40 @@ export function StatsCards({
 
   return (
     <LazyMotion features={domAnimation}>
-      {/* Outer container with generous padding to prevent hover shadows/rotations from clipping */}
+      {/* Outer viewport container with generous vertical breathing room for rotations & lift */}
       <div
         className={cn(
           "relative w-full overflow-x-auto overflow-y-visible px-4 py-12 select-none sm:px-8 sm:py-16",
-          "rounded-3xl border border-orange-200/50 bg-orange-50/70 backdrop-blur-sm transition-colors",
-          "dark:border-orange-500/10 dark:bg-zinc-950/40",
           className
         )}
       >
-        {/* Strictly flex-nowrap to completely prevent row wrapping on any screen size */}
-        <div className="mx-auto flex min-w-max flex-nowrap items-center justify-start md:min-w-0 md:justify-center">
-          {/* ── Card 1: Revenue Driven ── */}
+        {/* Fan deck row: strictly flex-nowrap to keep cards organically overlapping */}
+        <div className="mx-auto flex min-w-max flex-nowrap items-center justify-start px-4 py-8 md:min-w-0 md:justify-center">
+          {/* ── Card 1: Revenue Driven (Signature Crisp White Card) ── */}
           <m.div
             className={cn(
-              `relative z-10 ${width} ${height} flex shrink-0 flex-col justify-between rounded-[16px] p-5 shadow-xl transition-shadow hover:z-50`,
-              "border border-orange-100 bg-white dark:border-zinc-800 dark:bg-zinc-900/90 dark:shadow-2xl dark:shadow-black/60"
+              `relative z-10 ${width} ${height} flex shrink-0 flex-col justify-between rounded-[28px] p-6 shadow-[0_20px_50px_rgba(0,0,0,0.08)] transition-shadow hover:z-50 sm:p-7`,
+              "border border-black/[0.06] bg-white text-[#FF4400] shadow-[0_20px_50px_rgba(0,0,0,0.08)] dark:border-white/10 dark:shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
             )}
-            initial={{ rotate: -3 }}
+            initial={{ rotate: -5, y: 0 }}
             whileHover={{
               rotate: 0,
               scale: 1.05,
-              y: -8,
-              transition: { duration: 0.25, ease: "easeOut" },
+              y: -12,
+              transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
             }}
           >
             <div>
-              <h2 className="text-4xl font-semibold tracking-tighter text-[#FF4400] sm:text-5xl">
+              <span className="text-4xl font-bold tracking-tighter text-[#FF4400] sm:text-5xl lg:text-6xl">
                 $100k+
-              </h2>
+              </span>
             </div>
             <div>
-              <h4 className="text-base leading-tight font-medium tracking-tighter text-[#FF4400] sm:text-lg">
+              <h4 className="text-base font-semibold tracking-tight text-[#FF4400] sm:text-lg">
                 Revenue driven
               </h4>
-              <div className="my-2 h-px w-full bg-[#FF4400]/30 dark:bg-[#FF4400]/40" />
-              <p className="max-w-[90%] text-xs leading-tight tracking-tight text-[#FF4400]/90 sm:text-sm dark:text-[#FF4400]">
+              <div className="my-2.5 h-px w-full bg-[#FF4400]/25" />
+              <p className="max-w-[92%] text-xs leading-snug font-medium tracking-tight text-[#FF4400]/85 sm:text-sm">
                 From scroll-stopping campaigns that actually sell.
               </p>
             </div>
@@ -69,53 +67,53 @@ export function StatsCards({
           {/* ── Card 2: Image Stats (Liked) ── */}
           <m.div
             className={cn(
-              `group relative z-20 ${width} ${height} -ml-10 shrink-0 overflow-hidden rounded-[16px] shadow-xl transition-shadow hover:z-50 sm:-ml-12 md:-ml-14 lg:-ml-16`,
-              "border border-black/5 dark:border-white/10 dark:shadow-2xl dark:shadow-black/60"
+              `group relative z-20 ${width} ${height} -ml-10 shrink-0 overflow-hidden rounded-[28px] shadow-[0_20px_50px_rgba(0,0,0,0.12)] transition-shadow hover:z-50 sm:-ml-12 md:-ml-14 lg:-ml-16`,
+              "border border-black/5 dark:border-white/10 dark:shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
             )}
-            initial={{ rotate: 2, y: 1 }}
+            initial={{ rotate: 1, y: -4 }}
             whileHover={{
               rotate: 0,
               scale: 1.05,
-              y: -8,
-              transition: { duration: 0.25, ease: "easeOut" },
+              y: -12,
+              transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
             }}
           >
             <img
               src={img1}
-              alt="Campaign model showcase"
-              className="h-full w-full object-cover transition-transform duration-500 will-change-transform group-hover:scale-105"
+              alt="Editorial campaign showcase"
+              className="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105"
               loading="lazy"
             />
-            <div className="absolute top-5 left-5 rounded-full border border-black/5 bg-white/90 px-2.5 py-1 text-xs font-semibold tracking-tighter text-black shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-black/80 dark:text-white">
+            <div className="absolute top-5 left-5 rounded-full border border-black/5 bg-white/95 px-3.5 py-1.5 text-xs font-semibold tracking-tight text-zinc-900 shadow-sm backdrop-blur-md">
               900k Liked
             </div>
           </m.div>
 
-          {/* ── Card 3: Organic Impressions (Signature Orange Card) ── */}
+          {/* ── Card 3: Organic Impressions (Signature Vibrant Orange Card) ── */}
           <m.div
             className={cn(
-              `relative z-30 ${width} ${height} -ml-10 flex shrink-0 flex-col justify-between rounded-[16px] bg-[#FF4400] p-5 shadow-2xl shadow-orange-600/30 transition-shadow hover:z-50 sm:-ml-12 md:-ml-14 lg:-ml-16`,
-              "border border-orange-400/40"
+              `relative z-30 ${width} ${height} -ml-10 flex shrink-0 flex-col justify-between rounded-[28px] bg-[#FF4400] p-6 shadow-[0_25px_60px_rgba(255,68,0,0.35)] transition-shadow hover:z-50 sm:-ml-12 sm:p-7 md:-ml-14 lg:-ml-16`,
+              "border border-white/15 dark:shadow-[0_25px_60px_rgba(255,68,0,0.25)]"
             )}
-            initial={{ rotate: 8 }}
+            initial={{ rotate: 7, y: -8 }}
             whileHover={{
               rotate: 0,
-              scale: 1.03,
-              y: -8,
-              transition: { duration: 0.25, ease: "easeOut" },
+              scale: 1.05,
+              y: -12,
+              transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
             }}
           >
             <div>
-              <h2 className="text-4xl font-semibold tracking-tighter text-white sm:text-5xl">
+              <span className="text-4xl font-bold tracking-tighter text-white sm:text-5xl lg:text-6xl">
                 37M+
-              </h2>
+              </span>
             </div>
             <div>
-              <h4 className="text-base leading-tight font-medium tracking-tighter text-white sm:text-lg">
+              <h4 className="text-base font-semibold tracking-tight text-white sm:text-lg">
                 Organic impressions
               </h4>
-              <div className="my-2 h-px w-full bg-white/30" />
-              <p className="max-w-[90%] text-xs leading-tight tracking-tight text-white/90 sm:text-sm">
+              <div className="my-2.5 h-px w-full bg-white/30" />
+              <p className="max-w-[92%] text-xs leading-snug font-medium tracking-tight text-white/90 sm:text-sm">
                 Growth through content that sells, not just trends.
               </p>
             </div>
@@ -124,24 +122,24 @@ export function StatsCards({
           {/* ── Card 4: Image Stats (Viewed) ── */}
           <m.div
             className={cn(
-              `group relative z-40 ${width} ${height} -ml-10 shrink-0 overflow-hidden rounded-[16px] shadow-xl transition-shadow hover:z-50 sm:-ml-12 md:-ml-14 lg:-ml-16`,
-              "border border-black/5 dark:border-white/10 dark:shadow-2xl dark:shadow-black/60"
+              `group relative z-40 ${width} ${height} -ml-10 shrink-0 overflow-hidden rounded-[28px] shadow-[0_20px_50px_rgba(0,0,0,0.12)] transition-shadow hover:z-50 sm:-ml-12 md:-ml-14 lg:-ml-16`,
+              "border border-black/5 dark:border-white/10 dark:shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
             )}
-            initial={{ rotate: -4 }}
+            initial={{ rotate: -3, y: 4 }}
             whileHover={{
               rotate: 0,
               scale: 1.05,
-              y: -8,
-              transition: { duration: 0.25, ease: "easeOut" },
+              y: -12,
+              transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
             }}
           >
             <img
               src={img2}
               alt="Campaign creative visual"
-              className="h-full w-full object-cover transition-transform duration-500 will-change-transform group-hover:scale-105"
+              className="h-full w-full object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105"
               loading="lazy"
             />
-            <div className="absolute right-5 bottom-5 rounded-full border border-black/5 bg-white/90 px-2.5 py-1 text-xs font-semibold tracking-tighter text-black shadow-sm backdrop-blur-md dark:border-white/10 dark:bg-black/80 dark:text-white">
+            <div className="absolute right-5 bottom-5 rounded-full border border-black/5 bg-white/95 px-3.5 py-1.5 text-xs font-semibold tracking-tight text-zinc-900 shadow-sm backdrop-blur-md">
               1.5M Viewed
             </div>
           </m.div>

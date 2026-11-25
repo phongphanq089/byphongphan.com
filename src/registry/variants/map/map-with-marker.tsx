@@ -29,7 +29,7 @@ const SPOTS = [
 
 export function MapWithMarker() {
   return (
-    <div className="relative h-[400px] w-full overflow-hidden rounded-xl border border-border/80 bg-muted/10">
+    <div className="relative size-full min-h-[400px] w-full overflow-hidden rounded-xl border border-border/80 bg-muted/10">
       <Map center={[-122.411, 37.78]} zoom={13} className="size-full">
         {SPOTS.map((spot) => (
           <MapMarker

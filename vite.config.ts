@@ -31,22 +31,22 @@ function getRegistryStaticPaths(): string[] {
 
   const paths = new Set<string>()
   for (const cat of manifest.blockCategories ?? []) {
-    paths.add(`/blocks/${cat}`)
+    paths.add(`/ui/${cat}`)
   }
   for (const block of manifest.blocks ?? []) {
-    paths.add(`/blocks/${block.category}/${block.slug}`)
+    paths.add(`/ui/${block.category}/${block.slug}`)
   }
   for (const cat of manifest.componentCategories ?? []) {
-    paths.add(`/component-ui/${cat}`)
+    paths.add(`/ui/${cat}`)
   }
   for (const comp of manifest.components ?? []) {
-    paths.add(`/component-ui/${comp.category}/${comp.slug}`)
+    paths.add(`/ui/${comp.category}/${comp.slug}`)
   }
   for (const cat of manifest.hookCategories ?? []) {
-    paths.add(`/hooks/${cat}`)
+    paths.add(`/ui/${cat}`)
   }
   for (const hook of manifest.hooks ?? []) {
-    paths.add(`/hooks/${hook.category}/${hook.slug}`)
+    paths.add(`/ui/${hook.category}/${hook.slug}`)
   }
   return [...paths]
 }
@@ -136,9 +136,10 @@ const config = defineConfig({
       },
       pages: [
         { path: "/" },
-        { path: "/blocks" },
-        { path: "/component-ui" },
-        { path: "/hooks" },
+        { path: "/ui" },
+        { path: "/ui/base" },
+        { path: "/ui/blocks" },
+        { path: "/ui/hooks" },
         ...registryStaticPaths.map((path) => ({
           path,
         })),

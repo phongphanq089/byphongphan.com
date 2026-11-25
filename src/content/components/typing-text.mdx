@@ -1,0 +1,110 @@
+---
+title: Typing Text
+description: Realistic human typewriter effect with organic timing variance, simulated QWERTY typos with self-correction, and select-sweep erasure.
+component: true
+badge: Motion
+---
+
+<ComponentPreview name="typing-text-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="typing-text" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the required motion dependency:</Step>
+      <CodeBlockCommand command="npm install motion" />
+
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="typing-text" title="components/typing-text.tsx" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+TypingText (Full-width accessible typography wrapper)
+├── <span className="sr-only"> (Full sequence strings for screen reader accessibility)
+└── <motion.span> (CSS Grid overlay ensuring container width never jitters)
+    ├── <span (invisible)> (Static ghost copy of longest phrase to pin layout dimensions)
+    └── <span> (Live typed characters)
+        ├── <Caret> (Solid while active, blinking keyframe animation when idle)
+        └── <span (selected)> (High-contrast selection sweep highlight when deleteMode="select")
+```
+
+---
+
+## Usage
+
+```tsx
+import { TypingText } from "@/components/typing-text"
+```
+
+```tsx
+export function HeroTyping() {
+  const phrases = [
+    { text: "Creative Developer", deleteAfter: true },
+    { text: "Design Systems Engineer", deleteAfter: true },
+    { text: "Building Modern Web Apps", deleteAfter: false },
+  ]
+
+  return (
+    <TypingText
+      sequences={phrases}
+      typingSpeed={50}
+      deleteSpeed={30}
+      deleteMode="select"
+      typos={true}
+      className="text-primary font-bold text-4xl"
+    />
+  )
+}
+```
+
+---
+
+## Features
+
+- **Zero-Jitter CSS Grid Layout**: Renders every sequence invisibly in the same grid cell so the container locks to the rendered width of the longest phrase, completely eliminating layout shifts.
+- **Organic Human Timing**: Uses seeded pseudo-random distribution (Park-Miller generator) with 10% hesitation delays and burst strokes mimicking realistic human cadence.
+- **Accidental Typos & Self-Correction**: When `typos` is enabled, occasionally strikes neighbouring QWERTY keys, pauses in realization, backspaces, and corrects itself.
+- **Selection-Sweep Erasure**: Supports `deleteMode="select"` which highlights the phrase in reverse (like Shift+Home) before cutting it in one swift motion.
+- **Accessible & Battery Friendly**: Fully pauses while off-screen (`useInView`), respects `useReducedMotion()`, and exposes natural text to screen readers.
+
+---
+
+## API Reference
+
+### TypingText
+
+Realistic human typewriter effect component.
+
+| Prop                 | Type                                    | Default                                          | Description                                                                     |
+| :------------------- | :-------------------------------------- | :----------------------------------------------- | :------------------------------------------------------------------------------ |
+| `sequences`          | `TypewriterSequence[]`                  | `[{ text: "Typewriter", deleteAfter: true }, ...]`| Array of phrases and per-phrase pause configurations.                           |
+| `typingSpeed`        | `number`                                | `50`                                             | Base typing speed in milliseconds per character.                                |
+| `deleteSpeed`        | `number`                                | `30`                                             | Character deletion speed in milliseconds.                                       |
+| `deleteMode`         | `"backspace" \| "select"`               | `"backspace"`                                    | How phrases erase: character backspace vs reverse selection highlight sweep.   |
+| `typos`              | `boolean \| number`                     | `false`                                          | Enable realistic neighboring QWERTY key typos (boolean or custom rate 0-1).     |
+| `naturalVariance`    | `boolean`                               | `true`                                           | Adds organic hesitations (+/-40%) to typing speed.                              |
+| `pauseBeforeDelete`  | `number`                                | `1000`                                           | Pause duration before erasing a completed phrase in ms.                         |
+| `loopDelay`          | `number`                                | `1000`                                           | Delay before repeating the sequences loop in ms.                                |
+| `autoLoop`           | `boolean`                               | `true`                                           | Whether to restart the sequence loop indefinitely.                              |
+| `as`                 | `"div" \| "p" \| "span" \| "h1"-"h3"`   | `"div"`                                          | HTML element to render the container as.                                        |
+| `className`          | `string`                                | `undefined`                                      | CSS classes for the outer container.                                            |
+| `textClassName`      | `string`                                | `undefined`                                      | CSS classes for the typed text element.                                         |

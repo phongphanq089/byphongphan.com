@@ -1,0 +1,95 @@
+---
+title: Swoosh Text
+description: Physical 3D extruded typography simulation with pointer-reactive dynamic lighting, spring velocity kick, and interactive mechanical keycap sink physics.
+component: true
+badge: Physics
+---
+
+<ComponentPreview name="swoosh-text-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="swoosh-text" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the component into your project (zero external animation dependencies required):</Step>
+      <ComponentSource name="swoosh-text" title="components/swoosh-text.tsx" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+SwooshText (Pointer-reactive canvas with auto-sleeping RAF physics loop)
+├── <span className="sr-only"> (Full plain text string for screen readers)
+└── <span aria-hidden="true"> (Extruded letter container)
+    └── <Letter data-key=""> (Individual letter with stacked depth layers)
+        ├── <span (depth layer N)> (Deepest layer with optional accent color)
+        ├── <span (depth layer ...)> (OKLab color-mix gradient extrusion body)
+        └── <span (face layer)> (Top visible keycap face responding to click sink)
+```
+
+---
+
+## Usage
+
+```tsx
+import { SwooshText } from "@/components/swoosh-text"
+```
+
+```tsx
+export function HeroTitle() {
+  return (
+    <SwooshText
+      text="CREATIVE"
+      depth={14}
+      length={0.25}
+      accent="var(--primary)"
+      className="text-6xl sm:text-8xl font-black"
+    />
+  )
+}
+```
+
+---
+
+## Features
+
+- **Physics-Based Dynamic Lighting**: The 3D extrusion swings dynamically away from the cursor with under-damped spring velocity transfer (`LIGHT_KICK`), settling smoothly when cursor motion stops.
+- **Interactive Keycap Press Physics**: Clicking or tapping any letter physically depresses it into the extrusion column (`MAX_SINK`) with an exponential Gaussian falloff wave influencing neighboring letters.
+- **High-Performance Direct Transforms**: Applies direct `translate3d` transforms on each layer element inside requestAnimationFrame, bypassing CSS custom property cascade penalties.
+- **Zero Animation Dependencies**: Written in pure high-performance TypeScript and CSS matrix transforms without requiring heavy physics libraries.
+- **Smart Battery & Resource Conservation**: Automatically enters deep sleep once springs settle and halts execution when scrolled off-screen via `IntersectionObserver`.
+
+---
+
+## API Reference
+
+### SwooshText
+
+3D extruded physical typography simulation component.
+
+| Prop        | Type                                                                       | Default                                          | Description                                                                     |
+| :---------- | :------------------------------------------------------------------------- | :----------------------------------------------- | :------------------------------------------------------------------------------ |
+| `text`      | `string`                                                                   | `"Extruded"`                                     | The text string to render and extrude in 3D.                                    |
+| `children`  | `React.ReactNode`                                                          | `undefined`                                      | Optional text content passed as children.                                       |
+| `as`        | `"div" \| "span" \| "p" \| "h1" \| "h2" \| "h3" \| "h4" \| "h5" \| "h6"`   | `"div"`                                          | HTML element to render the container as.                                        |
+| `depth`     | `number`                                                                   | `12`                                             | Number of stacked extrusion layers (clamped between 6 and 16).                  |
+| `length`    | `number`                                                                   | `0.2`                                            | Total extrusion displacement distance in `em`.                                  |
+| `accent`    | `string`                                                                   | `undefined`                                      | Optional CSS color applied to the deepest base layer (e.g. `"var(--primary)"`). |
+| `className` | `string`                                                                   | `undefined`                                      | Additional CSS classes for styling.                                             |

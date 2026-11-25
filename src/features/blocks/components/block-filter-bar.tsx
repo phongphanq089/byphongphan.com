@@ -17,7 +17,7 @@ export const BlockFilterBar = ({
     <div className="no-scrollbar flex w-full items-stretch overflow-x-auto">
       {BLOCK_CATEGORIES.map((cat) => {
         const isSelected = activeCategory === cat.id
-        const to = cat.id === "all" ? "/blocks" : `/blocks/${cat.id}`
+        const to = cat.id === "all" ? "/ui/blocks" : `/ui/${cat.id}`
 
         return (
           <Link
