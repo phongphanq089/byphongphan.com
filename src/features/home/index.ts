@@ -1,5 +1,6 @@
 export * from "./components/drafting-time-readout"
 export * from "./components/full-width-caliper-ruler"
+export * from "./components/phong-phan-signature"
 export * from "./section-about"
 export * from "./section-blocks"
 export * from "./section-blog"
