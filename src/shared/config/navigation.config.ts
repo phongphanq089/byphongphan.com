@@ -33,7 +33,7 @@ export const MAIN_NAV_ITEMS: NavItemConfig[] = [
   {
     id: "mcp",
     label: "MCP",
-    title: "MCP Server",
+    title: "MCP",
     link: "/mcp",
     shortcut: ["G", "M"],
     badge: "LIVE",

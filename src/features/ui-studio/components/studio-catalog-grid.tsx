@@ -1,6 +1,7 @@
+import { ArrowLeftIcon } from "@phosphor-icons/react"
 import { Link, useNavigate } from "@tanstack/react-router"
-import { ArrowLeft } from "lucide-react"
-import { type ReactNode, useMemo } from "react"
+import { motion } from "motion/react"
+import { type ReactNode, useId, useMemo } from "react"
 
 import { BLOCKS_DATA } from "@/features/blocks"
 import { BlockCard } from "@/features/blocks/components/block-card"
@@ -18,6 +19,8 @@ import {
 } from "@/shared/config"
 import { playClickSound, playHoverSound } from "@/shared/lib/sound"
 import { cn } from "@/shared/lib/utils"
+import TextBurnNeon from "@/shared/ui/animation/text-burn-neon"
+import { ArchitecturalSpine } from "@/shared/ui/system/architectural-spine"
 
 import { getStudioSegmentLabel } from "../model/unified-registry.adapter"
 
@@ -91,6 +94,17 @@ export function StudioCatalogGrid({ segment }: StudioCatalogGridProps) {
 
   const total = componentItems.length + blockItems.length + hookItems.length
 
+  const romanSections = useMemo(() => {
+    const numerals = ["I", "II", "III"] as const
+    const active: string[] = []
+    if (showComponents) active.push("components")
+    if (showBlocks) active.push("blocks")
+    if (showHooks) active.push("hooks")
+    return Object.fromEntries(
+      active.map((key, idx) => [key, numerals[idx] ?? String(idx + 1)])
+    ) as Record<string, string>
+  }, [showComponents, showBlocks, showHooks])
+
   if (total === 0) {
     return (
       <div className="flex h-full flex-col items-center justify-center gap-2 p-8 text-center">
@@ -116,137 +130,135 @@ export function StudioCatalogGrid({ segment }: StudioCatalogGridProps) {
   }
 
   return (
-    <div className="h-full w-full overflow-y-auto overscroll-contain">
-      <div className="mx-auto flex max-w-7xl flex-col gap-10 px-4 py-8 sm:gap-14 sm:px-6 sm:py-10 lg:px-8">
-        {segment ? (
-          <div className="-mb-4 flex items-center justify-between border-b border-border/40 pb-3.5">
-            <Link
-              to="/ui"
-              onClick={() => playClickSound()}
-              onMouseEnter={() => playHoverSound()}
-              className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-border/60 bg-muted/60 px-3 py-1 text-xs font-medium text-muted-foreground hover:bg-accent hover:text-foreground active:scale-95"
-            >
-              <ArrowLeft className="size-3.5" aria-hidden="true" />
-              <span>Back to all items</span>
-            </Link>
-            <span className="text-xs text-muted-foreground">
-              {total} item{total !== 1 ? "s" : ""}
-            </span>
-          </div>
-        ) : null}
+    <div className="relative h-full w-full overflow-y-auto overscroll-contain">
+      <div className="relative mx-auto min-h-full w-full max-w-[1360px]">
+        {/* Continuous 6-hairline architectural spine matching Home, scaled wider for /ui */}
+        <ArchitecturalSpine
+          maxWidthClassName="max-w-[1360px]"
+          leftRailWidth={224}
+          gutterWidth={40}
+          rightRailWidth={48}
+          className="z-10"
+        />
 
-        {showComponents ? (
-          <CatalogSection
-            title={sectionTitle("Components")}
-            count={componentItems.length}
-            filter={
-              <CatalogFilterPills
-                value={componentFilter}
-                onChange={(value) => handleCategorySelect("base", value)}
-                options={COMPONENT_CATEGORIES}
+        <div className="relative z-20 flex flex-col gap-8 px-4 pt-18 pb-10 sm:gap-11 sm:px-6 sm:pt-20 sm:pb-12">
+          {segment ? (
+            <div className="relative flex w-full items-center">
+              <div
+                className="hidden w-[224px] shrink-0 lg:block"
+                aria-hidden="true"
               />
-            }
-          >
-            {componentItems.length === 0 ? (
-              <CatalogEmptyState label="No components in this category yet." />
-            ) : (
-              componentItems.map((component) => (
-                <ComponentCard key={component.id} component={component} />
-              ))
-            )}
-          </CatalogSection>
-        ) : null}
-
-        {showBlocks ? (
-          <CatalogSection
-            title={sectionTitle("Blocks")}
-            count={blockItems.length}
-            filter={
-              <CatalogFilterPills
-                value={blockFilter}
-                onChange={(value) => handleCategorySelect("blocks", value)}
-                options={BLOCK_CATEGORIES}
+              <div
+                className="hidden w-[40px] shrink-0 lg:block"
+                aria-hidden="true"
               />
-            }
-          >
-            {blockItems.length === 0 ? (
-              <CatalogEmptyState label="No blocks in this category yet." />
-            ) : (
-              blockItems.map((block) => (
-                <BlockCard key={block.id} block={block} />
-              ))
-            )}
-          </CatalogSection>
-        ) : null}
-
-        {showHooks ? (
-          <CatalogSection
-            title={sectionTitle("React Hooks")}
-            count={hookItems.length}
-            variant="block"
-            filter={
-              <CatalogFilterPills
-                value={hookFilter}
-                onChange={(value) => handleCategorySelect("hooks", value)}
-                options={HOOK_CATEGORIES}
-              />
-            }
-          >
-            {hookItems.length === 0 ? (
-              <CatalogEmptyState label="No hooks in this category yet." />
-            ) : (
-              <div className="overflow-hidden rounded-2xl border border-border/70 bg-card/30 shadow-xs backdrop-blur-xs">
-                <div className="grid w-full auto-rows-fr grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                  {hookItems.map((hook, index) => (
-                    <HookTile
-                      key={hook.id}
-                      hook={hook}
-                      index={index}
-                      className={getHookCellBorderClasses(
-                        index,
-                        hookItems.length
-                      )}
+              <div className="flex min-w-0 flex-1 items-center lg:px-5">
+                <div className="flex w-full items-center justify-between gap-4 border-b border-border/60 pb-3">
+                  <Link
+                    to="/ui"
+                    onClick={() => playClickSound()}
+                    onMouseEnter={() => playHoverSound()}
+                    className="group inline-flex items-center gap-2 font-mono text-xs tracking-wide text-muted-foreground transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+                  >
+                    <ArrowLeftIcon
+                      size={14}
+                      className="transition-transform duration-200 group-hover:-translate-x-0.5"
+                      aria-hidden="true"
                     />
-                  ))}
+                    <span>All items</span>
+                  </Link>
+                  <span className="font-mono text-[11px] tracking-wider text-muted-foreground/75 uppercase tabular-nums">
+                    {getStudioSegmentLabel(segment, segment)} ·{" "}
+                    {String(total).padStart(2, "0")}
+                  </span>
                 </div>
               </div>
-            )}
-          </CatalogSection>
-        ) : null}
+              <div
+                className="hidden w-[88px] shrink-0 lg:block"
+                aria-hidden="true"
+              />
+            </div>
+          ) : null}
+
+          {showComponents ? (
+            <CatalogSection
+              romanIndex={romanSections.components ?? "I"}
+              title={sectionTitle("Components")}
+              count={componentItems.length}
+              filter={
+                <CatalogFilterPills
+                  value={componentFilter}
+                  onChange={(value) => handleCategorySelect("base", value)}
+                  options={COMPONENT_CATEGORIES}
+                />
+              }
+            >
+              {componentItems.length === 0 ? (
+                <CatalogEmptyState label="No components in this category yet." />
+              ) : (
+                componentItems.map((component) => (
+                  <ComponentCard key={component.id} component={component} />
+                ))
+              )}
+            </CatalogSection>
+          ) : null}
+
+          {showBlocks ? (
+            <CatalogSection
+              romanIndex={romanSections.blocks ?? "II"}
+              title={sectionTitle("Blocks")}
+              count={blockItems.length}
+              filter={
+                <CatalogFilterPills
+                  value={blockFilter}
+                  onChange={(value) => handleCategorySelect("blocks", value)}
+                  options={BLOCK_CATEGORIES}
+                />
+              }
+            >
+              {blockItems.length === 0 ? (
+                <CatalogEmptyState label="No blocks in this category yet." />
+              ) : (
+                blockItems.map((block) => (
+                  <BlockCard key={block.id} block={block} />
+                ))
+              )}
+            </CatalogSection>
+          ) : null}
+
+          {showHooks ? (
+            <CatalogSection
+              romanIndex={romanSections.hooks ?? "III"}
+              title={sectionTitle("React Hooks")}
+              count={hookItems.length}
+              variant="block"
+              filter={
+                <CatalogFilterPills
+                  value={hookFilter}
+                  onChange={(value) => handleCategorySelect("hooks", value)}
+                  options={HOOK_CATEGORIES}
+                />
+              }
+            >
+              {hookItems.length === 0 ? (
+                <CatalogEmptyState label="No hooks in this category yet." />
+              ) : (
+                <div className="flex flex-col divide-y divide-border/50 border-y border-border/70 bg-transparent">
+                  {hookItems.map((hook, index) => (
+                    <HookTile key={hook.id} hook={hook} index={index} />
+                  ))}
+                </div>
+              )}
+            </CatalogSection>
+          ) : null}
+        </div>
       </div>
     </div>
   )
 }
 
-/**
- * Hairline blueprint borders for the unified hook block grid.
- * Dynamically switches border-r and border-b for 1-col (mobile), 2-col (sm), and 3-col (lg) layouts.
- */
-function getHookCellBorderClasses(index: number, total: number) {
-  const isLastColLg = index % 3 === 2
-  const isLastColSm = index % 2 === 1
-  const remainderLg = total % 3
-  const lastRowStartIndexLg = total - (remainderLg === 0 ? 3 : remainderLg)
-  const isLastRowLg = index >= lastRowStartIndexLg
-
-  const remainderSm = total % 2
-  const lastRowStartIndexSm = total - (remainderSm === 0 ? 2 : remainderSm)
-  const isLastRowSm = index >= lastRowStartIndexSm
-  const isLastRowSingle = index === total - 1
-
-  return cn(
-    "border-b border-border/40",
-    isLastRowSingle && "border-b-0",
-    // 2-column layout (sm)
-    isLastColSm ? "sm:border-r-0" : "sm:border-r sm:border-border/40",
-    isLastRowSm ? "sm:border-b-0" : "sm:border-b sm:border-border/40",
-    // 3-column layout (lg)
-    isLastColLg ? "lg:border-r-0" : "lg:border-r lg:border-border/40",
-    isLastRowLg ? "lg:border-b-0" : "sm:border-border/40 lg:border-b"
-  )
-}
-
 function CatalogSection({
+  romanIndex,
   title,
   count,
   wide = false,
@@ -254,6 +266,7 @@ function CatalogSection({
   filter,
   children,
 }: {
+  romanIndex: string
   title: string
   count: number
   wide?: boolean
@@ -262,42 +275,77 @@ function CatalogSection({
   children: ReactNode
 }) {
   return (
-    <section aria-label={title} className="flex flex-col gap-5 sm:gap-6">
-      <div className="flex flex-col gap-3.5 border-b border-border/60 pb-3.5 sm:gap-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
-            {title}
-          </h2>
-          <span className="text-xs text-muted-foreground tabular-nums">
-            {String(count).padStart(2, "0")}
+    <section
+      aria-label={title}
+      className="relative flex w-full flex-col lg:flex-row lg:items-start"
+    >
+      {/* Track 1: Left rail column (224px) matching Home DraftingSectionRow */}
+      <div className="mb-4 flex w-full flex-col items-start pr-0 lg:mb-0 lg:w-[224px] lg:shrink-0 lg:items-end lg:pr-6">
+        <div className="hidden w-full items-center gap-2 pl-6 font-mono text-xs select-none lg:mt-2 lg:flex">
+          <span className="font-serif text-lg font-medium text-pp-secondary italic">
+            {romanIndex}
           </span>
+          <span className="text-sm font-medium tracking-widest text-muted-foreground uppercase">
+            <TextBurnNeon>{title}</TextBurnNeon>
+          </span>
+          <div className="ml-2 flex-1 border-b border-border" />
         </div>
-        {filter ? (
-          <div className="no-scrollbar w-full overflow-x-auto py-0.5">
-            {filter}
-          </div>
-        ) : null}
       </div>
 
-      {variant === "block" ? (
-        children
-      ) : (
-        <div
-          className={
-            wide
-              ? "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
-              : "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
-          }
-        >
-          {children}
+      {/* Track 2: Left 40px gutter channel spacer */}
+      <div className="hidden w-[40px] shrink-0 lg:block" aria-hidden="true" />
+
+      {/* Track 3: Expanded center content column */}
+      <div className="flex min-w-0 flex-1 flex-col gap-5 sm:gap-6 lg:px-5">
+        {/* Mobile Section Header (visible below lg) */}
+        <div className="flex items-center gap-2 font-mono text-xs select-none lg:hidden">
+          <span className="font-serif text-lg font-medium text-pp-secondary italic">
+            {romanIndex}
+          </span>
+          <span className="text-sm font-medium tracking-widest text-muted-foreground uppercase">
+            <TextBurnNeon>{title}</TextBurnNeon>
+          </span>
+          <div className="ml-2 flex-1 border-b border-border" />
+          <span className="font-mono text-xs text-muted-foreground tabular-nums">
+            ({String(count).padStart(2, "0")})
+          </span>
         </div>
-      )}
+
+        {/* Architectural underline filter tabs + count */}
+        <div className="flex items-end justify-between gap-4 border-b border-border/60">
+          {filter ? (
+            <div className="no-scrollbar min-w-0 flex-1 overflow-x-auto">
+              {filter}
+            </div>
+          ) : null}
+          <span className="hidden shrink-0 pb-2.5 font-mono text-[11px] tracking-wider text-muted-foreground/70 uppercase tabular-nums lg:inline">
+            {String(count).padStart(2, "0")} items
+          </span>
+        </div>
+
+        {variant === "block" ? (
+          children
+        ) : (
+          <div
+            className={
+              wide
+                ? "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4"
+                : "grid grid-cols-1 gap-5 sm:grid-cols-2 lg:gap-6"
+            }
+          >
+            {children}
+          </div>
+        )}
+      </div>
+
+      {/* Track 4 & 5: Right gutter (40px) + right rail (48px) spacer */}
+      <div className="hidden w-[88px] shrink-0 lg:block" aria-hidden="true" />
     </section>
   )
 }
 
 /**
- * Tactile, horizontal pill chips for category navigation (matching modern UI spec).
+ * Architectural hairline category tabs aligned directly on the grid baseline.
  */
 function CatalogFilterPills({
   value,
@@ -308,6 +356,7 @@ function CatalogFilterPills({
   onChange: (value: string) => void
   options: readonly CategoryOption[]
 }) {
+  const indicatorId = useId()
   const allOptions = useMemo(
     () => [{ id: ALL_CATEGORIES, label: "All" }, ...options],
     [options]
@@ -317,7 +366,7 @@ function CatalogFilterPills({
     <div
       role="tablist"
       aria-label="Category filters"
-      className="-my-1 no-scrollbar flex items-center gap-1.5 overflow-x-auto scroll-smooth py-1 sm:gap-2"
+      className="flex items-center gap-1"
     >
       {allOptions.map((option) => {
         const isActive = value === option.id
@@ -333,14 +382,24 @@ function CatalogFilterPills({
               onChange(option.id)
             }}
             className={cn(
-              "inline-flex shrink-0 cursor-pointer items-center justify-center rounded-full px-3.5 py-1.5 text-xs font-medium tracking-normal active:scale-95",
-              "focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none",
+              "shrink-0 cursor-pointer px-2.5 text-[13px] tracking-tight whitespace-nowrap transition-colors outline-none select-none first:pl-0",
+              "focus-visible:rounded-sm focus-visible:ring-2 focus-visible:ring-primary",
               isActive
-                ? "bg-foreground font-semibold text-background shadow-xs"
-                : "border border-border/50 bg-muted/70 text-muted-foreground hover:bg-accent hover:text-foreground"
+                ? "font-semibold text-foreground"
+                : "font-medium text-muted-foreground/75 hover:text-foreground"
             )}
           >
-            {option.label}
+            <span className="relative inline-block pt-1 pb-2.5">
+              {option.label}
+              {isActive ? (
+                <motion.span
+                  layoutId={indicatorId}
+                  transition={{ type: "spring", stiffness: 450, damping: 36 }}
+                  aria-hidden="true"
+                  className="absolute inset-x-0 bottom-0 h-[2px] bg-pp-secondary"
+                />
+              ) : null}
+            </span>
           </button>
         )
       })}

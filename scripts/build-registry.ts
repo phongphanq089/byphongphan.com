@@ -109,23 +109,6 @@ async function buildRegistry() {
       "utf-8"
     )
 
-    const segment =
-      item.type === "registry:hook"
-        ? "hooks"
-        : item.type === "registry:block"
-          ? "blocks"
-          : "components"
-
-    const uiSegmentDir = path.join(publicDir, "ui", segment)
-    if (!fs.existsSync(uiSegmentDir)) {
-      fs.mkdirSync(uiSegmentDir, { recursive: true })
-    }
-    fs.writeFileSync(
-      path.join(uiSegmentDir, `${item.name}.md`),
-      markdownContent,
-      "utf-8"
-    )
-
     indexItems.push({
       name: item.name,
       type: item.type,
@@ -285,6 +268,11 @@ async function buildRegistry() {
     "/component-ui                  /ui/base             301!",
     "/blocks                        /ui/blocks           301!",
     "/hooks                         /ui/hooks            301!",
+    "",
+    "# 301 Wildcard Redirects from legacy/hierarchical markdown endpoints to unified /r/ flat path",
+    "/ui/components/:slug.md        /r/:slug.md          301!",
+    "/ui/blocks/:slug.md            /r/:slug.md          301!",
+    "/ui/hooks/:slug.md             /r/:slug.md          301!",
   ]
 
   for (const item of REGISTRY_ITEMS) {

@@ -138,20 +138,12 @@ export function UnderlineToBackground({
     },
   }
 
-  // Animation variants for the text color
-  const textVariants = {
-    initial: {
-      color: "currentColor",
-    },
-    target: {
-      color: targetTextColor,
-      transition,
-    },
-  }
-
   return (
     <MotionComponent
-      className={cn("relative inline-block cursor-pointer", className)}
+      className={cn(
+        "group/utb relative inline-block cursor-pointer",
+        className
+      )}
       whileHover="target"
       ref={textRef}
       {...props}
@@ -165,9 +157,16 @@ export function UnderlineToBackground({
         variants={underlineVariants}
         aria-hidden="true"
       />
-      <motion.span variants={textVariants} className="relative text-current">
+      <span
+        className="relative text-current group-hover/utb:text-(--utb-target-color) group-hover/utb:transition-colors group-hover/utb:duration-200"
+        style={
+          {
+            "--utb-target-color": targetTextColor,
+          } as React.CSSProperties
+        }
+      >
         {children}
-      </motion.span>
+      </span>
     </MotionComponent>
   )
 }

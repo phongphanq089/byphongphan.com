@@ -65,6 +65,8 @@ export type HintArrowDirection =
 export type HintArrowSide = "right" | "left" | "top" | "bottom"
 
 export interface InteractiveHintProps {
+  /** Root motion element type, defaults to "div". Use "span" when placed inside inline text. */
+  as?: "div" | "span"
   /** The handwritten text to display (e.g. "pull the cord!", "drag to resize!") */
   text: string
   /** Position of arrow relative to text: right (default), left, top, bottom */
@@ -94,6 +96,7 @@ export interface InteractiveHintProps {
 }
 
 export function InteractiveHint({
+  as = "div",
   text,
   arrowSide = "right",
   direction = "up-right",
@@ -127,10 +130,12 @@ export function InteractiveHint({
     }
   }
 
+  const MotionComponent = as === "span" ? motion.span : motion.div
+
   return (
     <AnimatePresence>
       {isShown && (
-        <motion.div
+        <MotionComponent
           key="interactive-hint"
           initial={{ opacity: 0, scale: 0.9, y: 4 }}
           animate={{
@@ -200,7 +205,7 @@ export function InteractiveHint({
               className={arrowClassName}
             />
           )}
-        </motion.div>
+        </MotionComponent>
       )}
     </AnimatePresence>
   )

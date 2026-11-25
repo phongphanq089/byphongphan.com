@@ -11,5 +11,10 @@
 /component-ui                  /ui/base             301!
 /blocks                        /ui/blocks           301!
 /hooks                         /ui/hooks            301!
+
+# 301 Wildcard Redirects from legacy/hierarchical markdown endpoints to unified /r/ flat path
+/ui/components/:slug.md        /r/:slug.md          301!
+/ui/blocks/:slug.md            /r/:slug.md          301!
+/ui/hooks/:slug.md             /r/:slug.md          301!
 /ui/button/slide-to-confirm  /ui/button/slide-to-unlock  301!
 /r/slide-to-confirm.json  /r/slide-to-unlock.json  301!

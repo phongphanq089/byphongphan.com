@@ -10,13 +10,12 @@ interface StudioRightPanelProps {
 }
 
 /**
- * Desktop right-hand docked column.
+ * Desktop right-hand column.
  *
- * Components/Hooks (MDX available): `StudioDocsView` fills the column as the
- * base layer; when `panel === "code"` `StudioCodeOverlay` slides in on top.
- *
- * Blocks (no MDX): the docs layer is never mounted — the code overlay is the
- * only content, and closing it collapses the panel completely.
+ * - Docs (`panel === "docs"`): renders borderless & transparent directly on the
+ *   outer shell with clean typography.
+ * - Source Code (`panel === "code"`): renders as a crisp contained drawer/card
+ *   with file tabs, copy action, and wrap toggle.
  */
 export function StudioRightPanel({ item }: StudioRightPanelProps) {
   const panel = useStudioStore((state) => state.panel)

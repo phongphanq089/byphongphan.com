@@ -1,16 +1,17 @@
+import {
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  ArrowSquareOutIcon,
+  BookOpenIcon,
+  CaretRightIcon,
+  CodeIcon,
+  XIcon,
+} from "@phosphor-icons/react"
 import { Link, useNavigate, useParams } from "@tanstack/react-router"
 import { play } from "cuelume"
-import {
-  ArrowLeft,
-  ArrowRight,
-  BookOpen,
-  ChevronRight,
-  Code2,
-  ExternalLink,
-  X,
-} from "lucide-react"
 import { useMemo } from "react"
 
+import { cn } from "@/shared/lib/utils"
 import { ScrollArea } from "@/shared/ui"
 import {
   Badge,
@@ -39,17 +40,23 @@ import { DocActionsDropdown } from "./doc-actions-dropdown"
 interface StudioDocsViewProps {
   item: StudioItem
   /** Close the whole docked panel. */
-  onClose: () => void
+  onClose?: () => void
+  /** Renders the compact close header bar (used on mobile drawers). */
+  showHeaderBar?: boolean
   activeVariantId?: string
   onSelectVariant: (variantId: string | null) => void
 }
 
 /**
- * Docked documentation view for a studio detail item: breadcrumb, badges,
- * external links, install/copy actions, prev/next navigation and the full
- * MDX doc (ComponentPreview is suppressed — the preview lives on the stage).
+ * Floating borderless documentation view for a studio detail item:
+ * - On desktop: sits directly on the outer background with no heavy box/header border.
+ * - Top breathing room leaves space under the top-right floating action capsule.
  */
-export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
+export function StudioDocsView({
+  item,
+  onClose,
+  showHeaderBar = false,
+}: StudioDocsViewProps) {
   const rawParams = useParams({ strict: false }) as {
     collection?: string
   }
@@ -85,67 +92,120 @@ export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
 
   return (
     <div className="flex h-full w-full flex-col">
-      {/* Breadcrumb + close */}
-      <div className="flex h-11 shrink-0 items-center justify-between gap-2 border-b border-border/70 px-4">
-        <nav
-          aria-label="Breadcrumb"
-          className="flex min-w-0 items-center gap-1.5 text-[12px] text-muted-foreground"
-        >
-          <Link
-            to="/ui"
-            className="shrink-0 transition-colors hover:text-foreground"
-          >
-            Home
-          </Link>
-          <ChevronRight
-            className="size-3 shrink-0 text-muted-foreground/60"
-            aria-hidden="true"
-          />
-          {segment ? (
-            <>
-              <Link
-                to="/ui/$collection"
-                params={{ collection: segment }}
-                className="max-w-32 shrink-0 truncate transition-colors hover:text-foreground"
-              >
-                {getStudioSegmentLabel(segment, segment)}
-              </Link>
-              <ChevronRight
-                className="size-3 shrink-0 text-muted-foreground/60"
-                aria-hidden="true"
-              />
-            </>
-          ) : null}
-          <span
-            aria-current="page"
-            className="min-w-0 truncate font-medium text-foreground"
-          >
+      {showHeaderBar ? (
+        <div className="flex h-11 shrink-0 items-center justify-between gap-2 border-b border-border/60 px-4">
+          <span className="truncate font-mono text-xs font-medium text-muted-foreground uppercase">
             {title}
           </span>
-        </nav>
-
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label="Close panel (Esc)"
-          title="Close panel (Esc)"
-          className="inline-flex size-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
-        >
-          <X className="size-4" aria-hidden="true" />
-        </button>
-      </div>
+          {onClose ? (
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close panel"
+              className="inline-flex size-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+            >
+              <XIcon size={16} aria-hidden="true" />
+            </button>
+          ) : null}
+        </div>
+      ) : null}
 
       <ScrollArea className="min-h-0 flex-1" scrollFade>
-        <article className="flex flex-col gap-5 p-5">
-          {/* Title + badges + description */}
-          <div className="flex flex-col gap-2">
+        <article
+          className={cn(
+            "flex flex-col gap-5 px-5 pb-12",
+            showHeaderBar ? "pt-5" : "pt-16 sm:px-6"
+          )}
+        >
+          {/* Quiet inline breadcrumb + micro nav */}
+          <div className="flex items-center justify-between gap-2">
+            <nav
+              aria-label="Breadcrumb"
+              className="flex min-w-0 items-center gap-1 font-mono text-[10px] tracking-wider text-muted-foreground/70 uppercase"
+            >
+              <Link
+                to="/ui"
+                className="shrink-0 transition-colors hover:text-foreground"
+              >
+                UI
+              </Link>
+              {segment ? (
+                <>
+                  <CaretRightIcon
+                    size={10}
+                    className="shrink-0 opacity-50"
+                    aria-hidden="true"
+                  />
+                  <Link
+                    to="/ui/$collection"
+                    params={{ collection: segment }}
+                    className="max-w-28 shrink-0 truncate transition-colors hover:text-foreground"
+                  >
+                    {getStudioSegmentLabel(segment, segment)}
+                  </Link>
+                </>
+              ) : null}
+              <CaretRightIcon
+                size={10}
+                className="shrink-0 opacity-50"
+                aria-hidden="true"
+              />
+              <span
+                aria-current="page"
+                className="min-w-0 truncate text-foreground/85"
+              >
+                {title}
+              </span>
+            </nav>
+
+            <div className="flex shrink-0 items-center gap-1">
+              {prev ? (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      aria-label="Previous component"
+                      onClick={goPrev}
+                      className="inline-flex size-7 cursor-pointer items-center justify-center rounded-lg text-muted-foreground/70 transition-colors hover:bg-muted/70 hover:text-foreground"
+                    >
+                      <ArrowLeftIcon size={15} aria-hidden="true" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom" className="text-[10px]">
+                    Previous <Kbd>←</Kbd>
+                  </TooltipContent>
+                </Tooltip>
+              ) : null}
+
+              {next ? (
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <button
+                      type="button"
+                      aria-label="Next component"
+                      onClick={goNext}
+                      className="inline-flex size-7 cursor-pointer items-center justify-center rounded-lg text-muted-foreground/70 transition-colors hover:bg-muted/70 hover:text-foreground"
+                    >
+                      <ArrowRightIcon size={15} aria-hidden="true" />
+                    </button>
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom" className="text-[10px]">
+                    Next <Kbd>→</Kbd>
+                  </TooltipContent>
+                </Tooltip>
+              ) : null}
+            </div>
+          </div>
+
+          {/* Editorial Title + Badges + Description */}
+          <div className="flex flex-col gap-2.5">
             <div className="flex flex-wrap items-center gap-2">
               {item.isNew ? (
                 <Badge
                   variant="outline"
                   size="sm"
                   shape="rounded"
-                  className="gap-1.5 border-primary/30 bg-primary/10 text-[11px] font-medium text-primary"
+                  className="gap-1.5 border-primary/30 bg-primary/10 text-[10px] font-medium text-primary"
                 >
                   <BadgeDot pulse />
                   <span>New</span>
@@ -155,7 +215,7 @@ export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
                   variant="success"
                   size="sm"
                   shape="rounded"
-                  className="gap-1.5 text-[11px] font-medium"
+                  className="gap-1.5 text-[10px] font-medium"
                 >
                   <BadgeDot pulse />
                   <span>Updated</span>
@@ -167,30 +227,16 @@ export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
                   variant="secondary"
                   size="sm"
                   shape="rounded"
-                  className="border-border/50 bg-secondary/80 text-[11px] font-medium text-secondary-foreground"
+                  className="border-border/50 bg-secondary/70 text-[10px] font-medium text-secondary-foreground"
                 >
                   <span>{customBadge}</span>
                 </Badge>
               ) : null}
-
-              {item.categoryName ? (
-                <Badge
-                  variant="subtle"
-                  size="sm"
-                  shape="rounded"
-                  className="border-border/40 text-[11px] font-medium text-muted-foreground capitalize"
-                >
-                  <span>{item.categoryName.replace(/-/g, " ")}</span>
-                </Badge>
-              ) : null}
             </div>
 
-            <h3 className="text-2xl leading-tight font-semibold tracking-tight text-foreground">
-              {title}
-            </h3>
-            <p className="text-sm leading-relaxed text-muted-foreground">
+            <h3 className="text-xl leading-snug font-semibold tracking-tight text-foreground sm:text-2xl">
               {description}
-            </p>
+            </h3>
 
             {links && (links.doc || links.api) ? (
               <div className="flex flex-wrap items-center gap-2 pt-1">
@@ -199,16 +245,18 @@ export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
                     variant="outline"
                     size="sm"
                     asChild
-                    className="h-7 gap-1.5 rounded-lg border-border/80 text-xs text-muted-foreground hover:text-foreground"
+                    className="h-7 gap-1.5 rounded-lg border-border/70 bg-transparent text-xs text-muted-foreground hover:text-foreground"
                   >
                     <a href={links.doc} target="_blank" rel="noreferrer">
-                      <BookOpen
-                        className="size-3 text-pp-primary"
+                      <BookOpenIcon
+                        size={14}
+                        className="text-pp-primary"
                         aria-hidden="true"
                       />
                       <span>Docs</span>
-                      <ExternalLink
-                        className="size-2.5 opacity-60"
+                      <ArrowSquareOutIcon
+                        size={12}
+                        className="opacity-60"
                         aria-hidden="true"
                       />
                     </a>
@@ -219,16 +267,18 @@ export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
                     variant="outline"
                     size="sm"
                     asChild
-                    className="h-7 gap-1.5 rounded-lg border-border/80 text-xs text-muted-foreground hover:text-foreground"
+                    className="h-7 gap-1.5 rounded-lg border-border/70 bg-transparent text-xs text-muted-foreground hover:text-foreground"
                   >
                     <a href={links.api} target="_blank" rel="noreferrer">
-                      <Code2
-                        className="size-3 text-pp-primary"
+                      <CodeIcon
+                        size={14}
+                        className="text-pp-primary"
                         aria-hidden="true"
                       />
                       <span>API Reference</span>
-                      <ExternalLink
-                        className="size-2.5 opacity-60"
+                      <ArrowSquareOutIcon
+                        size={12}
+                        className="opacity-60"
                         aria-hidden="true"
                       />
                     </a>
@@ -238,80 +288,28 @@ export function StudioDocsView({ item, onClose }: StudioDocsViewProps) {
             ) : null}
           </div>
 
-          {/* Sub-bar: Copy Page + Source Code + prev/next */}
-          <div className="flex items-center justify-between gap-2 border-y border-border/60 py-2">
-            <div className="flex items-center gap-1.5">
-              <DocActionsDropdown
-                item={item}
-                segment={segment}
-                rawMdxContent={mdxData?.rawMdxContent}
+          {/* Quiet hairline actions bar */}
+          <div className="flex flex-wrap items-center justify-between gap-2 border-y border-border/50 py-2.5">
+            <DocActionsDropdown
+              item={item}
+              segment={segment}
+              rawMdxContent={mdxData?.rawMdxContent}
+            />
+
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={toggleCode}
+              className="h-8 gap-1.5 rounded-lg px-3 text-xs text-muted-foreground hover:bg-muted/70 hover:text-foreground"
+            >
+              <CodeIcon
+                size={15}
+                className="text-pp-primary"
+                aria-hidden="true"
               />
-
-              <Button
-                type="button"
-                variant="secondary"
-                size="sm"
-                onClick={toggleCode}
-              >
-                <Code2
-                  className="size-3.5 text-pp-primary"
-                  aria-hidden="true"
-                />
-                <span>Source Code</span>
-              </Button>
-            </div>
-
-            <div className="flex items-center gap-1.5">
-              {prev ? (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="secondary"
-                      size="icon"
-                      aria-label="Previous component"
-                      onClick={goPrev}
-                      className="size-7"
-                    >
-                      <ArrowLeft
-                        className="size-4 opacity-60"
-                        aria-hidden="true"
-                      />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent side="top" className="text-[10px]">
-                    Previous Component{" "}
-                    <Kbd>
-                      <ArrowLeft />
-                    </Kbd>
-                  </TooltipContent>
-                </Tooltip>
-              ) : null}
-
-              {next ? (
-                <Tooltip>
-                  <TooltipTrigger asChild>
-                    <Button
-                      variant="secondary"
-                      size="icon"
-                      aria-label="Next component"
-                      onClick={goNext}
-                      className="size-7"
-                    >
-                      <ArrowRight
-                        className="size-4 opacity-60"
-                        aria-hidden="true"
-                      />
-                    </Button>
-                  </TooltipTrigger>
-                  <TooltipContent side="top" className="text-[10px]">
-                    Next Component{" "}
-                    <Kbd>
-                      <ArrowRight />
-                    </Kbd>
-                  </TooltipContent>
-                </Tooltip>
-              ) : null}
-            </div>
+              <span>View Source</span>
+            </Button>
           </div>
 
           {/* MDX doc (or fallback for blocks without .mdx) */}

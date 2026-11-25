@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-import { ProfileLayout } from "@/app/layouts"
+import { SiteDraftingLayout } from "@/app/layouts/site-drafting-layout"
 
 export const Route = createFileRoute("/_site")({
-  component: ProfileLayout,
+  component: SiteDraftingLayout,
 })

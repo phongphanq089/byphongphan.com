@@ -100,31 +100,31 @@ export function McpGuide() {
   }
 
   return (
-    <div className="relative mx-auto flex w-full max-w-4xl flex-col gap-12 px-4 py-8 sm:py-12 md:px-8 md:py-16">
+    <div className="relative mx-auto flex w-full max-w-4xl flex-col gap-10 px-4 py-8 sm:gap-12 sm:py-12 md:px-8 md:py-16">
       {/* ── Page Header ── */}
-      <header className="flex flex-col gap-3">
-        <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl md:text-5xl">
+      <header className="flex flex-col gap-2.5 sm:gap-3">
+        <h1 className="text-2xl font-semibold tracking-tight text-foreground sm:text-4xl md:text-5xl">
           Build with your AI editor
         </h1>
-        <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+        <p className="max-w-2xl text-xs leading-relaxed text-muted-foreground sm:text-base">
           Connect the shadcn MCP server and ask for any phongphan component by
           name. Your editor searches the registry and installs it for you.
         </p>
       </header>
 
       {/* ── Steps Container ── */}
-      <div className="flex flex-col gap-12">
+      <div className="flex flex-col gap-10 sm:gap-12">
         {/* ── Step 01: Install MCP Server ── */}
-        <section className="flex flex-col gap-4">
+        <section className="flex flex-col gap-3.5 sm:gap-4">
           <div className="flex items-start gap-3 sm:gap-4">
-            <span className="pt-1 font-mono text-xs font-semibold tracking-widest text-primary select-none">
+            <span className="shrink-0 pt-1 font-mono text-xs font-semibold tracking-widest whitespace-nowrap text-primary select-none">
               01
             </span>
-            <div className="flex flex-col gap-1">
-              <h2 className="text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+            <div className="flex min-w-0 flex-col gap-1">
+              <h2 className="text-base font-semibold tracking-tight text-foreground sm:text-xl">
                 Install the MCP server
               </h2>
-              <p className="text-xs text-muted-foreground sm:text-sm">
+              <p className="text-xs leading-relaxed text-muted-foreground sm:text-sm">
                 Pick your AI client, run the command, then restart the client.
               </p>
             </div>
@@ -132,7 +132,7 @@ export function McpGuide() {
 
           <div className="ml-0 flex flex-col gap-3 sm:ml-7">
             {/* AI Client Tabs */}
-            <div className="inline-flex self-start rounded-lg border border-border/70 bg-secondary/40 p-1 backdrop-blur-xs">
+            <div className="inline-flex max-w-full flex-wrap items-center gap-0.5 self-start rounded-lg border border-border/70 bg-secondary/40 p-1 backdrop-blur-xs">
               {CLIENTS.map((client) => {
                 const isSelected = selectedClient === client.id
                 return (
@@ -144,7 +144,7 @@ export function McpGuide() {
                       setSelectedClient(client.id)
                     }}
                     className={cn(
-                      "cursor-pointer rounded-md px-3 py-1 font-mono text-xs font-medium lowercase transition-all select-none",
+                      "cursor-pointer rounded-md px-2.5 py-1 font-mono text-xs font-medium whitespace-nowrap lowercase transition-all select-none sm:px-3",
                       isSelected
                         ? "bg-primary text-primary-foreground shadow-xs"
                         : "text-muted-foreground hover:text-foreground"
@@ -157,17 +157,17 @@ export function McpGuide() {
             </div>
 
             {/* Command Box with Package Manager Switcher */}
-            <div className="group flex items-center justify-between gap-3 overflow-hidden rounded-xl border border-border/80 bg-card/60 px-3.5 py-3 shadow-2xs backdrop-blur-md transition-colors focus-within:border-primary/60 hover:border-primary/40">
-              <div className="flex min-w-0 items-center gap-3">
+            <div className="group flex items-center justify-between gap-2 overflow-hidden rounded-xl border border-border/80 bg-card/60 px-3 py-2.5 shadow-2xs backdrop-blur-md transition-colors focus-within:border-primary/60 hover:border-primary/40 sm:gap-3 sm:px-3.5 sm:py-3">
+              <div className="flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3">
                 {/* Package Manager Dropdown */}
                 <DropdownMenu>
                   <DropdownMenuTrigger
                     aria-label="Select package manager"
-                    className="inline-flex cursor-pointer items-center gap-1 rounded-md border border-border/60 bg-muted/40 px-2 py-1 font-mono text-xs font-medium text-foreground transition-colors hover:border-primary/40 hover:bg-muted focus-visible:ring-1 focus-visible:ring-primary focus-visible:outline-none"
+                    className="inline-flex shrink-0 cursor-pointer items-center gap-1 rounded-md border border-border/60 bg-muted/40 px-2 py-1 font-mono text-xs font-medium whitespace-nowrap text-foreground transition-colors hover:border-primary/40 hover:bg-muted focus-visible:ring-1 focus-visible:ring-primary focus-visible:outline-none"
                   >
                     <span>{selectedPkg}</span>
                     <ChevronDown
-                      className="size-3 opacity-60"
+                      className="size-3 shrink-0 opacity-60"
                       aria-hidden="true"
                     />
                   </DropdownMenuTrigger>
@@ -196,9 +196,11 @@ export function McpGuide() {
                 </DropdownMenu>
 
                 {/* Command text */}
-                <code className="truncate font-mono text-xs text-foreground/90 sm:text-[13px]">
-                  {getCommand()}
-                </code>
+                <div className="min-w-0 flex-1 overflow-x-auto">
+                  <code className="block font-mono text-xs whitespace-nowrap text-foreground/90 sm:text-[13px]">
+                    {getCommand()}
+                  </code>
+                </div>
               </div>
 
               {/* Copy button */}
@@ -240,18 +242,18 @@ export function McpGuide() {
         </section>
 
         {/* ── Step 02: Add registry to project ── */}
-        <section className="flex flex-col gap-4">
+        <section className="flex flex-col gap-3.5 sm:gap-4">
           <div className="flex items-start gap-3 sm:gap-4">
-            <span className="pt-1 font-mono text-xs font-semibold tracking-widest text-primary select-none">
+            <span className="shrink-0 pt-1 font-mono text-xs font-semibold tracking-widest whitespace-nowrap text-primary select-none">
               02
             </span>
-            <div className="flex flex-col gap-1">
-              <h2 className="text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+            <div className="flex min-w-0 flex-col gap-1">
+              <h2 className="text-base font-semibold tracking-tight text-foreground sm:text-xl">
                 Add the registry to your project
               </h2>
-              <p className="text-xs text-muted-foreground sm:text-sm">
+              <p className="text-xs leading-relaxed text-muted-foreground sm:text-sm">
                 Add the snippet to your{" "}
-                <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs text-foreground">
+                <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-[11px] whitespace-nowrap text-foreground sm:text-xs">
                   components.json
                 </code>{" "}
                 file so the server can find phongphan components.
@@ -260,7 +262,7 @@ export function McpGuide() {
           </div>
 
           <div className="ml-0 sm:ml-7">
-            <div className="relative overflow-hidden rounded-xl border border-border/80 bg-card/60 p-4 shadow-2xs backdrop-blur-md transition-colors hover:border-primary/40">
+            <div className="relative overflow-hidden rounded-xl border border-border/80 bg-card/60 p-3.5 shadow-2xs backdrop-blur-md transition-colors hover:border-primary/40 sm:p-4">
               <div className="absolute top-3 right-3">
                 <Button
                   type="button"
@@ -299,7 +301,7 @@ export function McpGuide() {
                 </Button>
               </div>
 
-              <pre className="overflow-x-auto font-mono text-xs leading-relaxed text-foreground/90 sm:text-[13px]">
+              <pre className="overflow-x-auto pr-16 font-mono text-[11px] leading-relaxed text-foreground/90 sm:pr-20 sm:text-[13px]">
                 <code>
                   {"{\n"}
                   {"  "}
@@ -322,16 +324,16 @@ export function McpGuide() {
         </section>
 
         {/* ── Step 03: Ask for a component ── */}
-        <section className="flex flex-col gap-4">
+        <section className="flex flex-col gap-3.5 sm:gap-4">
           <div className="flex items-start gap-3 sm:gap-4">
-            <span className="pt-1 font-mono text-xs font-semibold tracking-widest text-primary select-none">
+            <span className="shrink-0 pt-1 font-mono text-xs font-semibold tracking-widest whitespace-nowrap text-primary select-none">
               03
             </span>
-            <div className="flex flex-col gap-1">
-              <h2 className="text-lg font-semibold tracking-tight text-foreground sm:text-xl">
+            <div className="flex min-w-0 flex-col gap-1">
+              <h2 className="text-base font-semibold tracking-tight text-foreground sm:text-xl">
                 Ask for a component
               </h2>
-              <p className="text-xs text-muted-foreground sm:text-sm">
+              <p className="text-xs leading-relaxed text-muted-foreground sm:text-sm">
                 Describe what you want. A few prompts to start with:
               </p>
             </div>
@@ -343,9 +345,9 @@ export function McpGuide() {
               return (
                 <div
                   key={prompt}
-                  className="group flex items-center justify-between gap-3 rounded-lg border border-border/70 bg-card/40 px-4 py-2.5 transition-all hover:border-primary/40 hover:bg-primary/[0.02]"
+                  className="group flex items-center justify-between gap-2.5 rounded-lg border border-border/70 bg-card/40 px-3 py-2.5 transition-all hover:border-primary/40 hover:bg-primary/[0.02] sm:gap-3 sm:px-4"
                 >
-                  <span className="font-mono text-xs text-foreground/90 sm:text-[13px]">
+                  <span className="min-w-0 flex-1 font-mono text-xs leading-relaxed text-foreground/90 sm:text-[13px]">
                     {prompt}
                   </span>
 
@@ -354,7 +356,7 @@ export function McpGuide() {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleCopyPrompt(prompt, idx)}
-                    className="h-6 gap-1 px-2 text-[11px] font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                    className="h-7 shrink-0 gap-1 px-2 text-[11px] font-medium whitespace-nowrap text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
                   >
                     <AnimatePresence mode="wait" initial={false}>
                       {isCopied ? (

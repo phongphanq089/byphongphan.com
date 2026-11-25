@@ -116,7 +116,7 @@ export function SpotlightCard({
         "dark:[--mb-glow-alpha:0.85] dark:[--mb-glow-rgb:244,244,245] dark:[--mb-spot-alpha:0.07]",
         // Theme surface & borders
         "border border-black/10 bg-gradient-to-b from-white to-zinc-50/90 dark:border-white/10 dark:from-[#18181b]/90 dark:to-[#121215]",
-        "shadow-xs transition-all duration-300",
+        "shadow-xs",
         // Smooth 3D tilt perspective
         enableTilt &&
           "[transform:perspective(900px)_rotateX(var(--mb-rx,0deg))_rotateY(var(--mb-ry,0deg))] transition-transform duration-200 ease-out",

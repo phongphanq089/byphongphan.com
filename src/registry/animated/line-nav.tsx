@@ -72,16 +72,69 @@ const WAVE: { width: number; className: string; glowClass: string }[] = [
   },
 ]
 
-function tickGeometry(role: TickRole, delta: number) {
-  const wave = WAVE[delta]
+const STUDIO_BASE_TICK: Record<TickRole, { width: number; className: string }> =
+  {
+    main: {
+      width: 14,
+      className: "bg-foreground/30 dark:bg-white/25",
+    },
+    "sub-mid": {
+      width: 10,
+      className: "bg-foreground/40 dark:bg-white/30",
+    },
+    "sub-small": {
+      width: 6,
+      className: "bg-foreground/22 dark:bg-white/15",
+    },
+  }
+
+const STUDIO_WAVE: { width: number; className: string; glowClass: string }[] = [
+  {
+    width: 42,
+    className: "bg-blue-600 dark:bg-sky-400",
+    glowClass:
+      "shadow-[0_0_8px_rgba(37,99,235,0.35)] dark:shadow-[0_0_8px_rgba(56,189,248,0.6)]",
+  },
+  {
+    width: 34,
+    className: "bg-blue-600/55 dark:bg-sky-400/50",
+    glowClass: "shadow-none",
+  },
+  {
+    width: 27,
+    className: "bg-blue-600/35 dark:bg-sky-400/30",
+    glowClass: "shadow-none",
+  },
+  {
+    width: 21,
+    className: "bg-blue-600/25 dark:bg-sky-400/25",
+    glowClass: "shadow-none",
+  },
+  {
+    width: 16,
+    className: "bg-blue-600/15 dark:bg-sky-400/15",
+    glowClass: "shadow-none",
+  },
+]
+
+function tickGeometry(
+  role: TickRole,
+  delta: number,
+  variant: LineNavVariant = "default"
+) {
+  const waveTable = variant === "studio" ? STUDIO_WAVE : WAVE
+  const baseTable = variant === "studio" ? STUDIO_BASE_TICK : BASE_TICK
+  const wave = waveTable[delta]
   if (wave) return wave
-  const base = BASE_TICK[role]
+  const base = baseTable[role]
   return {
     width: base.width,
     className: base.className,
     glowClass: "shadow-none",
   }
 }
+
+export type LineNavVariant = "default" | "studio"
 
 export type LineNavItem = {
   title: React.ReactNode
@@ -104,6 +157,8 @@ export type LineNavProps = {
   items?: LineNavItem[]
   /** Grouped navigation sections (for grouped mode) */
   groups?: LineNavGroup[]
+  /** Visual density preset (`"studio"` uses ultra-fine whisper ticks). */
+  variant?: LineNavVariant
   /** Href of the active item */
   activeHref?: string
   /** Scroll the active item into view on mount or change */
@@ -123,6 +178,7 @@ export function LineNav({
   className,
   items,
   groups,
+  variant = "default",
   activeHref,
   scrollActiveIntoView = true,
   showIndex = true,
@@ -196,7 +252,12 @@ export function LineNav({
           return (
             <div key={group.href ?? `group-${groupIndex}`} className="contents">
               {/* Group header row */}
-              <div className="flex flex-col pt-3 pb-1 first:pt-1">
+              <div
+                className={cn(
+                  "flex flex-col pb-1 first:pt-1",
+                  variant === "studio" ? "pt-4" : "pt-3"
+                )}
+              >
                 {group.href ? (
                   <motion.a
                     ref={isGroupActive ? activeItemRef : undefined}
@@ -215,37 +276,57 @@ export function LineNav({
                     }}
                     onBlur={() => setHoveredHref(null)}
                   >
-                    <div className="relative flex h-full w-14 shrink-0 items-center">
+                    <div
+                      className={cn(
+                        "relative flex h-full shrink-0 items-center",
+                        variant === "studio" ? "w-12" : "w-14"
+                      )}
+                    >
                       <span
                         aria-hidden="true"
                         className={cn(
                           "h-[2px] rounded-full transition-all duration-200",
-                          isGroupActive
-                            ? "w-12 bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.35)] dark:bg-sky-400 dark:shadow-[0_0_8px_rgba(56,189,248,0.6)]"
-                            : "w-5 bg-foreground/40 group-hover:bg-foreground/70 dark:bg-white/25 dark:group-hover:bg-white/40"
+                          variant === "studio"
+                            ? isGroupActive
+                              ? "w-10 bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.35)] dark:bg-sky-400 dark:shadow-[0_0_8px_rgba(56,189,248,0.6)]"
+                              : "w-4 bg-foreground/40 group-hover:bg-foreground/70 dark:bg-white/25 dark:group-hover:bg-white/40"
+                            : isGroupActive
+                              ? "w-12 bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.35)] dark:bg-sky-400 dark:shadow-[0_0_8px_rgba(56,189,248,0.6)]"
+                              : "w-5 bg-foreground/40 group-hover:bg-foreground/70 dark:bg-white/25 dark:group-hover:bg-white/40"
                         )}
                       />
                     </div>
                     <span
                       className={cn(
-                        "flex min-w-0 items-center gap-2 text-[11px] font-bold tracking-wider uppercase transition-colors",
+                        "flex min-w-0 items-center gap-2 uppercase transition-colors",
+                        variant === "studio"
+                          ? "text-[11px] font-bold tracking-wider"
+                          : "text-[11px] font-bold tracking-wider",
                         isGroupActive
                           ? "text-blue-600 dark:text-sky-400"
-                          : "text-foreground/90"
+                          : "text-foreground/85"
                       )}
                     >
                       {group.title}
                     </span>
                   </motion.a>
                 ) : (
-                  <div className="flex h-5 items-center select-none">
-                    <div className="relative flex h-full w-14 shrink-0 items-center">
+                  <div className="flex h-6 items-center select-none">
+                    <div
+                      className={cn(
+                        "relative flex h-full shrink-0 items-center",
+                        variant === "studio" ? "w-12" : "w-14"
+                      )}
+                    >
                       <span
                         aria-hidden="true"
-                        className="h-[2px] w-5 rounded-full bg-foreground/40 dark:bg-white/25"
+                        className={cn(
+                          "h-[2px] rounded-full bg-foreground/40 dark:bg-white/25",
+                          variant === "studio" ? "w-4" : "w-5"
+                        )}
                       />
                     </div>
-                    <span className="flex min-w-0 items-center gap-2 text-[11px] font-bold tracking-wider text-foreground/90 uppercase">
+                    <span className="flex min-w-0 items-center gap-2 text-[11px] font-bold tracking-wider text-foreground/85 uppercase">
                       {group.title}
                     </span>
                   </div>
@@ -263,6 +344,7 @@ export function LineNav({
                     key={item.href}
                     ref={isActive ? activeItemRef : undefined}
                     item={item}
+                    variant={variant}
                     index={
                       item.index ?? (showIndex ? itemIndex + 1 : undefined)
                     }
@@ -301,6 +383,7 @@ export function LineNav({
             key={item.href}
             ref={isActive ? activeItemRef : undefined}
             item={item}
+            variant={variant}
             index={item.index ?? (showIndex ? index + 1 : undefined)}
             showIndex={showIndex}
             isActive={isActive}
@@ -320,6 +403,7 @@ export function LineNav({
 interface LineNavItemRowProps {
   ref?: React.Ref<HTMLAnchorElement>
   item: LineNavItem
+  variant?: LineNavVariant
   index?: number | string
   showIndex?: boolean
   isActive: boolean
@@ -336,6 +420,7 @@ interface LineNavItemRowProps {
 const LineNavItemRow = memo(function LineNavItemRow({
   ref,
   item,
+  variant = "default",
   index,
   showIndex = true,
   isActive,
@@ -355,6 +440,7 @@ const LineNavItemRow = memo(function LineNavItemRow({
 
   // Global tick index for this block: main tick = blockIndex * 5
   const blockBase = blockIndex * 5
+  const isStudio = variant === "studio"
 
   return (
     <motion.a
@@ -372,16 +458,24 @@ const LineNavItemRow = memo(function LineNavItemRow({
         onHover()
       }}
       onBlur={() => setHoveredHref(null)}
-      className="group relative grid grid-cols-[3.5rem_minmax(0,1fr)] outline-none"
+      className={cn(
+        "group relative grid outline-none",
+        isStudio
+          ? "grid-cols-[3rem_minmax(0,1fr)]"
+          : "grid-cols-[3.5rem_minmax(0,1fr)]"
+      )}
       style={{ height: ROW_HEIGHT }}
     >
       {/* Ruler spine — fixed width, ticks originate at x = 0 */}
-      <div aria-hidden="true" className="relative h-full w-14">
+      <div
+        aria-hidden="true"
+        className={cn("relative h-full", isStudio ? "w-12" : "w-14")}
+      >
         {TICK_SLOTS.map((slot) => {
           const tickGlobal = blockBase + slot.local
           const targetGlobal = targetBlockIndex * 5
           const delta = Math.abs(tickGlobal - targetGlobal)
-          const geo = tickGeometry(slot.role, delta)
+          const geo = tickGeometry(slot.role, delta, variant)
           return (
             <motion.span
               key={slot.local}
@@ -402,27 +496,37 @@ const LineNavItemRow = memo(function LineNavItemRow({
       {/* Text column — aligned to the main (center) tick of the block */}
       <span
         className={cn(
-          "flex h-full min-w-0 items-center gap-2 pr-2 text-xs font-medium tracking-tight",
+          "flex h-full min-w-0 items-center gap-2 pr-2 tracking-tight transition-colors",
+          isStudio ? "text-[14.5px]" : "text-xs font-medium",
           isActive
             ? "font-semibold text-blue-600 dark:font-medium dark:text-sky-400"
             : isHovered
               ? "font-medium text-foreground"
-              : "text-foreground/70 group-hover:text-foreground dark:text-muted-foreground/75"
+              : isStudio
+                ? "font-normal text-foreground/85 group-hover:text-foreground dark:text-foreground/80"
+                : "text-foreground/65 group-hover:text-foreground dark:text-muted-foreground/70"
         )}
       >
         {formattedIndex ? (
           <span
             className={cn(
-              "shrink-0 text-[12px] tabular-nums",
+              "shrink-0 tabular-nums",
+              isStudio ? "text-[12.5px]" : "text-[12px]",
               isActive
                 ? "font-semibold text-blue-600 dark:font-medium dark:text-sky-400"
-                : "text-foreground/50 group-hover:text-foreground/80 dark:text-muted-foreground/45 dark:group-hover:text-muted-foreground"
+                : isStudio
+                  ? "text-foreground/55 group-hover:text-foreground/85 dark:text-muted-foreground/65 dark:group-hover:text-foreground"
+                  : "text-foreground/50 group-hover:text-foreground/80 dark:text-muted-foreground/45 dark:group-hover:text-muted-foreground"
             )}
           >
             {formattedIndex}
           </span>
         ) : null}
-        <span className="truncate text-sm">{item.title}</span>
+        <span
+          className={cn("truncate", isStudio ? "text-[14.5px]" : "text-sm")}
+        >
+          {item.title}
+        </span>
         {item.badge}
       </span>
     </motion.a>

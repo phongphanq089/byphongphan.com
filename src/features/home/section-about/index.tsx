@@ -1,52 +1,53 @@
-import React, { Suspense } from "react"
+import { DraftingSectionRow } from "@/app/layouts/drafting-section-row"
 
-import { siteConfig } from "@/shared/config"
-import { getCachedContributions } from "@/shared/lib"
-import { cn } from "@/shared/lib/utils"
-import {
-  GitHubContributions,
-  GitHubContributionsFallback,
-} from "@/shared/ui/system/github-contributions"
+import AboutGithubcontributions from "./components/about-github-contributions"
+import { AboutHeroBanner } from "./components/about-hero-banner"
+import { AboutHeroSocials } from "./components/about-hero-socials"
+import { AboutHeroStory } from "./components/about-hero-story"
+import { AboutStickerStack } from "./components/about-sticker-stack"
+import { PPPixelBadge } from "./components/pp-pixel-badge"
 
-import AboutStory from "./about-story"
-import DeskStage from "./desk-stage"
-
-export interface SectionAboutProps {
+export interface SectionAboutV2Props {
   className?: string
 }
 
-export function SectionAbout({ className }: SectionAboutProps) {
-  const GITHUB_USERNAME = siteConfig.author.githubUsername
-  const GITHUB_PROFILE_URL = siteConfig.social.github.href
-  const contributions = getCachedContributions(GITHUB_USERNAME)
-
+/**
+ * Section I: Hero & About (V2)
+ *
+ * Fully integrated into the 1024px Swiss Drafting Architecture:
+ * - Left column (224px): Pixel mark badge PL.1 + "I ABOUT" section header
+ * - Center column (528px):
+ *   - FIG. 01 // ULTRA EGO CAD framed visual banner
+ *   - Name & Role identity headline with live availability status
+ *   - Editorial craft philosophy statement with interactive avatar popover
+ *   - Tactile audio-enhanced social links and quick action CTAs
+ *   - Interactive horizontal sticker deck (stick-it-up)
+ *   - GitHub contribution graph
+ */
+export function SectionAbout({ className }: SectionAboutV2Props) {
   return (
-    <section
+    <DraftingSectionRow
       id="about"
-      className={cn(
-        "relative flex w-full flex-col bg-background text-foreground",
-        className
-      )}
+      romanIndex="I"
+      title="ABOUT"
+      leftSlot={<PPPixelBadge />}
+      className={className}
     >
-      {/* 1. Floating Desk Workspace Stage */}
-      <DeskStage />
+      <AboutHeroBanner />
 
-      {/* 2. Profile & Bio Editorial Story + GitHub Activity */}
-      <div className="w-full p-6 pt-16">
-        <div className="mx-auto flex w-full flex-col">
-          <AboutStory githubProfileUrl={GITHUB_PROFILE_URL} />
+      {/* 3. Editorial Story & Craft Philosophy */}
+      <AboutHeroStory />
 
-          {/* Live GitHub Contributions Heatmap */}
-          <div className="pt-6">
-            <Suspense fallback={<GitHubContributionsFallback />}>
-              <GitHubContributions
-                contributions={contributions}
-                githubProfileUrl={GITHUB_PROFILE_URL}
-              />
-            </Suspense>
-          </div>
-        </div>
-      </div>
-    </section>
+      {/* 4. Social Links & Quick Actions */}
+      <AboutHeroSocials />
+
+      {/* 5. Horizontal Sticker Deck */}
+      <AboutStickerStack />
+
+      {/* 6. GitHub Contributions */}
+      <AboutGithubcontributions />
+    </DraftingSectionRow>
   )
 }
+
+export default SectionAbout

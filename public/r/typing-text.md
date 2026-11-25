@@ -87,6 +87,9 @@ const DEFAULT_TYPO_RATE = 0.04
 const SELECT_SWEEP_MS = 120
 const SELECT_HOLD_MS = 220
 
+const FONT_SIZE_REGEX =
+  /\b(?:[a-z0-9_-]+:)*text-(?:xs|sm|base|lg|[1-9]xl|\[[0-9]+(?:\.[0-9]+)?(?:px|rem|em|pt|%)\])\b/i
+
 const CARET_KEYFRAMES =
   "@keyframes typing-text-caret { 0%, 33.333% { opacity: 1; } 66.667%, 100% { opacity: 0; } }"
 
@@ -378,6 +381,11 @@ export function TypingText({
   const kept = screen.text.slice(0, screen.text.length - screen.selected)
   const selected = screen.text.slice(kept.length)
 
+  const hasCustomFontSize = Boolean(
+    (textClassName && FONT_SIZE_REGEX.test(textClassName)) ||
+    (className && FONT_SIZE_REGEX.test(className))
+  )
+
   return (
     <Component
       className={cn(
@@ -393,7 +401,8 @@ export function TypingText({
         animate={{ opacity: 1 }}
         aria-hidden="true"
         className={cn(
-          "inline-grid justify-items-start pr-[0.25em] text-3xl leading-[1.2] font-bold whitespace-pre sm:text-5xl md:text-6xl",
+          "inline-grid justify-items-start pr-[0.25em] leading-[1.2] whitespace-pre",
+          !hasCustomFontSize && "text-3xl font-bold sm:text-5xl md:text-6xl",
           textClassName
         )}
         initial={{ opacity: 0 }}

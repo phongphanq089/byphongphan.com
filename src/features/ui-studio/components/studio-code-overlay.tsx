@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/set-state-in-effect */
-import { ArrowLeft, FileCode2, X } from "lucide-react"
+import { ArrowLeftIcon, FileCodeIcon, XIcon } from "@phosphor-icons/react"
 import { motion, useDragControls } from "motion/react"
 import * as React from "react"
 
@@ -87,22 +87,7 @@ export function StudioCodeOverlay({
 
   const content = (
     <>
-      {/* Grab handle — desktop right-panel only (>= xl); drawer mode (< xl) uses Base UI swipe bar */}
-      {!isDrawerMode ? (
-        <div
-          onPointerDown={(event) => {
-            if (event.button === 0) dragControls.start(event)
-          }}
-          role="separator"
-          aria-orientation="horizontal"
-          aria-label="Drag down to close"
-          className="flex h-6 w-full shrink-0 cursor-grab touch-none items-center justify-center border-b border-border/40 transition-colors select-none hover:bg-accent/40 active:cursor-grabbing"
-        >
-          <span className="h-1 w-10 rounded-full bg-muted-foreground/40 transition-colors hover:bg-muted-foreground/80" />
-        </div>
-      ) : null}
-
-      {/* Tool header: back + active file + copy + close */}
+      {/* Top header integrated cleanly alongside floating StudioHeader controls */}
       <div
         onPointerDown={(event) => {
           if (!isDrawerMode && event.button === 0) {
@@ -113,101 +98,100 @@ export function StudioCodeOverlay({
           }
         }}
         className={cn(
-          "flex h-11 shrink-0 items-center gap-2 border-b border-border/70 px-3",
-          !isDrawerMode && "cursor-grab select-none active:cursor-grabbing"
+          "flex shrink-0 items-center gap-2",
+          isDrawerMode
+            ? "h-11 justify-between px-4"
+            : "h-13.5 cursor-grab pr-[19.5rem] pl-4 select-none active:cursor-grabbing"
         )}
       >
-        {hasDocs ? (
-          <button
-            type="button"
-            onClick={onBack}
-            aria-label="Back to docs"
-            title="Back to docs"
-            className="inline-flex h-7 shrink-0 items-center gap-1.5 rounded-md px-2 text-[12px] font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
-          >
-            <ArrowLeft className="size-3.5" aria-hidden="true" />
-            Source Code
-          </button>
-        ) : null}
-
-        <span
-          title={currentFile?.path}
-          className="min-w-0 flex-1 truncate text-center text-[12px] text-muted-foreground"
-        >
-          {currentFile?.name ?? "—"}
-        </span>
-
-        <div className="flex shrink-0 items-center gap-1">
-          {currentFile ? (
-            <CopyButton
-              text={currentFile.code}
-              size="icon"
-              variant="ghost"
-              aria-label="Copy code"
-              title="Copy code"
-              className="size-7 shrink-0 text-muted-foreground hover:text-foreground"
-            />
-          ) : null}
-
-          {onClose ? (
+        <div className="flex min-w-0 items-center gap-2">
+          {hasDocs ? (
             <button
               type="button"
-              onClick={onClose}
-              aria-label="Close panel"
-              title="Close panel (Esc)"
-              className="inline-flex size-7 shrink-0 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+              onClick={onBack}
+              aria-label="Back to docs"
+              title="Back to docs"
+              className="inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
             >
-              <X className="size-4" aria-hidden="true" />
+              <ArrowLeftIcon size={16} aria-hidden="true" />
             </button>
           ) : null}
+
+          <span className="min-w-0 truncate text-sm font-semibold tracking-tight text-foreground">
+            {item.title}
+          </span>
         </div>
+
+        {isDrawerMode && onClose ? (
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close panel"
+            title="Close panel (Esc)"
+            className="inline-flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none"
+          >
+            <XIcon size={16} aria-hidden="true" />
+          </button>
+        ) : null}
       </div>
 
-      {/* File tabs: main + helpers + variants */}
-      {resolvedFiles.length > 0 ? (
-        <div
-          role="tablist"
-          aria-label="Source files"
-          className="flex shrink-0 items-center gap-1 overflow-x-auto border-b border-border/60 px-2 py-1.5"
-        >
-          {resolvedFiles.map((file) => {
-            const isActive = file.path === currentFile?.path
-            return (
-              <button
-                key={file.path}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                onClick={() => handleTabClick(file.path, file.variantId)}
-                title={file.path}
-                className={cn(
-                  "flex shrink-0 items-center gap-1.5 rounded-md px-2 py-1 text-xs transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary",
-                  isActive
-                    ? "bg-accent text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                )}
-              >
-                <FileCode2 className="size-3" aria-hidden="true" />
-                {file.name}
-              </button>
-            )
-          })}
-        </div>
-      ) : null}
-
-      {/* Code content */}
+      {/* Unified File Tabs + Language / Wrap / Copy Toolbar + Code Viewport */}
       {currentFile ? (
         <CodeBlock
           key={currentFile.path}
           code={currentFile.code}
           language={fileLanguage(currentFile.name)}
           showLineNumbers
-          className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-none border-none bg-transparent"
+          className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-none border-none bg-transparent shadow-none"
         >
-          <div className="flex h-8 shrink-0 items-center justify-between border-b border-border/60 bg-muted/20 px-3">
-            <CodeBlockLanguage className="font-mono text-[9px] tracking-wider text-muted-foreground uppercase" />
-            <CodeBlockWrapToggle />
+          <div className="flex h-10 shrink-0 items-center justify-between gap-2 border-y border-border/50 bg-muted/25 px-3">
+            {resolvedFiles.length > 0 ? (
+              <div
+                role="tablist"
+                aria-label="Source files"
+                className="no-scrollbar flex min-w-0 flex-1 items-center gap-1 overflow-x-auto"
+              >
+                {resolvedFiles.map((file) => {
+                  const isActive = file.path === currentFile.path
+                  return (
+                    <button
+                      key={file.path}
+                      type="button"
+                      role="tab"
+                      aria-selected={isActive}
+                      onClick={() => handleTabClick(file.path, file.variantId)}
+                      title={file.path}
+                      className={cn(
+                        "flex h-7 shrink-0 cursor-pointer items-center gap-1.5 rounded-md px-2.5 text-xs transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary",
+                        isActive
+                          ? "bg-background font-medium text-foreground shadow-2xs ring-1 ring-border/60 dark:bg-white/[0.08] dark:ring-white/10"
+                          : "text-muted-foreground hover:bg-muted/60 hover:text-foreground"
+                      )}
+                    >
+                      <FileCodeIcon size={13} aria-hidden="true" />
+                      {file.name}
+                    </button>
+                  )
+                })}
+              </div>
+            ) : (
+              <div className="flex-1" />
+            )}
+
+            <div className="flex shrink-0 items-center gap-1.5 border-l border-border/50 pl-2">
+              <CodeBlockLanguage className="border-border/50 bg-background/70 px-1.5 py-0.5 font-mono text-[10px] font-medium tracking-wider text-muted-foreground uppercase" />
+              <CodeBlockWrapToggle className="h-7 rounded-md px-2 text-[11px] font-medium text-muted-foreground hover:bg-muted hover:text-foreground" />
+              <CopyButton
+                text={currentFile.code}
+                size="icon"
+                variant="ghost"
+                aria-label="Copy code"
+                title="Copy code"
+                className="size-7 shrink-0 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
+              />
+            </div>
           </div>
+
           <ScrollArea className="min-h-0 flex-1" orientation="both">
             <CodeBlockContent />
           </ScrollArea>
@@ -225,13 +209,13 @@ export function StudioCodeOverlay({
     return <div className="flex h-full min-h-0 w-full flex-col">{content}</div>
   }
 
-  // Desktop (>= xl): bottom-anchored draggable drawer card inside the docked panel column
+  // Desktop (>= xl): crisp elevated code card starting flush at top without dead padding
   return (
     <motion.div
-      initial={{ y: "100%" }}
-      animate={{ y: 0 }}
-      exit={{ y: "100%" }}
-      transition={{ type: "spring", stiffness: 400, damping: 32 }}
+      initial={{ y: "100%", opacity: 0.5 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: "100%", opacity: 0.5 }}
+      transition={{ type: "spring", stiffness: 400, damping: 34 }}
       drag="y"
       dragControls={dragControls}
       dragListener={false}
@@ -243,7 +227,7 @@ export function StudioCodeOverlay({
           dismiss?.()
         }
       }}
-      className="absolute inset-0 z-20 flex h-full w-full flex-col border-l border-border/60 bg-background/98 backdrop-blur-xl"
+      className="absolute inset-0 z-20 flex h-full w-full flex-col overflow-hidden rounded-2xl border border-border/50 bg-card shadow-xs"
     >
       {content}
     </motion.div>

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-import BlueprintCanvasBackground from "@/features/home/banner-hero/blueprint-canvas-background"
 import { PPPixelMark } from "@/shared/ui"
+import BlueprintCanvasBackground from "@/shared/ui/background/blueprint-canvas-background"
 
 export const Route = createFileRoute("/brand-app")({
   component: RouteComponent,
