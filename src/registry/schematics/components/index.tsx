@@ -17,6 +17,7 @@ import { ElasticSliderSchematic } from "./elastic-slider-schematic"
 import { SelectSchematic } from "./select-schematic"
 import { SlideToUnlockSchematic } from "./slide-to-unlock-schematic"
 import { SpotlightCardSchematic } from "./spotlight-card-schematic"
+import { SpotlightTextSchematic } from "./spotlight-text-schematic"
 import { SwooshTextSchematic } from "./swoosh-text-schematic"
 import { TextHoverEffectSchematic } from "./text-hover-effect-schematic"
 import { TimeScrubberSchematic } from "./time-scrubber-schematic"
@@ -46,6 +47,7 @@ export * from "./letter-3d-swap-schematic"
 export * from "./select-schematic"
 export * from "./slide-to-unlock-schematic"
 export * from "./spotlight-card-schematic"
+export * from "./spotlight-text-schematic"
 export * from "./swoosh-text-schematic"
 export * from "./text-hover-effect-schematic"
 export * from "./time-scrubber-schematic"
@@ -79,6 +81,7 @@ export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
   "middle-truncation": MiddleTruncationSchematic,
   "line-nav": LineNavSchematic,
   "spotlight-card": SpotlightCardSchematic,
+  "spotlight-text": SpotlightTextSchematic,
   "border-glow": BorderGlowSchematic,
   "scroll-area": ScrollAreaSchematic,
   drawer: DrawerSchematic,

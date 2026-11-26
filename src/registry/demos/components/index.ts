@@ -82,6 +82,11 @@ export const SpotlightCardDemo = lazyWithRetry(() =>
     default: m.SpotlightCardDemo,
   }))
 )
+export const SpotlightTextDemo = lazyWithRetry(() =>
+  import("./spotlight-text-demo").then((m) => ({
+    default: m.SpotlightTextDemo,
+  }))
+)
 export const SwooshTextDemo = lazyWithRetry(() =>
   import("./swoosh-text-demo").then((m) => ({
     default: m.SwooshTextDemo,
@@ -156,6 +161,8 @@ export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   "slide-to-confirm-demo": SlideToUnlockDemo,
   "spotlight-card": SpotlightCardDemo,
   "spotlight-card-demo": SpotlightCardDemo,
+  "spotlight-text": SpotlightTextDemo,
+  "spotlight-text-demo": SpotlightTextDemo,
   "border-glow": BorderGlowDemo,
   "border-glow-demo": BorderGlowDemo,
   "scroll-area": ScrollAreaDemo,

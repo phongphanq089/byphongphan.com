@@ -147,6 +147,10 @@
       "slug": "corner-button"
     },
     {
+      "category": "text",
+      "slug": "spotlight-text"
+    },
+    {
       "category": "button",
       "slug": "slide-to-unlock"
     }

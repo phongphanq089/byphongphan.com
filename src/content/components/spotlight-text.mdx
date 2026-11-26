@@ -1,0 +1,88 @@
+---
+title: Spotlight Text
+description: Interactive giant cropped typography with procedural canvas grain texture, radial pointer-tracking spotlight mask, and autonomous figure-8 drift.
+component: true
+---
+
+<ComponentPreview name="spotlight-text-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="spotlight-text" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="spotlight-text" title="components/spotlight-text.tsx" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Usage
+
+```tsx
+import { SpotlightText } from "@/components/spotlight-text"
+```
+
+```tsx
+export function FooterWatermark() {
+  return (
+    <div className="w-full overflow-hidden bg-background">
+      <SpotlightText
+        text="byphongphan"
+        theme="dark"
+        spotlightRadius={560}
+        ambientOpacity={0.06}
+        bottomCropPercent={18}
+      />
+    </div>
+  )
+}
+```
+
+---
+
+## Features
+
+- **Zero External Dependencies**: Built purely with React, HTML5 Canvas, `ResizeObserver`, and `requestAnimationFrame`.
+- **Procedural Canvas Grain**: Generates a tileable stipple noise texture with configurable intensity, contrast, pore density, and warm paper tint.
+- **Auto-Fit Typography**: Dynamically measures text width with `ResizeObserver` to scale the display heading cleanly across viewports.
+- **Pointer-Tracking & Figure-8 Drift**: Smoothly lerps the radial spotlight mask toward the pointer on hover and falls back to an autonomous figure-8 sweep when idle (or always when `autoAnimate` is enabled).
+
+---
+
+## API Reference
+
+### SpotlightText
+
+Interactive grainy spotlight typography component.
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `text` | `string` | `"byphongphan"` | The large typography string displayed. |
+| `theme` | `"dark" \| "light" \| "paper"` | `"dark"` | Color theme mode for the procedural grain texture. |
+| `spotlightRadius` | `number` | `560` | Radius in px of the radial spotlight mask. |
+| `ambientOpacity` | `number` | `0.06` | Background ambient visibility outside the spotlight (`0.0` to `1.0`). |
+| `centerIntensity` | `number` | `1.0` | Peak brightness at the center of the spotlight (`0.0` to `1.0`). |
+| `bottomCropPercent` | `number` | `18` | Percentage to shift text downward for subtle bottom cropping. |
+| `grainIntensity` | `number` | `0.75` | Grain stipple intensity. |
+| `grainContrast` | `number` | `0.8` | Grain contrast adjustment. |
+| `grainDensity` | `number` | `0.82` | Density of noise pores. |
+| `grainScale` | `number` | `160` | Scale in px of the repeating grain texture tile. |
+| `letterSpacing` | `number` | `-0.055` | Tracking in `em`. |
+| `autoAnimate` | `boolean` | `false` | Always run the autonomous figure-8 drift animation even on hover. |
+| `className` | `string` | `""` | Additional container classes. |
+| `showColumnDividers` | `boolean` | `false` | Whether to render continuous vertical 4-column hairline divider lines. |
