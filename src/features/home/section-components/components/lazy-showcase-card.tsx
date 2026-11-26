@@ -77,7 +77,7 @@ export function LazyShowcaseCard({ item, className }: LazyShowcaseCardProps) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
-              className="flex h-full min-h-[300px] w-full items-center justify-center px-4 py-10"
+              className="flex h-full min-h-[200px] w-full items-center justify-center p-3 sm:min-h-[240px] sm:p-4 2xl:min-h-0"
             >
               <ShowcaseLiveComponent slug={item.slug} />
             </motion.div>
@@ -86,7 +86,7 @@ export function LazyShowcaseCard({ item, className }: LazyShowcaseCardProps) {
               key="loading"
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="flex h-full min-h-[300px] w-full flex-col items-center justify-center gap-2 p-3 select-none"
+              className="flex h-full min-h-[200px] w-full flex-col items-center justify-center gap-2 p-3 select-none sm:min-h-[240px] 2xl:min-h-0"
             >
               {/* Precision CAD Radar Dial */}
               <div className="relative flex size-7 items-center justify-center">
