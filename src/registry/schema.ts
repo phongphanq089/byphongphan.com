@@ -14,6 +14,7 @@ export type ComponentSchematicType =
   | "middle-truncation"
   | "line-nav"
   | "spotlight-card"
+  | "spotlight-text"
   | "border-glow"
   | "scroll-area"
   | "drawer"

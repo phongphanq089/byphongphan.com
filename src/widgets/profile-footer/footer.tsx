@@ -3,10 +3,10 @@ import { ArrowUp, ArrowUpRight, Globe, Mail } from "lucide-react"
 
 import { footerSocials, siteConfig, TELEMETRY_CONFIG } from "@/shared/config"
 import { ExternalLink } from "@/shared/ui"
+import { SpotlightText } from "@/shared/ui/animation"
 import UnderlineToBackground from "@/shared/ui/animation/underline-to-background"
 
 import { footerNavigation } from "./setting-footer"
-import { SpotlightText } from "./spotlight-text"
 
 const SYSTEM_SPECS = [
   { label: "Framework", value: "TanStack Start" },
