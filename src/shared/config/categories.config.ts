@@ -5,6 +5,12 @@
 // 1. Definition as const
 export const COMPONENT_CATEGORIES = [
   {
+    id: "button",
+    label: "Button",
+    description:
+      "Creative buttons, animated actions, and interactive triggers.",
+  },
+  {
     id: "card",
     label: "Card",
     description: "Card surfaces, spotlight effects, and glowing containers.",

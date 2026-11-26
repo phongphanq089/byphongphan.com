@@ -259,8 +259,8 @@ export const REGISTRY_BLOCKS: RegistryItem[] = [
         target: "app/marketing/artcraft-scroll/page.tsx",
       },
       {
-        path: "animated/rail-scroll-scrubber.tsx",
-        type: "registry:component",
+        path: "block/artcraft-scroll-01/components/rail-scroll-scrubber.tsx",
+        type: "registry:block",
         target: "components/rail-scroll-scrubber.tsx",
       },
     ],

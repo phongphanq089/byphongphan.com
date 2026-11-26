@@ -1,6 +1,7 @@
 import {
   Atom,
   Bookmark,
+  Bot,
   Code,
   Code2,
   Component,
@@ -72,9 +73,11 @@ export const COMMAND_GROUPS: CommandMenuGroup[] = [
 
 const NAVIGATION_ICON_MAP: Record<string, ReactNode> = {
   home: <Home className="size-4 text-pp-primary" />,
-  block: <Layers className="size-4 text-pp-primary" />,
+  ui: <Atom className="size-4 text-pp-primary" />,
+  mcp: <Bot className="size-4 text-pp-primary" />,
   blog: <Newspaper className="size-4 text-pp-primary" />,
   resources: <Bookmark className="size-4 text-pp-primary" />,
+  block: <Layers className="size-4 text-pp-primary" />,
   "component-ui": <Atom className="size-4 text-pp-primary" />,
   hooks: <Workflow className="size-4 text-pp-primary" />,
 }
@@ -158,7 +161,6 @@ function buildRegistryMenuItems(): CommandMenuItem[] {
   return REGISTRY_ITEMS.filter((item) => item.type !== "registry:hook").map(
     (item: RegistryItem) => {
       const isBlock = item.type === "registry:block"
-      const basePath = isBlock ? "/blocks" : "/component-ui"
       const categorySlug = item.category
 
       return {
@@ -177,7 +179,7 @@ function buildRegistryMenuItems(): CommandMenuItem[] {
         ],
         group: isBlock ? "blocks" : "components-ui",
         badge: item.isNew ? "New" : undefined,
-        to: `${basePath}/${categorySlug}/${item.name}`,
+        to: `/ui/${categorySlug}/${item.name}`,
       }
     }
   )

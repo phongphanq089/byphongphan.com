@@ -1,8 +1,20 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useCallback, useEffect, useState } from "react"
 
-import type { RailSection } from "@/registry/animated/rail-scroll-scrubber"
 import type { TOCItemType } from "@/shared/ui/system/toc-minimap"
+
+export interface RailSection {
+  id: string
+  title: string
+  label?: string
+  start: number
+  end?: number
+  anchor: number
+  flightRange: [number, number]
+  subtitle?: string
+  description?: string
+  accent?: string
+}
 
 export interface UseTocRailSectionsOptions {
   /** Optional custom short titles for desktop 3D rail characters (e.g. { "#components-ui": "COMPONENTS" }) */

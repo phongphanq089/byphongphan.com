@@ -1,28 +1,56 @@
 import { Riffle } from "@lucasmarkes/hairline/react"
+import React from "react"
 
-import { SectionHeading } from "@/shared/ui/system/section-heading"
+import { DraftingSectionRow } from "@/app/layouts/drafting-section-row"
 
-export const SectionBlog = () => {
+export interface SectionBlogProps {
+  className?: string
+}
+
+/**
+ * Section VI: Writing / Blog
+ *
+ * Implements a clean, compact coming soon state within the 1024px Swiss Drafting Architecture:
+ * - Roman Numeral: VI
+ * - Title: WRITING
+ * - Interactive hairline figure: Riffle by Lucas Markes
+ * - Clean, minimal framed CAD container
+ */
+export function SectionBlog({ className }: SectionBlogProps) {
   return (
-    <section
+    <DraftingSectionRow
       id="blog"
-      className="relative flex w-full flex-col bg-background text-foreground"
+      romanIndex="VI"
+      title="WRITING"
+      className={className}
     >
-      <div className="-mt-px border-y border-border">
-        <SectionHeading id="blog" heading="Blog" />
+      <div className="relative flex w-full flex-col border-t border-border/70 bg-transparent py-5 select-none">
+        {/* Center Lucas Markes Interactive Riffle Graphic */}
+        <div className="flex w-full items-center justify-center py-4">
+          <Riffle
+            className="w-full max-w-[240px] sm:max-w-[280px]"
+            intensity={0.6}
+            label="Coming soon - Technical Essays"
+          />
+        </div>
+
+        <div className="space-y-1.5 text-center">
+          <div className="inline-flex items-center gap-1.5 rounded-full border border-border/70 bg-transparent px-2.5 py-0.5 font-mono text-[9px] text-muted-foreground uppercase">
+            <span>Coming soon</span>
+          </div>
+
+          <h3 className="font-mono text-sm font-semibold tracking-wide text-foreground uppercase sm:text-base">
+            Engineering Notes &amp; Thoughts
+          </h3>
+
+          <p className="mx-auto max-w-sm text-xs leading-relaxed text-muted-foreground">
+            Essays on frontend craft, interactive graphics, shaders, and web
+            performance patterns are currently in progress.
+          </p>
+        </div>
       </div>
-
-      <div className="flex flex-col items-center justify-center border-b border-border p-4 text-center sm:p-6 md:p-8">
-        <Riffle style={{ width: 400 }} label="Coming soon" className="-mt-10" />
-
-        <h3 className="text-lg font-bold text-foreground sm:text-xl">
-          Coming soon
-        </h3>
-
-        <p className="mt-1 max-w-sm text-xs leading-relaxed text-muted-foreground sm:text-sm">
-          We’re currently building for this blog. Check back soon!
-        </p>
-      </div>
-    </section>
+    </DraftingSectionRow>
   )
 }
+
+export default SectionBlog

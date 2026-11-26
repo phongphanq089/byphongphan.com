@@ -1,5 +1,5 @@
 export * from "./desktop-navbar"
 export * from "./github-star-button"
-export * from "./menu-item"
+export * from "./gooey-navbar"
 export * from "./menu-public-desktop"
 export { default } from "./menu-public-desktop"

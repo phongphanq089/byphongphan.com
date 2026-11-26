@@ -28,10 +28,11 @@ export function CommandMenuTrigger({
   return (
     <Button
       type="button"
+      size="lg"
       onClick={openCommandMenu}
       aria-label="Open command palette"
       className={cn(
-        "group relative flex items-center gap-2 rounded-sm border border-border/70 bg-background/40 px-2.5 py-1.5 text-xs text-muted-foreground shadow-xs backdrop-blur-xs transition-all hover:border-foreground/30 hover:bg-accent/60 hover:text-foreground",
+        "group relative flex h-9 shrink-0 items-center gap-2 rounded-lg border-0 bg-muted px-3.5 py-0 text-xs font-medium text-muted-foreground shadow-none transition-colors duration-200 hover:bg-foreground/10 hover:text-foreground dark:hover:bg-white/10",
         className
       )}
     >

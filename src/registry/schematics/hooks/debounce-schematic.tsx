@@ -6,9 +6,7 @@ export function DebounceSchematic() {
       {/* Search Bar Input */}
       <div className="flex flex-1 items-center gap-2 rounded-sm border border-black/10 bg-card/80 px-2.5 py-2 shadow-xs dark:border-white/10 dark:bg-neutral-900/60">
         <Search className="size-3.5 text-muted-foreground/70" />
-        <span className="font-sans text-[11px] text-muted-foreground">
-          Search...
-        </span>
+        <span className="text-[11px] text-muted-foreground">Search...</span>
       </div>
 
       {/* Throttle / Debounce indicator dots */}

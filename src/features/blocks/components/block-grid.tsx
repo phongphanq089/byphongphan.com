@@ -145,7 +145,8 @@ export function BlockGrid({ category = "all" }: BlockGridProps) {
             We are working on adding more blocks to this category.
           </p>
           <Link
-            to="/blocks"
+            to="/ui/$collection"
+            params={{ collection: "blocks" }}
             className="mt-5 flex items-center gap-2 rounded-lg border border-pp-primary/40 bg-pp-primary/10 px-4 py-2 text-xs font-semibold text-pp-primary transition-all duration-200 hover:bg-pp-primary hover:text-pp-primary-foreground"
           >
             <LayoutGrid className="size-3.5" />

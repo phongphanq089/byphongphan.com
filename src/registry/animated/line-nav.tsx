@@ -1,31 +1,152 @@
 /**
- * This component is inspired by Devouring Details , chanh dai and Skiper UI.
+ * LineNav — Precision Caliper Ladder Navigation
+ * Inspired by Devouring Details, chanh dai and Skiper UI.
+ * Every tick on the ruler (main + sub graduations) animates with a Gaussian
+ * proximity wave — the entire ladder flexes with spring physics around the
+ * focused item. Fixed pitch grid: 5px per tick, 5 ticks per item row.
  */
 
 import { memo, useEffect, useRef, useState } from "react"
 import { motion } from "motion/react"
+
 import { cn } from "@/shared/lib/utils"
 
-const lineVariants = {
-  normal: { width: 24 },
-  active: { width: 40 },
-  hover: { width: 40 },
+/** Fixed pitch of the ruler grid, in pixels. */
+const TICK_PITCH = 5
+/** Item block height = 5 pitches (main tick + 4 sub graduations). */
+const ROW_HEIGHT = TICK_PITCH * 5
+/** Tick layout template (top offsets in px) for one 25px item block. */
+const TICK_SLOTS = [
+  { y: 2, local: 1, role: "sub-small" },
+  { y: 7, local: 2, role: "sub-small" },
+  { y: 12, local: 0, role: "main" },
+  { y: 17, local: 3, role: "sub-mid" },
+  { y: 22, local: 4, role: "sub-small" },
+] as const
+
+type TickRole = (typeof TICK_SLOTS)[number]["role"]
+
+/** Base (resting) geometry for each tick role — dual-theme via foreground tokens. */
+const BASE_TICK: Record<TickRole, { width: number; className: string }> = {
+  main: {
+    width: 14,
+    className: "bg-foreground/30 dark:bg-white/20",
+  },
+  "sub-mid": {
+    width: 11,
+    className: "bg-foreground/40 dark:bg-white/25",
+  },
+  "sub-small": {
+    width: 7,
+    className: "bg-foreground/20 dark:bg-white/15",
+  },
 }
 
-const groupLineVariants = {
-  normal: { width: 16 },
-  active: { width: 24 },
-  hover: { width: 20 },
+/** Level look-up table for the proximity wave (Δ ticks from the target). */
+const WAVE: { width: number; className: string; glowClass: string }[] = [
+  {
+    width: 52,
+    className: "bg-blue-600 dark:bg-sky-400",
+    glowClass:
+      "shadow-[0_0_8px_rgba(37,99,235,0.35)] dark:shadow-[0_0_8px_rgba(56,189,248,0.6)]",
+  },
+  {
+    width: 42,
+    className: "bg-blue-600/55 dark:bg-sky-400/50",
+    glowClass: "shadow-none",
+  },
+  {
+    width: 34,
+    className: "bg-blue-600/35 dark:bg-sky-400/30",
+    glowClass: "shadow-none",
+  },
+  {
+    width: 26,
+    className: "bg-blue-600/25 dark:bg-sky-400/25",
+    glowClass: "shadow-none",
+  },
+  {
+    width: 20,
+    className: "bg-blue-600/15 dark:bg-sky-400/15",
+    glowClass: "shadow-none",
+  },
+]
+
+const STUDIO_BASE_TICK: Record<TickRole, { width: number; className: string }> =
+  {
+    main: {
+      width: 14,
+      className: "bg-foreground/30 dark:bg-white/25",
+    },
+    "sub-mid": {
+      width: 10,
+      className: "bg-foreground/40 dark:bg-white/30",
+    },
+    "sub-small": {
+      width: 6,
+      className: "bg-foreground/22 dark:bg-white/15",
+    },
+  }
+
+const STUDIO_WAVE: { width: number; className: string; glowClass: string }[] = [
+  {
+    width: 42,
+    className: "bg-blue-600 dark:bg-sky-400",
+    glowClass:
+      "shadow-[0_0_8px_rgba(37,99,235,0.35)] dark:shadow-[0_0_8px_rgba(56,189,248,0.6)]",
+  },
+  {
+    width: 34,
+    className: "bg-blue-600/55 dark:bg-sky-400/50",
+    glowClass: "shadow-none",
+  },
+  {
+    width: 27,
+    className: "bg-blue-600/35 dark:bg-sky-400/30",
+    glowClass: "shadow-none",
+  },
+  {
+    width: 21,
+    className: "bg-blue-600/25 dark:bg-sky-400/25",
+    glowClass: "shadow-none",
+  },
+  {
+    width: 16,
+    className: "bg-blue-600/15 dark:bg-sky-400/15",
+    glowClass: "shadow-none",
+  },
+]
+
+function tickGeometry(
+  role: TickRole,
+  delta: number,
+  variant: LineNavVariant = "default"
+) {
+  const waveTable = variant === "studio" ? STUDIO_WAVE : WAVE
+  const baseTable = variant === "studio" ? STUDIO_BASE_TICK : BASE_TICK
+  const wave = waveTable[delta]
+  if (wave) return wave
+  const base = baseTable[role]
+  return {
+    width: base.width,
+    className: base.className,
+    glowClass: "shadow-none",
+  }
 }
+
+export type LineNavVariant = "default" | "studio"
 
 export type LineNavItem = {
   title: React.ReactNode
   href: string
+  /** Optional index number or string (e.g. 1 -> "01") */
+  index?: number | string
   badge?: React.ReactNode
 }
 
 export type LineNavGroup = {
-  title: string
+  /** Title content — string or composed nodes */
+  title: React.ReactNode
   href?: string
   items: LineNavItem[]
 }
@@ -36,24 +157,33 @@ export type LineNavProps = {
   items?: LineNavItem[]
   /** Grouped navigation sections (for grouped mode) */
   groups?: LineNavGroup[]
+  /** Visual density preset (`"studio"` uses ultra-fine whisper ticks). */
+  variant?: LineNavVariant
   /** Href of the active item */
   activeHref?: string
   /** Scroll the active item into view on mount or change */
   scrollActiveIntoView?: boolean
+  /** Show 2-digit index if provided (defaults to true) */
+  showIndex?: boolean
   /** Called when an item or group header is clicked */
   onItemClick?: (
     item: LineNavItem | LineNavGroup,
     event: React.MouseEvent<HTMLAnchorElement>
   ) => void
+  /** Called when an item or group header is hovered or focused (intent preload) */
+  onItemHover?: (item: LineNavItem | LineNavGroup) => void
 }
 
 export function LineNav({
   className,
   items,
   groups,
+  variant = "default",
   activeHref,
   scrollActiveIntoView = true,
+  showIndex = true,
   onItemClick,
+  onItemHover,
 }: LineNavProps) {
   const [internalActive, setInternalActive] = useState<string>(() => {
     if (activeHref) return activeHref
@@ -64,6 +194,7 @@ export function LineNav({
     return ""
   })
 
+  const [hoveredHref, setHoveredHref] = useState<string | null>(null)
   const currentActive = activeHref ?? internalActive
   const activeItemRef = useRef<HTMLAnchorElement | null>(null)
 
@@ -88,80 +219,143 @@ export function LineNav({
     onItemClick?.(item, event)
   }
 
+  const handleItemHover = (item: LineNavItem | LineNavGroup) => {
+    if (item.href) {
+      onItemHover?.(item)
+    }
+  }
+
+  /** Map the flat list of items to global blocks for Δk proximity math. */
+  const flatItems =
+    groups && groups.length > 0
+      ? groups.flatMap((group) => group.items)
+      : (items ?? [])
+  const targetHref = hoveredHref ?? currentActive
+  const targetBlockIndex = flatItems.findIndex(
+    (entry) => entry.href === targetHref
+  )
+  const safeTarget = targetBlockIndex === -1 ? 0 : targetBlockIndex
+
   // 1. Grouped Navigation Mode
   if (groups && groups.length > 0) {
+    let blockCursor = 0
     return (
       <nav
-        className={cn("flex flex-col gap-2 py-5.25 select-none", className)}
-        style={
-          {
-            "--line-nav-width": `${lineVariants.normal.width}px`,
-          } as React.CSSProperties
-        }
+        aria-label="Component navigation"
+        className={cn("flex flex-col py-2 select-none", className)}
       >
         {groups.map((group, groupIndex) => {
           const isGroupActive = Boolean(
             group.href && group.href === currentActive
           )
-          const isLastGroup = groupIndex === groups.length - 1
 
           return (
-            <div key={group.title} className="contents">
-              {/* Group Header */}
-              {group.href ? (
-                <motion.a
-                  ref={isGroupActive ? activeItemRef : undefined}
-                  aria-current={isGroupActive ? "page" : undefined}
-                  className="group relative flex h-px items-center gap-3 after:absolute after:top-1/2 after:left-0 after:size-full after:-translate-y-1/2 after:p-3.5 focus-visible:outline-none"
-                  href={group.href}
-                  initial={false}
-                  animate={isGroupActive ? "active" : "normal"}
-                  whileHover="hover"
-                  onClick={(event) => handleItemClick(group, event)}
-                >
-                  <motion.span
-                    className={cn(
-                      "block h-px shrink-0 transition-[background-color] ease-out",
-                      isGroupActive
-                        ? "bg-foreground"
-                        : "bg-foreground/30 group-hover:bg-foreground/60"
-                    )}
-                    variants={groupLineVariants}
-                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
-                  />
-                  <span className="font-mono text-[11px] font-medium tracking-wider text-foreground uppercase transition-[color] ease-out group-hover:text-foreground">
-                    {group.title}
-                  </span>
-                </motion.a>
-              ) : (
-                <div className="group relative flex h-px items-center gap-3 select-none">
-                  <span className="block h-px w-4 shrink-0 bg-foreground/30" />
-                  <span className="font-mono text-[11px] font-medium tracking-wider text-foreground uppercase">
-                    {group.title}
-                  </span>
-                </div>
-              )}
-
-              {/* Ticks following group header */}
-              <span className="block h-px w-(--line-nav-width) bg-foreground/20" />
-              <span className="block h-px w-(--line-nav-width) bg-foreground/20" />
+            <div key={group.href ?? `group-${groupIndex}`} className="contents">
+              {/* Group header row */}
+              <div
+                className={cn(
+                  "flex flex-col pb-1 first:pt-1",
+                  variant === "studio" ? "pt-4" : "pt-3"
+                )}
+              >
+                {group.href ? (
+                  <motion.a
+                    ref={isGroupActive ? activeItemRef : undefined}
+                    aria-current={isGroupActive ? "page" : undefined}
+                    className="group flex h-7 items-center rounded-xs transition-colors outline-none focus-visible:ring-1 focus-visible:ring-primary"
+                    href={group.href}
+                    onClick={(event) => handleItemClick(group, event)}
+                    onMouseEnter={() => {
+                      setHoveredHref(group.href ?? null)
+                      handleItemHover(group)
+                    }}
+                    onMouseLeave={() => setHoveredHref(null)}
+                    onFocus={() => {
+                      setHoveredHref(group.href ?? null)
+                      handleItemHover(group)
+                    }}
+                    onBlur={() => setHoveredHref(null)}
+                  >
+                    <div
+                      className={cn(
+                        "relative flex h-full shrink-0 items-center",
+                        variant === "studio" ? "w-12" : "w-14"
+                      )}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={cn(
+                          "h-[2px] rounded-full transition-all duration-200",
+                          variant === "studio"
+                            ? isGroupActive
+                              ? "w-10 bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.35)] dark:bg-sky-400 dark:shadow-[0_0_8px_rgba(56,189,248,0.6)]"
+                              : "w-4 bg-foreground/40 group-hover:bg-foreground/70 dark:bg-white/25 dark:group-hover:bg-white/40"
+                            : isGroupActive
+                              ? "w-12 bg-blue-600 shadow-[0_0_8px_rgba(37,99,235,0.35)] dark:bg-sky-400 dark:shadow-[0_0_8px_rgba(56,189,248,0.6)]"
+                              : "w-5 bg-foreground/40 group-hover:bg-foreground/70 dark:bg-white/25 dark:group-hover:bg-white/40"
+                        )}
+                      />
+                    </div>
+                    <span
+                      className={cn(
+                        "flex min-w-0 items-center gap-2 uppercase transition-colors",
+                        variant === "studio"
+                          ? "text-[11px] font-bold tracking-wider"
+                          : "text-[11px] font-bold tracking-wider",
+                        isGroupActive
+                          ? "text-blue-600 dark:text-sky-400"
+                          : "text-foreground/85"
+                      )}
+                    >
+                      {group.title}
+                    </span>
+                  </motion.a>
+                ) : (
+                  <div className="flex h-6 items-center select-none">
+                    <div
+                      className={cn(
+                        "relative flex h-full shrink-0 items-center",
+                        variant === "studio" ? "w-12" : "w-14"
+                      )}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={cn(
+                          "h-[2px] rounded-full bg-foreground/40 dark:bg-white/25",
+                          variant === "studio" ? "w-4" : "w-5"
+                        )}
+                      />
+                    </div>
+                    <span className="flex min-w-0 items-center gap-2 text-[11px] font-bold tracking-wider text-foreground/85 uppercase">
+                      {group.title}
+                    </span>
+                  </div>
+                )}
+              </div>
 
               {/* Group items */}
               {group.items.map((item, itemIndex) => {
                 const isActive = item.href === currentActive
-                const isLastItemInGroup = itemIndex === group.items.length - 1
-                const isVeryLast = isLastGroup && isLastItemInGroup
+                const isHovered = hoveredHref === item.href
+                const blockIndex = blockCursor++
 
                 return (
-                  <LineNavItem
+                  <LineNavItemRow
                     key={item.href}
                     ref={isActive ? activeItemRef : undefined}
-                    title={item.title}
-                    href={item.href}
-                    badge={item.badge}
-                    active={isActive}
-                    isLast={isVeryLast}
+                    item={item}
+                    variant={variant}
+                    index={
+                      item.index ?? (showIndex ? itemIndex + 1 : undefined)
+                    }
+                    showIndex={showIndex}
+                    isActive={isActive}
+                    isHovered={isHovered}
+                    targetBlockIndex={safeTarget}
+                    blockIndex={blockIndex}
                     onClick={(event) => handleItemClick(item, event)}
+                    onHover={() => handleItemHover(item)}
+                    setHoveredHref={setHoveredHref}
                   />
                 )
               })}
@@ -172,30 +366,33 @@ export function LineNav({
     )
   }
 
+  // 2. Flat List Navigation Mode
   const navItems = items ?? []
 
   return (
     <nav
-      className={cn("flex flex-col gap-2 py-5.25 select-none", className)}
-      style={
-        {
-          "--line-nav-width": `${lineVariants.normal.width}px`,
-        } as React.CSSProperties
-      }
+      aria-label="Component navigation"
+      className={cn("flex flex-col py-2 select-none", className)}
     >
       {navItems.map((item, index) => {
         const isActive = item.href === currentActive
+        const isHovered = hoveredHref === item.href
 
         return (
-          <LineNavItem
+          <LineNavItemRow
             key={item.href}
             ref={isActive ? activeItemRef : undefined}
-            title={item.title}
-            href={item.href}
-            badge={item.badge}
-            active={isActive}
-            isLast={index === navItems.length - 1}
+            item={item}
+            variant={variant}
+            index={item.index ?? (showIndex ? index + 1 : undefined)}
+            showIndex={showIndex}
+            isActive={isActive}
+            isHovered={isHovered}
+            targetBlockIndex={safeTarget}
+            blockIndex={index}
             onClick={(event) => handleItemClick(item, event)}
+            onHover={() => handleItemHover(item)}
+            setHoveredHref={setHoveredHref}
           />
         )
       })}
@@ -203,64 +400,135 @@ export function LineNav({
   )
 }
 
-const LineNavItem = memo(function LineNavItem({
-  ref,
-  title,
-  href,
-  badge,
-  active = false,
-  isLast = false,
-  onClick,
-}: {
+interface LineNavItemRowProps {
   ref?: React.Ref<HTMLAnchorElement>
-  title: React.ReactNode
-  href: string
-  badge?: React.ReactNode
-  active?: boolean
-  isLast?: boolean
-  onClick?: React.MouseEventHandler<HTMLAnchorElement>
-}) {
-  return (
-    <>
-      <motion.a
-        ref={ref}
-        aria-current={active ? "page" : undefined}
-        className="group relative flex h-px items-center gap-3 after:absolute after:top-1/2 after:left-0 after:size-full after:-translate-y-1/2 after:p-3.5 focus-visible:outline-none"
-        href={href}
-        initial={false}
-        animate={active ? "active" : "normal"}
-        whileHover="hover"
-        onClick={onClick}
-      >
-        <motion.span
-          className={cn(
-            "block h-px shrink-0 transition-[background-color,box-shadow] ease-out",
-            active
-              ? "bg-foreground shadow-[0_0_8px_rgba(255,255,255,0.7)]"
-              : "bg-foreground/20 group-hover:bg-foreground"
-          )}
-          variants={lineVariants}
-          transition={{ type: "spring", stiffness: 200, damping: 20 }}
-        />
-        <span
-          className={cn(
-            "inline-flex items-center gap-1.5 text-sm whitespace-nowrap transition-[color,font-weight] ease-out",
-            active
-              ? "font-semibold text-foreground"
-              : "text-muted-foreground group-hover:text-foreground"
-          )}
-        >
-          {title}
-          {badge}
-        </span>
-      </motion.a>
+  item: LineNavItem
+  variant?: LineNavVariant
+  index?: number | string
+  showIndex?: boolean
+  isActive: boolean
+  isHovered: boolean
+  /** Block index of the item closest to the focus wave (hovered ?? active). */
+  targetBlockIndex: number
+  /** Block index of this row within the flat item sequence. */
+  blockIndex: number
+  onClick: (event: React.MouseEvent<HTMLAnchorElement>) => void
+  onHover: () => void
+  setHoveredHref: (href: string | null) => void
+}
 
-      {!isLast && (
-        <>
-          <span className="block h-px w-(--line-nav-width) bg-foreground/20" />
-          <span className="block h-px w-(--line-nav-width) bg-foreground/20" />
-        </>
+const LineNavItemRow = memo(function LineNavItemRow({
+  ref,
+  item,
+  variant = "default",
+  index,
+  showIndex = true,
+  isActive,
+  isHovered,
+  targetBlockIndex,
+  blockIndex,
+  onClick,
+  onHover,
+  setHoveredHref,
+}: LineNavItemRowProps) {
+  const formattedIndex =
+    showIndex && index !== undefined
+      ? typeof index === "number"
+        ? String(index).padStart(2, "0")
+        : String(index)
+      : null
+
+  // Global tick index for this block: main tick = blockIndex * 5
+  const blockBase = blockIndex * 5
+  const isStudio = variant === "studio"
+
+  return (
+    <motion.a
+      ref={ref}
+      aria-current={isActive ? "page" : undefined}
+      href={item.href}
+      onClick={onClick}
+      onMouseEnter={() => {
+        setHoveredHref(item.href)
+        onHover()
+      }}
+      onMouseLeave={() => setHoveredHref(null)}
+      onFocus={() => {
+        setHoveredHref(item.href)
+        onHover()
+      }}
+      onBlur={() => setHoveredHref(null)}
+      className={cn(
+        "group relative grid outline-none",
+        isStudio
+          ? "grid-cols-[3rem_minmax(0,1fr)]"
+          : "grid-cols-[3.5rem_minmax(0,1fr)]"
       )}
-    </>
+      style={{ height: ROW_HEIGHT }}
+    >
+      {/* Ruler spine — fixed width, ticks originate at x = 0 */}
+      <div
+        aria-hidden="true"
+        className={cn("relative h-full", isStudio ? "w-12" : "w-14")}
+      >
+        {TICK_SLOTS.map((slot) => {
+          const tickGlobal = blockBase + slot.local
+          const targetGlobal = targetBlockIndex * 5
+          const delta = Math.abs(tickGlobal - targetGlobal)
+          const geo = tickGeometry(slot.role, delta, variant)
+          return (
+            <motion.span
+              key={slot.local}
+              initial={false}
+              animate={{ width: geo.width }}
+              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              className={cn(
+                "absolute left-0 block h-px",
+                geo.className,
+                geo.glowClass
+              )}
+              style={{ top: slot.y }}
+            />
+          )
+        })}
+      </div>
+
+      {/* Text column — aligned to the main (center) tick of the block */}
+      <span
+        className={cn(
+          "flex h-full min-w-0 items-center gap-2 pr-2 tracking-tight transition-colors",
+          isStudio ? "text-[14.5px]" : "text-xs font-medium",
+          isActive
+            ? "font-semibold text-blue-600 dark:font-medium dark:text-sky-400"
+            : isHovered
+              ? "font-medium text-foreground"
+              : isStudio
+                ? "font-normal text-foreground/85 group-hover:text-foreground dark:text-foreground/80"
+                : "text-foreground/65 group-hover:text-foreground dark:text-muted-foreground/70"
+        )}
+      >
+        {formattedIndex ? (
+          <span
+            className={cn(
+              "shrink-0 tabular-nums",
+              isStudio ? "text-[12.5px]" : "text-[12px]",
+              isActive
+                ? "font-semibold text-blue-600 dark:font-medium dark:text-sky-400"
+                : isStudio
+                  ? "text-foreground/55 group-hover:text-foreground/85 dark:text-muted-foreground/65 dark:group-hover:text-foreground"
+                  : "text-foreground/50 group-hover:text-foreground/80 dark:text-muted-foreground/45 dark:group-hover:text-muted-foreground"
+            )}
+          >
+            {formattedIndex}
+          </span>
+        ) : null}
+        <span
+          className={cn("truncate", isStudio ? "text-[14.5px]" : "text-sm")}
+        >
+          {item.title}
+        </span>
+        {item.badge}
+      </span>
+    </motion.a>
   )
 })

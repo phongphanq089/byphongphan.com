@@ -1,0 +1,102 @@
+---
+title: Letter 3D Swap
+description: Isometric 3D typography swap micro-interaction where characters rotate on multi-directional axes on hover with configurable stagger delays.
+component: true
+badge: Motion
+---
+
+<ComponentPreview name="letter-3d-swap-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="letter-3d-swap" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the required motion dependency:</Step>
+      <CodeBlockCommand command="npm install motion" />
+
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="letter-3d-swap" title="components/letter-3d-swap.tsx" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+Letter3DSwap (Accessible container with hidden sr-only text string)
+├── <span> (Inline word wrapper with whitespace awareness)
+│   └── <span> (CharBox with 3D preservation [transform-style:preserve-3d])
+│       ├── <span (front face)> (Front letter facing camera)
+│       └── <span (second face)> (Back/rotated letter facing active rotation plane)
+```
+
+---
+
+## Usage
+
+```tsx
+import { Letter3DSwap } from "@/components/letter-3d-swap"
+```
+
+```tsx
+export function HeroHeading() {
+  return (
+    <Letter3DSwap
+      as="h1"
+      className="text-4xl font-extrabold"
+      frontFaceClassName="text-foreground"
+      secondFaceClassName="text-primary font-bold"
+      rotateDirection="top"
+      staggerFrom="center"
+    >
+      INTERACTIVE 3D TEXT
+    </Letter3DSwap>
+  )
+}
+```
+
+---
+
+## Features
+
+- **True 3D Cube Transform**: Each character is wrapped in an isometric 3D box with front and second faces, rotating on X or Y axes with `backface-visibility: hidden`.
+- **Unicode & Grapheme Segmenter**: Uses `Intl.Segmenter` to split complex unicode, diacritics, and multi-byte emojis accurately without breaking characters.
+- **Configurable Stagger Physics**: Control the wave propagation order using `staggerFrom="first"`, `"last"`, `"center"`, or `"random"`, along with customizable `staggerDuration`.
+- **Full 4-Axis Rotations**: Easily switch rotation direction between `"top"`, `"right"`, `"bottom"`, and `"left"` to fit your navigation or headline layout.
+- **Accessible Out of the Box**: Includes `<span className="sr-only">` so screen readers parse the full, natural text phrase rather than fragmented individual letters.
+
+---
+
+## API Reference
+
+### Letter3DSwap
+
+Kinetic 3D typography swap component.
+
+| Prop                  | Type                                                       | Default                                          | Description                                                                     |
+| :-------------------- | :--------------------------------------------------------- | :----------------------------------------------- | :------------------------------------------------------------------------------ |
+| `children`            | `React.ReactNode`                                          | -                                                | The text content to display and animate in 3D (required).                       |
+| `as`                  | `React.ElementType`                                        | `"p"`                                            | HTML tag or component to render as.                                             |
+| `rotateDirection`     | `"top" \| "right" \| "bottom" \| "left"`                   | `"right"`                                        | Rotation axis and direction when triggered on hover.                            |
+| `staggerDuration`     | `number`                                                   | `0.05`                                           | Delay interval between consecutive character rotations in seconds.              |
+| `staggerFrom`         | `"first" \| "last" \| "center" \| "random" \| number`      | `"first"`                                        | Starting point for the character stagger animation sequence.                    |
+| `frontFaceClassName`  | `string`                                                   | `undefined`                                      | CSS class names applied to the resting front face character.                    |
+| `secondFaceClassName` | `string`                                                   | `undefined`                                      | CSS class names applied to the rotated secondary face character.                |
+| `mainClassName`       | `string`                                                   | `undefined`                                      | CSS class names for the outer container element.                                |
+| `transition`          | `ValueAnimationTransition \| AnimationOptions`             | `{ type: "spring", damping: 30, stiffness: 300 }`| Motion spring physics or easing configuration.                                   |
+| `className`           | `string`                                                   | `undefined`                                      | Additional CSS classes for the container.                                       |

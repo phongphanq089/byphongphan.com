@@ -1,40 +1,67 @@
 import type { ComponentVariant } from "@/features/component-ui/types"
 
 import { BACKGROUND_GRADIENT_CURSOR_VARIANTS } from "./background-gradient-cursor-variants"
+import { BADGE_VARIANTS } from "./badge-variants"
 import { CARD_VARIANTS } from "./card-variants"
 import { CODE_BLOCK_VARIANTS } from "./code-block-variants"
+import { CORNER_BUTTON_VARIANTS } from "./corner-button-variants"
+import { CRADLE_TEXT_VARIANTS } from "./cradle-text-variants"
 import { DRAWER_VARIANTS } from "./drawer-variants"
+import { ELASTIC_SLIDER_VARIANTS } from "./elastic-slider-variants"
+import { LETTER_3D_SWAP_VARIANTS } from "./letter-3d-swap-variants"
 import { LINE_NAV_VARIANTS } from "./line-nav-variants"
 import { MAP_VARIANTS } from "./map-variants"
 import { MIDDLE_TRUNCATION_VARIANTS } from "./middle-truncation-variants"
-import { PHONG_PHAN_ISOMETRIC_VARIANTS } from "./phong-phan-isometric-variants"
-import { PP_MARK_ISOMETRIC_VARIANTS } from "./pp-mark-isometric-variants"
+import { PLUCKED_TEXT_VARIANTS } from "./plucked-text-variants"
 import { SCROLL_AREA_VARIANTS } from "./scroll-area-variants"
 import { SELECT_VARIANTS } from "./select-variants"
+import { SLIDE_TO_UNLOCK_VARIANTS } from "./slide-to-unlock-variants"
+import { SWOOSH_TEXT_VARIANTS } from "./swoosh-text-variants"
 import { TEXT_HOVER_EFFECT_VARIANTS } from "./text-hover-effect-variants"
+import { TYPING_TEXT_VARIANTS } from "./typing-text-variants"
+import { UNDERLINE_ANIMATION_VARIANTS } from "./underline-animation-variants"
+import { UNDERLINE_TO_BACKGROUND_VARIANTS } from "./underline-to-background-variants"
 
 export * from "./background-gradient-cursor-variants"
+export * from "./badge-variants"
 export * from "./card-variants"
 export * from "./code-block-variants"
+export * from "./corner-button-variants"
+export * from "./cradle-text-variants"
 export * from "./drawer-variants"
+export * from "./elastic-slider-variants"
+export * from "./letter-3d-swap-variants"
 export * from "./line-nav-variants"
 export * from "./map-variants"
 export * from "./middle-truncation-variants"
-export * from "./phong-phan-isometric-variants"
-export * from "./pp-mark-isometric-variants"
+export * from "./plucked-text-variants"
 export * from "./scroll-area-variants"
 export * from "./select-variants"
+export * from "./slide-to-unlock-variants"
+export * from "./swoosh-text-variants"
 export * from "./text-hover-effect-variants"
+export * from "./typing-text-variants"
+export * from "./underline-animation-variants"
+export * from "./underline-to-background-variants"
 
 export const ALL_VARIANTS: ComponentVariant[] = [
   ...SELECT_VARIANTS,
+  ...CORNER_BUTTON_VARIANTS,
+  ...SLIDE_TO_UNLOCK_VARIANTS,
+  ...SWOOSH_TEXT_VARIANTS,
+  ...PLUCKED_TEXT_VARIANTS,
+  ...CRADLE_TEXT_VARIANTS,
+  ...ELASTIC_SLIDER_VARIANTS,
+  ...BADGE_VARIANTS,
   ...CARD_VARIANTS,
   ...CODE_BLOCK_VARIANTS,
   ...MAP_VARIANTS,
   ...TEXT_HOVER_EFFECT_VARIANTS,
+  ...LETTER_3D_SWAP_VARIANTS,
+  ...TYPING_TEXT_VARIANTS,
+  ...UNDERLINE_ANIMATION_VARIANTS,
+  ...UNDERLINE_TO_BACKGROUND_VARIANTS,
   ...BACKGROUND_GRADIENT_CURSOR_VARIANTS,
-  ...PP_MARK_ISOMETRIC_VARIANTS,
-  ...PHONG_PHAN_ISOMETRIC_VARIANTS,
   ...MIDDLE_TRUNCATION_VARIANTS,
   ...LINE_NAV_VARIANTS,
   ...SCROLL_AREA_VARIANTS,
@@ -50,13 +77,22 @@ export const VARIANTS_MAP = new Map<string, ComponentVariant>(
  */
 export const COMPONENT_VARIANTS: Record<string, ComponentVariant[]> = {
   select: SELECT_VARIANTS,
+  "corner-button": CORNER_BUTTON_VARIANTS,
+  "slide-to-unlock": SLIDE_TO_UNLOCK_VARIANTS,
+  badge: BADGE_VARIANTS,
+  "elastic-slider": ELASTIC_SLIDER_VARIANTS,
+  "swoosh-text": SWOOSH_TEXT_VARIANTS,
+  "plucked-text": PLUCKED_TEXT_VARIANTS,
+  "cradle-text": CRADLE_TEXT_VARIANTS,
   card: CARD_VARIANTS,
   "code-block": CODE_BLOCK_VARIANTS,
   map: MAP_VARIANTS,
   "text-hover-effect": TEXT_HOVER_EFFECT_VARIANTS,
+  "letter-3d-swap": LETTER_3D_SWAP_VARIANTS,
+  "typing-text": TYPING_TEXT_VARIANTS,
+  "underline-animation": UNDERLINE_ANIMATION_VARIANTS,
+  "underline-to-background": UNDERLINE_TO_BACKGROUND_VARIANTS,
   "background-gradient-cursor": BACKGROUND_GRADIENT_CURSOR_VARIANTS,
-  "pp-mark-isometric": PP_MARK_ISOMETRIC_VARIANTS,
-  "phong-phan-isometric": PHONG_PHAN_ISOMETRIC_VARIANTS,
   "middle-truncation": MIDDLE_TRUNCATION_VARIANTS,
   "line-nav": LINE_NAV_VARIANTS,
   "scroll-area": SCROLL_AREA_VARIANTS,

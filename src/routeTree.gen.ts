@@ -15,25 +15,21 @@ import { Route as BrandAppRouteImport } from './routes/brand-app'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as UiRouteRouteImport } from './routes/ui/route'
 import { Route as SiteIndexRouteImport } from './routes/_site/index'
+import { Route as SiteMcpRouteImport } from './routes/_site/mcp'
 import { Route as BlocksPreviewSlugRouteImport } from './routes/blocks-preview.$slug'
+import { Route as UiIndexRouteImport } from './routes/ui/index'
 import { Route as AdminAdminIndexRouteImport } from './routes/_admin/admin/index'
-import { Route as SiteBlocksIndexRouteImport } from './routes/_site/blocks/index'
 import { Route as SiteBlogIndexRouteImport } from './routes/_site/blog/index'
-import { Route as SiteComponentUiIndexRouteImport } from './routes/_site/component-ui/index'
-import { Route as SiteHooksIndexRouteImport } from './routes/_site/hooks/index'
 import { Route as SiteResourcesIndexRouteImport } from './routes/_site/resources/index'
+import { Route as UiCollectionIndexRouteImport } from './routes/ui/$collection/index'
+import { Route as UiCollectionSlugRouteImport } from './routes/ui/$collection/$slug'
 import { Route as AdminAdminCategoriesIndexRouteImport } from './routes/_admin/admin/categories/index'
 import { Route as AdminAdminGroupsIndexRouteImport } from './routes/_admin/admin/groups/index'
 import { Route as AdminAdminPostsIndexRouteImport } from './routes/_admin/admin/posts/index'
 import { Route as AdminAdminResourcesIndexRouteImport } from './routes/_admin/admin/resources/index'
 import { Route as AdminAdminSettingsIndexRouteImport } from './routes/_admin/admin/settings/index'
-import { Route as SiteBlocksCategoryIndexRouteImport } from './routes/_site/blocks/$category/index'
-import { Route as SiteBlocksCategorySlugRouteImport } from './routes/_site/blocks/$category/$slug'
-import { Route as SiteComponentUiCategoryIndexRouteImport } from './routes/_site/component-ui/$category/index'
-import { Route as SiteComponentUiCategorySlugRouteImport } from './routes/_site/component-ui/$category/$slug'
-import { Route as SiteHooksCategoryIndexRouteImport } from './routes/_site/hooks/$category/index'
-import { Route as SiteHooksCategorySlugRouteImport } from './routes/_site/hooks/$category/$slug'
 
 const AdminRouteRoute = AdminRouteRouteImport.update({
   id: '/_admin',
@@ -63,9 +59,19 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UiRouteRoute = UiRouteRouteImport.update({
+  id: '/ui',
+  path: '/ui',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SiteIndexRoute = SiteIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => SiteRouteRoute,
+} as any)
+const SiteMcpRoute = SiteMcpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
   getParentRoute: () => SiteRouteRoute,
 } as any)
 const BlocksPreviewSlugRoute = BlocksPreviewSlugRouteImport.update({
@@ -73,35 +79,35 @@ const BlocksPreviewSlugRoute = BlocksPreviewSlugRouteImport.update({
   path: '/blocks-preview/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UiIndexRoute = UiIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => UiRouteRoute,
+} as any)
 const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
   id: '/admin/',
   path: '/admin/',
   getParentRoute: () => AdminRouteRoute,
-} as any)
-const SiteBlocksIndexRoute = SiteBlocksIndexRouteImport.update({
-  id: '/blocks/',
-  path: '/blocks/',
-  getParentRoute: () => SiteRouteRoute,
 } as any)
 const SiteBlogIndexRoute = SiteBlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
   getParentRoute: () => SiteRouteRoute,
 } as any)
-const SiteComponentUiIndexRoute = SiteComponentUiIndexRouteImport.update({
-  id: '/component-ui/',
-  path: '/component-ui/',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
-const SiteHooksIndexRoute = SiteHooksIndexRouteImport.update({
-  id: '/hooks/',
-  path: '/hooks/',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
 const SiteResourcesIndexRoute = SiteResourcesIndexRouteImport.update({
   id: '/resources/',
   path: '/resources/',
   getParentRoute: () => SiteRouteRoute,
+} as any)
+const UiCollectionIndexRoute = UiCollectionIndexRouteImport.update({
+  id: '/$collection/',
+  path: '/$collection/',
+  getParentRoute: () => UiRouteRoute,
+} as any)
+const UiCollectionSlugRoute = UiCollectionSlugRouteImport.update({
+  id: '/$collection/$slug',
+  path: '/$collection/$slug',
+  getParentRoute: () => UiRouteRoute,
 } as any)
 const AdminAdminCategoriesIndexRoute =
   AdminAdminCategoriesIndexRouteImport.update({
@@ -130,63 +136,27 @@ const AdminAdminSettingsIndexRoute = AdminAdminSettingsIndexRouteImport.update({
   path: '/admin/settings/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
-const SiteBlocksCategoryIndexRoute = SiteBlocksCategoryIndexRouteImport.update({
-  id: '/blocks/$category/',
-  path: '/blocks/$category/',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
-const SiteBlocksCategorySlugRoute = SiteBlocksCategorySlugRouteImport.update({
-  id: '/blocks/$category/$slug',
-  path: '/blocks/$category/$slug',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
-const SiteComponentUiCategoryIndexRoute =
-  SiteComponentUiCategoryIndexRouteImport.update({
-    id: '/component-ui/$category/',
-    path: '/component-ui/$category/',
-    getParentRoute: () => SiteRouteRoute,
-  } as any)
-const SiteComponentUiCategorySlugRoute =
-  SiteComponentUiCategorySlugRouteImport.update({
-    id: '/component-ui/$category/$slug',
-    path: '/component-ui/$category/$slug',
-    getParentRoute: () => SiteRouteRoute,
-  } as any)
-const SiteHooksCategoryIndexRoute = SiteHooksCategoryIndexRouteImport.update({
-  id: '/hooks/$category/',
-  path: '/hooks/$category/',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
-const SiteHooksCategorySlugRoute = SiteHooksCategorySlugRouteImport.update({
-  id: '/hooks/$category/$slug',
-  path: '/hooks/$category/$slug',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
+  '/ui': typeof UiRouteRouteWithChildren
   '/brand-app': typeof BrandAppRoute
   '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/mcp': typeof SiteMcpRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
+  '/ui/': typeof UiIndexRoute
+  '/ui/$collection/$slug': typeof UiCollectionSlugRoute
   '/admin/': typeof AdminAdminIndexRoute
-  '/blocks/': typeof SiteBlocksIndexRoute
   '/blog/': typeof SiteBlogIndexRoute
-  '/component-ui/': typeof SiteComponentUiIndexRoute
-  '/hooks/': typeof SiteHooksIndexRoute
   '/resources/': typeof SiteResourcesIndexRoute
-  '/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
-  '/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
-  '/hooks/$category/$slug': typeof SiteHooksCategorySlugRoute
+  '/ui/$collection/': typeof UiCollectionIndexRoute
   '/admin/categories/': typeof AdminAdminCategoriesIndexRoute
   '/admin/groups/': typeof AdminAdminGroupsIndexRoute
   '/admin/posts/': typeof AdminAdminPostsIndexRoute
   '/admin/resources/': typeof AdminAdminResourcesIndexRoute
   '/admin/settings/': typeof AdminAdminSettingsIndexRoute
-  '/blocks/$category/': typeof SiteBlocksCategoryIndexRoute
-  '/component-ui/$category/': typeof SiteComponentUiCategoryIndexRoute
-  '/hooks/$category/': typeof SiteHooksCategoryIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof SiteIndexRoute
@@ -194,79 +164,66 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/mcp': typeof SiteMcpRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
+  '/ui': typeof UiIndexRoute
+  '/ui/$collection/$slug': typeof UiCollectionSlugRoute
   '/admin': typeof AdminAdminIndexRoute
-  '/blocks': typeof SiteBlocksIndexRoute
   '/blog': typeof SiteBlogIndexRoute
-  '/component-ui': typeof SiteComponentUiIndexRoute
-  '/hooks': typeof SiteHooksIndexRoute
   '/resources': typeof SiteResourcesIndexRoute
-  '/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
-  '/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
-  '/hooks/$category/$slug': typeof SiteHooksCategorySlugRoute
+  '/ui/$collection': typeof UiCollectionIndexRoute
   '/admin/categories': typeof AdminAdminCategoriesIndexRoute
   '/admin/groups': typeof AdminAdminGroupsIndexRoute
   '/admin/posts': typeof AdminAdminPostsIndexRoute
   '/admin/resources': typeof AdminAdminResourcesIndexRoute
   '/admin/settings': typeof AdminAdminSettingsIndexRoute
-  '/blocks/$category': typeof SiteBlocksCategoryIndexRoute
-  '/component-ui/$category': typeof SiteComponentUiCategoryIndexRoute
-  '/hooks/$category': typeof SiteHooksCategoryIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_admin': typeof AdminRouteRouteWithChildren
   '/_site': typeof SiteRouteRouteWithChildren
+  '/ui': typeof UiRouteRouteWithChildren
   '/brand-app': typeof BrandAppRoute
   '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_site/mcp': typeof SiteMcpRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
   '/_site/': typeof SiteIndexRoute
+  '/ui/': typeof UiIndexRoute
+  '/ui/$collection/$slug': typeof UiCollectionSlugRoute
   '/_admin/admin/': typeof AdminAdminIndexRoute
-  '/_site/blocks/': typeof SiteBlocksIndexRoute
   '/_site/blog/': typeof SiteBlogIndexRoute
-  '/_site/component-ui/': typeof SiteComponentUiIndexRoute
-  '/_site/hooks/': typeof SiteHooksIndexRoute
   '/_site/resources/': typeof SiteResourcesIndexRoute
-  '/_site/blocks/$category/$slug': typeof SiteBlocksCategorySlugRoute
-  '/_site/component-ui/$category/$slug': typeof SiteComponentUiCategorySlugRoute
-  '/_site/hooks/$category/$slug': typeof SiteHooksCategorySlugRoute
+  '/ui/$collection/': typeof UiCollectionIndexRoute
   '/_admin/admin/categories/': typeof AdminAdminCategoriesIndexRoute
   '/_admin/admin/groups/': typeof AdminAdminGroupsIndexRoute
   '/_admin/admin/posts/': typeof AdminAdminPostsIndexRoute
   '/_admin/admin/resources/': typeof AdminAdminResourcesIndexRoute
   '/_admin/admin/settings/': typeof AdminAdminSettingsIndexRoute
-  '/_site/blocks/$category/': typeof SiteBlocksCategoryIndexRoute
-  '/_site/component-ui/$category/': typeof SiteComponentUiCategoryIndexRoute
-  '/_site/hooks/$category/': typeof SiteHooksCategoryIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ui'
     | '/brand-app'
     | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/mcp'
     | '/blocks-preview/$slug'
+    | '/ui/'
+    | '/ui/$collection/$slug'
     | '/admin/'
-    | '/blocks/'
     | '/blog/'
-    | '/component-ui/'
-    | '/hooks/'
     | '/resources/'
-    | '/blocks/$category/$slug'
-    | '/component-ui/$category/$slug'
-    | '/hooks/$category/$slug'
+    | '/ui/$collection/'
     | '/admin/categories/'
     | '/admin/groups/'
     | '/admin/posts/'
     | '/admin/resources/'
     | '/admin/settings/'
-    | '/blocks/$category/'
-    | '/component-ui/$category/'
-    | '/hooks/$category/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -274,56 +231,48 @@ export interface FileRouteTypes {
     | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/mcp'
     | '/blocks-preview/$slug'
+    | '/ui'
+    | '/ui/$collection/$slug'
     | '/admin'
-    | '/blocks'
     | '/blog'
-    | '/component-ui'
-    | '/hooks'
     | '/resources'
-    | '/blocks/$category/$slug'
-    | '/component-ui/$category/$slug'
-    | '/hooks/$category/$slug'
+    | '/ui/$collection'
     | '/admin/categories'
     | '/admin/groups'
     | '/admin/posts'
     | '/admin/resources'
     | '/admin/settings'
-    | '/blocks/$category'
-    | '/component-ui/$category'
-    | '/hooks/$category'
   id:
     | '__root__'
     | '/_admin'
     | '/_site'
+    | '/ui'
     | '/brand-app'
     | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
+    | '/_site/mcp'
     | '/blocks-preview/$slug'
     | '/_site/'
+    | '/ui/'
+    | '/ui/$collection/$slug'
     | '/_admin/admin/'
-    | '/_site/blocks/'
     | '/_site/blog/'
-    | '/_site/component-ui/'
-    | '/_site/hooks/'
     | '/_site/resources/'
-    | '/_site/blocks/$category/$slug'
-    | '/_site/component-ui/$category/$slug'
-    | '/_site/hooks/$category/$slug'
+    | '/ui/$collection/'
     | '/_admin/admin/categories/'
     | '/_admin/admin/groups/'
     | '/_admin/admin/posts/'
     | '/_admin/admin/resources/'
     | '/_admin/admin/settings/'
-    | '/_site/blocks/$category/'
-    | '/_site/component-ui/$category/'
-    | '/_site/hooks/$category/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
   SiteRouteRoute: typeof SiteRouteRouteWithChildren
+  UiRouteRoute: typeof UiRouteRouteWithChildren
   BrandAppRoute: typeof BrandAppRoute
   ProfileRoute: typeof ProfileRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
@@ -375,11 +324,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ui': {
+      id: '/ui'
+      path: '/ui'
+      fullPath: '/ui'
+      preLoaderRoute: typeof UiRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_site/': {
       id: '/_site/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof SiteIndexRouteImport
+      parentRoute: typeof SiteRouteRoute
+    }
+    '/_site/mcp': {
+      id: '/_site/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof SiteMcpRouteImport
       parentRoute: typeof SiteRouteRoute
     }
     '/blocks-preview/$slug': {
@@ -389,19 +352,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlocksPreviewSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ui/': {
+      id: '/ui/'
+      path: '/'
+      fullPath: '/ui/'
+      preLoaderRoute: typeof UiIndexRouteImport
+      parentRoute: typeof UiRouteRoute
+    }
     '/_admin/admin/': {
       id: '/_admin/admin/'
       path: '/admin'
       fullPath: '/admin/'
       preLoaderRoute: typeof AdminAdminIndexRouteImport
       parentRoute: typeof AdminRouteRoute
-    }
-    '/_site/blocks/': {
-      id: '/_site/blocks/'
-      path: '/blocks'
-      fullPath: '/blocks/'
-      preLoaderRoute: typeof SiteBlocksIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
     }
     '/_site/blog/': {
       id: '/_site/blog/'
@@ -410,26 +373,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SiteBlogIndexRouteImport
       parentRoute: typeof SiteRouteRoute
     }
-    '/_site/component-ui/': {
-      id: '/_site/component-ui/'
-      path: '/component-ui'
-      fullPath: '/component-ui/'
-      preLoaderRoute: typeof SiteComponentUiIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_site/hooks/': {
-      id: '/_site/hooks/'
-      path: '/hooks'
-      fullPath: '/hooks/'
-      preLoaderRoute: typeof SiteHooksIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
     '/_site/resources/': {
       id: '/_site/resources/'
       path: '/resources'
       fullPath: '/resources/'
       preLoaderRoute: typeof SiteResourcesIndexRouteImport
       parentRoute: typeof SiteRouteRoute
+    }
+    '/ui/$collection/': {
+      id: '/ui/$collection/'
+      path: '/$collection'
+      fullPath: '/ui/$collection/'
+      preLoaderRoute: typeof UiCollectionIndexRouteImport
+      parentRoute: typeof UiRouteRoute
+    }
+    '/ui/$collection/$slug': {
+      id: '/ui/$collection/$slug'
+      path: '/$collection/$slug'
+      fullPath: '/ui/$collection/$slug'
+      preLoaderRoute: typeof UiCollectionSlugRouteImport
+      parentRoute: typeof UiRouteRoute
     }
     '/_admin/admin/categories/': {
       id: '/_admin/admin/categories/'
@@ -466,48 +429,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminSettingsIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
-    '/_site/blocks/$category/': {
-      id: '/_site/blocks/$category/'
-      path: '/blocks/$category'
-      fullPath: '/blocks/$category/'
-      preLoaderRoute: typeof SiteBlocksCategoryIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_site/blocks/$category/$slug': {
-      id: '/_site/blocks/$category/$slug'
-      path: '/blocks/$category/$slug'
-      fullPath: '/blocks/$category/$slug'
-      preLoaderRoute: typeof SiteBlocksCategorySlugRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_site/component-ui/$category/': {
-      id: '/_site/component-ui/$category/'
-      path: '/component-ui/$category'
-      fullPath: '/component-ui/$category/'
-      preLoaderRoute: typeof SiteComponentUiCategoryIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_site/component-ui/$category/$slug': {
-      id: '/_site/component-ui/$category/$slug'
-      path: '/component-ui/$category/$slug'
-      fullPath: '/component-ui/$category/$slug'
-      preLoaderRoute: typeof SiteComponentUiCategorySlugRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_site/hooks/$category/': {
-      id: '/_site/hooks/$category/'
-      path: '/hooks/$category'
-      fullPath: '/hooks/$category/'
-      preLoaderRoute: typeof SiteHooksCategoryIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_site/hooks/$category/$slug': {
-      id: '/_site/hooks/$category/$slug'
-      path: '/hooks/$category/$slug'
-      fullPath: '/hooks/$category/$slug'
-      preLoaderRoute: typeof SiteHooksCategorySlugRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
   }
 }
 
@@ -534,42 +455,42 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 )
 
 interface SiteRouteRouteChildren {
+  SiteMcpRoute: typeof SiteMcpRoute
   SiteIndexRoute: typeof SiteIndexRoute
-  SiteBlocksIndexRoute: typeof SiteBlocksIndexRoute
   SiteBlogIndexRoute: typeof SiteBlogIndexRoute
-  SiteComponentUiIndexRoute: typeof SiteComponentUiIndexRoute
-  SiteHooksIndexRoute: typeof SiteHooksIndexRoute
   SiteResourcesIndexRoute: typeof SiteResourcesIndexRoute
-  SiteBlocksCategorySlugRoute: typeof SiteBlocksCategorySlugRoute
-  SiteComponentUiCategorySlugRoute: typeof SiteComponentUiCategorySlugRoute
-  SiteHooksCategorySlugRoute: typeof SiteHooksCategorySlugRoute
-  SiteBlocksCategoryIndexRoute: typeof SiteBlocksCategoryIndexRoute
-  SiteComponentUiCategoryIndexRoute: typeof SiteComponentUiCategoryIndexRoute
-  SiteHooksCategoryIndexRoute: typeof SiteHooksCategoryIndexRoute
 }
 
 const SiteRouteRouteChildren: SiteRouteRouteChildren = {
+  SiteMcpRoute: SiteMcpRoute,
   SiteIndexRoute: SiteIndexRoute,
-  SiteBlocksIndexRoute: SiteBlocksIndexRoute,
   SiteBlogIndexRoute: SiteBlogIndexRoute,
-  SiteComponentUiIndexRoute: SiteComponentUiIndexRoute,
-  SiteHooksIndexRoute: SiteHooksIndexRoute,
   SiteResourcesIndexRoute: SiteResourcesIndexRoute,
-  SiteBlocksCategorySlugRoute: SiteBlocksCategorySlugRoute,
-  SiteComponentUiCategorySlugRoute: SiteComponentUiCategorySlugRoute,
-  SiteHooksCategorySlugRoute: SiteHooksCategorySlugRoute,
-  SiteBlocksCategoryIndexRoute: SiteBlocksCategoryIndexRoute,
-  SiteComponentUiCategoryIndexRoute: SiteComponentUiCategoryIndexRoute,
-  SiteHooksCategoryIndexRoute: SiteHooksCategoryIndexRoute,
 }
 
 const SiteRouteRouteWithChildren = SiteRouteRoute._addFileChildren(
   SiteRouteRouteChildren,
 )
 
+interface UiRouteRouteChildren {
+  UiIndexRoute: typeof UiIndexRoute
+  UiCollectionSlugRoute: typeof UiCollectionSlugRoute
+  UiCollectionIndexRoute: typeof UiCollectionIndexRoute
+}
+
+const UiRouteRouteChildren: UiRouteRouteChildren = {
+  UiIndexRoute: UiIndexRoute,
+  UiCollectionSlugRoute: UiCollectionSlugRoute,
+  UiCollectionIndexRoute: UiCollectionIndexRoute,
+}
+
+const UiRouteRouteWithChildren =
+  UiRouteRoute._addFileChildren(UiRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   AdminRouteRoute: AdminRouteRouteWithChildren,
   SiteRouteRoute: SiteRouteRouteWithChildren,
+  UiRouteRoute: UiRouteRouteWithChildren,
   BrandAppRoute: BrandAppRoute,
   ProfileRoute: ProfileRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,

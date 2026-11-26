@@ -343,7 +343,7 @@ export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
                         {frame.method}
                       </span>
                       {frame.isInternal && (
-                        <span className="py-0.2 rounded bg-zinc-800/80 px-1.5 font-sans text-[10px] text-zinc-400">
+                        <span className="py-0.2 rounded bg-zinc-800/80 px-1.5 text-[10px] text-zinc-400">
                           internal
                         </span>
                       )}

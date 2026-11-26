@@ -114,9 +114,9 @@ export function BlockDetail({ block }: BlockDetailProps) {
       if (!prevBlock) return
 
       navigation({
-        to: "/blocks/$category/$slug",
+        to: "/ui/$collection/$slug",
         params: {
-          category: prevBlock.category,
+          collection: prevBlock.category,
           slug: prevBlock.slug,
         },
       })
@@ -133,9 +133,9 @@ export function BlockDetail({ block }: BlockDetailProps) {
       if (!nextBlock) return
 
       navigation({
-        to: "/blocks/$category/$slug",
+        to: "/ui/$collection/$slug",
         params: {
-          category: nextBlock.category,
+          collection: nextBlock.category,
           slug: nextBlock.slug,
         },
       })
@@ -240,7 +240,7 @@ export function BlockDetail({ block }: BlockDetailProps) {
             </div>
 
             <Button variant="outline" asChild>
-              <Link to="/blocks">
+              <Link to="/ui/$collection" params={{ collection: "blocks" }}>
                 <ArrowLeft className="size-3.5" />
                 <span>All Blocks</span>
               </Link>
@@ -259,7 +259,7 @@ export function BlockDetail({ block }: BlockDetailProps) {
       >
         <Button
           variant="link"
-          onClick={() => navigation({ to: `/blocks/${block.category}` })}
+          onClick={() => navigation({ to: `/ui/${block.category}` })}
           className="capitalize"
         >
           <ArrowLeft className="size-3.5" />
@@ -279,9 +279,9 @@ export function BlockDetail({ block }: BlockDetailProps) {
                   }
                 >
                   <Link
-                    to="/blocks/$category/$slug"
+                    to="/ui/$collection/$slug"
                     params={{
-                      category: prevBlock.category,
+                      collection: prevBlock.category,
                       slug: prevBlock.slug,
                     }}
                   >
@@ -313,9 +313,9 @@ export function BlockDetail({ block }: BlockDetailProps) {
                   }
                 >
                   <Link
-                    to="/blocks/$category/$slug"
+                    to="/ui/$collection/$slug"
                     params={{
-                      category: nextBlock.category,
+                      collection: nextBlock.category,
                       slug: nextBlock.slug,
                     }}
                   >

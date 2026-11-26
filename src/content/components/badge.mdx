@@ -1,0 +1,108 @@
+---
+title: Badge
+description: A versatile, subtle badge component with calibrated proportions, translucent status tints, micro dots, and geometric contour variants.
+component: true
+badge: UI
+---
+
+<ComponentPreview name="badge-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="badge" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install the following dependencies:</Step>
+      <CodeBlockCommand command="npm install @base-ui/react class-variance-authority" />
+
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="badge" title="components/ui/badge.tsx" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+Badge (Base UI useRender span with micro-proportions)
+├── <BadgeDot pulse? /> (Optional status indicator with ping animation)
+├── <Icon /> (Optional inline SVG icon auto-scaled to 12px/14px)
+└── {children} (Text label with tracking and crisp contrast)
+```
+
+---
+
+## Usage
+
+```tsx
+import { Badge, BadgeDot } from "@/components/ui/badge"
+```
+
+```tsx
+export function StatusShowcase() {
+  return (
+    <div className="flex items-center gap-2">
+      <Badge variant="success">
+        <BadgeDot pulse />
+        Live System
+      </Badge>
+
+      <Badge variant="secondary" shape="rounded">
+        v3.2.0
+      </Badge>
+
+      <Badge variant="outline">
+        Preview
+      </Badge>
+    </div>
+  )
+}
+```
+
+---
+
+## Features
+
+- **Translucent Micro Tints**: Subtle opacity backgrounds (`bg-emerald-500/10`, `bg-secondary/60`, `bg-muted/40`) that look clean and sophisticated instead of visually aggressive solid blocks.
+- **Pulsing Dot Indicators**: Built-in `<BadgeDot pulse />` component that automatically inherits the parent badge's semantic color.
+- **Geometric Contours**: Three shapes tailored for distinct UI contexts:
+  - `pill`: Classic smooth pill (`rounded-full`).
+  - `rounded`: Linear / Raycast modern developer rectangular tag (`rounded-md`).
+  - `square`: Technical specification micro stamp (`rounded-xs`).
+- **Flexible Sizes**: Micro tags `xs` (18px) for compact data tables, `sm` (20px), standard `default` (24px), up to prominent `lg` (28px).
+- **Polymorphic Rendering**: Built on `@base-ui/react/use-render`, easily render as links (`render={<a href="..." />}`) without invalid HTML nesting.
+
+---
+
+## API Reference
+
+### Badge
+
+| Prop        | Type                                                                                                        | Default     | Description                                                          |
+| :---------- | :---------------------------------------------------------------------------------------------------------- | :---------- | :------------------------------------------------------------------- |
+| `variant`   | `"default" \| "secondary" \| "outline" \| "subtle" \| "success" \| "warning" \| "destructive" \| "info" \| "ghost" \| "link"` | `"default"` | Visual style and semantic color mood.                                |
+| `size`      | `"xs" \| "sm" \| "default" \| "lg"`                                                                         | `"default"` | Height and padding scale (18px, 20px, 24px, 28px).                   |
+| `shape`     | `"pill" \| "rounded" \| "square"`                                                                           | `"pill"`    | Geometric border radius profile.                                     |
+| `render`    | `React.ReactElement`                                                                                        | `undefined` | Polymorphic element to render (e.g. `<a />`, `<button />`).         |
+| `className` | `string`                                                                                                    | `undefined` | Additional CSS classes for styling.                                  |
+
+### BadgeDot
+
+| Prop        | Type      | Default | Description                                                          |
+| :---------- | :-------- | :------ | :------------------------------------------------------------------- |
+| `pulse`     | `boolean` | `false` | When true, renders an animated ping beacon radiating from the dot.   |
+| `className` | `string`  | `undefined` | Additional CSS classes for styling.                              |

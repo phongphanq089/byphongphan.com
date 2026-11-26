@@ -1,0 +1,94 @@
+---
+title: Cradle Text
+description: A headline hung like a Newton's cradle, so a knock on one letter clacks through the word, simulated with pendulum collision physics.
+component: true
+badge: Physics
+---
+
+<ComponentPreview name="cradle-text-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="cradle-text" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Copy and paste the component into your project (zero external animation dependencies required):</Step>
+      <ComponentSource name="cradle-text" title="components/cradle-text.tsx" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Anatomy
+
+```text
+CradleText (Overhead suspension rail & pendulum physics loop)
+├── <span className="sr-only"> (Full plain text string for screen readers)
+├── <span className="rail"> (Overhead suspension rail)
+└── <span aria-hidden="true"> (Suspended letters container)
+    └── <span data-letter=""> (Individual letter bob rotating about overhead pivot)
+        ├── <span className="thread"> (Micro vertical suspension thread)
+        └── {char} (Letter typography carrying momentum and colliding)
+```
+
+---
+
+## Usage
+
+```tsx
+import { CradleText } from "@/components/cradle-text"
+```
+
+```tsx
+export function HeroHeading() {
+  return (
+    <CradleText
+      text="MOMENTUM"
+      bounce={0.97}
+      intro={true}
+      className="text-4xl sm:text-6xl font-black"
+    />
+  )
+}
+```
+
+---
+
+## Features
+
+- **Newton's Cradle Physics**: Multi-step collision solver (`SUBSTEPS = 8`, `ITERATIONS = 3`) that passes impulse momentum through consecutive letters so the end letter flies out authentically.
+- **Interactive Pull & Drag**: Pull any letter sideways along its pendulum arc, release to let it swing into its neighbors.
+- **Cursor Sweep Knock**: Moving the cursor across letters delivers kinetic speed impulses (`SWEEP_PUSH`).
+- **Responsive Layout**: Designed with responsive clamp sizing and fluid containers that scale cleanly from mobile screens up to desktop viewports.
+- **Zero Heavy Dependencies**: Pure TypeScript and Canvas text measurement running smoothly without requiring external physics runtimes.
+- **Accessibility & Battery Conservation**: Respects `prefers-reduced-motion` and pauses computation when off-screen via `IntersectionObserver`.
+
+---
+
+## API Reference
+
+### CradleText
+
+Suspended pendulum typography headline component.
+
+| Prop               | Type              | Default     | Description                                                                     |
+| :----------------- | :---------------- | :---------- | :------------------------------------------------------------------------------ |
+| `text`             | `string`          | `"Momentum"`| The line of letters hung from the rail. Keep to a single line.                  |
+| `children`         | `React.ReactNode` | `undefined` | Optional text content passed as children.                                       |
+| `className`        | `string`          | `undefined` | Additional CSS classes for typography styling (font size, weight, color).       |
+| `wrapperClassName` | `string`          | `undefined` | Classes applied to the outer flex container.                                    |
+| `intro`            | `boolean`         | `true`      | Whether to pull and release the first letter once when scrolled into view.      |
+| `bounce`           | `number`          | `0.97`      | Elasticity restitution coefficient (0 to 1). Steel is approximately 0.95–0.98.  |

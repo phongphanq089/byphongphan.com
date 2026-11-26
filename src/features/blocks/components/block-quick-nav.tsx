@@ -39,7 +39,7 @@ export function BlockQuickNav({
   const navigate = useNavigate()
   const [open, setOpen] = useState(false)
 
-  const activeHref = `/blocks/${currentCategory}/${currentSlug}`
+  const activeHref = `/ui/${currentCategory}/${currentSlug}`
 
   const navGroups: LineNavGroup[] = useMemo(() => {
     return BLOCK_CATEGORIES.map((cat) => {
@@ -47,7 +47,7 @@ export function BlockQuickNav({
         .sort((a, b) => a.title.localeCompare(b.title))
         .map((b) => ({
           title: b.title,
-          href: `/blocks/${b.category}/${b.slug}`,
+          href: `/ui/${b.category}/${b.slug}`,
           badge: b.isNew ? (
             <span
               aria-label="New block"
@@ -63,7 +63,7 @@ export function BlockQuickNav({
 
       return {
         title: cat.label,
-        href: `/blocks/${cat.id}`,
+        href: `/ui/${cat.id}`,
         items,
       }
     }).filter((group) => group.items.length > 0)
