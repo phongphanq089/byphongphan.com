@@ -35,6 +35,9 @@ export const ElasticSliderDemo = lazyWithRetry(() =>
 export const FlipClockDemo = lazyWithRetry(() =>
   import("./time-scrubber-demo").then((m) => ({ default: m.TimeScrubberDemo }))
 )
+export const GlassSelectDemo = lazyWithRetry(() =>
+  import("./glass-select-demo").then((m) => ({ default: m.GlassSelectDemo }))
+)
 export const TimeScrubberDemo = lazyWithRetry(() =>
   import("./time-scrubber-demo").then((m) => ({ default: m.TimeScrubberDemo }))
 )
@@ -82,6 +85,11 @@ export const SpotlightCardDemo = lazyWithRetry(() =>
     default: m.SpotlightCardDemo,
   }))
 )
+export const SpotlightTextDemo = lazyWithRetry(() =>
+  import("./spotlight-text-demo").then((m) => ({
+    default: m.SpotlightTextDemo,
+  }))
+)
 export const SwooshTextDemo = lazyWithRetry(() =>
   import("./swoosh-text-demo").then((m) => ({
     default: m.SwooshTextDemo,
@@ -115,6 +123,8 @@ export const UnderlineToBackgroundDemo = lazyWithRetry(() =>
 
 export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   select: SelectDemo,
+  "glass-select": GlassSelectDemo,
+  "glass-select-demo": GlassSelectDemo,
   badge: BadgeDemo,
   "badge-demo": BadgeDemo,
   card: CardDemo,
@@ -156,6 +166,8 @@ export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   "slide-to-confirm-demo": SlideToUnlockDemo,
   "spotlight-card": SpotlightCardDemo,
   "spotlight-card-demo": SpotlightCardDemo,
+  "spotlight-text": SpotlightTextDemo,
+  "spotlight-text-demo": SpotlightTextDemo,
   "border-glow": BorderGlowDemo,
   "border-glow-demo": BorderGlowDemo,
   "scroll-area": ScrollAreaDemo,

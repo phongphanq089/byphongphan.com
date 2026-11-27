@@ -1,0 +1,92 @@
+---
+title: Glass Select
+description: WebGL2 SDF liquid glass select built natively on @base-ui/react/select where the dropdown list swells out of its trigger on a stretching neck that thins, snaps, and retracts smoothly.
+component: true
+badge: Base UI
+---
+
+<ComponentPreview name="glass-select-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="glass-select" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install required dependencies:</Step>
+      <CodeBlockCommand command="npm install @base-ui/react lucide-react" />
+
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="glass-select" title="components/glass-select.tsx" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Usage
+
+```tsx
+import { GlassSelect } from "@/components/glass-select"
+```
+
+```tsx
+export function RolePicker() {
+  return (
+    <GlassSelect
+      label="Role"
+      placeholder="Pick a role"
+      opening="stretch"
+      options={[
+        { value: "admin", label: "Admin" },
+        { value: "editor", label: "Editor" },
+        { value: "viewer", label: "Viewer" },
+      ]}
+    />
+  )
+}
+```
+
+### Composable Primitives
+
+You can also compose `GlassSelectRoot`, `GlassSelectTrigger`, `GlassSelectContent`, `GlassSelectGroup`, `GlassSelectLabel`, and `GlassSelectItem` directly when grouping options or customizing markup.
+
+---
+
+## Features
+
+- **Native `@base-ui/react/select` Accessibility**: Preserves full keyboard navigation, typeahead, press-drag-release selection, and viewport collision handling (`--available-height`, `--anchor-width`).
+- **Three Opening Modes**: Choose between `stretch` (spring emergence from the anchor edge), `morph` (pill-to-card morph over the trigger), and `grow` (smooth anchor expansion).
+- **Zero DOM-Snapshot Overhead**: Uses GPU-composited `backdrop-blur-2xl`, an isolated SVG refraction filter (`useId()`), and zero-rerender CSS variable pointer glow instead of heavy `document.body` DOM walking.
+- **Staggered Item Reveal**: Options cascade smoothly on open via `--glass-i` and exit cleanly with Base UI `data-ending-style`.
+- **Reduced Motion & SSR Safe**: Respects `prefers-reduced-motion` via `useReducedMotion()` and runs safely under SSR.
+
+---
+
+## API Reference
+
+### GlassSelect
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `options` | `GlassSelectOption[]` | - | Array of `{ value, label, disabled? }` items (required). |
+| `label` | `React.ReactNode` | `undefined` | Accessible label rendered above the trigger. |
+| `value` | `string \| null` | `undefined` | Controlled selected value. |
+| `defaultValue` | `string \| null` | `undefined` | Initial uncontrolled selected value. |
+| `onValueChange` | `(value: string \| null) => void` | `undefined` | Callback fired when the selected value changes. |
+| `placeholder` | `string` | `"Select an option"` | Placeholder text shown when no value is selected. |
+| `opening` | `"stretch" \| "morph" \| "grow"` | `"stretch"` | Opening transition preset. |
+| `matchWidth` | `boolean` | `true` | Match popup width to the trigger width. |
+| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Trigger height preset. |
+| `disabled` | `boolean` | `false` | Disables the select control. |

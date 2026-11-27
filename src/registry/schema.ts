@@ -2,6 +2,7 @@ import type React from "react"
 
 export type ComponentSchematicType =
   | "select"
+  | "glass-select"
   | "badge"
   | "card"
   | "unboxing-bucket"
@@ -14,6 +15,7 @@ export type ComponentSchematicType =
   | "middle-truncation"
   | "line-nav"
   | "spotlight-card"
+  | "spotlight-text"
   | "border-glow"
   | "scroll-area"
   | "drawer"

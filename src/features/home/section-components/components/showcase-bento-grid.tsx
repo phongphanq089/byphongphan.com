@@ -21,7 +21,7 @@ export function ShowcaseBentoGrid({
   return (
     <div
       className={cn(
-        "grid w-full grid-cols-1 gap-4 px-4 sm:px-6 md:grid-cols-2 md:px-8 xl:px-10 2xl:h-[2050px] 2xl:grid-cols-5 2xl:grid-rows-[repeat(12,minmax(0,1fr))] 2xl:px-12",
+        "grid w-full grid-cols-1 gap-4 px-4 sm:px-6 md:grid-cols-2 md:px-8 lg:grid-cols-4 xl:px-10 2xl:auto-rows-[minmax(160px,auto)] 2xl:grid-cols-5 2xl:px-12",
         className
       )}
     >

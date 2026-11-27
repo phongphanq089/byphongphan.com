@@ -24,7 +24,11 @@ import {
   Card,
   CardContent,
 } from "@/shared/ui"
-import { CornerButton, TextHoverEffect } from "@/shared/ui/animation"
+import {
+  CornerButton,
+  SpotlightText,
+  TextHoverEffect,
+} from "@/shared/ui/animation"
 import { BorderGlow, LineNav, MiddleTruncation } from "@/shared/ui/core"
 
 export interface ShowcaseLiveComponentProps {
@@ -255,16 +259,25 @@ export function ShowcaseLiveComponent({
 
     case "corner-button":
       return (
-        <div className="flex flex-wrap items-center justify-center gap-6 p-6">
-          <CornerButton accentColor="var(--primary)">
-            System Primary
+        <div
+          className="flex flex-wrap items-center justify-center gap-4 p-2 2xl:flex-col"
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <CornerButton
+            accentColor="var(--primary)"
+            className="whitespace-nowrap"
+          >
+            Primary
           </CornerButton>
 
-          <CornerButton accentColor="#8b5cf6">Cyber Violet</CornerButton>
+          <CornerButton accentColor="#8b5cf6" className="whitespace-nowrap">
+            Violet
+          </CornerButton>
 
-          <CornerButton accentColor="#10b981">Neon Emerald</CornerButton>
-
-          <CornerButton accentColor="#f59e0b">Amber Gold</CornerButton>
+          <CornerButton accentColor="#10b981" className="whitespace-nowrap">
+            Emerald
+          </CornerButton>
         </div>
       )
 
@@ -296,7 +309,7 @@ export function ShowcaseLiveComponent({
           onClick={(e) => e.stopPropagation()}
         >
           <Letter3DSwap
-            mainClassName="text-2xl sm:text-3xl font-black font-mono tracking-widest text-foreground cursor-pointer"
+            mainClassName="text-xl sm:text-3xl font-black font-mono tracking-widest text-foreground cursor-pointer"
             secondFaceClassName="text-primary"
           >
             TACTILE 3D
@@ -325,9 +338,9 @@ export function ShowcaseLiveComponent({
 
     case "card":
       return (
-        <Card className="w-xs p-0">
+        <Card className="w-full max-w-[320px] p-0">
           <CardContent className="flex items-center gap-5 p-0">
-            <div className="group/card relative flex h-96 w-full flex-col justify-end overflow-hidden">
+            <div className="group/card relative flex h-[300px] w-full flex-col justify-end overflow-hidden sm:h-[340px]">
               <img
                 src="https://picsum.photos/1000/800?grayscale&random=76"
                 alt="16:9"
@@ -343,8 +356,8 @@ export function ShowcaseLiveComponent({
               <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/60 to-transparent" />
 
               {/* Header */}
-              <div className="absolute top-0 right-0 left-0 flex flex-wrap items-center gap-3 p-6">
-                <div className="relative">
+              <div className="absolute top-0 right-0 left-0 flex items-center gap-3 p-4 sm:p-5">
+                <div className="relative shrink-0">
                   <Avatar className="size-10">
                     <AvatarImage
                       src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=96&h=96&dpr=2&q=80"
@@ -365,22 +378,24 @@ export function ShowcaseLiveComponent({
                     </svg>
                   </span>
                 </div>
-                <div className="flex-1 space-y-px">
-                  <a href="#" className="font-medium text-white">
+                <div className="min-w-0 flex-1 space-y-px">
+                  <a href="#" className="block truncate font-medium text-white">
                     Nick Johnson
                   </a>
-                  <div className="text-white/80">nick@example.com</div>
+                  <div className="truncate text-xs text-white/80">
+                    nick@example.com
+                  </div>
                 </div>
 
-                <Badge>New</Badge>
+                <Badge className="shrink-0">New</Badge>
               </div>
 
               {/* Content */}
-              <div className="absolute right-0 bottom-0 left-0 space-y-2 p-6">
-                <h3 className="text-2xl font-semibold text-white">
+              <div className="absolute right-0 bottom-0 left-0 space-y-1.5 p-4 sm:p-5">
+                <h3 className="text-xl font-semibold text-white sm:text-2xl">
                   Author Profile
                 </h3>
-                <p className="text-white">
+                <p className="line-clamp-3 text-sm text-white/90">
                   Profile card showcasing the author’s avatar, name, and
                   estimated reading time for each post.
                 </p>
@@ -422,7 +437,7 @@ export function ShowcaseLiveComponent({
         >
           <SwooshText
             text="SWOOSH"
-            className="text-3xl font-black tracking-wider text-foreground sm:text-4xl md:text-5xl"
+            className="text-2xl font-black tracking-wider text-foreground sm:text-4xl md:text-5xl"
           />
           <span className="mt-3 font-mono text-[10px] tracking-wider text-muted-foreground/60 uppercase">
             Mechanical keycap waves
@@ -471,6 +486,28 @@ export function ShowcaseLiveComponent({
           <TextHoverEffect
             text="ANTIGRAVITY"
             className="h-full w-full max-w-sm"
+          />
+        </div>
+      )
+
+    case "spotlight-text":
+      return (
+        <div
+          className={cn(
+            "flex h-full w-full items-end justify-center overflow-hidden px-4 pt-6 pb-0",
+            className
+          )}
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <SpotlightText
+            text="Tanstack"
+            theme="dark"
+            spotlightRadius={420}
+            ambientOpacity={0.05}
+            centerIntensity={1.0}
+            bottomCropPercent={10}
+            autoAnimate
           />
         </div>
       )

@@ -233,6 +233,25 @@
     "registryDependencies": []
   },
   {
+    "name": "spotlight-text",
+    "type": "registry:component",
+    "title": "Spotlight Text",
+    "description": "Interactive giant cropped typography with procedural canvas grain texture, radial pointer-tracking spotlight mask, and autonomous figure-8 drift.",
+    "dependencies": [],
+    "registryDependencies": []
+  },
+  {
+    "name": "glass-select",
+    "type": "registry:component",
+    "title": "Glass Select",
+    "description": "WebGL2 SDF liquid glass select built natively on @base-ui/react/select: the list swells out of its trigger on a stretching neck that thins, snaps, and retracts smoothly.",
+    "dependencies": [
+      "@base-ui/react",
+      "lucide-react"
+    ],
+    "registryDependencies": []
+  },
+  {
     "name": "slide-to-unlock",
     "type": "registry:component",
     "title": "Slide to Unlock",
