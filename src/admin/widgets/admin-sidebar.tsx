@@ -11,6 +11,7 @@ import {
   LogOut,
   SlidersHorizontal,
   Tags,
+  User,
 } from "lucide-react"
 import { useEffect } from "react"
 
@@ -82,6 +83,11 @@ const registryNavItems: NavItem[] = [
 ]
 
 const systemNavItems: NavItem[] = [
+  {
+    title: "Profile",
+    url: "/admin/profile",
+    icon: User,
+  },
   {
     title: "Site Settings & SEO",
     url: "/admin/settings",
@@ -360,6 +366,13 @@ export function SidebarAdmin() {
                 </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
+                  <DropdownMenuItem
+                    className="cursor-pointer"
+                    render={<Link to="/admin/profile" />}
+                  >
+                    <User className="mr-2 size-3.5 text-muted-foreground" />
+                    <span>Author Profile</span>
+                  </DropdownMenuItem>
                   <DropdownMenuItem
                     className="cursor-pointer"
                     render={<Link to="/admin/settings" />}

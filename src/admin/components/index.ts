@@ -14,6 +14,10 @@ export {
 } from "./admin-content-card"
 export { type AdminColumnMeta, AdminDataTable } from "./admin-data-table"
 export { AdminEmptyState } from "./admin-empty-state"
+export {
+  AdminImageUploadField,
+  type AdminImageUploadFieldProps,
+} from "./admin-image-upload-field"
 export { AdminMediaThumbnail } from "./admin-media-thumbnail"
 export {
   AdminPageHeader,

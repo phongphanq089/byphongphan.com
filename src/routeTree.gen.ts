@@ -30,6 +30,7 @@ import { Route as AdminAdminGroupsIndexRouteImport } from './routes/_admin/admin
 import { Route as AdminAdminPostsIndexRouteImport } from './routes/_admin/admin/posts/index'
 import { Route as AdminAdminPostsPostIdRouteImport } from './routes/_admin/admin/posts/$postId'
 import { Route as AdminAdminPostsNewRouteImport } from './routes/_admin/admin/posts/new'
+import { Route as AdminAdminProfileIndexRouteImport } from './routes/_admin/admin/profile/index'
 import { Route as AdminAdminResourcesIndexRouteImport } from './routes/_admin/admin/resources/index'
 import { Route as AdminAdminSettingsIndexRouteImport } from './routes/_admin/admin/settings/index'
 
@@ -137,6 +138,11 @@ const AdminAdminPostsNewRoute = AdminAdminPostsNewRouteImport.update({
   path: '/admin/posts/new',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminAdminProfileIndexRoute = AdminAdminProfileIndexRouteImport.update({
+  id: '/admin/profile/',
+  path: '/admin/profile/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminAdminResourcesIndexRoute =
   AdminAdminResourcesIndexRouteImport.update({
     id: '/admin/resources/',
@@ -169,6 +175,7 @@ export interface FileRoutesByFullPath {
   '/admin/categories/': typeof AdminAdminCategoriesIndexRoute
   '/admin/groups/': typeof AdminAdminGroupsIndexRoute
   '/admin/posts/': typeof AdminAdminPostsIndexRoute
+  '/admin/profile/': typeof AdminAdminProfileIndexRoute
   '/admin/resources/': typeof AdminAdminResourcesIndexRoute
   '/admin/settings/': typeof AdminAdminSettingsIndexRoute
 }
@@ -191,6 +198,7 @@ export interface FileRoutesByTo {
   '/admin/categories': typeof AdminAdminCategoriesIndexRoute
   '/admin/groups': typeof AdminAdminGroupsIndexRoute
   '/admin/posts': typeof AdminAdminPostsIndexRoute
+  '/admin/profile': typeof AdminAdminProfileIndexRoute
   '/admin/resources': typeof AdminAdminResourcesIndexRoute
   '/admin/settings': typeof AdminAdminSettingsIndexRoute
 }
@@ -217,6 +225,7 @@ export interface FileRoutesById {
   '/_admin/admin/categories/': typeof AdminAdminCategoriesIndexRoute
   '/_admin/admin/groups/': typeof AdminAdminGroupsIndexRoute
   '/_admin/admin/posts/': typeof AdminAdminPostsIndexRoute
+  '/_admin/admin/profile/': typeof AdminAdminProfileIndexRoute
   '/_admin/admin/resources/': typeof AdminAdminResourcesIndexRoute
   '/_admin/admin/settings/': typeof AdminAdminSettingsIndexRoute
 }
@@ -242,6 +251,7 @@ export interface FileRouteTypes {
     | '/admin/categories/'
     | '/admin/groups/'
     | '/admin/posts/'
+    | '/admin/profile/'
     | '/admin/resources/'
     | '/admin/settings/'
   fileRoutesByTo: FileRoutesByTo
@@ -264,6 +274,7 @@ export interface FileRouteTypes {
     | '/admin/categories'
     | '/admin/groups'
     | '/admin/posts'
+    | '/admin/profile'
     | '/admin/resources'
     | '/admin/settings'
   id:
@@ -289,6 +300,7 @@ export interface FileRouteTypes {
     | '/_admin/admin/categories/'
     | '/_admin/admin/groups/'
     | '/_admin/admin/posts/'
+    | '/_admin/admin/profile/'
     | '/_admin/admin/resources/'
     | '/_admin/admin/settings/'
   fileRoutesById: FileRoutesById
@@ -453,6 +465,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminPostsNewRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/_admin/admin/profile/': {
+      id: '/_admin/admin/profile/'
+      path: '/admin/profile'
+      fullPath: '/admin/profile/'
+      preLoaderRoute: typeof AdminAdminProfileIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/_admin/admin/resources/': {
       id: '/_admin/admin/resources/'
       path: '/admin/resources'
@@ -477,6 +496,7 @@ interface AdminRouteRouteChildren {
   AdminAdminCategoriesIndexRoute: typeof AdminAdminCategoriesIndexRoute
   AdminAdminGroupsIndexRoute: typeof AdminAdminGroupsIndexRoute
   AdminAdminPostsIndexRoute: typeof AdminAdminPostsIndexRoute
+  AdminAdminProfileIndexRoute: typeof AdminAdminProfileIndexRoute
   AdminAdminResourcesIndexRoute: typeof AdminAdminResourcesIndexRoute
   AdminAdminSettingsIndexRoute: typeof AdminAdminSettingsIndexRoute
 }
@@ -488,6 +508,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAdminCategoriesIndexRoute: AdminAdminCategoriesIndexRoute,
   AdminAdminGroupsIndexRoute: AdminAdminGroupsIndexRoute,
   AdminAdminPostsIndexRoute: AdminAdminPostsIndexRoute,
+  AdminAdminProfileIndexRoute: AdminAdminProfileIndexRoute,
   AdminAdminResourcesIndexRoute: AdminAdminResourcesIndexRoute,
   AdminAdminSettingsIndexRoute: AdminAdminSettingsIndexRoute,
 }
