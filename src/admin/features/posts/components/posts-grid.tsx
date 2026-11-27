@@ -1,6 +1,6 @@
 import type { Row } from "@tanstack/react-table"
 import { format } from "date-fns"
-import { Clock, Layers, Sparkles } from "lucide-react"
+import { Clock, Layers, Star } from "lucide-react"
 
 import { cn } from "@/shared/lib/utils"
 import { Badge, Checkbox, Switch } from "@/shared/ui"
@@ -73,7 +73,7 @@ export function PostsGrid({
               {post.isFeatured && (
                 <div className="absolute top-2.5 right-2.5">
                   <Badge variant="warning" size="xs" shape="pill">
-                    <Sparkles className="size-2.5" />
+                    <Star className="size-2.5" />
                     <span>Featured</span>
                   </Badge>
                 </div>

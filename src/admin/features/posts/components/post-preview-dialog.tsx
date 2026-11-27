@@ -8,7 +8,7 @@ import {
   FileEdit,
   Layers,
   Pencil,
-  Sparkles,
+  Star,
 } from "lucide-react"
 import { useState } from "react"
 
@@ -68,7 +68,7 @@ export function PostPreviewDialog({
             <PostStatusBadge status={post.status} />
             {post.isFeatured && (
               <Badge variant="warning" size="sm" shape="pill">
-                <Sparkles className="size-3" />
+                <Star className="size-3" />
                 <span>Featured</span>
               </Badge>
             )}
@@ -205,7 +205,7 @@ export function PostPreviewDialog({
               onClick={() => onToggleFeatured(post.id)}
               className="gap-1.5 bg-background text-xs"
             >
-              <Sparkles
+              <Star
                 className={
                   post.isFeatured
                     ? "size-3.5 text-amber-500"

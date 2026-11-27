@@ -1,5 +1,5 @@
 import { format } from "date-fns"
-import { Check, Clock, Copy, Layers, Sparkles } from "lucide-react"
+import { Check, Clock, Copy, Layers, Star } from "lucide-react"
 import { useState } from "react"
 
 import {
@@ -139,7 +139,7 @@ export function createPostColumns({
                   {post.title}
                 </button>
                 {post.isFeatured && (
-                  <Sparkles
+                  <Star
                     className="size-3.5 shrink-0 text-amber-500 lg:hidden"
                     aria-label="Featured article"
                   />
