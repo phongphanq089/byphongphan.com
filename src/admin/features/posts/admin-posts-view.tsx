@@ -5,18 +5,38 @@ import {
   type SortingState,
   useTable,
 } from "@tanstack/react-table"
-import { FileText, Plus, RotateCcw, SearchX } from "lucide-react"
+import {
+  Archive,
+  CheckCircle2,
+  FileEdit,
+  FileText,
+  Plus,
+  RotateCcw,
+  SearchX,
+  Trash2,
+} from "lucide-react"
 import { useCallback, useMemo, useState } from "react"
 
-import { AdminContentCard, AdminPageHeader, useAdminConfirm } from "@/admin"
-import { Badge, Button } from "@/shared/ui"
+import {
+  AdminContentCard,
+  AdminDataTable,
+  AdminEmptyState,
+  AdminPageHeader,
+  AdminTableBottomBar,
+  useAdminConfirm,
+} from "@/admin"
+import {
+  Badge,
+  Button,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/shared/ui"
 
 import { createPostColumns } from "./columns"
 import { PostPreviewDialog } from "./components/post-preview-dialog"
-import { PostsBottomBar } from "./components/posts-bottom-bar"
 import { PostsGrid } from "./components/posts-grid"
 import { PostsStatsStrip } from "./components/posts-stats-strip"
-import { PostsTable } from "./components/posts-table"
 import { PostsToolbar } from "./components/posts-toolbar"
 import { MOCK_CATEGORIES, MOCK_GROUPS, MOCK_POSTS } from "./mock-data"
 import { postsTableFeatures } from "./table-config"
@@ -354,63 +374,53 @@ export function AdminPostsView() {
 
         <div className="flex flex-1 flex-col px-5 py-4">
           {posts.length === 0 ? (
-            <div className="flex flex-1 flex-col items-center justify-center rounded-xl border border-dashed border-border/80 bg-muted/15 px-6 py-12 text-center">
-              <div className="flex size-14 items-center justify-center rounded-full bg-muted/60">
-                <FileText className="size-7 text-muted-foreground/70" />
-              </div>
-              <h3 className="mt-4 text-base font-semibold text-foreground">
-                No articles in this workspace
-              </h3>
-              <p className="mt-1.5 max-w-sm text-sm text-muted-foreground">
-                Create your first article or restore the sample dataset to
-                preview the management table.
-              </p>
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-                <Button asChild className="gap-2">
-                  <Link to="/admin/posts/new">
-                    <Plus className="size-4" />
-                    <span>Create first article</span>
-                  </Link>
-                </Button>
+            <AdminEmptyState
+              icon={<FileText className="size-6" />}
+              title="No articles in this workspace"
+              description="Create your first article or restore the sample dataset to preview the management table."
+              actions={
+                <>
+                  <Button asChild className="gap-2">
+                    <Link to="/admin/posts/new">
+                      <Plus className="size-4" />
+                      <span>Create first article</span>
+                    </Link>
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="gap-2"
+                    onClick={() => {
+                      setPosts(MOCK_POSTS)
+                      handleResetFilters()
+                    }}
+                  >
+                    <RotateCcw className="size-4" />
+                    <span>Restore sample data</span>
+                  </Button>
+                </>
+              }
+            />
+          ) : filteredPosts.length === 0 ? (
+            <AdminEmptyState
+              icon={<SearchX className="size-6" />}
+              title="No matching articles"
+              description="Try adjusting your search query, status tab, category, or series filter."
+              actions={
                 <Button
                   type="button"
                   variant="outline"
-                  className="gap-2"
-                  onClick={() => {
-                    setPosts(MOCK_POSTS)
-                    handleResetFilters()
-                  }}
+                  size="sm"
+                  onClick={handleResetFilters}
+                  className="gap-1.5"
                 >
-                  <RotateCcw className="size-4" />
-                  <span>Restore sample data</span>
+                  <RotateCcw className="size-3.5" />
+                  <span>Reset all filters</span>
                 </Button>
-              </div>
-            </div>
-          ) : filteredPosts.length === 0 ? (
-            <div className="flex flex-1 flex-col items-center justify-center rounded-xl border border-dashed border-border/80 bg-muted/15 px-6 py-12 text-center">
-              <div className="flex size-12 items-center justify-center rounded-full bg-muted/60">
-                <SearchX className="size-6 text-muted-foreground/70" />
-              </div>
-              <h3 className="mt-4 text-base font-semibold text-foreground">
-                No matching articles
-              </h3>
-              <p className="mt-1.5 max-w-sm text-sm text-muted-foreground">
-                Try adjusting your search query, status tab, category, or series
-                filter.
-              </p>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={handleResetFilters}
-                className="mt-5 gap-1.5"
-              >
-                <RotateCcw className="size-3.5" />
-                <span>Reset all filters</span>
-              </Button>
-            </div>
+              }
+            />
           ) : viewMode === "table" ? (
-            <PostsTable table={table} />
+            <AdminDataTable table={table} />
           ) : (
             <PostsGrid
               rows={pageRows}
@@ -425,12 +435,76 @@ export function AdminPostsView() {
         </div>
 
         {filteredPosts.length > 0 && (
-          <PostsBottomBar
+          <AdminTableBottomBar
             table={table}
             selectedCount={selectedIds.length}
             totalRows={filteredPosts.length}
-            onBulkStatusChange={handleBulkStatusChange}
-            onBulkDelete={() => void handleBulkDelete()}
+            singularLabel="post"
+            pluralLabel="posts"
+            bulkActions={
+              <>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon-sm"
+                      onClick={() => handleBulkStatusChange("published")}
+                      aria-label="Publish selected posts"
+                      className="size-7 rounded-lg"
+                    >
+                      <CheckCircle2 className="size-3.5 text-emerald-500" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top">Publish selected</TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon-sm"
+                      onClick={() => handleBulkStatusChange("draft")}
+                      aria-label="Move selected posts to draft"
+                      className="size-7 rounded-lg"
+                    >
+                      <FileEdit className="size-3.5 text-amber-500" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top">Move to draft</TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon-sm"
+                      onClick={() => handleBulkStatusChange("archived")}
+                      aria-label="Archive selected posts"
+                      className="size-7 rounded-lg"
+                    >
+                      <Archive className="size-3.5 text-muted-foreground" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top">Archive selected</TooltipContent>
+                </Tooltip>
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      size="icon-sm"
+                      onClick={() => void handleBulkDelete()}
+                      aria-label="Delete selected posts"
+                      className="size-7 rounded-lg"
+                    >
+                      <Trash2 className="size-3.5" />
+                    </Button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top">Delete selected</TooltipContent>
+                </Tooltip>
+              </>
+            }
           />
         )}
       </AdminContentCard>

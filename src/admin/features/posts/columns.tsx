@@ -1,18 +1,10 @@
 import { format } from "date-fns"
-import { Check, Clock, Copy, Layers, Star } from "lucide-react"
-import { useState } from "react"
+import { Clock, Layers, Star } from "lucide-react"
 
-import {
-  Badge,
-  Checkbox,
-  Switch,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/shared/ui"
+import { AdminMediaThumbnail, AdminSlugCopyButton } from "@/admin"
+import { Badge, Checkbox, Switch } from "@/shared/ui"
 
 import { PostActionsMenu } from "./components/post-actions-menu"
-import { PostCoverThumbnail } from "./components/post-cover-thumbnail"
 import { PostStatusBadge } from "./components/post-status-badge"
 import { PostTaxonomyPills } from "./components/post-taxonomy-pills"
 import { postsColumnHelper } from "./table-config"
@@ -25,43 +17,6 @@ interface CreatePostColumnsOptions {
   onToggleFeatured: (postId: string) => void
   onDuplicate: (post: AdminPost) => void
   onDelete: (post: AdminPost) => void
-}
-
-function SlugCopyButton({ slug }: { slug: string }) {
-  const [copied, setCopied] = useState(false)
-
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(slug)
-      setCopied(true)
-      window.setTimeout(() => setCopied(false), 1400)
-    } catch {
-      // Clipboard may be unavailable in restricted contexts
-    }
-  }
-
-  return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <button
-          type="button"
-          onClick={() => void handleCopy()}
-          aria-label={`Copy slug ${slug}`}
-          className="group/slug inline-flex max-w-[260px] items-center gap-1 rounded px-1 py-0.5 font-mono text-[11px] text-muted-foreground transition-colors hover:bg-muted/70 hover:text-foreground"
-        >
-          <span className="truncate">/{slug}</span>
-          {copied ? (
-            <Check className="size-3 shrink-0 text-emerald-500" />
-          ) : (
-            <Copy className="size-3 shrink-0 opacity-0 transition-opacity group-hover/slug:opacity-100" />
-          )}
-        </button>
-      </TooltipTrigger>
-      <TooltipContent side="bottom">
-        {copied ? "Copied slug!" : "Copy slug"}
-      </TooltipContent>
-    </Tooltip>
-  )
 }
 
 export function createPostColumns({
@@ -123,7 +78,7 @@ export function createPostColumns({
 
         return (
           <div className="flex items-start gap-3">
-            <PostCoverThumbnail
+            <AdminMediaThumbnail
               src={post.coverImage}
               alt={post.coverImageAlt}
               title={post.title}
@@ -147,7 +102,7 @@ export function createPostColumns({
               </div>
 
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-                <SlugCopyButton slug={post.slug} />
+                <AdminSlugCopyButton slug={post.slug} />
                 <span className="inline-flex items-center gap-1 font-mono text-[11px] text-muted-foreground/80 sm:hidden">
                   <Clock className="size-3" />
                   {post.readTime}m

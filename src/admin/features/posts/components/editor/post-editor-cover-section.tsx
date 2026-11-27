@@ -1,8 +1,7 @@
 import { X } from "lucide-react"
 
+import { AdminMediaThumbnail } from "@/admin"
 import { Button, Input, Label } from "@/shared/ui"
-
-import { PostCoverThumbnail } from "../post-cover-thumbnail"
 
 interface PostEditorCoverSectionProps {
   title: string
@@ -28,7 +27,7 @@ export function PostEditorCoverSection({
         </span>
       </div>
 
-      <PostCoverThumbnail
+      <AdminMediaThumbnail
         src={coverImage || null}
         alt={coverImageAlt || null}
         title={title || "Article cover preview"}

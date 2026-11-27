@@ -3,21 +3,21 @@ import { useState } from "react"
 
 import { cn } from "@/shared/lib/utils"
 
-interface PostCoverThumbnailProps {
-  src: string | null
-  alt: string | null
+interface AdminMediaThumbnailProps {
+  src: string | null | undefined
+  alt?: string | null
   title: string
   className?: string
   iconClassName?: string
 }
 
-export function PostCoverThumbnail({
+export function AdminMediaThumbnail({
   src,
   alt,
   title,
   className,
   iconClassName,
-}: PostCoverThumbnailProps) {
+}: AdminMediaThumbnailProps) {
   const [hasError, setHasError] = useState(false)
 
   if (!src || hasError) {

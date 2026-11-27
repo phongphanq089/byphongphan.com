@@ -12,6 +12,7 @@ import {
 } from "lucide-react"
 import { useState } from "react"
 
+import { AdminMediaThumbnail } from "@/admin"
 import {
   Badge,
   Button,
@@ -24,7 +25,6 @@ import {
 } from "@/shared/ui"
 
 import type { AdminPost, PostStatus } from "../types"
-import { PostCoverThumbnail } from "./post-cover-thumbnail"
 import { PostStatusBadge } from "./post-status-badge"
 import { PostTaxonomyPills } from "./post-taxonomy-pills"
 
@@ -108,7 +108,7 @@ export function PostPreviewDialog({
         <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5">
           {/* Cover Preview */}
           <div className="space-y-1.5">
-            <PostCoverThumbnail
+            <AdminMediaThumbnail
               src={post.coverImage}
               alt={post.coverImageAlt}
               title={post.title}

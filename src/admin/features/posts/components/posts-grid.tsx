@@ -2,13 +2,13 @@ import type { Row } from "@tanstack/react-table"
 import { format } from "date-fns"
 import { Clock, Layers, Star } from "lucide-react"
 
+import { AdminMediaThumbnail } from "@/admin"
 import { cn } from "@/shared/lib/utils"
 import { Badge, Checkbox, Switch } from "@/shared/ui"
 
 import type { postsTableFeatures } from "../table-config"
 import type { AdminPost, PostStatus } from "../types"
 import { PostActionsMenu } from "./post-actions-menu"
-import { PostCoverThumbnail } from "./post-cover-thumbnail"
 import { PostStatusBadge } from "./post-status-badge"
 import { PostTaxonomyPills } from "./post-taxonomy-pills"
 
@@ -48,7 +48,7 @@ export function PostsGrid({
           >
             {/* Cover Header */}
             <div className="relative aspect-[16/9] w-full overflow-hidden border-b border-border/60 bg-muted/30">
-              <PostCoverThumbnail
+              <AdminMediaThumbnail
                 src={post.coverImage}
                 alt={post.coverImageAlt}
                 title={post.title}

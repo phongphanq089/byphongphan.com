@@ -1,7 +1,8 @@
 import { MonitorArrowUpIcon, XIcon } from "@phosphor-icons/react"
 import type { SortingState } from "@tanstack/react-table"
-import { ArrowUpDown, LayoutGrid, List, RotateCcw, Search } from "lucide-react"
+import { ArrowUpDown, RotateCcw, Search } from "lucide-react"
 
+import { AdminViewModeToggle } from "@/admin"
 import { cn } from "@/shared/lib/utils"
 import {
   Badge,
@@ -170,34 +171,7 @@ export function PostsToolbar({
             <span>Featured</span>
           </Button>
 
-          <div
-            role="group"
-            aria-label="View layout"
-            className="inline-flex h-8 items-center rounded-lg border border-border/80 bg-muted/30 p-0.5"
-          >
-            <Button
-              type="button"
-              variant={viewMode === "table" ? "secondary" : "ghost"}
-              size="icon-xs"
-              onClick={() => onViewModeChange("table")}
-              aria-label="Table view"
-              aria-pressed={viewMode === "table"}
-              className="h-6.5 w-7 rounded-md"
-            >
-              <List className="size-3.5" />
-            </Button>
-            <Button
-              type="button"
-              variant={viewMode === "grid" ? "secondary" : "ghost"}
-              size="icon-xs"
-              onClick={() => onViewModeChange("grid")}
-              aria-label="Grid view"
-              aria-pressed={viewMode === "grid"}
-              className="h-6.5 w-7 rounded-md"
-            >
-              <LayoutGrid className="size-3.5" />
-            </Button>
-          </div>
+          <AdminViewModeToggle value={viewMode} onChange={onViewModeChange} />
         </div>
       </div>
 

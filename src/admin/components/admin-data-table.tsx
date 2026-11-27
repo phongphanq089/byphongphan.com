@@ -1,4 +1,4 @@
-import type { ReactTable } from "@tanstack/react-table"
+import type { ReactTable, RowData, TableFeatures } from "@tanstack/react-table"
 import { ArrowDown, ArrowUp, ArrowUpDown } from "lucide-react"
 
 import { cn } from "@/shared/lib/utils"
@@ -11,14 +11,23 @@ import {
   TableRow,
 } from "@/shared/ui"
 
-import type { postsTableFeatures } from "../table-config"
-import type { AdminPost } from "../types"
-
-interface PostsTableProps {
-  table: ReactTable<typeof postsTableFeatures, AdminPost>
+export interface AdminColumnMeta {
+  headerClassName?: string
+  cellClassName?: string
+  align?: "left" | "center" | "right"
 }
 
-export function PostsTable({ table }: PostsTableProps) {
+interface AdminDataTableProps<
+  TFeatures extends TableFeatures,
+  TData extends RowData,
+> {
+  table: ReactTable<TFeatures, TData>
+}
+
+export function AdminDataTable<
+  TFeatures extends TableFeatures,
+  TData extends RowData,
+>({ table }: AdminDataTableProps<TFeatures, TData>) {
   const rows = table.getRowModel().rows
 
   return (
@@ -32,14 +41,16 @@ export function PostsTable({ table }: PostsTableProps) {
             >
               {headerGroup.headers.map((header) => {
                 const meta = header.column.columnDef.meta as
-                  | {
-                      headerClassName?: string
-                      align?: "left" | "center" | "right"
-                    }
-                  | undefined
-                const canSort = header.column.getCanSort()
-                const sorted = header.column.getIsSorted()
-                const toggleSort = header.column.getToggleSortingHandler()
+                  AdminColumnMeta | undefined
+                const column = header.column as typeof header.column & {
+                  getCanSort?: () => boolean
+                  getIsSorted?: () => false | "asc" | "desc"
+                  getToggleSortingHandler?: () =>
+                    ((event: unknown) => void) | undefined
+                }
+                const canSort = column.getCanSort?.() ?? false
+                const sorted = column.getIsSorted?.() ?? false
+                const toggleSort = column.getToggleSortingHandler?.()
 
                 return (
                   <TableHead
@@ -80,7 +91,12 @@ export function PostsTable({ table }: PostsTableProps) {
         </TableHeader>
         <TableBody className="[&_tr]:border-border/60">
           {rows.map((row) => {
-            const isSelected = row.getIsSelected()
+            const selectableRow = row as typeof row & {
+              getIsSelected?: () => boolean
+              getVisibleCells?: () => ReturnType<typeof row.getAllCells>
+            }
+            const isSelected = selectableRow.getIsSelected?.() ?? false
+            const cells = selectableRow.getVisibleCells?.() ?? row.getAllCells()
 
             return (
               <TableRow
@@ -92,9 +108,9 @@ export function PostsTable({ table }: PostsTableProps) {
                     "data-[state=selected]:bg-primary/[0.04] data-[state=selected]:hover:bg-primary/[0.06]"
                 )}
               >
-                {row.getVisibleCells().map((cell) => {
+                {cells.map((cell) => {
                   const meta = cell.column.columnDef.meta as
-                    { cellClassName?: string } | undefined
+                    AdminColumnMeta | undefined
 
                   return (
                     <TableCell
