@@ -1,3 +1,7 @@
+export {
+  AdminPostEditorLayout,
+  type AdminPostEditorLayoutProps,
+} from "./admin-post-editor-layout"
 export { AdminPostsView } from "./admin-posts-view"
 export { PostsLoadingSkeleton } from "./components/posts-loading-skeleton"
 export type {

@@ -1,13 +1,16 @@
 import { format } from "date-fns"
 import {
   Calendar,
+  Check,
   CheckCircle2,
   Clock,
+  Copy,
   FileEdit,
   Layers,
   Pencil,
   Sparkles,
 } from "lucide-react"
+import { useState } from "react"
 
 import {
   Badge,
@@ -18,7 +21,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  Separator,
 } from "@/shared/ui"
 
 import type { AdminPost, PostStatus } from "../types"
@@ -43,13 +45,26 @@ export function PostPreviewDialog({
   onChangeStatus,
   onToggleFeatured,
 }: PostPreviewDialogProps) {
+  const [copiedSlug, setCopiedSlug] = useState(false)
+
   if (!post) return null
+
+  const handleCopySlug = async () => {
+    try {
+      await navigator.clipboard.writeText(post.slug)
+      setCopiedSlug(true)
+      window.setTimeout(() => setCopiedSlug(false), 1500)
+    } catch {
+      // Clipboard may be unavailable in restricted contexts
+    }
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-h-[90svh] overflow-y-auto sm:max-w-2xl">
-        <DialogHeader>
-          <div className="flex flex-wrap items-center gap-2 pr-8">
+      <DialogContent className="flex max-h-[88svh] flex-col gap-0 overflow-hidden rounded-2xl border border-border/80 bg-background p-0 shadow-2xl sm:max-w-2xl">
+        {/* Fixed Header */}
+        <DialogHeader className="shrink-0 gap-2 border-b border-border/70 bg-background px-6 py-4 pr-12">
+          <div className="flex flex-wrap items-center gap-2">
             <PostStatusBadge status={post.status} />
             {post.isFeatured && (
               <Badge variant="warning" size="sm" shape="pill">
@@ -67,22 +82,37 @@ export function PostPreviewDialog({
               </Badge>
             )}
           </div>
-          <DialogTitle className="pt-1 text-lg leading-snug font-semibold text-foreground">
+
+          <DialogTitle className="text-lg leading-snug font-semibold text-foreground">
             {post.title}
           </DialogTitle>
-          <DialogDescription className="font-mono text-xs">
-            /{post.slug}
+
+          <DialogDescription className="flex items-center gap-1.5 font-mono text-xs">
+            <span className="truncate">/{post.slug}</span>
+            <button
+              type="button"
+              onClick={() => void handleCopySlug()}
+              aria-label="Copy article slug"
+              className="inline-flex size-5 shrink-0 items-center justify-center rounded text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+            >
+              {copiedSlug ? (
+                <Check className="size-3 text-emerald-500" />
+              ) : (
+                <Copy className="size-3" />
+              )}
+            </button>
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4">
+        {/* Scrollable Body */}
+        <div className="min-h-0 flex-1 space-y-5 overflow-y-auto px-6 py-5">
           {/* Cover Preview */}
           <div className="space-y-1.5">
             <PostCoverThumbnail
               src={post.coverImage}
               alt={post.coverImageAlt}
               title={post.title}
-              className="aspect-[16/9] w-full rounded-lg"
+              className="aspect-[16/9] w-full rounded-xl"
               iconClassName="size-10"
             />
             {post.coverImageAlt && (
@@ -94,23 +124,23 @@ export function PostPreviewDialog({
 
           {/* Excerpt */}
           {post.excerpt && (
-            <div className="rounded-lg border border-border/70 bg-muted/30 p-3">
-              <p className="text-[11px] font-medium tracking-wider text-muted-foreground uppercase">
+            <div className="rounded-xl border border-border/70 bg-muted/25 p-3.5">
+              <p className="font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
                 Excerpt
               </p>
-              <p className="mt-1 text-xs leading-relaxed text-foreground/90">
+              <p className="mt-1.5 text-xs leading-relaxed text-foreground/90">
                 {post.excerpt}
               </p>
             </div>
           )}
 
           {/* Metadata Grid aligned to Drizzle Schema */}
-          <div className="grid gap-3 rounded-lg border border-border/70 bg-card p-3 sm:grid-cols-2">
+          <div className="grid gap-4 rounded-xl border border-border/70 bg-card p-4 sm:grid-cols-2">
             <div>
-              <p className="text-[11px] font-medium text-muted-foreground">
+              <p className="font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
                 Taxonomy
               </p>
-              <div className="mt-1.5">
+              <div className="mt-2">
                 <PostTaxonomyPills
                   categories={post.categories}
                   tags={post.tags}
@@ -120,27 +150,27 @@ export function PostPreviewDialog({
             </div>
 
             <div className="space-y-2 text-xs">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-2">
                 <span className="text-muted-foreground">Read Time</span>
                 <span className="inline-flex items-center gap-1 font-mono font-medium text-foreground">
                   <Clock className="size-3 text-muted-foreground" />
                   {post.readTime} min
                 </span>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-2">
                 <span className="text-muted-foreground">Published At</span>
                 <span className="inline-flex items-center gap-1 font-mono text-foreground">
                   <Calendar className="size-3 text-muted-foreground" />
                   {format(new Date(post.publishedAt), "yyyy-MM-dd HH:mm")}
                 </span>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-2">
                 <span className="text-muted-foreground">Updated At</span>
                 <span className="font-mono text-muted-foreground">
                   {format(new Date(post.updatedAt), "yyyy-MM-dd HH:mm")}
                 </span>
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-2">
                 <span className="text-muted-foreground">Post ID</span>
                 <span className="font-mono text-[11px] text-muted-foreground">
                   {post.id}
@@ -150,31 +180,30 @@ export function PostPreviewDialog({
           </div>
 
           {/* Content JSON AST Snapshot */}
-          <div className="space-y-1.5">
+          <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-medium tracking-wider text-muted-foreground uppercase">
-                Content JSON AST (`posts.content`)
+              <span className="font-mono text-[10px] font-semibold tracking-wider text-muted-foreground uppercase">
+                Content JSON AST (posts.content)
               </span>
-              <span className="font-mono text-[10px] text-muted-foreground">
+              <span className="rounded bg-muted/60 px-1.5 py-0.5 font-mono text-[10px] text-muted-foreground">
                 jsonb
               </span>
             </div>
-            <pre className="max-h-36 overflow-auto rounded-lg border border-border/70 bg-muted/40 p-3 font-mono text-[11px] leading-relaxed text-muted-foreground">
+            <pre className="max-h-44 overflow-auto rounded-xl border border-border/70 bg-muted/35 p-3.5 font-mono text-[11px] leading-relaxed text-muted-foreground">
               {JSON.stringify(post.content, null, 2)}
             </pre>
           </div>
         </div>
 
-        <Separator />
-
-        <DialogFooter className="mx-0 mb-0 justify-between rounded-none border-0 bg-transparent p-0 sm:justify-between">
+        {/* Fixed Footer */}
+        <DialogFooter className="mx-0 mb-0 shrink-0 flex-col-reverse gap-2 rounded-none border-t border-border/70 bg-muted/30 px-6 py-3.5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-2">
             <Button
               type="button"
               variant="outline"
               size="sm"
               onClick={() => onToggleFeatured(post.id)}
-              className="gap-1.5 text-xs"
+              className="gap-1.5 bg-background text-xs"
             >
               <Sparkles
                 className={
@@ -191,7 +220,7 @@ export function PostPreviewDialog({
                 variant="outline"
                 size="sm"
                 onClick={() => onChangeStatus(post.id, "published")}
-                className="gap-1.5 text-xs"
+                className="gap-1.5 bg-background text-xs"
               >
                 <CheckCircle2 className="size-3.5 text-emerald-500" />
                 <span>Publish</span>
@@ -202,7 +231,7 @@ export function PostPreviewDialog({
                 variant="outline"
                 size="sm"
                 onClick={() => onChangeStatus(post.id, "draft")}
-                className="gap-1.5 text-xs"
+                className="gap-1.5 bg-background text-xs"
               >
                 <FileEdit className="size-3.5 text-amber-500" />
                 <span>Move to Draft</span>
@@ -210,7 +239,7 @@ export function PostPreviewDialog({
             )}
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-end gap-2">
             <Button
               type="button"
               variant="ghost"

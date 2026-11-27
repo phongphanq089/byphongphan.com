@@ -1,10 +1,11 @@
+import { Link, useNavigate } from "@tanstack/react-router"
 import {
   type PaginationState,
   type RowSelectionState,
   type SortingState,
   useTable,
 } from "@tanstack/react-table"
-import { FileText, Info, Plus, RotateCcw, SearchX } from "lucide-react"
+import { FileText, Plus, RotateCcw, SearchX } from "lucide-react"
 import { useCallback, useMemo, useState } from "react"
 
 import { AdminContentCard, AdminPageHeader, useAdminConfirm } from "@/admin"
@@ -68,6 +69,7 @@ export function AdminPostsView() {
   const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
   const [previewPostId, setPreviewPostId] = useState<string | null>(null)
 
+  const navigate = useNavigate()
   const { confirm, ConfirmDialog } = useAdminConfirm()
 
   const hasActiveFilters =
@@ -196,29 +198,21 @@ export function AdminPostsView() {
     [confirm]
   )
 
-  const handleOpenEditorNotice = useCallback(
-    async (post?: AdminPost) => {
-      await confirm({
-        title: post
-          ? "Article Editor Coming Next"
-          : "New Article Editor Coming Next",
-        description: post
-          ? `Ready to wire the Tiptap/ProseMirror editor route for "${post.title}" (/${post.slug}) in the next step.`
-          : "The article creation & Tiptap JSON editor page will be implemented next after finalizing this list view.",
-        variant: "info",
-        confirmText: "Got it",
-        cancelText: "Close",
-        icon: <Info className="size-5" />,
+  const handleEditPost = useCallback(
+    (post: AdminPost) => {
+      void navigate({
+        to: "/admin/posts/$postId",
+        params: { postId: post.id },
       })
     },
-    [confirm]
+    [navigate]
   )
 
   const columns = useMemo(
     () =>
       createPostColumns({
         onPreview: (post) => setPreviewPostId(post.id),
-        onEdit: (post) => void handleOpenEditorNotice(post),
+        onEdit: handleEditPost,
         onChangeStatus: handleChangeStatus,
         onToggleFeatured: handleToggleFeatured,
         onDuplicate: handleDuplicate,
@@ -228,7 +222,7 @@ export function AdminPostsView() {
       handleChangeStatus,
       handleDeletePost,
       handleDuplicate,
-      handleOpenEditorNotice,
+      handleEditPost,
       handleToggleFeatured,
     ]
   )
@@ -326,13 +320,11 @@ export function AdminPostsView() {
           { label: "Posts" },
         ]}
         actions={
-          <Button
-            type="button"
-            className="gap-2"
-            onClick={() => void handleOpenEditorNotice()}
-          >
-            <Plus className="size-4" />
-            <span>New Article</span>
+          <Button asChild className="gap-2">
+            <Link to="/admin/posts/new">
+              <Plus className="size-4" />
+              <span>New Article</span>
+            </Link>
           </Button>
         }
       />
@@ -374,13 +366,11 @@ export function AdminPostsView() {
                 preview the management table.
               </p>
               <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
-                <Button
-                  type="button"
-                  className="gap-2"
-                  onClick={() => void handleOpenEditorNotice()}
-                >
-                  <Plus className="size-4" />
-                  <span>Create first article</span>
+                <Button asChild className="gap-2">
+                  <Link to="/admin/posts/new">
+                    <Plus className="size-4" />
+                    <span>Create first article</span>
+                  </Link>
                 </Button>
                 <Button
                   type="button"
@@ -425,7 +415,7 @@ export function AdminPostsView() {
             <PostsGrid
               rows={pageRows}
               onPreview={(post) => setPreviewPostId(post.id)}
-              onEdit={(post) => void handleOpenEditorNotice(post)}
+              onEdit={handleEditPost}
               onChangeStatus={handleChangeStatus}
               onToggleFeatured={handleToggleFeatured}
               onDuplicate={handleDuplicate}
@@ -451,7 +441,7 @@ export function AdminPostsView() {
         onOpenChange={(open) => {
           if (!open) setPreviewPostId(null)
         }}
-        onEdit={(post) => void handleOpenEditorNotice(post)}
+        onEdit={handleEditPost}
         onChangeStatus={handleChangeStatus}
         onToggleFeatured={handleToggleFeatured}
       />

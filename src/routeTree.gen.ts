@@ -28,6 +28,8 @@ import { Route as UiCollectionSlugRouteImport } from './routes/ui/$collection/$s
 import { Route as AdminAdminCategoriesIndexRouteImport } from './routes/_admin/admin/categories/index'
 import { Route as AdminAdminGroupsIndexRouteImport } from './routes/_admin/admin/groups/index'
 import { Route as AdminAdminPostsIndexRouteImport } from './routes/_admin/admin/posts/index'
+import { Route as AdminAdminPostsPostIdRouteImport } from './routes/_admin/admin/posts/$postId'
+import { Route as AdminAdminPostsNewRouteImport } from './routes/_admin/admin/posts/new'
 import { Route as AdminAdminResourcesIndexRouteImport } from './routes/_admin/admin/resources/index'
 import { Route as AdminAdminSettingsIndexRouteImport } from './routes/_admin/admin/settings/index'
 
@@ -125,6 +127,16 @@ const AdminAdminPostsIndexRoute = AdminAdminPostsIndexRouteImport.update({
   path: '/admin/posts/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminAdminPostsPostIdRoute = AdminAdminPostsPostIdRouteImport.update({
+  id: '/admin/posts/$postId',
+  path: '/admin/posts/$postId',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminPostsNewRoute = AdminAdminPostsNewRouteImport.update({
+  id: '/admin/posts/new',
+  path: '/admin/posts/new',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminAdminResourcesIndexRoute =
   AdminAdminResourcesIndexRouteImport.update({
     id: '/admin/resources/',
@@ -152,6 +164,8 @@ export interface FileRoutesByFullPath {
   '/blog/': typeof SiteBlogIndexRoute
   '/resources/': typeof SiteResourcesIndexRoute
   '/ui/$collection/': typeof UiCollectionIndexRoute
+  '/admin/posts/$postId': typeof AdminAdminPostsPostIdRoute
+  '/admin/posts/new': typeof AdminAdminPostsNewRoute
   '/admin/categories/': typeof AdminAdminCategoriesIndexRoute
   '/admin/groups/': typeof AdminAdminGroupsIndexRoute
   '/admin/posts/': typeof AdminAdminPostsIndexRoute
@@ -172,6 +186,8 @@ export interface FileRoutesByTo {
   '/blog': typeof SiteBlogIndexRoute
   '/resources': typeof SiteResourcesIndexRoute
   '/ui/$collection': typeof UiCollectionIndexRoute
+  '/admin/posts/$postId': typeof AdminAdminPostsPostIdRoute
+  '/admin/posts/new': typeof AdminAdminPostsNewRoute
   '/admin/categories': typeof AdminAdminCategoriesIndexRoute
   '/admin/groups': typeof AdminAdminGroupsIndexRoute
   '/admin/posts': typeof AdminAdminPostsIndexRoute
@@ -196,6 +212,8 @@ export interface FileRoutesById {
   '/_site/blog/': typeof SiteBlogIndexRoute
   '/_site/resources/': typeof SiteResourcesIndexRoute
   '/ui/$collection/': typeof UiCollectionIndexRoute
+  '/_admin/admin/posts/$postId': typeof AdminAdminPostsPostIdRoute
+  '/_admin/admin/posts/new': typeof AdminAdminPostsNewRoute
   '/_admin/admin/categories/': typeof AdminAdminCategoriesIndexRoute
   '/_admin/admin/groups/': typeof AdminAdminGroupsIndexRoute
   '/_admin/admin/posts/': typeof AdminAdminPostsIndexRoute
@@ -219,6 +237,8 @@ export interface FileRouteTypes {
     | '/blog/'
     | '/resources/'
     | '/ui/$collection/'
+    | '/admin/posts/$postId'
+    | '/admin/posts/new'
     | '/admin/categories/'
     | '/admin/groups/'
     | '/admin/posts/'
@@ -239,6 +259,8 @@ export interface FileRouteTypes {
     | '/blog'
     | '/resources'
     | '/ui/$collection'
+    | '/admin/posts/$postId'
+    | '/admin/posts/new'
     | '/admin/categories'
     | '/admin/groups'
     | '/admin/posts'
@@ -262,6 +284,8 @@ export interface FileRouteTypes {
     | '/_site/blog/'
     | '/_site/resources/'
     | '/ui/$collection/'
+    | '/_admin/admin/posts/$postId'
+    | '/_admin/admin/posts/new'
     | '/_admin/admin/categories/'
     | '/_admin/admin/groups/'
     | '/_admin/admin/posts/'
@@ -415,6 +439,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminPostsIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/_admin/admin/posts/$postId': {
+      id: '/_admin/admin/posts/$postId'
+      path: '/admin/posts/$postId'
+      fullPath: '/admin/posts/$postId'
+      preLoaderRoute: typeof AdminAdminPostsPostIdRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin/posts/new': {
+      id: '/_admin/admin/posts/new'
+      path: '/admin/posts/new'
+      fullPath: '/admin/posts/new'
+      preLoaderRoute: typeof AdminAdminPostsNewRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/_admin/admin/resources/': {
       id: '/_admin/admin/resources/'
       path: '/admin/resources'
@@ -434,6 +472,8 @@ declare module '@tanstack/react-router' {
 
 interface AdminRouteRouteChildren {
   AdminAdminIndexRoute: typeof AdminAdminIndexRoute
+  AdminAdminPostsPostIdRoute: typeof AdminAdminPostsPostIdRoute
+  AdminAdminPostsNewRoute: typeof AdminAdminPostsNewRoute
   AdminAdminCategoriesIndexRoute: typeof AdminAdminCategoriesIndexRoute
   AdminAdminGroupsIndexRoute: typeof AdminAdminGroupsIndexRoute
   AdminAdminPostsIndexRoute: typeof AdminAdminPostsIndexRoute
@@ -443,6 +483,8 @@ interface AdminRouteRouteChildren {
 
 const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAdminIndexRoute: AdminAdminIndexRoute,
+  AdminAdminPostsPostIdRoute: AdminAdminPostsPostIdRoute,
+  AdminAdminPostsNewRoute: AdminAdminPostsNewRoute,
   AdminAdminCategoriesIndexRoute: AdminAdminCategoriesIndexRoute,
   AdminAdminGroupsIndexRoute: AdminAdminGroupsIndexRoute,
   AdminAdminPostsIndexRoute: AdminAdminPostsIndexRoute,
