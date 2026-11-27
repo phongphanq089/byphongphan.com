@@ -26,6 +26,7 @@ const ROUTE_CONFIG: Record<string, { group?: string; title: string }> = {
     title: "Resources & Tools",
   },
   "/admin/registry": { group: "Showcase & Registry", title: "Registry Hub" },
+  "/admin/media": { group: "System & Media", title: "Media Library" },
   "/admin/profile": { group: "System & Media", title: "Profile" },
   "/admin/settings": { group: "System & Media", title: "Site Settings & SEO" },
 }

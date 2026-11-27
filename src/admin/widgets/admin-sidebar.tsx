@@ -84,6 +84,11 @@ const registryNavItems: NavItem[] = [
 
 const systemNavItems: NavItem[] = [
   {
+    title: "Media Library",
+    url: "/admin/media",
+    icon: Images,
+  },
+  {
     title: "Profile",
     url: "/admin/profile",
     icon: User,

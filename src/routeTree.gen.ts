@@ -27,6 +27,7 @@ import { Route as UiCollectionIndexRouteImport } from './routes/ui/$collection/i
 import { Route as UiCollectionSlugRouteImport } from './routes/ui/$collection/$slug'
 import { Route as AdminAdminCategoriesIndexRouteImport } from './routes/_admin/admin/categories/index'
 import { Route as AdminAdminGroupsIndexRouteImport } from './routes/_admin/admin/groups/index'
+import { Route as AdminAdminMediaIndexRouteImport } from './routes/_admin/admin/media/index'
 import { Route as AdminAdminPostsIndexRouteImport } from './routes/_admin/admin/posts/index'
 import { Route as AdminAdminPostsPostIdRouteImport } from './routes/_admin/admin/posts/$postId'
 import { Route as AdminAdminPostsNewRouteImport } from './routes/_admin/admin/posts/new'
@@ -123,6 +124,11 @@ const AdminAdminGroupsIndexRoute = AdminAdminGroupsIndexRouteImport.update({
   path: '/admin/groups/',
   getParentRoute: () => AdminRouteRoute,
 } as any)
+const AdminAdminMediaIndexRoute = AdminAdminMediaIndexRouteImport.update({
+  id: '/admin/media/',
+  path: '/admin/media/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const AdminAdminPostsIndexRoute = AdminAdminPostsIndexRouteImport.update({
   id: '/admin/posts/',
   path: '/admin/posts/',
@@ -174,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/admin/posts/new': typeof AdminAdminPostsNewRoute
   '/admin/categories/': typeof AdminAdminCategoriesIndexRoute
   '/admin/groups/': typeof AdminAdminGroupsIndexRoute
+  '/admin/media/': typeof AdminAdminMediaIndexRoute
   '/admin/posts/': typeof AdminAdminPostsIndexRoute
   '/admin/profile/': typeof AdminAdminProfileIndexRoute
   '/admin/resources/': typeof AdminAdminResourcesIndexRoute
@@ -197,6 +204,7 @@ export interface FileRoutesByTo {
   '/admin/posts/new': typeof AdminAdminPostsNewRoute
   '/admin/categories': typeof AdminAdminCategoriesIndexRoute
   '/admin/groups': typeof AdminAdminGroupsIndexRoute
+  '/admin/media': typeof AdminAdminMediaIndexRoute
   '/admin/posts': typeof AdminAdminPostsIndexRoute
   '/admin/profile': typeof AdminAdminProfileIndexRoute
   '/admin/resources': typeof AdminAdminResourcesIndexRoute
@@ -224,6 +232,7 @@ export interface FileRoutesById {
   '/_admin/admin/posts/new': typeof AdminAdminPostsNewRoute
   '/_admin/admin/categories/': typeof AdminAdminCategoriesIndexRoute
   '/_admin/admin/groups/': typeof AdminAdminGroupsIndexRoute
+  '/_admin/admin/media/': typeof AdminAdminMediaIndexRoute
   '/_admin/admin/posts/': typeof AdminAdminPostsIndexRoute
   '/_admin/admin/profile/': typeof AdminAdminProfileIndexRoute
   '/_admin/admin/resources/': typeof AdminAdminResourcesIndexRoute
@@ -250,6 +259,7 @@ export interface FileRouteTypes {
     | '/admin/posts/new'
     | '/admin/categories/'
     | '/admin/groups/'
+    | '/admin/media/'
     | '/admin/posts/'
     | '/admin/profile/'
     | '/admin/resources/'
@@ -273,6 +283,7 @@ export interface FileRouteTypes {
     | '/admin/posts/new'
     | '/admin/categories'
     | '/admin/groups'
+    | '/admin/media'
     | '/admin/posts'
     | '/admin/profile'
     | '/admin/resources'
@@ -299,6 +310,7 @@ export interface FileRouteTypes {
     | '/_admin/admin/posts/new'
     | '/_admin/admin/categories/'
     | '/_admin/admin/groups/'
+    | '/_admin/admin/media/'
     | '/_admin/admin/posts/'
     | '/_admin/admin/profile/'
     | '/_admin/admin/resources/'
@@ -444,6 +456,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAdminGroupsIndexRouteImport
       parentRoute: typeof AdminRouteRoute
     }
+    '/_admin/admin/media/': {
+      id: '/_admin/admin/media/'
+      path: '/admin/media'
+      fullPath: '/admin/media/'
+      preLoaderRoute: typeof AdminAdminMediaIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/_admin/admin/posts/': {
       id: '/_admin/admin/posts/'
       path: '/admin/posts'
@@ -495,6 +514,7 @@ interface AdminRouteRouteChildren {
   AdminAdminPostsNewRoute: typeof AdminAdminPostsNewRoute
   AdminAdminCategoriesIndexRoute: typeof AdminAdminCategoriesIndexRoute
   AdminAdminGroupsIndexRoute: typeof AdminAdminGroupsIndexRoute
+  AdminAdminMediaIndexRoute: typeof AdminAdminMediaIndexRoute
   AdminAdminPostsIndexRoute: typeof AdminAdminPostsIndexRoute
   AdminAdminProfileIndexRoute: typeof AdminAdminProfileIndexRoute
   AdminAdminResourcesIndexRoute: typeof AdminAdminResourcesIndexRoute
@@ -507,6 +527,7 @@ const AdminRouteRouteChildren: AdminRouteRouteChildren = {
   AdminAdminPostsNewRoute: AdminAdminPostsNewRoute,
   AdminAdminCategoriesIndexRoute: AdminAdminCategoriesIndexRoute,
   AdminAdminGroupsIndexRoute: AdminAdminGroupsIndexRoute,
+  AdminAdminMediaIndexRoute: AdminAdminMediaIndexRoute,
   AdminAdminPostsIndexRoute: AdminAdminPostsIndexRoute,
   AdminAdminProfileIndexRoute: AdminAdminProfileIndexRoute,
   AdminAdminResourcesIndexRoute: AdminAdminResourcesIndexRoute,
