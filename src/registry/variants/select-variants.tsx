@@ -4,6 +4,7 @@ import { ColoredBorderSelect } from "./select/colored-border-select"
 import { ErrorSelect } from "./select/error-select"
 import { HelperTextSelect } from "./select/helper-text-select"
 import { IconSelect } from "./select/icon-select"
+import { LiquidGlassSelect } from "./select/liquid-glass-select"
 import { OptionsWithFlag } from "./select/options-with-flag"
 import { PlaceholderSelect } from "./select/placeholder-select"
 import { SearchAndButton } from "./select/search-and-button"
@@ -50,6 +51,13 @@ export const SELECT_VARIANTS: ComponentVariant[] = [
     title: "Error State",
     component: SearchAndButton,
   },
+  {
+    id: "liquid-glass-select",
+    title: "Liquid Glass",
+    description:
+      "Frosted liquid glass select built on @base-ui/react/select with pointer specular glow and staggered reveals.",
+    component: LiquidGlassSelect,
+  },
 ]
 
 export {
@@ -57,5 +65,6 @@ export {
   ErrorSelect,
   HelperTextSelect,
   IconSelect,
+  LiquidGlassSelect,
   PlaceholderSelect,
 }

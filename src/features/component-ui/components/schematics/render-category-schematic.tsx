@@ -4,6 +4,7 @@ import { CategoryBackgroundSchematic } from "./category-background-schematic"
 import { CategoryButtonSchematic } from "./category-button-schematic"
 import { CategoryCardSchematic } from "./category-card-schematic"
 import { CategoryDataDisplaySchematic } from "./category-data-display-schematic"
+import { CategoryGlassSchematic } from "./category-glass-schematic"
 import { CategoryInteractiveSchematic } from "./category-interactive-schematic"
 import { CategoryNavigationSchematic } from "./category-navigation-schematic"
 import { CategoryTextSchematic } from "./category-text-schematic"
@@ -42,6 +43,8 @@ export function RenderComponentCategorySchematic({
       return (
         <CategoryBackgroundSchematic active={active} className={className} />
       )
+    case "glass":
+      return <CategoryGlassSchematic active={active} className={className} />
     default:
       return null
   }
