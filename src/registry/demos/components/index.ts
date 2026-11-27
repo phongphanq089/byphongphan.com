@@ -35,6 +35,9 @@ export const ElasticSliderDemo = lazyWithRetry(() =>
 export const FlipClockDemo = lazyWithRetry(() =>
   import("./time-scrubber-demo").then((m) => ({ default: m.TimeScrubberDemo }))
 )
+export const GlassSelectDemo = lazyWithRetry(() =>
+  import("./glass-select-demo").then((m) => ({ default: m.GlassSelectDemo }))
+)
 export const TimeScrubberDemo = lazyWithRetry(() =>
   import("./time-scrubber-demo").then((m) => ({ default: m.TimeScrubberDemo }))
 )
@@ -120,6 +123,8 @@ export const UnderlineToBackgroundDemo = lazyWithRetry(() =>
 
 export const COMPONENT_DEMOS: Record<string, ComponentType> = {
   select: SelectDemo,
+  "glass-select": GlassSelectDemo,
+  "glass-select-demo": GlassSelectDemo,
   badge: BadgeDemo,
   "badge-demo": BadgeDemo,
   card: CardDemo,

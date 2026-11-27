@@ -44,6 +44,12 @@ export const COMPONENT_CATEGORIES = [
     description:
       "Syntax-highlighted code blocks, vector maps, and data visualizers.",
   },
+  {
+    id: "glass",
+    label: "Glass",
+    description:
+      "WebGL2 SDF liquid glass controls, optical refraction, and spring-coupled popups.",
+  },
 ] as const
 
 export const BLOCK_CATEGORIES = [

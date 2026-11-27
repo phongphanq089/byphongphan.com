@@ -515,6 +515,47 @@
       ]
     },
     {
+      "name": "glass-select",
+      "type": "registry:component",
+      "title": "Glass Select",
+      "description": "WebGL2 SDF liquid glass select built natively on @base-ui/react/select: the list swells out of its trigger on a stretching neck that thins, snaps, and retracts smoothly.",
+      "category": "glass",
+      "author": "Phong Phan <phongphanq089@gmail.com>",
+      "dependencies": [
+        "@base-ui/react",
+        "lucide-react"
+      ],
+      "devDependencies": [],
+      "registryDependencies": [],
+      "files": [
+        {
+          "path": "src/registry/animated/glass-select.tsx",
+          "type": "registry:component",
+          "target": "components/glass-select.tsx"
+        },
+        {
+          "path": "src/registry/animated/liquid-glass/glass-popup.tsx",
+          "type": "registry:component",
+          "target": "components/liquid-glass/glass-popup.tsx"
+        },
+        {
+          "path": "src/registry/animated/liquid-glass/glass-layer.tsx",
+          "type": "registry:component",
+          "target": "components/liquid-glass/glass-layer.tsx"
+        },
+        {
+          "path": "src/registry/animated/liquid-glass/engine.ts",
+          "type": "registry:component",
+          "target": "components/liquid-glass/engine.ts"
+        },
+        {
+          "path": "src/registry/animated/liquid-glass/dom-snapshot.ts",
+          "type": "registry:component",
+          "target": "components/liquid-glass/dom-snapshot.ts"
+        }
+      ]
+    },
+    {
       "name": "slide-to-unlock",
       "type": "registry:component",
       "title": "Slide to Unlock",
