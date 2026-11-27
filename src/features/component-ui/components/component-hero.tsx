@@ -82,6 +82,17 @@ const CATEGORY_HERO_CONFIG: Record<
       { label: "HIGH PERFORMANCE", hideOnMobile: true },
     ],
   },
+  glass: {
+    badge: "Liquid Glass",
+    title: "WebGL2 SDF refraction & liquid surfaces.",
+    description:
+      "Physically inspired liquid glass primitives with real-time refraction, gooey neck coupling, and Base UI accessibility.",
+    stats: [
+      { label: "WEBGL2 SDF SHADER" },
+      { label: "SPRING PHYSICS" },
+      { label: "BASE UI ACCESSIBLE", hideOnMobile: true },
+    ],
+  },
 }
 
 export function ComponentHero({

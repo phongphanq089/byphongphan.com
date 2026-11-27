@@ -47,7 +47,8 @@
     "navigation",
     "text",
     "interactive",
-    "data-display"
+    "data-display",
+    "glass"
   ],
   "components": [
     {
@@ -149,6 +150,10 @@
     {
       "category": "text",
       "slug": "spotlight-text"
+    },
+    {
+      "category": "glass",
+      "slug": "glass-select"
     },
     {
       "category": "button",

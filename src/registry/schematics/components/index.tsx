@@ -14,6 +14,7 @@ import { PluckedTextSchematic } from "./plucked-text-schematic"
 import { ScrollAreaSchematic } from "./scroll-area-schematic"
 import { DrawerSchematic } from "./drawer-schematic"
 import { ElasticSliderSchematic } from "./elastic-slider-schematic"
+import { GlassSelectSchematic } from "./glass-select-schematic"
 import { SelectSchematic } from "./select-schematic"
 import { SlideToUnlockSchematic } from "./slide-to-unlock-schematic"
 import { SpotlightCardSchematic } from "./spotlight-card-schematic"
@@ -43,6 +44,7 @@ export * from "./plucked-text-schematic"
 export * from "./scroll-area-schematic"
 export * from "./drawer-schematic"
 export * from "./elastic-slider-schematic"
+export * from "./glass-select-schematic"
 export * from "./letter-3d-swap-schematic"
 export * from "./select-schematic"
 export * from "./slide-to-unlock-schematic"
@@ -68,6 +70,7 @@ export function DefaultComponentSchematic() {
 
 export const COMPONENT_SCHEMATICS_MAP: Record<string, React.ComponentType> = {
   select: SelectSchematic,
+  "glass-select": GlassSelectSchematic,
   badge: BadgeSchematic,
   card: CardSchematic,
   "unboxing-bucket": UnboxingBucketSchematic,
