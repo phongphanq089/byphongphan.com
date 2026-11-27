@@ -74,6 +74,8 @@ export interface GlassSelectRootProps {
   disabled?: boolean
   name?: string
   required?: boolean
+  /** Item labels map/array so GlassSelectValue renders labels before first open. */
+  items?: SelectPrimitive.Root.Props<string>["items"]
   /** Opening physics preset: "stretch" (default), "morph", or "grow". */
   opening?: GlassPopupOpening
   /** With opening="morph", direction the surface arrives from. */
@@ -93,6 +95,7 @@ export function GlassSelectRoot({
   disabled,
   name,
   required,
+  items,
   opening = "stretch",
   from = "top",
   matchWidth = true,
@@ -111,6 +114,7 @@ export function GlassSelectRoot({
         disabled={disabled}
         name={name}
         required={required}
+        items={items}
       >
         {children}
       </SelectPrimitive.Root>
@@ -136,10 +140,10 @@ export function GlassSelectTrigger({
       data-glass-host=""
       data-size={size}
       className={cn(
-        "relative flex w-full cursor-pointer items-center justify-between gap-2 rounded-full border border-black/10 bg-white/60 pr-4 pl-5 font-medium text-neutral-900 outline-none select-none",
+        "relative flex w-full cursor-pointer items-center justify-between gap-2 rounded-full border border-black/10 bg-white/60 pr-4 pl-5 font-medium whitespace-nowrap text-neutral-900 outline-none select-none",
         "focus-visible:ring-2 focus-visible:ring-[#3291FF] focus-visible:ring-offset-2",
         "disabled:cursor-not-allowed disabled:opacity-40",
-        "data-[size=sm]:h-9 data-[size=sm]:text-sm data-[size=default]:h-11 data-[size=default]:text-[15px] data-[size=lg]:h-12 data-[size=lg]:text-[15px]",
+        "data-[size=default]:h-11 data-[size=default]:text-[15px] data-[size=lg]:h-12 data-[size=lg]:text-[15px] data-[size=sm]:h-9 data-[size=sm]:text-sm",
         "dark:border-white/15 dark:bg-white/10 dark:text-white",
         "data-[glass-tone=dark]:text-white data-[glass-tone=light]:text-neutral-900",
         className
@@ -167,7 +171,7 @@ export function GlassSelectValue({
   return (
     <SelectPrimitive.Value
       data-slot="glass-select-value"
-      className={cn("line-clamp-1 flex flex-1 text-left", className)}
+      className={cn("min-w-0 flex-1 truncate text-left", className)}
       {...props}
     />
   )
@@ -303,7 +307,7 @@ export function GlassSelectItem({
       )}
       {...props}
     >
-      <SelectPrimitive.ItemText className="line-clamp-1 flex flex-1 items-center gap-2">
+      <SelectPrimitive.ItemText className="min-w-0 flex-1 truncate">
         {children}
       </SelectPrimitive.ItemText>
       <SelectPrimitive.ItemIndicator
@@ -368,6 +372,7 @@ export function GlassSelect({
       disabled={disabled}
       name={name}
       required={required}
+      items={options}
       opening={opening}
       from={from}
       matchWidth={matchWidth}
