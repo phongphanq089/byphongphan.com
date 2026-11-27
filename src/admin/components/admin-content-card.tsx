@@ -57,7 +57,7 @@ export function AdminContentCard({
   ...props
 }: AdminContentCardProps) {
   const variantStyles: Record<AdminContentCardVariant, string> = {
-    default: "border border-border/70 bg-card text-card-foreground shadow-xs",
+    default: "border border-border/70 bg-card text-card-foreground shadow-xs ",
     dashed:
       "border border-dashed border-border/80 bg-card/40 text-card-foreground",
     subtle: "border border-border/40 bg-muted/20 text-card-foreground",

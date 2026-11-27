@@ -89,6 +89,9 @@ const systemNavItems: NavItem[] = [
   },
 ]
 
+const NAV_BUTTON_CLASS =
+  "text-muted-foreground transition-colors hover:bg-background/60 hover:text-foreground data-active:bg-background data-active:font-semibold data-active:text-foreground data-active:shadow-xs data-active:ring-1 data-active:ring-border/80"
+
 export function SidebarAdmin() {
   const currentPath = useRouterState({ select: (s) => s.location.pathname })
   const { setOpenMobile, isMobile } = useSidebar()
@@ -174,6 +177,7 @@ export function SidebarAdmin() {
                     <SidebarMenuButton
                       isActive={active}
                       tooltip={item.title}
+                      className={NAV_BUTTON_CLASS}
                       render={<Link to={item.url} />}
                       onClick={handleNavClick}
                     >
@@ -202,6 +206,7 @@ export function SidebarAdmin() {
                     <SidebarMenuButton
                       isActive={active}
                       tooltip={item.title}
+                      className={NAV_BUTTON_CLASS}
                       render={<Link to={item.url} />}
                       onClick={handleNavClick}
                     >
@@ -238,6 +243,7 @@ export function SidebarAdmin() {
                     <SidebarMenuButton
                       isActive={active}
                       tooltip={item.title}
+                      className={NAV_BUTTON_CLASS}
                       render={<Link to={item.url} />}
                       onClick={handleNavClick}
                     >
@@ -273,6 +279,7 @@ export function SidebarAdmin() {
                     <SidebarMenuButton
                       isActive={active}
                       tooltip={item.title}
+                      className={NAV_BUTTON_CLASS}
                       render={<Link to={item.url} />}
                       onClick={handleNavClick}
                     >
@@ -285,6 +292,7 @@ export function SidebarAdmin() {
               <SidebarMenuItem>
                 <SidebarMenuButton
                   tooltip="Media Assets (ImageKit)"
+                  className={NAV_BUTTON_CLASS}
                   render={
                     <a
                       href="https://imagekit.io/dashboard"
