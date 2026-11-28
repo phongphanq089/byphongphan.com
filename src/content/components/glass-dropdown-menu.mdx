@@ -1,0 +1,90 @@
+---
+title: Glass Dropdown Menu
+description: WebGL2 SDF liquid glass dropdown menu built natively on @base-ui/react/menu where the menu swells out of its trigger on a stretching neck, morphs, or grows smoothly.
+component: true
+badge: Base UI
+---
+
+<ComponentPreview name="glass-dropdown-menu-demo" />
+
+## Installation
+
+<CodeTabs defaultValue="cli">
+  <TabsList>
+    <TabsTrigger value="cli">Command</TabsTrigger>
+    <TabsTrigger value="manual">Manual</TabsTrigger>
+  </TabsList>
+
+<TabsContent value="cli">
+  <CodeBlockCommand name="glass-dropdown-menu" />
+</TabsContent>
+
+  <TabsContent value="manual">
+    <Steps className="mb-0 pt-2">
+      <Step>Install required dependencies:</Step>
+      <CodeBlockCommand command="npm install @base-ui/react lucide-react" />
+
+      <Step>Copy and paste the component into your project:</Step>
+      <ComponentSource name="glass-dropdown-menu" title="components/glass-dropdown-menu.tsx" />
+
+      <Step>Update the import paths to match your project directory structure.</Step>
+    </Steps>
+
+  </TabsContent>
+</CodeTabs>
+
+---
+
+## Usage
+
+```tsx
+import {
+  GlassDropdownMenu,
+  GlassDropdownMenuContent,
+  GlassDropdownMenuItem,
+  GlassDropdownMenuSeparator,
+  GlassDropdownMenuTrigger,
+} from "@/components/glass-dropdown-menu"
+```
+
+```tsx
+export function ActionsMenu() {
+  return (
+    <GlassDropdownMenu opening="stretch">
+      <GlassDropdownMenuTrigger>Actions</GlassDropdownMenuTrigger>
+      <GlassDropdownMenuContent>
+        <GlassDropdownMenuItem index={0}>Profile</GlassDropdownMenuItem>
+        <GlassDropdownMenuItem index={1}>Settings</GlassDropdownMenuItem>
+        <GlassDropdownMenuSeparator />
+        <GlassDropdownMenuItem index={2} variant="destructive">
+          Delete
+        </GlassDropdownMenuItem>
+      </GlassDropdownMenuContent>
+    </GlassDropdownMenu>
+  )
+}
+```
+
+---
+
+## Features
+
+- **Native `@base-ui/react/menu` Accessibility**: Full keyboard navigation, typeahead, checkbox/switch items, radio groups, link items, and nested submenus.
+- **Three Opening Modes**: Choose between `stretch` (spring emergence from the anchor edge), `morph` (pill-to-card morph over the trigger with letter-by-letter label return), and `grow` (smooth anchor expansion).
+- **WebGL2 SDF Liquid Glass (Menu & Submenu)**: Root menus use `liquid-glass/glass-popup` and nested submenus render on `GlassCard` for consistent real-time refraction, pointer-driven surface light, and graceful CSS fallback when WebGL2 is unavailable.
+- **Staggered Item Reveal**: Menu items cascade smoothly on open via `--glass-i` and exit cleanly with Base UI `data-ending-style`.
+
+---
+
+## API Reference
+
+### GlassDropdownMenu
+
+| Prop | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `opening` | `"stretch" \| "morph" \| "grow"` | `"stretch"` | Opening transition preset. |
+| `from` | `"top" \| "bottom"` | `"top"` | Direction the surface arrives from when `opening="morph"`. |
+| `matchWidth` | `boolean` | `false` | Match popup width to the trigger width. |
+| `open` | `boolean` | `undefined` | Controlled open state. |
+| `defaultOpen` | `boolean` | `false` | Initial uncontrolled open state. |
+| `onOpenChange` | `(open: boolean) => void` | `undefined` | Callback fired when the open state changes. |

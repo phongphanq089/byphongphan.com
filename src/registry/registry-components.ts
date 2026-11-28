@@ -10,6 +10,7 @@ import {
   DrawerSchematic,
   ElasticSliderSchematic,
   FlipClockSchematic,
+  GlassDropdownMenuSchematic,
   GlassSelectSchematic,
   Letter3DSwapSchematic,
   LineNavSchematic,
@@ -572,6 +573,51 @@ export const REGISTRY_COMPONENTS: RegistryItem[] = [
         path: "animated/liquid-glass/glass-popup.tsx",
         type: "registry:component",
         target: "components/liquid-glass/glass-popup.tsx",
+      },
+      {
+        path: "animated/liquid-glass/glass-layer.tsx",
+        type: "registry:component",
+        target: "components/liquid-glass/glass-layer.tsx",
+      },
+      {
+        path: "animated/liquid-glass/engine.ts",
+        type: "registry:component",
+        target: "components/liquid-glass/engine.ts",
+      },
+      {
+        path: "animated/liquid-glass/dom-snapshot.ts",
+        type: "registry:component",
+        target: "components/liquid-glass/dom-snapshot.ts",
+      },
+    ],
+  },
+  {
+    name: "glass-dropdown-menu",
+    title: "Glass Dropdown Menu",
+    description:
+      "WebGL2 SDF liquid glass dropdown menu built natively on @base-ui/react/menu: the menu swells out of its trigger on a stretching neck, morphs, or grows smoothly.",
+    type: "registry:component",
+    category: "glass",
+    schematic: GlassDropdownMenuSchematic,
+    schematicType: "glass-dropdown-menu",
+    isNew: true,
+    dependencies: ["@base-ui/react", "lucide-react"],
+    registryDependencies: [],
+    files: [
+      {
+        path: "animated/glass-dropdown-menu.tsx",
+        type: "registry:component",
+        target: "components/glass-dropdown-menu.tsx",
+      },
+      {
+        path: "animated/liquid-glass/glass-popup.tsx",
+        type: "registry:component",
+        target: "components/liquid-glass/glass-popup.tsx",
+      },
+      {
+        path: "animated/liquid-glass/glass-card.tsx",
+        type: "registry:component",
+        target: "components/liquid-glass/glass-card.tsx",
       },
       {
         path: "animated/liquid-glass/glass-layer.tsx",

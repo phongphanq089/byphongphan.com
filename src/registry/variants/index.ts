@@ -8,6 +8,8 @@ import { CORNER_BUTTON_VARIANTS } from "./corner-button-variants"
 import { CRADLE_TEXT_VARIANTS } from "./cradle-text-variants"
 import { DRAWER_VARIANTS } from "./drawer-variants"
 import { ELASTIC_SLIDER_VARIANTS } from "./elastic-slider-variants"
+import { GLASS_DROPDOWN_MENU_VARIANTS } from "./glass-dropdown-menu-variants"
+import { GLASS_SELECT_VARIANTS } from "./glass-select-variants"
 import { LETTER_3D_SWAP_VARIANTS } from "./letter-3d-swap-variants"
 import { LINE_NAV_VARIANTS } from "./line-nav-variants"
 import { MAP_VARIANTS } from "./map-variants"
@@ -30,6 +32,8 @@ export * from "./corner-button-variants"
 export * from "./cradle-text-variants"
 export * from "./drawer-variants"
 export * from "./elastic-slider-variants"
+export * from "./glass-dropdown-menu-variants"
+export * from "./glass-select-variants"
 export * from "./letter-3d-swap-variants"
 export * from "./line-nav-variants"
 export * from "./map-variants"
@@ -66,6 +70,8 @@ export const ALL_VARIANTS: ComponentVariant[] = [
   ...LINE_NAV_VARIANTS,
   ...SCROLL_AREA_VARIANTS,
   ...DRAWER_VARIANTS,
+  ...GLASS_DROPDOWN_MENU_VARIANTS,
+  ...GLASS_SELECT_VARIANTS,
 ]
 
 export const VARIANTS_MAP = new Map<string, ComponentVariant>(
@@ -97,4 +103,6 @@ export const COMPONENT_VARIANTS: Record<string, ComponentVariant[]> = {
   "line-nav": LINE_NAV_VARIANTS,
   "scroll-area": SCROLL_AREA_VARIANTS,
   drawer: DRAWER_VARIANTS,
+  "glass-dropdown-menu": GLASS_DROPDOWN_MENU_VARIANTS,
+  "glass-select": GLASS_SELECT_VARIANTS,
 }

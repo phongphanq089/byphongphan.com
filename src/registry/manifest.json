@@ -156,6 +156,10 @@
       "slug": "glass-select"
     },
     {
+      "category": "glass",
+      "slug": "glass-dropdown-menu"
+    },
+    {
       "category": "button",
       "slug": "slide-to-unlock"
     }

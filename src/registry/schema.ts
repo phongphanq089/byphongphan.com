@@ -3,6 +3,7 @@ import type React from "react"
 export type ComponentSchematicType =
   | "select"
   | "glass-select"
+  | "glass-dropdown-menu"
   | "badge"
   | "card"
   | "unboxing-bucket"

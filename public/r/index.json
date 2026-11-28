@@ -252,6 +252,17 @@
     "registryDependencies": []
   },
   {
+    "name": "glass-dropdown-menu",
+    "type": "registry:component",
+    "title": "Glass Dropdown Menu",
+    "description": "WebGL2 SDF liquid glass dropdown menu built natively on @base-ui/react/menu: the menu swells out of its trigger on a stretching neck, morphs, or grows smoothly.",
+    "dependencies": [
+      "@base-ui/react",
+      "lucide-react"
+    ],
+    "registryDependencies": []
+  },
+  {
     "name": "slide-to-unlock",
     "type": "registry:component",
     "title": "Slide to Unlock",

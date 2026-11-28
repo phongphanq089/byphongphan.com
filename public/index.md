@@ -57,7 +57,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 
 ---
 
-## UI Components & Primitives (27)
+## UI Components & Primitives (28)
 
 | Component | Category | Description | Direct Install |
 | :--- | :--- | :--- | :--- |
@@ -87,6 +87,7 @@ pnpm dlx shadcn add @byphongphan/<component-name>
 | [Corner Button](https://byphongphan.com/component-ui/button/corner-button) | `button` | An animated tactile button featuring orbiting corner dots, expanding dashed CAD lines, and smooth ambient backdrop glow transitions. | `pnpm dlx shadcn add https://byphongphan.com/r/corner-button.json` |
 | [Spotlight Text](https://byphongphan.com/component-ui/text/spotlight-text) | `text` | Interactive giant cropped typography with procedural canvas grain texture, radial pointer-tracking spotlight mask, and autonomous figure-8 drift. | `pnpm dlx shadcn add https://byphongphan.com/r/spotlight-text.json` |
 | [Glass Select](https://byphongphan.com/component-ui/glass/glass-select) | `glass` | WebGL2 SDF liquid glass select built natively on @base-ui/react/select: the list swells out of its trigger on a stretching neck that thins, snaps, and retracts smoothly. | `pnpm dlx shadcn add https://byphongphan.com/r/glass-select.json` |
+| [Glass Dropdown Menu](https://byphongphan.com/component-ui/glass/glass-dropdown-menu) | `glass` | WebGL2 SDF liquid glass dropdown menu built natively on @base-ui/react/menu: the menu swells out of its trigger on a stretching neck, morphs, or grows smoothly. | `pnpm dlx shadcn add https://byphongphan.com/r/glass-dropdown-menu.json` |
 | [Slide to Unlock](https://byphongphan.com/component-ui/button/slide-to-unlock) | `button` | The iconic iOS tactile slider featuring authentic text shimmer, squircle thumb, spring recoil physics, and velocity flick commitment. | `pnpm dlx shadcn add https://byphongphan.com/r/slide-to-unlock.json` |
 
 ---
