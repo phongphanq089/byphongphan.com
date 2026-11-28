@@ -103,7 +103,12 @@ export function AdminPostEditorLayout({
             onFieldChange={updateField}
           />
 
-          <PostEditorContentFrame content={values.content} />
+          <PostEditorContentFrame
+            content={values.content}
+            onContentChange={(nextContent) =>
+              updateField("content", nextContent)
+            }
+          />
         </div>
 
         <PostEditorMetadataSidebar

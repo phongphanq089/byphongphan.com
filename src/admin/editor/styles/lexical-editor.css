@@ -1,0 +1,7 @@
+.lexical-content-editable {
+  outline: none;
+}
+
+.lexical-content-editable:focus {
+  outline: none;
+}

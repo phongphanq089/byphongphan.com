@@ -1,15 +1,21 @@
 import { FileCode2 } from "lucide-react"
+import { useMemo } from "react"
 
 import { AdminContentCard } from "@/admin"
+import { Editor } from "@/admin/editor"
 import { Badge } from "@/shared/ui"
 
 interface PostEditorContentFrameProps {
   content: Record<string, unknown>
+  onContentChange?: (content: Record<string, unknown>) => void
 }
 
 export function PostEditorContentFrame({
   content,
+  onContentChange,
 }: PostEditorContentFrameProps) {
+  const initialJson = useMemo(() => JSON.stringify(content), [content])
+
   return (
     <AdminContentCard
       title={
@@ -18,51 +24,33 @@ export function PostEditorContentFrame({
           <span>Content Editor</span>
         </span>
       }
-      description="Rich-text / JSON AST workspace (editor package pending selection)"
+      description="Lexical rich-text editor outputting serialized JSON AST & Markdown"
       actions={
         <Badge variant="subtle" size="xs" shape="rounded" className="font-mono">
           posts.content (jsonb)
         </Badge>
       }
       variant="default"
-      minHeight="min-h-[420px]"
+      minHeight="min-h-[480px]"
       padding="default"
       className="flex-1"
     >
-      <div className="flex flex-1 flex-col overflow-hidden rounded-xl border border-border/70 bg-background/40">
-        {/* Toolbar Frame Slot */}
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border/70 bg-muted/30 px-4 py-2.5 text-xs text-muted-foreground">
-          <span>
-            Editor Toolbar Slot · Headings · Formatting · Code Block · Image ·
-            Link
-          </span>
-          <span className="font-mono text-[11px]">Placeholder</span>
-        </div>
+      <div className="flex flex-1 flex-col gap-3">
+        <Editor
+          variant="default"
+          defaultValue={initialJson}
+          minHeight={320}
+          onChange={(data) => onContentChange?.(data.state)}
+        />
 
-        {/* Editor Canvas Frame Slot */}
-        <div className="flex flex-1 flex-col items-center justify-center gap-4 p-6 text-center">
-          <div className="flex size-12 items-center justify-center rounded-xl border border-dashed border-border/80 bg-muted/30 text-muted-foreground/70">
-            <FileCode2 className="size-5" />
-          </div>
-          <div className="space-y-1">
-            <p className="text-sm font-medium text-foreground">
-              Content Editor Frame
-            </p>
-            <p className="max-w-md text-xs text-muted-foreground">
-              Rich-text editor is kept as a structural frame until a final
-              editor library is selected.
-            </p>
-          </div>
-
-          <details className="w-full max-w-xl text-left">
-            <summary className="cursor-pointer text-center font-mono text-[11px] text-muted-foreground hover:text-foreground">
-              Inspect current JSON AST payload
-            </summary>
-            <pre className="mt-2 max-h-40 overflow-auto rounded-lg border border-border/70 bg-muted/35 p-3 font-mono text-[11px] leading-relaxed text-muted-foreground">
-              {JSON.stringify(content, null, 2)}
-            </pre>
-          </details>
-        </div>
+        <details className="w-full text-left">
+          <summary className="cursor-pointer font-mono text-[11px] text-muted-foreground hover:text-foreground">
+            Inspect current JSON AST payload
+          </summary>
+          <pre className="mt-2 max-h-48 overflow-auto rounded-lg border border-border/70 bg-muted/35 p-3 font-mono text-[11px] leading-relaxed text-muted-foreground">
+            {JSON.stringify(content, null, 2)}
+          </pre>
+        </details>
       </div>
     </AdminContentCard>
   )
