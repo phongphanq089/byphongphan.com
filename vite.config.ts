@@ -122,7 +122,13 @@ const config = defineConfig({
     noExternal: ["gsap", "@gsap/react", "use-sound", "posthog-js"],
   },
   optimizeDeps: {
-    include: ["matter-js", "poly-decomp", "svg-path-commander", "maplibre-gl"],
+    include: [
+      "matter-js",
+      "poly-decomp",
+      "svg-path-commander",
+      "maplibre-gl",
+      "@tanstack/react-table",
+    ],
   },
   plugins: [
     // tsconfigPaths({ projects: ["./tsconfig.json"] }),

@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AdminRouteRouteImport } from './routes/_admin/route'
 import { Route as SiteRouteRouteImport } from './routes/_site/route'
 import { Route as BrandAppRouteImport } from './routes/brand-app'
 import { Route as ProfileRouteImport } from './routes/profile'
@@ -19,11 +20,25 @@ import { Route as SiteIndexRouteImport } from './routes/_site/index'
 import { Route as SiteMcpRouteImport } from './routes/_site/mcp'
 import { Route as BlocksPreviewSlugRouteImport } from './routes/blocks-preview.$slug'
 import { Route as UiIndexRouteImport } from './routes/ui/index'
+import { Route as AdminAdminIndexRouteImport } from './routes/_admin/admin/index'
 import { Route as SiteBlogIndexRouteImport } from './routes/_site/blog/index'
 import { Route as SiteResourcesIndexRouteImport } from './routes/_site/resources/index'
 import { Route as UiCollectionIndexRouteImport } from './routes/ui/$collection/index'
 import { Route as UiCollectionSlugRouteImport } from './routes/ui/$collection/$slug'
+import { Route as AdminAdminCategoriesIndexRouteImport } from './routes/_admin/admin/categories/index'
+import { Route as AdminAdminGroupsIndexRouteImport } from './routes/_admin/admin/groups/index'
+import { Route as AdminAdminMediaIndexRouteImport } from './routes/_admin/admin/media/index'
+import { Route as AdminAdminPostsIndexRouteImport } from './routes/_admin/admin/posts/index'
+import { Route as AdminAdminPostsPostIdRouteImport } from './routes/_admin/admin/posts/$postId'
+import { Route as AdminAdminPostsNewRouteImport } from './routes/_admin/admin/posts/new'
+import { Route as AdminAdminProfileIndexRouteImport } from './routes/_admin/admin/profile/index'
+import { Route as AdminAdminResourcesIndexRouteImport } from './routes/_admin/admin/resources/index'
+import { Route as AdminAdminSettingsIndexRouteImport } from './routes/_admin/admin/settings/index'
 
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/_admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SiteRouteRoute = SiteRouteRouteImport.update({
   id: '/_site',
   getParentRoute: () => rootRouteImport,
@@ -73,6 +88,11 @@ const UiIndexRoute = UiIndexRouteImport.update({
   path: '/',
   getParentRoute: () => UiRouteRoute,
 } as any)
+const AdminAdminIndexRoute = AdminAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 const SiteBlogIndexRoute = SiteBlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
@@ -93,6 +113,53 @@ const UiCollectionSlugRoute = UiCollectionSlugRouteImport.update({
   path: '/$collection/$slug',
   getParentRoute: () => UiRouteRoute,
 } as any)
+const AdminAdminCategoriesIndexRoute =
+  AdminAdminCategoriesIndexRouteImport.update({
+    id: '/admin/categories/',
+    path: '/admin/categories/',
+    getParentRoute: () => AdminRouteRoute,
+  } as any)
+const AdminAdminGroupsIndexRoute = AdminAdminGroupsIndexRouteImport.update({
+  id: '/admin/groups/',
+  path: '/admin/groups/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminMediaIndexRoute = AdminAdminMediaIndexRouteImport.update({
+  id: '/admin/media/',
+  path: '/admin/media/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminPostsIndexRoute = AdminAdminPostsIndexRouteImport.update({
+  id: '/admin/posts/',
+  path: '/admin/posts/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminPostsPostIdRoute = AdminAdminPostsPostIdRouteImport.update({
+  id: '/admin/posts/$postId',
+  path: '/admin/posts/$postId',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminPostsNewRoute = AdminAdminPostsNewRouteImport.update({
+  id: '/admin/posts/new',
+  path: '/admin/posts/new',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminProfileIndexRoute = AdminAdminProfileIndexRouteImport.update({
+  id: '/admin/profile/',
+  path: '/admin/profile/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
+const AdminAdminResourcesIndexRoute =
+  AdminAdminResourcesIndexRouteImport.update({
+    id: '/admin/resources/',
+    path: '/admin/resources/',
+    getParentRoute: () => AdminRouteRoute,
+  } as any)
+const AdminAdminSettingsIndexRoute = AdminAdminSettingsIndexRouteImport.update({
+  id: '/admin/settings/',
+  path: '/admin/settings/',
+  getParentRoute: () => AdminRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
@@ -105,26 +172,47 @@ export interface FileRoutesByFullPath {
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
   '/ui/': typeof UiIndexRoute
   '/ui/$collection/$slug': typeof UiCollectionSlugRoute
+  '/admin/': typeof AdminAdminIndexRoute
   '/blog/': typeof SiteBlogIndexRoute
   '/resources/': typeof SiteResourcesIndexRoute
   '/ui/$collection/': typeof UiCollectionIndexRoute
+  '/admin/posts/$postId': typeof AdminAdminPostsPostIdRoute
+  '/admin/posts/new': typeof AdminAdminPostsNewRoute
+  '/admin/categories/': typeof AdminAdminCategoriesIndexRoute
+  '/admin/groups/': typeof AdminAdminGroupsIndexRoute
+  '/admin/media/': typeof AdminAdminMediaIndexRoute
+  '/admin/posts/': typeof AdminAdminPostsIndexRoute
+  '/admin/profile/': typeof AdminAdminProfileIndexRoute
+  '/admin/resources/': typeof AdminAdminResourcesIndexRoute
+  '/admin/settings/': typeof AdminAdminSettingsIndexRoute
 }
 export interface FileRoutesByTo {
+  '/': typeof SiteIndexRoute
   '/brand-app': typeof BrandAppRoute
   '/profile': typeof ProfileRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/mcp': typeof SiteMcpRoute
   '/blocks-preview/$slug': typeof BlocksPreviewSlugRoute
-  '/': typeof SiteIndexRoute
   '/ui': typeof UiIndexRoute
   '/ui/$collection/$slug': typeof UiCollectionSlugRoute
+  '/admin': typeof AdminAdminIndexRoute
   '/blog': typeof SiteBlogIndexRoute
   '/resources': typeof SiteResourcesIndexRoute
   '/ui/$collection': typeof UiCollectionIndexRoute
+  '/admin/posts/$postId': typeof AdminAdminPostsPostIdRoute
+  '/admin/posts/new': typeof AdminAdminPostsNewRoute
+  '/admin/categories': typeof AdminAdminCategoriesIndexRoute
+  '/admin/groups': typeof AdminAdminGroupsIndexRoute
+  '/admin/media': typeof AdminAdminMediaIndexRoute
+  '/admin/posts': typeof AdminAdminPostsIndexRoute
+  '/admin/profile': typeof AdminAdminProfileIndexRoute
+  '/admin/resources': typeof AdminAdminResourcesIndexRoute
+  '/admin/settings': typeof AdminAdminSettingsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/_admin': typeof AdminRouteRouteWithChildren
   '/_site': typeof SiteRouteRouteWithChildren
   '/ui': typeof UiRouteRouteWithChildren
   '/brand-app': typeof BrandAppRoute
@@ -136,9 +224,19 @@ export interface FileRoutesById {
   '/_site/': typeof SiteIndexRoute
   '/ui/': typeof UiIndexRoute
   '/ui/$collection/$slug': typeof UiCollectionSlugRoute
+  '/_admin/admin/': typeof AdminAdminIndexRoute
   '/_site/blog/': typeof SiteBlogIndexRoute
   '/_site/resources/': typeof SiteResourcesIndexRoute
   '/ui/$collection/': typeof UiCollectionIndexRoute
+  '/_admin/admin/posts/$postId': typeof AdminAdminPostsPostIdRoute
+  '/_admin/admin/posts/new': typeof AdminAdminPostsNewRoute
+  '/_admin/admin/categories/': typeof AdminAdminCategoriesIndexRoute
+  '/_admin/admin/groups/': typeof AdminAdminGroupsIndexRoute
+  '/_admin/admin/media/': typeof AdminAdminMediaIndexRoute
+  '/_admin/admin/posts/': typeof AdminAdminPostsIndexRoute
+  '/_admin/admin/profile/': typeof AdminAdminProfileIndexRoute
+  '/_admin/admin/resources/': typeof AdminAdminResourcesIndexRoute
+  '/_admin/admin/settings/': typeof AdminAdminSettingsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -153,25 +251,46 @@ export interface FileRouteTypes {
     | '/blocks-preview/$slug'
     | '/ui/'
     | '/ui/$collection/$slug'
+    | '/admin/'
     | '/blog/'
     | '/resources/'
     | '/ui/$collection/'
+    | '/admin/posts/$postId'
+    | '/admin/posts/new'
+    | '/admin/categories/'
+    | '/admin/groups/'
+    | '/admin/media/'
+    | '/admin/posts/'
+    | '/admin/profile/'
+    | '/admin/resources/'
+    | '/admin/settings/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/'
     | '/brand-app'
     | '/profile'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/mcp'
     | '/blocks-preview/$slug'
-    | '/'
     | '/ui'
     | '/ui/$collection/$slug'
+    | '/admin'
     | '/blog'
     | '/resources'
     | '/ui/$collection'
+    | '/admin/posts/$postId'
+    | '/admin/posts/new'
+    | '/admin/categories'
+    | '/admin/groups'
+    | '/admin/media'
+    | '/admin/posts'
+    | '/admin/profile'
+    | '/admin/resources'
+    | '/admin/settings'
   id:
     | '__root__'
+    | '/_admin'
     | '/_site'
     | '/ui'
     | '/brand-app'
@@ -183,12 +302,23 @@ export interface FileRouteTypes {
     | '/_site/'
     | '/ui/'
     | '/ui/$collection/$slug'
+    | '/_admin/admin/'
     | '/_site/blog/'
     | '/_site/resources/'
     | '/ui/$collection/'
+    | '/_admin/admin/posts/$postId'
+    | '/_admin/admin/posts/new'
+    | '/_admin/admin/categories/'
+    | '/_admin/admin/groups/'
+    | '/_admin/admin/media/'
+    | '/_admin/admin/posts/'
+    | '/_admin/admin/profile/'
+    | '/_admin/admin/resources/'
+    | '/_admin/admin/settings/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
   SiteRouteRoute: typeof SiteRouteRouteWithChildren
   UiRouteRoute: typeof UiRouteRouteWithChildren
   BrandAppRoute: typeof BrandAppRoute
@@ -200,6 +330,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_admin': {
+      id: '/_admin'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_site': {
       id: '/_site'
       path: ''
@@ -270,6 +407,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UiIndexRouteImport
       parentRoute: typeof UiRouteRoute
     }
+    '/_admin/admin/': {
+      id: '/_admin/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminAdminIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
     '/_site/blog/': {
       id: '/_site/blog/'
       path: '/blog'
@@ -298,8 +442,101 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UiCollectionSlugRouteImport
       parentRoute: typeof UiRouteRoute
     }
+    '/_admin/admin/categories/': {
+      id: '/_admin/admin/categories/'
+      path: '/admin/categories'
+      fullPath: '/admin/categories/'
+      preLoaderRoute: typeof AdminAdminCategoriesIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin/groups/': {
+      id: '/_admin/admin/groups/'
+      path: '/admin/groups'
+      fullPath: '/admin/groups/'
+      preLoaderRoute: typeof AdminAdminGroupsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin/media/': {
+      id: '/_admin/admin/media/'
+      path: '/admin/media'
+      fullPath: '/admin/media/'
+      preLoaderRoute: typeof AdminAdminMediaIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin/posts/': {
+      id: '/_admin/admin/posts/'
+      path: '/admin/posts'
+      fullPath: '/admin/posts/'
+      preLoaderRoute: typeof AdminAdminPostsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin/posts/$postId': {
+      id: '/_admin/admin/posts/$postId'
+      path: '/admin/posts/$postId'
+      fullPath: '/admin/posts/$postId'
+      preLoaderRoute: typeof AdminAdminPostsPostIdRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin/posts/new': {
+      id: '/_admin/admin/posts/new'
+      path: '/admin/posts/new'
+      fullPath: '/admin/posts/new'
+      preLoaderRoute: typeof AdminAdminPostsNewRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin/profile/': {
+      id: '/_admin/admin/profile/'
+      path: '/admin/profile'
+      fullPath: '/admin/profile/'
+      preLoaderRoute: typeof AdminAdminProfileIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin/resources/': {
+      id: '/_admin/admin/resources/'
+      path: '/admin/resources'
+      fullPath: '/admin/resources/'
+      preLoaderRoute: typeof AdminAdminResourcesIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
+    '/_admin/admin/settings/': {
+      id: '/_admin/admin/settings/'
+      path: '/admin/settings'
+      fullPath: '/admin/settings/'
+      preLoaderRoute: typeof AdminAdminSettingsIndexRouteImport
+      parentRoute: typeof AdminRouteRoute
+    }
   }
 }
+
+interface AdminRouteRouteChildren {
+  AdminAdminIndexRoute: typeof AdminAdminIndexRoute
+  AdminAdminPostsPostIdRoute: typeof AdminAdminPostsPostIdRoute
+  AdminAdminPostsNewRoute: typeof AdminAdminPostsNewRoute
+  AdminAdminCategoriesIndexRoute: typeof AdminAdminCategoriesIndexRoute
+  AdminAdminGroupsIndexRoute: typeof AdminAdminGroupsIndexRoute
+  AdminAdminMediaIndexRoute: typeof AdminAdminMediaIndexRoute
+  AdminAdminPostsIndexRoute: typeof AdminAdminPostsIndexRoute
+  AdminAdminProfileIndexRoute: typeof AdminAdminProfileIndexRoute
+  AdminAdminResourcesIndexRoute: typeof AdminAdminResourcesIndexRoute
+  AdminAdminSettingsIndexRoute: typeof AdminAdminSettingsIndexRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminAdminIndexRoute: AdminAdminIndexRoute,
+  AdminAdminPostsPostIdRoute: AdminAdminPostsPostIdRoute,
+  AdminAdminPostsNewRoute: AdminAdminPostsNewRoute,
+  AdminAdminCategoriesIndexRoute: AdminAdminCategoriesIndexRoute,
+  AdminAdminGroupsIndexRoute: AdminAdminGroupsIndexRoute,
+  AdminAdminMediaIndexRoute: AdminAdminMediaIndexRoute,
+  AdminAdminPostsIndexRoute: AdminAdminPostsIndexRoute,
+  AdminAdminProfileIndexRoute: AdminAdminProfileIndexRoute,
+  AdminAdminResourcesIndexRoute: AdminAdminResourcesIndexRoute,
+  AdminAdminSettingsIndexRoute: AdminAdminSettingsIndexRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
 
 interface SiteRouteRouteChildren {
   SiteMcpRoute: typeof SiteMcpRoute
@@ -335,6 +572,7 @@ const UiRouteRouteWithChildren =
   UiRouteRoute._addFileChildren(UiRouteRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
+  AdminRouteRoute: AdminRouteRouteWithChildren,
   SiteRouteRoute: SiteRouteRouteWithChildren,
   UiRouteRoute: UiRouteRouteWithChildren,
   BrandAppRoute: BrandAppRoute,

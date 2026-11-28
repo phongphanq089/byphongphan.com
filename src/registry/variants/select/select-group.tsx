@@ -5,8 +5,8 @@ import {
   Select,
   SelectContent,
   SelectGroup,
+  SelectGroupLabel,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/registry/ui/select"
@@ -21,13 +21,13 @@ export function SelectGroupVariant() {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>Frontend</SelectLabel>
+            <SelectGroupLabel>Frontend</SelectGroupLabel>
             <SelectItem value="1">React</SelectItem>
             <SelectItem value="2">Vue</SelectItem>
             <SelectItem value="3">Angular</SelectItem>
           </SelectGroup>
           <SelectGroup>
-            <SelectLabel>Backend</SelectLabel>
+            <SelectGroupLabel>Backend</SelectGroupLabel>
             <SelectItem value="4">Node.js</SelectItem>
             <SelectItem value="5">Python</SelectItem>
             <SelectItem value="6">Java</SelectItem>

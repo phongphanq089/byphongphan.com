@@ -3,8 +3,8 @@ import {
   Select,
   SelectContent,
   SelectGroup,
+  SelectGroupLabel,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/registry/ui/select"
@@ -18,7 +18,7 @@ export function SelectDemo() {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            <SelectLabel>Frameworks</SelectLabel>
+            <SelectGroupLabel>Frameworks</SelectGroupLabel>
             <SelectItem value="react">React 19</SelectItem>
             <SelectItem value="nextjs">Next.js 15</SelectItem>
             <SelectItem value="tanstack">TanStack Start</SelectItem>

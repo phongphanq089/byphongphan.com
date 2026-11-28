@@ -5,8 +5,8 @@ import {
   Select,
   SelectContent,
   SelectGroup,
+  SelectGroupLabel,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/registry/ui/select"
@@ -67,7 +67,9 @@ export function OptionsWithFlag() {
         <SelectContent className="[&_*[role=option]]:ps-2 [&_*[role=option]]:pe-8 [&_*[role=option]>span]:start-auto [&_*[role=option]>span]:end-2 [&_*[role=option]>span]:flex [&_*[role=option]>span]:items-center [&_*[role=option]>span]:gap-2 [&_*[role=option]>span>svg]:shrink-0 [&_*[role=option]>span>svg]:text-muted-foreground/80">
           {countries.map((continent) => (
             <SelectGroup key={continent.continent}>
-              <SelectLabel className="ps-2">{continent.continent}</SelectLabel>
+              <SelectGroupLabel className="ps-2">
+                {continent.continent}
+              </SelectGroupLabel>
               {continent.items.map((item) => (
                 <SelectItem key={item.value} value={item.value}>
                   <span className="rounded bg-accent p-1 text-lg leading-none">
